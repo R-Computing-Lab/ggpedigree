@@ -21,10 +21,11 @@ calculate_coordinates <- function(ped, personID = "ID", momID = "momID",
   ped$y <- -ped[[generation]]  # Negative for plotting purposes
  # determine number of offspring to adjust width of graph
   ped$offspring <- 0
-  # probably not the most efficient way to do this....
-  for (i in 1:nrow(ped)) {
-    ped$offspring[i] <- sum(ped$momID == ped$personID[i],na.rm = TRUE) + sum(ped$dadID == ped$personID[i],na.rm = TRUE)
-  }
+  ped$offspring <- sapply(ped[[personID]], function(id) {
+    sum(ped[[momID]] == id, na.rm = TRUE) + sum(ped[[dadID]] == id, na.rm = TRUE)
+  })
+
+
   ped$offspring <- as.numeric(ped$offspring)
   ped$parentid <- paste0(ped[[momID]],".",ped[[dadID]])
   ped$parentid[ped$parentid=="NA.NA"] <- NA
@@ -34,7 +35,6 @@ calculate_coordinates <- function(ped, personID = "ID", momID = "momID",
                                                    siblings = n()-1)
   # for orphans/parentless
   ped$siblings <- ifelse(is.na(ped$parentid),0,ped$siblings)
-
   ped$siborder <- ifelse(is.na(ped$parentid),1,
                          ped$siborder)
 
@@ -54,9 +54,9 @@ calculate_coordinates <- function(ped, personID = "ID", momID = "momID",
         siblings <- max(ped$offspring[ped[[var_personID]] %in% parent_ids], na.rm = TRUE)
         mid_parent_x <- mean(parent_coords, na.rm = TRUE)
         # need to spread out siblings
-        if (siblings > 1) {
-          mid_parent_x <- mid_parent_x + (ped$siborder - (siblings + 1)/2)
-        }
+    #    if (siblings > 1) {
+      #    mid_parent_x <- mid_parent_x + (ped$siborder - (siblings + 1)/2)
+       # }
 
         # need to allow for siblings
 
@@ -76,7 +76,7 @@ calculate_coordinates <- function(ped, personID = "ID", momID = "momID",
   ped <- ped[order(ped[[var_personID]]),]
   return(ped)
 }
-
+#### to do. Add spouseID to the mix, and determine better way to make sure spouses are nearby
 
 calculate_connections <- function(ped) {
   # Create connections based on parent-child relationships
