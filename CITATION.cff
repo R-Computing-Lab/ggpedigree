@@ -1,0 +1,55 @@
+cff-version: "1.2.0"
+authors:
+- family-names: Garrison
+  given-names: S. Mason
+  orcid: "https://orcid.org/0000-0002-4804-6003"
+- family-names: Hunter
+  given-names: Michael D.
+  orcid: "https://orcid.org/0000-0002-3651-6709"
+- family-names: Lyu
+  given-names: Xuanyu
+  orcid: "https://orcid.org/0000-0002-2841-5529"
+- family-names: Trattner
+  given-names: Jonathan D.
+  orcid: "https://orcid.org/0000-0002-1097-7603"
+- family-names: Burt
+  given-names: S. Alexandra
+  orcid: "https://orcid.org/0000-0001-5538-7431"
+contact:
+- family-names: Garrison
+  given-names: S. Mason
+  orcid: "https://orcid.org/0000-0002-4804-6003"
+doi: 10.6084/m9.figshare.25238536
+message: If you use this software, please cite our article in the
+  Journal of Open Source Software.
+preferred-citation:
+  authors:
+  - family-names: Garrison
+    given-names: S. Mason
+    orcid: "https://orcid.org/0000-0002-4804-6003"
+  - family-names: Hunter
+    given-names: Michael D.
+    orcid: "https://orcid.org/0000-0002-3651-6709"
+  - family-names: Lyu
+    given-names: Xuanyu
+    orcid: "https://orcid.org/0000-0002-2841-5529"
+  - family-names: Trattner
+    given-names: Jonathan D.
+    orcid: "https://orcid.org/0000-0002-1097-7603"
+  - family-names: Burt
+    given-names: S. Alexandra
+    orcid: "https://orcid.org/0000-0001-5538-7431"
+  date-published: 2024-02-24
+  doi: 10.21105/joss.06203
+  issn: 2475-9066
+  issue: 94
+  journal: Journal of Open Source Software
+  publisher:
+    name: Open Journals
+  start: 6203
+  title: "BGmisc: An R Package for Extended Behavior Genetics Analysis"
+  type: article
+  year: 2024
+  url: "https://joss.theoj.org/papers/10.21105/joss.06203"
+  volume: 9
+title: "BGmisc: An R Package for Extended Behavior Genetics Analysis"

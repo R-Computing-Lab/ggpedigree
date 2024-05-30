@@ -1,0 +1,88 @@
+---
+title: "Pedigree Simulation and Visualization with BGmisc"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Pedigree}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+options(rmarkdown.html_vignette.check_title = FALSE)
+```
+
+# Introduction
+
+```{r}
+## Loading Required Libraries
+library(BGmisc)
+
+set.seed(5)
+df_ped <- simulatePedigree(
+  kpc = 4,
+  Ngen = 4,
+  sexR = .5,
+  marR = .7
+)
+summary(df_ped)
+```
+
+The simulation output is a `data.frame` with `r length(df_ped$ID)` rows and `r length(df_ped)` columns. Each row corresponds to a simulated individual.
+
+```{r}
+df_ped[21, ]
+```
+
+The columns represents the individual's family ID, the individual's personal ID, the generation the individual is in, the IDs of their father and mother, the ID of their spouse, and the biological sex of the individual, respectively.
+
+## Summarizing Pedigrees
+
+```{r}
+summarizeFamilies(df_ped, famID = "fam")$family_summary
+```
+## Plotting Pedigree
+
+Pedigrees are visual diagrams that represent family relationships across generations. They are commonly used in genetics to trace the inheritance of specific traits or conditions. This vignette will guide you through visualizing simulated pedigrees using the `plotPedigree` function. This function is a wrapper function for `Kinship2`'s base R plotting.
+
+### Single Pedigree Visualization
+
+To visualize a single simulated pedigree, use the `plotPedigree()` function.
+
+```{r,fig.width=8,fig.height=6}
+# Plot the simulated pedigree
+plotPedigree(df_ped)
+```
+
+
+In the resulting plot, biological males are represented by squares, while biological females are represented by circles, following the standard pedigree conventions.
+
+### Visualizing Multiple Pedigrees Side-by-Side
+
+If you wish to compare different pedigrees side by side, you can plot them together. For instance, let's visualize pedigrees for families spanning three and four generations, respectively.
+
+
+```{r,fig.width=8, fig.height=6}
+set.seed(8)
+# Simulate a family with 3 generations
+df_ped_3 <- simulatePedigree(Ngen = 3)
+
+# Simulate a family with 4 generations
+df_ped_4 <- simulatePedigree(Ngen = 4)
+
+# Set up plotting parameters for side-by-side display
+par(mfrow = c(1, 2))
+
+# Plot the 3-generation pedigree
+plotPedigree(df_ped_3, width = 3)
+
+# Plot the 4-generation pedigree
+plotPedigree(df_ped_4, width = 1)
+```   
+
+By examining the side-by-side plots, you can contrast and analyze the structures of different families, tracing the inheritance of specific traits or conditions if needed.
+
+
