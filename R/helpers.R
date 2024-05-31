@@ -6,7 +6,7 @@
 #' @param dadID character.  Name of the column in ped for the father ID variable
 #' @param generation character.  Name of the column in ped the generation variable
 
-
+#' @return a data.frame with x and y coordinates for each person in the pedigree
 calculate_coordinates <- function(ped, personID = "ID", momID = "momID",
                                   dadID = "dadID", generation = "generation",
                                   spouseID = "spouseID"
@@ -16,27 +16,23 @@ calculate_coordinates <- function(ped, personID = "ID", momID = "momID",
     stop("At least one of the following needed ID variables were not found: personID, momID, dadID, generation")
   }
   var_personID <- personID
+
   # Initialize positions
   ped$x <- NA
   ped$y <- -ped[[generation]]  # Negative for plotting purposes
- # determine number of offspring to adjust width of graph
-  ped$offspring <- 0
-  ped$offspring <- sapply(ped[[personID]], function(id) {
-    sum(ped[[momID]] == id, na.rm = TRUE) + sum(ped[[dadID]] == id, na.rm = TRUE)
-  })
+
+  # determine number of offspring to adjust width of graph
+  ped <- countOffspring(ped=ped,
+                        personID=personID,
+                        momID=momID,
+                        dadID=dadID)
 
 
-  ped$offspring <- as.numeric(ped$offspring)
-  ped$parentid <- paste0(ped[[momID]],".",ped[[dadID]])
-  ped$parentid[ped$parentid=="NA.NA"] <- NA
+  ped <- countSiblings(ped=ped,
+                       personID=personID,
+                       momID=momID,
+                       dadID=dadID)
 
-  # determine number of siblings to adjust width of graph
-  ped <- ped %>% group_by(ped$parentid) %>% mutate(siborder = row_number(),
-                                                   siblings = n()-1)
-  # for orphans/parentless
-  ped$siblings <- ifelse(is.na(ped$parentid),0,ped$siblings)
-  ped$siborder <- ifelse(is.na(ped$parentid),1,
-                         ped$siborder)
 
 
   # Sort by generation to process from oldest to youngest
@@ -54,9 +50,9 @@ calculate_coordinates <- function(ped, personID = "ID", momID = "momID",
         siblings <- max(ped$offspring[ped[[var_personID]] %in% parent_ids], na.rm = TRUE)
         mid_parent_x <- mean(parent_coords, na.rm = TRUE)
         # need to spread out siblings
-    #    if (siblings > 1) {
-      #    mid_parent_x <- mid_parent_x + (ped$siborder - (siblings + 1)/2)
-       # }
+        #    if (siblings > 1) {
+        #    mid_parent_x <- mid_parent_x + (ped$siborder - (siblings + 1)/2)
+        # }
 
         # need to allow for siblings
 
