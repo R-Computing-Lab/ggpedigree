@@ -42,7 +42,7 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
 
   # Generate a spouselist matrix
   spouselist <- generateSpouseList(ped=ped, personID=personID, momID=momID, dadID= dadID, spouseID=spouseID)
-
+# NOTE THAT THE kinship2 alignped function does not return the positions when a pedigree file is used. this needs to be fixed
   # Apply alignment functions
   rval <- kinship2::alignped1(rval, ped[[dadID]], ped[[momID]], ped[[generation]], horder = c(1, 1), packed = FALSE, spouselist = spouselist)
   rval <- kinship2::alignped2(rval, ped[[dadID]], ped[[momID]], ped[[generation]], horder = c(1, 1), packed = FALSE, spouselist = spouselist)
