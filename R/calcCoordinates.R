@@ -7,7 +7,7 @@
 #' @param generation character.  Name of the column in ped the generation variable
 
 #' @return a data.frame with x and y coordinates for each person in the pedigree
-calculate_coordinates <- function(ped, personID = "ID", momID = "momID",
+calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
                                   dadID = "dadID", generation = "generation",
                                   spouseID = "spouseID"
 ) {
@@ -74,7 +74,7 @@ calculate_coordinates <- function(ped, personID = "ID", momID = "momID",
 }
 #### to do. Add spouseID to the mix, and determine better way to make sure spouses are nearby
 
-calculate_connections <- function(ped) {
+calculateConnections <- function(ped) {
   # Create connections based on parent-child relationships
   connections <- ped %>%
     select(personID, x, y, dadID, momID) %>%
