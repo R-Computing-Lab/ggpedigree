@@ -53,3 +53,28 @@ countSiblings <- function(ped, personID = "ID", momID = "momID", dadID = "dadID"
 
   return(ped)
 }
+
+#' Generate a spouselist matrix
+#' @param ped A data frame containing the pedigree information
+#' @param personID Character. Name of the column in ped for the person ID variable
+#' @param momID Character. Name of the column in ped for the mother ID variable
+#' @param dadID Character. Name of the column in ped for the father ID variable
+#' @param spouseID Character. Name of the column in ped for the spouse ID variable
+#' @return A spouselist matrix
+generateSpouseList <- function(ped, personID, momID, dadID, spouseID) {
+  spouselist <- data.frame(matrix(NA, nrow = 0, ncol = 4))
+  colnames(spouselist) <- c("ID1", "ID2", "sex1", "sex2")
+
+  unique_pairs <- unique(ped[, c(momID, dadID)])
+  for (i in 1:nrow(unique_pairs)) {
+    id1 <- unique_pairs[i, 1]
+    id2 <- unique_pairs[i, 2]
+    if (!is.na(id1) & !is.na(id2)) {
+      sex1 <- ifelse(id1 %in% ped[[personID]], ped$sex[which(ped[[personID]] == id1)], NA)
+      sex2 <- ifelse(id2 %in% ped[[personID]], ped$sex[which(ped[[personID]] == id2)], NA)
+      spouselist <- rbind(spouselist, data.frame(ID1 = id1, ID2 = id2, sex1 = sex1, sex2 = sex2))
+    }
+  }
+
+  return(as.matrix(spouselist))
+}

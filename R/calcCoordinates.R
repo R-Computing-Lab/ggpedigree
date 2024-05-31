@@ -12,8 +12,12 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
                                   spouseID = "spouseID"
 ) {
   if (!inherits(ped, "data.frame")) stop("ped should be a data.frame or inherit to a data.frame")
-  if (!all(c(personID, momID, dadID, generation) %in% names(ped))) {
-    stop("At least one of the following needed ID variables were not found: personID, momID, dadID, generation")
+  if (!all(c(personID, momID, dadID) %in% names(ped))) {
+    stop("At least one of the following needed ID variables were not found: personID, momID, dadID")
+  }
+  if (!generation %in% names(ped)) {
+    stop("generation variable not found in ped")
+    # to do: add function to calculate generation
   }
   var_personID <- personID
 
@@ -33,8 +37,22 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
                        momID=momID,
                        dadID=dadID)
 
+  # Initialize alignment data structure
+  rval <- list(nid = ped[[personID]], pos = rep(NA, nrow(ped)), fam = matrix(0L, nrow(ped), 1), n = rep(NA, max(ped[[generation]])))
 
+  # Generate a spouselist matrix
+  spouselist <- generateSpouseList(ped=ped, personID=personID, momID=momID, dadID= dadID, spouseID=spouseID)
 
+  # Apply alignment functions
+  rval <- kinship2::alignped1(rval, ped[[dadID]], ped[[momID]], ped[[generation]], horder = c(1, 1), packed = FALSE, spouselist = spouselist)
+  rval <- kinship2::alignped2(rval, ped[[dadID]], ped[[momID]], ped[[generation]], horder = c(1, 1), packed = FALSE, spouselist = spouselist)
+  rval <- kinship2::alignped3(rval, ped[[dadID]], ped[[momID]], ped[[generation]], horder = c(1, 1), packed = FALSE, spouselist = spouselist)
+  rval <- kinship2::alignped4(rval, ped, align = c(1, 1))
+
+  # Assign calculated positions back to ped
+  ped$x <- rval$pos
+
+  if(FALSE){
   # Sort by generation to process from oldest to youngest
   ped <- ped[order(ped[[generation]]),]
 
@@ -67,6 +85,7 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
         }
       }
     }
+  }
   }
   # sort by personID
   ped <- ped[order(ped[[var_personID]]),]
