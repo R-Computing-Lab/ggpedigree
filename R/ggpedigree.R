@@ -78,54 +78,7 @@ plot_pedigree_ggplotv1 <- function(pedigree, affected = NULL, status = NULL) {
 }
 
 
-calculate_coordinates <- function(pedigree) {
-  # Assuming 'pedigree' includes 'id', 'father_id', 'mother_id', and possibly 'generation'
-  if (!"generation" %in% names(pedigree)) {
-    # Assign generations if not present
-    pedigree <- assign_generations(pedigree)
-  }
 
-  # Initialize positions
-  pedigree$x <- NA
-  pedigree$y <- -pedigree$generation  # Negative for plotting purposes
-
-  # Sort by generation to process from oldest to youngest
-  pedigree <- pedigree[order(pedigree$generation),]
-
-  for (gen in unique(pedigree$generation)) {
-    current_gen <- subset(pedigree, generation == gen)
-
-    for (i in seq_along(current_gen$id)) {
-      person_id <- current_gen$id[i]
-      if (is.na(pedigree$x[pedigree$id == person_id])) {
-        # Find parents' x coordinates
-        parent_ids <- c(current_gen$father_id[i], current_gen$mother_id[i])
-        parent_coords <- pedigree$x[pedigree$id %in% parent_ids]
-        parent_x <- mean(parent_coords, na.rm = TRUE)
-
-        # Assign x coordinate
-        if (!is.na(parent_x)) {
-          pedigree$x[pedigree$id == person_id] <- parent_x
-        } else {
-          # No parents x found (might be top generation or orphan)
-          pedigree$x[pedigree$id == person_id] <- max(pedigree$x, na.rm = TRUE, 0) + 1
-        }
-      }
-    }
-  }
-
-  return(pedigree)
-}
-
-assign_generations <- function(pedigree) {
-  # This function should implement a way to calculate generation numbers based on parental links.
-  # Placeholder for detailed generational assignment logic.
-  pedigree$generation <- sample(1:3, size = nrow(pedigree), replace = TRUE)  # Placeholder
-  return(pedigree)
-}
-
-library(ggplot2)
-library(dplyr)
 
 # Function to compute generational levels and horizontal positions
 compute_positions <- function(ped) {
