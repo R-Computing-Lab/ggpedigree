@@ -3,7 +3,6 @@
 #' @param  pedigree A data frame with columns \code{id}, \code{father}, \code{mother}, and
 #' @return plot
 
-library(ggplot2)
 
 plot_pedigree_ggplotv0 <- function(pedigree) {
   # Convert factors to numeric for plotting efficiency if they are not already

@@ -4,13 +4,13 @@ library(ggplot2)
 library(BGmisc)
 library(tidyverse)
 
-ds <- ped2fam(potter, famID = "famID", personID = "personID") %>% select(-famID.y) %>%
+ds_df <-ds <- ped2fam(potter, famID = "famID", personID = "personID") %>% select(-famID.y) %>%
   rename(famID = famID.x,
          generation = gen)
 
 
-ds <-  calculateCoordinates(ds,personID = "personID",momID = "momID",dadID = "dadID",code_male = 1) %>%
-  mutate (y_pos = -y_pos)
+ds <-  calculateCoordinates(ds,personID = "personID",momID = "momID",dadID = "dadID",code_male = 1) #%>%
+#  mutate (y_pos = -y_pos)
 
 connections <- calculateConnections(ds)
 
@@ -20,13 +20,30 @@ ggplot(ds, aes(x = x_pos, y = y_pos)) +
   theme_void()
 
 
-ggplot(ds, aes(x = x_pos, y = y_pos)) +
+p <- ggplot(ds, aes(x = x_pos, y = y_pos)) +
     geom_point(aes(color = as.factor(sex), shape = as.factor(sex)), size = 4) +
     geom_text(aes(label = personID), vjust = 1.5, size = 3) +
-    geom_segment(data = connections, aes(x = x_end,xend = x_pos, y = y_end,yend = y_pos))+
+    scale_shape_manual(values = c(16, 15), labels = c("Female", "Male")) + # 0 for circles (females) and 15 for squares (males)    
+    scale_color_discrete(labels = c("Female", "Male")) +  
+     labs(color = "Sex", shape = "Sex")
+
+
+
+
+p
+p +     geom_segment(data = connections, aes(x = x_end, xend = x_mid, y = y_end, yend = y_mid), size = 0.5, color = "black") +
+    # Draw horizontal connections between siblings
+    geom_segment(data = connections, aes(x = x_mid, xend = x_pos, y = y_mid, yend = y_mid), size = 0.5, color = "black") +
+    # Draw vertical connections from horizontal midpoint to child
+    geom_segment(data = connections, aes(x = x_pos, xend = x_pos, y = y_mid, yend = y_pos), size = 0.5, color = "black") +
+    scale_y_reverse() +
+ #   geom_segment(data = connections, aes(x = x_end,xend = x_pos, y = y_end,yend = y_pos))+
     labs(color = "Sex", shape = "Sex") +
     theme_minimal() +
     theme(axis.title.y = element_blank(),
           axis.text.y = element_blank(),
           axis.ticks.y = element_blank())
+
+
+plotPedigree(ds,personID = "personID",momID = "momID",dadID = "dadID",code_male = 1)
 ```

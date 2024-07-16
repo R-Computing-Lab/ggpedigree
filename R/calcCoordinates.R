@@ -49,12 +49,14 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
  # Initialize coordinate vectors
  x_coords <- rep(NA, length(nid_vector))
  y_coords <- rep(NA, length(nid_vector))
+ x_pos <- rep(NA, length(nid_vector))
 
  # Populate coordinate vectors
  for (i in seq_along(nid_vector)) {
    index <- which(pos$nid == nid_vector[i], arr.ind = TRUE)
    y_coords[i] <- index[1]
    x_coords[i] <- index[2]
+   x_pos[i] <- pos[["pos"]][index[1], index[2]]
  }
 
  # Create a mapping from nid_vector to ped_ped$id
@@ -62,10 +64,12 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
 
  # Fill the nid, pos, x, and y columns in ped_ped based on the mapping
  ped$nid <- nid_vector[tmp]
- ped$x_pos <- pos_vector[tmp]
- ped$y_pos <- y_coords[tmp]
  ped$x_order <- x_coords[tmp]
  ped$y_order <- y_coords[tmp]
+ ped$x_pos <- x_pos[tmp]
+#ped$x_pos <- pos_vector[tmp]
+ ped$y_pos <- y_coords[tmp]
+
   # sort by personID
 #  ped <- ped[order(ped[[var_personID]]),]
   return(ped)
@@ -82,7 +86,22 @@ calculateConnections <- function(ped) {
               suffix = c("", "_end") ) %>%
     left_join(ped %>% select(personID, x_pos, y_pos), by = c("personID" = "personID"),
               suffix = c("", ".y") ) %>% rename(x_end = x_pos_end, y_end = y_pos_end) %>%
-    select(personID, x_pos, y_pos, x_end, y_end)
+    select(personID, x_pos, y_pos, x_end, y_end, parent_id)
+
+
+
+
+  # Create additional points for horizontal connections
+  horizontal_connections <- connections %>%
+    group_by(parent_id) %>%
+    summarize(x_mid = mean(x_pos), y_mid = first(y_pos) - 0.5) %>%
+    ungroup()
+
+  # Merge horizontal connections with original connections
+  connections <- connections %>%
+    left_join(horizontal_connections, by = c("parent_id" = "parent_id"))
 
   return(connections)
 }
+
+
