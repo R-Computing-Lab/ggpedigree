@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# BGmisc
+# ggBGmisc
 
 <!-- badges: start -->
 
@@ -14,26 +14,26 @@ version](https://www.r-pkg.org/badges/version/ggBGmisc)](https://cran.r-project.
 downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggBGmisc)](https://cran.r-project.org/package=BGmisc)</br>
 [![R-CMD-check](https://github.com/R-Computing-Lab/ggBGmisc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/R-Computing-Lab/ggBGmisc/actions/workflows/R-CMD-check.yaml)
 [![Dev Main
-branch](https://github.com/R-Computing-Lab/ggBGmisc/actions/workflows/R-CMD-dev_maincheck.yaml/badge.svg)](https://github.com/R-Computing-Lab/ggBGmisc/actions/workflows/R-CMD-dev_maincheck.yaml)
+branch](https://github.com/R-Computing-Lab/ggBGmisc/actions/workflows/R-CMD-devcheck.yaml/badge.svg)](https://github.com/R-Computing-Lab/ggBGmisc/actions/workflows/R-CMD-devcheck.yaml)
 [![codecov](https://codecov.io/gh/R-Computing-Lab/ggBGmisc/graph/badge.svg)](https://codecov.io/gh/R-Computing-Lab/ggBGmisc)
 ![License](https://img.shields.io/badge/License-GPL_v3-blue.svg)
 <!-- badges: end -->
 
-The ggBGmisc R package offers a comprehensive suite of functions
-tailored for extended behavior genetics analysis, including model
-identification, calculating relatedness, pedigree conversion, pedigree
-simulation, and more.
+The ggBGmisc R package complements the BGmisc package by providing a set
+of functions for visualizing and analyzing pedigree data. It is designed
+to work seamlessly with the BGmisc package, which provides tools for
+simulating, manipulating, and modeling pedigree data.
 
 ## Installation
 
-You can install the released version of BGmisc from
+You can install the released version of ggBGmisc from
 [CRAN](https://cran.r-project.org/) with:
 
 ``` r
 install.packages("ggBGmisc")
 ```
 
-To install the development version of BGmisc from
+To install the development version of ggBGmisc from
 [GitHub](https://github.com/) use:
 
 ``` r
@@ -52,7 +52,7 @@ the following paper:
     'ggBGmisc' from package DESCRIPTION file
 
 Garrison S (????). *ggBGmisc: An R Package for Extended Behavior
-Genetics Analysis*. R package version 0.0.1,
+Genetics Analysis*. R package version 0.1.0,
 <https://github.com/R-Computing-Lab/ggBGmisc/>.
 
 A BibTeX entry for LaTeX users is
@@ -62,7 +62,7 @@ A BibTeX entry for LaTeX users is
     @Manual{,
       title = {ggBGmisc: An R Package for Extended Behavior Genetics Analysis},
       author = {S. Mason Garrison},
-      note = {R package version 0.0.1},
+      note = {R package version 0.1.0},
       url = {https://github.com/R-Computing-Lab/ggBGmisc/},
     }
 
@@ -80,9 +80,8 @@ The development of ggBGmisc follows a [GitFlow branching
 strategy](https://tilburgsciencehub.com/topics/automation/version-control/advanced-git/git-branching-strategies/):
 
 - **Feature Branches**: All major changes and new features should be
-  developed on separate branches created from the dev_main branch. Name
-  these branches according to the feature or change they are meant to
-  address.
+  developed on separate branches created from the dev branch. Name these
+  branches according to the feature or change they are meant to address.
 - **Development Branches**: Our approach includes two development
   branches, each serving distinct roles:
   - **`dev`**: This branch is the final integration stage before changes

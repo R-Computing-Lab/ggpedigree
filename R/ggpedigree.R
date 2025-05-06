@@ -10,20 +10,39 @@
 #' @param momID_col Character string specifying the column name for mother IDs. Defaults to "momID".
 #' @param dadID_col Character string specifying the column name for father IDs. Defaults to "dadID".
 #' @param code_male Numeric value specifying the male code (typically 0 or 1). Defaults to 1.
+#' @param config A list of configuration options for customizing the plot. The list can include:
+#'  - `spouse_segment_color`: Color for spouse segments (default: "pink").
+#'  - `sibling_segment_color`: Color for sibling segments (default: "blue").
+#'  - `parent_segment_color`: Color for parent segments (default: "green").
+#'  - `offspring_segment_color`: Color for offspring segments (default: "black").
+#'  - `text_size`: Size of the text labels (default: 3).
+#'  - `point_size`: Size of the points (default: 4).
+#'  - `line_width`: Width of the lines (default: 0.5).
 #' @return A ggplot object representing the pedigree diagram.
 #' @examples
 #' library(BGmisc)
 #' data("potter")
-#' plot_custom_pedigree(potter, famID_col = "famID", personID_col = "personID", code_male = 1)
+#' ggPedigree(potter, famID_col = "famID", personID_col = "personID", code_male = 1)
 #'
 #' data("hazard")
-#' plot_custom_pedigree(hazard, famID_col = "famID", personID_col = "ID", code_male = 0)
+#' ggPedigree(hazard, famID_col = "famID", personID_col = "ID", code_male = 0)
 #'
 #' @export
 
-plot_custom_pedigree <- function(ped, famID_col = "famID",
+ggPedigree <- function(ped, famID_col = "famID",
                                  personID_col = "personID",
-                                 momID_col = "momID", dadID_col = "dadID", code_male = 1) {
+                                 momID_col = "momID",
+                                 dadID_col = "dadID", code_male = 1,
+                                 config = list(spouse_segment_color = "pink",
+                                               sibling_segment_color = "blue",
+                                               parent_segment_color = "green",
+                                               offspring_segment_color = "black",
+                                               text_size = 3,
+                                               point_size = 4,
+                                               line_width = 0.5)
+                                 ) {
+
+
   # STEP 1: Convert to pedigree format
 
   ds <- BGmisc::ped2fam(ped,
@@ -50,7 +69,6 @@ plot_custom_pedigree <- function(ped, famID_col = "famID",
 
   # If the input personID_col was not "personID", rename to "personID" for downstream functions
   # STEP 2: Recode sex
-
 
   ds <- BGmisc::recodeSex(ds, recode_male = code_male)
 
@@ -80,7 +98,7 @@ plot_custom_pedigree <- function(ped, famID_col = "famID",
         y = .data$y_spouse,
         yend = .data$y_pos
       ),
-      linewidth = 0.5, color = "pink",
+      linewidth = 0.5, color = config$spouse_segment_color,
       na.rm = TRUE
     ) +
     ggplot2::geom_segment(
@@ -91,7 +109,7 @@ plot_custom_pedigree <- function(ped, famID_col = "famID",
         y = .data$y_mid_sib - .5,
         yend = .data$y_midparent
       ),
-      linewidth = 0.5, color = "green",
+      linewidth = 0.5, color = config$parent_segment_color,
       na.rm = TRUE
     ) +
     ggplot2::geom_segment(
@@ -102,7 +120,8 @@ plot_custom_pedigree <- function(ped, famID_col = "famID",
         y = .data$y_pos - .5,
         yend = .data$y_mid_sib - .5
       ),
-      linewidth = 0.5, color = "black",
+      linewidth = 0.5,
+      color = config$offspring_segment_color,
       na.rm = TRUE
     ) +
     ggplot2::geom_segment(
@@ -113,7 +132,8 @@ plot_custom_pedigree <- function(ped, famID_col = "famID",
         y = .data$y_mid_sib - .5,
         yend = .data$y_pos
       ),
-      linewidth = 0.5, color = "blue",
+      linewidth = 0.5,
+      color = config$sibling_segment_color,
       na.rm = TRUE
     ) +
     ggplot2::geom_point(
@@ -121,12 +141,12 @@ plot_custom_pedigree <- function(ped, famID_col = "famID",
         color = as.factor(.data$sex),
         shape = as.factor(.data$sex)
       ),
-      size = 4,
+      size = config$point_size,
       na.rm = TRUE
     ) +
     ggrepel::geom_text_repel(ggplot2::aes(label = .data$personID),
       nudge_y = -.15,
-      size = 3
+      size = config$text_size
     ) +
     ggplot2::scale_shape_manual(
       values = c(16, 15),
