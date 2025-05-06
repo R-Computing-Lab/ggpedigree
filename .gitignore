@@ -4,3 +4,4 @@
 .Ruserdata
 *.lnk
 docs
+*.code-workspace
