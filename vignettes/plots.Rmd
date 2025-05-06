@@ -2,7 +2,7 @@
 title: "Plotting pedigrees with `plotPedigree()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Plotting pedigrees with `plotPedigree()`}
+  %\VignetteIndexEntry{Plotting pedigrees with `ggPedigree()`}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
