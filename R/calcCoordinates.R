@@ -16,7 +16,8 @@
 calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
                                  dadID = "dadID",
                                  spouseID = "spouseID", sexVar = "sex",
-                                 code_male = NULL, generation = NULL) {
+                                 code_male = NULL,
+                                 generation = NULL) {
   if (!inherits(ped, "data.frame")) stop("ped should be a data.frame or inherit to a data.frame")
   if (!all(c(personID, momID, dadID) %in% names(ped))) {
     stop("At least one of the following needed ID variables were not found: personID, momID, dadID")
@@ -104,12 +105,21 @@ calculateConnections <- function(ped,
     ped$spouseID <- ped$dadID[match(ped$personID, ped$momID)]
   }
 
+  if (!all("famID" %in% names(ped))) {
+    ped$famID <- 1
+  }
+
+
+
+
   # Base data frame used for joins ----------------------------------------
   connections <- dplyr::select(
     .data = ped,
     .data$personID,
     .data$x_pos, .data$y_pos,
-    .data$dadID, .data$momID, .data$spouseID
+    .data$dadID, .data$momID,
+    .data$spouseID,
+    .data$famID
   )
 
   # Separate mom coordinates ----------------------------------------------
@@ -131,7 +141,10 @@ calculateConnections <- function(ped,
     dplyr::filter(!is.na(.data$dadID)) |>
     dplyr::left_join(ped, by = c("dadID" = "personID"), suffix = c("", "_dad")) |>
     dplyr::rename(x_dad = .data$x_pos_dad, y_dad = .data$y_pos_dad) |>
-    dplyr::select(.data$personID, .data$dadID, .data$x_dad, .data$y_dad)
+    dplyr::select(
+      .data$personID, .data$dadID,
+      .data$x_dad, .data$y_dad
+    )
 
   spouse_connections <- ped |>
     dplyr::select(
@@ -168,10 +181,14 @@ calculateConnections <- function(ped,
     dplyr::filter(!is.na(.data$dadID) & !is.na(.data$momID)) |>
     dplyr::group_by(.data$dadID, .data$momID) |>
     dplyr::summarize(
-      x_midparent = mean(c(dplyr::first(.data$x_dad),
-                           dplyr::first(.data$x_mom))),
-      y_midparent = mean(c(dplyr::first(.data$y_dad),
-                           dplyr::first(.data$y_mom))),
+      x_midparent = mean(c(
+        dplyr::first(.data$x_dad),
+        dplyr::first(.data$x_mom)
+      )),
+      y_midparent = mean(c(
+        dplyr::first(.data$y_dad),
+        dplyr::first(.data$y_mom)
+      )),
       .groups = "drop"
     )
 
@@ -193,8 +210,10 @@ calculateConnections <- function(ped,
   # Calculate midpoints for siblings
   sibling_midpoints <- connections |>
     dplyr::filter(!is.na(.data$dadID) & !is.na(.data$momID)) |>
-    dplyr::group_by(.data$dadID,
-                    .data$momID) |>
+    dplyr::group_by(
+      .data$dadID,
+      .data$momID
+    ) |>
     dplyr::summarize(
       x_mid_sib = mean(.data$x_pos),
       y_mid_sib = dplyr::first(.data$y_pos),
@@ -205,11 +224,14 @@ calculateConnections <- function(ped,
   # Merge midpoints back to connections
   connections <- connections |>
     dplyr::left_join(parent_midpoints,
-                     by = c("dadID", "momID")) |>
+      by = c("dadID", "momID")
+    ) |>
     dplyr::left_join(spouse_midpoints,
-                     by = c("spouseID")) |>
+      by = c("spouseID")
+    ) |>
     dplyr::left_join(sibling_midpoints,
-                     by = c("dadID", "momID")) |>
+      by = c("dadID", "momID")
+    ) |>
     dplyr::mutate(
       x_mid_sib = dplyr::case_when(
         is.na(.data$x_mid_sib) & !is.na(.data$dadID) & !is.na(.data$momID) ~ .data$x_pos,

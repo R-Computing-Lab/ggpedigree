@@ -1,5 +1,5 @@
 ---
-title: "Plotting pedigrees with `plotPedigree()`"
+title: "Plotting pedigrees with `ggPedigree()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Plotting pedigrees with `ggPedigree()`}
@@ -7,17 +7,141 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, warning=FALSE, message=FALSE}
-library(ggBGmisc)
-library(BGmisc)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5
+)
+library(ggBGmisc) # ggPedigree lives here
+library(BGmisc) # helper utilities & example data
+library(ggplot2) # ggplot2 for plotting
+library(viridis) # viridis for color palettes
 ```
 
-Here we will show how to visualize pedigrees using the `ggPedigree()` function. This function is built in ggplot2. We will use the `potter` and `hazard` datasets from the BGmisc package as examples.
+# Introduction
+
+This vignette demonstrates pedigree visualisation with `ggPedigree()` from `ggBGmisc`.
+Internally, `ggPedigree()` leverages helpers from both {BGmisc} (ped2fam(), recodeSex()) and {ggBGmisc} (`calculateCoordinates()`, `calculateConnections()`), and returns a standard `ggplot2` object, so any familiar ggplot syntax can be added afterward.
+
+We illustrate usage with two bundled data sets:
+
+- `potter` – extended wizarding family
+
+- `hazard` – historical royalty
+
+
+# Basic usage
+
+
 
 ```{r}
 data("potter")
-ggPedigree(potter, famID_col = "famID", personID_col = "personID", code_male = 1)
+ggPedigree(potter,
+  famID_col = "famID",
+  personID_col = "personID",
+  code_male = 1
+)
+```
 
+`ggPedigree()` automatically:
+1. reshapes the data by family (`ped2fam()`),
+
+2. recodes sex (`recodeSex()`),
+
+3. computes node layout (`calculateCoordinates()`), and
+
+4. draws spouse, parent, sibling, and offspring links (`calculateConnections()`).
+
+The result is a `ggplot2` object, so you can add any ggplot syntax to it. 
+
+
+# Customizing the plot
+
+All aesthetics reside in a config list; anything you omit falls back to the default.
+
+```{r}
+ggPedigree(
+  potter,
+  famID_col = "famID",
+  personID_col = "personID",
+  code_male = 1,
+  config = list(
+    spouse_segment_color = "pink",
+    sibling_segment_color = "blue",
+    parent_segment_color = "green",
+    offspring_segment_color = "black",
+    text_size = 3,
+    point_size = 4,
+    line_width = 0.5,
+    generation_gap = 1,
+    sex_unknown_code = NA,
+    unknown_shape = 18,
+    female_shape = 16,
+    male_shape = 15
+  )
+)
+```
+
+Because the result is just a ggplot object, regular layering applies:
+
+```{r}
+ggPedigree(potter,
+  famID_col = "famID",
+  personID_col = "personID",
+  code_male = 1
+) +
+  theme_bw(base_size = 12)
+```
+
+
+
+# Alternative coding schemes
+
+Pass the appropriate `code_male` when males are coded differently.
+
+
+```{r}
 data("hazard")
-ggPedigree(hazard, famID_col = "famID", personID_col = "ID", code_male = 0)
+
+p <- ggPedigree(
+  hazard %>% mutate(affected = as.factor(ifelse(affected == TRUE, "affected", "unaffected"))),
+  famID_col = "famID",
+  personID_col = "ID",
+  code_male = 0,
+  status_col = "affected"
+)
+
+p
+```
+
+# Multiple families in one graphic
+
+Facet to separate distinct pedigrees:
+```{r}
+p +
+  facet_wrap(~famID, scales = "free_x")
+```
+
+# Changing the layout
+
+```{r}
+p +
+  theme_bw(base_size = 12) +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    axis.line        = element_line(colour = "black"),
+    axis.text.x      = element_blank(),
+    axis.text.y      = element_blank(),
+    axis.ticks.x     = element_blank(),
+    axis.ticks.y     = element_blank(),
+    axis.title.x     = element_blank(),
+    axis.title.y     = element_blank()
+  ) + scale_color_viridis(
+    discrete = TRUE,
+    labels = c("Female", "Male", "Unknown")
+  )
 ```

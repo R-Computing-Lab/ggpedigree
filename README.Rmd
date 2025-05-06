@@ -46,7 +46,7 @@ devtools::install_github("R-Computing-Lab/ggBGmisc")
 
 ## Citation
 
-If you use ggBGmisc in your research or wish to refer to it, please cite the following paper:
+If you use ggBGmisc in your research or wish to refer to it, please cite the following:
 
 ```
 citation(package = "ggBGmisc")
@@ -68,7 +68,7 @@ Contributions to the ggBGmisc project are welcome. For guidelines on how to cont
 The development of ggBGmisc follows a [GitFlow branching strategy](https://tilburgsciencehub.com/topics/automation/version-control/advanced-git/git-branching-strategies/):
 
 - **Feature Branches**: All major changes and new features should be developed on separate branches created from the dev branch. Name these branches according to the feature or change they are meant to address.
-- **Development Branches**: Our approach includes two development branches, each serving distinct roles:
+- **Development Branch**: Our approach includes two development branches, each serving distinct roles:
   - **`dev`**: This branch is the final integration stage before changes are merged into the `main` branch. It is considered stable, and only well-tested features and updates that are ready for the next release cycle are merged here.
 - **Main Branch** (`main`): The main branch mirrors the stable state of the project as seen on CRAN. Only fully tested and approved changes from the dev_main branch are merged into main to prepare for a new release.
 

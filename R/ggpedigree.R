@@ -30,19 +30,24 @@
 #' @export
 
 ggPedigree <- function(ped, famID_col = "famID",
-                                 personID_col = "personID",
-                                 momID_col = "momID",
-                                 dadID_col = "dadID", code_male = 1,
-                                 config = list(spouse_segment_color = "pink",
-                                               sibling_segment_color = "blue",
-                                               parent_segment_color = "green",
-                                               offspring_segment_color = "black",
-                                               text_size = 3,
-                                               point_size = 4,
-                                               line_width = 0.5)
-                                 ) {
-
-
+                       personID_col = "personID",
+                       momID_col = "momID",
+                       dadID_col = "dadID", code_male = 1,
+                       status_col = NULL,
+                       config = list(
+                         spouse_segment_color = "black",
+                         sibling_segment_color = "black",
+                         parent_segment_color = "black",
+                         offspring_segment_color = "black",
+                         text_size = 3,
+                         point_size = 4,
+                         line_width = 0.5,
+                         generation_gap = 1,
+                         sex_unknown_code = NA,
+                         unknown_shape = 18,
+                         female_shape = 16,
+                         male_shape = 15
+                       )) {
   # STEP 1: Convert to pedigree format
 
   ds <- BGmisc::ped2fam(ped,
@@ -80,12 +85,17 @@ ggPedigree <- function(ped, famID_col = "famID",
     code_male = code_male
   )
 
+  if (!isTRUE(all.equal(config$generation_gap, 1))) {
+    ds$y_pos <- ds$y_pos * config$generation_gap # expand/contract generations
+  }
 
   # STEP 4: Calculate connections
 
   connections <- calculateConnections(ds)
 
   # STEP 5: Create the plot
+  gap_off <- 0.5 * config$generation_gap # single constant for all “stub” offsets
+
   p <- ggplot2::ggplot(ds, ggplot2::aes(
     x = .data$x_pos,
     y = .data$y_pos
@@ -106,7 +116,7 @@ ggPedigree <- function(ped, famID_col = "famID",
       ggplot2::aes(
         x = .data$x_mid_sib,
         xend = .data$x_midparent,
-        y = .data$y_mid_sib - .5,
+        y = .data$y_mid_sib - gap_off,
         yend = .data$y_midparent
       ),
       linewidth = 0.5, color = config$parent_segment_color,
@@ -117,10 +127,10 @@ ggPedigree <- function(ped, famID_col = "famID",
       ggplot2::aes(
         x = .data$x_pos,
         xend = .data$x_mid_sib,
-        y = .data$y_pos - .5,
-        yend = .data$y_mid_sib - .5
+        y = .data$y_pos - gap_off,
+        yend = .data$y_mid_sib - gap_off
       ),
-      linewidth = 0.5,
+      linewidth = config$line_width,
       color = config$offspring_segment_color,
       na.rm = TRUE
     ) +
@@ -129,13 +139,21 @@ ggPedigree <- function(ped, famID_col = "famID",
       ggplot2::aes(
         x = .data$x_pos,
         xend = .data$x_pos,
-        y = .data$y_mid_sib - .5,
+        y = .data$y_mid_sib - gap_off,
         yend = .data$y_pos
       ),
-      linewidth = 0.5,
+      linewidth = config$line_width,
       color = config$sibling_segment_color,
       na.rm = TRUE
-    ) +
+    )
+
+
+  ## -- node layer -----------------------------------------------------------
+  base_aes <- ggplot2::aes(
+    color = as.factor(.data$sex),
+    shape = as.factor(.data$sex)
+  )
+  p <- p +
     ggplot2::geom_point(
       ggplot2::aes(
         color = as.factor(.data$sex),
@@ -143,23 +161,58 @@ ggPedigree <- function(ped, famID_col = "famID",
       ),
       size = config$point_size,
       na.rm = TRUE
-    ) +
+    )
+  if (!is.null(status_col)) {
+    p <- p + geom_point(
+      aes(alpha = !!rlang::sym(status_col)),
+      shape = 4, size = config$point_size,
+      na.rm = TRUE
+    )
+  }
+
+  ## -- labels ---------------------------------------------------------------
+
+  p <- p +
     ggrepel::geom_text_repel(ggplot2::aes(label = .data$personID),
-      nudge_y = -.15,
+      nudge_y = -.15 * config$generation_gap,
       size = config$text_size
-    ) +
+    )
+  ## -- scales / legends -----------------------------------------------------
+  shape_vals <- c(config$female_shape, config$male_shape, config$unknown_shape)
+  shape_labs <- c("Female", "Male", "Unknown")
+
+
+  p <- p +
     ggplot2::scale_shape_manual(
-      values = c(16, 15),
-      labels = c("Female", "Male")
+      values = shape_vals,
+      labels = shape_labs
     ) +
-    ggplot2::scale_y_reverse() +
+    ggplot2::scale_y_reverse()
+
+  if (!is.null(status_col)) {
+    p <- p + ggplot2::scale_alpha_manual(
+      name = NULL,
+      values = c("unaffected" = 0, "affected" = 1),
+      na.translate = FALSE
+    ) + guides(alpha = "none")
+  }
+
+  ## -- theme ----------------------------------------------------------------
+
+  p <- p +
     ggplot2::theme_minimal() +
     ggplot2::theme(
       axis.title.y = ggplot2::element_blank(),
       axis.text.y = ggplot2::element_blank(),
-      axis.ticks.y = ggplot2::element_blank()
+      axis.ticks.y = ggplot2::element_blank(),
+      panel.grid.major = ggplot2::element_blank(),
+      panel.grid.minor = ggplot2::element_blank(),
+      panel.background = ggplot2::element_blank(),
+      axis.title.x = ggplot2::element_blank(),
+      axis.text.x = ggplot2::element_blank(),
+      axis.ticks.x = ggplot2::element_blank()
     ) +
-    ggplot2::scale_color_discrete(labels = c("Female", "Male")) +
+    ggplot2::scale_color_discrete(labels = c("Female", "Male", "Unknown")) +
     ggplot2::labs(color = "Sex", shape = "Sex")
 
   return(p)
