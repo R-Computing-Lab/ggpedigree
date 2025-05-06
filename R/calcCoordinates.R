@@ -16,12 +16,12 @@
 calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
                                   dadID = "dadID",
                                   spouseID = "spouseID", sexVar = "sex",
-                                  code_male = NULL
-) {
+                                  code_male = NULL, generation = NULL) {
   if (!inherits(ped, "data.frame")) stop("ped should be a data.frame or inherit to a data.frame")
   if (!all(c(personID, momID, dadID) %in% names(ped))) {
     stop("At least one of the following needed ID variables were not found: personID, momID, dadID")
   }
+  require(magrittr)
   ped_recode <- BGmisc::recodeSex(ped, code_male = code_male)
   # Initialize alignment data structure
   ped_ped <-  kinship2::pedigree(
@@ -89,6 +89,9 @@ calculateConnections <- function(ped, type = c("siblings","parent-child", "spous
   if (!all(c("personID", "x_pos", "y_pos", "dadID", "momID") %in% names(ped))) {
     stop("ped must contain personID, x_pos, y_pos, dadID, and momID columns")
   }
+
+  require(magrittr)
+
   if(!all("spouseID" %in% names(ped))){
 
     ped$spouseID <- NA

@@ -6,7 +6,7 @@
 \alias{ggBGmisc-package}
 \title{ggBGmisc: An R Package for Extended Behavior Genetics Analysis}
 \description{
-The ggBGmisc R package offers a complimentary suite of plotting functions for BGmisc which are implemented in ggplot
+The ggBGmisc R package offers a complimentary suite of plotting functions for BGmisc which are implemented in ggplot.
 }
 \seealso{
 Useful links:

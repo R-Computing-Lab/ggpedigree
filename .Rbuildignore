@@ -1,10 +1,8 @@
-^BGmisc\.Rproj$
+^ggBGmisc\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^R/\.Rhistory$
 ^R/paper$
-^checkParents\.X
-^test-clean\.X
 CITATION.cff$
 ^doc$
 ^data-raw$
@@ -14,7 +12,7 @@ CITATION.cff$
 ^\.github$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
-^BGmisc\.code-workspace$
+^ggBGmisc\.code-workspace$
 ^\.lintr$
 ^CODE_OF_CONDUCT\.md$
 ^CONTRIBUTING\.md$
@@ -22,3 +20,4 @@ CITATION.cff$
 ^docs$
 ^pkgdown$
 ^kinship2 - Shortcut
+
