@@ -75,16 +75,7 @@ ggPedigree(
     spouse_segment_color = "pink",
     sibling_segment_color = "blue",
     parent_segment_color = "green",
-    offspring_segment_color = "black",
-    text_size = 3,
-    point_size = 4,
-    line_width = 0.5,
-    generation_gap = 1,
-    sex_unknown_code = NA,
-    unknown_shape = 18,
-    female_shape = 16,
-    male_shape = 15,
-    affected_shape = 4
+    offspring_segment_color = "black"
   )
 )
 ```

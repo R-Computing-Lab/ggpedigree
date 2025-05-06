@@ -24,6 +24,7 @@
 #'  - `female_shape`: shape id for female sex (default: 16).
 #'  - `male_shape`: shape id for male sex (default: 15).
 #'  - `affected_shape`: shape id for affected individuals (default: 4).
+#'  - `sex_shape_labs`: labels for sex variable  (default: c("Female", "Male", "Unknown"))
 
 #' @return A ggplot object representing the pedigree diagram.
 #' @examples
@@ -41,22 +42,31 @@ ggPedigree <- function(ped, famID_col = "famID",
                        momID_col = "momID",
                        dadID_col = "dadID", code_male = 1,
                        status_col = NULL,
-                       config = list(
-                         spouse_segment_color = "black",
-                         sibling_segment_color = "black",
-                         parent_segment_color = "black",
-                         offspring_segment_color = "black",
-                         text_size = 3,
-                         point_size = 4,
-                         line_width = 0.5,
-                         generation_gap = 1,
-                         unknown_shape = 18,
-                         female_shape = 16,
-                         male_shape = 15,
-                         affected_shape = 4,
-                         shape_labs = c("Female", "Male", "Unknown")
-                       )) {
+                       config = list()) {
   # STEP 1: Convert to pedigree format
+
+
+  # default config
+  default_config <- list(
+    spouse_segment_color = "black",
+    sibling_segment_color = "black",
+    parent_segment_color = "black",
+    offspring_segment_color = "black",
+    text_size = 3,
+    point_size = 4,
+    line_width = 0.5,
+    generation_gap = 1,
+    unknown_shape = 18,
+    female_shape = 16,
+    male_shape = 15,
+    affected_shape = 4,
+    shape_labs = c("Female", "Male", "Unknown")
+  )
+
+  # Add fill in default_config values to config if config doesn't already have them
+
+  config <- utils::modifyList(default_config, config)
+
 
   ds <- BGmisc::ped2fam(ped,
     famID = famID_col,
@@ -116,7 +126,8 @@ ggPedigree <- function(ped, famID_col = "famID",
         y = .data$y_spouse,
         yend = .data$y_pos
       ),
-      linewidth = config$line_width, color = config$spouse_segment_color,
+      linewidth = config$line_width,
+      color = config$spouse_segment_color,
       na.rm = TRUE
     ) +
     ggplot2::geom_segment(
@@ -127,7 +138,8 @@ ggPedigree <- function(ped, famID_col = "famID",
         y = .data$y_mid_sib - gap_off,
         yend = .data$y_midparent
       ),
-      linewidth = config$line_width, color = config$parent_segment_color,
+      linewidth = config$line_width,
+      color = config$parent_segment_color,
       na.rm = TRUE
     ) +
     ggplot2::geom_segment(
@@ -180,13 +192,11 @@ ggPedigree <- function(ped, famID_col = "famID",
 
   p <- p +
     ggrepel::geom_text_repel(ggplot2::aes(label = .data$personID),
-      nudge_y = -.15 *config$generation_gap,
+      nudge_y = -.15*config$generation_gap,
       size = config$text_size
     )
   ## -- scales / legends -----------------------------------------------------
   shape_vals <- c(config$female_shape, config$male_shape, config$unknown_shape)
-
-
 
   p <- p +
     ggplot2::scale_shape_manual(

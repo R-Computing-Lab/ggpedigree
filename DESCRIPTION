@@ -19,7 +19,8 @@ Imports:
     ggplot2,
     ggrepel,
     rlang,
-    dplyr
+    dplyr,
+    utils
 Suggests: 
     EasyMx,
     viridis,
