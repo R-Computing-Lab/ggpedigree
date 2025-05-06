@@ -54,18 +54,18 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="bgmisc">BGmisc<a class="anchor" aria-label="anchor" href="#bgmisc"></a>
+<div class="page-header"><h1 id="ggbgmisc">ggBGmisc<a class="anchor" aria-label="anchor" href="#ggbgmisc"></a>
 </h1></div>
 <!-- badges: start -->
 
-<p>The ggBGmisc R package offers a comprehensive suite of functions tailored for extended behavior genetics analysis, including model identification, calculating relatedness, pedigree conversion, pedigree simulation, and more.</p>
+<p>The ggBGmisc R package complements the BGmisc package by providing a set of functions for visualizing and analyzing pedigree data. It is designed to work seamlessly with the BGmisc package, which provides tools for simulating, manipulating, and modeling pedigree data.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the released version of BGmisc from <a href="https://cran.r-project.org/" class="external-link">CRAN</a> with:</p>
+<p>You can install the released version of ggBGmisc from <a href="https://cran.r-project.org/" class="external-link">CRAN</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ggBGmisc"</span><span class="op">)</span></span></code></pre></div>
-<p>To install the development version of BGmisc from <a href="https://github.com/" class="external-link">GitHub</a> use:</p>
+<p>To install the development version of ggBGmisc from <a href="https://github.com/" class="external-link">GitHub</a> use:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"R-Computing-Lab/ggBGmisc"</span><span class="op">)</span></span></code></pre></div>
@@ -78,14 +78,14 @@
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>Warning <span class="cf">in</span> <span class="fu">citation</span>(<span class="at">package =</span> <span class="st">"ggBGmisc"</span>)<span class="sc">:</span> could not determine year <span class="cf">for</span></span>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="st">'ggBGmisc'</span> from package DESCRIPTION file</span></code></pre></div>
-<p>Garrison S (????). <em>ggBGmisc: An R Package for Extended Behavior Genetics Analysis</em>. R package version 0.0.1, <a href="https://github.com/R-Computing-Lab/ggBGmisc/" class="external-link uri">https://github.com/R-Computing-Lab/ggBGmisc/</a>.</p>
+<p>Garrison S (????). <em>ggBGmisc: An R Package for Extended Behavior Genetics Analysis</em>. R package version 0.1.0, <a href="https://github.com/R-Computing-Lab/ggBGmisc/" class="external-link uri">https://github.com/R-Computing-Lab/ggBGmisc/</a>.</p>
 <p>A BibTeX entry for LaTeX users is</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>Warning <span class="cf">in</span> <span class="fu">citation</span>(<span class="at">package =</span> <span class="st">"ggBGmisc"</span>)<span class="sc">:</span> could not determine year <span class="cf">for</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="st">'ggBGmisc'</span> from package DESCRIPTION file</span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="sc">@</span>Manual{,</span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  title <span class="ot">=</span> {ggBGmisc<span class="sc">:</span> An R Package <span class="cf">for</span> Extended Behavior Genetics Analysis},</span>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  author <span class="ot">=</span> {S. Mason Garrison},</span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  note <span class="ot">=</span> {R package version <span class="dv">0</span>.<span class="fl">0.1</span>},</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  note <span class="ot">=</span> {R package version <span class="dv">0</span>.<span class="fl">1.0</span>},</span>
 <span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  url <span class="ot">=</span> {https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>R<span class="sc">-</span>Computing<span class="sc">-</span>Lab<span class="sc">/</span>ggBGmisc<span class="sc">/</span>},</span>
 <span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>}</span></code></pre></div>
 </div>
@@ -99,7 +99,7 @@
 <p>The development of ggBGmisc follows a <a href="https://tilburgsciencehub.com/topics/automation/version-control/advanced-git/git-branching-strategies/" class="external-link">GitFlow branching strategy</a>:</p>
 <ul>
 <li>
-<strong>Feature Branches</strong>: All major changes and new features should be developed on separate branches created from the dev_main branch. Name these branches according to the feature or change they are meant to address.</li>
+<strong>Feature Branches</strong>: All major changes and new features should be developed on separate branches created from the dev branch. Name these branches according to the feature or change they are meant to address.</li>
 <li>
 <strong>Development Branches</strong>: Our approach includes two development branches, each serving distinct roles:
 <ul>
@@ -163,7 +163,7 @@
 <li><a href="https://cran.r-project.org/package=ggBGmisc" class="external-link"><img src="https://www.r-pkg.org/badges/version/ggBGmisc" alt="R package version"></a></li>
 <li><a href="https://cran.r-project.org/package=BGmisc" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/ggBGmisc" alt="Package downloads"></a></li>
 <li><a href="https://github.com/R-Computing-Lab/ggBGmisc/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/R-Computing-Lab/ggBGmisc/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://github.com/R-Computing-Lab/ggBGmisc/actions/workflows/R-CMD-dev_maincheck.yaml" class="external-link"><img src="https://github.com/R-Computing-Lab/ggBGmisc/actions/workflows/R-CMD-dev_maincheck.yaml/badge.svg" alt="Dev Main branch"></a></li>
+<li><a href="https://github.com/R-Computing-Lab/ggBGmisc/actions/workflows/R-CMD-devcheck.yaml" class="external-link"><img src="https://github.com/R-Computing-Lab/ggBGmisc/actions/workflows/R-CMD-devcheck.yaml/badge.svg" alt="Dev Main branch"></a></li>
 <li><a href="https://codecov.io/gh/R-Computing-Lab/ggBGmisc" class="external-link"><img src="https://codecov.io/gh/R-Computing-Lab/ggBGmisc/graph/badge.svg" alt="codecov"></a></li>
 </ul>
 </div>

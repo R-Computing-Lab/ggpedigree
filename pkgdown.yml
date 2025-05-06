@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   pedigree: pedigree.html
   plots: plots.html
-last_built: 2025-05-06T15:48Z
+last_built: 2025-05-06T16:15Z
 urls:
   reference: https://r-computing-lab.github.io/ggBGmisc/reference
   article: https://r-computing-lab.github.io/ggBGmisc/articles
