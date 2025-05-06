@@ -11,9 +11,12 @@ ggPedigree(
   momID_col = "momID",
   dadID_col = "dadID",
   code_male = 1,
+  status_col = NULL,
   config = list(spouse_segment_color = "black", sibling_segment_color = "black",
     parent_segment_color = "black", offspring_segment_color = "black", text_size = 3,
-    point_size = 4, line_width = 0.5)
+    point_size = 4, line_width = 0.5, generation_gap = 1, unknown_shape = 18,
+    female_shape = 16, male_shape = 15, affected_shape = 4, shape_labs = c("Female",
+    "Male", "Unknown"))
 )
 }
 \arguments{
@@ -29,6 +32,8 @@ ggPedigree(
 
 \item{code_male}{Numeric value specifying the male code (typically 0 or 1). Defaults to 1.}
 
+\item{status_col}{Character string specifying the column name for affected status. Defaults to NULL.}
+
 \item{config}{A list of configuration options for customizing the plot. The list can include:
 - `spouse_segment_color`: Color for spouse segments (default: "pink").
 - `sibling_segment_color`: Color for sibling segments (default: "blue").
@@ -36,7 +41,12 @@ ggPedigree(
 - `offspring_segment_color`: Color for offspring segments (default: "black").
 - `text_size`: Size of the text labels (default: 3).
 - `point_size`: Size of the points (default: 4).
-- `line_width`: Width of the lines (default: 0.5).}
+- `line_width`: Width of the lines (default: 0.5).
+- `generation_gap`: Gap between generations (default: 1).
+- `unknown_shape`: shape id for unknown sex (default: 18).
+- `female_shape`: shape id for female sex (default: 16).
+- `male_shape`: shape id for male sex (default: 15).
+- `affected_shape`: shape id for affected individuals (default: 4).}
 }
 \value{
 A ggplot object representing the pedigree diagram.

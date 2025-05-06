@@ -10,6 +10,7 @@
 #' @param momID_col Character string specifying the column name for mother IDs. Defaults to "momID".
 #' @param dadID_col Character string specifying the column name for father IDs. Defaults to "dadID".
 #' @param code_male Numeric value specifying the male code (typically 0 or 1). Defaults to 1.
+#' @param status_col Character string specifying the column name for affected status. Defaults to NULL.
 #' @param config A list of configuration options for customizing the plot. The list can include:
 #'  - `spouse_segment_color`: Color for spouse segments (default: "pink").
 #'  - `sibling_segment_color`: Color for sibling segments (default: "blue").
@@ -18,6 +19,12 @@
 #'  - `text_size`: Size of the text labels (default: 3).
 #'  - `point_size`: Size of the points (default: 4).
 #'  - `line_width`: Width of the lines (default: 0.5).
+#'  - `generation_gap`: Gap between generations (default: 1).
+#'  - `unknown_shape`: shape id for unknown sex (default: 18).
+#'  - `female_shape`: shape id for female sex (default: 16).
+#'  - `male_shape`: shape id for male sex (default: 15).
+#'  - `affected_shape`: shape id for affected individuals (default: 4).
+
 #' @return A ggplot object representing the pedigree diagram.
 #' @examples
 #' library(BGmisc)
@@ -43,10 +50,11 @@ ggPedigree <- function(ped, famID_col = "famID",
                          point_size = 4,
                          line_width = 0.5,
                          generation_gap = 1,
-                         sex_unknown_code = NA,
                          unknown_shape = 18,
                          female_shape = 16,
-                         male_shape = 15
+                         male_shape = 15,
+                         affected_shape = 4,
+                         shape_labs = c("Female", "Male", "Unknown")
                        )) {
   # STEP 1: Convert to pedigree format
 
@@ -108,7 +116,7 @@ ggPedigree <- function(ped, famID_col = "famID",
         y = .data$y_spouse,
         yend = .data$y_pos
       ),
-      linewidth = 0.5, color = config$spouse_segment_color,
+      linewidth = config$line_width, color = config$spouse_segment_color,
       na.rm = TRUE
     ) +
     ggplot2::geom_segment(
@@ -119,7 +127,7 @@ ggPedigree <- function(ped, famID_col = "famID",
         y = .data$y_mid_sib - gap_off,
         yend = .data$y_midparent
       ),
-      linewidth = 0.5, color = config$parent_segment_color,
+      linewidth = config$line_width, color = config$parent_segment_color,
       na.rm = TRUE
     ) +
     ggplot2::geom_segment(
@@ -149,10 +157,6 @@ ggPedigree <- function(ped, famID_col = "famID",
 
 
   ## -- node layer -----------------------------------------------------------
-  base_aes <- ggplot2::aes(
-    color = as.factor(.data$sex),
-    shape = as.factor(.data$sex)
-  )
   p <- p +
     ggplot2::geom_point(
       ggplot2::aes(
@@ -162,10 +166,12 @@ ggPedigree <- function(ped, famID_col = "famID",
       size = config$point_size,
       na.rm = TRUE
     )
+  ## -- affected individuals -------------------------------------------------
   if (!is.null(status_col)) {
-    p <- p + geom_point(
-      aes(alpha = !!rlang::sym(status_col)),
-      shape = 4, size = config$point_size,
+    p <- p + ggplot2::geom_point(
+      ggplot2::aes(alpha = !!rlang::sym(status_col)),
+      shape = config$affected_shape,
+      size = config$point_size,
       na.rm = TRUE
     )
   }
@@ -174,18 +180,18 @@ ggPedigree <- function(ped, famID_col = "famID",
 
   p <- p +
     ggrepel::geom_text_repel(ggplot2::aes(label = .data$personID),
-      nudge_y = -.15 * config$generation_gap,
+      nudge_y = -.15 *config$generation_gap,
       size = config$text_size
     )
   ## -- scales / legends -----------------------------------------------------
   shape_vals <- c(config$female_shape, config$male_shape, config$unknown_shape)
-  shape_labs <- c("Female", "Male", "Unknown")
+
 
 
   p <- p +
     ggplot2::scale_shape_manual(
       values = shape_vals,
-      labels = shape_labs
+      labels = config$shape_labs
     ) +
     ggplot2::scale_y_reverse()
 
@@ -194,7 +200,7 @@ ggPedigree <- function(ped, famID_col = "famID",
       name = NULL,
       values = c("unaffected" = 0, "affected" = 1),
       na.translate = FALSE
-    ) + guides(alpha = "none")
+    ) + ggplot2::guides(alpha = "none")
   }
 
   ## -- theme ----------------------------------------------------------------
@@ -212,7 +218,7 @@ ggPedigree <- function(ped, famID_col = "famID",
       axis.text.x = ggplot2::element_blank(),
       axis.ticks.x = ggplot2::element_blank()
     ) +
-    ggplot2::scale_color_discrete(labels = c("Female", "Male", "Unknown")) +
+    ggplot2::scale_color_discrete(labels = config$shape_labs) +
     ggplot2::labs(color = "Sex", shape = "Sex")
 
   return(p)

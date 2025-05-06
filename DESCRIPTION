@@ -22,6 +22,7 @@ Imports:
     dplyr
 Suggests: 
     EasyMx,
+    viridis,
     knitr,
     tidyverse,
     OpenMx,

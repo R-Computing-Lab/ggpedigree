@@ -14,11 +14,9 @@ knitr::opts_chunk$set(
   fig.width = 7,
   fig.height = 5
 )
-library(ggBGmisc) # ggPedigree lives here
-library(BGmisc) # helper utilities & example data
-library(ggplot2) # ggplot2 for plotting
-library(viridis) # viridis for color palettes
 ```
+
+
 
 # Introduction
 
@@ -34,7 +32,13 @@ We illustrate usage with two bundled data sets:
 
 # Basic usage
 
-
+```{r libraries, message=FALSE, warning=FALSE}
+library(ggBGmisc) # ggPedigree lives here
+library(BGmisc) # helper utilities & example data
+library(ggplot2) # ggplot2 for plotting
+library(viridis) # viridis for color palettes
+library(tidyverse) # for data wrangling
+```
 
 ```{r}
 data("potter")
@@ -79,7 +83,8 @@ ggPedigree(
     sex_unknown_code = NA,
     unknown_shape = 18,
     female_shape = 16,
-    male_shape = 15
+    male_shape = 15,
+    affected_shape = 4
   )
 )
 ```
