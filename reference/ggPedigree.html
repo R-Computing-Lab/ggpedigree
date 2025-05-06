@@ -23,7 +23,7 @@ returns a ggplot object with customized styling."></head><body>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/pedigree.html">Pedigree Simulation and Visualization with BGmisc</a></li>
-    <li><a class="dropdown-item" href="../articles/plots.html">Plotting pedigrees with `plotPedigree()`</a></li>
+    <li><a class="dropdown-item" href="../articles/plots.html">Plotting pedigrees with `ggPedigree()`</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -38,7 +38,7 @@ returns a ggplot object with customized styling."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Plot a custom pedigree diagram</h1>
-      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggBGmisc/blob/main/R/ggpedigree.R" class="external-link"><code>R/ggpedigree.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggBGmisc/blob/main/R/ggPedigree.R" class="external-link"><code>R/ggPedigree.R</code></a></small>
       <div class="d-none name"><code>ggPedigree.Rd</code></div>
     </div>
 
@@ -57,9 +57,12 @@ returns a ggplot object with customized styling.</p>
 <span>  momID_col <span class="op">=</span> <span class="st">"momID"</span>,</span>
 <span>  dadID_col <span class="op">=</span> <span class="st">"dadID"</span>,</span>
 <span>  code_male <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>spouse_segment_color <span class="op">=</span> <span class="st">"pink"</span>, sibling_segment_color <span class="op">=</span> <span class="st">"blue"</span>,</span>
-<span>    parent_segment_color <span class="op">=</span> <span class="st">"green"</span>, offspring_segment_color <span class="op">=</span> <span class="st">"black"</span>, text_size <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>    point_size <span class="op">=</span> <span class="fl">4</span>, line_width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span>  status_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>spouse_segment_color <span class="op">=</span> <span class="st">"black"</span>, sibling_segment_color <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>    parent_segment_color <span class="op">=</span> <span class="st">"black"</span>, offspring_segment_color <span class="op">=</span> <span class="st">"black"</span>, text_size <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>    point_size <span class="op">=</span> <span class="fl">4</span>, line_width <span class="op">=</span> <span class="fl">0.5</span>, generation_gap <span class="op">=</span> <span class="fl">1</span>, unknown_shape <span class="op">=</span> <span class="fl">18</span>,</span>
+<span>    female_shape <span class="op">=</span> <span class="fl">16</span>, male_shape <span class="op">=</span> <span class="fl">15</span>, affected_shape <span class="op">=</span> <span class="fl">4</span>, shape_labs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Female"</span>,</span>
+<span>    <span class="st">"Male"</span>, <span class="st">"Unknown"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -91,6 +94,10 @@ returns a ggplot object with customized styling.</p>
 <dd><p>Numeric value specifying the male code (typically 0 or 1). Defaults to 1.</p></dd>
 
 
+<dt id="arg-status-col">status_col<a class="anchor" aria-label="anchor" href="#arg-status-col"></a></dt>
+<dd><p>Character string specifying the column name for affected status. Defaults to NULL.</p></dd>
+
+
 <dt id="arg-config">config<a class="anchor" aria-label="anchor" href="#arg-config"></a></dt>
 <dd><p>A list of configuration options for customizing the plot. The list can include:
 - `spouse_segment_color`: Color for spouse segments (default: "pink").
@@ -99,7 +106,12 @@ returns a ggplot object with customized styling.</p>
 - `offspring_segment_color`: Color for offspring segments (default: "black").
 - `text_size`: Size of the text labels (default: 3).
 - `point_size`: Size of the points (default: 4).
-- `line_width`: Width of the lines (default: 0.5).</p></dd>
+- `line_width`: Width of the lines (default: 0.5).
+- `generation_gap`: Gap between generations (default: 1).
+- `unknown_shape`: shape id for unknown sex (default: 18).
+- `female_shape`: shape id for female sex (default: 16).
+- `male_shape`: shape id for male sex (default: 15).
+- `affected_shape`: shape id for affected individuals (default: 4).</p></dd>
 
 </dl></div>
     <div class="section level2">
