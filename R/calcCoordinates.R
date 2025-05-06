@@ -89,7 +89,7 @@ calculateConnections <- function(ped, type = c("siblings","parent-child", "spous
   if (!all(c("personID", "x_pos", "y_pos", "dadID", "momID") %in% names(ped))) {
     stop("ped must contain personID, x_pos, y_pos, dadID, and momID columns")
   }
-  if("spouseID" %in% names(ped) == FALSE){
+  if(!all("spouseID" %in% names(ped))){
 
     ped$spouseID <- NA
     # this will give you the mom that is the spouse of the dad
@@ -154,9 +154,6 @@ calculateConnections <- function(ped, type = c("siblings","parent-child", "spous
       y_mid_sib = first(y_pos),
       .groups = 'drop'
     )
-
-
-
 
 
   # Merge midpoints back to connections

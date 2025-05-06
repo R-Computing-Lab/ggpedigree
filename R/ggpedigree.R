@@ -28,9 +28,7 @@ plot_custom_pedigree <- function(ped, famID_col = "famID",
 
   # STEP 1: Convert to pedigree format
 
-  ds <-
-
-    BGmisc::ped2fam(ped, famID = famID_col,
+  ds <-  BGmisc::ped2fam(ped, famID = famID_col,
                     personID = personID_col,
                     momID = momID_col,
                     dadID = dadID_col

@@ -1,6 +1,6 @@
 Package: ggBGmisc
 Title: An R Package for Extended Behavior Genetics Analysis
-Version: 0.0.1
+Version: 0.1.0
 Authors@R: c(
     person("S. Mason", "Garrison", , email= "garrissm@wfu.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-4804-6003"))
@@ -15,7 +15,9 @@ Depends:
     R (>= 3.5.0)
 Imports: 
     BGmisc,
-    ggplot2
+    ggplot2,
+    ggrepel,
+    tidyverse
 Suggests: 
     EasyMx,
     knitr,
