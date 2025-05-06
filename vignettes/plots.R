@@ -1,13 +1,4 @@
----
-title: "Plotting pedigrees with `plotPedigree()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Pedigree}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-
-```{r, warning=FALSE, message=FALSE}
+## ----warning=FALSE, message=FALSE---------------------------------------------
 library(tidyverse)
 library(ggplot2)
 library(BGmisc)
@@ -36,9 +27,8 @@ ggplot(ds, aes(x = x_pos, y = y_pos)) +
 plotPedigree(ds,#personID = "personID",
            #  momID = "momID",dadID = "dadID",
              code_male = 1) %>% suppressMessages()
-```
 
-```{r}
+## -----------------------------------------------------------------------------
 
 data("hazard")
 
@@ -62,10 +52,8 @@ plotPedigree(ds,#personID = "personID",
            #  momID = "momID",dadID = "dadID",
              code_male = 0) %>% suppressMessages()
 
-```
 
-
-```{r}
+## -----------------------------------------------------------------------------
 
 
 
@@ -110,8 +98,8 @@ p <- ggplot(ds, aes(x = x_pos, y = y_pos)) +
     
 
 
-```
-```{r}
+
+## -----------------------------------------------------------------------------
 
 p 
 p +  scale_y_reverse() +
@@ -124,10 +112,8 @@ p +  scale_y_reverse() +
      labs(color = "Sex", shape = "Sex") 
 
 
-```
 
-
-```{r}
+## -----------------------------------------------------------------------------
 
 data("potter")
 plot_custom_pedigree(potter, famID_col = "famID", personID_col = "personID", code_male = 1)
@@ -136,4 +122,4 @@ data("hazard")
 plot_custom_pedigree(hazard, famID_col = "famID", personID_col = "ID", code_male = 0)
 
 
-```
+
