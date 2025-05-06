@@ -34,9 +34,9 @@ countSiblings <- function(ped, personID = "ID", momID = "momID", dadID = "dadID"
   }
   # Create a unique parent ID by concatenating momID and dadID
 
-  ped$parentsID <- paste0(ped[[momID]],".",ped[[dadID]])
+  ped$parentsID <- paste0(ped[[momID]], ".", ped[[dadID]])
 
-  ped$parentsID[ped$parentsID=="NA.NA"] <- NA
+  ped$parentsID[ped$parentsID == "NA.NA"] <- NA
 
   # Calculate sibling order and count using vectorized operations
   ped <- ped[order(ped$parentsID), ]
@@ -44,7 +44,7 @@ countSiblings <- function(ped, personID = "ID", momID = "momID", dadID = "dadID"
   ped$siborder <- sequence(rle_parentsID$lengths)
   ped$siblings <- rep(rle_parentsID$lengths - 1, rle_parentsID$lengths)
 
-   # Handle cases where parent ID is missing (orphans)
+  # Handle cases where parent ID is missing (orphans)
   ped$siblings[is.na(ped$parentsID)] <- 0
   ped$siborder[is.na(ped$parentsID)] <- 1
 
@@ -78,3 +78,6 @@ generateSpouseList <- function(ped, personID, momID, dadID, spouseID) {
 
   return(as.matrix(spouselist))
 }
+
+#' @importFrom rlang .data
+NULL

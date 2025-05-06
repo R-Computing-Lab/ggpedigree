@@ -14,6 +14,8 @@ plot_custom_pedigree(
 )
 }
 \arguments{
+\item{ped}{A data frame containing the pedigree data.}
+
 \item{famID_col}{Character string specifying the column name for family IDs.}
 
 \item{personID_col}{Character string specifying the column name for individual IDs.}
@@ -23,8 +25,6 @@ plot_custom_pedigree(
 \item{dadID_col}{Character string specifying the column name for father IDs. Defaults to "dadID".}
 
 \item{code_male}{Numeric value specifying the male code (typically 0 or 1). Defaults to 1.}
-
-\item{pedigree}{A data frame containing the pedigree data.}
 }
 \value{
 A ggplot object representing the pedigree diagram.
@@ -35,6 +35,7 @@ It processes the data using `ped2fam()`, calculates coordinates and family conne
 returns a ggplot object with customized styling.
 }
 \examples{
+library(BGmisc)
 data("potter")
 plot_custom_pedigree(potter, famID_col = "famID", personID_col = "personID", code_male = 1)
 

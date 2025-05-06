@@ -10,7 +10,7 @@ data("potter")
 
 
 
-ds_df <-ds <- ped2fam(potter, famID = "famID", personID = "personID") %>% select(-famID.y) %>%
+ds_df <- ds <- ped2fam(potter, famID = "famID", personID = "personID") %>% select(-famID.y) %>%
   rename(famID = famID.x,
          generation = gen)
 
@@ -32,14 +32,13 @@ plotPedigree(ds,#personID = "personID",
 
 data("hazard")
 
-ds_hz <-ds <- ped2fam(hazard, famID = "famID", personID = "ID") %>% select(-famID.y) %>%
-  rename(famID = famID.x,
-         personID = ID,
-          generation = gen) %>% recodeSex(recode_male = 0,
-                                          )
+ds_hz <-ds <- ped2fam(hazard, famID = "famID", personID = "ID") %>% select(-FamID) %>%
+  rename(
+         personID = ID) %>% recodeSex(recode_male = 0)
 
 #  mutate (y_pos = -y_pos)
-ds <-  calculateCoordinates(ds,personID = "personID",momID = "momID",dadID = "dadID",code_male = 0) #%>%
+ds <-  calculateCoordinates(ds,personID = "personID",momID = "momID",
+                            dadID = "dadID",code_male = 0) #%>%
 
 connections <- calculateConnections(ds)
 
