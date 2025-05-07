@@ -47,12 +47,15 @@ ggPedigree(potter,
 data("hazard")
 
 p <- ggPedigree(
-  hazard %>% mutate(affected = as.factor(ifelse(affected == TRUE, "affected", "unaffected"))),
+  hazard, #%>% mutate(affected = as.factor(ifelse(affected == TRUE, "affected", "uneffected"))),
   famID_col = "famID",
   personID_col = "ID",
   code_male = 0,
-  status_col = "affected"
-)
+  status_col = "affected",
+  config =list (affected=TRUE,
+                unaffected=FALSE,
+                affected_shape = 4
+))
 
 p
 

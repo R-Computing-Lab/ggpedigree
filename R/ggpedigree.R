@@ -105,7 +105,8 @@ ggPedigree <- function(ped, famID_col = "famID",
     personID = "personID",
     momID = momID_col,
     dadID = dadID_col,
-    code_male = code_male
+    code_male = code_male,
+    config = config
   )
 
   if (!isTRUE(all.equal(config$generation_gap, 1))) {
@@ -114,7 +115,7 @@ ggPedigree <- function(ped, famID_col = "famID",
 
   # STEP 4: Calculate connections
 
-  connections <- calculateConnections(ds)
+  connections <- calculateConnections(ds, config = config)
 
   # STEP 5: Create the plot
   gap_off <- 0.5 * config$generation_gap # single constant for all “stub” offsets

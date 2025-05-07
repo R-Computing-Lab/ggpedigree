@@ -4,7 +4,11 @@
 \alias{calculateConnections}
 \title{Calculate connections for a pedigree dataset}
 \usage{
-calculateConnections(ped, type = c("siblings", "parent-child", "spouses"))
+calculateConnections(
+  ped,
+  type = c("siblings", "parent-child", "spouses"),
+  config = list()
+)
 }
 \arguments{
 \item{ped}{a pedigree dataset.  Needs personID, momID, and dadID columns}

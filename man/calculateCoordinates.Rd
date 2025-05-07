@@ -12,7 +12,8 @@ calculateCoordinates(
   spouseID = "spouseID",
   sexVar = "sex",
   code_male = NULL,
-  generation = NULL
+  generation = NULL,
+  config = list()
 )
 }
 \arguments{
