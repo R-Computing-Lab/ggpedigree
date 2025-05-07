@@ -2,7 +2,6 @@
 % Please edit documentation in R/ggpedigree-package.R
 \docType{package}
 \name{ggpedigree-package}
-\alias{ggpedigree}
 \alias{ggpedigree-package}
 \title{ggpedigree: An R Package for Extended Behavior Genetics Analysis}
 \description{

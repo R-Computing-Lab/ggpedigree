@@ -11,7 +11,6 @@
 
 #' @return a data.frame with x and y coordinates for each person in the pedigree
 #'
-#' @export
 #'
 calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
                                  dadID = "dadID",
@@ -83,7 +82,6 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
 #' @param ped a pedigree dataset.  Needs personID, momID, and dadID columns
 #' @param type character.  Type of connections to calculate, either "siblings" or "parent-child"
 #' @return a data.frame with connections between individuals based on parent-child relationships
-#' @export
 #'
 calculateConnections <- function(ped,
                                  type = c("siblings", "parent-child", "spouses")) {

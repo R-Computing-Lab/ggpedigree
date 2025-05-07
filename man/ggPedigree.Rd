@@ -2,9 +2,33 @@
 % Please edit documentation in R/ggPedigree.R
 \name{ggPedigree}
 \alias{ggPedigree}
+\alias{ggpedigree}
+\alias{ggped}
 \title{Plot a custom pedigree diagram}
 \usage{
 ggPedigree(
+  ped,
+  famID_col = "famID",
+  personID_col = "personID",
+  momID_col = "momID",
+  dadID_col = "dadID",
+  code_male = 1,
+  status_col = NULL,
+  config = list()
+)
+
+ggpedigree(
+  ped,
+  famID_col = "famID",
+  personID_col = "personID",
+  momID_col = "momID",
+  dadID_col = "dadID",
+  code_male = 1,
+  status_col = NULL,
+  config = list()
+)
+
+ggped(
   ped,
   famID_col = "famID",
   personID_col = "personID",

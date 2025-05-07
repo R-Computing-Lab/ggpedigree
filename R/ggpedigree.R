@@ -60,7 +60,9 @@ ggPedigree <- function(ped, famID_col = "famID",
     female_shape = 16,
     male_shape = 15,
     affected_shape = 4,
-    shape_labs = c("Female", "Male", "Unknown")
+    shape_labs = c("Female", "Male", "Unknown"),
+    unaffected =  "unaffected",
+    affected = "affected"
   )
 
   # Add fill in default_config values to config if config doesn't already have them
@@ -89,7 +91,10 @@ ggPedigree <- function(ped, famID_col = "famID",
   if (personID_col != "personID") {
     ds <- dplyr::rename(ds, personID = !!personID_col)
   }
-
+  if (!is.null(status_col)) {
+    ds[[status_col]] <- factor(ds[[status_col]],
+                               levels = c(config$affected, config$unaffected))
+  }
   # If the input personID_col was not "personID", rename to "personID" for downstream functions
   # STEP 2: Recode sex
 
@@ -206,9 +211,16 @@ ggPedigree <- function(ped, famID_col = "famID",
     ggplot2::scale_y_reverse()
 
   if (!is.null(status_col)) {
+    status_vals <- c(1,0)
+
+    status_labs <- c(paste0(config$affected), paste0(config$unaffected))
+
+
+
     p <- p + ggplot2::scale_alpha_manual(
       name = NULL,
-      values = c("unaffected" = 0, "affected" = 1),
+      labels = status_labs,
+      values = status_vals,
       na.translate = FALSE
     ) + ggplot2::guides(alpha = "none")
   }
@@ -233,3 +245,12 @@ ggPedigree <- function(ped, famID_col = "famID",
 
   return(p)
 }
+
+
+#' @rdname ggPedigree
+#' @export
+ggpedigree <- ggPedigree
+
+#' @rdname ggPedigree
+#' @export
+ggped <- ggPedigree
