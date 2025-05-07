@@ -20,8 +20,8 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-This vignette demonstrates pedigree visualisation with `ggPedigree()` from `ggBGmisc`.
-Internally, `ggPedigree()` leverages helpers from both {BGmisc} (ped2fam(), recodeSex()) and {ggBGmisc} (`calculateCoordinates()`, `calculateConnections()`), and returns a standard `ggplot2` object, so any familiar ggplot syntax can be added afterward.
+This vignette demonstrates pedigree visualisation with `ggPedigree()` from `ggpedigree`.
+Internally, `ggPedigree()` leverages helpers from both {BGmisc} (ped2fam(), recodeSex()) and {ggpedigree} (`calculateCoordinates()`, `calculateConnections()`), and returns a standard `ggplot2` object, so any familiar ggplot syntax can be added afterward.
 
 We illustrate usage with two bundled data sets:
 
@@ -33,7 +33,7 @@ We illustrate usage with two bundled data sets:
 # Basic usage
 
 ```{r libraries, message=FALSE, warning=FALSE}
-library(ggBGmisc) # ggPedigree lives here
+library(ggpedigree) # ggPedigree lives here
 library(BGmisc) # helper utilities & example data
 library(ggplot2) # ggplot2 for plotting
 library(viridis) # viridis for color palettes

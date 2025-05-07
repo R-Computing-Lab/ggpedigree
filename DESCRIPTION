@@ -1,16 +1,16 @@
-Package: ggBGmisc
+Package: ggpedigree
 Title: An R Package for Extended Behavior Genetics Analysis
 Version: 0.1.0
 Authors@R: c(
     person("S. Mason", "Garrison", , email= "garrissm@wfu.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-4804-6003"))
   )
-Description: The ggBGmisc R package offers a complimentary suite of
+Description: The ggpedigree R package offers a complimentary suite of
     plotting functions for BGmisc which are implemented in ggplot.
 License: GPL-3
-URL: https://github.com/R-Computing-Lab/ggBGmisc/,
-     https://r-computing-lab.github.io/ggBGmisc/
-BugReports: https://github.com/R-Computing-Lab/ggBGmisc/issues
+URL: https://github.com/R-Computing-Lab/ggpedigree/,
+     https://r-computing-lab.github.io/ggpedigree/
+BugReports: https://github.com/R-Computing-Lab/ggpedigree/issues
 Depends: 
    R (>= 4.1.0)
 Imports: 

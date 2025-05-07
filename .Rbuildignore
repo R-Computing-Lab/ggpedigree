@@ -1,4 +1,4 @@
-^ggBGmisc\.Rproj$
+^ggpedigree\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^R/\.Rhistory$
@@ -12,7 +12,7 @@ CITATION.cff$
 ^\.github$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
-^ggBGmisc\.code-workspace$
+^ggpedigree\.code-workspace$
 ^\.lintr$
 ^CODE_OF_CONDUCT\.md$
 ^CONTRIBUTING\.md$

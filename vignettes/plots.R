@@ -7,7 +7,7 @@ knitr::opts_chunk$set(
 )
 
 ## ----libraries, message=FALSE, warning=FALSE----------------------------------
-library(ggBGmisc) # ggPedigree lives here
+library(ggpedigree) # ggPedigree lives here
 library(BGmisc) # helper utilities & example data
 library(ggplot2) # ggplot2 for plotting
 library(viridis) # viridis for color palettes
