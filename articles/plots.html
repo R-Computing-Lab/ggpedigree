@@ -33,8 +33,7 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/pedigree.html">Pedigree Simulation and Visualization with BGmisc</a></li>
-    <li><a class="dropdown-item" href="../articles/plots.html">Plotting pedigrees with `ggPedigree()`</a></li>
+<li><a class="dropdown-item" href="../articles/plots.html">Plotting pedigrees with `ggPedigree()`</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -100,9 +99,9 @@ afterward.</p>
 <span>  code_male <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="plots_files/figure-html/unnamed-chunk-1-1.png" width="672"></p>
-<p><code><a href="../reference/ggPedigree.html">ggPedigree()</a></code> automatically: 1. reshapes the data by
-family (<code><a href="https://r-computing-lab.github.io/BGmisc/reference/ped2fam.html" class="external-link">ped2fam()</a></code>),</p>
-<ol start="2" style="list-style-type: decimal">
+<p><code><a href="../reference/ggPedigree.html">ggPedigree()</a></code> automatically:</p>
+<ol style="list-style-type: decimal">
+<li><p>reshapes the data by family (<code><a href="https://r-computing-lab.github.io/BGmisc/reference/ped2fam.html" class="external-link">ped2fam()</a></code>),</p></li>
 <li><p>recodes sex (<code><a href="https://r-computing-lab.github.io/BGmisc/reference/recodeSex.html" class="external-link">recodeSex()</a></code>),</p></li>
 <li><p>computes node layout (<code><a href="../reference/calculateCoordinates.html">calculateCoordinates()</a></code>),
 and</p></li>
@@ -151,12 +150,15 @@ differently.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hazard"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
-<span>  <span class="va">hazard</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>affected <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">affected</span> <span class="op">==</span> <span class="cn">TRUE</span>, <span class="st">"affected"</span>, <span class="st">"unaffected"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="va">hazard</span>, <span class="co">#%&gt;% mutate(affected = as.factor(ifelse(affected == TRUE, "affected", "uneffected"))),</span></span>
 <span>  famID_col <span class="op">=</span> <span class="st">"famID"</span>,</span>
 <span>  personID_col <span class="op">=</span> <span class="st">"ID"</span>,</span>
 <span>  code_male <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  status_col <span class="op">=</span> <span class="st">"affected"</span></span>
-<span><span class="op">)</span></span>
+<span>  status_col <span class="op">=</span> <span class="st">"affected"</span>,</span>
+<span>  config <span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span> <span class="op">(</span>affected<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>                unaffected<span class="op">=</span><span class="cn">FALSE</span>,</span>
+<span>                affected_shape <span class="op">=</span> <span class="fl">4</span></span>
+<span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p</span></span></code></pre></div>
 <p><img src="plots_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
