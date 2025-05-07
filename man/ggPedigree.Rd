@@ -12,11 +12,7 @@ ggPedigree(
   dadID_col = "dadID",
   code_male = 1,
   status_col = NULL,
-  config = list(spouse_segment_color = "black", sibling_segment_color = "black",
-    parent_segment_color = "black", offspring_segment_color = "black", text_size = 3,
-    point_size = 4, line_width = 0.5, generation_gap = 1, unknown_shape = 18,
-    female_shape = 16, male_shape = 15, affected_shape = 4, shape_labs = c("Female",
-    "Male", "Unknown"))
+  config = list()
 )
 }
 \arguments{
@@ -46,7 +42,8 @@ ggPedigree(
 - `unknown_shape`: shape id for unknown sex (default: 18).
 - `female_shape`: shape id for female sex (default: 16).
 - `male_shape`: shape id for male sex (default: 15).
-- `affected_shape`: shape id for affected individuals (default: 4).}
+- `affected_shape`: shape id for affected individuals (default: 4).
+- `sex_shape_labs`: labels for sex variable  (default: c("Female", "Male", "Unknown"))}
 }
 \value{
 A ggplot object representing the pedigree diagram.
