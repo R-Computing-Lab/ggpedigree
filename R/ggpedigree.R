@@ -70,38 +70,38 @@ ggPedigree <- function(ped, famID_col = "famID",
   config <- utils::modifyList(default_config, config)
 
 
-  ds <- BGmisc::ped2fam(ped,
+  ds_ped <- BGmisc::ped2fam(ped,
     famID = famID_col,
     personID = personID_col,
     momID = momID_col,
     dadID = dadID_col
   )
 
-  if ("famID.y" %in% names(ds)) {
-    ds <- dplyr::select(ds, -.data$famID.y)
+  if ("famID.y" %in% names( ds_ped)) {
+    ds_ped <- dplyr::select( ds_ped, -.data$famID.y)
   }
 
 
-  if ("famID.x" %in% names(ds)) {
-    ds <- dplyr::rename(ds, famID = .data$famID.x)
+  if ("famID.x" %in% names( ds_ped)) {
+    ds_ped<- dplyr::rename( ds_ped, famID = .data$famID.x)
   }
 
   # If the input personID_col was not "personID", rename to "personID" for downstream functions
 
   if (personID_col != "personID") {
-    ds <- dplyr::rename(ds, personID = !!personID_col)
+    ds_ped <- dplyr::rename( ds_ped, personID = !!personID_col)
   }
   if (!is.null(status_col)) {
-    ds[[status_col]] <- factor(ds[[status_col]],
+    ds_ped[[status_col]] <- factor( ds_ped[[status_col]],
                                levels = c(config$affected, config$unaffected))
   }
   # If the input personID_col was not "personID", rename to "personID" for downstream functions
   # STEP 2: Recode sex
 
-  ds <- BGmisc::recodeSex(ds, recode_male = code_male)
+  ds_ped <- BGmisc::recodeSex( ds_ped, recode_male = code_male)
 
   # STEP 3: Calculate coordinates
-  ds <- calculateCoordinates(ds,
+  ds <- calculateCoordinates(ds_ped,
     personID = "personID",
     momID = momID_col,
     dadID = dadID_col,
