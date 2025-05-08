@@ -10,7 +10,7 @@
 #' @param code_male character.  Value in sexVar that corresponds
 
 #' @return a data.frame with x and y coordinates for each person in the pedigree
-#'
+#' @export
 #'
 calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
                                  dadID = "dadID",
@@ -201,6 +201,17 @@ if("extra" %in% names(ped)){
 
 
   # Base data frame used for joins ----------------------------------------
+if ("x_otherself" %in% names(ped)) {
+  connections <- dplyr::select(
+    .data = ped,
+    .data$personID,
+    .data$x_pos, .data$y_pos,
+    .data$dadID, .data$momID,
+    .data$spouseID,
+    .data$famID,
+    .data$x_otherself, .data$y_otherself
+  )
+} else {
   connections <- dplyr::select(
     .data = ped,
     .data$personID,
@@ -209,6 +220,8 @@ if("extra" %in% names(ped)){
     .data$spouseID,
     .data$famID
   )
+}
+
 #print(connections)
   # Separate mom coordinates ----------------------------------------------
 
@@ -383,13 +396,13 @@ getMidpoints <- function(data, group_vars,
   if (!is.null(require_non_missing)) {
     data <- data |>
       dplyr::filter(
-        dplyr::if_all(all_of(require_non_missing), ~ !is.na(.))
+        dplyr::if_all(all_of(.data$require_non_missing), ~ !is.na(.))
       )
   }
 
   if(method == "mean"){
     data |>
-      dplyr::group_by(across(all_of(group_vars))) |>
+      dplyr::group_by(across(all_of(.data$group_vars))) |>
       dplyr::summarize(
         !!x_out := mean(c(!!!syms(x_vars)), na.rm = TRUE),
         !!y_out := mean(c(!!!syms(y_vars)), na.rm = TRUE),
@@ -492,6 +505,8 @@ extras <- dplyr::filter(ped, .data$personID %in% idsextras) %>%
   )
 
 
+
+
 # step one is find mom and dad's coordinates
 # Get mom, dad, spouse coordinates using the general function
 mom_coords <- getRelativeCoordinates(
@@ -523,21 +538,33 @@ spouse_coords <- getRelativeCoordinates(
   multiple = "all"
 )
 
-self_coords <- getRelativeCoordinates(
-  ped = ped,
-  connections = extras,
-  personID = "newID",
-  relativeIDvar = "personID",
-  x_name = "x_spouse",
-  y_name = "y_spouse",
-  multiple = "all"
-)
+
+self_coords  <- extras |>
+  dplyr::left_join(
+    ped,
+    by = c("personID"),
+    suffix = c("", "_other"),
+    #    relationship = relationship,
+    multiple = "all"
+  ) %>% dplyr::filter(.data$newID != .data$newID_other) %>%
+  dplyr::mutate(
+    x_otherself = .data$x_pos_other,
+    y_otherself = .data$y_pos_other
+  ) |> select(
+    .data$newID,
+    .data$personID,
+    .data$newID_other,
+    .data$x_otherself,
+    .data$y_otherself
+  )
+
 # Merge mom, dad, spouse coordinates
 extras <- extras |>
   dplyr::left_join(mom_coords, by = c("newID","personID", "momID")) |>
   dplyr::left_join(dad_coords, by = c("newID","personID", "dadID")) |>
+  dplyr::left_join(self_coords, by = c("newID","personID")) |>
   dplyr::left_join(spouse_coords, by = c("newID","personID", "spouseID"),
-                   multiple = "any"
+                   multiple = "all"
   )
 
 
@@ -547,12 +574,47 @@ extras <- extras |>
 extras <- extras |>
   dplyr::mutate(
     dist_mom = sqrt((.data$x_pos - .data$x_mom)^2 + (.data$y_pos - .data$y_mom)^2),
+    dist_mom_other = sqrt((.data$x_otherself - .data$x_mom)^2 + (.data$y_otherself - .data$y_mom)^2),
     dist_dad = sqrt((.data$x_pos - .data$x_dad)^2 + (.data$y_pos - .data$y_dad)^2),
-    dist_spouse = sqrt((.data$x_pos - .data$x_spouse)^2 + (.data$y_pos - .data$y_spouse)^2)
+    dist_dad_other = sqrt((.data$x_otherself - .data$x_dad)^2 + (.data$y_otherself - .data$y_dad)^2),
+    dist_spouse = sqrt((.data$x_pos - .data$x_spouse)^2 + (.data$y_pos - .data$y_spouse)^2),
+    dist_spouse_other = sqrt((.data$x_otherself - .data$x_spouse)^2 + (.data$y_otherself - .data$y_spouse)^2),
+    dist_otherself = sqrt((.data$x_pos - .data$x_otherself)^2 + (.data$y_pos - .data$y_otherself)^2)
   )
-# Find the closest relative
+
+# filter to only use the closest spouse when there are multiple spouses
+extras <- extras|>
+  dplyr::group_by(.data$newID,.data$personID) |>
+  dplyr::mutate(
+    min_spouse = min(.data$dist_spouse, na.rm = TRUE),
+    num_spouse = n()
+  ) |>
+  ungroup()
+ extras <- extras  |>
+  dplyr::filter(.data$num_spouse == 1 | .data$dist_spouse == .data$min_spouse) |>
+  dplyr::select(-.data$min_spouse,
+                -.data$num_spouse)
+
+
+# Find whether the distance to the other self is less than the distance to mom, dad, or spouse
 extras <- extras |>
   dplyr::mutate(
+    mom_closer = dplyr::case_when(
+      .data$dist_mom < .data$dist_mom_other ~ TRUE,
+      .data$dist_mom_other < .data$dist_mom ~ FALSE,
+      TRUE ~ NA
+    ),
+    dad_closer = dplyr::case_when(
+      .data$dist_dad < .data$dist_dad_other ~ TRUE,
+      .data$dist_dad_other < .data$dist_dad ~ FALSE,
+      TRUE ~ NA
+    ),
+    spouse_closer = dplyr::case_when(
+      .data$dist_spouse < .data$dist_spouse_other ~ TRUE,
+      .data$dist_spouse_other < .data$dist_spouse ~ FALSE,
+      TRUE ~ NA
+    )
+  ) |> dplyr::mutate(
     closest_relative = dplyr::case_when(
       .data$dist_mom <= .data$dist_dad & .data$dist_mom <= .data$dist_spouse ~ "mom",
       .data$dist_dad < .data$dist_mom & .data$dist_dad <= .data$dist_spouse ~ "dad",
@@ -560,51 +622,52 @@ extras <- extras |>
     )
   )
 
-# remove spouseID if it isn't the closest relative
-#  extras <- extras |>
-#    dplyr::mutate(
-#      spouseID = dplyr::case_when(
-#        .data$closest_relative == "spouse" ~ .data$spouseID,
-#        TRUE ~  NA_real_
-#      ),
-#      momID = dplyr::case_when(
-#        .data$closest_relative == "spouse" ~ NA_real_,
-#        TRUE ~ .data$momID
-#      ),
-#      dadID = dplyr::case_when(
-#        .data$closest_relative == "spouse" ~ NA_real_,
-#        TRUE ~ .data$dadID
-#      )
-#    )
+# determine which relative to keep
+
+extras <- extras |>
+  dplyr::mutate(
+    keep_parents = dplyr::case_when(
+    c("mom","dad") %in%  .data$closest_relative & .data$mom_closer == TRUE & .data$dad_closer == TRUE ~ TRUE,
+    c("mom","dad") %in%  .data$closest_relative & .data$mom_closer == TRUE & .data$dad_closer == FALSE ~ TRUE,
+    c("mom","dad") %in%  .data$closest_relative & .data$mom_closer == FALSE & .data$dad_closer == TRUE ~ TRUE,
+    TRUE ~ FALSE),
+    keep_spouse = dplyr::case_when(
+      c("spouse") %in%  .data$closest_relative & .data$spouse_closer == TRUE ~ TRUE,
+      c("spouse") %in%  .data$closest_relative & .data$spouse_closer == FALSE ~ FALSE,
+      TRUE ~ FALSE)
+  )
+
 
 
 skinnyextras <- extras|>
   dplyr::select(.data$newID,
-                .data$closest_relative)
+                .data$closest_relative,
+                .data$keep_parents,
+                .data$keep_spouse,
+                .data$x_otherself,
+                .data$y_otherself)
 
 # now return the new connections to ped, no. these need to replace the old ones,
 # joining will not work because they will restore the mom and dad identifiers that we've removed
-
-
 
 ped <- ped |>
   dplyr::left_join(skinnyextras,
                    by = c("newID"),  suffix = c("", "_"), relationship = "one-to-one"
   ) |>  dplyr::mutate(
     spouseID = dplyr::case_when(
-      .data$closest_relative == "spouse" ~ .data$spouseID,
+      .data$keep_spouse == TRUE ~ .data$spouseID,
       is.na(.data$closest_relative) ~ .data$spouseID,
       TRUE ~  NA_real_
     ),
     momID = dplyr::case_when(
-      .data$closest_relative == "spouse" ~ NA_real_,
+      .data$keep_parents == TRUE ~ .data$momID,
       is.na(.data$closest_relative) ~ .data$momID,
-      TRUE ~ .data$momID
+      TRUE ~  NA_real_
     ),
     dadID = dplyr::case_when(
-      .data$closest_relative == "spouse" ~ NA_real_,
+      .data$keep_parents == TRUE ~ .data$dadID,
       is.na(.data$closest_relative) ~ .data$dadID,
-      TRUE ~ .data$dadID
+      TRUE ~  NA_real_
     )
   ) |>  dplyr::select(-.data$newID,
                       -.data$extra,

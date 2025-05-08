@@ -72,6 +72,7 @@ ggPedigree(
   personID_col = "personID",
   config = list(
     code_male = 1,
+    sex_color = TRUE,
     spouse_segment_color = "pink",
     sibling_segment_color = "blue",
     parent_segment_color = "green",
@@ -106,12 +107,31 @@ p <- ggPedigree(
   personID_col = "ID",
   status_col = "affected",
   config =list (code_male = 0,
+    sex_color = TRUE,
     affected=TRUE,
                 unaffected=FALSE,
                 affected_shape = 4
 ))
 
 p
+
+
+p <- ggPedigree(
+  hazard, #%>% mutate(affected = as.factor(ifelse(affected == TRUE, "affected", "uneffected"))),
+  famID_col = "famID",
+  personID_col = "ID",
+  status_col = "affected",
+  config =list (code_male = 0,
+    sex_color = FALSE,
+    affected=TRUE,
+                unaffected=FALSE,
+                affected_shape = 4
+))
+
+p
+
+
+
 ```
 
 # Multiple families in one graphic

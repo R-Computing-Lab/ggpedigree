@@ -13,6 +13,7 @@
 #' @param config A list of configuration options for customizing the plot. The list can include:
 #'  - `code_male`: value specifying the male code (typically 0 or 1). Defaults to 1.
 #'  - `spouse_segment_color`: Color for spouse segments (default: "pink").
+#'  - `self_segment_color`: Color for sibling segments (default: "purple").
 #'  - `sibling_segment_color`: Color for sibling segments (default: "blue").
 #'  - `parent_segment_color`: Color for parent segments (default: "green").
 #'  - `offspring_segment_color`: Color for offspring segments (default: "black").
@@ -49,6 +50,7 @@ ggPedigree <- function(ped, famID_col = "famID",
   # default config
   default_config <- list(
     spouse_segment_color = "black",
+    self_segment_color = "purple",
     sibling_segment_color = "black",
     parent_segment_color = "black",
     offspring_segment_color = "black",
@@ -63,7 +65,8 @@ ggPedigree <- function(ped, famID_col = "famID",
     affected_shape = 4,
     shape_labs = c("Female", "Male", "Unknown"),
     unaffected =  "unaffected",
-    affected = "affected"
+    affected = "affected",
+    sex_color = TRUE
   )
 
   # Add fill in default_config values to config if config doesn't already have them
@@ -124,7 +127,28 @@ ggPedigree <- function(ped, famID_col = "famID",
   p <- ggplot2::ggplot(ds, ggplot2::aes(
     x = .data$x_pos,
     y = .data$y_pos
-  )) +
+  ))
+
+
+  ## -- segments ------------------------------------------------------
+
+  ## -- duplicates -------------------------------------------------
+  if ("x_otherself" %in% names(connections)) {
+    p <- p + ggplot2::geom_segment(
+      data = connections,
+      ggplot2::aes(
+        x = .data$x_otherself,
+        xend = .data$x_pos,
+        y = .data$y_otherself,
+        yend = .data$y_pos
+      ),
+      linewidth = config$line_width,
+      color = config$self_segment_color,
+      na.rm = TRUE
+    )
+  }
+  ### -- spouse segments ------------------------------------------------------
+  p <- p +
     ggplot2::geom_segment(
       data = connections,
       ggplot2::aes(
@@ -137,6 +161,7 @@ ggPedigree <- function(ped, famID_col = "famID",
       color = config$spouse_segment_color,
       na.rm = TRUE
     ) +
+    ## -- parent segments ------------------------------------------------------
     ggplot2::geom_segment(
       data = connections,
       ggplot2::aes(
@@ -174,8 +199,8 @@ ggPedigree <- function(ped, famID_col = "famID",
       na.rm = TRUE
     )
 
-
   ## -- node layer -----------------------------------------------------------
+  if (config$sex_color == TRUE) {
   p <- p +
     ggplot2::geom_point(
       ggplot2::aes(
@@ -185,7 +210,7 @@ ggPedigree <- function(ped, famID_col = "famID",
       size = config$point_size,
       na.rm = TRUE
     )
-  ## -- affected individuals -------------------------------------------------
+  ## -- affected individuals and color -------------------------------------------------
   if (!is.null(status_col)) {
     p <- p + ggplot2::geom_point(
       ggplot2::aes(alpha = !!rlang::sym(status_col)),
@@ -194,6 +219,31 @@ ggPedigree <- function(ped, famID_col = "famID",
       na.rm = TRUE
     )
   }
+
+  } else if (!is.null(status_col)) {
+
+     p <- p +
+    ggplot2::geom_point(
+      ggplot2::aes(
+        color = as.factor(!!rlang::sym(status_col)),
+        shape = as.factor(.data$sex)
+      ),
+      size = config$point_size,
+      na.rm = TRUE
+    )
+  } else {
+    # no color, no status
+    p <- p +
+      ggplot2::geom_point(
+        ggplot2::aes(
+          shape = as.factor(.data$sex)
+        ),
+        size = config$point_size,
+        na.rm = TRUE
+      )
+
+    }
+
 
   ## -- labels ---------------------------------------------------------------
 
@@ -212,11 +262,18 @@ ggPedigree <- function(ped, famID_col = "famID",
     ) +
     ggplot2::scale_y_reverse()
 
-  if (!is.null(status_col)) {
+ if (!is.null(status_col)) {
     status_vals <- c(1,0)
 
     status_labs <- c(paste0(config$affected), paste0(config$unaffected))
-
+    if (config$sex_color == TRUE) {
+    p <- p + ggplot2::scale_color_manual(
+      name = "Affected",
+      labels = status_labs,
+      values = status_vals,
+      na.translate = FALSE
+    )
+    } else{
     p <- p + ggplot2::scale_alpha_manual(
       name = NULL,
       labels = status_labs,
@@ -224,7 +281,7 @@ ggPedigree <- function(ped, famID_col = "famID",
       na.translate = FALSE
     ) + ggplot2::guides(alpha = "none")
   }
-
+}
   ## -- theme ----------------------------------------------------------------
 
   p <- p +
@@ -239,10 +296,26 @@ ggPedigree <- function(ped, famID_col = "famID",
       axis.title.x = ggplot2::element_blank(),
       axis.text.x = ggplot2::element_blank(),
       axis.ticks.x = ggplot2::element_blank()
-    ) +
+    )
+
+
+  ## -- legends ---------------------------------------------------------------
+  if (config$sex_color == TRUE && is.null(status_col)) {
+    p <- p +
+      ggplot2::scale_color_discrete(labels = config$shape_labs) +
+      ggplot2::labs(color = "Sex", shape = "Sex")
+
+  } else if (config$sex_color == TRUE && !is.null(status_col)) {
+  p <- p +
     ggplot2::scale_color_discrete(labels = config$shape_labs) +
     ggplot2::labs(color = "Sex", shape = "Sex")
-
+  } else if (!is.null(status_col)) {
+    p <- p +  ggplot2::scale_color_discrete(labels = config$status_labs) +
+     ggplot2::labs(color = "Affected", shape = "Sex")
+  }else {
+    p <- p +
+      ggplot2::labs(shape = "Sex")
+  }
   return(p)
 }
 

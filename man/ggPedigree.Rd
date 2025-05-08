@@ -12,7 +12,6 @@ ggPedigree(
   personID_col = "personID",
   momID_col = "momID",
   dadID_col = "dadID",
-  code_male = 1,
   status_col = NULL,
   config = list()
 )
@@ -23,7 +22,6 @@ ggpedigree(
   personID_col = "personID",
   momID_col = "momID",
   dadID_col = "dadID",
-  code_male = 1,
   status_col = NULL,
   config = list()
 )
@@ -34,7 +32,6 @@ ggped(
   personID_col = "personID",
   momID_col = "momID",
   dadID_col = "dadID",
-  code_male = 1,
   status_col = NULL,
   config = list()
 )
@@ -50,12 +47,12 @@ ggped(
 
 \item{dadID_col}{Character string specifying the column name for father IDs. Defaults to "dadID".}
 
-\item{code_male}{Numeric value specifying the male code (typically 0 or 1). Defaults to 1.}
-
 \item{status_col}{Character string specifying the column name for affected status. Defaults to NULL.}
 
 \item{config}{A list of configuration options for customizing the plot. The list can include:
+- `code_male`: value specifying the male code (typically 0 or 1). Defaults to 1.
 - `spouse_segment_color`: Color for spouse segments (default: "pink").
+- `self_segment_color`: Color for sibling segments (default: "purple").
 - `sibling_segment_color`: Color for sibling segments (default: "blue").
 - `parent_segment_color`: Color for parent segments (default: "green").
 - `offspring_segment_color`: Color for offspring segments (default: "black").
