@@ -1,0 +1,244 @@
+---
+title: "Plotting more complicated pedigrees with `ggPedigree()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Plotting pedigrees with `ggPedigree()`}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5
+)
+```
+
+
+
+# Introduction
+
+This vignette demonstrates pedigree visualization with `ggPedigree()` from `ggBGmisc`.
+Internally, `ggPedigree()` leverages helpers from both {BGmisc} (ped2fam(), recodeSex()) and {ggBGmisc} (`calculateCoordinates()`, `calculateConnections()`), and returns a standard `ggplot2` object, so any familiar ggplot syntax can be added afterward.
+
+We illustrate usage with a more complicated data set:
+
+- `asoiaf` – extended Targaryen family
+
+
+# Basic usage
+
+```{r libraries, message=FALSE, warning=FALSE}
+library(ggpedigree) # ggPedigree lives here
+library(BGmisc) # helper utilities & example data
+library(ggplot2) # ggplot2 for plotting
+library(viridis) # viridis for color palettes
+library(tidyverse) # for data wrangling
+```
+
+
+
+## Load Packages and Data
+
+We begin by loading the required libraries and examining the structure of the built-in `ASOIAF` pedigree.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+data(ASOIAF)
+```
+
+The ASOIAF dataset includes character IDs, names, family identifiers, and  parent identifiers for a subset of characters drawn from the *A Song of Ice and Fire* canon.
+
+```{r}
+head(ASOIAF)
+```
+
+## Prepare and Validate Sex Codes
+
+Many pedigree-based algorithms rely on biological sex for downstream calculationss and visualization. We use `checkSex()` to inspect the sex variable, repairing inconsistencies programmatically.
+
+
+```{r}
+df_got <- checkSex(ASOIAF,
+  code_male = "M",
+  code_female = "F",
+  repair = TRUE)
+
+
+# Find the IDs of Jon Snow and Daenerys Targaryen
+
+jon_id <- df_got %>%
+  filter(name == "Jon Snow") %>%
+  pull(ID)
+
+dany_id <- df_got %>%
+  filter(name == "Daenerys Targaryen") %>%
+  pull(ID)
+
+```
+
+
+```{r}
+df_repaired <- checkParentIDs(df_got,
+  addphantoms = TRUE,
+  repair = TRUE,
+  parentswithoutrow = FALSE,
+  repairsex = FALSE
+) %>% mutate(
+  famID = 1,
+  affected = case_when(
+    ID %in% c(jon_id, dany_id, "365") ~ 1,
+    TRUE ~ 0
+  )
+)
+```
+
+
+## Visualize the Pedigree with `plotPedigree()`
+
+
+Here is the classic pedigree plot of the Targaryen family, with Jon Snow and Daenerys Targaryen highlighted in black The `plotPedigree()` function from {BGmisc} provides a quick way to visualize the pedigree structure.
+
+```{r, message=FALSE, warning=FALSE}
+
+plotPedigree(df_repaired, 
+             affected = df_repaired$affected, 
+             verbose = FALSE)
+
+```
+
+
+## Visualize the Pedigree with `ggPedigree()`
+
+Here is the same pedigree, but using `ggPedigree()` from {ggpedigree}. This function provides a more flexible and customizable way to visualize pedigrees, allowing for easy integration with other `ggplot2` functions.
+
+```{r, message=FALSE, warning=FALSE}
+
+
+ggPedigree(df_repaired,  status_col = "affected",  
+           personID_col = "ID",  
+           config = list(unaffected =  0,
+                         code_male = "M",
+                         affected = 1,
+                         affected_shape = 4,
+                         point_size = 3,
+                         spouse_segment_color = "pink",
+    sibling_segment_color = "blue",
+    parent_segment_color = "green",
+    offspring_segment_color = "black",
+                         
+                         
+                         ped_width=14))
+
+```
+
+
+
+
+
+
+
+
+```{r}
+data("potter")
+ggPedigree(potter,
+  famID_col = "famID",
+  personID_col = "personID",
+  code_male = 1
+)
+```
+
+`ggPedigree()` automatically:
+1. reshapes the data by family (`ped2fam()`),
+
+2. recodes sex (`recodeSex()`),
+
+3. computes node layout (`calculateCoordinates()`), and
+
+4. draws spouse, parent, sibling, and offspring links (`calculateConnections()`).
+
+The result is a `ggplot2` object, so you can add any ggplot syntax to it. 
+
+
+# Customizing the plot
+
+All aesthetics reside in a config list; anything you omit falls back to the default.
+
+```{r}
+ggPedigree(
+  potter,
+  famID_col = "famID",
+  personID_col = "personID",
+  code_male = 1,
+  config = list(
+    spouse_segment_color = "pink",
+    sibling_segment_color = "blue",
+    parent_segment_color = "green",
+    offspring_segment_color = "black"
+  )
+)
+```
+
+Because the result is just a ggplot object, regular layering applies:
+
+```{r}
+ggPedigree(potter,
+  famID_col = "famID",
+  personID_col = "personID",
+  code_male = 1
+) +
+  theme_bw(base_size = 12)
+```
+
+
+
+# Alternative coding schemes
+
+Pass the appropriate `code_male` when males are coded differently.
+
+
+```{r}
+data("hazard")
+
+p <- ggPedigree(
+  hazard %>% mutate(affected = as.factor(ifelse(affected == TRUE, "affected", "unaffected"))),
+  famID_col = "famID",
+  personID_col = "ID",
+  code_male = 0,
+  status_col = "affected"
+)
+
+p
+```
+
+# Multiple families in one graphic
+
+Facet to separate distinct pedigrees:
+```{r}
+p +
+  facet_wrap(~famID, scales = "free_x")
+```
+
+# Changing the layout
+
+```{r}
+p +
+  theme_bw(base_size = 12) +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    axis.line        = element_line(colour = "black"),
+    axis.text.x      = element_blank(),
+    axis.text.y      = element_blank(),
+    axis.ticks.x     = element_blank(),
+    axis.ticks.y     = element_blank(),
+    axis.title.x     = element_blank(),
+    axis.title.y     = element_blank()
+  ) + scale_color_viridis(
+    discrete = TRUE,
+    labels = c("Female", "Male", "Unknown")
+  )
+```

@@ -44,8 +44,7 @@ library(tidyverse) # for data wrangling
 data("potter")
 ggPedigree(potter,
   famID_col = "famID",
-  personID_col = "personID",
-  code_male = 1
+  personID_col = "personID"
 )
 ```
 
@@ -71,8 +70,8 @@ ggPedigree(
   potter,
   famID_col = "famID",
   personID_col = "personID",
-  code_male = 1,
   config = list(
+    code_male = 1,
     spouse_segment_color = "pink",
     sibling_segment_color = "blue",
     parent_segment_color = "green",
@@ -86,8 +85,7 @@ Because the result is just a ggplot object, regular layering applies:
 ```{r}
 ggPedigree(potter,
   famID_col = "famID",
-  personID_col = "personID",
-  code_male = 1
+  personID_col = "personID"
 ) +
   theme_bw(base_size = 12)
 ```
@@ -106,9 +104,9 @@ p <- ggPedigree(
   hazard, #%>% mutate(affected = as.factor(ifelse(affected == TRUE, "affected", "uneffected"))),
   famID_col = "famID",
   personID_col = "ID",
-  code_male = 0,
   status_col = "affected",
-  config =list (affected=TRUE,
+  config =list (code_male = 0,
+    affected=TRUE,
                 unaffected=FALSE,
                 affected_shape = 4
 ))

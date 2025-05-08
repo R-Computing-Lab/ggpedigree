@@ -9,9 +9,9 @@
 #' @param personID_col Character string specifying the column name for individual IDs.
 #' @param momID_col Character string specifying the column name for mother IDs. Defaults to "momID".
 #' @param dadID_col Character string specifying the column name for father IDs. Defaults to "dadID".
-#' @param code_male Numeric value specifying the male code (typically 0 or 1). Defaults to 1.
 #' @param status_col Character string specifying the column name for affected status. Defaults to NULL.
 #' @param config A list of configuration options for customizing the plot. The list can include:
+#'  - `code_male`: value specifying the male code (typically 0 or 1). Defaults to 1.
 #'  - `spouse_segment_color`: Color for spouse segments (default: "pink").
 #'  - `sibling_segment_color`: Color for sibling segments (default: "blue").
 #'  - `parent_segment_color`: Color for parent segments (default: "green").
@@ -40,7 +40,7 @@
 ggPedigree <- function(ped, famID_col = "famID",
                        personID_col = "personID",
                        momID_col = "momID",
-                       dadID_col = "dadID", code_male = 1,
+                       dadID_col = "dadID",
                        status_col = NULL,
                        config = list()) {
   # STEP 1: Convert to pedigree format
@@ -52,6 +52,7 @@ ggPedigree <- function(ped, famID_col = "famID",
     sibling_segment_color = "black",
     parent_segment_color = "black",
     offspring_segment_color = "black",
+    code_male = 1,
     text_size = 3,
     point_size = 4,
     line_width = 0.5,
@@ -83,7 +84,7 @@ ggPedigree <- function(ped, famID_col = "famID",
 
 
   if ("famID.x" %in% names( ds_ped)) {
-    ds_ped<- dplyr::rename( ds_ped, famID = .data$famID.x)
+    ds_ped <- dplyr::rename( ds_ped, famID = .data$famID.x)
   }
 
   # If the input personID_col was not "personID", rename to "personID" for downstream functions
@@ -98,14 +99,14 @@ ggPedigree <- function(ped, famID_col = "famID",
   # If the input personID_col was not "personID", rename to "personID" for downstream functions
   # STEP 2: Recode sex
 
-  ds_ped <- BGmisc::recodeSex( ds_ped, recode_male = code_male)
+  ds_ped <- BGmisc::recodeSex( ds_ped, recode_male = config$code_male)
 
   # STEP 3: Calculate coordinates
   ds <- calculateCoordinates(ds_ped,
     personID = "personID",
     momID = momID_col,
     dadID = dadID_col,
-    code_male = code_male,
+    code_male = config$code_male,
     config = config
   )
 
@@ -215,8 +216,6 @@ ggPedigree <- function(ped, famID_col = "famID",
     status_vals <- c(1,0)
 
     status_labs <- c(paste0(config$affected), paste0(config$unaffected))
-
-
 
     p <- p + ggplot2::scale_alpha_manual(
       name = NULL,
