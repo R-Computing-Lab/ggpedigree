@@ -43,8 +43,8 @@ library(tidyverse) # for data wrangling
 ```{r}
 data("potter")
 ggPedigree(potter,
-  famID_col = "famID",
-  personID_col = "personID"
+  famID = "famID",
+  personID = "personID"
 )
 ```
 
@@ -68,8 +68,8 @@ All aesthetics reside in a config list; anything you omit falls back to the defa
 ```{r}
 ggPedigree(
   potter,
-  famID_col = "famID",
-  personID_col = "personID",
+  famID = "famID",
+  personID = "personID",
   config = list(
     code_male = 1,
     sex_color = FALSE,
@@ -85,8 +85,8 @@ Because the result is just a ggplot object, regular layering applies:
 
 ```{r}
 ggPedigree(potter,
-  famID_col = "famID",
-  personID_col = "personID"
+  famID = "famID",
+  personID = "personID"
 ) +
   theme_bw(base_size = 12)
 ```
@@ -103,16 +103,18 @@ When you add the `status_col` argument, `ggPedigree()` will automatically color 
 data("hazard")
 
 p <- ggPedigree(
-  hazard, #%>% mutate(affected = as.factor(ifelse(affected == TRUE, "affected", "uneffected"))),
-  famID_col = "famID",
-  personID_col = "ID",
+  hazard, # %>% mutate(affected = as.factor(ifelse(affected == TRUE, "affected", "uneffected"))),
+  famID = "famID",
+  personID = "ID",
   status_col = "affected",
-  config =list (code_male = 0,
+  config = list(
+    code_male = 0,
     sex_color = TRUE,
-    affected=TRUE,
-    unaffected=FALSE,
+    affected = TRUE,
+    unaffected = FALSE,
     affected_shape = 4
-))
+  )
+)
 
 p
 ```
@@ -120,20 +122,20 @@ p
 If you set sex_color to FALSE, the affected values will be filled with the default color palette.
 
 ```{r}
-
 p <- ggPedigree(
   hazard,
-  famID_col = "famID",
-  personID_col = "ID",
+  famID = "famID",
+  personID = "ID",
   status_col = "affected",
-  config =list (code_male = 0,
+  config = list(
+    code_male = 0,
     sex_color = FALSE,
-    affected=TRUE,
-    unaffected=FALSE
-))
+    affected = TRUE,
+    unaffected = FALSE
+  )
+)
 
 p
-
 ```
 
 # Multiple families in one graphic

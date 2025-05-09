@@ -4,11 +4,11 @@
 #' It processes the data using `ped2fam()`, calculates coordinates and family connections, and
 #' returns a ggplot object with customized styling.
 #'
-#' @param ped A data frame containing the pedigree data.
-#' @param famID_col Character string specifying the column name for family IDs.
-#' @param personID_col Character string specifying the column name for individual IDs.
-#' @param momID_col Character string specifying the column name for mother IDs. Defaults to "momID".
-#' @param dadID_col Character string specifying the column name for father IDs. Defaults to "dadID".
+#' @param ped A data frame containing the pedigree data. Needs personID, momID, and dadID columns
+#' @param famID Character string specifying the column name for family IDs.
+#' @param personID Character string specifying the column name for individual IDs.
+#' @param momID Character string specifying the column name for mother IDs. Defaults to "momID".
+#' @param dadID Character string specifying the column name for father IDs. Defaults to "dadID".
 #' @param status_col Character string specifying the column name for affected status. Defaults to NULL.
 #' @param config A list of configuration options for customizing the plot. The list can include:
 #'  - `code_male`: value specifying the male code (typically 0 or 1). Defaults to 1.
@@ -31,17 +31,17 @@
 #' @examples
 #' library(BGmisc)
 #' data("potter")
-#' ggPedigree(potter, famID_col = "famID", personID_col = "personID")
+#' ggPedigree(potter, famID = "famID", personID = "personID")
 #'
 #' data("hazard")
-#' ggPedigree(hazard, famID_col = "famID", personID_col = "ID", config=list(code_male = 0))
+#' ggPedigree(hazard, famID = "famID", personID = "ID", config = list(code_male = 0))
 #'
 #' @export
 
-ggPedigree <- function(ped, famID_col = "famID",
-                       personID_col = "personID",
-                       momID_col = "momID",
-                       dadID_col = "dadID",
+ggPedigree <- function(ped, famID = "famID",
+                       personID = "personID",
+                       momID = "momID",
+                       dadID = "dadID",
                        status_col = NULL,
                        config = list()) {
   # STEP 1: Convert to pedigree format
@@ -64,10 +64,10 @@ ggPedigree <- function(ped, famID_col = "famID",
     male_shape = 15,
     affected_shape = 4,
     shape_labs = c("Female", "Male", "Unknown"),
-    unaffected =  "unaffected",
+    unaffected = "unaffected",
     affected = "affected",
     sex_color = TRUE,
-    status_vals = c(1,0)
+    status_vals = c(1, 0)
   )
 
   # Add fill in default_config values to config if config doesn't already have them
@@ -78,40 +78,41 @@ ggPedigree <- function(ped, famID_col = "famID",
   config$status_labs <- c(paste0(config$affected), paste0(config$unaffected))
 
   ds_ped <- BGmisc::ped2fam(ped,
-    famID = famID_col,
-    personID = personID_col,
-    momID = momID_col,
-    dadID = dadID_col
+    famID = famID,
+    personID = personID,
+    momID = momID,
+    dadID = dadID
   )
 
-  if ("famID.y" %in% names( ds_ped)) {
-    ds_ped <- dplyr::select( ds_ped, -.data$famID.y)
+  if ("famID.y" %in% names(ds_ped)) {
+    ds_ped <- dplyr::select(ds_ped, -.data$famID.y)
   }
 
 
-  if ("famID.x" %in% names( ds_ped)) {
-    ds_ped <- dplyr::rename( ds_ped, famID = .data$famID.x)
+  if ("famID.x" %in% names(ds_ped)) {
+    ds_ped <- dplyr::rename(ds_ped, famID = .data$famID.x)
   }
 
-  # If the input personID_col was not "personID", rename to "personID" for downstream functions
+  # If the input personID was not "personID", rename to "personID" for downstream functions
 
-  if (personID_col != "personID") {
-    ds_ped <- dplyr::rename( ds_ped, personID = !!personID_col)
+  if (personID != "personID") {
+    ds_ped <- dplyr::rename(ds_ped, personID = !!personID)
   }
   if (!is.null(status_col)) {
-    ds_ped[[status_col]] <- factor( ds_ped[[status_col]],
-                               levels = c(config$affected, config$unaffected))
+    ds_ped[[status_col]] <- factor(ds_ped[[status_col]],
+      levels = c(config$affected, config$unaffected)
+    )
   }
-  # If the input personID_col was not "personID", rename to "personID" for downstream functions
+  # If the input personID was not "personID", rename to "personID" for downstream functions
   # STEP 2: Recode sex
 
-  ds_ped <- BGmisc::recodeSex( ds_ped, recode_male = config$code_male)
+  ds_ped <- BGmisc::recodeSex(ds_ped, recode_male = config$code_male)
 
   # STEP 3: Calculate coordinates
   ds <- calculateCoordinates(ds_ped,
     personID = "personID",
-    momID = momID_col,
-    dadID = dadID_col,
+    momID = momID,
+    dadID = dadID,
     code_male = config$code_male,
     config = config
   )
@@ -205,37 +206,34 @@ ggPedigree <- function(ped, famID_col = "famID",
 
   ## -- node layer -----------------------------------------------------------
   if (config$sex_color == TRUE) {
-  p <- p +
-    ggplot2::geom_point(
-      ggplot2::aes(
-        color = as.factor(.data$sex),
-        shape = as.factor(.data$sex)
-      ),
-      size = config$point_size,
-      na.rm = TRUE
-    )
-  ## -- affected individuals and color -------------------------------------------------
-  if (!is.null(status_col)) {
-
-    p <- p + ggplot2::geom_point(
-      ggplot2::aes(alpha = !!rlang::sym(status_col)),
-      shape = config$affected_shape,
-      size = config$point_size,
-      na.rm = TRUE
-    )
-  }
-
+    p <- p +
+      ggplot2::geom_point(
+        ggplot2::aes(
+          color = as.factor(.data$sex),
+          shape = as.factor(.data$sex)
+        ),
+        size = config$point_size,
+        na.rm = TRUE
+      )
+    ## -- affected individuals and color -------------------------------------------------
+    if (!is.null(status_col)) {
+      p <- p + ggplot2::geom_point(
+        ggplot2::aes(alpha = !!rlang::sym(status_col)),
+        shape = config$affected_shape,
+        size = config$point_size,
+        na.rm = TRUE
+      )
+    }
   } else if (!is.null(status_col)) {
-
-     p <- p +
-    ggplot2::geom_point(
-      ggplot2::aes(
-        color = as.factor(!!rlang::sym(status_col)),
-        shape = as.factor(.data$sex)
-      ),
-      size = config$point_size,
-      na.rm = TRUE
-    )
+    p <- p +
+      ggplot2::geom_point(
+        ggplot2::aes(
+          color = as.factor(!!rlang::sym(status_col)),
+          shape = as.factor(.data$sex)
+        ),
+        size = config$point_size,
+        na.rm = TRUE
+      )
   } else {
     # no color, no status
     p <- p +
@@ -246,15 +244,14 @@ ggPedigree <- function(ped, famID_col = "famID",
         size = config$point_size,
         na.rm = TRUE
       )
-
-    }
+  }
 
 
   ## -- labels ---------------------------------------------------------------
 
   p <- p +
     ggrepel::geom_text_repel(ggplot2::aes(label = .data$personID),
-      nudge_y = -.15*config$generation_gap,
+      nudge_y = -.15 * config$generation_gap,
       size = config$text_size
     )
   ## -- scales / legends -----------------------------------------------------
@@ -268,8 +265,6 @@ ggPedigree <- function(ped, famID_col = "famID",
     ggplot2::scale_y_reverse()
 
   if (!is.null(status_col) && config$sex_color == TRUE) {
-
-
     p <- p + ggplot2::scale_alpha_manual(
       name = NULL,
       labels = config$status_labs,
@@ -299,18 +294,14 @@ ggPedigree <- function(ped, famID_col = "famID",
     p <- p +
       ggplot2::scale_color_discrete(labels = config$shape_labs) +
       ggplot2::labs(color = "Sex", shape = "Sex")
-  } else if(!is.null(status_col)){
-
+  } else if (!is.null(status_col)) {
     p <- p +
       ggplot2::scale_color_discrete(labels = config$status_labs) +
       ggplot2::labs(color = "Affected", shape = "Sex")
-
-  } else{
-
+  } else {
     p <- p +
       ggplot2::labs(shape = "Sex")
-
-    }
+  }
 
 
 

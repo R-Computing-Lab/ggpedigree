@@ -55,11 +55,11 @@ head(ASOIAF)
 # Data Cleaning
 
 ```{r}
-
 df_got <- checkSex(ASOIAF,
   code_male = "M",
   code_female = "F",
-  repair = TRUE)
+  repair = TRUE
+)
 
 
 # Find the IDs of Jon Snow and Daenerys Targaryen
@@ -71,7 +71,6 @@ jon_id <- df_got %>%
 dany_id <- df_got %>%
   filter(name == "Daenerys Targaryen") %>%
   pull(ID)
-
 ```
 
 Here we've added phantom IDs to the dataset, which are used to represent individuals who are not directly related to the family tree but are still part of the pedigree structure. This is useful for visualizing complex relationships, such as half-siblings or step-siblings.
@@ -98,11 +97,10 @@ df_repaired <- checkParentIDs(df_got,
 Here is the classic pedigree plot of the Targaryen family, with Jon Snow and Daenerys Targaryen highlighted in black The `plotPedigree()` function from {BGmisc} provides a quick way to visualize the pedigree structure. It serves as a wrapper function from {kinship2} and is useful for quickly checking the pedigree structure.
 
 ```{r, message=FALSE, warning=FALSE}
-
-plotPedigree(df_repaired, 
-             affected = df_repaired$affected, 
-             verbose = FALSE)
-
+plotPedigree(df_repaired,
+  affected = df_repaired$affected,
+  verbose = FALSE
+)
 ```
 
 
@@ -111,23 +109,24 @@ plotPedigree(df_repaired,
 Here is the same pedigree, but using `ggPedigree()` from {ggpedigree}. This function provides a more flexible and customizable way to visualize pedigrees, allowing for easy integration with other `ggplot2` functions.
 
 ```{r, message=FALSE, warning=FALSE}
-
-
-ggPedigree(df_repaired,  status_col = "affected",  
-           personID_col = "ID",  
-           config = list(unaffected =  0,
-                         sex_color=FALSE,
-                         code_male = "M",
-                         affected = 1,
-                         affected_shape = 4,
-                         point_size = 3,
-                         spouse_segment_color = "pink",
+ggPedigree(df_repaired,
+  status_col = "affected",
+  personID = "ID",
+  config = list(
+    unaffected = 0,
+    sex_color = FALSE,
+    code_male = "M",
+    affected = 1,
+    affected_shape = 4,
+    point_size = 3,
+    spouse_segment_color = "pink",
     sibling_segment_color = "blue",
     parent_segment_color = "green",
     offspring_segment_color = "black",
     self_segment_color = "purple",
-                         ped_width=14))
-
+    ped_width = 14
+  )
+)
 ```
 
 

@@ -8,44 +8,44 @@
 \usage{
 ggPedigree(
   ped,
-  famID_col = "famID",
-  personID_col = "personID",
-  momID_col = "momID",
-  dadID_col = "dadID",
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
   status_col = NULL,
   config = list()
 )
 
 ggpedigree(
   ped,
-  famID_col = "famID",
-  personID_col = "personID",
-  momID_col = "momID",
-  dadID_col = "dadID",
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
   status_col = NULL,
   config = list()
 )
 
 ggped(
   ped,
-  famID_col = "famID",
-  personID_col = "personID",
-  momID_col = "momID",
-  dadID_col = "dadID",
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
   status_col = NULL,
   config = list()
 )
 }
 \arguments{
-\item{ped}{A data frame containing the pedigree data.}
+\item{ped}{A data frame containing the pedigree data. Needs personID, momID, and dadID columns}
 
-\item{famID_col}{Character string specifying the column name for family IDs.}
+\item{famID}{Character string specifying the column name for family IDs.}
 
-\item{personID_col}{Character string specifying the column name for individual IDs.}
+\item{personID}{Character string specifying the column name for individual IDs.}
 
-\item{momID_col}{Character string specifying the column name for mother IDs. Defaults to "momID".}
+\item{momID}{Character string specifying the column name for mother IDs. Defaults to "momID".}
 
-\item{dadID_col}{Character string specifying the column name for father IDs. Defaults to "dadID".}
+\item{dadID}{Character string specifying the column name for father IDs. Defaults to "dadID".}
 
 \item{status_col}{Character string specifying the column name for affected status. Defaults to NULL.}
 
@@ -77,9 +77,9 @@ returns a ggplot object with customized styling.
 \examples{
 library(BGmisc)
 data("potter")
-ggPedigree(potter, famID_col = "famID", personID_col = "personID")
+ggPedigree(potter, famID = "famID", personID = "personID")
 
 data("hazard")
-ggPedigree(hazard, famID_col = "famID", personID_col = "ID", config=list(code_male = 0))
+ggPedigree(hazard, famID = "famID", personID = "ID", config = list(code_male = 0))
 
 }

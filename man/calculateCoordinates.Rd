@@ -12,26 +12,38 @@ calculateCoordinates(
   spouseID = "spouseID",
   sexVar = "sex",
   code_male = NULL,
-  generation = NULL,
   config = list()
 )
 }
 \arguments{
-\item{ped}{a pedigree dataset.  Needs ID, momID, and dadID columns}
+\item{ped}{A data frame containing the pedigree data. Needs personID, momID, and dadID columns}
 
-\item{personID}{character.  Name of the column in ped for the person ID variable}
+\item{personID}{Character string specifying the column name for individual IDs.}
 
-\item{momID}{character.  Name of the column in ped for the mother ID variable}
+\item{momID}{Character string specifying the column name for mother IDs. Defaults to "momID".}
 
-\item{dadID}{character.  Name of the column in ped for the father ID variable}
+\item{dadID}{Character string specifying the column name for father IDs. Defaults to "dadID".}
 
 \item{spouseID}{character.  Name of the column in ped for the spouse ID variable}
 
 \item{sexVar}{character.  Name of the column in ped for the sex variable}
 
-\item{code_male}{character.  Value in sexVar that corresponds}
-
-\item{generation}{character.  Name of the column in ped the generation variable}
+\item{config}{A list of configuration options for customizing the plot. The list can include:
+- `code_male`: value specifying the male code (typically 0 or 1). Defaults to 1.
+- `spouse_segment_color`: Color for spouse segments (default: "pink").
+- `self_segment_color`: Color for sibling segments (default: "purple").
+- `sibling_segment_color`: Color for sibling segments (default: "blue").
+- `parent_segment_color`: Color for parent segments (default: "green").
+- `offspring_segment_color`: Color for offspring segments (default: "black").
+- `text_size`: Size of the text labels (default: 3).
+- `point_size`: Size of the points (default: 4).
+- `line_width`: Width of the lines (default: 0.5).
+- `generation_gap`: Gap between generations (default: 1).
+- `unknown_shape`: shape id for unknown sex (default: 18).
+- `female_shape`: shape id for female sex (default: 16).
+- `male_shape`: shape id for male sex (default: 15).
+- `affected_shape`: shape id for affected individuals (default: 4).
+- `sex_shape_labs`: labels for sex variable  (default: c("Female", "Male", "Unknown"))}
 }
 \value{
 a data.frame with x and y coordinates for each person in the pedigree
