@@ -20,8 +20,7 @@ Imports:
     ggrepel,
     rlang,
     dplyr,
-    utils,
-    tidyselect
+    utils
 Suggests: 
     EasyMx,
     viridis,

@@ -38,7 +38,7 @@ if(!requireNamespace("remotes", quietly = TRUE)) {
 
 # Install your package from GitHub
 remotes::install_github("R-Computing-Lab/BGmisc")
-
+# unfortunately this requires BGmisc 1.4.0
 library(ggpedigree) # ggPedigree lives here
 library(BGmisc) # helper utilities & example data
 library(ggplot2) # ggplot2 for plotting

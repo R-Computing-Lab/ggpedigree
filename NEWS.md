@@ -2,7 +2,7 @@
 * Extended functionality to include new plotting features, like handling multiple instances of
   the same individual in a pedigree.
 * Improved documentation and examples for better user guidance.
-
+* Added unit tests for describeHelpers
 
 # ggpedigree 0.1.0
 * Implemented pedigree plotting functions for `ggplot2`.

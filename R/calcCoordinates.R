@@ -239,21 +239,21 @@ calculateConnections <- function(ped,
   if ("x_otherself" %in% names(ped)) {
     connections <- dplyr::select(
       .data = ped,
-      .data$personID,
-      .data$x_pos, .data$y_pos,
-      .data$dadID, .data$momID,
-      .data$spouseID,
-      .data$famID,
-      .data$x_otherself, .data$y_otherself
+      "personID",
+      "x_pos", "y_pos",
+      "dadID", "momID",
+      "spouseID",
+      "famID",
+      "x_otherself", "y_otherself"
     )
   } else {
     connections <- dplyr::select(
       .data = ped,
-      .data$personID,
-      .data$x_pos, .data$y_pos,
-      .data$dadID, .data$momID,
-      .data$spouseID,
-      .data$famID
+      "personID",
+       "x_pos", "y_pos",
+      "dadID", "momID",
+      "spouseID",
+      "famID"
     )
   }
 
@@ -278,8 +278,8 @@ calculateConnections <- function(ped,
   # Get spouse coordinates
   spouse_connections <- ped |>
     dplyr::select(
-      .data$personID, .data$x_pos,
-      .data$y_pos, .data$spouseID
+      "personID", "x_pos",
+      "y_pos", "spouseID"
     ) |>
     dplyr::left_join(ped,
       by = c("spouseID" = "personID"),
@@ -287,12 +287,12 @@ calculateConnections <- function(ped,
       multiple = "any"
     ) |>
     dplyr::rename(
-      x_spouse = .data$x_pos_spouse,
-      y_spouse = .data$y_pos_spouse
+      x_spouse = "x_pos_spouse",
+      y_spouse = "y_pos_spouse"
     ) |>
     dplyr::select(
-      .data$personID, .data$spouseID,
-      .data$x_spouse, .data$y_spouse
+      "personID", "spouseID",
+      "x_spouse", "y_spouse"
     )
 
   # Combine mom, dad, and spouse coordinates
@@ -419,15 +419,15 @@ getRelativeCoordinates <- function(ped, connections, relativeIDvar, x_name, y_na
     ) |>
     # Rename the joined coordinate columns to the specified x/y output names
     dplyr::rename(
-      !!x_name := .data$x_pos_rel,
-      !!y_name := .data$y_pos_rel
+      !!x_name := "x_pos_rel",
+      !!y_name := "y_pos_rel"
     )
   # If the ped includes a 'newID' column (used to track duplicates), retain it in the result
   if ("newID" %in% names(ped)) {
     rel_connections <- rel_connections |>
       dplyr::select(
         !!personID,
-        .data$newID,
+        "newID",
         !!relativeIDvar,
         !!x_name,
         !!y_name
@@ -479,7 +479,7 @@ getMidpoints <- function(data, group_vars,
   if (!is.null(require_non_missing)) {
     data <- data |>
       dplyr::filter(
-        dplyr::if_all(tidyselect::all_of(.data$require_non_missing), ~ !is.na(.))
+        dplyr::if_all(!!!rlang::syms(require_non_missing), ~ !is.na(.))
       )
   }
 
@@ -491,7 +491,7 @@ getMidpoints <- function(data, group_vars,
     # Average all xs and Average of all y values
 
     data |>
-      dplyr::group_by(dplyr::across(tidyselect::all_of(group_vars))) |>
+      dplyr::group_by(!!!rlang::syms(group_vars)) |>
       dplyr::summarize(
         !!x_out := mean(c(!!!rlang::syms(x_vars)), na.rm = TRUE),
         !!y_out := mean(c(!!!rlang::syms(y_vars)), na.rm = TRUE),
@@ -500,7 +500,7 @@ getMidpoints <- function(data, group_vars,
   } else if (method == "median") {
     # Median of all xs and Median of all y values
     data |>
-      dplyr::group_by(dplyr::across(tidyselect::all_of(group_vars))) |>
+      dplyr::group_by(!!!rlang::syms(group_vars)) |>
       dplyr::summarize(
         !!x_out := stats::median(c(!!!rlang::syms(x_vars)), na.rm = TRUE),
         !!y_out := stats::median(c(!!!rlang::syms(y_vars)), na.rm = TRUE),
@@ -510,7 +510,7 @@ getMidpoints <- function(data, group_vars,
     # Weighted average (same weight for all unless specified externally)
 
     data |>
-      dplyr::group_by(dplyr::across(tidyselect::all_of(group_vars))) |>
+      dplyr::group_by(!!!rlang::syms(group_vars)) |>
       dplyr::summarize(
         !!x_out := stats::weighted.mean(c(!!!rlang::syms(x_vars)), na.rm = TRUE),
         !!y_out := stats::weighted.mean(c(!!!rlang::syms(y_vars)), na.rm = TRUE),
@@ -520,7 +520,7 @@ getMidpoints <- function(data, group_vars,
     # Use only the first value in each pair of x/y coordinates
     # This is useful for spousal pairs or sibling groups
     data |>
-      dplyr::group_by(dplyr::across(tidyselect::all_of(group_vars))) |>
+      dplyr::group_by(!!!rlang::syms(group_vars)) |>
       dplyr::summarize(
         !!x_out := mean(c(
           dplyr::first(.data[[x_vars[1]]]),
@@ -535,7 +535,7 @@ getMidpoints <- function(data, group_vars,
   } else if (method == "meanxfirst") {
     # Use the mean of all x coordinates and the first y coordinate
     data |>
-      dplyr::group_by(dplyr::across(tidyselect::all_of(group_vars))) |>
+      dplyr::group_by(!!!rlang::syms(group_vars)) |>
       dplyr::summarize(
         !!x_out := mean(c(!!!rlang::syms(x_vars)), na.rm = TRUE),
         !!y_out := mean(c(
@@ -547,7 +547,7 @@ getMidpoints <- function(data, group_vars,
   } else if (method == "meanyfirst") {
     # First x, mean of all y
     data |>
-      dplyr::group_by(dplyr::across(tidyselect::all_of(group_vars))) |>
+      dplyr::group_by(!!!rlang::syms(group_vars)) |>
       dplyr::summarize(
         !!x_out := mean(c(
           dplyr::first(.data[[x_vars[1]]]),
@@ -597,7 +597,7 @@ process_extras <- function(ped, config = list()) {
 
   # Find all individuals with extra appearances
   idsextras <- dplyr::filter(ped, .data$extra == TRUE) |>
-    dplyr::select(.data$personID) |>
+    dplyr::select("personID") |>
     dplyr::pull() |>
     unique()
 
@@ -607,15 +607,15 @@ process_extras <- function(ped, config = list()) {
 
 
   # -----
-  # Subset to duplicated entries only
+  # Subset to duplicated entries only # note that tidyselect hates .data pronouns
   # -----
   extras <- dplyr::filter(ped, .data$personID %in% idsextras) |>
     dplyr::select(
-      .data$newID,
-      .data$personID,
-      .data$x_pos, .data$y_pos,
-      .data$dadID, .data$momID,
-      .data$spouseID
+      "newID",
+      "personID",
+      "x_pos", "y_pos",
+      "dadID", "momID",
+      "spouseID"
     )
 
   # -----
@@ -832,9 +832,9 @@ process_extras <- function(ped, config = list()) {
       )
     ) |>
     dplyr::select(
-      -.data$newID,
-      -.data$extra,
-      -.data$closest_relative
+      -"newID",
+      -"extra",
+      -"closest_relative"
     )
 
   return(ped)
