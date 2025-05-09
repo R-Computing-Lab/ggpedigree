@@ -4,37 +4,26 @@
 \alias{calculateConnections}
 \title{Calculate connections for a pedigree dataset}
 \usage{
-calculateConnections(
-  ped,
-  type = c("siblings", "parent-child", "spouses"),
-  config = list()
-)
+calculateConnections(ped, config = list())
 }
 \arguments{
 \item{ped}{A data frame containing the pedigree data. Needs personID, momID, and dadID columns}
 
-\item{type}{character.  Type of connections to calculate, either "siblings" or "parent-child"}
-
-\item{config}{A list of configuration options for customizing the plot. The list can include:
-- `code_male`: value specifying the male code (typically 0 or 1). Defaults to 1.
-- `spouse_segment_color`: Color for spouse segments (default: "pink").
-- `self_segment_color`: Color for sibling segments (default: "purple").
-- `sibling_segment_color`: Color for sibling segments (default: "blue").
-- `parent_segment_color`: Color for parent segments (default: "green").
-- `offspring_segment_color`: Color for offspring segments (default: "black").
-- `text_size`: Size of the text labels (default: 3).
-- `point_size`: Size of the points (default: 4).
-- `line_width`: Width of the lines (default: 0.5).
-- `generation_gap`: Gap between generations (default: 1).
-- `unknown_shape`: shape id for unknown sex (default: 18).
-- `female_shape`: shape id for female sex (default: 16).
-- `male_shape`: shape id for male sex (default: 15).
-- `affected_shape`: shape id for affected individuals (default: 4).
-- `sex_shape_labs`: labels for sex variable  (default: c("Female", "Male", "Unknown"))}
+\item{config}{List of configuration parameters. Currently unused but passed through to internal helpers.}
 }
 \value{
-a data.frame with connections between individuals based on parent-child relationships
+A `data.frame` containing connection points and midpoints for graphical rendering. Includes:
+  \itemize{
+    \item `x_pos`, `y_pos`: positions of focal individual
+    \item `x_dad`, `y_dad`, `x_mom`, `y_mom`: parental positions (if available)
+    \item `x_spouse`, `y_spouse`: spousal positions (if available)
+    \item `x_midparent`, `y_midparent`: midpoint between parents
+    \item `x_mid_sib`, `y_mid_sib`: sibling group midpoint
+    \item `x_mid_spouse`, `y_mid_spouse`: midpoint between spouses
+  }
 }
 \description{
-Calculate connections for a pedigree dataset
+Computes graphical connection paths for a pedigree layout, including parent-child,
+sibling, and spousal connections. Optionally processes duplicate appearances
+of individuals (marked as `extra`) to ensure relational accuracy.
 }

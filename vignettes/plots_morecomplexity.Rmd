@@ -108,7 +108,7 @@ plotPedigree(df_repaired,
 
 Here is the same pedigree, but using `ggPedigree()` from {ggpedigree}. This function provides a more flexible and customizable way to visualize pedigrees, allowing for easy integration with other `ggplot2` functions.
 
-```{r, message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE}
 ggPedigree(df_repaired,
   status_col = "affected",
   personID = "ID",
