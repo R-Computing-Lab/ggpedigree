@@ -72,7 +72,7 @@ ggPedigree(
   personID_col = "personID",
   config = list(
     code_male = 1,
-    sex_color = TRUE,
+    sex_color = FALSE,
     spouse_segment_color = "pink",
     sibling_segment_color = "blue",
     parent_segment_color = "green",
@@ -93,10 +93,11 @@ ggPedigree(potter,
 
 
 
-# Alternative coding schemes
+# Additional customization
 
-Pass the appropriate `code_male` when males are coded differently.
+You can also add affected/unaffected status to the plot. The `status_col` argument allows you to specify a column in your data frame that contains the affected/unaffected status of each individual. This column should be a factor or character vector, and `ggPedigree()` will automatically recode it to a factor if necessary.
 
+When you add the `status_col` argument, `ggPedigree()` will automatically color the affected individuals in one color and the unaffected individuals in another. You can indicate what the values of the affected/unaffected status are in your data frame using the `affected` and `unaffected` arguments in the `config` list. By default, `ggPedigree()` will overlay the affected individuals with a different shape, but you can customize this as well.
 
 ```{r}
 data("hazard")
@@ -109,34 +110,38 @@ p <- ggPedigree(
   config =list (code_male = 0,
     sex_color = TRUE,
     affected=TRUE,
-                unaffected=FALSE,
-                affected_shape = 4
+    unaffected=FALSE,
+    affected_shape = 4
 ))
 
 p
+```
 
+If you set sex_color to FALSE, the affected values will be filled with the default color palette.
+
+```{r}
 
 p <- ggPedigree(
-  hazard, #%>% mutate(affected = as.factor(ifelse(affected == TRUE, "affected", "uneffected"))),
+  hazard,
   famID_col = "famID",
   personID_col = "ID",
   status_col = "affected",
   config =list (code_male = 0,
     sex_color = FALSE,
     affected=TRUE,
-                unaffected=FALSE,
-                affected_shape = 4
+    unaffected=FALSE
 ))
 
 p
-
-
 
 ```
 
 # Multiple families in one graphic
 
-Facet to separate distinct pedigrees:
+If you have multiple families in your data frame, you can use the `facet_wrap()` function from `ggplot2` to create separate plots for each family. This is useful if you want to compare the pedigrees of different families side by side.
+
+Facet to separate distinct pedigrees, note that you can use `scales = "free_x"` to allow each family to have its own x-axis scale.
+
 ```{r}
 p +
   facet_wrap(~famID, scales = "free_x")

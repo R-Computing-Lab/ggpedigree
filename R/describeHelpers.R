@@ -81,3 +81,7 @@ generateSpouseList <- function(ped, personID, momID, dadID, spouseID) {
 
 #' @importFrom rlang .data
 NULL
+
+#' @importFrom stats median
+NULL
+

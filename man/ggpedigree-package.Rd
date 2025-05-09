@@ -3,7 +3,7 @@
 \docType{package}
 \name{ggpedigree-package}
 \alias{ggpedigree-package}
-\title{ggpedigree: An R Package for Extended Behavior Genetics Analysis}
+\title{ggpedigree: An R Package for plotting pedigrees}
 \description{
 The ggpedigree R package offers a complimentary suite of plotting functions for BGmisc which are implemented in ggplot.
 }

@@ -77,9 +77,9 @@ returns a ggplot object with customized styling.
 \examples{
 library(BGmisc)
 data("potter")
-ggPedigree(potter, famID_col = "famID", personID_col = "personID", code_male = 1)
+ggPedigree(potter, famID_col = "famID", personID_col = "personID")
 
 data("hazard")
-ggPedigree(hazard, famID_col = "famID", personID_col = "ID", code_male = 0)
+ggPedigree(hazard, famID_col = "famID", personID_col = "ID", config=list(code_male = 0))
 
 }

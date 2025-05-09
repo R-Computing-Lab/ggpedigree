@@ -2,7 +2,7 @@
 title: "Plotting more complicated pedigrees with `ggPedigree()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Plotting pedigrees with `ggPedigree()`}
+  %\VignetteIndexEntry{Plotting more complicated pedigrees with `ggPedigree()`}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -20,10 +20,9 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-This vignette demonstrates pedigree visualization with `ggPedigree()` from `ggBGmisc`.
-Internally, `ggPedigree()` leverages helpers from both {BGmisc} (ped2fam(), recodeSex()) and {ggBGmisc} (`calculateCoordinates()`, `calculateConnections()`), and returns a standard `ggplot2` object, so any familiar ggplot syntax can be added afterward.
+This vignette demonstrates some of the more complex family trees you can visualization with `ggPedigree()`.
 
-We illustrate usage with a more complicated data set:
+We illustrate usage with a more complicated data set from BGmisc:
 
 - `asoiaf` – extended Targaryen family
 
@@ -38,14 +37,11 @@ library(viridis) # viridis for color palettes
 library(tidyverse) # for data wrangling
 ```
 
-
-
 ## Load Packages and Data
 
 We begin by loading the required libraries and examining the structure of the built-in `ASOIAF` pedigree.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-
 data(ASOIAF)
 ```
 
@@ -55,12 +51,11 @@ The ASOIAF dataset includes character IDs, names, family identifiers, and  paren
 head(ASOIAF)
 ```
 
-## Prepare and Validate Sex Codes
 
-Many pedigree-based algorithms rely on biological sex for downstream calculationss and visualization. We use `checkSex()` to inspect the sex variable, repairing inconsistencies programmatically.
-
+# Data Cleaning
 
 ```{r}
+
 df_got <- checkSex(ASOIAF,
   code_male = "M",
   code_female = "F",
@@ -79,6 +74,7 @@ dany_id <- df_got %>%
 
 ```
 
+Here we've added phantom IDs to the dataset, which are used to represent individuals who are not directly related to the family tree but are still part of the pedigree structure. This is useful for visualizing complex relationships, such as half-siblings or step-siblings.
 
 ```{r}
 df_repaired <- checkParentIDs(df_got,
@@ -99,7 +95,7 @@ df_repaired <- checkParentIDs(df_got,
 ## Visualize the Pedigree with `plotPedigree()`
 
 
-Here is the classic pedigree plot of the Targaryen family, with Jon Snow and Daenerys Targaryen highlighted in black The `plotPedigree()` function from {BGmisc} provides a quick way to visualize the pedigree structure.
+Here is the classic pedigree plot of the Targaryen family, with Jon Snow and Daenerys Targaryen highlighted in black The `plotPedigree()` function from {BGmisc} provides a quick way to visualize the pedigree structure. It serves as a wrapper function from {kinship2} and is useful for quickly checking the pedigree structure.
 
 ```{r, message=FALSE, warning=FALSE}
 
@@ -120,6 +116,7 @@ Here is the same pedigree, but using `ggPedigree()` from {ggpedigree}. This func
 ggPedigree(df_repaired,  status_col = "affected",  
            personID_col = "ID",  
            config = list(unaffected =  0,
+                         sex_color=FALSE,
                          code_male = "M",
                          affected = 1,
                          affected_shape = 4,
@@ -128,7 +125,7 @@ ggPedigree(df_repaired,  status_col = "affected",
     sibling_segment_color = "blue",
     parent_segment_color = "green",
     offspring_segment_color = "black",
-    self_segment_color = "0",
+    self_segment_color = "purple",
                          ped_width=14))
 
 ```

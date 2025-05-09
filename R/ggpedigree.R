@@ -31,10 +31,10 @@
 #' @examples
 #' library(BGmisc)
 #' data("potter")
-#' ggPedigree(potter, famID_col = "famID", personID_col = "personID", code_male = 1)
+#' ggPedigree(potter, famID_col = "famID", personID_col = "personID")
 #'
 #' data("hazard")
-#' ggPedigree(hazard, famID_col = "famID", personID_col = "ID", code_male = 0)
+#' ggPedigree(hazard, famID_col = "famID", personID_col = "ID", config=list(code_male = 0))
 #'
 #' @export
 
@@ -66,13 +66,16 @@ ggPedigree <- function(ped, famID_col = "famID",
     shape_labs = c("Female", "Male", "Unknown"),
     unaffected =  "unaffected",
     affected = "affected",
-    sex_color = TRUE
+    sex_color = TRUE,
+    status_vals = c(1,0)
   )
 
   # Add fill in default_config values to config if config doesn't already have them
 
   config <- utils::modifyList(default_config, config)
 
+  # add affected and unaffected to config
+  config$status_labs <- c(paste0(config$affected), paste0(config$unaffected))
 
   ds_ped <- BGmisc::ped2fam(ped,
     famID = famID_col,
@@ -199,6 +202,7 @@ ggPedigree <- function(ped, famID_col = "famID",
       na.rm = TRUE
     )
 
+
   ## -- node layer -----------------------------------------------------------
   if (config$sex_color == TRUE) {
   p <- p +
@@ -212,6 +216,7 @@ ggPedigree <- function(ped, famID_col = "famID",
     )
   ## -- affected individuals and color -------------------------------------------------
   if (!is.null(status_col)) {
+
     p <- p + ggplot2::geom_point(
       ggplot2::aes(alpha = !!rlang::sym(status_col)),
       shape = config$affected_shape,
@@ -262,26 +267,17 @@ ggPedigree <- function(ped, famID_col = "famID",
     ) +
     ggplot2::scale_y_reverse()
 
- if (!is.null(status_col)) {
-    status_vals <- c(1,0)
+  if (!is.null(status_col) && config$sex_color == TRUE) {
 
-    status_labs <- c(paste0(config$affected), paste0(config$unaffected))
-    if (config$sex_color == TRUE) {
-    p <- p + ggplot2::scale_color_manual(
-      name = "Affected",
-      labels = status_labs,
-      values = status_vals,
-      na.translate = FALSE
-    )
-    } else{
+
     p <- p + ggplot2::scale_alpha_manual(
       name = NULL,
-      labels = status_labs,
-      values = status_vals,
+      labels = config$status_labs,
+      values = config$status_vals,
       na.translate = FALSE
     ) + ggplot2::guides(alpha = "none")
   }
-}
+
   ## -- theme ----------------------------------------------------------------
 
   p <- p +
@@ -298,24 +294,26 @@ ggPedigree <- function(ped, famID_col = "famID",
       axis.ticks.x = ggplot2::element_blank()
     )
 
-
-  ## -- legends ---------------------------------------------------------------
-  if (config$sex_color == TRUE && is.null(status_col)) {
+  # add labls
+  if (config$sex_color == TRUE) {
     p <- p +
       ggplot2::scale_color_discrete(labels = config$shape_labs) +
       ggplot2::labs(color = "Sex", shape = "Sex")
+  } else if(!is.null(status_col)){
 
-  } else if (config$sex_color == TRUE && !is.null(status_col)) {
-  p <- p +
-    ggplot2::scale_color_discrete(labels = config$shape_labs) +
-    ggplot2::labs(color = "Sex", shape = "Sex")
-  } else if (!is.null(status_col)) {
-    p <- p +  ggplot2::scale_color_discrete(labels = config$status_labs) +
-     ggplot2::labs(color = "Affected", shape = "Sex")
-  }else {
+    p <- p +
+      ggplot2::scale_color_discrete(labels = config$status_labs) +
+      ggplot2::labs(color = "Affected", shape = "Sex")
+
+  } else{
+
     p <- p +
       ggplot2::labs(shape = "Sex")
-  }
+
+    }
+
+
+
   return(p)
 }
 

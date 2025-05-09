@@ -199,7 +199,6 @@ if("extra" %in% names(ped)){
 
   }
 
-
   # Base data frame used for joins ----------------------------------------
 if ("x_otherself" %in% names(ped)) {
   connections <- dplyr::select(
@@ -354,7 +353,7 @@ getRelativeCoordinates <- function(ped, connections, relativeIDvar, x_name, y_na
     dplyr::filter(!is.na(.data[[relativeIDvar]])) |>
     dplyr::left_join(
       ped,
-      by = setNames(personID, relativeIDvar),
+      by = stats::setNames(personID, relativeIDvar),
       suffix = c("", "_rel"),
   #    relationship = relationship,
       multiple = multiple
@@ -402,7 +401,7 @@ getMidpoints <- function(data, group_vars,
 
   if(method == "mean"){
     data |>
-      dplyr::group_by(across(all_of(.data$group_vars))) |>
+      dplyr::group_by(across(all_of(group_vars))) |>
       dplyr::summarize(
         !!x_out := mean(c(!!!syms(x_vars)), na.rm = TRUE),
         !!y_out := mean(c(!!!syms(y_vars)), na.rm = TRUE),
@@ -412,21 +411,21 @@ getMidpoints <- function(data, group_vars,
     data |>
       dplyr::group_by(across(all_of(group_vars))) |>
       dplyr::summarize(
-        !!x_out := median(c(!!!syms(x_vars)), na.rm = TRUE),
-        !!y_out := median(c(!!!syms(y_vars)), na.rm = TRUE),
+        !!x_out := stats::median(c(!!!syms(x_vars)), na.rm = TRUE),
+        !!y_out := stats::median(c(!!!syms(y_vars)), na.rm = TRUE),
         .groups = "drop"
       )
   } else if(method == "weighted_mean"){
     data |>
       dplyr::group_by(across(all_of(group_vars))) |>
       dplyr::summarize(
-        !!x_out := weighted.mean(c(!!!syms(x_vars)), na.rm = TRUE),
-        !!y_out := weighted.mean(c(!!!syms(y_vars)), na.rm = TRUE),
+        !!x_out := stats::weighted.mean(c(!!!syms(x_vars)), na.rm = TRUE),
+        !!y_out := stats::weighted.mean(c(!!!syms(y_vars)), na.rm = TRUE),
         .groups = "drop"
       )
   } else if(method == "first_pair"){
     data |>
-      dplyr::group_by(across(all_of(group_vars))) |>
+      dplyr::group_by(across(tidyselect::all_of(group_vars))) |>
       dplyr::summarize(
         !!x_out := mean(c(
           dplyr::first(.data[[x_vars[1]]]),
@@ -440,7 +439,7 @@ getMidpoints <- function(data, group_vars,
       )
   } else if(method == "meanxfirst"){
     data |>
-      dplyr::group_by(across(all_of(group_vars))) |>
+      dplyr::group_by(across(tidyselect::all_of(group_vars))) |>
       dplyr::summarize(
         !!x_out := mean(c(!!!syms(x_vars)), na.rm = TRUE),
         !!y_out := mean(c(
@@ -453,7 +452,7 @@ getMidpoints <- function(data, group_vars,
   } else if(method == "meanyfirst"){
 
     data |>
-      dplyr::group_by(across(all_of(group_vars))) |>
+      dplyr::group_by(across(tidyselect::all_of(group_vars))) |>
       dplyr::summarize(
         !!x_out := mean(c(
           dplyr::first(.data[[x_vars[1]]]),
@@ -495,7 +494,7 @@ ped$newID <- 1:nrow(ped)
 
 # determine who each is closest too
 
-extras <- dplyr::filter(ped, .data$personID %in% idsextras) %>%
+extras <- dplyr::filter(ped, .data$personID %in% idsextras) |>
   dplyr::select(
     .data$newID,
     .data$personID,
@@ -546,11 +545,11 @@ self_coords  <- extras |>
     suffix = c("", "_other"),
     #    relationship = relationship,
     multiple = "all"
-  ) %>% dplyr::filter(.data$newID != .data$newID_other) %>%
+  ) |> dplyr::filter(.data$newID != .data$newID_other) |>
   dplyr::mutate(
     x_otherself = .data$x_pos_other,
     y_otherself = .data$y_pos_other
-  ) |> select(
+  ) |> dplyr::select(
     .data$newID,
     .data$personID,
     .data$newID_other,
