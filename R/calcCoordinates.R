@@ -230,7 +230,7 @@ calculateConnections <- function(ped,
 
   # If duplicated appearances exist, resolve which connections to keep
   if ("extra" %in% names(ped)) {
-    ped <- process_extras(ped, config = config)
+    ped <- processExtras(ped, config = config)
   }
 
   # Construct base connection frame
@@ -250,7 +250,7 @@ calculateConnections <- function(ped,
     connections <- dplyr::select(
       .data = ped,
       "personID",
-       "x_pos", "y_pos",
+      "x_pos", "y_pos",
       "dadID", "momID",
       "spouseID",
       "famID"
@@ -576,7 +576,7 @@ getMidpoints <- function(data, group_vars,
 #'
 #' @keywords internal
 
-process_extras <- function(ped, config = list()) {
+processExtras <- function(ped, config = list()) {
   # -----
   # Check inputs
   # -----
@@ -687,7 +687,6 @@ process_extras <- function(ped, config = list()) {
       by = c("newID", "personID", "spouseID"),
       multiple = "all"
     )
-
 
 
   # -----

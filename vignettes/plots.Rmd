@@ -122,7 +122,7 @@ p
 If you set sex_color to FALSE, the affected values will be filled with the default color palette.
 
 ```{r}
-p <- ggPedigree(
+ggPedigree(
   hazard,
   famID = "famID",
   personID = "ID",
@@ -135,7 +135,7 @@ p <- ggPedigree(
   )
 )
 
-p
+
 ```
 
 # Multiple families in one graphic

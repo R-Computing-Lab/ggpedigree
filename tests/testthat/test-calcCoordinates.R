@@ -7,57 +7,59 @@ test_that("calculateCoordinates assigns correct layout for unique individuals", 
   coords <- calculateCoordinates(ped, code_male = 1, personID = "personID")
 
   expect_true(all(c("x_order", "y_order", "x_pos", "y_pos", "nid") %in% names(coords)))
-  expect_true(all(ped$ID %in% coords$personID))  # ID retention
-  expect_equal(nrow(coords), nrow(ped))  # no duplicates yet
+  expect_true(all(ped$ID %in% coords$personID)) # ID retention
+  expect_equal(nrow(coords), nrow(ped)) # no duplicates yet
 })
 
-#test_that("calculateCoordinates extras", {
+# test_that("calculateCoordinates extras", {
 #  library(BGmisc)
 #  data("ASOIAF")
 
- # coords <- calculateCoordinates(ASOIAF, code_male = "M", personID = "id")
+# coords <- calculateCoordinates(ASOIAF, code_male = "M", personID = "id")
 
- # expect_true("extra" %in% names(coords))
- # dup_ids <- coords$ID[duplicated(coords$ID)]
- # expect_true(length(dup_ids) > 0)  # Someone appears twice
- # expect_true(any(coords$extra == TRUE))
-#})
+# expect_true("extra" %in% names(coords))
+# dup_ids <- coords$ID[duplicated(coords$ID)]
+# expect_true(length(dup_ids) > 0)  # Someone appears twice
+# expect_true(any(coords$extra == TRUE))
+# })
 test_that("calculateCoordinates Code M works for characters", {
   ped <- data.frame(
-    ID = c("A", "B", "C", "D","X"),
-    momID = c(NA, "A", "A", "C",NA),
-    dadID = c(NA, "X", "X", "B",NA),
-    spouseID = c(NA, NA, NA, NA,NA),
-    sex = c("F", "M", "F", "F","M")
+    ID = c("A", "B", "C", "D", "X"),
+    momID = c(NA, "A", "A", "C", NA),
+    dadID = c(NA, "X", "X", "B", NA),
+    spouseID = c(NA, NA, NA, NA, NA),
+    sex = c("F", "M", "F", "F", "M")
   )
 
   coords <- calculateCoordinates(ped, code_male = "M")
 
   expect_true(all(c("x_order", "y_order", "x_pos", "y_pos", "nid") %in% names(coords)))
-  expect_true(all(coords$ID %in% ped$ID))  # ID retention
-  expect_equal(nrow(coords), nrow(ped))  # no duplicates yet
+  expect_true(all(coords$ID %in% ped$ID)) # ID retention
+  expect_equal(nrow(coords), nrow(ped)) # no duplicates yet
 })
 
 
 test_that("calculateConnections returns expected structure", {
   ped <- data.frame(
-    personID = c("A", "B", "C", "D","X"),
-    momID = c(NA, "A", "A", "C",NA),
-    dadID = c(NA, "X", "X", "B",NA),
-    spouseID = c(NA, NA, NA, NA,NA),
-    sex = c("F", "M", "F", "F","M")
+    personID = c("A", "B", "C", "D", "X"),
+    momID = c(NA, "A", "A", "C", NA),
+    dadID = c(NA, "X", "X", "B", NA),
+    spouseID = c(NA, NA, NA, NA, NA),
+    sex = c("F", "M", "F", "F", "M")
   )
 
   coords <- calculateCoordinates(ped, code_male = "M", personID = "personID")
-  conns <- calculateConnections(coords, config= list(code_male = "M"))
+  conns <- calculateConnections(coords, config = list(code_male = "M"))
 
-  expected_cols <- c("personID", "x_pos", "y_pos",
-                     "dadID", "momID", "spouseID",
-                     "x_mom", "y_mom", "x_dad", "y_dad",
-                     "x_spouse", "y_spouse",
-                     "x_midparent", "y_midparent",
-                     "x_mid_spouse", "y_mid_spouse",
-                     "x_mid_sib", "y_mid_sib")
+  expected_cols <- c(
+    "personID", "x_pos", "y_pos",
+    "dadID", "momID", "spouseID",
+    "x_mom", "y_mom", "x_dad", "y_dad",
+    "x_spouse", "y_spouse",
+    "x_midparent", "y_midparent",
+    "x_mid_spouse", "y_mid_spouse",
+    "x_mid_sib", "y_mid_sib"
+  )
 
   expect_true(all(expected_cols %in% names(conns)))
 })
@@ -118,4 +120,3 @@ test_that("getRelativeCoordinates returns expected coordinates for mother", {
   expect_false("A" %in% mom_coords$personID)
   expect_false("B" %in% mom_coords$personID)
 })
-

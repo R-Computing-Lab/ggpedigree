@@ -1,4 +1,3 @@
-
 test_that("countOffspring returns correct counts", {
   ped <- data.frame(
     ID = c("A", "B", "C", "D"),
@@ -8,10 +7,10 @@ test_that("countOffspring returns correct counts", {
 
   out <- countOffspring(ped)
 
-  expect_equal(out$offspring[which(out$ID == "A")], 2)  # B and C
-  expect_equal(out$offspring[which(out$ID == "B")], 1)  # D
-  expect_equal(out$offspring[which(out$ID == "C")], 1)  # D
-  expect_equal(out$offspring[which(out$ID == "D")], 0)  # no children
+  expect_equal(out$offspring[which(out$ID == "A")], 2) # B and C
+  expect_equal(out$offspring[which(out$ID == "B")], 1) # D
+  expect_equal(out$offspring[which(out$ID == "C")], 1) # D
+  expect_equal(out$offspring[which(out$ID == "D")], 0) # no children
 })
 
 test_that("countSiblings returns correct sibling counts and orders", {
@@ -27,7 +26,6 @@ test_that("countSiblings returns correct sibling counts and orders", {
   expect_equal(out$siblings[which(out$ID == "B")], 1)
   expect_equal(out$siblings[which(out$ID == "C")], 0)
   expect_equal(out$siblings[which(out$ID == "D")], 0)
-
   expect_equal(out$siborder[which(out$ID == "A")], 1)
   expect_equal(out$siborder[which(out$ID == "B")], 2)
 })
@@ -48,5 +46,5 @@ test_that("generateSpouseList returns correct spouse matrix", {
 
   # Check a known couple: A and B
   expect_true(any((out[, "ID1"] == "A" & out[, "ID2"] == "B") |
-                    (out[, "ID1"] == "B" & out[, "ID2"] == "A")))
+    (out[, "ID1"] == "B" & out[, "ID2"] == "A")))
 })
