@@ -83,7 +83,9 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
 
 
   # Flatten coordinate matrix
-  pos_vector <- as.vector(pos$pos)
+ # pos_vector <- as.vector(pos$pos)
+#  spouse_vector <- as.vector(pos$spouse)
+
 
   # Initialize coordinate columns in the data frame
   ped$nid <- NA
@@ -100,11 +102,22 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
   y_coords <- rep(NA, length(nid_vector))
   x_pos <- rep(NA, length(nid_vector))
 
+  # Initialize spouse vector
+  spouse_vector <- rep(NA, length(nid_vector))
+
+  #' A matrix with values
+  #' 1 = subject plotted to the immediate right is a spouse
+  #' 2 = subject plotted to the immediate right is an inbred spouse
+  #' 0 = not a spouse
+
+
   # Populate coordinates from nid positions
   for (i in seq_along(nid_vector)) {
     y_coords[i] <- nid_pos[i, "row"]
     x_coords[i] <- nid_pos[i, "col"]
     x_pos[i] <- pos$pos[nid_pos[i, "row"], nid_pos[i, "col"]]
+    spouse_vector[i] <- pos$spouse[nid_pos[i, "row"], nid_pos[i, "col"]]
+
   }
 
   # -----
@@ -121,6 +134,8 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
   ped$y_order <- y_coords[tmp]
   ped$x_pos <- x_pos[tmp]
   ped$y_pos <- y_coords[tmp]
+  ped$spousehint <- spouse_vector[tmp]
+
 
   # Detect multiple layout positions for the same individual
   # This can happen if the same individual appears multiple times in the pedigree
