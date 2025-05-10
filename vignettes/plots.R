@@ -16,18 +16,18 @@ library(tidyverse) # for data wrangling
 ## -----------------------------------------------------------------------------
 data("potter")
 ggPedigree(potter,
-  famID_col = "famID",
-  personID_col = "personID",
-  code_male = 1
+  famID = "famID",
+  personID = "personID"
 )
 
 ## -----------------------------------------------------------------------------
 ggPedigree(
   potter,
-  famID_col = "famID",
-  personID_col = "personID",
-  code_male = 1,
+  famID = "famID",
+  personID = "personID",
   config = list(
+    code_male = 1,
+    sex_color = FALSE,
     spouse_segment_color = "pink",
     sibling_segment_color = "blue",
     parent_segment_color = "green",
@@ -37,9 +37,8 @@ ggPedigree(
 
 ## -----------------------------------------------------------------------------
 ggPedigree(potter,
-  famID_col = "famID",
-  personID_col = "personID",
-  code_male = 1
+  famID = "famID",
+  personID = "personID"
 ) +
   theme_bw(base_size = 12)
 
@@ -47,11 +46,33 @@ ggPedigree(potter,
 data("hazard")
 
 p <- ggPedigree(
-  hazard %>% mutate(affected = as.factor(ifelse(affected == TRUE, "affected", "unaffected"))),
-  famID_col = "famID",
-  personID_col = "ID",
-  code_male = 0,
-  status_col = "affected"
+  hazard, # %>% mutate(affected = as.factor(ifelse(affected == TRUE, "affected", "uneffected"))),
+  famID = "famID",
+  personID = "ID",
+  status_col = "affected",
+  config = list(
+    code_male = 0,
+    sex_color = TRUE,
+    affected = TRUE,
+    unaffected = FALSE,
+    affected_shape = 4
+  )
+)
+
+p
+
+## -----------------------------------------------------------------------------
+p <- ggPedigree(
+  hazard,
+  famID = "famID",
+  personID = "ID",
+  status_col = "affected",
+  config = list(
+    code_male = 0,
+    sex_color = FALSE,
+    affected = TRUE,
+    unaffected = FALSE
+  )
 )
 
 p

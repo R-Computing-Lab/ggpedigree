@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcCoordinates.R
 \name{calculateCoordinates}
 \alias{calculateCoordinates}
-\title{Calculate x and y coordinates for plotting a pedigree}
+\title{Calculate coordinates for plotting individuals in a pedigree}
 \usage{
 calculateCoordinates(
   ped,
@@ -12,29 +12,43 @@ calculateCoordinates(
   spouseID = "spouseID",
   sexVar = "sex",
   code_male = NULL,
-  generation = NULL
+  config = list()
 )
 }
 \arguments{
-\item{ped}{a pedigree dataset.  Needs ID, momID, and dadID columns}
+\item{ped}{A data frame containing the pedigree data. Needs personID, momID, and dadID columns}
 
-\item{personID}{character.  Name of the column in ped for the person ID variable}
+\item{personID}{Character string specifying the column name for individual IDs.}
 
-\item{momID}{character.  Name of the column in ped for the mother ID variable}
+\item{momID}{Character string specifying the column name for mother IDs. Defaults to "momID".}
 
-\item{dadID}{character.  Name of the column in ped for the father ID variable}
+\item{dadID}{Character string specifying the column name for father IDs. Defaults to "dadID".}
 
-\item{spouseID}{character.  Name of the column in ped for the spouse ID variable}
+\item{spouseID}{Character. Name of the column in `ped` for the spouse ID variable.}
 
-\item{sexVar}{character.  Name of the column in ped for the sex variable}
+\item{sexVar}{Character. Name of the column in `ped` for the sex variable.}
 
-\item{code_male}{character.  Value in sexVar that corresponds}
+\item{code_male}{Value used to indicate male sex. Defaults to NULL.}
 
-\item{generation}{character.  Name of the column in ped the generation variable}
+\item{config}{List of configuration options:
+\describe{
+  \item{code_male}{Default is 1. Used by BGmisc::recodeSex().}
+  \item{ped_packed}{Logical, default TRUE. Passed to `kinship2::align.pedigree`.}
+  \item{ped_align}{Logical, default TRUE. Align generations.}
+  \item{ped_width}{Numeric, default 15. Controls spacing.}
+}}
 }
 \value{
-a data.frame with x and y coordinates for each person in the pedigree
+A data frame with one or more rows per person, each containing:
+  \itemize{
+    \item `x_order`, `y_order`: Grid indices representing layout rows and columns.
+    \item `x_pos`, `y_pos`: Continuous coordinate positions used for plotting.
+    \item `nid`: Internal numeric identifier for layout mapping.
+    \item `extra`: Logical flag indicating whether this row is a secondary appearance.
+  }
 }
 \description{
-Calculate x and y coordinates for plotting a pedigree
+Extracts and modifies the x and y positions for each individual in a
+pedigree data frame using the align.pedigree function from the `kinship2` package.
+It returns a data.frame with positions for plotting.
 }

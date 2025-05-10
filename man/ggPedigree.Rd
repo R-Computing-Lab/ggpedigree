@@ -8,81 +8,76 @@
 \usage{
 ggPedigree(
   ped,
-  famID_col = "famID",
-  personID_col = "personID",
-  momID_col = "momID",
-  dadID_col = "dadID",
-  code_male = 1,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
   status_col = NULL,
   config = list()
 )
 
 ggpedigree(
   ped,
-  famID_col = "famID",
-  personID_col = "personID",
-  momID_col = "momID",
-  dadID_col = "dadID",
-  code_male = 1,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
   status_col = NULL,
   config = list()
 )
 
 ggped(
   ped,
-  famID_col = "famID",
-  personID_col = "personID",
-  momID_col = "momID",
-  dadID_col = "dadID",
-  code_male = 1,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
   status_col = NULL,
   config = list()
 )
 }
 \arguments{
-\item{ped}{A data frame containing the pedigree data.}
+\item{ped}{A data frame containing the pedigree data. Needs personID, momID, and dadID columns}
 
-\item{famID_col}{Character string specifying the column name for family IDs.}
+\item{famID}{Character string specifying the column name for family IDs.}
 
-\item{personID_col}{Character string specifying the column name for individual IDs.}
+\item{personID}{Character string specifying the column name for individual IDs.}
 
-\item{momID_col}{Character string specifying the column name for mother IDs. Defaults to "momID".}
+\item{momID}{Character string specifying the column name for mother IDs. Defaults to "momID".}
 
-\item{dadID_col}{Character string specifying the column name for father IDs. Defaults to "dadID".}
-
-\item{code_male}{Numeric value specifying the male code (typically 0 or 1). Defaults to 1.}
+\item{dadID}{Character string specifying the column name for father IDs. Defaults to "dadID".}
 
 \item{status_col}{Character string specifying the column name for affected status. Defaults to NULL.}
 
 \item{config}{A list of configuration options for customizing the plot. The list can include:
-- `spouse_segment_color`: Color for spouse segments (default: "pink").
-- `sibling_segment_color`: Color for sibling segments (default: "blue").
-- `parent_segment_color`: Color for parent segments (default: "green").
-- `offspring_segment_color`: Color for offspring segments (default: "black").
-- `text_size`: Size of the text labels (default: 3).
-- `point_size`: Size of the points (default: 4).
-- `line_width`: Width of the lines (default: 0.5).
-- `generation_gap`: Gap between generations (default: 1).
-- `unknown_shape`: shape id for unknown sex (default: 18).
-- `female_shape`: shape id for female sex (default: 16).
-- `male_shape`: shape id for male sex (default: 15).
-- `affected_shape`: shape id for affected individuals (default: 4).
-- `sex_shape_labs`: labels for sex variable  (default: c("Female", "Male", "Unknown"))}
+\describe{
+   \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1.}
+   \item{spouse_segment_color, self_segment_color, sibling_segment_color, parent_segment_color, offspring_segment_color}{Character. Line colors for respective connection types.}
+   \item{text_size, point_size, line_width}{Numeric. Controls text size, point size, and line thickness.}
+   \item{generation_gap}{Numeric. Vertical spacing multiplier between generations. Default: 1.}
+   \item{unknown_shape, female_shape, male_shape, affected_shape}{Integers. Shape codes for plotting each group.}
+   \item{sex_shape_labs}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
+   \item{unaffected, affected}{Values indicating unaffected/affected status.}
+   \item{sex_color}{Logical. If TRUE, uses color to differentiate sex.}
+   \item{max_overlaps}{Maximum number of overlaps allowed in repelled labels.}
+   \item{id_segment_color}{Color used for label connector lines.}
+ }}
 }
 \value{
-A ggplot object representing the pedigree diagram.
+A `ggplot` object rendering the pedigree diagram.
 }
 \description{
-This function takes a pedigree dataset and generates a custom ggplot2-based pedigree diagram.
-It processes the data using `ped2fam()`, calculates coordinates and family connections, and
-returns a ggplot object with customized styling.
+Generates a ggplot2-based diagram of a pedigree using custom coordinate layout,
+calculated relationship connections, and flexible styling via `config`.
+It processes the data using `ped2fam()`. This function
+supports multiple families and optionally displays affected status and sex-based color/shape.
 }
 \examples{
 library(BGmisc)
 data("potter")
-ggPedigree(potter, famID_col = "famID", personID_col = "personID", code_male = 1)
+ggPedigree(potter, famID = "famID", personID = "personID")
 
 data("hazard")
-ggPedigree(hazard, famID_col = "famID", personID_col = "ID", code_male = 0)
+ggPedigree(hazard, famID = "famID", personID = "ID", config = list(code_male = 0))
 
 }

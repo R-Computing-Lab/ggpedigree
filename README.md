@@ -19,10 +19,10 @@ branch](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-de
 ![License](https://img.shields.io/badge/License-GPL_v3-blue.svg)
 <!-- badges: end -->
 
-The ggpedigree R package complements the BGmisc package by providing a set
-of functions for visualizing and analyzing pedigree data. It is designed
-to work seamlessly with the BGmisc package, which provides tools for
-simulating, manipulating, and modeling pedigree data.
+The ggpedigree R package complements the BGmisc package by providing a
+set of functions for visualizing and analyzing pedigree data. It is
+designed to work seamlessly with the BGmisc package, which provides
+tools for simulating, manipulating, and modeling pedigree data.
 
 ## Installation
 
@@ -43,8 +43,8 @@ devtools::install_github("R-Computing-Lab/ggpedigree")
 
 ## Citation
 
-If you use ggpedigree in your research or wish to refer to it, please cite
-the following paper:
+If you use ggpedigree in your research or wish to refer to it, please
+cite the following:
 
     citation(package = "ggpedigree")
 
@@ -68,8 +68,8 @@ A BibTeX entry for LaTeX users is
 
 ## Contributing
 
-Contributions to the ggpedigree project are welcome. For guidelines on how
-to contribute, please refer to the [Contributing
+Contributions to the ggpedigree project are welcome. For guidelines on
+how to contribute, please refer to the [Contributing
 Guidelines](https://github.com/R-Computing-Lab/ggpedigree/blob/main/CONTRIBUTING.md).
 Issues and pull requests should be submitted on the GitHub repository.
 For support, please use the GitHub issues page.
@@ -82,7 +82,7 @@ strategy](https://tilburgsciencehub.com/topics/automation/version-control/advanc
 - **Feature Branches**: All major changes and new features should be
   developed on separate branches created from the dev branch. Name these
   branches according to the feature or change they are meant to address.
-- **Development Branches**: Our approach includes two development
+- **Development Branch**: Our approach includes two development
   branches, each serving distinct roles:
   - **`dev`**: This branch is the final integration stage before changes
     are merged into the `main` branch. It is considered stable, and only
@@ -95,7 +95,7 @@ strategy](https://tilburgsciencehub.com/topics/automation/version-control/advanc
 
 ## License
 
-ggpedigree is licensed under the GNU General Public License v3.0. For more
-details, see the
-[LICENSE.md](https://github.com/R-Computing-Lab/BGmisc/blob/main/LICENSE.md)
+ggpedigree is licensed under the GNU General Public License v3.0. For
+more details, see the
+[LICENSE.md](https://github.com/R-Computing-Lab/ggpedigree/blob/main/LICENSE.md)
 file.

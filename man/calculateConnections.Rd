@@ -4,16 +4,26 @@
 \alias{calculateConnections}
 \title{Calculate connections for a pedigree dataset}
 \usage{
-calculateConnections(ped, type = c("siblings", "parent-child", "spouses"))
+calculateConnections(ped, config = list())
 }
 \arguments{
-\item{ped}{a pedigree dataset.  Needs personID, momID, and dadID columns}
+\item{ped}{A data frame containing the pedigree data. Needs personID, momID, and dadID columns}
 
-\item{type}{character.  Type of connections to calculate, either "siblings" or "parent-child"}
+\item{config}{List of configuration parameters. Currently unused but passed through to internal helpers.}
 }
 \value{
-a data.frame with connections between individuals based on parent-child relationships
+A `data.frame` containing connection points and midpoints for graphical rendering. Includes:
+  \itemize{
+    \item `x_pos`, `y_pos`: positions of focal individual
+    \item `x_dad`, `y_dad`, `x_mom`, `y_mom`: parental positions (if available)
+    \item `x_spouse`, `y_spouse`: spousal positions (if available)
+    \item `x_midparent`, `y_midparent`: midpoint between parents
+    \item `x_mid_sib`, `y_mid_sib`: sibling group midpoint
+    \item `x_mid_spouse`, `y_mid_spouse`: midpoint between spouses
+  }
 }
 \description{
-Calculate connections for a pedigree dataset
+Computes graphical connection paths for a pedigree layout, including parent-child,
+sibling, and spousal connections. Optionally processes duplicate appearances
+of individuals (marked as `extra`) to ensure relational accuracy.
 }
