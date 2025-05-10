@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,9 +94,8 @@ afterward.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"potter"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span><span class="va">potter</span>,</span>
-<span>  famID_col <span class="op">=</span> <span class="st">"famID"</span>,</span>
-<span>  personID_col <span class="op">=</span> <span class="st">"personID"</span>,</span>
-<span>  code_male <span class="op">=</span> <span class="fl">1</span></span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="plots_files/figure-html/unnamed-chunk-1-1.png" width="672"></p>
 <p><code><a href="../reference/ggPedigree.html">ggPedigree()</a></code> automatically:</p>
@@ -119,10 +118,11 @@ to the default.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
 <span>  <span class="va">potter</span>,</span>
-<span>  famID_col <span class="op">=</span> <span class="st">"famID"</span>,</span>
-<span>  personID_col <span class="op">=</span> <span class="st">"personID"</span>,</span>
-<span>  code_male <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    code_male <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    sex_color <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    spouse_segment_color <span class="op">=</span> <span class="st">"pink"</span>,</span>
 <span>    sibling_segment_color <span class="op">=</span> <span class="st">"blue"</span>,</span>
 <span>    parent_segment_color <span class="op">=</span> <span class="st">"green"</span>,</span>
@@ -134,48 +134,84 @@ to the default.</p>
 applies:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span><span class="va">potter</span>,</span>
-<span>  famID_col <span class="op">=</span> <span class="st">"famID"</span>,</span>
-<span>  personID_col <span class="op">=</span> <span class="st">"personID"</span>,</span>
-<span>  code_male <span class="op">=</span> <span class="fl">1</span></span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span></span>
 <span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plots_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
 </div>
 <div class="section level2">
-<h2 id="alternative-coding-schemes">Alternative coding schemes<a class="anchor" aria-label="anchor" href="#alternative-coding-schemes"></a>
+<h2 id="additional-customization">Additional customization<a class="anchor" aria-label="anchor" href="#additional-customization"></a>
 </h2>
-<p>Pass the appropriate <code>code_male</code> when males are coded
-differently.</p>
+<p>You can also add affected/unaffected status to the plot. The
+<code>status_col</code> argument allows you to specify a column in your
+data frame that contains the affected/unaffected status of each
+individual. This column should be a factor or character vector, and
+<code><a href="../reference/ggPedigree.html">ggPedigree()</a></code> will automatically recode it to a factor if
+necessary.</p>
+<p>When you add the <code>status_col</code> argument,
+<code><a href="../reference/ggPedigree.html">ggPedigree()</a></code> will automatically color the affected
+individuals in one color and the unaffected individuals in another. You
+can indicate what the values of the affected/unaffected status are in
+your data frame using the <code>affected</code> and
+<code>unaffected</code> arguments in the <code>config</code> list. By
+default, <code><a href="../reference/ggPedigree.html">ggPedigree()</a></code> will overlay the affected individuals
+with a different shape, but you can customize this as well.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hazard"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
-<span>  <span class="va">hazard</span>, <span class="co">#%&gt;% mutate(affected = as.factor(ifelse(affected == TRUE, "affected", "uneffected"))),</span></span>
-<span>  famID_col <span class="op">=</span> <span class="st">"famID"</span>,</span>
-<span>  personID_col <span class="op">=</span> <span class="st">"ID"</span>,</span>
-<span>  code_male <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  <span class="va">hazard</span>, <span class="co"># %&gt;% mutate(affected = as.factor(ifelse(affected == TRUE, "affected", "uneffected"))),</span></span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"ID"</span>,</span>
 <span>  status_col <span class="op">=</span> <span class="st">"affected"</span>,</span>
-<span>  config <span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span> <span class="op">(</span>affected<span class="op">=</span><span class="cn">TRUE</span>,</span>
-<span>                unaffected<span class="op">=</span><span class="cn">FALSE</span>,</span>
-<span>                affected_shape <span class="op">=</span> <span class="fl">4</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    code_male <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    sex_color <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    affected <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    unaffected <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    affected_shape <span class="op">=</span> <span class="fl">4</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p</span></span></code></pre></div>
 <p><img src="plots_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
+<p>If you set sex_color to FALSE, the affected values will be filled
+with the default color palette.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
+<span>  <span class="va">hazard</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"ID"</span>,</span>
+<span>  status_col <span class="op">=</span> <span class="st">"affected"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    code_male <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    sex_color <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    affected <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    unaffected <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="plots_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="multiple-families-in-one-graphic">Multiple families in one graphic<a class="anchor" aria-label="anchor" href="#multiple-families-in-one-graphic"></a>
 </h2>
-<p>Facet to separate distinct pedigrees:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p>If you have multiple families in your data frame, you can use the
+<code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap()</a></code> function from <code>ggplot2</code> to create
+separate plots for each family. This is useful if you want to compare
+the pedigrees of different families side by side.</p>
+<p>Facet to separate distinct pedigrees, note that you can use
+<code>scales = "free_x"</code> to allow each family to have its own
+x-axis scale.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">famID</span>, scales <span class="op">=</span> <span class="st">"free_x"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="plots_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
+<p><img src="plots_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="changing-the-layout">Changing the layout<a class="anchor" aria-label="anchor" href="#changing-the-layout"></a>
 </h2>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
@@ -195,7 +231,7 @@ differently.</p>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; Scale for <span style="color: #00BB00;">colour</span> is already present.</span></span>
 <span><span class="co">#&gt; Adding another scale for <span style="color: #00BB00;">colour</span>, which will replace the existing scale.</span></span></code></pre></div>
-<p><img src="plots_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+<p><img src="plots_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

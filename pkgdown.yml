@@ -3,7 +3,7 @@ pkgdown: 2.1.2
 pkgdown_sha: ~
 articles:
   plots: plots.html
-last_built: 2025-05-07T01:18Z
+last_built: 2025-05-10T00:27Z
 urls:
   reference: https://r-computing-lab.github.io/ggpedigree/reference
   article: https://r-computing-lab.github.io/ggpedigree/articles
