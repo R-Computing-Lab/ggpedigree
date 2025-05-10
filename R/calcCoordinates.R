@@ -251,17 +251,44 @@ calculateConnections <- function(ped,
   # Construct base connection frame
   # This will be used for all joins
 
+
   if ("x_otherself" %in% names(ped)) {
-    connections <- dplyr::select(
-      .data = ped,
-      "personID",
-      "x_pos", "y_pos",
-      "dadID", "momID",
-      "spouseID",
-      "famID",
-      "x_otherself", "y_otherself"
-    )
-  } else {
+    connections <-  dplyr::select(
+        .data = ped,
+        "personID",
+        "x_pos", "y_pos",
+        "dadID", "momID",
+        "spouseID",
+        "famID",
+        "x_otherself", "y_otherself",
+        "extra","link_as_mom", "link_as_dad", "link_as_spouse"
+      )
+
+
+    connections_moms <- dplyr::filter(connections, .data$extra==FALSE  | .data$link_as_mom == TRUE) %>%
+      dplyr::select(
+        -"extra",
+        -"link_as_mom",
+        -"link_as_dad",
+        -"link_as_spouse"
+      )
+
+    connections_dads <- dplyr::filter(connections, .data$extra==FALSE | .data$link_as_dad == TRUE) %>%
+      dplyr::select(
+        -"extra",
+        -"link_as_mom",
+        -"link_as_dad",
+        -"link_as_spouse"
+      )
+    connections_spouses <- dplyr::filter(connections, .data$extra==FALSE |  .data$link_as_spouse == TRUE) %>%
+      dplyr::select(
+        -"extra",
+        -"link_as_mom",
+        -"link_as_dad",
+        -"link_as_spouse"
+      )
+
+  }  else {
     connections <- dplyr::select(
       .data = ped,
       "personID",
@@ -269,13 +296,21 @@ calculateConnections <- function(ped,
       "dadID", "momID",
       "spouseID",
       "famID"
+
     )
+# no duplications, so just use the same connections
+    connections_spouses <- connections_dads <- connections_moms <- connections
   }
+
+
+
+
+
 
   # Get mom's coordinates
   mom_connections <- getRelativeCoordinates(
     ped = ped,
-    connections = connections,
+    connections = connections_moms,
     relativeIDvar = "momID",
     x_name = "x_mom",
     y_name = "y_mom"
@@ -284,7 +319,7 @@ calculateConnections <- function(ped,
   # Get dad's coordinates
   dad_connections <- getRelativeCoordinates(
     ped = ped,
-    connections = connections,
+    connections = connections_dads,
     relativeIDvar = "dadID",
     x_name = "x_dad",
     y_name = "y_dad"
@@ -296,7 +331,7 @@ calculateConnections <- function(ped,
       "personID", "x_pos",
       "y_pos", "spouseID"
     ) |>
-    dplyr::left_join(ped,
+    dplyr::left_join(connections_spouses,
       by = c("spouseID" = "personID"),
       suffix = c("", "_spouse"),
       multiple = "any"
@@ -756,17 +791,19 @@ processExtras <- function(ped, config = list()) {
       mom_closer = dplyr::case_when(
         .data$dist_mom < .data$dist_mom_other ~ TRUE,
         .data$dist_mom_other < .data$dist_mom ~ FALSE,
-        TRUE ~ NA
+        TRUE ~ TRUE
       ),
       dad_closer = dplyr::case_when(
         .data$dist_dad < .data$dist_dad_other ~ TRUE,
         .data$dist_dad_other < .data$dist_dad ~ FALSE,
-        TRUE ~ NA
+        TRUE ~ TRUE
       ),
       spouse_closer = dplyr::case_when(
         .data$dist_spouse < .data$dist_spouse_other ~ TRUE,
         .data$dist_spouse_other < .data$dist_spouse ~ FALSE,
-        TRUE ~ NA
+     #   is.na(.data$dist_spouse)  ~ FALSE,
+      #  !is.na(.data$dist_spouse) & is.na(.data$dist_spouse_other) ~ TRUE,
+        TRUE ~ TRUE
       )
     )
 
@@ -790,18 +827,11 @@ processExtras <- function(ped, config = list()) {
 
   extras <- extras |>
     dplyr::mutate(
-      keep_parents = dplyr::case_when(
-        c("mom", "dad") %in% .data$closest_relative & .data$mom_closer == TRUE & .data$dad_closer == TRUE ~ TRUE,
-        c("mom", "dad") %in% .data$closest_relative & .data$mom_closer == TRUE & .data$dad_closer == FALSE ~ TRUE,
-        c("mom", "dad") %in% .data$closest_relative & .data$mom_closer == FALSE & .data$dad_closer == TRUE ~ TRUE,
-        TRUE ~ FALSE
-      ),
-      keep_spouse = dplyr::case_when(
-        c("spouse") %in% .data$closest_relative & .data$spouse_closer == TRUE ~ TRUE,
-        c("spouse") %in% .data$closest_relative & .data$spouse_closer == FALSE ~ FALSE,
-        TRUE ~ FALSE
+      link_as_mom = .data$closest_relative %in% c("mom", "dad") & .data$mom_closer,
+      link_as_dad = .data$closest_relative %in% c("mom", "dad") & .data$dad_closer,
+      link_as_spouse = .data$closest_relative == "spouse" & .data$spouse_closer
       )
-    )
+
 
   # -----
   # Final subset of relevant decision columns
@@ -810,9 +840,9 @@ processExtras <- function(ped, config = list()) {
   skinnyextras <- extras |>
     dplyr::select(
       .data$newID,
-      .data$closest_relative,
-      .data$keep_parents,
-      .data$keep_spouse,
+      .data$link_as_dad,
+      .data$link_as_mom,
+      .data$link_as_spouse,
       .data$x_otherself,
       .data$y_otherself
     )
@@ -825,31 +855,29 @@ processExtras <- function(ped, config = list()) {
 
   ped <- ped |>
     dplyr::left_join(skinnyextras,
-      by = c("newID"), suffix = c("", "_"),
-      relationship = "one-to-one"
-    ) |>
-    dplyr::mutate(
-      spouseID = dplyr::case_when(
-        .data$keep_spouse == TRUE ~ .data$spouseID,
-        is.na(.data$closest_relative) ~ .data$spouseID,
-        TRUE ~ NA_real_
-      ),
-      momID = dplyr::case_when(
-        .data$keep_parents == TRUE ~ .data$momID,
-        is.na(.data$closest_relative) ~ .data$momID,
-        TRUE ~ NA_real_
-      ),
-      dadID = dplyr::case_when(
-        .data$keep_parents == TRUE ~ .data$dadID,
-        is.na(.data$closest_relative) ~ .data$dadID,
-        TRUE ~ NA_real_
-      )
-    ) |>
+      by = c("newID"), suffix = c("", "_")#,
+     # relationship = "one-to-one"
+    )  |>
     dplyr::select(
-      -"newID",
-      -"extra",
-      -"closest_relative"
+      -"newID"
+    ) |>
+    # set the connection columns to TRUE if not kept
+    dplyr::mutate(
+      link_as_mom = case_when(
+        is.na(.data$link_as_mom) ~ TRUE,
+        .data$link_as_mom == TRUE ~ TRUE,
+        .data$link_as_mom == FALSE ~ FALSE
+      ),
+      link_as_dad = case_when(
+        is.na(.data$link_as_dad) ~ TRUE,
+        .data$link_as_dad == TRUE ~ TRUE,
+        .data$link_as_dad == FALSE ~ FALSE
+      ),
+      link_as_spouse = case_when(
+        is.na(.data$link_as_spouse) ~ TRUE,
+        .data$link_as_spouse == TRUE ~ TRUE,
+        .data$link_as_spouse == FALSE ~ FALSE
+      )
     )
-
   return(ped)
 }

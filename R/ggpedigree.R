@@ -15,7 +15,7 @@
 #'  \describe{
 #'     \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1.}
 #'     \item{spouse_segment_color, self_segment_color, sibling_segment_color, parent_segment_color, offspring_segment_color}{Character. Line colors for respective connection types.}
-#'     \item{text_size, point_size, line_width}{Numeric. Controls text size, point size, and line thickness.}
+#'     \item{label_text_size, point_size, line_width}{Numeric. Controls text size, point size, and line thickness.}
 #'     \item{generation_gap}{Numeric. Vertical spacing multiplier between generations. Default: 1.}
 #'     \item{unknown_shape, female_shape, male_shape, affected_shape}{Integers. Shape codes for plotting each group.}
 #'     \item{sex_shape_labs}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
@@ -53,8 +53,10 @@ ggPedigree <- function(ped, famID = "famID",
     sibling_segment_color = "black",
     parent_segment_color = "black",
     offspring_segment_color = "black",
+    include_labels = TRUE,
+    label_method="ggrepel",
     code_male = 1,
-    text_size = 3,
+    label_text_size = 2,
     point_size = 4,
     line_width = 0.5,
     generation_gap = 1,
@@ -67,7 +69,7 @@ ggPedigree <- function(ped, famID = "famID",
     affected = "affected",
     sex_color = TRUE,
     status_vals = c(1, 0),
-    max_overlaps = 100,
+    max_overlaps = 15,
     id_segment_color = NA
   )
 
@@ -76,7 +78,7 @@ ggPedigree <- function(ped, famID = "famID",
   config <- utils::modifyList(default_config, config)
 
   # Set additional internal config values based on other entries
-  config$status_labs <- c(paste0(config$affected), paste0(config$unaffected))
+  config$status_labs <- c(config$affected, config$unaffected)
   config$shape_vals <- c(config$female_shape, config$male_shape, config$unknown_shape)
 
   # -----
@@ -110,6 +112,7 @@ ggPedigree <- function(ped, famID = "famID",
       levels = c(config$affected, config$unaffected)
     )
   }
+
 
   # -----
   # STEP 3: Sex Recode
@@ -293,15 +296,34 @@ ggPedigree <- function(ped, famID = "famID",
   # STEP 9: Add Labels
   # -----
   # Add labels to the points using ggrepel for better visibility
-  p <- p +
-    ggrepel::geom_text_repel(ggplot2::aes(label = .data$personID),
-      nudge_y = -.15 * config$generation_gap,
-      size = config$text_size,
-      na.rm = TRUE,
-      max.overlaps = config$max_overlaps,
-      segment.size = config$line_width * .5,
-      segment.color = config$id_segment_color,
-    )
+  if(config$include_labels == TRUE && config$label_method=="ggrepel"){
+    p <- p +
+      ggrepel::geom_text_repel(ggplot2::aes(label = .data$personID),
+        nudge_y = -.10 * config$generation_gap,
+        size = config$label_text_size,
+        na.rm = TRUE,
+        max.overlaps = config$max_overlaps,
+        segment.size = config$line_width *.5,
+        segment.color = config$id_segment_color
+      )
+  } else if(config$include_labels == TRUE && config$label_method=="geom_label"){
+    p <- p +
+      ggplot2::geom_label(ggplot2::aes(label = .data$personID),
+        nudge_y = -.25 * config$generation_gap,
+        size = config$label_text_size,
+        na.rm = TRUE
+      )
+
+  } else if(config$include_labels == TRUE || config$label_method=="geom_text"){
+    p <- p +
+      ggplot2::geom_text(ggplot2::aes(label = .data$personID),
+        nudge_y = -.25 * config$generation_gap,
+        size = config$label_text_size,
+        na.rm = TRUE
+      )
+  }
+
+
 
   # -----
   # STEP 10: Scales, Theme

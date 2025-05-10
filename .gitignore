@@ -5,3 +5,4 @@
 *.lnk
 docs
 *.code-workspace
+R/plot.ped.R
