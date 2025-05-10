@@ -25,12 +25,16 @@ utils::globalVariables(c(":="))
 #'     \item `nid`: Internal numeric identifier for layout mapping.
 #'     \item `extra`: Logical flag indicating whether this row is a secondary appearance.
 #'   }
+#'
 #' @export
+
 calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
                                  dadID = "dadID",
                                  spouseID = "spouseID", sexVar = "sex",
                                  code_male = NULL,
-                                 config = list()) {
+                                 config = list())
+  {
+
   if (!inherits(ped, "data.frame")) {
     stop("ped should be a data.frame or inherit to a data.frame")
   }
@@ -105,10 +109,10 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
   # Initialize spouse vector
   spouse_vector <- rep(NA, length(nid_vector))
 
-  #' A matrix with values
-  #' 1 = subject plotted to the immediate right is a spouse
-  #' 2 = subject plotted to the immediate right is an inbred spouse
-  #' 0 = not a spouse
+  # A matrix with values
+  # 1 = subject plotted to the immediate right is a spouse
+  # 2 = subject plotted to the immediate right is an inbred spouse
+  # 0 = not a spouse
 
 
   # Populate coordinates from nid positions
@@ -265,7 +269,7 @@ calculateConnections <- function(ped,
       )
 
 
-    connections_moms <- dplyr::filter(connections, .data$extra==FALSE  | .data$link_as_mom == TRUE) %>%
+    connections_moms <- dplyr::filter(connections, .data$extra==FALSE  | .data$link_as_mom == TRUE) |>
       dplyr::select(
         -"extra",
         -"link_as_mom",
@@ -273,14 +277,14 @@ calculateConnections <- function(ped,
         -"link_as_spouse"
       )
 
-    connections_dads <- dplyr::filter(connections, .data$extra==FALSE | .data$link_as_dad == TRUE) %>%
+    connections_dads <- dplyr::filter(connections, .data$extra==FALSE | .data$link_as_dad == TRUE)|>
       dplyr::select(
         -"extra",
         -"link_as_mom",
         -"link_as_dad",
         -"link_as_spouse"
       )
-    connections_spouses <- dplyr::filter(connections, .data$extra==FALSE |  .data$link_as_spouse == TRUE) %>%
+    connections_spouses <- dplyr::filter(connections, .data$extra==FALSE |  .data$link_as_spouse == TRUE) |>
       dplyr::select(
         -"extra",
         -"link_as_mom",
@@ -863,17 +867,17 @@ processExtras <- function(ped, config = list()) {
     ) |>
     # set the connection columns to TRUE if not kept
     dplyr::mutate(
-      link_as_mom = case_when(
+      link_as_mom =  dplyr::case_when(
         is.na(.data$link_as_mom) ~ TRUE,
         .data$link_as_mom == TRUE ~ TRUE,
         .data$link_as_mom == FALSE ~ FALSE
       ),
-      link_as_dad = case_when(
+      link_as_dad =  dplyr::case_when(
         is.na(.data$link_as_dad) ~ TRUE,
         .data$link_as_dad == TRUE ~ TRUE,
         .data$link_as_dad == FALSE ~ FALSE
       ),
-      link_as_spouse = case_when(
+      link_as_spouse = dplyr::case_when(
         is.na(.data$link_as_spouse) ~ TRUE,
         .data$link_as_spouse == TRUE ~ TRUE,
         .data$link_as_spouse == FALSE ~ FALSE

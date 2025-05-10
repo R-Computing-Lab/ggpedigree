@@ -62,7 +62,7 @@ p <- ggPedigree(
 p
 
 ## -----------------------------------------------------------------------------
-p <- ggPedigree(
+ggPedigree(
   hazard,
   famID = "famID",
   personID = "ID",
@@ -75,7 +75,7 @@ p <- ggPedigree(
   )
 )
 
-p
+
 
 ## -----------------------------------------------------------------------------
 p +
@@ -99,4 +99,28 @@ p +
     discrete = TRUE,
     labels = c("Female", "Male", "Unknown")
   )
+
+## ----message=FALSE, warning=FALSE---------------------------------------------
+library(BGmisc) # helper utilities & example data
+data("inbreeding")
+
+df <- inbreeding 
+
+
+p <- ggPedigree(
+  df,
+  famID = "famID",
+  personID = "ID",
+  status_col = "proband",
+  config = list(
+    code_male = 0,
+    sex_color = F,
+    label_method="geom_text",
+    affected = TRUE,
+    unaffected = FALSE,
+    generation_gap = 2,
+    affected_shape = 4)
+) + facet_wrap(~famID, scales= "free")
+
+p
 
