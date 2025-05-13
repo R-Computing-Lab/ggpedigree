@@ -192,7 +192,11 @@ p <- ggPedigree(
     affected = TRUE,
     unaffected = FALSE,
     generation_gap = 2,
-    affected_shape = 4)
+    affected_shape = 4,
+    spouse_segment_color = "pink",
+    sibling_segment_color = "blue",
+    parent_segment_color = "green",
+    offspring_segment_color = "black")
 ) + facet_wrap(~famID, scales= "free")
 
 p

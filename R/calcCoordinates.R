@@ -188,6 +188,7 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
     ped <- rbind(ped, ped_extra)
   } else {
     ped_extra <- NULL
+    ped$extra <- FALSE
   }
 
   return(ped)
@@ -248,7 +249,7 @@ calculateConnections <- function(ped,
   }
 
   # If duplicated appearances exist, resolve which connections to keep
-  if ("extra" %in% names(ped)) {
+  if (sum(ped$extra) > 0) {
     ped <- processExtras(ped, config = config)
   }
 
@@ -299,17 +300,13 @@ calculateConnections <- function(ped,
       "x_pos", "y_pos",
       "dadID", "momID",
       "spouseID",
-      "famID"
+      "famID",
+      "extra"
 
     )
 # no duplications, so just use the same connections
     connections_spouses <- connections_dads <- connections_moms <- connections
   }
-
-
-
-
-
 
   # Get mom's coordinates
   mom_connections <- getRelativeCoordinates(
@@ -395,10 +392,15 @@ calculateConnections <- function(ped,
 
   # Calculate sibling group midpoints
   sibling_midpoints <- connections |>
-    dplyr::filter(!is.na(.data$dadID) & !is.na(.data$momID)) |>
+    dplyr::filter(
+      !is.na(.data$momID) & !is.na(.data$dadID) &  # biological parents defined
+        !is.na(.data$x_mom) & !is.na(.data$y_mom) &  # mom’s coordinates linked
+        !is.na(.data$x_dad) & !is.na(.data$y_dad)    # dad’s coordinates linked
+    ) |>
     dplyr::group_by(
-      .data$dadID,
-      .data$momID
+      .data$momID, .data$dadID,
+      .data$x_mom, .data$y_mom,
+      .data$x_dad, .data$y_dad
     ) |>
     dplyr::summarize(
       x_mid_sib = mean(.data$x_pos),
@@ -416,17 +418,18 @@ calculateConnections <- function(ped,
       by = c("spouseID")
     ) |>
     dplyr::left_join(sibling_midpoints,
-      by = c("dadID", "momID")
+      by = c("dadID", "momID","x_mom", "y_mom",
+             "x_dad", "y_dad")
     ) |>
     dplyr::mutate(
       x_mid_sib = dplyr::case_when(
-        is.na(.data$x_mid_sib) & !is.na(.data$dadID) & !is.na(.data$momID) ~ .data$x_pos,
         !is.na(.data$x_mid_sib) ~ .data$x_mid_sib,
+        (!is.na(.data$momID) & !is.na(.data$x_mom)) | (!is.na(.data$dadID) & !is.na(.data$x_dad)) ~ .data$x_pos,
         TRUE ~ NA_real_
       ),
       y_mid_sib = dplyr::case_when(
-        is.na(.data$y_mid_sib) & !is.na(.data$dadID) & !is.na(.data$momID) ~ .data$y_pos,
         !is.na(.data$y_mid_sib) ~ .data$y_mid_sib,
+        (!is.na(.data$momID) & !is.na(.data$y_mom)) | (!is.na(.data$dadID) & !is.na(.data$y_dad)) ~ .data$y_pos,
         TRUE ~ NA_real_
       )
     )
@@ -748,16 +751,47 @@ processExtras <- function(ped, config = list()) {
   #   - mom, dad, spouse
   #   - same individual in other location (otherself)
   # These will be used to choose the "closest" relationship.
+  # minkowski distance could be used here as well aka "city block" distance
   # -----
   extras <- extras |>
     dplyr::mutate(
-      dist_mom = sqrt((.data$x_pos - .data$x_mom)^2 + (.data$y_pos - .data$y_mom)^2),
-      dist_mom_other = sqrt((.data$x_otherself - .data$x_mom)^2 + (.data$y_otherself - .data$y_mom)^2),
-      dist_dad = sqrt((.data$x_pos - .data$x_dad)^2 + (.data$y_pos - .data$y_dad)^2),
-      dist_dad_other = sqrt((.data$x_otherself - .data$x_dad)^2 + (.data$y_otherself - .data$y_dad)^2),
-      dist_spouse = sqrt((.data$x_pos - .data$x_spouse)^2 + (.data$y_pos - .data$y_spouse)^2),
-      dist_spouse_other = sqrt((.data$x_otherself - .data$x_spouse)^2 + (.data$y_otherself - .data$y_spouse)^2),
-      dist_otherself = sqrt((.data$x_pos - .data$x_otherself)^2 + (.data$y_pos - .data$y_otherself)^2)
+      dist_mom = computeDistance(method = "cityblock",
+                                 x1 = .data$x_pos,
+                                 y1 = .data$y_pos,
+                                 x2 = .data$x_mom,
+                                 y2 = .data$y_mom),
+
+      dist_mom_other = computeDistance(method = "cityblock",
+                                       x1 = .data$x_otherself,
+                                       y1 = .data$y_otherself,
+                                       x2 = .data$x_mom,
+                                       y2 = .data$y_mom),
+      dist_dad = computeDistance(method = "cityblock",
+                                 x1 = .data$x_pos,
+                                 y1 = .data$y_pos,
+                                 x2 = .data$x_dad,
+                                 y2 = .data$y_dad),
+      dist_dad_other = computeDistance(method = "cityblock",
+                                       x1 = .data$x_otherself,
+                                       y1 = .data$y_otherself,
+                                       x2 = .data$x_dad,
+                                       y2 = .data$y_dad),
+      # spouse distance
+      dist_spouse = computeDistance(method = "cityblock",
+                                    x1 = .data$x_pos,
+                                 y1 = .data$y_pos,
+                                 x2 = .data$x_spouse,
+                                 y2 = .data$y_spouse),
+      dist_spouse_other = computeDistance(method = "cityblock",
+                                          x1 = .data$x_otherself,
+                                       y1 = .data$y_otherself,
+                                       x2 = .data$x_spouse,
+                                       y2 = .data$y_spouse),
+      dist_otherself = computeDistance(method = "cityblock",
+                                       x1 = .data$x_pos,
+                                 y1 = .data$y_pos,
+                                 x2 = .data$x_otherself,
+                                 y2 = .data$y_otherself)
     )
 
   # -----
@@ -885,3 +919,37 @@ processExtras <- function(ped, config = list()) {
     )
   return(ped)
 }
+#' Compute distance between two points
+#'
+#' This function calculates the distance between two points in a 2D space using
+#' Minkowski distance. It can be used to compute Euclidean or Manhattan distance.
+#' It is a utility function for calculating distances in pedigree layouts.
+#' Defaults to Euclidean distance if no method is specified.
+#'
+#'
+#' @param x1 Numeric. X-coordinate of the first point.
+#' @param y1 Numeric. Y-coordinate of the first point.
+#' @param x2 Numeric. X-coordinate of the second point.
+#' @param y2 Numeric. Y-coordinate of the second point.
+#' @param method Character. Method of distance calculation. Options are "euclidean", "cityblock", and "Minkowski".
+#' @param p Numeric. The order of the Minkowski distance. If NULL, defaults to 2 for Euclidean and 1 for Manhattan. If
+#' Minkowski method is used, p should be specified.
+
+computeDistance <- function(x1, y1, x2, y2,
+                                     method = "euclidean", p = NULL) {
+
+  method <- tolower(method)
+
+  if(is.null(p)) {
+    p <- switch(method,
+                euclidean = 2,
+                cityblock = 1,
+                stop("Invalid distance method. Choose from 'euclidean', 'cityblock', or specify p.")
+    )
+  }
+  # Calculate Minkowski distance
+
+  ((abs(x1 - x2))^p + (abs(y1 - y2))^p)^(1 / p)
+
+}
+

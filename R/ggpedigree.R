@@ -161,21 +161,6 @@ ggPedigree <- function(ped, famID = "famID",
   # STEP 7: Add Segments
   # -----
 
-  # Self-segment (for duplicate layout appearances of same person)
-  if ("x_otherself" %in% names(connections)) {
-    p <- p + ggplot2::geom_segment(
-      data = connections,
-      ggplot2::aes(
-        x = .data$x_otherself,
-        xend = .data$x_pos,
-        y = .data$y_otherself,
-        yend = .data$y_pos
-      ),
-      linewidth = config$line_width,
-      color = config$self_segment_color,
-      na.rm = TRUE
-    )
-  }
   # Spouse link between two parents
   p <- p +
     ggplot2::geom_segment(
@@ -189,20 +174,22 @@ ggPedigree <- function(ped, famID = "famID",
       linewidth = config$line_width,
       color = config$spouse_segment_color,
       na.rm = TRUE
-    ) +
-    # Parent-child stub (child to mid-sibling point)
-    ggplot2::geom_segment(
-      data = connections,
-      ggplot2::aes(
-        x = .data$x_mid_sib,
-        xend = .data$x_midparent,
-        y = .data$y_mid_sib - gap_off,
-        yend = .data$y_midparent
-      ),
-      linewidth = config$line_width,
-      color = config$parent_segment_color,
-      na.rm = TRUE
-    ) +
+    )
+
+  # Parent-child stub (child to mid-sibling point)
+
+  p <- p + ggplot2::geom_segment(
+    data = connections,
+    ggplot2::aes(
+      x = .data$x_mid_sib,
+      xend = .data$x_midparent,
+      y = .data$y_mid_sib - gap_off,
+      yend = .data$y_midparent
+    ),
+    linewidth = config$line_width,
+    color = config$parent_segment_color,
+    na.rm = TRUE
+  )  +
     # Mid-sibling to parents midpoint
     ggplot2::geom_segment(
       data = connections,
@@ -229,6 +216,7 @@ ggPedigree <- function(ped, famID = "famID",
       color = config$sibling_segment_color,
       na.rm = TRUE
     )
+
 
 
 
@@ -321,6 +309,26 @@ ggPedigree <- function(ped, famID = "famID",
         size = config$label_text_size,
         na.rm = TRUE
       )
+  }
+
+
+  # Self-segment (for duplicate layout appearances of same person)
+  if ("x_otherself" %in% names(connections)) {
+    p <- p + ggplot2::geom_curve(
+      data = dplyr::filter(connections,extra==TRUE),
+      ggplot2::aes(
+        x = .data$x_otherself,
+        xend = .data$x_pos,
+        y = .data$y_otherself,
+        yend = .data$y_pos
+      ),
+      linewidth = config$line_width,
+      color = config$self_segment_color,
+      angle = 90,
+      curvature = -0.2,
+      na.rm = TRUE
+    )
+
   }
 
 
