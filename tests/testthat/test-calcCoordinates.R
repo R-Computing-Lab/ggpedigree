@@ -120,3 +120,23 @@ test_that("getRelativeCoordinates returns expected coordinates for mother", {
   expect_false("A" %in% mom_coords$personID)
   expect_false("B" %in% mom_coords$personID)
 })
+
+
+test_that("broken hints doesn't cause a fatal error", {
+  library(BGmisc)
+  data("potter")
+  potter$momID[1] <- NA
+  potter$dadID[1] <- NA
+
+  # Test with hints
+  expect_warning(
+    ggPedigree(potter,
+               famID = "famID",
+               personID = "personID",
+               config= list(hints = TRUE)
+    )
+  )
+}
+  )
+
+

@@ -44,7 +44,8 @@ library(tidyverse) # for data wrangling
 data("potter")
 ggPedigree(potter,
   famID = "famID",
-  personID = "personID"
+  personID = "personID",
+  config= list(hints = TRUE)
 )
 ```
 
@@ -173,7 +174,7 @@ p +
 
 # More complex examples
 
-```{r, message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE}
 library(BGmisc) # helper utilities & example data
 data("inbreeding")
 
@@ -181,10 +182,13 @@ df <- inbreeding
 
 
 p <- ggPedigree(
-  df,
+  df %>% filter(
+    famID %in% c(5,7),
+  ),
   famID = "famID",
   personID = "ID",
   status_col = "proband",
+  debug = TRUE,
   config = list(
     code_male = 0,
     sex_color = F,
@@ -197,7 +201,10 @@ p <- ggPedigree(
     sibling_segment_color = "blue",
     parent_segment_color = "green",
     offspring_segment_color = "black")
-) + facet_wrap(~famID, scales= "free")
+)# + facet_wrap(~famID, scales= "free")
 
-p
+p$connections%>%filter(personID     ==61) %>% nrow()
+p$connections%>%filter(personID     ==61) %>% unique()
+
+p$plot
 ```

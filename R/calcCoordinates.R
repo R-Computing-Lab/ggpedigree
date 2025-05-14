@@ -69,6 +69,25 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
     sex = ped_recode[[sexVar]],
   )
 
+  if(!is.null(config$hints)) {
+
+
+    autohint <-   tryCatch(kinship2::autohint(ped_ped,config$hints,
+                                align = config$ped_align,
+                                packed = config$ped_packed),
+             error = function(e) kinship2::autohint(ped_ped,
+                                        align = config$ped_align,
+                                        packed = config$ped_packed)
+             ,
+             finally = warning("Your hints caused an error and were not used, using default hints instead"))
+  } else {
+    autohint <- kinship2::autohint(ped_ped,
+                                   align = config$ped_align,
+                                   packed = config$ped_packed)
+  }
+
+
+
   # -----
   # Extract layout information
   # -----
@@ -78,7 +97,8 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
   pos <- kinship2::align.pedigree(ped_ped,
     packed = config$ped_packed,
     align = config$ped_align,
-    width = config$ped_width
+    width = config$ped_width,
+    hints = autohint
   )
 
   # Extract layout information
@@ -248,6 +268,18 @@ calculateConnections <- function(ped,
     ped$famID <- 1
   }
 
+  # create a unique parenthash for each individual
+  # this will be used to identify siblings
+  if (!all("parenthash" %in% names(ped))) {
+  ped <- ped |>
+    dplyr::mutate(
+      parenthash = paste0(.data$momID, ".", .data$dadID)
+    ) |>
+    dplyr::mutate(
+      parenthash = gsub("NA.NA", NA, .data$parenthash)
+    )
+  }
+
   # If duplicated appearances exist, resolve which connections to keep
   if (sum(ped$extra) > 0) {
     ped <- processExtras(ped, config = config)
@@ -262,50 +294,69 @@ calculateConnections <- function(ped,
         .data = ped,
         "personID",
         "x_pos", "y_pos",
-        "dadID", "momID",
+        "dadID", "momID", "parenthash",
         "spouseID",
         "famID",
         "x_otherself", "y_otherself",
-        "extra","link_as_mom", "link_as_dad", "link_as_spouse"
-      )
+        "extra","link_as_mom", "link_as_dad", "link_as_spouse",
+        "link_as_sibling"
+      )  |> unique()
 
 
-    connections_moms <- dplyr::filter(connections, .data$extra==FALSE  | .data$link_as_mom == TRUE) |>
+    connections_moms <- dplyr::filter(connections, .data$link_as_mom == TRUE) |>
       dplyr::select(
         -"extra",
         -"link_as_mom",
         -"link_as_dad",
-        -"link_as_spouse"
+        -"link_as_spouse",
+        -"link_as_sibling"
       )
 
-    connections_dads <- dplyr::filter(connections, .data$extra==FALSE | .data$link_as_dad == TRUE)|>
+    connections_dads <- dplyr::filter(connections, .data$link_as_dad == TRUE)|>
       dplyr::select(
         -"extra",
         -"link_as_mom",
         -"link_as_dad",
-        -"link_as_spouse"
+        -"link_as_spouse",
+        -"link_as_sibling"
       )
-    connections_spouses <- dplyr::filter(connections, .data$extra==FALSE |  .data$link_as_spouse == TRUE) |>
+    connections_spouses <- dplyr::filter(connections, .data$link_as_spouse == TRUE) |>
       dplyr::select(
         -"extra",
         -"link_as_mom",
         -"link_as_dad",
-        -"link_as_spouse"
+        -"link_as_spouse",
+        -"link_as_sibling"
       )
-
+    connections_sibs <- dplyr::filter(connections, .data$link_as_sibling == TRUE) |>
+      dplyr::select(
+        -"extra",
+        -"link_as_mom",
+        -"link_as_dad",
+        -"link_as_spouse",
+        -"link_as_sibling"
+      )
   }  else {
     connections <- dplyr::select(
       .data = ped,
       "personID",
       "x_pos", "y_pos",
-      "dadID", "momID",
+      "dadID", "momID", "parenthash",
       "spouseID",
       "famID",
       "extra"
+    )  |> unique() |>
+      dplyr::mutate(
+        link_as_mom = TRUE,
+        link_as_dad = TRUE,
+        link_as_spouse = TRUE,
+        link_as_sibling = TRUE
+      )
 
-    )
+
+
 # no duplications, so just use the same connections
-    connections_spouses <- connections_dads <- connections_moms <- connections
+    connections_sibs <-  connections_spouses <- connections_dads <- connections_moms <- connections
   }
 
   # Get mom's coordinates
@@ -344,7 +395,7 @@ calculateConnections <- function(ped,
     dplyr::select(
       "personID", "spouseID",
       "x_spouse", "y_spouse"
-    )
+    )  |> unique()
 
   # Combine mom, dad, and spouse coordinates
   connections <- connections |>
@@ -356,12 +407,13 @@ calculateConnections <- function(ped,
     ) |>
     dplyr::left_join(spouse_connections,
       by = c("personID", "spouseID")
-    )
+    )  |> unique()
 
-  # Calculate midpoints between mom and dad
+  # Calculate midpoints between mom and dad in child row
+
   parent_midpoints <- connections |>
     dplyr::filter(!is.na(.data$dadID) & !is.na(.data$momID)) |>
-    dplyr::group_by(.data$dadID, .data$momID) |>
+    dplyr::group_by(.data$parenthash) |>
     dplyr::summarize(
       x_midparent = mean(c(
         dplyr::first(.data$x_dad),
@@ -372,7 +424,7 @@ calculateConnections <- function(ped,
         dplyr::first(.data$y_mom)
       )),
       .groups = "drop"
-    )
+    )  |> unique()
 
   # Calculate midpoints between spouses
   spouse_midpoints <- connections |>
@@ -388,17 +440,17 @@ calculateConnections <- function(ped,
         dplyr::first(.data$y_spouse)
       )),
       .groups = "drop"
-    )
+    )  |> unique()
 
   # Calculate sibling group midpoints
-  sibling_midpoints <- connections |>
+  sibling_midpoints <- connections|>
     dplyr::filter(
       !is.na(.data$momID) & !is.na(.data$dadID) &  # biological parents defined
         !is.na(.data$x_mom) & !is.na(.data$y_mom) &  # mom’s coordinates linked
         !is.na(.data$x_dad) & !is.na(.data$y_dad)    # dad’s coordinates linked
     ) |>
     dplyr::group_by(
-      .data$momID, .data$dadID,
+      .data$parenthash,
       .data$x_mom, .data$y_mom,
       .data$x_dad, .data$y_dad
     ) |>
@@ -406,33 +458,36 @@ calculateConnections <- function(ped,
       x_mid_sib = mean(.data$x_pos),
       y_mid_sib = dplyr::first(.data$y_pos),
       .groups = "drop"
-    )
+    )  |> unique()
 
 
   # Merge midpoints into connections
   connections <- connections |>
     dplyr::left_join(parent_midpoints,
-      by = c("dadID", "momID")
+      by = c("parenthash")
     ) |>
     dplyr::left_join(spouse_midpoints,
       by = c("spouseID")
     ) |>
     dplyr::left_join(sibling_midpoints,
-      by = c("dadID", "momID","x_mom", "y_mom",
+      by = c("parenthash","x_mom", "y_mom",
              "x_dad", "y_dad")
     ) |>
-    dplyr::mutate(
-      x_mid_sib = dplyr::case_when(
-        !is.na(.data$x_mid_sib) ~ .data$x_mid_sib,
-        (!is.na(.data$momID) & !is.na(.data$x_mom)) | (!is.na(.data$dadID) & !is.na(.data$x_dad)) ~ .data$x_pos,
+   dplyr::mutate(
+     x_mid_sib = dplyr::case_when(
+       is.na(.data$x_dad) &  is.na(.data$x_mom) ~ NA_real_,
+       !is.na(.data$x_mid_sib) ~ .data$x_mid_sib,
+       (!is.na(.data$momID) & !is.na(.data$x_mom)) | (!is.na(.data$dadID) & !is.na(.data$x_dad)) ~ .data$x_pos,
         TRUE ~ NA_real_
-      ),
+     ),
       y_mid_sib = dplyr::case_when(
+        is.na(.data$y_dad) &  is.na(.data$y_mom) ~ NA_real_,
+
         !is.na(.data$y_mid_sib) ~ .data$y_mid_sib,
-        (!is.na(.data$momID) & !is.na(.data$y_mom)) | (!is.na(.data$dadID) & !is.na(.data$y_dad)) ~ .data$y_pos,
-        TRUE ~ NA_real_
-      )
-    )
+       (!is.na(.data$momID) & !is.na(.data$y_mom)) | (!is.na(.data$dadID) & !is.na(.data$y_dad)) ~ .data$y_pos,
+       TRUE ~ NA_real_
+     )
+   )  |> unique()
 
   return(connections)
 }
@@ -448,6 +503,7 @@ calculateConnections <- function(ped,
 #' @param x_name Character. Name of the new column to store the x-coordinate of the relative.
 #' @param y_name Character. Name of the new column to store the y-coordinate of the relative.
 #' @param multiple Character. Specifies how to handle multiple matches. Options are "all" or "any".
+#' @param only_unique Logical. If TRUE, return only unique rows. Defaults to TRUE.
 #'
 #' @return A `data.frame` with columns:
 #'   \itemize{
@@ -461,7 +517,8 @@ calculateConnections <- function(ped,
 getRelativeCoordinates <- function(ped, connections, relativeIDvar, x_name, y_name,
                                    #  relationship = "one-to-one",
                                    personID = "personID",
-                                   multiple = "all") {
+                                   multiple = "all",
+                                   only_unique = TRUE) {
   # Filter only rows where the relative ID is not missing
   # and join with the main pedigree data frame
   rel_connections <- connections |>
@@ -498,126 +555,14 @@ getRelativeCoordinates <- function(ped, connections, relativeIDvar, x_name, y_na
         !!y_name
       )
   }
+  if(only_unique == TRUE){
+    rel_connections <-  unique(rel_connections)
+  }
 
   return(rel_connections)
 }
 
-#' Compute midpoints across grouped coordinates
-#'
-#' A flexible utility function to compute x and y midpoints for groups of individuals
-#' using a specified method. Used to support positioning logic for sibling groups,
-#' parental dyads, or spousal pairs in pedigree layouts.
-#' @param data A `data.frame` containing the coordinate and grouping variables.
-#' @param group_vars Character vector. Names of the grouping variables.
-#' @param x_vars Character vector. Names of the x-coordinate variables to be averaged.
-#' @param y_vars Character vector. Names of the y-coordinate variables to be averaged.
-#' @param x_out Character. Name of the output column for the x-coordinate midpoint.
-#' @param y_out Character. Name of the output column for the y-coordinate midpoint.
-#' @param method Character. Method for calculating midpoints. Options include:
-#'  \itemize{
-#'  \item `"mean"`: Arithmetic mean of the coordinates.
-#'  \item `"median"`: Median of the coordinates.
-#'  \item `"weighted_mean"`: Weighted mean of the coordinates.
-#'  \item `"first_pair"`: Mean of the first pair of coordinates.
-#'  \item `"meanxfirst"`: Mean of the x-coordinates and first y-coordinate.
-#'  \item `"meanyfirst"`: Mean of the y-coordinates and first x-coordinate.
-#'  }
-#' @param require_non_missing Character vector. Names of variables that must not be missing for the row to be included.
 
-#' @return A `data.frame` grouped by `group_vars` with new columns `x_out` and `y_out` containing midpoint coordinates.
-#' @keywords internal
-
-getMidpoints <- function(data, group_vars,
-                         x_vars, y_vars,
-                         x_out, y_out, method = "mean",
-                         require_non_missing = group_vars) {
-  # -----
-  # Filter for complete data if requested
-  if (!is.null(require_non_missing)) {
-    data <- data |>
-      dplyr::filter(
-        dplyr::if_all(!!!rlang::syms(require_non_missing), ~ !is.na(.))
-      )
-  }
-
-  # -----
-  # Apply selected midpoint method
-  # -----
-
-  if (method == "mean") {
-    # Average all xs and Average of all y values
-
-    data |>
-      dplyr::group_by(!!!rlang::syms(group_vars)) |>
-      dplyr::summarize(
-        !!x_out := mean(c(!!!rlang::syms(x_vars)), na.rm = TRUE),
-        !!y_out := mean(c(!!!rlang::syms(y_vars)), na.rm = TRUE),
-        .groups = "drop"
-      )
-  } else if (method == "median") {
-    # Median of all xs and Median of all y values
-    data |>
-      dplyr::group_by(!!!rlang::syms(group_vars)) |>
-      dplyr::summarize(
-        !!x_out := stats::median(c(!!!rlang::syms(x_vars)), na.rm = TRUE),
-        !!y_out := stats::median(c(!!!rlang::syms(y_vars)), na.rm = TRUE),
-        .groups = "drop"
-      )
-  } else if (method == "weighted_mean") {
-    # Weighted average (same weight for all unless specified externally)
-
-    data |>
-      dplyr::group_by(!!!rlang::syms(group_vars)) |>
-      dplyr::summarize(
-        !!x_out := stats::weighted.mean(c(!!!rlang::syms(x_vars)), na.rm = TRUE),
-        !!y_out := stats::weighted.mean(c(!!!rlang::syms(y_vars)), na.rm = TRUE),
-        .groups = "drop"
-      )
-  } else if (method == "first_pair") {
-    # Use only the first value in each pair of x/y coordinates
-    # This is useful for spousal pairs or sibling groups
-    data |>
-      dplyr::group_by(!!!rlang::syms(group_vars)) |>
-      dplyr::summarize(
-        !!x_out := mean(c(
-          dplyr::first(.data[[x_vars[1]]]),
-          dplyr::first(.data[[x_vars[2]]])
-        ), na.rm = TRUE),
-        !!y_out := mean(c(
-          dplyr::first(.data[[y_vars[1]]]),
-          dplyr::first(.data[[y_vars[2]]])
-        ), na.rm = TRUE),
-        .groups = "drop"
-      )
-  } else if (method == "meanxfirst") {
-    # Use the mean of all x coordinates and the first y coordinate
-    data |>
-      dplyr::group_by(!!!rlang::syms(group_vars)) |>
-      dplyr::summarize(
-        !!x_out := mean(c(!!!rlang::syms(x_vars)), na.rm = TRUE),
-        !!y_out := mean(c(
-          dplyr::first(.data[[y_vars[1]]]),
-          dplyr::first(.data[[y_vars[2]]])
-        ), na.rm = TRUE),
-        .groups = "drop"
-      )
-  } else if (method == "meanyfirst") {
-    # First x, mean of all y
-    data |>
-      dplyr::group_by(!!!rlang::syms(group_vars)) |>
-      dplyr::summarize(
-        !!x_out := mean(c(
-          dplyr::first(.data[[x_vars[1]]]),
-          dplyr::first(.data[[x_vars[2]]])
-        ), na.rm = TRUE),
-        !!y_out := mean(c(!!!rlang::syms(y_vars)), na.rm = TRUE),
-        .groups = "drop"
-      )
-  } else {
-    # Handle unsupported method argument
-    stop("Unsupported method.")
-  }
-}
 
 #' Process duplicate appearances of individuals in a pedigree layout
 #'
@@ -671,7 +616,7 @@ processExtras <- function(ped, config = list()) {
       "newID",
       "personID",
       "x_pos", "y_pos",
-      "dadID", "momID",
+      "dadID", "momID","parenthash",
       "spouseID"
     )
 
@@ -710,6 +655,36 @@ processExtras <- function(ped, config = list()) {
     multiple = "all"
   )
 
+  # Parenthash coordinates
+  parenthash_coords <- extras |> # need to get mom and dad coordinates
+    dplyr::left_join(mom_coords, by = c("newID", "personID", "momID")) |>
+    dplyr::left_join(dad_coords, by = c("newID", "personID", "dadID")) |>
+    dplyr::left_join(
+      ped,
+      by = c("parenthash"),
+      suffix = c("", "_sib"),
+      multiple = "all"
+    ) |>
+    dplyr::filter(!is.na(.data$parenthash)) |>
+    dplyr::mutate(
+      x_parenthash = mean(c(
+        .data$x_dad,
+        .data$x_mom
+      )),
+      y_parenthash = mean(c(
+        .data$y_dad,
+        .data$y_mom
+      ))
+    ) |>
+    dplyr::select(
+      .data$newID,
+      .data$personID,
+      .data$parenthash,
+      .data$x_parenthash,
+      .data$y_parenthash
+    )
+
+
   # Coordinates of the individual's other appearance ("self")
   self_coords <- extras |>
     dplyr::left_join(
@@ -743,9 +718,13 @@ processExtras <- function(ped, config = list()) {
     dplyr::left_join(spouse_coords,
       by = c("newID", "personID", "spouseID"),
       multiple = "all"
+    ) |>
+    dplyr::left_join(parenthash_coords,
+      by = c("newID", "personID", "parenthash"),
+      multiple = "all"
     )
 
-
+#print(extras)
   # -----
   # Compute Euclidean distances between this appearance and:
   #   - mom, dad, spouse
@@ -791,8 +770,21 @@ processExtras <- function(ped, config = list()) {
                                        x1 = .data$x_pos,
                                  y1 = .data$y_pos,
                                  x2 = .data$x_otherself,
-                                 y2 = .data$y_otherself)
+                                 y2 = .data$y_otherself),
+      dist_parenthash = computeDistance(method = "cityblock",
+                                             x1 = .data$x_pos,
+                                       y1 = .data$y_pos,
+                                       x2 = .data$x_parenthash,
+                                       y2 = .data$y_parenthash),
+      dist_parenthash_other = computeDistance(method = "cityblock",
+                                              x1 = .data$x_otherself,
+                                              y1 = .data$y_otherself,
+                                              x2 = .data$x_parenthash,
+                                              y2 = .data$y_parenthash)
+
+
     )
+
 
   # -----
   # When there are multiple spouses, keep only the appearance
@@ -842,6 +834,11 @@ processExtras <- function(ped, config = list()) {
      #   is.na(.data$dist_spouse)  ~ FALSE,
       #  !is.na(.data$dist_spouse) & is.na(.data$dist_spouse_other) ~ TRUE,
         TRUE ~ TRUE
+      ),
+     parenthash_closer = dplyr::case_when(
+        .data$dist_parenthash < .data$dist_parenthash_other ~ TRUE,
+        .data$dist_parenthash_other < .data$dist_parenthash ~ FALSE,
+        TRUE ~ TRUE
       )
     )
 
@@ -850,14 +847,14 @@ processExtras <- function(ped, config = list()) {
   #   - Determine which of mom, dad, or spouse is closest in absolute terms
   #   - Use that to decide whether to retain connections to that relative
 
-  extras <- extras |>
-    dplyr::mutate(
-      closest_relative = dplyr::case_when(
-        .data$dist_mom <= .data$dist_dad & .data$dist_mom <= .data$dist_spouse ~ "mom",
-        .data$dist_dad < .data$dist_mom & .data$dist_dad <= .data$dist_spouse ~ "dad",
-        TRUE ~ "spouse"
-      )
-    )
+#  extras <- extras |>
+#    dplyr::mutate(
+#      closest_relative = dplyr::case_when(
+#        .data$dist_mom <= .data$dist_dad & .data$dist_mom <= .data$dist_spouse ~ "mom",
+#        .data$dist_dad < .data$dist_mom & .data$dist_dad <= .data$dist_spouse ~ "dad",
+#        TRUE ~ "spouse"
+#      )
+#    )
 
   # -----
   # Based on which relative is closest, determine which links to keep
@@ -865,9 +862,16 @@ processExtras <- function(ped, config = list()) {
 
   extras <- extras |>
     dplyr::mutate(
-      link_as_mom = .data$closest_relative %in% c("mom", "dad") & .data$mom_closer,
-      link_as_dad = .data$closest_relative %in% c("mom", "dad") & .data$dad_closer,
-      link_as_spouse = .data$closest_relative == "spouse" & .data$spouse_closer
+      link_as_mom = .data$mom_closer,
+      link_as_dad = .data$dad_closer,
+      link_as_spouse = .data$spouse_closer,
+      link_as_sibling = .data$parenthash_closer
+      ) %>% dplyr::mutate(
+        link_any = dplyr::case_when(
+          .data$link_as_mom == TRUE | .data$link_as_dad == TRUE |
+            .data$link_as_sibling == TRUE|  .data$link_as_spouse == TRUE ~ TRUE,
+          TRUE ~ FALSE
+        )
       )
 
 
@@ -881,6 +885,8 @@ processExtras <- function(ped, config = list()) {
       .data$link_as_dad,
       .data$link_as_mom,
       .data$link_as_spouse,
+      .data$link_as_sibling,
+      .data$link_any,
       .data$x_otherself,
       .data$y_otherself
     )
@@ -912,44 +918,24 @@ processExtras <- function(ped, config = list()) {
         .data$link_as_dad == FALSE ~ FALSE
       ),
       link_as_spouse = dplyr::case_when(
+        .data$link_as_spouse == FALSE ~ FALSE,
         is.na(.data$link_as_spouse) ~ TRUE,
-        .data$link_as_spouse == TRUE ~ TRUE,
-        .data$link_as_spouse == FALSE ~ FALSE
+        .data$link_as_spouse == TRUE ~ TRUE),
+      link_as_sibling = dplyr::case_when(
+        is.na(.data$link_as_sibling) ~ TRUE,
+        .data$link_as_sibling == TRUE ~ TRUE,
+        .data$link_as_sibling == FALSE ~ FALSE),
+      link_any = dplyr::case_when(
+        is.na(.data$link_any) ~ TRUE,
+        .data$link_any == TRUE ~ TRUE,
+        .data$link_any == FALSE ~ FALSE)
+      ) |> filter(
+        .data$link_any == TRUE
       )
-    )
+
+
+
   return(ped)
 }
-#' Compute distance between two points
-#'
-#' This function calculates the distance between two points in a 2D space using
-#' Minkowski distance. It can be used to compute Euclidean or Manhattan distance.
-#' It is a utility function for calculating distances in pedigree layouts.
-#' Defaults to Euclidean distance if no method is specified.
-#'
-#'
-#' @param x1 Numeric. X-coordinate of the first point.
-#' @param y1 Numeric. Y-coordinate of the first point.
-#' @param x2 Numeric. X-coordinate of the second point.
-#' @param y2 Numeric. Y-coordinate of the second point.
-#' @param method Character. Method of distance calculation. Options are "euclidean", "cityblock", and "Minkowski".
-#' @param p Numeric. The order of the Minkowski distance. If NULL, defaults to 2 for Euclidean and 1 for Manhattan. If
-#' Minkowski method is used, p should be specified.
 
-computeDistance <- function(x1, y1, x2, y2,
-                                     method = "euclidean", p = NULL) {
-
-  method <- tolower(method)
-
-  if(is.null(p)) {
-    p <- switch(method,
-                euclidean = 2,
-                cityblock = 1,
-                stop("Invalid distance method. Choose from 'euclidean', 'cityblock', or specify p.")
-    )
-  }
-  # Calculate Minkowski distance
-
-  ((abs(x1 - x2))^p + (abs(y1 - y2))^p)^(1 / p)
-
-}
 

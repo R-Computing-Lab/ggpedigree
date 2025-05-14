@@ -11,6 +11,7 @@
 #' @param momID Character string specifying the column name for mother IDs. Defaults to "momID".
 #' @param dadID Character string specifying the column name for father IDs. Defaults to "dadID".
 #' @param status_col Character string specifying the column name for affected status. Defaults to NULL.
+#' @param debug Logical. If TRUE, prints debugging information. Default: FALSE.
 #' @param config A list of configuration options for customizing the plot. The list can include:
 #'  \describe{
 #'     \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1.}
@@ -41,7 +42,8 @@ ggPedigree <- function(ped, famID = "famID",
                        momID = "momID",
                        dadID = "dadID",
                        status_col = NULL,
-                       config = list()) {
+                       config = list(),
+                       debug = FALSE) {
   # -----
   # STEP 1: Configuration and Preparation
   # -----
@@ -70,8 +72,12 @@ ggPedigree <- function(ped, famID = "famID",
     sex_color = TRUE,
     status_vals = c(1, 0),
     max_overlaps = 15,
-    id_segment_color = NA
+    id_segment_color = NA,
+    hints = NULL
   )
+
+
+
 
   # Merge with user-specified overrides
   # This allows the user to override any of the default values
@@ -144,7 +150,8 @@ ggPedigree <- function(ped, famID = "famID",
   # -----
 
   # Generate a connection table for plotting lines (parents, spouses, etc.)
-  connections <- calculateConnections(ds, config = config)
+  connections <- calculateConnections(ds, config = config)  |>
+    unique() # remove duplicates
 
   # -----
   # STEP 6: Initialize Plot
@@ -192,7 +199,11 @@ ggPedigree <- function(ped, famID = "famID",
   )  +
     # Mid-sibling to parents midpoint
     ggplot2::geom_segment(
-      data = connections,
+      data = dplyr::filter(
+        connections,
+        !is.na(.data$x_mom) & !is.na(.data$y_mom) &
+          !is.na(.data$x_dad) & !is.na(.data$y_dad)
+      ),
       ggplot2::aes(
         x = .data$x_pos,
         xend = .data$x_mid_sib,
@@ -205,7 +216,11 @@ ggPedigree <- function(ped, famID = "famID",
     ) +
     # Sibling vertical drop line
     ggplot2::geom_segment(
-      data = connections,
+      data = dplyr::filter(
+        connections,
+        !is.na(.data$x_mom) & !is.na(.data$y_mom) &
+          !is.na(.data$x_dad) & !is.na(.data$y_dad)
+      ),
       ggplot2::aes(
         x = .data$x_pos,
         xend = .data$x_pos,
@@ -384,8 +399,17 @@ ggPedigree <- function(ped, famID = "famID",
   } else {
     p <- p + ggplot2::labs(shape = "Sex")
   }
-
-  return(p)
+if (debug==TRUE) {
+    return(list(
+      plot = p,
+      data = ds,
+      connections = connections,
+      config = config
+    ))
+  } else {
+    # If debug is FALSE, return only the plot
+    return(p)
+  }
 }
 
 
