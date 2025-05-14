@@ -148,3 +148,75 @@ getMidpoints <- function(data, group_vars,
     stop("Unsupported method.")
   }
 }
+
+
+#' Get coordinate positions of relatives for each individual
+#'
+#' Helper function used to retrieve the x and y coordinates of a specified relative
+#' (e.g., mom, dad, spouse) and join them into the main connection table. This supports
+#' relative-specific positioning in downstream layout functions like `calculateConnections()`.
+#'
+#' @inheritParams ggpedigree
+#' @param connections A `data.frame` containing the individuals and their associated relative IDs.
+#' @param relativeIDvar Character. Name of the column in `connections` for the relative ID variable.
+#' @param x_name Character. Name of the new column to store the x-coordinate of the relative.
+#' @param y_name Character. Name of the new column to store the y-coordinate of the relative.
+#' @param multiple Character. Specifies how to handle multiple matches. Options are "all" or "any".
+#' @param only_unique Logical. If TRUE, return only unique rows. Defaults to TRUE.
+#'
+#' @return A `data.frame` with columns:
+#'   \itemize{
+#'     \item `personID`, `relativeIDvar`
+#'     \item `x_name`, `y_name`: Coordinates of the specified relative
+#'     \item Optionally, `newID` if present in `ped`
+#'   }
+#' @keywords internal
+
+
+getRelativeCoordinates <- function(ped, connections, relativeIDvar, x_name, y_name,
+                                   #  relationship = "one-to-one",
+                                   personID = "personID",
+                                   multiple = "all",
+                                   only_unique = TRUE) {
+  # Filter only rows where the relative ID is not missing
+  # and join with the main pedigree data frame
+  rel_connections <- connections |>
+    dplyr::filter(!is.na(.data[[relativeIDvar]])) |>
+    # Join in the relative's coordinates from `ped`, based on relative ID
+    dplyr::left_join(
+      ped,
+      by = stats::setNames(personID, relativeIDvar),
+      suffix = c("", "_rel"),
+      #    relationship = relationship,
+      multiple = multiple
+    ) |>
+    # Rename the joined coordinate columns to the specified x/y output names
+    dplyr::rename(
+      !!x_name := "x_pos_rel",
+      !!y_name := "y_pos_rel"
+    )
+  # If the ped includes a 'newID' column (used to track duplicates), retain it in the result
+  if ("newID" %in% names(ped)) {
+    rel_connections <- rel_connections |>
+      dplyr::select(
+        !!personID,
+        "newID",
+        !!relativeIDvar,
+        !!x_name,
+        !!y_name
+      )
+  } else {
+    rel_connections <- rel_connections |>
+      dplyr::select(
+        !!personID,
+        !!relativeIDvar,
+        !!x_name,
+        !!y_name
+      )
+  }
+  if(only_unique == TRUE){
+    rel_connections <-  unique(rel_connections)
+  }
+
+  return(rel_connections)
+}
