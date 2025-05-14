@@ -169,6 +169,7 @@ ggPedigree <- function(ped, famID = "famID",
   # -----
 
   # Spouse link between two parents
+  if(FALSE){
   p <- p +
     ggplot2::geom_segment(
       data = plot_connections$connections_spouse_segment,
@@ -177,6 +178,20 @@ ggPedigree <- function(ped, famID = "famID",
         xend = .data$x_end,
         y = .data$y_start,
         yend = .data$y_end
+      ),
+      linewidth = config$line_width,
+      color = config$spouse_segment_color,
+      na.rm = TRUE
+    )
+  }
+  p <- p +
+    ggplot2::geom_segment(
+      data = connections,
+      ggplot2::aes(
+        x = .data$x_spouse,
+        xend = .data$x_pos,
+        y = .data$y_spouse,
+        yend =  .data$y_pos
       ),
       linewidth = config$line_width,
       color = config$spouse_segment_color,

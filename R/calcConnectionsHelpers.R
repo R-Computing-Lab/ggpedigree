@@ -220,3 +220,10 @@ getRelativeCoordinates <- function(ped, connections, relativeIDvar, x_name, y_na
 
   return(rel_connections)
 }
+
+
+symKey <- function(id1, id2, sep = ".") {
+  dplyr::if_else(id1 < id2,
+                 paste0(id1, sep, id2),
+                 paste0(id2, sep, id1))
+}

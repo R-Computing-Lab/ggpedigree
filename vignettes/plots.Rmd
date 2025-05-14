@@ -44,8 +44,7 @@ library(tidyverse) # for data wrangling
 data("potter")
 ggPedigree(potter,
   famID = "famID",
-  personID = "personID",
-  config= list(hints = TRUE)
+  personID = "personID"
 )
 ```
 
@@ -205,6 +204,8 @@ p <- ggPedigree(
 
 p$connections%>%filter(personID     ==61) %>% nrow()
 p$connections%>%filter(personID     ==61) %>% unique()
+
+p$connections%>%filter(personID     ==65) %>% unique()
 
 p$plot
 ```
