@@ -67,7 +67,10 @@ calculateConnections <- function(ped,
   # If duplicated appearances exist, resolve which connections to keep
   if (sum(ped$extra) > 0) {
     ped <- processExtras(ped, config = config)
-    connections <-  dplyr::select(
+
+  # Construct base connection frame
+  # This will be used for all joins
+    connections_core <-  dplyr::select(
         .data = ped,
         "personID",
         "x_pos", "y_pos",
@@ -80,7 +83,7 @@ calculateConnections <- function(ped,
       )  |> unique()
 
 
-    connections_for_moms <- dplyr::filter(connections, .data$link_as_mom == TRUE) |>
+    connections_for_moms <- dplyr::filter(connections_core, .data$link_as_mom == TRUE) |>
       dplyr::select(
         -"extra",
         -"link_as_mom",
@@ -89,7 +92,7 @@ calculateConnections <- function(ped,
         -"link_as_sibling"
       )
 
-    connections_for_dads <- dplyr::filter(connections, .data$link_as_dad == TRUE)|>
+    connections_for_dads <- dplyr::filter(connections_core, .data$link_as_dad == TRUE)|>
       dplyr::select(
         -"extra",
         -"link_as_mom",
@@ -97,7 +100,7 @@ calculateConnections <- function(ped,
         -"link_as_spouse",
         -"link_as_sibling"
       )
-    connections_for_spouses <- dplyr::filter(connections, .data$link_as_spouse == TRUE) |>
+    connections_for_spouses <- dplyr::filter(connections_core, .data$link_as_spouse == TRUE) |>
       dplyr::select(
         -"extra",
         -"link_as_mom",
@@ -105,7 +108,7 @@ calculateConnections <- function(ped,
         -"link_as_spouse",
         -"link_as_sibling"
       )
-    connections_for_sibs <- dplyr::filter(connections, .data$link_as_sibling == TRUE) |>
+    connections_for_sibs <- dplyr::filter(connections_core, .data$link_as_sibling == TRUE) |>
       dplyr::select(
         -"extra",
         -"link_as_mom",
@@ -113,8 +116,8 @@ calculateConnections <- function(ped,
         -"link_as_spouse",
         -"link_as_sibling"
       )
-  }  else {
-    connections <- dplyr::select(
+  } else { # no duplicates
+    connections_core <- dplyr::select(
       .data = ped,
       "personID",
       "x_pos", "y_pos",
@@ -122,7 +125,12 @@ calculateConnections <- function(ped,
       "spouseID",
       "famID",
       "extra"
-    )  |> unique() |>
+    )  |> unique()
+
+	# no duplications, so just use the same connections
+	    connections_for_sibs <-  connections_for_spouses <- connections_for_dads <- connections_for_moms <- connections_core
+
+connections_core <- connections_core |>
       dplyr::mutate(
         link_as_mom = TRUE,
         link_as_dad = TRUE,
@@ -132,8 +140,6 @@ calculateConnections <- function(ped,
 
 
 
-# no duplications, so just use the same connections
-    connections_for_sibs <-  connections_for_spouses <- connections_for_dads <- connections_for_moms <- connections
   }
 
   # Get mom's coordinates
@@ -154,46 +160,23 @@ calculateConnections <- function(ped,
     y_name = "y_dad"
   )
 
-  # Get spouse coordinates
-  spouse_connections <- ped |>
-    dplyr::select(
-      "personID", "x_pos",
-      "y_pos", "spouseID"
-    ) |>
-    dplyr::left_join(connections_for_spouses,
-      by = c("spouseID" = "personID"),
-      suffix = c("", "_spouse"),
-      multiple = "any"
-    ) |>
-    dplyr::rename(
-      x_spouse = "x_pos_spouse",
-      y_spouse = "y_pos_spouse"
-    ) |>
-    dplyr::select(
-      "personID", "spouseID",
-      "x_spouse", "y_spouse"
-    )  |> unique()
-
-  # Combine mom, dad, and spouse coordinates
-  connections <- connections |>
+# combine for parents
+ parent_connections <- connections_core |>
     dplyr::left_join(mom_connections,
       by = c("personID", "momID")
     ) |>
     dplyr::left_join(dad_connections,
       by = c("personID", "dadID")
-    ) |>
-    dplyr::left_join(spouse_connections,
-      by = c("personID", "spouseID")
-    )  |> unique()
+    )
 
-  # Calculate midpoints between mom and dad in child row
+ # Calculate midpoints between mom and dad in child row
 
-  parent_midpoints <- connections |>
+  parent_midpoints <- parent_connections |>
     dplyr::filter(!is.na(.data$dadID) & !is.na(.data$momID)) |>
     dplyr::group_by(.data$parenthash) |>
     dplyr::summarize(
       x_midparent = mean(c(
-        dplyr::first(.data$x_dad),
+        dplyr::first(.data$x_dad), # faster
         dplyr::first(.data$x_mom)
       )),
       y_midparent = mean(c(
@@ -203,8 +186,21 @@ calculateConnections <- function(ped,
       .groups = "drop"
     )  |> unique()
 
+
+# spouses
+  # Get spouse coordinates
+  spouse_connections <- build_connections_spouse_segment(
+    ped,
+    connections_for_spouses
+  )
+print(spouse_connections)
   # Calculate midpoints between spouses
-  spouse_midpoints <- connections |>
+
+
+spouse_midpoints <- connections_core |>
+    dplyr::left_join(spouse_connections,
+                     by = c("spouseID")
+  )  |>
     dplyr::filter(!is.na(.data$spouseID)) |>
     dplyr::group_by(.data$spouseID) |>
     dplyr::summarize(
@@ -219,8 +215,23 @@ calculateConnections <- function(ped,
       .groups = "drop"
     )  |> unique()
 
+
+  # Combine mom, dad, and spouse coordinates
+  connections <- connections_core |>
+    dplyr::left_join(mom_connections,
+      by = c("personID", "momID")
+    ) |>
+    dplyr::left_join(dad_connections,
+      by = c("personID", "dadID")
+    ) |>
+    dplyr::left_join(spouse_connections,
+      by = c("personID", "spouseID")
+    )  |> unique()
+
+
+
   # Calculate sibling group midpoints
-  sibling_midpoints <- connections|>
+  sibling_midpoints <- connections |>
     dplyr::filter(
       !is.na(.data$momID) & !is.na(.data$dadID) &  # biological parents defined
         !is.na(.data$x_mom) & !is.na(.data$y_mom) &  # mom’s coordinates linked
@@ -266,19 +277,26 @@ calculateConnections <- function(ped,
      )
    )  |> unique()
 
-  plot_connections <- list(
+  plotting_connections <- list(
     connections = connections,
-    connections_spouse_segment = build_connections_spouse_segment(
-      ped = ped,
-      connections_for_spouses = connections_for_spouses
-    )
-    )
+    connections_core = connections_core,
+    connections_spouse_segment  =   connections_spouse_segment,  # Spouse link between two parents, needs
+    # x = .data$x_spouse,
+ #   xend = .data$x_pos,
+ #   y = .data$y_spouse,
+ #   yend = .data$y_pos
+    connections_parent_segment  = NULL,  # Parent-child stub (child to mid-sibling point)
+    connections_offspring_segment = NULL,  # Mid-sibling to parents midpoint
+    connections_sibling_segment = NULL,   # Sibling vertical drop line
+    ped = ped
+  )
 
-  return(plot_connections)
+
+  return(connections)
 }
 
 
-build_connections_spouse_segment <- function(ped,connections_for_FOO) {
+build_connections_spouse_segment <- function(ped,connections_for_spouses) {
 
   # spouses
   # Get spouse coordinates
@@ -287,7 +305,7 @@ build_connections_spouse_segment <- function(ped,connections_for_FOO) {
       "personID", "x_pos",
       "y_pos", "spouseID"
     ) |>  dplyr::filter(!is.na(.data$spouseID)) |>
-    dplyr::left_join(connections_for_FOO,
+    dplyr::left_join(connections_for_spouses,
                      by = c("spouseID" = "personID"),
                      suffix = c("", "_spouse"),
                      multiple = "any"
@@ -308,47 +326,4 @@ build_connections_spouse_segment <- function(ped,connections_for_FOO) {
   return(spouse_connections)
 }
 
-build_connections_parent_segment <- function(ped,connections_for_FOO) {
-  #     ggplot2::aes(
- # x = .data$x_mid_sib,
-#  xend = .data$x_midparent,
-  #y = .data$y_mid_sib - gap_off,
- # yend = .data$y_midparent
-#  )
 
-  parent_midpoints <- connections |>
-    dplyr::filter(!is.na(.data$dadID) & !is.na(.data$momID)) |>
-    dplyr::group_by(.data$parenthash) |>
-    dplyr::summarize(
-      x_midparent = mean(c(
-        dplyr::first(.data$x_dad),
-        dplyr::first(.data$x_mom)
-      )),
-      y_midparent = mean(c(
-        dplyr::first(.data$y_dad),
-        dplyr::first(.data$y_mom)
-      )),
-      .groups = "drop"
-    )  |> unique()
-
-  # Calculate sibling group midpoints
-  sibling_midpoints <- connections|>
-    dplyr::filter(
-      !is.na(.data$momID) & !is.na(.data$dadID) &  # biological parents defined
-        !is.na(.data$x_mom) & !is.na(.data$y_mom) &  # mom’s coordinates linked
-        !is.na(.data$x_dad) & !is.na(.data$y_dad)    # dad’s coordinates linked
-    ) |>
-    dplyr::group_by(
-      .data$parenthash,
-      .data$x_mom, .data$y_mom,
-      .data$x_dad, .data$y_dad
-    ) |>
-    dplyr::summarize(
-      x_mid_sib = mean(.data$x_pos),
-      y_mid_sib = dplyr::first(.data$y_pos),
-      .groups = "drop"
-    )  |> unique()
-
-
-  return(spouse_connections)
-}

@@ -150,9 +150,9 @@ ggPedigree <- function(ped, famID = "famID",
   # -----
 
   # Generate a connection table for plotting lines (parents, spouses, etc.)
-  connections <- calculateConnections(ds, config = config)  |>
-    unique() # remove duplicates
+  plot_connections <- calculateConnections(ds, config = config)
 
+  connections <- plot_connections$connections
   # -----
   # STEP 6: Initialize Plot
   # -----
@@ -171,12 +171,12 @@ ggPedigree <- function(ped, famID = "famID",
   # Spouse link between two parents
   p <- p +
     ggplot2::geom_segment(
-      data = connections,
+      data = plot_connections$connections_spouse_segment,
       ggplot2::aes(
-        x = .data$x_spouse,
-        xend = .data$x_pos,
-        y = .data$y_spouse,
-        yend = .data$y_pos
+        x = .data$x_start,
+        xend = .data$x_end,
+        y = .data$y_start,
+        yend = .data$y_end
       ),
       linewidth = config$line_width,
       color = config$spouse_segment_color,
@@ -199,11 +199,7 @@ ggPedigree <- function(ped, famID = "famID",
   )  +
     # Mid-sibling to parents midpoint
     ggplot2::geom_segment(
-      data = dplyr::filter(
-        connections,
-        !is.na(.data$x_mom) & !is.na(.data$y_mom) &
-          !is.na(.data$x_dad) & !is.na(.data$y_dad)
-      ),
+      data = connections,
       ggplot2::aes(
         x = .data$x_pos,
         xend = .data$x_mid_sib,
@@ -216,11 +212,7 @@ ggPedigree <- function(ped, famID = "famID",
     ) +
     # Sibling vertical drop line
     ggplot2::geom_segment(
-      data = dplyr::filter(
-        connections,
-        !is.na(.data$x_mom) & !is.na(.data$y_mom) &
-          !is.na(.data$x_dad) & !is.na(.data$y_dad)
-      ),
+      data = connections,
       ggplot2::aes(
         x = .data$x_pos,
         xend = .data$x_pos,
