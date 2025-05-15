@@ -51,18 +51,17 @@ cite the following:
     Warning in citation(package = "ggpedigree"): could not determine year for
     'ggpedigree' from package DESCRIPTION file
 
-Garrison S (????). *ggpedigree: An R Package for Extended Behavior
-Genetics Analysis*. R package version 0.1.0,
-<https://github.com/R-Computing-Lab/ggpedigree/>.
+Garrison S (????). *ggpedigree: An R Package for plotting pedigrees*. R
+package version 0.2.0, <https://github.com/R-Computing-Lab/ggpedigree/>.
 
 A BibTeX entry for LaTeX users is
 
     Warning in citation(package = "ggpedigree"): could not determine year for
     'ggpedigree' from package DESCRIPTION file
     @Manual{,
-      title = {ggpedigree: An R Package for Extended Behavior Genetics Analysis},
+      title = {ggpedigree: An R Package for plotting pedigrees},
       author = {S. Mason Garrison},
-      note = {R package version 0.1.0},
+      note = {R package version 0.2.0},
       url = {https://github.com/R-Computing-Lab/ggpedigree/},
     }
 
