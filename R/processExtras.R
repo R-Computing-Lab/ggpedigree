@@ -14,7 +14,7 @@
 #'
 #' @keywords internal
 
-processExtras <- function(ped, config = list()) {
+processExtrasx <- function(ped, config = list()) {
   # -----
   # Check inputs
   # -----

@@ -69,55 +69,14 @@ calculateConnections <- function(ped,
   # If duplicated appearances exist, resolve which connections to keep
   if (sum(ped$extra) > 0) {
     ped <- processExtras(ped, config = config)   |> unique()
+} else {
 
-    # Create a unique parent_hash for each individual
-    connections <-  dplyr::select(
-        .data = ped,
-        "personID",
-        "x_pos", "y_pos",
-        "dadID", "momID", "parent_hash", "couple_hash",
-        "spouseID",
-        "famID",
-        "x_otherself", "y_otherself",
-        "extra","link_as_mom", "link_as_dad", "link_as_spouse",
-        "link_as_sibling"
-      )  |> unique()
+  ped <- ped |>
+    dplyr::mutate(
+      coreID = .data$personID
+    )
+}
 
-
-    connections_for_moms <- dplyr::filter(connections, .data$link_as_mom == TRUE) |>
-      dplyr::select(
-        -"extra",
-        -"link_as_mom",
-        -"link_as_dad",
-        -"link_as_spouse",
-        -"link_as_sibling"
-      )   |> unique()
-
-    connections_for_dads <- dplyr::filter(connections, .data$link_as_dad == TRUE)|>
-      dplyr::select(
-        -"extra",
-        -"link_as_mom",
-        -"link_as_dad",
-        -"link_as_spouse",
-        -"link_as_sibling"
-      )   |> unique()
-    connections_for_spouses <- dplyr::filter(connections, .data$link_as_spouse == TRUE) |>
-      dplyr::select(
-        -"extra",
-        -"link_as_mom",
-        -"link_as_dad",
-        -"link_as_spouse",
-        -"link_as_sibling"
-      )
-    connections_for_sibs <- dplyr::filter(connections, .data$link_as_sibling == TRUE) |>
-      dplyr::select(
-        -"extra",
-        -"link_as_mom",
-        -"link_as_dad",
-        -"link_as_spouse",
-        -"link_as_sibling"
-      )   |> unique()
-  }  else {
     connections <- dplyr::select(
       .data = ped,
       "personID",
@@ -126,7 +85,13 @@ calculateConnections <- function(ped,
       "spouseID",
       "famID",
       "extra"
-    )  |> unique() |>
+    )  |> unique()
+
+    # no duplications, so just use the same connections
+    connections_for_sibs <-  connections_for_spouses <- connections_for_dads <- connections_for_moms <- connections
+
+
+    connections <- connections |>
       dplyr::mutate(
         link_as_mom = TRUE,
         link_as_dad = TRUE,
@@ -136,9 +101,7 @@ calculateConnections <- function(ped,
 
 
 
-# no duplications, so just use the same connections
-    connections_for_sibs <-  connections_for_spouses <- connections_for_dads <- connections_for_moms <- connections
-  }
+
 
   # Get mom's coordinates
   mom_connections <- getRelativeCoordinates(
@@ -244,13 +207,11 @@ calculateConnections <- function(ped,
       .groups = "drop"
     )  |> unique()
 
-
+#print(parent_midpoints)
   # Merge midpoints into connections
   connections <- connections |>
     dplyr::left_join(parent_midpoints,
-      by = c("parent_hash",
-             "x_mom", "y_mom",
-             "x_dad", "y_dad")
+      by = c("parent_hash")
     ) |>
     dplyr::left_join(spouse_midpoints,
       by = c("spouseID", "couple_hash")
