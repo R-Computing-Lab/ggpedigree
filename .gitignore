@@ -5,3 +5,5 @@
 *.lnk
 docs
 *.code-workspace
+R/plot.ped.R
+R/plot.ped.X

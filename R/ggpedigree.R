@@ -11,12 +11,15 @@
 #' @param momID Character string specifying the column name for mother IDs. Defaults to "momID".
 #' @param dadID Character string specifying the column name for father IDs. Defaults to "dadID".
 #' @param status_col Character string specifying the column name for affected status. Defaults to NULL.
+#' @param debug Logical. If TRUE, prints debugging information. Default: FALSE.
+#' @param hints Data frame with hints for layout adjustments. Default: NULL.
+#' @param ... Additional arguments passed to `ggplot2` functions.
 #' @param config A list of configuration options for customizing the plot. The list can include:
 #'  \describe{
 #'     \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1.}
 #'     \item{spouse_segment_color, self_segment_color, sibling_segment_color, parent_segment_color, offspring_segment_color}{Character. Line colors for respective connection types.}
-#'     \item{text_size, point_size, line_width}{Numeric. Controls text size, point size, and line thickness.}
-#'     \item{generation_gap}{Numeric. Vertical spacing multiplier between generations. Default: 1.}
+#'     \item{label_text_size, point_size, line_width}{Numeric. Controls text size, point size, and line thickness.}
+#'     \item{generation_height}{Numeric. Vertical spacing multiplier between generations. Default: 1.}
 #'     \item{unknown_shape, female_shape, male_shape, affected_shape}{Integers. Shape codes for plotting each group.}
 #'     \item{sex_shape_labs}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
 #'     \item{unaffected, affected}{Values indicating unaffected/affected status.}
@@ -41,23 +44,32 @@ ggPedigree <- function(ped, famID = "famID",
                        momID = "momID",
                        dadID = "dadID",
                        status_col = NULL,
-                       config = list()) {
+                       config = list(),
+                       debug = FALSE,
+                       hints = NULL,
+                       ...) {
   # -----
   # STEP 1: Configuration and Preparation
   # -----
 
   # Set default styling and layout parameters
   default_config <- list(
+    apply_default_theme = TRUE,
+    apply_default_scales = TRUE,
     spouse_segment_color = "black",
     self_segment_color = "purple",
     sibling_segment_color = "black",
     parent_segment_color = "black",
     offspring_segment_color = "black",
+    include_labels = TRUE,
+    label_method = "ggrepel",
+    label_text_angle = 0,
     code_male = 1,
-    text_size = 3,
+    label_text_size = 2,
     point_size = 4,
     line_width = 0.5,
-    generation_gap = 1,
+    generation_height = 1,
+    generation_width = 1,
     unknown_shape = 18,
     female_shape = 16,
     male_shape = 15,
@@ -67,16 +79,20 @@ ggPedigree <- function(ped, famID = "famID",
     affected = "affected",
     sex_color = TRUE,
     status_vals = c(1, 0),
-    max_overlaps = 100,
-    id_segment_color = NA
+    max_overlaps = 15,
+    id_segment_color = NA#,
+  #  hints = NULL
   )
+
+
+
 
   # Merge with user-specified overrides
   # This allows the user to override any of the default values
   config <- utils::modifyList(default_config, config)
 
   # Set additional internal config values based on other entries
-  config$status_labs <- c(paste0(config$affected), paste0(config$unaffected))
+  config$status_labs <- c(config$affected, config$unaffected)
   config$shape_vals <- c(config$female_shape, config$male_shape, config$unknown_shape)
 
   # -----
@@ -93,10 +109,10 @@ ggPedigree <- function(ped, famID = "famID",
   # Clean duplicated famID columns if present
 
   if ("famID.y" %in% names(ds_ped)) {
-    ds_ped <- dplyr::select(ds_ped, -.data$famID.y)
+    ds_ped <- dplyr::select(.data=ds_ped, -"famID.y")
   }
   if ("famID.x" %in% names(ds_ped)) {
-    ds_ped <- dplyr::rename(ds_ped, famID = .data$famID.x)
+    ds_ped <- dplyr::rename(.data=ds_ped, famID = "famID.x")
   }
 
   # If personID is not "personID", rename to "personID" internally
@@ -110,6 +126,7 @@ ggPedigree <- function(ped, famID = "famID",
       levels = c(config$affected, config$unaffected)
     )
   }
+
 
   # -----
   # STEP 3: Sex Recode
@@ -131,22 +148,26 @@ ggPedigree <- function(ped, famID = "famID",
     config = config
   )
 
-  # Apply vertical spacing factor if generation_gap ≠ 1
-  if (!isTRUE(all.equal(config$generation_gap, 1))) {
-    ds$y_pos <- ds$y_pos * config$generation_gap # expand/contract generations
+  # Apply vertical spacing factor if generation_height ≠ 1
+  if (!isTRUE(all.equal(config$generation_height, 1))) {
+    ds$y_pos <- ds$y_pos * config$generation_height # expand/contract generations
   }
-
+  # Apply horizontal spacing factor if generation_width ≠ 1
+  if (!isTRUE(all.equal(config$generation_width, 1))) {
+    ds$x_pos <- ds$x_pos * config$generation_width # expand/contract generations
+  }
   # -----
   # STEP 5: Compute Relationship Connections
   # -----
 
   # Generate a connection table for plotting lines (parents, spouses, etc.)
-  connections <- calculateConnections(ds, config = config)
+  plot_connections <- calculateConnections(ds, config = config)
 
+  connections <- plot_connections$connections
   # -----
   # STEP 6: Initialize Plot
   # -----
-  gap_off <- 0.5 * config$generation_gap # single constant for all “stub” offsets
+  gap_off <- 0.5 * config$generation_height # single constant for all “stub” offsets
 
   p <- ggplot2::ggplot(ds, ggplot2::aes(
     x = .data$x_pos,
@@ -158,21 +179,6 @@ ggPedigree <- function(ped, famID = "famID",
   # STEP 7: Add Segments
   # -----
 
-  # Self-segment (for duplicate layout appearances of same person)
-  if ("x_otherself" %in% names(connections)) {
-    p <- p + ggplot2::geom_segment(
-      data = connections,
-      ggplot2::aes(
-        x = .data$x_otherself,
-        xend = .data$x_pos,
-        y = .data$y_otherself,
-        yend = .data$y_pos
-      ),
-      linewidth = config$line_width,
-      color = config$self_segment_color,
-      na.rm = TRUE
-    )
-  }
   # Spouse link between two parents
   p <- p +
     ggplot2::geom_segment(
@@ -186,20 +192,22 @@ ggPedigree <- function(ped, famID = "famID",
       linewidth = config$line_width,
       color = config$spouse_segment_color,
       na.rm = TRUE
-    ) +
-    # Parent-child stub (child to mid-sibling point)
-    ggplot2::geom_segment(
-      data = connections,
-      ggplot2::aes(
-        x = .data$x_mid_sib,
-        xend = .data$x_midparent,
-        y = .data$y_mid_sib - gap_off,
-        yend = .data$y_midparent
-      ),
-      linewidth = config$line_width,
-      color = config$parent_segment_color,
-      na.rm = TRUE
-    ) +
+    )
+
+  # Parent-child stub (child to mid-sibling point)
+
+  p <- p + ggplot2::geom_segment(
+    data = connections,
+    ggplot2::aes(
+      x = .data$x_mid_sib,
+      xend = .data$x_midparent,
+      y = .data$y_mid_sib - gap_off,
+      yend = .data$y_midparent
+    ),
+    linewidth = config$line_width,
+    color = config$parent_segment_color,
+    na.rm = TRUE
+  ) +
     # Mid-sibling to parents midpoint
     ggplot2::geom_segment(
       data = connections,
@@ -226,6 +234,7 @@ ggPedigree <- function(ped, famID = "famID",
       color = config$sibling_segment_color,
       na.rm = TRUE
     )
+
 
 
 
@@ -293,44 +302,101 @@ ggPedigree <- function(ped, famID = "famID",
   # STEP 9: Add Labels
   # -----
   # Add labels to the points using ggrepel for better visibility
-  p <- p +
-    ggrepel::geom_text_repel(ggplot2::aes(label = .data$personID),
-      nudge_y = -.15 * config$generation_gap,
-      size = config$text_size,
-      na.rm = TRUE,
-      max.overlaps = config$max_overlaps,
-      segment.size = config$line_width * .5,
-      segment.color = config$id_segment_color,
+  if (config$include_labels == TRUE && config$label_method == "ggrepel") {
+    p <- p +
+      ggrepel::geom_text_repel(ggplot2::aes(label = .data$personID),
+        nudge_y = -.10*config$generation_height,
+        size = config$label_text_size,
+        na.rm = TRUE,
+        max.overlaps = config$max_overlaps,
+        segment.size = config$line_width * .5,
+        angle = config$label_text_angle,
+        segment.color = config$id_segment_color
+      )
+  } else if (config$include_labels == TRUE && config$label_method == "geom_label") {
+    p <- p +
+      ggplot2::geom_label(ggplot2::aes(label = .data$personID),
+        nudge_y = -.10 * config$generation_height,
+        size = config$label_text_size,
+        angle = config$label_text_angle,
+        na.rm = TRUE
+
+      )
+  } else if (config$include_labels == TRUE || config$label_method == "geom_text") {
+    p <- p +
+      ggplot2::geom_text(ggplot2::aes(label = .data$personID),
+        nudge_y = -.10*config$generation_height,
+        size = config$label_text_size,
+        angle = config$label_text_angle,
+        na.rm = TRUE
+      )
+  }
+
+
+  # Self-segment (for duplicate layout appearances of same person)
+  if (inherits(plot_connections$self_coords, "data.frame")) {
+    otherself <- plot_connections$self_coords |>
+      dplyr::filter(!is.na(.data$x_otherself)) |>
+      dplyr::mutate(
+        otherself_xkey = symKey(.data$x_otherself, .data$x_pos) # ,
+        #  otherself_ykey = symKey(.data$y_otherself, .data$y_pos)
+      ) |>
+      # unique combinations of x_otherself and x_pos and y_otherself and y_pos
+      dplyr::distinct(.data$otherself_xkey, .keep_all = TRUE)
+
+
+    p <- p + ggplot2::geom_curve(
+      data = otherself,
+      ggplot2::aes(
+        x = .data$x_otherself,
+        xend = .data$x_pos,
+        y = .data$y_otherself,
+        yend = .data$y_pos
+      ),
+      linewidth = config$line_width,
+      color = config$self_segment_color,
+      angle = 90,
+      curvature = -0.2,
+      na.rm = TRUE
     )
+  }
+
+
 
   # -----
   # STEP 10: Scales, Theme
   # -----
 
   p <- p +
-    ggplot2::scale_y_reverse() +
-    ggplot2::theme_minimal() +
-    ggplot2::theme(
-      axis.title.y = ggplot2::element_blank(),
-      axis.text.y = ggplot2::element_blank(),
-      axis.ticks.y = ggplot2::element_blank(),
-      panel.grid.major = ggplot2::element_blank(),
-      panel.grid.minor = ggplot2::element_blank(),
-      panel.background = ggplot2::element_blank(),
-      axis.title.x = ggplot2::element_blank(),
-      axis.text.x = ggplot2::element_blank(),
-      axis.ticks.x = ggplot2::element_blank()
-    )
+    ggplot2::scale_y_reverse()
+
+ if(config$apply_default_theme == TRUE) {
+    p <-  p +
+      ggplot2::theme_minimal() +
+      ggplot2::theme(
+        axis.title.y = ggplot2::element_blank(),
+        axis.text.y = ggplot2::element_blank(),
+        axis.ticks.y = ggplot2::element_blank(),
+        panel.grid.major = ggplot2::element_blank(),
+        panel.grid.minor = ggplot2::element_blank(),
+        panel.background = ggplot2::element_blank(),
+        axis.title.x = ggplot2::element_blank(),
+        axis.text.x = ggplot2::element_blank(),
+        axis.ticks.x = ggplot2::element_blank()
+      )
+}
+
 
 
   # -----
   # STEP 11: Final Legend Adjustments
   # -----
   # Adjust legend labels and colors based on the configuration
-  p <- p + ggplot2::scale_shape_manual(
-    values = config$shape_vals,
-    labels = config$shape_labs
-  )
+  if(config$apply_default_scales == TRUE) {
+    p <- p + ggplot2::scale_shape_manual(
+      values = config$shape_vals,
+      labels = config$shape_labs
+    )
 
   # Add alpha scale for affected status if applicable
   if (!is.null(status_col) && config$sex_color == TRUE) {
@@ -354,10 +420,21 @@ ggPedigree <- function(ped, famID = "famID",
   } else {
     p <- p + ggplot2::labs(shape = "Sex")
   }
+  }
 
-  return(p)
+  if (debug == TRUE) {
+    return(list(
+      plot = p,
+      data = ds,
+      connections = connections,
+      config = config
+    ))
+  } else {
+    # If debug is FALSE, return only the plot
+    return(p)
+  }
+
 }
-
 
 #' @rdname ggPedigree
 #' @export

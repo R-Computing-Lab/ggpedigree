@@ -61,7 +61,7 @@ test_that("calculateConnections returns expected structure", {
     "x_mid_sib", "y_mid_sib"
   )
 
-  expect_true(all(expected_cols %in% names(conns)))
+  expect_true(all(expected_cols %in% names(conns$connections)))
 })
 
 
@@ -119,4 +119,19 @@ test_that("getRelativeCoordinates returns expected coordinates for mother", {
   # Others (A and B, who have NA momID) should be excluded
   expect_false("A" %in% mom_coords$personID)
   expect_false("B" %in% mom_coords$personID)
+})
+
+
+test_that("broken hints doesn't cause a fatal error", {
+  library(BGmisc)
+  data("potter")
+
+  # Test with hints
+  expect_warning(
+    ggPedigree(potter,
+      famID = "famID",
+      personID = "personID",
+      config = list(hints = TRUE)
+    )
+  )
 })

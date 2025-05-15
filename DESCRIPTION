@@ -20,6 +20,7 @@ Imports:
     ggrepel,
     rlang,
     dplyr,
+    stringr,
     utils
 Suggests: 
     EasyMx,
@@ -30,6 +31,7 @@ Suggests:
     OpenMx,
     NlsyLinks,
     rmarkdown,
+    tibble,
     testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
