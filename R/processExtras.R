@@ -181,14 +181,14 @@ processExtras <- function(ped, config = list()) {
 
   if (sum(ped$total_blue, na.rm = TRUE) == 0) {
     parent_winner <- extras |>
-      dplyr::group_by(.data$coreID) |>
+      dplyr::group_by("coreID") |>
       dplyr::slice_min(.data$total_parent_dist_cityblock, n = 1, with_ties = FALSE) |>
       dplyr::ungroup() |>
       dplyr::select("coreID", parent_choice = .data$personID)
   } else {
     # if there are spouseID == momID or spouseID == dadID, then parent choice needs to be the 2nd closest
     parent_winner <- extras |>
-      dplyr::group_by(coreID) |>
+      dplyr::group_by("coreID") |>
       dplyr::arrange(.data$total_parent_dist2, .by_group = TRUE) |>
       dplyr::mutate(
         rank       = dplyr::row_number(), # 1 = closest, 2 = second‑closest …

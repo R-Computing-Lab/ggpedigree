@@ -75,6 +75,8 @@ ggped(
 \item{debug}{Logical. If TRUE, prints debugging information. Default: FALSE.}
 
 \item{hints}{Data frame with hints for layout adjustments. Default: NULL.}
+
+\item{...}{Additional arguments passed to `ggplot2` functions.}
 }
 \value{
 A `ggplot` object rendering the pedigree diagram.

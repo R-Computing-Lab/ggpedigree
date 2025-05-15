@@ -20,6 +20,7 @@ Imports:
     ggrepel,
     rlang,
     dplyr,
+    stringr,
     utils
 Suggests: 
     EasyMx,
