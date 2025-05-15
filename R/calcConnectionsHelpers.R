@@ -16,20 +16,18 @@
 
 computeDistance <- function(x1, y1, x2, y2,
                             method = "euclidean", p = NULL) {
-
   method <- tolower(method)
 
-  if(is.null(p)) {
+  if (is.null(p)) {
     p <- switch(method,
-                euclidean = 2,
-                cityblock = 1,
-                stop("Invalid distance method. Choose from 'euclidean', 'cityblock', or specify p.")
+      euclidean = 2,
+      cityblock = 1,
+      stop("Invalid distance method. Choose from 'euclidean', 'cityblock', or specify p.")
     )
   }
   # Calculate Minkowski distance
 
   ((abs(x1 - x2))^p + (abs(y1 - y2))^p)^(1 / p)
-
 }
 
 #' Compute midpoints across grouped coordinates
@@ -214,8 +212,8 @@ getRelativeCoordinates <- function(ped, connections, relativeIDvar, x_name, y_na
         !!y_name
       )
   }
-  if(only_unique == TRUE){
-    rel_connections <-  unique(rel_connections)
+  if (only_unique == TRUE) {
+    rel_connections <- unique(rel_connections)
   }
 
   return(rel_connections)
@@ -224,6 +222,7 @@ getRelativeCoordinates <- function(ped, connections, relativeIDvar, x_name, y_na
 
 symKey <- function(id1, id2, sep = ".") {
   dplyr::if_else(id1 < id2,
-                 paste0(id1, sep, id2),
-                 paste0(id2, sep, id1))
+    paste0(id1, sep, id2),
+    paste0(id2, sep, id1)
+  )
 }

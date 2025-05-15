@@ -32,9 +32,7 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
                                  dadID = "dadID",
                                  spouseID = "spouseID", sexVar = "sex",
                                  code_male = NULL,
-                                 config = list())
-  {
-
+                                 config = list()) {
   if (!inherits(ped, "data.frame")) {
     stop("ped should be a data.frame or inherit to a data.frame")
   }
@@ -68,22 +66,27 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
     momid = ped[[momID]],
     sex = ped_recode[[sexVar]],
   )
-
-  if(!is.null(config$hints)) {
-
-#' Check if hints are provided
-    autohint <-   tryCatch(kinship2::autohint(ped_ped,config$hints,
-                                align = config$ped_align,
-                                packed = config$ped_packed),
-             error = function(e) kinship2::autohint(ped_ped,
-                                        align = config$ped_align,
-                                        packed = config$ped_packed)
-             ,
-             finally = warning("Your hints caused an error and were not used, using default hints instead"))
+#
+  if ("hints" %in% names(config)) {
+    # Check if hints are provided
+    autohint <- tryCatch(
+      kinship2::autohint(ped_ped, config$hints,
+        align = config$ped_align,
+        packed = config$ped_packed
+      ),
+      error = function(e) {
+        warning("Your hints caused an error and were not used. Using default hints instead.")
+        kinship2::autohint(
+          ped_ped,
+          align = config$ped_align,
+          packed = config$ped_packed
+        )}
+      )
   } else {
     autohint <- kinship2::autohint(ped_ped,
-                                   align = config$ped_align,
-                                   packed = config$ped_packed)
+      align = config$ped_align,
+      packed = config$ped_packed
+    )
   }
 
 
@@ -107,8 +110,8 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
 
 
   # Flatten coordinate matrix
- # pos_vector <- as.vector(pos$pos)
-#  spouse_vector <- as.vector(pos$spouse)
+  # pos_vector <- as.vector(pos$pos)
+  #  spouse_vector <- as.vector(pos$spouse)
 
 
   # Initialize coordinate columns in the data frame
@@ -141,7 +144,6 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
     x_coords[i] <- nid_pos[i, "col"]
     x_pos[i] <- pos$pos[nid_pos[i, "row"], nid_pos[i, "col"]]
     spouse_vector[i] <- pos$spouse[nid_pos[i, "row"], nid_pos[i, "col"]]
-
   }
 
   # -----
@@ -213,5 +215,3 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
 
   return(ped)
 }
-
-

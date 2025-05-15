@@ -13,7 +13,10 @@ ggPedigree(
   momID = "momID",
   dadID = "dadID",
   status_col = NULL,
-  config = list()
+  config = list(),
+  debug = FALSE,
+  hints = NULL,
+  ...
 )
 
 ggpedigree(
@@ -23,7 +26,10 @@ ggpedigree(
   momID = "momID",
   dadID = "dadID",
   status_col = NULL,
-  config = list()
+  config = list(),
+  debug = FALSE,
+  hints = NULL,
+  ...
 )
 
 ggped(
@@ -33,7 +39,10 @@ ggped(
   momID = "momID",
   dadID = "dadID",
   status_col = NULL,
-  config = list()
+  config = list(),
+  debug = FALSE,
+  hints = NULL,
+  ...
 )
 }
 \arguments{
@@ -54,7 +63,7 @@ ggped(
    \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1.}
    \item{spouse_segment_color, self_segment_color, sibling_segment_color, parent_segment_color, offspring_segment_color}{Character. Line colors for respective connection types.}
    \item{label_text_size, point_size, line_width}{Numeric. Controls text size, point size, and line thickness.}
-   \item{generation_gap}{Numeric. Vertical spacing multiplier between generations. Default: 1.}
+   \item{generation_height}{Numeric. Vertical spacing multiplier between generations. Default: 1.}
    \item{unknown_shape, female_shape, male_shape, affected_shape}{Integers. Shape codes for plotting each group.}
    \item{sex_shape_labs}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
    \item{unaffected, affected}{Values indicating unaffected/affected status.}
@@ -62,6 +71,10 @@ ggped(
    \item{max_overlaps}{Maximum number of overlaps allowed in repelled labels.}
    \item{id_segment_color}{Color used for label connector lines.}
  }}
+
+\item{debug}{Logical. If TRUE, prints debugging information. Default: FALSE.}
+
+\item{hints}{Data frame with hints for layout adjustments. Default: NULL.}
 }
 \value{
 A `ggplot` object rendering the pedigree diagram.
