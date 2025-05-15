@@ -2,3 +2,4 @@
     uses: codecov/codecov-action@v5
     with:
       token: ${{ secrets.CODECOV_TOKEN }}
+      slug: R-Computing-Lab/ggpedigree
