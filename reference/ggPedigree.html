@@ -39,7 +39,7 @@ supports multiple families and optionally displays affected status and sex-based
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Plot a custom pedigree diagram</h1>
-      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/main/R/ggPedigree.R" class="external-link"><code>R/ggPedigree.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/main/R/ggpedigree.R" class="external-link"><code>R/ggpedigree.R</code></a></small>
       <div class="d-none name"><code>ggPedigree.Rd</code></div>
     </div>
 
@@ -59,7 +59,10 @@ supports multiple families and optionally displays affected status and sex-based
 <span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
 <span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
 <span>  status_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  debug <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  hints <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ggpedigree</span><span class="op">(</span></span>
@@ -69,7 +72,10 @@ supports multiple families and optionally displays affected status and sex-based
 <span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
 <span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
 <span>  status_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  debug <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  hints <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ggped</span><span class="op">(</span></span>
@@ -79,7 +85,10 @@ supports multiple families and optionally displays affected status and sex-based
 <span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
 <span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
 <span>  status_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  debug <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  hints <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -118,10 +127,10 @@ supports multiple families and optionally displays affected status and sex-based
    <dt>spouse_segment_color, self_segment_color, sibling_segment_color, parent_segment_color, offspring_segment_color</dt>
 <dd><p>Character. Line colors for respective connection types.</p></dd>
 
-   <dt>text_size, point_size, line_width</dt>
+   <dt>label_text_size, point_size, line_width</dt>
 <dd><p>Numeric. Controls text size, point size, and line thickness.</p></dd>
 
-   <dt>generation_gap</dt>
+   <dt>generation_height</dt>
 <dd><p>Numeric. Vertical spacing multiplier between generations. Default: 1.</p></dd>
 
    <dt>unknown_shape, female_shape, male_shape, affected_shape</dt>
@@ -144,6 +153,18 @@ supports multiple families and optionally displays affected status and sex-based
 
 
 </dl></dd>
+
+
+<dt id="arg-debug">debug<a class="anchor" aria-label="anchor" href="#arg-debug"></a></dt>
+<dd><p>Logical. If TRUE, prints debugging information. Default: FALSE.</p></dd>
+
+
+<dt id="arg-hints">hints<a class="anchor" aria-label="anchor" href="#arg-hints"></a></dt>
+<dd><p>Data frame with hints for layout adjustments. Default: NULL.</p></dd>
+
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Additional arguments passed to `ggplot2` functions.</p></dd>
 
 </dl></div>
     <div class="section level2">
