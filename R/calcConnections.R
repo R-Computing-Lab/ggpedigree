@@ -68,7 +68,10 @@ calculateConnections <- function(ped,
 
   # If duplicated appearances exist, resolve which connections to keep
   if (sum(ped$extra) > 0) {
-    ped <- processExtras(ped, config = config)   |> unique()
+    full_extra <- processExtras(ped, config = config)
+
+    ped <- full_extra$ped  |> unique()
+
 } else {
 
   ped <- ped |>
@@ -76,7 +79,6 @@ calculateConnections <- function(ped,
       coreID = .data$personID
     )
 }
-
     connections <- dplyr::select(
       .data = ped,
       "personID",
@@ -239,18 +241,26 @@ calculateConnections <- function(ped,
       y_mid_sib = dplyr::if_else(link_as_sibling, y_mid_sib, NA_real_)
     )
 
-
-
-
-
+if(exists("full_extra")){
   plot_connections <- list(
     connections = connections,
+    self_coords = full_extra$self_coords,
     connections_spouse_segment = build_connections_spouse_segment(
       ped = ped,
       connections_for_FOO = connections_for_spouses
     )
     )
+}else{
+  plot_connections <- list(
+    connections = connections,
+    self_coords = FALSE,
+    connections_spouse_segment = build_connections_spouse_segment(
+      ped = ped,
+      connections_for_FOO = connections_for_spouses
+    )
+  )
 
+}
   return(plot_connections)
 }
 

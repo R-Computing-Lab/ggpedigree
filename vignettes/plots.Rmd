@@ -194,7 +194,8 @@ p <- ggPedigree(
     label_method="geom_text",
     affected = TRUE,
     unaffected = FALSE,
-    generation_gap = 2,
+    generation_height = 2,
+    generation_width = 1,
     affected_shape = 4,
     spouse_segment_color = "pink",
     sibling_segment_color = "blue",
@@ -202,10 +203,12 @@ p <- ggPedigree(
     offspring_segment_color = "black")
 )# + facet_wrap(~famID, scales= "free")
 
-p$connections%>%filter(personID     ==61) %>% nrow()
-p$connections%>%filter(personID     ==61) %>% unique()
+#p$connections%>%filter(personID     ==60) %>% nrow()
+#p$connections%>%filter(personID     ==66) %>% unique()
+#p$connections%>%filter(personID     ==65) %>% unique()
 
-p$connections%>%filter(personID     ==65) %>% unique()
+#p$connections%>%filter(personID  >=61 &
+                #       personID  <62 ) %>% unique()
 
 p$plot
 ```

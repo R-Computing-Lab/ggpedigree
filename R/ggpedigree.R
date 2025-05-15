@@ -17,7 +17,7 @@
 #'     \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1.}
 #'     \item{spouse_segment_color, self_segment_color, sibling_segment_color, parent_segment_color, offspring_segment_color}{Character. Line colors for respective connection types.}
 #'     \item{label_text_size, point_size, line_width}{Numeric. Controls text size, point size, and line thickness.}
-#'     \item{generation_gap}{Numeric. Vertical spacing multiplier between generations. Default: 1.}
+#'     \item{generation_height}{Numeric. Vertical spacing multiplier between generations. Default: 1.}
 #'     \item{unknown_shape, female_shape, male_shape, affected_shape}{Integers. Shape codes for plotting each group.}
 #'     \item{sex_shape_labs}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
 #'     \item{unaffected, affected}{Values indicating unaffected/affected status.}
@@ -61,7 +61,8 @@ ggPedigree <- function(ped, famID = "famID",
     label_text_size = 2,
     point_size = 4,
     line_width = 0.5,
-    generation_gap = 1,
+    generation_height = 1,
+    generation_width = 1,
     unknown_shape = 18,
     female_shape = 16,
     male_shape = 15,
@@ -140,11 +141,14 @@ ggPedigree <- function(ped, famID = "famID",
     config = config
   )
 
-  # Apply vertical spacing factor if generation_gap ≠ 1
-  if (!isTRUE(all.equal(config$generation_gap, 1))) {
-    ds$y_pos <- ds$y_pos * config$generation_gap # expand/contract generations
+  # Apply vertical spacing factor if generation_height ≠ 1
+  if (!isTRUE(all.equal(config$generation_height, 1))) {
+    ds$y_pos <- ds$y_pos * config$generation_height # expand/contract generations
   }
-
+  # Apply horizontal spacing factor if generation_width ≠ 1
+  if (!isTRUE(all.equal(config$generation_width, 1))) {
+    ds$x_pos <- ds$x_pos * config$generation_width # expand/contract generations
+  }
   # -----
   # STEP 5: Compute Relationship Connections
   # -----
@@ -156,7 +160,7 @@ ggPedigree <- function(ped, famID = "famID",
   # -----
   # STEP 6: Initialize Plot
   # -----
-  gap_off <- 0.5 * config$generation_gap # single constant for all “stub” offsets
+  gap_off <- 0.5 * config$generation_height # single constant for all “stub” offsets
 
   p <- ggplot2::ggplot(ds, ggplot2::aes(
     x = .data$x_pos,
@@ -294,7 +298,7 @@ ggPedigree <- function(ped, famID = "famID",
   if(config$include_labels == TRUE && config$label_method=="ggrepel"){
     p <- p +
       ggrepel::geom_text_repel(ggplot2::aes(label = .data$personID),
-        nudge_y = -.10 * config$generation_gap,
+        nudge_y = -.10 * config$generation_height,
         size = config$label_text_size,
         na.rm = TRUE,
         max.overlaps = config$max_overlaps,
@@ -304,7 +308,7 @@ ggPedigree <- function(ped, famID = "famID",
   } else if(config$include_labels == TRUE && config$label_method=="geom_label"){
     p <- p +
       ggplot2::geom_label(ggplot2::aes(label = .data$personID),
-        nudge_y = -.25 * config$generation_gap,
+        nudge_y = -.25 * config$generation_height,
         size = config$label_text_size,
         na.rm = TRUE
       )
@@ -312,7 +316,7 @@ ggPedigree <- function(ped, famID = "famID",
   } else if(config$include_labels == TRUE || config$label_method=="geom_text"){
     p <- p +
       ggplot2::geom_text(ggplot2::aes(label = .data$personID),
-        nudge_y = -.25 * config$generation_gap,
+        nudge_y = -.25 * config$generation_height,
         size = config$label_text_size,
         na.rm = TRUE
       )
@@ -320,9 +324,19 @@ ggPedigree <- function(ped, famID = "famID",
 
 
   # Self-segment (for duplicate layout appearances of same person)
-  if ("x_otherself" %in% names(connections)) {
+  if (inherits(plot_connections$self_coords, "data.frame")) {
+
+    otherself <- plot_connections$self_coords |> filter(!is.na(.data$x_otherself)) |>
+      mutate(
+        otherself_xkey = symKey(.data$x_otherself, .data$x_pos)#,
+      #  otherself_ykey = symKey(.data$y_otherself, .data$y_pos)
+      ) |>
+      # unique combinations of x_otherself and x_pos and y_otherself and y_pos
+      dplyr::distinct(.data$otherself_xkey, .keep_all = TRUE)
+
+
     p <- p + ggplot2::geom_curve(
-      data = dplyr::filter(connections,extra==TRUE),
+      data = otherself,
       ggplot2::aes(
         x = .data$x_otherself,
         xend = .data$x_pos,
