@@ -100,11 +100,12 @@ p +
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
 library(BGmisc) # helper utilities & example data
+
 data("inbreeding")
 
-df <- inbreeding %>% filter(
-    famID %in% c(5, 7),
-  )
+df <- inbreeding 
+
+#df  <- dplyr::filter(df, famID %in% c(5, 7))
 
 
 p <- ggPedigree(
