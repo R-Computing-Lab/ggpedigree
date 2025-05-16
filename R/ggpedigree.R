@@ -92,7 +92,7 @@ ggPedigree <- function(ped, famID = "famID",
     status_affected_shape = 4,
     status_unaffected_lab = "unaffected",
     status_vals = c(1, 0)
-  #  hints = NULL
+    #  hints = NULL
   )
 
 
@@ -264,22 +264,20 @@ ggPedigree <- function(ped, famID = "famID",
   #   3. If neither is used: plot individuals using shape alone.
 
 
-    if(config$outline == TRUE) {
+  if (config$outline == TRUE) {
     p <- p +
       ggplot2::geom_point(
         ggplot2::aes(
           shape = as.factor(.data$sex)
         ),
-        size = config$point_size*config$outline_multiplier,
+        size = config$point_size * config$outline_multiplier,
         na.rm = TRUE,
         color = config$outline_color,
-       stroke = config$line_width
+        stroke = config$line_width
       )
   }
 
   if (config$sex_color == TRUE) {
-
-
     # Use color and shape to represent sex
     p <- p +
       ggplot2::geom_point(
@@ -356,7 +354,7 @@ ggPedigree <- function(ped, famID = "famID",
     p <- p +
       ggplot2::geom_text(ggplot2::aes(label = !!rlang::sym(config$label_col)),
         nudge_y = config$label_nudge_y * config$generation_height,
-         nudge_x = config$label_nudge_x * config$generation_width,
+        nudge_x = config$label_nudge_x * config$generation_width,
         size = config$label_text_size,
         angle = config$label_text_angle,
         na.rm = TRUE
@@ -440,18 +438,18 @@ ggPedigree <- function(ped, famID = "famID",
     }
 
 
-  # Add color scale for sex or affected status if applicable
-  if (config$sex_color == TRUE) {
-    p <- p +
-      ggplot2::scale_color_discrete(labels = config$sex_shape_labs) +
-      ggplot2::labs(color = "Sex", shape = "Sex")
-  } else if (!is.null(status_col)) {
-    p <- p +
-      ggplot2::scale_color_discrete(labels = config$status_labs) +
-      ggplot2::labs(color = "Affected", shape = "Sex")
-  } else {
-    p <- p + ggplot2::labs(shape = "Sex")
-  }
+    # Add color scale for sex or affected status if applicable
+    if (config$sex_color == TRUE) {
+      p <- p +
+        ggplot2::scale_color_discrete(labels = config$sex_shape_labs) +
+        ggplot2::labs(color = "Sex", shape = "Sex")
+    } else if (!is.null(status_col)) {
+      p <- p +
+        ggplot2::scale_color_discrete(labels = config$status_labs) +
+        ggplot2::labs(color = "Affected", shape = "Sex")
+    } else {
+      p <- p + ggplot2::labs(shape = "Sex")
+    }
   }
 
   if (debug == TRUE) {

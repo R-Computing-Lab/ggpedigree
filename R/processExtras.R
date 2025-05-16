@@ -60,7 +60,8 @@ processExtras <- function(ped, config = list()) {
         .data$extra,
         .data$personID + .data$newID / 1000, # numeric, unique
         .data$personID
-      ))
+      )
+    )
 
   # ---- 4. Isolate duplicates for relationship resolution --------------------
   ped <- ped |> # flag anyone with extra appearances
@@ -171,8 +172,9 @@ processExtras <- function(ped, config = list()) {
     parent_winner <- extras |>
       dplyr::group_by(.data$coreID) |>
       dplyr::slice_min(.data$total_parent_dist_cityblock,
-                       n = 1,
-                       with_ties = FALSE) |>
+        n = 1,
+        with_ties = FALSE
+      ) |>
       dplyr::ungroup() |>
       dplyr::select("coreID", parent_choice = .data$personID)
   } else {
@@ -332,4 +334,3 @@ processExtras <- function(ped, config = list()) {
 
   return(full_extra)
 }
-

@@ -31,13 +31,12 @@ ggPedigree(
     line_width = 1,
     segment_spouse_color = viridis_pal()(5)[1],
     segment_sibling_color = viridis_pal()(5)[2],
-    segment_parent_color =viridis_pal()(5)[3],
+    segment_parent_color = viridis_pal()(5)[3],
     segment_offspring_color = viridis_pal()(5)[4],
     outline = TRUE,
     outline_color = viridis_pal()(5)[5]
   )
 )
-
 
 ## -----------------------------------------------------------------------------
 ggPedigree(potter,
@@ -53,8 +52,8 @@ ggPedigree(
   personID = "personID",
   config = list(
     label_col = "name",
-    label_text_angle =  -45,
-    label_nudge_y= -.25,
+    label_text_angle = -45,
+    label_nudge_y = -.25,
     label_nudge_x = 0.45,
     label_method = "geom_text",
     sex_color = TRUE
@@ -109,10 +108,9 @@ ggPedigree(
     sex_color = TRUE,
     status_affected_lab = TRUE,
     status_unaffected_lab = FALSE,
-    status_affected_shape = 8  # star shape
+    status_affected_shape = 8 # star shape
   )
 )
-
 
 ## ----facet_wrap---------------------------------------------------------------
 p +
@@ -142,9 +140,11 @@ library(BGmisc) # helper utilities & example data
 
 data("inbreeding")
 
+
 df <- inbreeding # multigenerational pedigree with consanguinity
 
-#df  <- dplyr::filter(df, famID %in% c(5, 7))
+
+# df  <- dplyr::filter(df, famID %in% c(5, 7))
 
 
 p <- ggPedigree(
@@ -171,7 +171,6 @@ p + facet_wrap(~famID, scales = "free") #+ scale_color_viridis(
 #  )  + theme_bw(base_size = 14)  +  guides(colour="none", shape="none")
 
 ## -----------------------------------------------------------------------------
-
 library(tibble)
 library(dplyr)
 pedigree_df <- tribble(
@@ -218,18 +217,22 @@ pedigree_df <- tribble(
   10039, 10026, 10027, 0, 2,
   10311, 10026, 10027, 1, 2,
   10312, 10026, 10027, 1, 2
-) %>% 
+) %>%
   mutate(
     cleanpersonID = personID - 10000,
     personID = ifelse(famID == 1, personID - 10000, personID),
-    momID    = ifelse(famID == 1 & !is.na(momID), momID - 10000, momID),
-    dadID    = ifelse(famID == 1 & !is.na(dadID), dadID - 10000, dadID),
-    proband =  case_when(personID %in% c(11,22,23,26,27,31,32,33,34,35) ~ TRUE,
-                        personID %in% c(10011,10022,10022,10023,10024,10026,
-                                        10034,10035,10036,10310,
-                                        10037,10038,10039,10311,
-                                        10312) ~ TRUE,
-                         TRUE ~ FALSE)
+    momID = ifelse(famID == 1 & !is.na(momID), momID - 10000, momID),
+    dadID = ifelse(famID == 1 & !is.na(dadID), dadID - 10000, dadID),
+    proband = case_when(
+      personID %in% c(11, 22, 23, 26, 27, 31, 32, 33, 34, 35) ~ TRUE,
+      personID %in% c(
+        10011, 10022, 10022, 10023, 10024, 10026,
+        10034, 10035, 10036, 10310,
+        10037, 10038, 10039, 10311,
+        10312
+      ) ~ TRUE,
+      TRUE ~ FALSE
+    )
   )
 
 ## -----------------------------------------------------------------------------
@@ -266,8 +269,10 @@ p + scale_shape_manual(
     discrete = TRUE,
     labels = c("TRUE", "FALSE"),
     name = "Founding MtDNA Line"
-  ) + 
-  facet_wrap(~famID, scales= "free", shrink = TRUE) + 
-  theme(strip.text = element_blank(),
-        legend.position = "bottom")
+  ) +
+  facet_wrap(~famID, scales = "free", shrink = TRUE) +
+  theme(
+    strip.text = element_blank(),
+    legend.position = "bottom"
+  )
 

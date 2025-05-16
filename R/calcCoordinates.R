@@ -80,19 +80,17 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
           ped_ped,
           align = config$ped_align,
           packed = config$ped_packed
-        )}
-      )
+        )
+      }
+    )
     # Align pedigree for plotting
     pos <- kinship2::align.pedigree(ped_ped,
-                                    packed = config$ped_packed,
-                                    align = config$ped_align,
-                                    width = config$ped_width,
-                                    hints = autohint
+      packed = config$ped_packed,
+      align = config$ped_align,
+      width = config$ped_width,
+      hints = autohint
     )
-
   } else {
-
-
     # -----
     # Extract layout information
     # -----
@@ -100,9 +98,9 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
 
     # Align pedigree for plotting
     pos <- kinship2::align.pedigree(ped_ped,
-                                    packed = config$ped_packed,
-                                    align = config$ped_align,
-                                    width = config$ped_width
+      packed = config$ped_packed,
+      align = config$ped_align,
+      width = config$ped_width
     )
   }
 
