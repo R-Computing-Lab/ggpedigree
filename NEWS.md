@@ -1,7 +1,5 @@
-# ggpedigree 0.3.0
-* Enhance the narrative of the plotting vignette to provide a more comprehensive understanding of the package's capabilities.
-
 # ggpedigree 0.2.0
+* Enhance the narrative of the plotting vignette to provide a more comprehensive understanding of the package's capabilities.
 * Extended functionality to include new plotting features, like handling multiple instances of
   the same individual in a pedigree.
 * Improved documentation and examples for better user guidance.

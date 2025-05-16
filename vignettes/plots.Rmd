@@ -44,7 +44,7 @@ library(tidyverse) # for data wrangling
 
 The simplest usage requires a data frame and column names for family and individual IDs. Here’s a basic pedigree plot using the `potter` data:
 
-```{r}
+```{r basic-usage}
 data("potter")
 ggPedigree(potter,
   famID = "famID",
@@ -66,12 +66,12 @@ The result is returned as a `ggplot2` object, which allows immediate post-proces
 
 
 
-# Customizing the plot
+# Customizing Aesthetics
 
 Users can control aesthetics via the `config` list. 
 Most appearance settings are managed through a `config` list. If any options are omitted, they fall back to predefined defaults. For example, we can turn off sex-based fill color and assign specific colors to connection segments:
 
-```{r}
+```{r customize-aesthetics}
 ggPedigree(
   potter,
   famID = "famID",
@@ -101,7 +101,7 @@ This can be particularly useful for matching house styles in academic publicatio
 
 
 
-# Additional customization
+# Overlaying Status Information
 
 In many applied settings, pedigrees include binary phenotypes such as affected/unaffected status. To incorporate this, use the `status_col` argument to point to a column containing the relevant variable.
 
@@ -252,6 +252,7 @@ p  + facet_wrap(~famID, scales= "free") #+ scale_color_viridis(
 ```
 
 # Power paper
+
 ```{r}
 library(tibble)
 
