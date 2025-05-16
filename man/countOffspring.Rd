@@ -16,8 +16,18 @@ countOffspring(ped, personID = "ID", momID = "momID", dadID = "dadID")
 \item{dadID}{character.  Name of the column in ped for the father ID variable}
 }
 \value{
-A data frame with an additional column, offspring, that contains the number of offspring for each individual
+A data frame with an additional column, offspring,
+   that contains the number of offspring for each individual
 }
 \description{
 Count offspring of each individual
+}
+\examples{
+library(BGmisc)
+data("potter")
+countOffspring(potter,
+  personID = "personID",
+  momID = "momID", dadID = "dadID"
+)
+
 }

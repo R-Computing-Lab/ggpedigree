@@ -3,6 +3,7 @@
 * Added option to add an outline to the pedigree plot.
 * Made the config options more consistent and user-friendly.
 * Enhance the narrative of the plotting vignette to demonstrate the new features and provide clearer examples.
+* Added missing examples to the `ggpedigree` function documentation.
 
 # ggpedigree 0.2.0
 * Extended functionality to include new plotting features, like handling multiple instances of the same individual in a pedigree.

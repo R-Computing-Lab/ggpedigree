@@ -4,10 +4,17 @@
 #' @param personID character.  Name of the column in ped for the person ID variable
 #' @param momID character.  Name of the column in ped for the mother ID variable
 #' @param dadID character.  Name of the column in ped for the father ID variable
-#' @return A data frame with an additional column, offspring, that contains the number of offspring for each individual
+#' @return A data frame with an additional column, offspring,
+#'    that contains the number of offspring for each individual
+#' @examples
+#' library(BGmisc)
+#' data("potter")
+#' countOffspring(potter,
+#'   personID = "personID",
+#'   momID = "momID", dadID = "dadID"
+#' )
+#'
 #' @export
-#'
-#'
 countOffspring <- function(ped, personID = "ID", momID = "momID", dadID = "dadID") {
   if (!all(c(personID, momID, dadID) %in% names(ped))) {
     stop("At least one of the following needed ID variables were not found: personID, momID, dadID")
@@ -25,9 +32,15 @@ countOffspring <- function(ped, personID = "ID", momID = "momID", dadID = "dadID
 #' @param personID character.  Name of the column in ped for the person ID variable
 #' @param momID character.  Name of the column in ped for the mother ID variable
 #' @param dadID character.  Name of the column in ped for the father ID variable
-#' @return A data frame with an additional column, siblings, that contains the number of siblings for each individual
-#' @export
+#' @return A data frame with an additional column, siblings,
+#'        that contains the number of siblings for each individual
+#' @examples
+#' library(BGmisc)
+#' data("potter")
+#' countSiblings(potter, personID = "personID")
 #'
+#' @export
+
 countSiblings <- function(ped, personID = "ID", momID = "momID", dadID = "dadID") {
   if (!all(c(personID, momID, dadID) %in% names(ped))) {
     stop("At least one of the following needed ID variables were not found: personID, momID, dadID")
@@ -61,7 +74,15 @@ countSiblings <- function(ped, personID = "ID", momID = "momID", dadID = "dadID"
 #' @param dadID Character. Name of the column in ped for the father ID variable
 #' @param spouseID Character. Name of the column in ped for the spouse ID variable
 #' @return A spouselist matrix
-generateSpouseList <- function(ped, personID, momID, dadID, spouseID) {
+#' @examples
+#' library(BGmisc)
+#' data("potter")
+#' generateSpouseList(potter,
+#'   personID = "personID",
+#'   momID = "momID", dadID = "dadID", spouseID = "spouseID"
+#' )
+#' @export
+generateSpouseList <- function(ped, personID = "personID", momID = "momID", dadID = "dadID", spouseID = "spouseID") {
   spouselist <- data.frame(matrix(NA, nrow = 0, ncol = 4))
   colnames(spouselist) <- c("ID1", "ID2", "sex1", "sex2")
 
