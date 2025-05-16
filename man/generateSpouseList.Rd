@@ -4,7 +4,13 @@
 \alias{generateSpouseList}
 \title{Generate a spouselist matrix}
 \usage{
-generateSpouseList(ped, personID, momID, dadID, spouseID)
+generateSpouseList(
+  ped,
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  spouseID = "spouseID"
+)
 }
 \arguments{
 \item{ped}{A data frame containing the pedigree information}
@@ -22,4 +28,12 @@ A spouselist matrix
 }
 \description{
 Generate a spouselist matrix
+}
+\examples{
+library(BGmisc)
+data("potter")
+generateSpouseList(potter,
+  personID = "personID",
+  momID = "momID", dadID = "dadID", spouseID = "spouseID"
+)
 }

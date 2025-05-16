@@ -16,8 +16,15 @@ countSiblings(ped, personID = "ID", momID = "momID", dadID = "dadID")
 \item{dadID}{character.  Name of the column in ped for the father ID variable}
 }
 \value{
-A data frame with an additional column, siblings, that contains the number of siblings for each individual
+A data frame with an additional column, siblings,
+       that contains the number of siblings for each individual
 }
 \description{
 Count siblings of each individual
+}
+\examples{
+library(BGmisc)
+data("potter")
+countSiblings(potter, personID = "personID")
+
 }

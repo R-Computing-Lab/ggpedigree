@@ -9,20 +9,22 @@
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R package
-version](https://www.r-pkg.org/badges/version/ggpedigree)](https://cran.r-project.org/package=ggpedigree)
+version](https://www.r-pkg.org/badges/version/ggpedigree)](https://www.r-pkg.org/badges/version/ggpedigree)
 [![Package
-downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggpedigree)](https://cran.r-project.org/package=BGmisc)</br>
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggpedigree)](https://cranlogs.r-pkg.org/badges/grand-total/ggpedigree)</br>
 [![R-CMD-check](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-check.yaml)
-[![Dev Main
+[![Dev
 branch](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-devcheck.yaml/badge.svg)](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-devcheck.yaml)
-[![codecov](https://codecov.io/gh/R-Computing-Lab/ggpedigree/graph/badge.svg)](https://codecov.io/gh/R-Computing-Lab/ggpedigree)
+[![codecov](https://app.codecov.io/gh/R-Computing-Lab/ggpedigree/graph/badge.svg?token=xXWYDcD9CF)](https://app.codecov.io/gh/R-Computing-Lab/ggpedigree)
 ![License](https://img.shields.io/badge/License-GPL_v3-blue.svg)
 <!-- badges: end -->
 
 The ggpedigree R package complements the BGmisc package by providing a
-set of functions for visualizing and analyzing pedigree data. It is
+set of functions for visualizing pedigree data using ggplot2. It is
 designed to work seamlessly with the BGmisc package, which provides
-tools for simulating, manipulating, and modeling pedigree data.
+tools for simulating, manipulating, and modeling pedigree data. It
+extends the plotting functionality of the `kinship2` package, which is
+widely used for pedigree analysis in R.
 
 ## Installation
 
@@ -48,19 +50,16 @@ cite the following:
 
     citation(package = "ggpedigree")
 
-    Warning in citation(package = "ggpedigree"): could not determine year for
-    'ggpedigree' from package DESCRIPTION file
-
-Garrison S (????). *ggpedigree: An R Package for plotting pedigrees*. R
-package version 0.3.0, <https://github.com/R-Computing-Lab/ggpedigree/>.
+Garrison S (05.16.2025). *ggpedigree: ggplot2 Extensions for Pedigree
+Diagrams*. R package version 0.3.0,
+<https://github.com/R-Computing-Lab/ggpedigree/>.
 
 A BibTeX entry for LaTeX users is
 
-    Warning in citation(package = "ggpedigree"): could not determine year for
-    'ggpedigree' from package DESCRIPTION file
     @Manual{,
-      title = {ggpedigree: An R Package for plotting pedigrees},
+      title = {ggpedigree: ggplot2 Extensions for Pedigree Diagrams},
       author = {S. Mason Garrison},
+      year = {05.16.2025},
       note = {R package version 0.3.0},
       url = {https://github.com/R-Computing-Lab/ggpedigree/},
     }
