@@ -1,7 +1,10 @@
+# ggpedigree 0.3.0
+* Expose more labeling options in the `ggpedigree` function to allow for more customization, including nudging labels and changing the variable used.
+* Made the config options more consistent and user-friendly.
+* Enhance the narrative of the plotting vignette to demonstrate the new features and provide clearer examples.
+
 # ggpedigree 0.2.0
-* Enhance the narrative of the plotting vignette to provide a more comprehensive understanding of the package's capabilities.
-* Extended functionality to include new plotting features, like handling multiple instances of
-  the same individual in a pedigree.
+* Extended functionality to include new plotting features, like handling multiple instances of the same individual in a pedigree.
 * Improved documentation and examples for better user guidance.
 * Added unit tests for describeHelpers
 
