@@ -291,9 +291,9 @@ x-axis scale.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"inbreeding"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">inbreeding</span> </span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">inbreeding</span></span>
 <span></span>
-<span><span class="co">#df  &lt;- dplyr::filter(df, famID %in% c(5, 7))</span></span>
+<span><span class="co"># df  &lt;- dplyr::filter(df, famID %in% c(5, 7))</span></span>
 <span></span>
 <span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
@@ -301,11 +301,11 @@ x-axis scale.</p>
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
 <span>  personID <span class="op">=</span> <span class="st">"ID"</span>,</span>
 <span>  status_col <span class="op">=</span> <span class="st">"proband"</span>,</span>
-<span><span class="co">#  debug = TRUE,</span></span>
+<span>  <span class="co">#  debug = TRUE,</span></span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    code_male <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>    sex_color <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>  <span class="co">#  label_method = "geom_text",</span></span>
+<span>    <span class="co">#  label_method = "geom_text",</span></span>
 <span>    affected <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    unaffected <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    generation_height <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -316,7 +316,7 @@ x-axis scale.</p>
 <span>    parent_segment_color <span class="op">=</span> <span class="st">"green"</span>,</span>
 <span>    offspring_segment_color <span class="op">=</span> <span class="st">"black"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">)</span> </span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># p$connections%&gt;%filter(personID     ==60) %&gt;% nrow()</span></span>
 <span><span class="co"># p$connections%&gt;%filter(personID     ==66) %&gt;% unique()</span></span>
@@ -325,11 +325,11 @@ x-axis scale.</p>
 <span><span class="co"># p$connections%&gt;%filter(personID  &gt;=61 &amp;</span></span>
 <span><span class="co">#       personID  &lt;62 ) %&gt;% unique()</span></span>
 <span></span>
-<span><span class="va">p</span>  <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">famID</span>, scales<span class="op">=</span> <span class="st">"free"</span><span class="op">)</span> <span class="co">#+ scale_color_viridis(</span></span></code></pre></div>
+<span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">famID</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span> <span class="co">#+ scale_color_viridis(</span></span></code></pre></div>
 <p><img src="plots_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span> <span class="co">#   discrete = TRUE,</span></span>
-<span> <span class="co">#   labels = c("TRUE", "FALSE")</span></span>
+<code class="sourceCode R"><span><span class="co">#   discrete = TRUE,</span></span>
+<span><span class="co">#   labels = c("TRUE", "FALSE")</span></span>
 <span><span class="co">#  )  + theme_bw(base_size = 14)  +  guides(colour="none", shape="none")</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -340,54 +340,54 @@ x-axis scale.</p>
 <span></span>
 <span><span class="va">pedigree_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">personID</span>, <span class="op">~</span><span class="va">momID</span>, <span class="op">~</span><span class="va">dadID</span>, <span class="op">~</span><span class="va">sex</span>, <span class="op">~</span><span class="va">famID</span>,</span>
-<span>  <span class="fl">10011</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="fl">0</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10012</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="fl">1</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10021</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="fl">1</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10022</span>,  <span class="fl">10011</span>,  <span class="fl">10012</span>,     <span class="fl">1</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10023</span>,  <span class="fl">10011</span>,  <span class="fl">10012</span>,     <span class="fl">0</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10024</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="fl">0</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10025</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="fl">0</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10026</span>,  <span class="fl">10011</span>,  <span class="fl">10012</span>,     <span class="fl">0</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10027</span>,  <span class="fl">10011</span>,  <span class="fl">10012</span>,     <span class="fl">1</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10031</span>,  <span class="fl">10023</span>,  <span class="fl">10021</span>,     <span class="fl">0</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10032</span>,  <span class="fl">10023</span>,  <span class="fl">10021</span>,     <span class="fl">1</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10033</span>,  <span class="fl">10023</span>,  <span class="fl">10021</span>,     <span class="fl">1</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10034</span>,  <span class="fl">10023</span>,  <span class="fl">10021</span>,     <span class="fl">1</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10035</span>,  <span class="fl">10023</span>,  <span class="fl">10021</span>,     <span class="fl">0</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10036</span>,  <span class="fl">10024</span>,  <span class="fl">10022</span>,     <span class="fl">1</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10037</span>,  <span class="fl">10024</span>,  <span class="fl">10022</span>,     <span class="fl">0</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10038</span>,  <span class="fl">10025</span>,  <span class="fl">10027</span>,     <span class="fl">1</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10039</span>,  <span class="fl">10025</span>,  <span class="fl">10027</span>,     <span class="fl">0</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10310</span>, <span class="fl">10025</span>,  <span class="fl">10027</span>,     <span class="fl">1</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10311</span>, <span class="fl">10025</span>,  <span class="fl">10027</span>,     <span class="fl">1</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10312</span>, <span class="fl">10025</span>,  <span class="fl">10027</span>,     <span class="fl">0</span>,    <span class="fl">1</span>,</span>
-<span>  <span class="fl">10011</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="fl">0</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">10012</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="fl">1</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">10021</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="fl">0</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">10022</span>,  <span class="fl">10011</span>,  <span class="fl">10012</span>,     <span class="fl">0</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">10023</span>,  <span class="fl">10011</span>,  <span class="fl">10012</span>,     <span class="fl">1</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">10024</span>,  <span class="fl">10011</span>,  <span class="fl">10012</span>,     <span class="fl">1</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">10025</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="fl">1</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">10026</span>,  <span class="fl">10011</span>,  <span class="fl">10012</span>,     <span class="fl">0</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">10027</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="fl">1</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">10031</span>,  <span class="fl">10021</span>,  <span class="fl">10023</span>,     <span class="fl">1</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">10032</span>,  <span class="fl">10021</span>,  <span class="fl">10023</span>,     <span class="fl">0</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">10033</span>,  <span class="fl">10021</span>,  <span class="fl">10023</span>,     <span class="fl">1</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">10034</span>,  <span class="fl">10022</span>,  <span class="fl">10025</span>,     <span class="fl">0</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">10035</span>,  <span class="fl">10022</span>,  <span class="fl">10025</span>,     <span class="fl">0</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">10036</span>,  <span class="fl">10022</span>,  <span class="fl">10025</span>,     <span class="fl">1</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">100310</span>, <span class="fl">10022</span>,  <span class="fl">10025</span>,     <span class="fl">1</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">10037</span>,  <span class="fl">10026</span>,  <span class="fl">10027</span>,     <span class="fl">0</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">10038</span>,  <span class="fl">10026</span>,  <span class="fl">10027</span>,     <span class="fl">0</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">10039</span>,  <span class="fl">10026</span>,  <span class="fl">10027</span>,     <span class="fl">0</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">100311</span>, <span class="fl">10026</span>,  <span class="fl">10027</span>,     <span class="fl">1</span>,    <span class="fl">2</span>,</span>
-<span>  <span class="fl">100312</span>, <span class="fl">10026</span>,  <span class="fl">10027</span>,     <span class="fl">1</span>,    <span class="fl">2</span></span>
-<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span> <span class="op">(</span>proband <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="fl">10011</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10012</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10021</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10022</span>, <span class="fl">10011</span>, <span class="fl">10012</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10023</span>, <span class="fl">10011</span>, <span class="fl">10012</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10024</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10025</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10026</span>, <span class="fl">10011</span>, <span class="fl">10012</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10027</span>, <span class="fl">10011</span>, <span class="fl">10012</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10031</span>, <span class="fl">10023</span>, <span class="fl">10021</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10032</span>, <span class="fl">10023</span>, <span class="fl">10021</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10033</span>, <span class="fl">10023</span>, <span class="fl">10021</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10034</span>, <span class="fl">10023</span>, <span class="fl">10021</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10035</span>, <span class="fl">10023</span>, <span class="fl">10021</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10036</span>, <span class="fl">10024</span>, <span class="fl">10022</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10037</span>, <span class="fl">10024</span>, <span class="fl">10022</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10038</span>, <span class="fl">10025</span>, <span class="fl">10027</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10039</span>, <span class="fl">10025</span>, <span class="fl">10027</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10310</span>, <span class="fl">10025</span>, <span class="fl">10027</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10311</span>, <span class="fl">10025</span>, <span class="fl">10027</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10312</span>, <span class="fl">10025</span>, <span class="fl">10027</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
+<span>  <span class="fl">10011</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">10012</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">10021</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">10022</span>, <span class="fl">10011</span>, <span class="fl">10012</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">10023</span>, <span class="fl">10011</span>, <span class="fl">10012</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">10024</span>, <span class="fl">10011</span>, <span class="fl">10012</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">10025</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">10026</span>, <span class="fl">10011</span>, <span class="fl">10012</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">10027</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">10031</span>, <span class="fl">10021</span>, <span class="fl">10023</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">10032</span>, <span class="fl">10021</span>, <span class="fl">10023</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">10033</span>, <span class="fl">10021</span>, <span class="fl">10023</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">10034</span>, <span class="fl">10022</span>, <span class="fl">10025</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">10035</span>, <span class="fl">10022</span>, <span class="fl">10025</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">10036</span>, <span class="fl">10022</span>, <span class="fl">10025</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">100310</span>, <span class="fl">10022</span>, <span class="fl">10025</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">10037</span>, <span class="fl">10026</span>, <span class="fl">10027</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">10038</span>, <span class="fl">10026</span>, <span class="fl">10027</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">10039</span>, <span class="fl">10026</span>, <span class="fl">10027</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">100311</span>, <span class="fl">10026</span>, <span class="fl">10027</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
+<span>  <span class="fl">100312</span>, <span class="fl">10026</span>, <span class="fl">10027</span>, <span class="fl">1</span>, <span class="fl">2</span></span>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>proband <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">#pedigree_df &lt;- recodeSex(pedigree_df,code_male = 1, recode_male = "M")</span></span>
-<span><span class="va">pedigree_df</span><span class="op">$</span><span class="va">personID</span><span class="op">[</span><span class="va">pedigree_df</span><span class="op">$</span><span class="va">famID</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">pedigree_df</span><span class="op">$</span><span class="va">personID</span><span class="op">[</span><span class="va">pedigree_df</span><span class="op">$</span><span class="va">famID</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span><span class="op">-</span><span class="fl">10000</span></span>
-<span><span class="va">pedigree_df</span><span class="op">$</span><span class="va">momID</span><span class="op">[</span><span class="va">pedigree_df</span><span class="op">$</span><span class="va">famID</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">pedigree_df</span><span class="op">$</span><span class="va">momID</span><span class="op">[</span><span class="va">pedigree_df</span><span class="op">$</span><span class="va">famID</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span><span class="op">-</span><span class="fl">10000</span></span>
-<span><span class="va">pedigree_df</span><span class="op">$</span><span class="va">dadID</span><span class="op">[</span><span class="va">pedigree_df</span><span class="op">$</span><span class="va">famID</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">pedigree_df</span><span class="op">$</span><span class="va">dadID</span><span class="op">[</span><span class="va">pedigree_df</span><span class="op">$</span><span class="va">famID</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span><span class="op">-</span><span class="fl">10000</span></span>
+<span><span class="co"># pedigree_df &lt;- recodeSex(pedigree_df,code_male = 1, recode_male = "M")</span></span>
+<span><span class="va">pedigree_df</span><span class="op">$</span><span class="va">personID</span><span class="op">[</span><span class="va">pedigree_df</span><span class="op">$</span><span class="va">famID</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">pedigree_df</span><span class="op">$</span><span class="va">personID</span><span class="op">[</span><span class="va">pedigree_df</span><span class="op">$</span><span class="va">famID</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="fl">10000</span></span>
+<span><span class="va">pedigree_df</span><span class="op">$</span><span class="va">momID</span><span class="op">[</span><span class="va">pedigree_df</span><span class="op">$</span><span class="va">famID</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">pedigree_df</span><span class="op">$</span><span class="va">momID</span><span class="op">[</span><span class="va">pedigree_df</span><span class="op">$</span><span class="va">famID</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="fl">10000</span></span>
+<span><span class="va">pedigree_df</span><span class="op">$</span><span class="va">dadID</span><span class="op">[</span><span class="va">pedigree_df</span><span class="op">$</span><span class="va">famID</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">pedigree_df</span><span class="op">$</span><span class="va">dadID</span><span class="op">[</span><span class="va">pedigree_df</span><span class="op">$</span><span class="va">famID</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="fl">10000</span></span>
 <span></span>
 <span></span>
 <span></span>
@@ -396,14 +396,14 @@ x-axis scale.</p>
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
 <span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
 <span>  status_col <span class="op">=</span> <span class="st">"proband"</span>,</span>
-<span><span class="co">#  debug = TRUE,</span></span>
+<span>  <span class="co">#  debug = TRUE,</span></span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    code_male <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>    sex_color <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>    apply_default_scales <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>   label_method <span class="op">=</span> <span class="st">"geom_text"</span>,</span>
-<span> <span class="co">#   affected = TRUE,</span></span>
-<span> <span class="co">#   unaffected = FALSE,</span></span>
+<span>    label_method <span class="op">=</span> <span class="st">"geom_text"</span>,</span>
+<span>    <span class="co">#   affected = TRUE,</span></span>
+<span>    <span class="co">#   unaffected = FALSE,</span></span>
 <span>    generation_height <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>    generation_width <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>    affected_shape <span class="op">=</span> <span class="fl">4</span>,</span>
@@ -415,14 +415,14 @@ x-axis scale.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_shape_manual</a></span><span class="op">(</span></span>
-<span>      values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">16</span>, <span class="fl">15</span>, <span class="fl">15</span><span class="op">)</span>,</span>
-<span>      labels <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="st">"Male"</span>, <span class="st">"Unknown"</span><span class="op">)</span></span>
-<span>    <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>colour<span class="op">=</span><span class="st">"none"</span>, shape<span class="op">=</span><span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
+<span>  values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">16</span>, <span class="fl">15</span>, <span class="fl">15</span><span class="op">)</span>,</span>
+<span>  labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="st">"Male"</span>, <span class="st">"Unknown"</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"none"</span>, shape <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plots_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span> <span class="co"># guides(colour="none", shape="none") + </span></span>
-<span><span class="co">#facet_wrap(~famID, scales= "free") </span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># guides(colour="none", shape="none") +</span></span>
+<span><span class="co"># facet_wrap(~famID, scales= "free")</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
