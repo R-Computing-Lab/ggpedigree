@@ -120,10 +120,10 @@ ggPedigree <- function(ped, famID = "famID",
   # Clean duplicated famID columns if present
 
   if ("famID.y" %in% names(ds_ped)) {
-    ds_ped <- dplyr::select(.data=ds_ped, -"famID.y")
+    ds_ped <- dplyr::select(.data = ds_ped, -"famID.y")
   }
   if ("famID.x" %in% names(ds_ped)) {
-    ds_ped <- dplyr::rename(.data=ds_ped, famID = "famID.x")
+    ds_ped <- dplyr::rename(.data = ds_ped, famID = "famID.x")
   }
 
   # If personID is not "personID", rename to "personID" internally
@@ -332,6 +332,7 @@ ggPedigree <- function(ped, famID = "famID",
   # Add labels to the points using ggrepel for better visibility
   if (config$include_labels == TRUE && config$label_method == "ggrepel") {
     p <- p +
+
       ggrepel::geom_text_repel(ggplot2::aes(label = !!rlang::sym(config$label_col)),
         nudge_y = config$label_nudge_y * config$generation_height,
         nudge_x = config$label_nudge_x * config$generation_width,
@@ -350,7 +351,6 @@ ggPedigree <- function(ped, famID = "famID",
         size = config$label_text_size,
         angle = config$label_text_angle,
         na.rm = TRUE
-
       )
   } else if (config$include_labels == TRUE || config$label_method == "geom_text") {
     p <- p +
@@ -401,8 +401,8 @@ ggPedigree <- function(ped, famID = "famID",
   p <- p +
     ggplot2::scale_y_reverse()
 
- if(config$apply_default_theme == TRUE) {
-    p <-  p +
+  if (config$apply_default_theme == TRUE) {
+    p <- p +
       ggplot2::theme_minimal() +
       ggplot2::theme(
         axis.title.y = ggplot2::element_blank(),
@@ -415,7 +415,7 @@ ggPedigree <- function(ped, famID = "famID",
         axis.text.x = ggplot2::element_blank(),
         axis.ticks.x = ggplot2::element_blank()
       )
-}
+  }
 
 
 
@@ -423,21 +423,22 @@ ggPedigree <- function(ped, famID = "famID",
   # STEP 11: Final Legend Adjustments
   # -----
   # Adjust legend labels and colors based on the configuration
-  if(config$apply_default_scales == TRUE) {
+  if (config$apply_default_scales == TRUE) {
     p <- p + ggplot2::scale_shape_manual(
       values = config$sex_shape_vals,
       labels = config$sex_shape_labs
     )
 
-  # Add alpha scale for affected status if applicable
-  if (!is.null(status_col) && config$sex_color == TRUE) {
-    p <- p + ggplot2::scale_alpha_manual(
-      name = NULL,
-      labels = config$status_labs,
-      values = config$status_vals,
-      na.translate = FALSE
-    ) + ggplot2::guides(alpha = "none")
-  }
+    # Add alpha scale for affected status if applicable
+    if (!is.null(status_col) && config$sex_color == TRUE) {
+      p <- p + ggplot2::scale_alpha_manual(
+        name = NULL,
+        labels = config$status_labs,
+        values = config$status_vals,
+        na.translate = FALSE
+      ) + ggplot2::guides(alpha = "none")
+    }
+
 
   # Add color scale for sex or affected status if applicable
   if (config$sex_color == TRUE) {
@@ -464,7 +465,6 @@ ggPedigree <- function(ped, famID = "famID",
     # If debug is FALSE, return only the plot
     return(p)
   }
-
 }
 
 #' @rdname ggPedigree

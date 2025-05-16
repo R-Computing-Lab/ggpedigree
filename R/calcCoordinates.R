@@ -66,7 +66,7 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
     momid = ped[[momID]],
     sex = ped_recode[[sexVar]],
   )
-#
+  #
   if ("hints" %in% names(config)) {
     # Check if hints are provided
     autohint <- tryCatch(

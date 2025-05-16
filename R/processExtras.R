@@ -206,12 +206,13 @@ processExtras <- function(ped, config = list()) {
       x2 = cand$x_pos, y2 = cand$y_pos
     )
     ord <- order(d) # ascending distance
-    pick <- if(any(cand$total_blue, na.rm = TRUE)){
-      2L }else{
-      1L} # 2nd if blue present, else 1st
+    pick <- if (any(cand$total_blue, na.rm = TRUE)) {
+      2L
+    } else {
+      1L
+    } # 2nd if blue present, else 1st
 
-
-    if(length(ord) < pick) pick <- 1L
+    if (length(ord) < pick) pick <- 1L
 
 
     cand$personID[ord[pick]]

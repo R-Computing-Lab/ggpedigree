@@ -240,9 +240,11 @@ library(BGmisc) # helper utilities & example data
 
 data("inbreeding")
 
+
 df <- inbreeding # multigenerational pedigree with consanguinity
 
-#df  <- dplyr::filter(df, famID %in% c(5, 7))
+
+# df  <- dplyr::filter(df, famID %in% c(5, 7))
 
 
 p <- ggPedigree(
@@ -352,6 +354,7 @@ pedigree_df <- tribble(
 ```
 </details>
 
+
 ## Plotting the pedigree
 
 ```{r}
@@ -379,6 +382,7 @@ p <- ggPedigree(
   )
 )
 ```
+
 
 We finish by adjusting the legend and shape scale for visual clarity:
 
