@@ -1,3 +1,5 @@
+utils::globalVariables(c("coreID")) # no alternative with group_by
+
 #' Process duplicate appearances of individuals in a pedigree layout
 #'
 #' Resolves layout conflicts when the same individual appears in multiple places
@@ -167,7 +169,7 @@ processExtras <- function(ped, config = list()) {
 
   if (sum(ped$total_blue, na.rm = TRUE) == 0) {
     parent_winner <- extras |>
-      dplyr::group_by(coreID) |>
+      dplyr::group_by(.data$coreID) |>
       dplyr::slice_min(.data$total_parent_dist_cityblock,
                        n = 1,
                        with_ties = FALSE) |>
@@ -176,7 +178,7 @@ processExtras <- function(ped, config = list()) {
   } else {
     # if there are spouseID == momID or spouseID == dadID, then parent choice needs to be the 2nd closest
     parent_winner <- extras |>
-      dplyr::group_by(coreID) |>
+      dplyr::group_by(.data$coreID) |>
       dplyr::arrange(.data$total_parent_dist2, .by_group = TRUE) |>
       dplyr::mutate(
         rank       = dplyr::row_number(), # 1 = closest, 2 = second‑closest …

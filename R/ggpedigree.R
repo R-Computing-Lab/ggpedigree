@@ -72,10 +72,14 @@ ggPedigree <- function(ped, famID = "famID",
     # point and line aesthetics
     line_width = 0.5,
     point_size = 4,
+    # point outline
+    outline = FALSE,
+    outline_multiplier = 1.5,
+    outline_color = "black",
     # segment colors
     segment_offspring_color = "black",
     segment_parent_color = "black",
-    segment_self_color = "purple",
+    segment_self_color = "black",
     segment_sibling_color = "black",
     segment_spouse_color = "black",
     # sex
@@ -259,7 +263,23 @@ ggPedigree <- function(ped, famID = "famID",
   #   2. If sex_color == FALSE but status_col is present: shape reflects sex, and color reflects affected status.
   #   3. If neither is used: plot individuals using shape alone.
 
+
+    if(config$outline == TRUE) {
+    p <- p +
+      ggplot2::geom_point(
+        ggplot2::aes(
+          shape = as.factor(.data$sex)
+        ),
+        size = config$point_size*config$outline_multiplier,
+        na.rm = TRUE,
+        color = config$outline_color,
+       stroke = config$line_width
+      )
+  }
+
   if (config$sex_color == TRUE) {
+
+
     # Use color and shape to represent sex
     p <- p +
       ggplot2::geom_point(
@@ -268,7 +288,8 @@ ggPedigree <- function(ped, famID = "famID",
           shape = as.factor(.data$sex)
         ),
         size = config$point_size,
-        na.rm = TRUE
+        na.rm = TRUE,
+        stroke = config$line_width
       )
     # If affected status is present, overlay an additional marker using alpha aesthetic
     if (!is.null(status_col)) {

@@ -28,12 +28,16 @@ ggPedigree(
   config = list(
     code_male = 1, # Here, 1 = male, 0 = female
     sex_color = FALSE,
-    segment_spouse_color = "pink",
-    segment_sibling_color = "blue",
-    segment_parent_color = "green",
-    segment_offspring_color = "black"
+    line_width = 1,
+    segment_spouse_color = viridis_pal()(5)[1],
+    segment_sibling_color = viridis_pal()(5)[2],
+    segment_parent_color =viridis_pal()(5)[3],
+    segment_offspring_color = viridis_pal()(5)[4],
+    outline = TRUE,
+    outline_color = viridis_pal()(5)[5]
   )
 )
+
 
 ## -----------------------------------------------------------------------------
 ggPedigree(potter,
@@ -50,8 +54,8 @@ ggPedigree(
   config = list(
     label_col = "name",
     label_text_angle =  -45,
-    label_nudge_y= -.2,
-    label_nudge_x = 0.5,
+    label_nudge_y= -.25,
+    label_nudge_x = 0.45,
     label_method = "geom_text",
     sex_color = TRUE
   )
@@ -110,7 +114,7 @@ ggPedigree(
 )
 
 
-## -----------------------------------------------------------------------------
+## ----facet_wrap---------------------------------------------------------------
 p +
   facet_wrap(~famID, scales = "free_x")
 
@@ -133,14 +137,14 @@ p +
     labels = c("Female", "Male", "Unknown")
   )
 
-## ----message=FALSE, warning=FALSE---------------------------------------------
+## ----self-loops, message=FALSE, warning=FALSE---------------------------------
 library(BGmisc) # helper utilities & example data
 
 data("inbreeding")
 
 df <- inbreeding # multigenerational pedigree with consanguinity
 
- df  <- dplyr::filter(df, famID %in% c(5, 7))
+#df  <- dplyr::filter(df, famID %in% c(5, 7))
 
 
 p <- ggPedigree(
@@ -151,7 +155,7 @@ p <- ggPedigree(
   #  debug = TRUE,
   config = list(
     code_male = 0,
-    sex_color = F,
+    sex_color = FALSE,
     status_affected_lab = TRUE,
     status_unaffected_lab = FALSE,
     generation_height = 4,

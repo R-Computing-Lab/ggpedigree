@@ -78,12 +78,16 @@ ggPedigree(
   config = list(
     code_male = 1, # Here, 1 = male, 0 = female
     sex_color = FALSE,
-    segment_spouse_color = "pink",
-    segment_sibling_color = "blue",
-    segment_parent_color = "green",
-    segment_offspring_color = "black"
+    line_width = 1,
+    segment_spouse_color = viridis_pal()(5)[1],
+    segment_sibling_color = viridis_pal()(5)[2],
+    segment_parent_color =viridis_pal()(5)[3],
+    segment_offspring_color = viridis_pal()(5)[4],
+    outline = TRUE,
+    outline_color = viridis_pal()(5)[5]
   )
 )
+
 ```
 
 As with any `ggplot2` object, further theming and labeling can be applied using layers or themes. For instance:
@@ -111,8 +115,8 @@ ggPedigree(
   config = list(
     label_col = "name",
     label_text_angle =  -45,
-    label_nudge_y= -.2,
-    label_nudge_x = 0.5,
+    label_nudge_y= -.25,
+    label_nudge_x = 0.45,
     label_method = "geom_text",
     sex_color = TRUE
   )
@@ -198,7 +202,7 @@ ggPedigree(
 
 If you have multiple families in your data frame, you can use the `facet_wrap()` function from `ggplot2` to create separate plots for each family. This is useful if you want to compare the pedigrees of different families side by side. Note that you can use `scales = "free_x"` to allow each family to have its own x-axis scale.
 
-```{r}
+```{r facet_wrap}
 p +
   facet_wrap(~famID, scales = "free_x")
 ```
@@ -227,18 +231,18 @@ p +
   )
 ```
 
-# Advanced Example: Large Pedigrees and Overlaid Status
+# Advanced Example: Large Pedigrees with self-loops
 
-In this section, we demonstrate how to create a more complex pedigree plot with multiple families and overlaid status information. We use the `inbreeding` dataset from the `BGmisc` package, which contains several multigenerational pedigrees with consanguinity. Note that in these plots that some individuals may appear in multiple places within the pedigree. This is common in large pedigrees, especially when there are overlapping generations or multiple marriages. Here the colors are set to be the same for all segments, except for self-loops, which are colored purple.
+In this section, we demonstrate how to create a more complex pedigree plot with multiple families. We use the `inbreeding` dataset from the `BGmisc` package, which contains several multigenerational pedigrees with consanguinity. Note that in these plots that some individuals may appear in multiple places within the pedigree. This is common in large pedigrees, especially when there are overlapping generations or multiple marriages. Here the colors are set to be the same for all segments, except for self-loops, which are colored purple.
 
-```{r message=FALSE, warning=FALSE}
+```{r self-loops, message=FALSE, warning=FALSE}
 library(BGmisc) # helper utilities & example data
 
 data("inbreeding")
 
 df <- inbreeding # multigenerational pedigree with consanguinity
 
-df  <- dplyr::filter(df, famID %in% c(5, 7))
+#df  <- dplyr::filter(df, famID %in% c(5, 7))
 
 
 p <- ggPedigree(

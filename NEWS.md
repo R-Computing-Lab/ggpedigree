@@ -1,5 +1,6 @@
 # ggpedigree 0.3.0
-* Expose more labeling options in the `ggpedigree` function to allow for more customization, including nudging labels and changing the variable used.
+* Expose more labeling options in the `ggpedigree` function to allow for more customization, including nudging labels, and changing the variable used.
+* Added option to add an outline to the pedigree plot.
 * Made the config options more consistent and user-friendly.
 * Enhance the narrative of the plotting vignette to demonstrate the new features and provide clearer examples.
 
