@@ -140,7 +140,7 @@ data("inbreeding")
 
 df <- inbreeding # multigenerational pedigree with consanguinity
 
-# df  <- dplyr::filter(df, famID %in% c(5, 7))
+ df  <- dplyr::filter(df, famID %in% c(5, 7))
 
 
 p <- ggPedigree(
@@ -154,16 +154,12 @@ p <- ggPedigree(
     sex_color = F,
     status_affected_lab = TRUE,
     status_unaffected_lab = FALSE,
-    generation_height = 2,
-    generation_width = 1,
+    generation_height = 4,
+    generation_width = 2,
     status_affected_shape = 4,
-    segment_spouse_color = "pink",
-    segment_sibling_color = "blue",
-    segment_parent_color = "green",
-    segment_offspring_color = "black"
+    segment_self_color = "purple"
   )
 )
-
 
 p + facet_wrap(~famID, scales = "free") #+ scale_color_viridis(
 #   discrete = TRUE,
@@ -257,6 +253,7 @@ p <- ggPedigree(
   )
 )
 
+## ----message=FALSE, warning=FALSE---------------------------------------------
 p + scale_shape_manual(
   values = c(16, 15, 15),
   labels = c("Female", "Male", "Unknown")
@@ -269,7 +266,4 @@ p + scale_shape_manual(
   facet_wrap(~famID, scales= "free", shrink = TRUE) + 
   theme(strip.text = element_blank(),
         legend.position = "bottom")
-# ,
-# guides(colour="none", shape="none") +
-# 
 

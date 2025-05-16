@@ -238,7 +238,7 @@ data("inbreeding")
 
 df <- inbreeding # multigenerational pedigree with consanguinity
 
- df  <- dplyr::filter(df, famID %in% c(5, 7))
+df  <- dplyr::filter(df, famID %in% c(5, 7))
 
 
 p <- ggPedigree(
@@ -249,7 +249,7 @@ p <- ggPedigree(
   #  debug = TRUE,
   config = list(
     code_male = 0,
-    sex_color = F,
+    sex_color = FALSE,
     status_affected_lab = TRUE,
     status_unaffected_lab = FALSE,
     generation_height = 4,
