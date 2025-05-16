@@ -20,17 +20,18 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-This vignette demonstrates pedigree visualisation with `ggPedigree()` from `ggpedigree`.
-Internally, `ggPedigree()` leverages helpers from both {BGmisc} (ped2fam(), recodeSex()) and {ggpedigree} (`calculateCoordinates()`, `calculateConnections()`), and returns a standard `ggplot2` object, so any familiar ggplot syntax can be added afterward.
+This vignette demonstrates pedigree visualization with `ggPedigree()` from `ggpedigree`. Pedigree plots are central to fields like human genetics, behavioral science, and genealogy, where understanding lineage and familial relationships informs diagnosis, analysis, and interpretation. 
 
-We illustrate usage with two bundled data sets:
+`ggPedigree()` builds on `ggplot2` and `kinship2`, leveraging modular helpers from both `{BGmisc}` and `{ggpedigree}` to streamline plot generation while retaining full aesthetic flexibility.
 
-- `potter` – extended wizarding family
+Unlike base R pedigree tools, this package returns a `ggplot2` object, meaning users can customize their output using familiar `ggplot2` syntax, themes, scales, and layering. Throughout this vignette, we walk through basic usage, layout control, status overlays, aesthetic customization, and faceting for multifamily visualization.
 
-- `hazard` – historical royalty
+We use two bundled example datasets (from `BGmisc`) to illustrate the package's capabilities. The first dataset, `potter`, contains a fictional wizarding family tree, while the second dataset, `hazard`, includes a a multigenerational historical pedigree with affected/unaffected status. 
 
 
 # Basic usage
+
+We begin by loading the required libraries. These include the main plotting package `ggpedigree`, helper utilities from `BGmisc`, and supporting tools for aesthetic and data manipulation.
 
 ```{r libraries, message=FALSE, warning=FALSE}
 library(ggpedigree) # ggPedigree lives here
@@ -40,6 +41,9 @@ library(viridis) # viridis for color palettes
 library(tidyverse) # for data wrangling
 ```
 
+
+The simplest usage requires a data frame and column names for family and individual IDs. Here’s a basic pedigree plot using the `potter` data:
+
 ```{r}
 data("potter")
 ggPedigree(potter,
@@ -48,22 +52,24 @@ ggPedigree(potter,
 )
 ```
 
-`ggPedigree()` automatically:
+Behind the scenes, `ggPedigree()`:
 
 1. reshapes the data by family (`ped2fam()`),
 
-2. recodes sex (`recodeSex()`),
+2. recodes sex (e.g., 0/1/NA) into semantic labels via `recodeSex()`
 
-3. computes node layout (`calculateCoordinates()`), and
+3. extracts a layout grid with `calculateCoordinates()`
 
-4. draws spouse, parent, sibling, and offspring links (`calculateConnections()`).
+4. builds connection segments for spouses, siblings, parents, and offspring with `calculateConnections()`
 
-The result is a `ggplot2` object, so you can add any ggplot syntax to it. 
+The result is returned as a `ggplot2` object, which allows immediate post-processing with standard `ggplot` syntax.
+
 
 
 # Customizing the plot
 
-All aesthetics reside in a config list; anything you omit falls back to the default.
+Users can control aesthetics via the `config` list. 
+Most appearance settings are managed through a `config` list. If any options are omitted, they fall back to predefined defaults. For example, we can turn off sex-based fill color and assign specific colors to connection segments:
 
 ```{r}
 ggPedigree(
@@ -81,7 +87,8 @@ ggPedigree(
 )
 ```
 
-Because the result is just a ggplot object, regular layering applies:
+As with any `ggplot2` object, further theming and labeling can be applied using layers or themes. For instance:
+
 
 ```{r}
 ggPedigree(potter,
@@ -90,10 +97,38 @@ ggPedigree(potter,
 ) +
   theme_bw(base_size = 12)
 ```
+This can be particularly useful for matching house styles in academic publications or removing clutter for presentations.
 
 
 
 # Additional customization
+
+In many applied settings, pedigrees include binary phenotypes such as affected/unaffected status. To incorporate this, use the `status_col` argument to point to a column containing the relevant variable.
+
+```{r}
+data("hazard")
+
+p <- ggPedigree(
+  hazard,
+  famID = "famID",
+  personID = "ID",
+  status_col = "affected",
+  config = list(
+    code_male = 0,
+    sex_color = TRUE,
+    affected = TRUE,
+    unaffected = FALSE,
+    affected_shape = 4
+  )
+)
+
+p
+```
+
+The function will automatically assign different shapes to affected individuals. If the `status_col` isn't already a factor, `ggPedigree()` will coerce it. You can explicitly set what values correspond to "affected" and "unaffected" via the `config` list.
+
+If you turn off sex-based coloring, `ggPedigree()` will apply default `ggplot2` fill scales based on status:
+
 
 You can also add affected/unaffected status to the plot. The `status_col` argument allows you to specify a column in your data frame that contains the affected/unaffected status of each individual. This column should be a factor or character vector, and `ggPedigree()` will automatically recode it to a factor if necessary.
 

@@ -1,6 +1,6 @@
 Package: ggpedigree
 Title: An R Package for plotting pedigrees
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: c(
     person("S. Mason", "Garrison", , email= "garrissm@wfu.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-4804-6003"))
