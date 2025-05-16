@@ -1,0 +1,36 @@
+# For more configuration details:
+# https://docs.codecov.com/docs/codecov-yaml
+
+# Check if this file is valid by running in bash:
+# curl -X POST --data-binary @.codecov.yml https://codecov.io/validate
+
+# Settings related to codecov job
+codecov:
+  require_ci_to_pass: yes  # Only report if CI runs successfully
+  notify:
+    wait_for_ci: yes       # Wait for other jobs to finish
+    manual_trigger: true   # Notify when manually triggered
+
+# Settings related to code coverage analysis
+coverage:
+  status:
+    # Checks how the PR changes overall coverage.
+    project:
+      default:
+        # For each PR, auto compare coverage to previous commit.
+        target: auto  # Desired coverage
+        base: auto    # Compares against the base branch
+        threshold: 2% # Allows slight drops before failing
+    # Checks the relative coverage of the new PR code only.
+    patch:
+      default:
+         target: auto
+         base: auto
+         threshold: 2%
+
+# Settings related to the comment that Codecov posts on the PR
+comment:
+  layout: "diff, flags, files"
+  behavior: default             # Uses default commenting behavior
+  require_changes: false        # Always post the comment, even if coverage did not change
+  hide_project_coverage: false  # Always show coverage for both project and patch
