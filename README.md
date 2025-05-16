@@ -52,7 +52,7 @@ cite the following:
     'ggpedigree' from package DESCRIPTION file
 
 Garrison S (????). *ggpedigree: An R Package for plotting pedigrees*. R
-package version 0.2.0, <https://github.com/R-Computing-Lab/ggpedigree/>.
+package version 0.3.0, <https://github.com/R-Computing-Lab/ggpedigree/>.
 
 A BibTeX entry for LaTeX users is
 
@@ -61,7 +61,7 @@ A BibTeX entry for LaTeX users is
     @Manual{,
       title = {ggpedigree: An R Package for plotting pedigrees},
       author = {S. Mason Garrison},
-      note = {R package version 0.2.0},
+      note = {R package version 0.3.0},
       url = {https://github.com/R-Computing-Lab/ggpedigree/},
     }
 

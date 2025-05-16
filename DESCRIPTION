@@ -1,12 +1,13 @@
 Package: ggpedigree
 Title: An R Package for plotting pedigrees
-Version: 0.2.0
+Version: 0.3.0
+Date/Publication: 05.16.2025
 Authors@R: c(
     person("S. Mason", "Garrison", , email= "garrissm@wfu.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-4804-6003"))
   )
 Description: The ggpedigree R package offers a complimentary suite of
-    plotting functions for BGmisc which are implemented in ggplot.
+    plotting functions for BGmisc and implementation of a ggplot version of kinship2's pedigree plot.
 License: GPL-3
 URL: https://github.com/R-Computing-Lab/ggpedigree/,
      https://r-computing-lab.github.io/ggpedigree/
@@ -37,6 +38,5 @@ VignetteBuilder:
     knitr
 Config/testthat/edition: 3
 Encoding: UTF-8
-LazyData: true
 RoxygenNote: 7.3.2
 Language: en-US

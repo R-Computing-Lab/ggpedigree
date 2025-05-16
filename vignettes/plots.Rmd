@@ -229,6 +229,8 @@ p +
 
 # Advanced Example: Large Pedigrees and Overlaid Status
 
+In this section, we demonstrate how to create a more complex pedigree plot with multiple families and overlaid status information. We use the `inbreeding` dataset from the `BGmisc` package, which contains several multigenerational pedigrees with consanguinity. Note that in these plots that some individuals may appear in multiple places within the pedigree. This is common in large pedigrees, especially when there are overlapping generations or multiple marriages. Here the colors are set to be the same for all segments, except for self-loops, which are colored purple.
+
 ```{r message=FALSE, warning=FALSE}
 library(BGmisc) # helper utilities & example data
 
@@ -236,7 +238,7 @@ data("inbreeding")
 
 df <- inbreeding # multigenerational pedigree with consanguinity
 
-# df  <- dplyr::filter(df, famID %in% c(5, 7))
+ df  <- dplyr::filter(df, famID %in% c(5, 7))
 
 
 p <- ggPedigree(
@@ -250,16 +252,12 @@ p <- ggPedigree(
     sex_color = F,
     status_affected_lab = TRUE,
     status_unaffected_lab = FALSE,
-    generation_height = 2,
-    generation_width = 1,
+    generation_height = 4,
+    generation_width = 2,
     status_affected_shape = 4,
-    segment_spouse_color = "pink",
-    segment_sibling_color = "blue",
-    segment_parent_color = "green",
-    segment_offspring_color = "black"
+    segment_self_color = "purple"
   )
 )
-
 
 p + facet_wrap(~famID, scales = "free") #+ scale_color_viridis(
 #   discrete = TRUE,
@@ -376,7 +374,11 @@ p <- ggPedigree(
     segment_offspring_color = "black"
   )
 )
+```
 
+We finish by adjusting the legend and shape scale for visual clarity:
+
+```{r, message=FALSE, warning=FALSE}
 p + scale_shape_manual(
   values = c(16, 15, 15),
   labels = c("Female", "Male", "Unknown")
@@ -389,7 +391,4 @@ p + scale_shape_manual(
   facet_wrap(~famID, scales= "free", shrink = TRUE) + 
   theme(strip.text = element_blank(),
         legend.position = "bottom")
-# ,
-# guides(colour="none", shape="none") +
-# 
 ```

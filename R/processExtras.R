@@ -13,7 +13,7 @@
 #' @keywords internal
 
 processExtras <- function(ped, config = list()) {
-  # ---- sanity checks -------------------------------------------------------
+  # ---- 1. Sanity checks and data integrity validation -----------------------
   if (!inherits(ped, "data.frame")) {
     stop("ped must be a data.frame")
   }
@@ -27,47 +27,28 @@ processExtras <- function(ped, config = list()) {
     stop("ped is missing columns: ", paste(miss, collapse = ", "))
   }
 
-  # ---- 1. ensure a unique row key  ----
+  # ---- 2. Assign unique IDs and initial relationship flags ------------------
 
   ped$newID <- seq_len(nrow(ped))
+
+  # check if momID or dadID == spouseID
+  ped <- ped |>
+    dplyr::mutate(
+      momSpouse = dplyr::if_else(!is.na(.data$spouseID) & !is.na(.data$momID) & (.data$spouseID == .data$momID), TRUE, FALSE),
+      dadSpouse = dplyr::if_else(!is.na(.data$spouseID) & !is.na(.data$dadID) & (.data$spouseID == .data$dadID), TRUE, FALSE),
+      total_blue = .data$dadSpouse | .data$momSpouse
+    ) |>
+    dplyr::select(-.data$dadSpouse, -.data$momSpouse)
+
+
+  # ---- 3. Give every extra appearance a unique numeric personID -----------
 
   idsextras <- dplyr::filter(ped, .data$extra == TRUE) |>
     dplyr::select("personID") |>
     dplyr::pull() |>
     unique()
 
-  # check if momID == spouseID
-  if (any(ped$momID == ped$spouseID, na.rm = TRUE)) {
-    ped <- ped |>
-      dplyr::mutate(
-        momSpouse = dplyr::if_else(.data$spouseID == .data$momID,
-          TRUE,
-          FALSE
-        )
-      )
-  } else {
-    ped <- ped |>
-      dplyr::mutate(
-        momSpouse = FALSE
-      )
-  }
-  if (any(ped$dadID == ped$spouseID, na.rm = TRUE)) {
-    ped <- ped |>
-      dplyr::mutate(
-        dadSpouse = dplyr::if_else(.data$spouseID == .data$dadID,
-          TRUE,
-          FALSE
-        )
-      )
-  } else {
-    ped <- ped |>
-      dplyr::mutate(
-        dadSpouse = FALSE
-      )
-  }
 
-
-  # ---- 2. give every extra appearance a unique numeric personID -----------
   ped <- ped |>
     dplyr::arrange(.data$personID, .data$newID) |>
     dplyr::mutate(
@@ -200,9 +181,6 @@ processExtras <- function(ped, config = list()) {
   }
   # ---- 5. row‑wise relink using nearest appearance -------------------------
 
-
-
-
   # lookup table: every appearance of every coreID
   dup_xy <- ped |>
     dplyr::select("personID", "coreID", "x_pos", "y_pos", "total_blue")
@@ -222,7 +200,7 @@ processExtras <- function(ped, config = list()) {
     pick <- if(any(cand$total_blue, na.rm = TRUE)){
       2L }else{ 1L} # 2nd if blue present, else 1st
 
-    if(length(ord) < pick) pick <- 1L
+    if(length(ord) < pick){ pick <- 1L}
 
     cand$personID[ord[pick]]
 
