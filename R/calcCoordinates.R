@@ -83,27 +83,26 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
         )
       }
     )
-  } else {
-    autohint <- kinship2::autohint(ped_ped,
+    # Align pedigree for plotting
+    pos <- kinship2::align.pedigree(ped_ped,
+      packed = config$ped_packed,
       align = config$ped_align,
-      packed = config$ped_packed
+      width = config$ped_width,
+      hints = autohint
+    )
+  } else {
+    # -----
+    # Extract layout information
+    # -----
+
+
+    # Align pedigree for plotting
+    pos <- kinship2::align.pedigree(ped_ped,
+      packed = config$ped_packed,
+      align = config$ped_align,
+      width = config$ped_width
     )
   }
-
-
-
-  # -----
-  # Extract layout information
-  # -----
-
-
-  # Align pedigree for plotting
-  pos <- kinship2::align.pedigree(ped_ped,
-    packed = config$ped_packed,
-    align = config$ped_align,
-    width = config$ped_width,
-    hints = autohint
-  )
 
   # Extract layout information
   nid_vector <- as.vector(pos$nid)

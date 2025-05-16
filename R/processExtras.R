@@ -1,3 +1,5 @@
+utils::globalVariables(c("coreID")) # no alternative with group_by
+
 #' Process duplicate appearances of individuals in a pedigree layout
 #'
 #' Resolves layout conflicts when the same individual appears in multiple places
@@ -12,11 +14,13 @@
 #'
 #' @keywords internal
 
+
 processExtras <- function(ped, config = list()) {
-  # ---- sanity checks -------------------------------------------------------
+  # ---- 1. Sanity checks and data integrity validation -----------------------
   if (!inherits(ped, "data.frame")) {
     stop("ped must be a data.frame")
   }
+
 
   req_cols <- c(
     "personID", "x_pos", "y_pos",
@@ -27,47 +31,27 @@ processExtras <- function(ped, config = list()) {
     stop("ped is missing columns: ", paste(miss, collapse = ", "))
   }
 
-  # ---- 1. ensure a unique row key  ----
 
+  # ---- 2. Assign unique IDs and initial relationship flags ------------------
   ped$newID <- seq_len(nrow(ped))
+
 
   idsextras <- dplyr::filter(ped, .data$extra == TRUE) |>
     dplyr::select("personID") |>
     dplyr::pull() |>
     unique()
 
-  # check if momID == spouseID
-  if (any(ped$momID == ped$spouseID, na.rm = TRUE)) {
-    ped <- ped |>
-      dplyr::mutate(
-        momSpouse = dplyr::if_else(.data$spouseID == .data$momID,
-          TRUE,
-          FALSE
-        )
-      )
-  } else {
-    ped <- ped |>
-      dplyr::mutate(
-        momSpouse = FALSE
-      )
-  }
-  if (any(ped$dadID == ped$spouseID, na.rm = TRUE)) {
-    ped <- ped |>
-      dplyr::mutate(
-        dadSpouse = dplyr::if_else(.data$spouseID == .data$dadID,
-          TRUE,
-          FALSE
-        )
-      )
-  } else {
-    ped <- ped |>
-      dplyr::mutate(
-        dadSpouse = FALSE
-      )
-  }
 
+  ped <- ped |>
+    dplyr::mutate(
+      momSpouse = dplyr::if_else(!is.na(.data$spouseID) & !is.na(.data$momID) & (.data$spouseID == .data$momID), TRUE, FALSE),
+      dadSpouse = dplyr::if_else(!is.na(.data$spouseID) & !is.na(.data$dadID) & (.data$spouseID == .data$dadID), TRUE, FALSE),
+      total_blue = .data$dadSpouse | .data$momSpouse
+    ) |>
+    dplyr::select(-.data$dadSpouse, -.data$momSpouse)
 
-  # ---- 2. give every extra appearance a unique numeric personID -----------
+  # ---- 3. Give every extra appearance a unique numeric personID -----------
+
   ped <- ped |>
     dplyr::arrange(.data$personID, .data$newID) |>
     dplyr::mutate(
@@ -76,11 +60,10 @@ processExtras <- function(ped, config = list()) {
         .data$extra,
         .data$personID + .data$newID / 1000, # numeric, unique
         .data$personID
-      ),
-      total_blue = .data$dadSpouse | .data$momSpouse
-    ) |>
-    dplyr::select(-.data$dadSpouse, -.data$momSpouse)
+      )
+    )
 
+  # ---- 4. Isolate duplicates for relationship resolution --------------------
   ped <- ped |> # flag anyone with extra appearances
     dplyr::mutate(extra = dplyr::case_when(
       .data$coreID %in% idsextras ~ TRUE,
@@ -90,11 +73,10 @@ processExtras <- function(ped, config = list()) {
       TRUE ~ .data$extra
     ))
 
-
-  # ---- 3. isolate duplicates for distance logic ---------------------------
   extras <- dplyr::filter(ped, .data$extra)
 
-  # ---- 3a. attach relative coordinates (same helpers you use) -------------
+
+  # ---- 5. Attach relative coordinates & compute distances -------------------
   # Mother's coordinates
   mom_coords <- getRelativeCoordinates(
     ped = ped,
@@ -104,6 +86,7 @@ processExtras <- function(ped, config = list()) {
     y_name = "y_mom",
     multiple = "any"
   )
+
 
   # Father's coordinates
   dad_coords <- getRelativeCoordinates(
@@ -115,6 +98,7 @@ processExtras <- function(ped, config = list()) {
     multiple = "any"
   )
 
+
   # Spouse's coordinates
   spouse_coords <- getRelativeCoordinates(
     ped = ped,
@@ -125,6 +109,7 @@ processExtras <- function(ped, config = list()) {
     multiple = "all"
   )
 
+  # Parent hash coordinates
   parent_hash_coords <- extras |>
     dplyr::left_join(mom_coords, by = c("newID", "personID", "momID")) |>
     dplyr::left_join(dad_coords, by = c("newID", "personID", "dadID")) |>
@@ -138,13 +123,15 @@ processExtras <- function(ped, config = list()) {
       .data$x_parent_hash, .data$y_parent_hash
     )
 
+
   extras <- extras |>
     dplyr::left_join(mom_coords, by = c("newID", "personID", "momID")) |>
     dplyr::left_join(dad_coords, by = c("newID", "personID", "dadID")) |>
     dplyr::left_join(spouse_coords, by = c("newID", "personID", "spouseID")) |>
     dplyr::left_join(parent_hash_coords, by = c("newID", "personID"))
 
-  # ---- 3b. compute distance metrics  --------------
+
+  # ---- 5b. compute distance metrics  --------------
   extras <- extras |>
     dplyr::mutate(
       dist_mom = computeDistance(
@@ -170,7 +157,9 @@ processExtras <- function(ped, config = list()) {
       total_parent_dist2 = .data$dist_mom + .data$dist_dad
     )
 
-  # ---- 4. choose winning duplicate per relationship -----------------------
+
+  # ---- 6. choose winning duplicate per relationship -----------------------
+
 
   spouse_winner <- extras |>
     dplyr::group_by(.data$coreID, .data$spouseID) |>
@@ -181,27 +170,27 @@ processExtras <- function(ped, config = list()) {
 
   if (sum(ped$total_blue, na.rm = TRUE) == 0) {
     parent_winner <- extras |>
-      dplyr::group_by("coreID") |>
-      dplyr::slice_min(.data$total_parent_dist_cityblock, n = 1, with_ties = FALSE) |>
+      dplyr::group_by(.data$coreID) |>
+      dplyr::slice_min(.data$total_parent_dist_cityblock,
+        n = 1,
+        with_ties = FALSE
+      ) |>
       dplyr::ungroup() |>
       dplyr::select("coreID", parent_choice = .data$personID)
   } else {
     # if there are spouseID == momID or spouseID == dadID, then parent choice needs to be the 2nd closest
     parent_winner <- extras |>
-      dplyr::group_by("coreID") |>
+      dplyr::group_by(.data$coreID) |>
       dplyr::arrange(.data$total_parent_dist2, .by_group = TRUE) |>
       dplyr::mutate(
         rank       = dplyr::row_number(), # 1 = closest, 2 = second‑closest …
-        pick_rank  = base::ifelse(any(.data$total_blue), 2L, 1L) # group‑level choice
+        pick_rank  = dplyr::if_else(any(.data$total_blue), 2L, 1L) # group‑level choice
       ) |>
       dplyr::filter(.data$rank == .data$pick_rank) |>
       dplyr::ungroup() |>
       dplyr::select("coreID", parent_choice = .data$personID)
   }
-  # ---- 5. row‑wise relink using nearest appearance -------------------------
-
-
-
+  # ---- 7. row‑wise relink using nearest appearance -------------------------
 
   # lookup table: every appearance of every coreID
   dup_xy <- ped |>
@@ -227,7 +216,9 @@ processExtras <- function(ped, config = list()) {
 
     if (length(ord) < pick) pick <- 1L
 
+
     cand$personID[ord[pick]]
+
 
     #  cand$personID[
     #    which.min(
@@ -237,6 +228,7 @@ processExtras <- function(ped, config = list()) {
     #   )
     #  ]
   }
+
 
   relink <- function(df, col) {
     df |>
@@ -256,8 +248,12 @@ processExtras <- function(ped, config = list()) {
 
 
 
+
+
+
   # remove parent ids from all but the closest coreID,
   # if there's no choice to be made, then keep existing momID
+
 
   ped <- ped |>
     dplyr::left_join(spouse_winner, by = "coreID") |>
@@ -288,7 +284,9 @@ processExtras <- function(ped, config = list()) {
     relink("momID") |>
     relink("dadID")
 
+
   #
+
 
   # rehash
   ped <- ped |>
@@ -327,10 +325,12 @@ processExtras <- function(ped, config = list()) {
     #  ) |>
     unique()
 
+
   full_extra <- list(
     ped = ped,
     self_coords = self_coords
   )
+
 
   return(full_extra)
 }

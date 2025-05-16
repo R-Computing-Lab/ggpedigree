@@ -17,15 +17,15 @@
 #' @param config A list of configuration options for customizing the plot. The list can include:
 #'  \describe{
 #'     \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1.}
-#'     \item{spouse_segment_color, self_segment_color, sibling_segment_color, parent_segment_color, offspring_segment_color}{Character. Line colors for respective connection types.}
+#'     \item{segment_spouse_color, segment_self_color, segment_sibling_color, segment_parent_color, segment_offspring_color}{Character. Line colors for respective connection types.}
 #'     \item{label_text_size, point_size, line_width}{Numeric. Controls text size, point size, and line thickness.}
 #'     \item{generation_height}{Numeric. Vertical spacing multiplier between generations. Default: 1.}
-#'     \item{unknown_shape, female_shape, male_shape, affected_shape}{Integers. Shape codes for plotting each group.}
+#'     \item{shape_unknown, shape_female, shape_male, affected_shape}{Integers. Shape codes for plotting each group.}
 #'     \item{sex_shape_labs}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
 #'     \item{unaffected, affected}{Values indicating unaffected/affected status.}
 #'     \item{sex_color}{Logical. If TRUE, uses color to differentiate sex.}
-#'     \item{max_overlaps}{Maximum number of overlaps allowed in repelled labels.}
-#'     \item{id_segment_color}{Color used for label connector lines.}
+#'     \item{label_max_overlaps}{Maximum number of overlaps allowed in repelled labels.}
+#'     \item{label_segment_color}{Color used for label connector lines.}
 #'   }
 
 #' @return A `ggplot` object rendering the pedigree diagram.
@@ -54,33 +54,44 @@ ggPedigree <- function(ped, famID = "famID",
 
   # Set default styling and layout parameters
   default_config <- list(
-    apply_default_theme = TRUE,
     apply_default_scales = TRUE,
-    spouse_segment_color = "black",
-    self_segment_color = "purple",
-    sibling_segment_color = "black",
-    parent_segment_color = "black",
-    offspring_segment_color = "black",
-    include_labels = TRUE,
-    label_method = "ggrepel",
-    label_text_angle = 0,
+    apply_default_theme = TRUE,
     code_male = 1,
-    label_text_size = 2,
-    point_size = 4,
-    line_width = 0.5,
     generation_height = 1,
     generation_width = 1,
-    unknown_shape = 18,
-    female_shape = 16,
-    male_shape = 15,
-    affected_shape = 4,
-    shape_labs = c("Female", "Male", "Unknown"),
-    unaffected = "unaffected",
-    affected = "affected",
+    # geom label
+    include_labels = TRUE,
+    label_col = "personID",
+    label_max_overlaps = 15,
+    label_method = "ggrepel",
+    label_nudge_x = 0,
+    label_nudge_y = -.10,
+    label_segment_color = NA,
+    label_text_angle = 0,
+    label_text_size = 2,
+    # point and line aesthetics
+    line_width = 0.5,
+    point_size = 4,
+    # point outline
+    outline = FALSE,
+    outline_multiplier = 1.5,
+    outline_color = "black",
+    # segment colors
+    segment_offspring_color = "black",
+    segment_parent_color = "black",
+    segment_self_color = "black",
+    segment_sibling_color = "black",
+    segment_spouse_color = "black",
+    # sex
     sex_color = TRUE,
-    status_vals = c(1, 0),
-    max_overlaps = 15,
-    id_segment_color = NA # ,
+    sex_shape_labs = c("Female", "Male", "Unknown"),
+    sex_shape_female = 16,
+    sex_shape_male = 15,
+    sex_shape_unknown = 18,
+    status_affected_lab = "affected",
+    status_affected_shape = 4,
+    status_unaffected_lab = "unaffected",
+    status_vals = c(1, 0)
     #  hints = NULL
   )
 
@@ -92,8 +103,8 @@ ggPedigree <- function(ped, famID = "famID",
   config <- utils::modifyList(default_config, config)
 
   # Set additional internal config values based on other entries
-  config$status_labs <- c(config$affected, config$unaffected)
-  config$shape_vals <- c(config$female_shape, config$male_shape, config$unknown_shape)
+  config$status_labs <- c(config$status_affected_lab, config$status_unaffected_lab)
+  config$sex_shape_vals <- c(config$sex_shape_female, config$sex_shape_male, config$sex_shape_unknown)
 
   # -----
   # STEP 2: Pedigree Data Transformation
@@ -123,7 +134,7 @@ ggPedigree <- function(ped, famID = "famID",
   # Recode affected status into factor, if applicable
   if (!is.null(status_col)) {
     ds_ped[[status_col]] <- factor(ds_ped[[status_col]],
-      levels = c(config$affected, config$unaffected)
+      levels = c(config$status_affected_lab, config$status_unaffected_lab)
     )
   }
 
@@ -190,7 +201,7 @@ ggPedigree <- function(ped, famID = "famID",
         yend = .data$y_pos
       ),
       linewidth = config$line_width,
-      color = config$spouse_segment_color,
+      color = config$segment_spouse_color,
       na.rm = TRUE
     )
 
@@ -205,7 +216,7 @@ ggPedigree <- function(ped, famID = "famID",
       yend = .data$y_midparent
     ),
     linewidth = config$line_width,
-    color = config$parent_segment_color,
+    color = config$segment_parent_color,
     na.rm = TRUE
   ) +
     # Mid-sibling to parents midpoint
@@ -218,7 +229,7 @@ ggPedigree <- function(ped, famID = "famID",
         yend = .data$y_mid_sib - gap_off
       ),
       linewidth = config$line_width,
-      color = config$offspring_segment_color,
+      color = config$segment_offspring_color,
       na.rm = TRUE
     ) +
     # Sibling vertical drop line
@@ -231,7 +242,7 @@ ggPedigree <- function(ped, famID = "famID",
         yend = .data$y_pos
       ),
       linewidth = config$line_width,
-      color = config$sibling_segment_color,
+      color = config$segment_sibling_color,
       na.rm = TRUE
     )
 
@@ -252,6 +263,20 @@ ggPedigree <- function(ped, famID = "famID",
   #   2. If sex_color == FALSE but status_col is present: shape reflects sex, and color reflects affected status.
   #   3. If neither is used: plot individuals using shape alone.
 
+
+  if (config$outline == TRUE) {
+    p <- p +
+      ggplot2::geom_point(
+        ggplot2::aes(
+          shape = as.factor(.data$sex)
+        ),
+        size = config$point_size * config$outline_multiplier,
+        na.rm = TRUE,
+        color = config$outline_color,
+        stroke = config$line_width
+      )
+  }
+
   if (config$sex_color == TRUE) {
     # Use color and shape to represent sex
     p <- p +
@@ -261,13 +286,14 @@ ggPedigree <- function(ped, famID = "famID",
           shape = as.factor(.data$sex)
         ),
         size = config$point_size,
-        na.rm = TRUE
+        na.rm = TRUE,
+        stroke = config$line_width
       )
     # If affected status is present, overlay an additional marker using alpha aesthetic
     if (!is.null(status_col)) {
       p <- p + ggplot2::geom_point(
         ggplot2::aes(alpha = !!rlang::sym(status_col)),
-        shape = config$affected_shape,
+        shape = config$status_affected_shape,
         size = config$point_size,
         na.rm = TRUE
       )
@@ -304,27 +330,31 @@ ggPedigree <- function(ped, famID = "famID",
   # Add labels to the points using ggrepel for better visibility
   if (config$include_labels == TRUE && config$label_method == "ggrepel") {
     p <- p +
-      ggrepel::geom_text_repel(ggplot2::aes(label = .data$personID),
-        nudge_y = -.10 * config$generation_height,
+
+      ggrepel::geom_text_repel(ggplot2::aes(label = !!rlang::sym(config$label_col)),
+        nudge_y = config$label_nudge_y * config$generation_height,
+        nudge_x = config$label_nudge_x * config$generation_width,
         size = config$label_text_size,
         na.rm = TRUE,
-        max.overlaps = config$max_overlaps,
+        max.overlaps = config$label_max_overlaps,
         segment.size = config$line_width * .5,
         angle = config$label_text_angle,
-        segment.color = config$id_segment_color
+        segment.color = config$label_segment_color
       )
   } else if (config$include_labels == TRUE && config$label_method == "geom_label") {
     p <- p +
-      ggplot2::geom_label(ggplot2::aes(label = .data$personID),
-        nudge_y = -.10 * config$generation_height,
+      ggplot2::geom_label(ggplot2::aes(label = !!rlang::sym(config$label_col)),
+        nudge_y = config$label_nudge_y * config$generation_height,
+        nudge_x = config$label_nudge_x * config$generation_width,
         size = config$label_text_size,
         angle = config$label_text_angle,
         na.rm = TRUE
       )
   } else if (config$include_labels == TRUE || config$label_method == "geom_text") {
     p <- p +
-      ggplot2::geom_text(ggplot2::aes(label = .data$personID),
-        nudge_y = -.10 * config$generation_height,
+      ggplot2::geom_text(ggplot2::aes(label = !!rlang::sym(config$label_col)),
+        nudge_y = config$label_nudge_y * config$generation_height,
+        nudge_x = config$label_nudge_x * config$generation_width,
         size = config$label_text_size,
         angle = config$label_text_angle,
         na.rm = TRUE
@@ -353,7 +383,7 @@ ggPedigree <- function(ped, famID = "famID",
         yend = .data$y_pos
       ),
       linewidth = config$line_width,
-      color = config$self_segment_color,
+      color = config$segment_self_color,
       angle = 90,
       curvature = -0.2,
       na.rm = TRUE
@@ -393,8 +423,8 @@ ggPedigree <- function(ped, famID = "famID",
   # Adjust legend labels and colors based on the configuration
   if (config$apply_default_scales == TRUE) {
     p <- p + ggplot2::scale_shape_manual(
-      values = config$shape_vals,
-      labels = config$shape_labs
+      values = config$sex_shape_vals,
+      labels = config$sex_shape_labs
     )
 
     # Add alpha scale for affected status if applicable
@@ -407,10 +437,11 @@ ggPedigree <- function(ped, famID = "famID",
       ) + ggplot2::guides(alpha = "none")
     }
 
+
     # Add color scale for sex or affected status if applicable
     if (config$sex_color == TRUE) {
       p <- p +
-        ggplot2::scale_color_discrete(labels = config$shape_labs) +
+        ggplot2::scale_color_discrete(labels = config$sex_shape_labs) +
         ggplot2::labs(color = "Sex", shape = "Sex")
     } else if (!is.null(status_col)) {
       p <- p +

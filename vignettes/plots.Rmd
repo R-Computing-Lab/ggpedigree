@@ -26,7 +26,7 @@ This vignette demonstrates pedigree visualization with `ggPedigree()` from `ggpe
 
 Unlike base R pedigree tools, this package returns a `ggplot2` object, meaning users can customize their output using familiar `ggplot2` syntax, themes, scales, and layering. Throughout this vignette, we walk through basic usage, layout control, status overlays, aesthetic customization, and faceting for multifamily visualization.
 
-We use two bundled example datasets (from `BGmisc`) to illustrate the package's capabilities. The first dataset, `potter`, contains a fictional wizarding family tree, while the second dataset, `hazard`, includes a a multigenerational historical pedigree with affected/unaffected status. 
+We use two bundled example datasets (from `BGmisc`) to illustrate the package's capabilities. The first dataset, `potter`, contains a fictional wizarding family tree, while the second dataset, `hazard`, includes a multigenerational historical pedigree with affected/unaffected status. 
 
 
 # Basic usage
@@ -68,8 +68,7 @@ The result is returned as a `ggplot2` object, which allows immediate post-proces
 
 # Customizing Aesthetics
 
-Users can control aesthetics via the `config` list. 
-Most appearance settings are managed through a `config` list. If any options are omitted, they fall back to predefined defaults. For example, we can turn off sex-based fill color and assign specific colors to connection segments:
+Most appearance settings are managed through a `config` list, which allows for fine-tuned customization. If any options are omitted, they fall back to predefined defaults. For example, we can turn off sex-based fill color and assign specific colors to connection segments:
 
 ```{r customize-aesthetics}
 ggPedigree(
@@ -77,12 +76,15 @@ ggPedigree(
   famID = "famID",
   personID = "personID",
   config = list(
-    code_male = 1,
+    code_male = 1, # Here, 1 = male, 0 = female
     sex_color = FALSE,
-    spouse_segment_color = "pink",
-    sibling_segment_color = "blue",
-    parent_segment_color = "green",
-    offspring_segment_color = "black"
+    line_width = 1,
+    segment_spouse_color = viridis_pal()(5)[1],
+    segment_sibling_color = viridis_pal()(5)[2],
+    segment_parent_color = viridis_pal()(5)[3],
+    segment_offspring_color = viridis_pal()(5)[4],
+    outline = TRUE,
+    outline_color = viridis_pal()(5)[5]
   )
 )
 ```
@@ -97,9 +99,28 @@ ggPedigree(potter,
 ) +
   theme_bw(base_size = 12)
 ```
+
 This can be particularly useful for matching house styles in academic publications or removing clutter for presentations.
 
+## Labeling Individuals
 
+You can also label individuals in the pedigree using the `label_method` argument. The default is `geom_label_repel()`, which uses the `ggrepel` package to avoid overlapping labels. You can also use `geom_text()` for simpler labeling. Other configurable options include `label_col` for the label column, `label_text_angle` for text rotation, `label_nudge_y` for vertical adjustment, and `label_nudge_x` for horizontal adjustment.
+
+```{r}
+ggPedigree(
+  potter,
+  famID = "famID",
+  personID = "personID",
+  config = list(
+    label_col = "name",
+    label_text_angle = -45,
+    label_nudge_y = -.25,
+    label_nudge_x = 0.45,
+    label_method = "geom_text",
+    sex_color = TRUE
+  )
+)
+```
 
 # Overlaying Status Information
 
@@ -116,45 +137,25 @@ p <- ggPedigree(
   config = list(
     code_male = 0,
     sex_color = TRUE,
-    affected = TRUE,
-    unaffected = FALSE,
-    affected_shape = 4
+    status_affected_lab = TRUE,
+    status_unaffected_lab = FALSE,
+    status_affected_shape = 4
   )
 )
 
 p
 ```
 
-The function will automatically assign different shapes to affected individuals. If the `status_col` isn't already a factor, `ggPedigree()` will coerce it. You can explicitly set what values correspond to "affected" and "unaffected" via the `config` list.
+The `status_col` argument allows you to specify a column that identifies affected/unaffected individuals. This column should be a factor or character vector; if not, `ggPedigree()` will coerce it.
 
-If you turn off sex-based coloring, `ggPedigree()` will apply default `ggplot2` fill scales based on status:
+The behavior differs depending on whether `sex_color` is also enabled:
 
+* If `sex_color = TRUE`, affected individuals are overlaid with a shape (controlled by `affected_shape`), preserving the fill color by sex.
 
-You can also add affected/unaffected status to the plot. The `status_col` argument allows you to specify a column in your data frame that contains the affected/unaffected status of each individual. This column should be a factor or character vector, and `ggPedigree()` will automatically recode it to a factor if necessary.
+* If `sex_color = FALSE`, affected and unaffected individuals are instead colored by status, using a default fill scale.
 
-When you add the `status_col` argument, `ggPedigree()` will automatically color the affected individuals in one color and the unaffected individuals in another. You can indicate what the values of the affected/unaffected status are in your data frame using the `affected` and `unaffected` arguments in the `config` list. By default, `ggPedigree()` will overlay the affected individuals with a different shape, but you can customize this as well.
+You can control how values are interpreted via the `affected` and `unaffected` parameters in `config`. By default, `TRUE` is considered affected and `FALSE` unaffected.
 
-```{r}
-data("hazard")
-
-p <- ggPedigree(
-  hazard, # %>% mutate(affected = as.factor(ifelse(affected == TRUE, "affected", "uneffected"))),
-  famID = "famID",
-  personID = "ID",
-  status_col = "affected",
-  config = list(
-    code_male = 0,
-    sex_color = TRUE,
-    affected = TRUE,
-    unaffected = FALSE,
-    affected_shape = 4
-  )
-)
-
-p
-```
-
-If you set sex_color to FALSE, the affected values will be filled with the default color palette.
 
 ```{r}
 ggPedigree(
@@ -165,24 +166,48 @@ ggPedigree(
   config = list(
     code_male = 0,
     sex_color = FALSE,
-    affected = TRUE,
-    unaffected = FALSE
+    status_affected_lab = TRUE,
+    status_unaffected_lab = FALSE
+  )
+)
+```
+
+## Highlighting Specific Individuals
+
+You can also highlight specific individuals in the pedigree by creating a new column in your data frame. For example, if you want to highlight Harry Potter and Dudley Dursley, you can create a new column called `proband` and set it to `TRUE` for those individuals. You can specify the `affected_shape` to be a star shape (8) and use the `status_col` argument to indicate the probands.
+
+```{r}
+df <- potter
+
+df <- df %>%
+  mutate(proband = ifelse(name %in% c("Harry Potter", "Dudley Dursley"), TRUE, FALSE))
+
+ggPedigree(
+  df,
+  famID = "famID",
+  personID = "personID",
+  status_col = "proband",
+  config = list(
+    sex_color = TRUE,
+    status_affected_lab = TRUE,
+    status_unaffected_lab = FALSE,
+    status_affected_shape = 8 # star shape
   )
 )
 ```
 
 # Multiple families in one graphic
 
-If you have multiple families in your data frame, you can use the `facet_wrap()` function from `ggplot2` to create separate plots for each family. This is useful if you want to compare the pedigrees of different families side by side.
+If you have multiple families in your data frame, you can use the `facet_wrap()` function from `ggplot2` to create separate plots for each family. This is useful if you want to compare the pedigrees of different families side by side. Note that you can use `scales = "free_x"` to allow each family to have its own x-axis scale.
 
-Facet to separate distinct pedigrees, note that you can use `scales = "free_x"` to allow each family to have its own x-axis scale.
-
-```{r}
+```{r facet_wrap}
 p +
   facet_wrap(~famID, scales = "free_x")
 ```
 
-# Changing the layout
+# Adjusting Plot Appearance
+
+The layout appearance can be refined using `theme()` elements. This doesn't change the pedigree structure but helps declutter the visualization.
 
 ```{r}
 p +
@@ -204,14 +229,18 @@ p +
   )
 ```
 
-# More complex examples
+# Advanced Example: Large Pedigrees with self-loops
 
-```{r message=FALSE, warning=FALSE}
+In this section, we demonstrate how to create a more complex pedigree plot with multiple families. We use the `inbreeding` dataset from the `BGmisc` package, which contains several multigenerational pedigrees with consanguinity. Note that in these plots that some individuals may appear in multiple places within the pedigree. This is common in large pedigrees, especially when there are overlapping generations or multiple marriages. Here the colors are set to be the same for all segments, except for self-loops, which are colored purple.
+
+```{r self-loops, message=FALSE, warning=FALSE}
 library(BGmisc) # helper utilities & example data
 
 data("inbreeding")
 
-df <- inbreeding
+
+df <- inbreeding # multigenerational pedigree with consanguinity
+
 
 # df  <- dplyr::filter(df, famID %in% c(5, 7))
 
@@ -224,26 +253,15 @@ p <- ggPedigree(
   #  debug = TRUE,
   config = list(
     code_male = 0,
-    sex_color = F,
-    #  label_method = "geom_text",
-    affected = TRUE,
-    unaffected = FALSE,
-    generation_height = 2,
-    generation_width = 1,
-    affected_shape = 4,
-    spouse_segment_color = "pink",
-    sibling_segment_color = "blue",
-    parent_segment_color = "green",
-    offspring_segment_color = "black"
+    sex_color = FALSE,
+    status_affected_lab = TRUE,
+    status_unaffected_lab = FALSE,
+    generation_height = 4,
+    generation_width = 2,
+    status_affected_shape = 4,
+    segment_self_color = "purple"
   )
 )
-
-# p$connections%>%filter(personID     ==60) %>% nrow()
-# p$connections%>%filter(personID     ==66) %>% unique()
-# p$connections%>%filter(personID     ==65) %>% unique()
-
-# p$connections%>%filter(personID  >=61 &
-#       personID  <62 ) %>% unique()
 
 p + facet_wrap(~famID, scales = "free") #+ scale_color_viridis(
 #   discrete = TRUE,
@@ -251,11 +269,28 @@ p + facet_wrap(~famID, scales = "free") #+ scale_color_viridis(
 #  )  + theme_bw(base_size = 14)  +  guides(colour="none", shape="none")
 ```
 
-# Power paper
+# Example: Constructing Custom Pedigrees for Publication
+
+Here we demonstrate how to create a custom pedigree using the `ggpedigree package`. The data shown here were generated using the `simulatePedigree()` function from the {BGmisc} package, which is the parent package to {ggpedigree}. These simulated pedigrees were used in a study evaluating statistical power and estimation bias for a variance decomposition model that includes mitochondrial DNA (mtDNA) effects.
+
+The simulation generated thousands of extended pedigree structures varying in depth, sibship size, mating structure, and maternal lineage overlap. The example below shows one of the simulated pedigrees and is the version included in the final manuscript:
+
+> Detecting mtDNA effects with an Extended Pedigree Model: An Analysis of Statistical Power and Estimation Bias
+> Xuanyu Lyu, S. Alexandra Burt, Michael D. Hunter, Rachel Good, Sarah L. Carroll, S. Mason Garrison
+> Preprint available at: https://doi.org/10.1101/2024.12.19.629449
+
+The structure includes multiple generations, sibling sets, and overlapping parental lineages, and was chosen to illustrate the complexity of the simulated pedigrees used in the power study.
+
+## Preparing the data
+
+Each row represents one individual. Variables include `personID`, `momID`, `dadID`, `sex`, and `famID`. The proband variable is included to demonstrate status overlays. For plotting, we normalize identifiers in family 1 to avoid ID collisions across families. 
+
+<details>
+<summary>Click to expand pedigree setup</summary>
 
 ```{r}
 library(tibble)
-
+library(dplyr)
 pedigree_df <- tribble(
   ~personID, ~momID, ~dadID, ~sex, ~famID,
   10011, NA, NA, 0, 1,
@@ -294,21 +329,36 @@ pedigree_df <- tribble(
   10034, 10022, 10025, 0, 2,
   10035, 10022, 10025, 0, 2,
   10036, 10022, 10025, 1, 2,
-  100310, 10022, 10025, 1, 2,
+  10310, 10022, 10025, 1, 2,
   10037, 10026, 10027, 0, 2,
   10038, 10026, 10027, 0, 2,
   10039, 10026, 10027, 0, 2,
-  100311, 10026, 10027, 1, 2,
-  100312, 10026, 10027, 1, 2
-) %>% mutate(proband = TRUE)
+  10311, 10026, 10027, 1, 2,
+  10312, 10026, 10027, 1, 2
+) %>%
+  mutate(
+    cleanpersonID = personID - 10000,
+    personID = ifelse(famID == 1, personID - 10000, personID),
+    momID = ifelse(famID == 1 & !is.na(momID), momID - 10000, momID),
+    dadID = ifelse(famID == 1 & !is.na(dadID), dadID - 10000, dadID),
+    proband = case_when(
+      personID %in% c(11, 22, 23, 26, 27, 31, 32, 33, 34, 35) ~ TRUE,
+      personID %in% c(
+        10011, 10022, 10022, 10023, 10024, 10026,
+        10034, 10035, 10036, 10310,
+        10037, 10038, 10039, 10311,
+        10312
+      ) ~ TRUE,
+      TRUE ~ FALSE
+    )
+  )
+```
+</details>
 
-# pedigree_df <- recodeSex(pedigree_df,code_male = 1, recode_male = "M")
-pedigree_df$personID[pedigree_df$famID == 1] <- pedigree_df$personID[pedigree_df$famID == 1] - 10000
-pedigree_df$momID[pedigree_df$famID == 1] <- pedigree_df$momID[pedigree_df$famID == 1] - 10000
-pedigree_df$dadID[pedigree_df$famID == 1] <- pedigree_df$dadID[pedigree_df$famID == 1] - 10000
 
+## Plotting the pedigree
 
-
+```{r}
 p <- ggPedigree(
   pedigree_df,
   famID = "famID",
@@ -317,26 +367,39 @@ p <- ggPedigree(
   #  debug = TRUE,
   config = list(
     code_male = 1,
-    sex_color = F,
+    sex_color = FALSE,
     apply_default_scales = FALSE,
     label_method = "geom_text",
-    #   affected = TRUE,
-    #   unaffected = FALSE,
+    label_col = "cleanpersonID",
+    status_affected_lab = TRUE,
+    status_unaffected_lab = FALSE,
     generation_height = 1,
     generation_width = 1,
-    affected_shape = 4,
-    spouse_segment_color = "black",
-    sibling_segment_color = "black",
-    parent_segment_color = "black",
-    offspring_segment_color = "black"
+    status_affected_shape = 4,
+    segment_spouse_color = "black",
+    segment_sibling_color = "black",
+    segment_parent_color = "black",
+    segment_offspring_color = "black"
   )
 )
+```
 
+
+We finish by adjusting the legend and shape scale for visual clarity:
+
+```{r, message=FALSE, warning=FALSE}
 p + scale_shape_manual(
   values = c(16, 15, 15),
   labels = c("Female", "Male", "Unknown")
 ) +
-  guides(colour = "none", shape = "none")
-# guides(colour="none", shape="none") +
-# facet_wrap(~famID, scales= "free")
+  guides(shape = "none") + scale_color_viridis(
+    discrete = TRUE,
+    labels = c("TRUE", "FALSE"),
+    name = "Founding MtDNA Line"
+  ) +
+  facet_wrap(~famID, scales = "free", shrink = TRUE) +
+  theme(
+    strip.text = element_blank(),
+    legend.position = "bottom"
+  )
 ```

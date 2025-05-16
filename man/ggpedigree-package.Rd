@@ -5,7 +5,7 @@
 \alias{ggpedigree-package}
 \title{ggpedigree: An R Package for plotting pedigrees}
 \description{
-The ggpedigree R package offers a complimentary suite of plotting functions for BGmisc which are implemented in ggplot.
+The ggpedigree R package offers a complimentary suite of plotting functions for BGmisc and implementation of a ggplot version of kinship2's pedigree plot.
 }
 \seealso{
 Useful links:

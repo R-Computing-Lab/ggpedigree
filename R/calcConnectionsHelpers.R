@@ -14,20 +14,22 @@
 #' @param p Numeric. The order of the Minkowski distance. If NULL, defaults to 2 for Euclidean and 1 for Manhattan. If
 #' Minkowski method is used, p should be specified.
 
-computeDistance <- function(x1, y1, x2, y2,
-                            method = "euclidean", p = NULL) {
+computeDistance <- function(method = "euclidean", x1, y1, x2, y2,
+                            p = NULL) {
   method <- tolower(method)
 
   if (is.null(p)) {
-    p <- switch(method,
+    Min_p <- switch(method,
       euclidean = 2,
       cityblock = 1,
       stop("Invalid distance method. Choose from 'euclidean', 'cityblock', or specify p.")
     )
+  } else {
+    Min_p <- p
   }
   # Calculate Minkowski distance
 
-  ((abs(x1 - x2))^p + (abs(y1 - y2))^p)^(1 / p)
+  ((abs(x1 - x2))^Min_p + (abs(y1 - y2))^Min_p)^(1 / Min_p)
 }
 
 #' Compute midpoints across grouped coordinates

@@ -4,9 +4,11 @@
 \alias{computeDistance}
 \title{Compute distance between two points}
 \usage{
-computeDistance(x1, y1, x2, y2, method = "euclidean", p = NULL)
+computeDistance(method = "euclidean", x1, y1, x2, y2, p = NULL)
 }
 \arguments{
+\item{method}{Character. Method of distance calculation. Options are "euclidean", "cityblock", and "Minkowski".}
+
 \item{x1}{Numeric. X-coordinate of the first point.}
 
 \item{y1}{Numeric. Y-coordinate of the first point.}
@@ -14,8 +16,6 @@ computeDistance(x1, y1, x2, y2, method = "euclidean", p = NULL)
 \item{x2}{Numeric. X-coordinate of the second point.}
 
 \item{y2}{Numeric. Y-coordinate of the second point.}
-
-\item{method}{Character. Method of distance calculation. Options are "euclidean", "cityblock", and "Minkowski".}
 
 \item{p}{Numeric. The order of the Minkowski distance. If NULL, defaults to 2 for Euclidean and 1 for Manhattan. If
 Minkowski method is used, p should be specified.}

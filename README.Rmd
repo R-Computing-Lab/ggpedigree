@@ -19,15 +19,14 @@ options(citation.bibtex.max = 0)
 <!-- badges: start -->
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R package version](https://www.r-pkg.org/badges/version/ggpedigree)](https://cran.r-project.org/package=ggpedigree)
-[![Package downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggpedigree)](https://cran.r-project.org/package=BGmisc)</br>
+[![Package downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggpedigree)](https://cran.r-project.org/package=ggpedigree)</br>
 [![R-CMD-check](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-check.yaml)
-[![Dev Main
-branch](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-devcheck.yaml/badge.svg)](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-devcheck.yaml)
+[![Dev branch](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-devcheck.yaml/badge.svg)](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-devcheck.yaml)
 [![codecov](https://codecov.io/gh/R-Computing-Lab/ggpedigree/graph/badge.svg)](https://codecov.io/gh/R-Computing-Lab/ggpedigree)
 ![License](https://img.shields.io/badge/License-GPL_v3-blue.svg)
 <!-- badges: end -->
 
-The ggpedigree R package complements the BGmisc package by providing a set of functions for visualizing and analyzing pedigree data. It is designed to work seamlessly with the BGmisc package, which provides tools for simulating, manipulating, and modeling pedigree data.
+The ggpedigree R package complements the BGmisc package by providing a set of functions for visualizing pedigree data using ggplot2. It is designed to work seamlessly with the BGmisc package, which provides tools for simulating, manipulating, and modeling pedigree data. It extends the plotting functionality of the `kinship2` package, which is widely used for pedigree analysis in R.
 
 ## Installation
 
@@ -51,6 +50,7 @@ If you use ggpedigree in your research or wish to refer to it, please cite the f
 ```
 citation(package = "ggpedigree")
 ```
+
 ```{r,comment='',results='asis',echo=FALSE} 
 print(citation(package = "ggpedigree"), style = "text", bibtex = FALSE)
 ```
