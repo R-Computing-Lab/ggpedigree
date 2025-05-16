@@ -80,8 +80,8 @@ ggPedigree <- function(ped, famID = "famID",
     sex_color = TRUE,
     status_vals = c(1, 0),
     max_overlaps = 15,
-    id_segment_color = NA#,
-  #  hints = NULL
+    id_segment_color = NA # ,
+    #  hints = NULL
   )
 
 
@@ -109,10 +109,10 @@ ggPedigree <- function(ped, famID = "famID",
   # Clean duplicated famID columns if present
 
   if ("famID.y" %in% names(ds_ped)) {
-    ds_ped <- dplyr::select(.data=ds_ped, -"famID.y")
+    ds_ped <- dplyr::select(.data = ds_ped, -"famID.y")
   }
   if ("famID.x" %in% names(ds_ped)) {
-    ds_ped <- dplyr::rename(.data=ds_ped, famID = "famID.x")
+    ds_ped <- dplyr::rename(.data = ds_ped, famID = "famID.x")
   }
 
   # If personID is not "personID", rename to "personID" internally
@@ -305,7 +305,7 @@ ggPedigree <- function(ped, famID = "famID",
   if (config$include_labels == TRUE && config$label_method == "ggrepel") {
     p <- p +
       ggrepel::geom_text_repel(ggplot2::aes(label = .data$personID),
-        nudge_y = -.10*config$generation_height,
+        nudge_y = -.10 * config$generation_height,
         size = config$label_text_size,
         na.rm = TRUE,
         max.overlaps = config$max_overlaps,
@@ -320,12 +320,11 @@ ggPedigree <- function(ped, famID = "famID",
         size = config$label_text_size,
         angle = config$label_text_angle,
         na.rm = TRUE
-
       )
   } else if (config$include_labels == TRUE || config$label_method == "geom_text") {
     p <- p +
       ggplot2::geom_text(ggplot2::aes(label = .data$personID),
-        nudge_y = -.10*config$generation_height,
+        nudge_y = -.10 * config$generation_height,
         size = config$label_text_size,
         angle = config$label_text_angle,
         na.rm = TRUE
@@ -370,8 +369,8 @@ ggPedigree <- function(ped, famID = "famID",
   p <- p +
     ggplot2::scale_y_reverse()
 
- if(config$apply_default_theme == TRUE) {
-    p <-  p +
+  if (config$apply_default_theme == TRUE) {
+    p <- p +
       ggplot2::theme_minimal() +
       ggplot2::theme(
         axis.title.y = ggplot2::element_blank(),
@@ -384,7 +383,7 @@ ggPedigree <- function(ped, famID = "famID",
         axis.text.x = ggplot2::element_blank(),
         axis.ticks.x = ggplot2::element_blank()
       )
-}
+  }
 
 
 
@@ -392,34 +391,34 @@ ggPedigree <- function(ped, famID = "famID",
   # STEP 11: Final Legend Adjustments
   # -----
   # Adjust legend labels and colors based on the configuration
-  if(config$apply_default_scales == TRUE) {
+  if (config$apply_default_scales == TRUE) {
     p <- p + ggplot2::scale_shape_manual(
       values = config$shape_vals,
       labels = config$shape_labs
     )
 
-  # Add alpha scale for affected status if applicable
-  if (!is.null(status_col) && config$sex_color == TRUE) {
-    p <- p + ggplot2::scale_alpha_manual(
-      name = NULL,
-      labels = config$status_labs,
-      values = config$status_vals,
-      na.translate = FALSE
-    ) + ggplot2::guides(alpha = "none")
-  }
+    # Add alpha scale for affected status if applicable
+    if (!is.null(status_col) && config$sex_color == TRUE) {
+      p <- p + ggplot2::scale_alpha_manual(
+        name = NULL,
+        labels = config$status_labs,
+        values = config$status_vals,
+        na.translate = FALSE
+      ) + ggplot2::guides(alpha = "none")
+    }
 
-  # Add color scale for sex or affected status if applicable
-  if (config$sex_color == TRUE) {
-    p <- p +
-      ggplot2::scale_color_discrete(labels = config$shape_labs) +
-      ggplot2::labs(color = "Sex", shape = "Sex")
-  } else if (!is.null(status_col)) {
-    p <- p +
-      ggplot2::scale_color_discrete(labels = config$status_labs) +
-      ggplot2::labs(color = "Affected", shape = "Sex")
-  } else {
-    p <- p + ggplot2::labs(shape = "Sex")
-  }
+    # Add color scale for sex or affected status if applicable
+    if (config$sex_color == TRUE) {
+      p <- p +
+        ggplot2::scale_color_discrete(labels = config$shape_labs) +
+        ggplot2::labs(color = "Sex", shape = "Sex")
+    } else if (!is.null(status_col)) {
+      p <- p +
+        ggplot2::scale_color_discrete(labels = config$status_labs) +
+        ggplot2::labs(color = "Affected", shape = "Sex")
+    } else {
+      p <- p + ggplot2::labs(shape = "Sex")
+    }
   }
 
   if (debug == TRUE) {
@@ -433,7 +432,6 @@ ggPedigree <- function(ped, famID = "famID",
     # If debug is FALSE, return only the plot
     return(p)
   }
-
 }
 
 #' @rdname ggPedigree

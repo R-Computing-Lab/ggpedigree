@@ -280,18 +280,20 @@ build_connections_spouse_segment <- function(ped, connections_for_FOO, use_hash 
       dplyr::select("parent_hash") |>
       dplyr::mutate(
         parent1 = # needs to be the first part of the string
-        stringr::str_extract(.data$parent_hash, "^[^.]+"),
+          stringr::str_extract(.data$parent_hash, "^[^.]+"),
         parent2 = # needs to be the second part of the string\
-        stringr::str_extract(.data$parent_hash, "(?<=\\.)[^.]+")
+          stringr::str_extract(.data$parent_hash, "(?<=\\.)[^.]+")
       ) |>
-      dplyr::left_join(connections_for_FOO |>
-                         dplyr::mutate(personID = paste0(.data$personID)),
+      dplyr::left_join(
+        connections_for_FOO |>
+          dplyr::mutate(personID = paste0(.data$personID)),
         by = c("parent1" = "personID"),
         suffix = c("", "_parent1"),
         multiple = "any"
       ) |>
-      dplyr::left_join(connections_for_FOO |>
-                         dplyr::mutate(personID = paste0(.data$personID)),
+      dplyr::left_join(
+        connections_for_FOO |>
+          dplyr::mutate(personID = paste0(.data$personID)),
         by = c("parent2" = "personID"),
         suffix = c("", "_parent2"),
         multiple = "any"

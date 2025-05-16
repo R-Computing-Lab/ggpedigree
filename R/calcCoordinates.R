@@ -66,7 +66,7 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
     momid = ped[[momID]],
     sex = ped_recode[[sexVar]],
   )
-#
+  #
   if ("hints" %in% names(config)) {
     # Check if hints are provided
     autohint <- tryCatch(
@@ -80,8 +80,9 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
           ped_ped,
           align = config$ped_align,
           packed = config$ped_packed
-        )}
-      )
+        )
+      }
+    )
   } else {
     autohint <- kinship2::autohint(ped_ped,
       align = config$ped_align,
