@@ -13,7 +13,7 @@ supports multiple families and optionally displays affected status and sex-based
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -124,7 +124,7 @@ supports multiple families and optionally displays affected status and sex-based
 <dd><p>A list of configuration options for customizing the plot. The list can include:</p><dl><dt>code_male</dt>
 <dd><p>Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1.</p></dd>
 
-   <dt>spouse_segment_color, self_segment_color, sibling_segment_color, parent_segment_color, offspring_segment_color</dt>
+   <dt>segment_spouse_color, segment_self_color, segment_sibling_color, segment_parent_color, segment_offspring_color</dt>
 <dd><p>Character. Line colors for respective connection types.</p></dd>
 
    <dt>label_text_size, point_size, line_width</dt>
@@ -133,7 +133,7 @@ supports multiple families and optionally displays affected status and sex-based
    <dt>generation_height</dt>
 <dd><p>Numeric. Vertical spacing multiplier between generations. Default: 1.</p></dd>
 
-   <dt>unknown_shape, female_shape, male_shape, affected_shape</dt>
+   <dt>shape_unknown, shape_female, shape_male, affected_shape</dt>
 <dd><p>Integers. Shape codes for plotting each group.</p></dd>
 
    <dt>sex_shape_labs</dt>
@@ -145,10 +145,10 @@ supports multiple families and optionally displays affected status and sex-based
    <dt>sex_color</dt>
 <dd><p>Logical. If TRUE, uses color to differentiate sex.</p></dd>
 
-   <dt>max_overlaps</dt>
+   <dt>label_max_overlaps</dt>
 <dd><p>Maximum number of overlaps allowed in repelled labels.</p></dd>
 
-   <dt>id_segment_color</dt>
+   <dt>label_segment_color</dt>
 <dd><p>Color used for label connector lines.</p></dd>
 
 
