@@ -49,7 +49,7 @@ plt <- ggPedigreeInteractive(
     sex_color       = TRUE
   ),
   tooltip_cols = c("personID", "name")
-) |> plotly::hide_legend()
+)
 plt
 
 ## ----further-customization----------------------------------------------------
