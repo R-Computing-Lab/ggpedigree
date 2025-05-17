@@ -17,6 +17,7 @@ options(citation.bibtex.max = 0)
 # ggpedigree
 
 <!-- badges: start -->
+<a href="https://r-computing-lab.github.io/ggpedigree/"><img src="man/figures/hex.png" align="right" height="139" alt="ggpedigree website" /></a>
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R package version](https://www.r-pkg.org/badges/version/ggpedigree)](https://www.r-pkg.org/badges/version/ggpedigree)
 [![Package downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggpedigree)](https://cranlogs.r-pkg.org/badges/grand-total/ggpedigree)</br>
