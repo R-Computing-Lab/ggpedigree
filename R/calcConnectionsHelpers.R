@@ -76,7 +76,6 @@ getMidpoints <- function(data, group_vars,
 
   if (method == "mean") {
     # Average all xs and Average of all y values
-
     data |>
       dplyr::group_by(!!!rlang::syms(group_vars)) |>
       dplyr::summarize(

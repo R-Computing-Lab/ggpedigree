@@ -292,7 +292,7 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
   if (use_hash == TRUE) {
     # I want to make segments for each hash, because some people have multiple spouses
     # this is to add those missing segments
-    parent_hash_connections <- ped |>
+    parent_connections <- ped |>
       dplyr::select("parent_hash") |>
       dplyr::mutate(
         parent1 = # needs to be the first part of the string
@@ -330,13 +330,11 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
         -"y_pos_parent2"
       )
 
-
-
     # Get spouse coordinates
   } else {
     # spouses
     # Get spouse coordinates
-    spouse_connections <- ped |>
+    parent_connections <- ped |>
       dplyr::select(
         "personID", "x_pos",
         "y_pos", "spouseID"
@@ -362,5 +360,5 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
         -"spouseID_spouse"
       )
   }
-  return(parent_hash_connections)
+  return(parent_connections)
 }
