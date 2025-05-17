@@ -7,7 +7,8 @@ test_that("calculateConnections returns expected columns and structure", {
     sex = c("F", "M", "F", "F", "M")
   )
 
-  ped <- calculateCoordinates(ped, code_male = "M",
+  ped <- calculateCoordinates(ped,
+    code_male = "M",
     personID = "personID",
     momID = "momID",
     dadID = "dadID",
@@ -37,11 +38,12 @@ test_that("calculateConnections returns correct parent coordinates", {
     stringsAsFactors = FALSE
   )
 
-  ped <- calculateCoordinates(ped, code_male = "M",
-                              personID = "personID",
-                              momID = "momID",
-                              dadID = "dadID",
-                              spouseID = "spouseID"
+  ped <- calculateCoordinates(ped,
+    code_male = "M",
+    personID = "personID",
+    momID = "momID",
+    dadID = "dadID",
+    spouseID = "spouseID"
   )
   conn_out <- calculateConnections(ped)
   conns <- conn_out$connections
@@ -66,11 +68,12 @@ test_that("midparent coordinates are correct", {
     sex = c("F", "M", "F")
   )
 
-  ped <- calculateCoordinates(ped, code_male = "M",
-                              personID = "personID",
-                              momID = "momID",
-                              dadID = "dadID",
-                              spouseID = "spouseID"
+  ped <- calculateCoordinates(ped,
+    code_male = "M",
+    personID = "personID",
+    momID = "momID",
+    dadID = "dadID",
+    spouseID = "spouseID"
   )
   conn_out <- calculateConnections(ped)
   conns <- conn_out$connections
@@ -98,11 +101,12 @@ test_that("spouse midpoint is correctly calculated", {
     sex = c("F", "M")
   )
 
-  ped <- calculateCoordinates(ped, code_male = "M" ,
-                              personID = "personID",
-                              momID = "momID",
-                              dadID = "dadID",
-                              spouseID = "spouseID"
+  ped <- calculateCoordinates(ped,
+    code_male = "M",
+    personID = "personID",
+    momID = "momID",
+    dadID = "dadID",
+    spouseID = "spouseID"
   )
   conn_out <- calculateConnections(ped)
   conns <- conn_out$connections
@@ -127,10 +131,11 @@ test_that("calculateConnections respects duplicated appearances (extra)", {
     sex = c("F", "M", "F", "F", "M")
   )
 
-  ped <- calculateCoordinates(ped, code_male = "M",    personID = "personID",
-                              momID = "momID",
-                              dadID = "dadID",
-                              spouseID = "spouseID"
+  ped <- calculateCoordinates(ped,
+    code_male = "M", personID = "personID",
+    momID = "momID",
+    dadID = "dadID",
+    spouseID = "spouseID"
   )
 
   # Simulate duplicate appearance
@@ -154,7 +159,7 @@ test_that("calculateConnections computes parental coordinates correctly", {
     momID = c(NA, NA, "A"),
     dadID = c(NA, NA, "B"),
     spouseID = c(NA, NA, NA),
-    x_pos = c(1, 3, 2),  # layout positions
+    x_pos = c(1, 3, 2), # layout positions
     y_pos = c(1, 1, 2),
     extra = FALSE
   )
@@ -223,7 +228,7 @@ test_that("calculateConnections computes sibling midpoints", {
   sibs <- conns[conns$personID %in% c("C1", "C2"), ]
 
   expect_equal(unique(sibs$y_mid_sib), 2)
-  expect_equal(round(unique(sibs$x_mid_sib), 2), 3)  # midpoint of x_pos = 1 and 5
+  expect_equal(round(unique(sibs$x_mid_sib), 2), 3) # midpoint of x_pos = 1 and 5
 })
 
 test_that("calculateConnections resolves 'extra' rows properly", {
@@ -239,7 +244,7 @@ test_that("calculateConnections resolves 'extra' rows properly", {
 
   result <- calculateConnections(ped)
   conns <- result$connections
-# at the connections stage its flagged as extra true
+  # at the connections stage its flagged as extra true
   expect_true(all(conns$extra == TRUE))
 
   # expect A to be the start of the string for the personID
@@ -249,4 +254,3 @@ test_that("calculateConnections resolves 'extra' rows properly", {
   expect_equal(sum(conns$personID == "A"), 1)
   expect_equal(sum(conns$personID == "A_2"), 1)
 })
-

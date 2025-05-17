@@ -4,7 +4,7 @@
 #' sibling, and spousal connections. Optionally processes duplicate appearances
 #' of individuals (marked as `extra`) to ensure relational accuracy.
 #'
-#' @inheritParams ggpedigree
+#' @inheritParams  ggpedigree
 #' @param config List of configuration parameters. Currently unused but passed through to internal helpers.
 #' @return A `data.frame` containing connection points and midpoints for graphical rendering. Includes:
 #'   \itemize{
@@ -37,7 +37,7 @@ calculateConnections <- function(ped,
 
   # Add spouseID if missing
   if (!all("spouseID" %in% names(ped))) {
-# make it match the personID type
+    # make it match the personID type
     # Initialize spouseID with NA of the same type as personID
 
     ped$spouseID <- na_person
@@ -261,7 +261,7 @@ calculateConnections <- function(ped,
     plot_connections <- list(
       connections = connections,
       self_coords = full_extra$self_coords,
-      connections_spouse_segment = build_connections_spouse_segment(
+      connections_spouse_segment = buildSpouseSegments(
         ped = ped,
         connections_for_FOO = connections_for_spouses
       )
@@ -270,7 +270,7 @@ calculateConnections <- function(ped,
     plot_connections <- list(
       connections = connections,
       self_coords = FALSE,
-      connections_spouse_segment = build_connections_spouse_segment(
+      connections_spouse_segment = buildSpouseSegments(
         ped = ped,
         connections_for_FOO = connections_for_spouses
       )
@@ -279,8 +279,16 @@ calculateConnections <- function(ped,
   return(plot_connections)
 }
 
-
-build_connections_spouse_segment <- function(ped, connections_for_FOO, use_hash = TRUE) {
+#' Build spouse segments
+#'
+#' @inheritParams calculateConnections
+#' @param connections_for_FOO A data frame containing the connections for the spouse segments
+#' @param use_hash Logical. If TRUE, use the parent_hash to build segments. If FALSE, use the spouseID.
+#' @return A data frame with the spouse segments
+#' @keywords internal
+#'
+#'
+buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
   if (use_hash == TRUE) {
     # I want to make segments for each hash, because some people have multiple spouses
     # this is to add those missing segments

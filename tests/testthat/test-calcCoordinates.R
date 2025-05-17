@@ -123,11 +123,15 @@ test_that("getRelativeCoordinates returns expected coordinates for mother", {
 
 
 test_that("calculateCoordinates fails on incorrect ped input", {
-  expect_error(calculateCoordinates("not_a_df"),
-               "ped should be a data.frame or inherit to a data.frame")
+  expect_error(
+    calculateCoordinates("not_a_df"),
+    "ped should be a data.frame or inherit to a data.frame"
+  )
 
-  expect_error(calculateCoordinates(data.frame(ID = 1:3), personID = "ID"),
-               "At least one of the required ID variables")
+  expect_error(
+    calculateCoordinates(data.frame(ID = 1:3), personID = "ID"),
+    "At least one of the required ID variables"
+  )
 })
 
 test_that("calculateCoordinates respects ped_align and ped_packed flags", {
@@ -144,8 +148,8 @@ test_that("calculateCoordinates respects ped_align and ped_packed flags", {
   coords3 <- calculateCoordinates(ped, config = list(ped_align = TRUE, ped_packed = FALSE))
   coords4 <- calculateCoordinates(ped, config = list(ped_align = FALSE, ped_packed = FALSE))
 
-  expect_true(nrow(coords1) == nrow(coords2))  # layout style may differ, not row count
-  expect_true(nrow(coords3) == nrow(coords4))  # layout style may differ, not row count
+  expect_true(nrow(coords1) == nrow(coords2)) # layout style may differ, not row count
+  expect_true(nrow(coords3) == nrow(coords4)) # layout style may differ, not row count
 })
 
 test_that("calculateCoordinates uses default code_male = 1", {

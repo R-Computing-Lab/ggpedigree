@@ -2,6 +2,7 @@
 * Allows support for character-based IDs
 * Added linejoin, lineend, segment_self_linetype, option to the `ggpedigree` functions.
 * Added unit tests for calculateConnections, calculateConnections, and ggpedigree functions.
+* Refactored ggpedigree function with .addScales and .addLabels functions to improve readability and maintainability.
 
 # ggpedigree 0.3.0
 * Expose more labeling options in the `ggpedigree` function to allow for more customization, including nudging labels, and changing the variable used.

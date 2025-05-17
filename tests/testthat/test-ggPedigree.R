@@ -5,11 +5,9 @@ test_that("broken hints doesn't cause a fatal error", {
   # Test with hints
   expect_warning(
     ggPedigree(potter,
-               famID = "famID",
-               personID = "personID",
-               config = list(hints = TRUE)
+      famID = "famID",
+      personID = "personID",
+      config = list(hints = TRUE)
     )
   )
 })
-
-

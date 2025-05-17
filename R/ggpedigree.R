@@ -341,37 +341,9 @@ ggPedigree <- function(ped, famID = "famID",
   # STEP 9: Add Labels
   # -----
   # Add labels to the points using ggrepel for better visibility
-  if (config$include_labels == TRUE && config$label_method == "ggrepel") {
-    p <- p +
 
-      ggrepel::geom_text_repel(ggplot2::aes(label = !!rlang::sym(config$label_col)),
-        nudge_y = config$label_nudge_y * config$generation_height,
-        nudge_x = config$label_nudge_x * config$generation_width,
-        size = config$label_text_size,
-        na.rm = TRUE,
-        max.overlaps = config$label_max_overlaps,
-        segment.size = config$line_width * .5,
-        angle = config$label_text_angle,
-        segment.color = config$label_segment_color
-      )
-  } else if (config$include_labels == TRUE && config$label_method == "geom_label") {
-    p <- p +
-      ggplot2::geom_label(ggplot2::aes(label = !!rlang::sym(config$label_col)),
-        nudge_y = config$label_nudge_y * config$generation_height,
-        nudge_x = config$label_nudge_x * config$generation_width,
-        size = config$label_text_size,
-        angle = config$label_text_angle,
-        na.rm = TRUE
-      )
-  } else if (config$include_labels == TRUE || config$label_method == "geom_text") {
-    p <- p +
-      ggplot2::geom_text(ggplot2::aes(label = !!rlang::sym(config$label_col)),
-        nudge_y = config$label_nudge_y * config$generation_height,
-        nudge_x = config$label_nudge_x * config$generation_width,
-        size = config$label_text_size,
-        angle = config$label_text_angle,
-        na.rm = TRUE
-      )
+  if (config$include_labels == TRUE) {
+    p <- .addLabels(p = p, config = config)
   }
 
 
@@ -438,34 +410,7 @@ ggPedigree <- function(ped, famID = "famID",
   # -----
   # Adjust legend labels and colors based on the configuration
   if (config$apply_default_scales == TRUE) {
-    p <- p + ggplot2::scale_shape_manual(
-      values = config$sex_shape_vals,
-      labels = config$sex_shape_labs
-    )
-
-    # Add alpha scale for affected status if applicable
-    if (!is.null(status_col) && config$sex_color == TRUE) {
-      p <- p + ggplot2::scale_alpha_manual(
-        name = NULL,
-        labels = config$status_labs,
-        values = config$status_vals,
-        na.translate = FALSE
-      ) + ggplot2::guides(alpha = "none")
-    }
-
-
-    # Add color scale for sex or affected status if applicable
-    if (config$sex_color == TRUE) {
-      p <- p +
-        ggplot2::scale_color_discrete(labels = config$sex_shape_labs) +
-        ggplot2::labs(color = "Sex", shape = "Sex")
-    } else if (!is.null(status_col)) {
-      p <- p +
-        ggplot2::scale_color_discrete(labels = config$status_labs) +
-        ggplot2::labs(color = "Affected", shape = "Sex")
-    } else {
-      p <- p + ggplot2::labs(shape = "Sex")
-    }
+    p <- .addScales(p = p, config = config, status_col = status_col)
   }
 
   if (debug == TRUE) {
@@ -488,3 +433,81 @@ ggpedigree <- ggPedigree
 #' @rdname ggPedigree
 #' @export
 ggped <- ggPedigree
+
+#' @title Add Scales to ggplot Pedigree Plot
+#' @inheritParams ggPedigree
+#' @param p A ggplot object.
+#' @keywords internal
+#' @return A ggplot object with added scales.
+.addScales <- function(p, config, status_col = NULL) {
+  p <- p + ggplot2::scale_shape_manual(
+    values = config$sex_shape_vals,
+    labels = config$sex_shape_labs
+  )
+
+  # Add alpha scale for affected status if applicable
+  if (!is.null(status_col) && config$sex_color == TRUE) {
+    p <- p + ggplot2::scale_alpha_manual(
+      name = NULL,
+      labels = config$status_labs,
+      values = config$status_vals,
+      na.translate = FALSE
+    ) + ggplot2::guides(alpha = "none")
+  }
+
+  # Add color scale for sex or affected status if applicable
+  if (config$sex_color == TRUE) {
+    p <- p +
+      ggplot2::scale_color_discrete(labels = config$sex_shape_labs) +
+      ggplot2::labs(color = "Sex", shape = "Sex")
+  } else if (!is.null(status_col)) {
+    p <- p +
+      ggplot2::scale_color_discrete(labels = config$status_labs) +
+      ggplot2::labs(color = "Affected", shape = "Sex")
+  } else {
+    p <- p + ggplot2::labs(shape = "Sex")
+  }
+  return(p)
+}
+
+#' @title Add Labels to ggplot Pedigree Plot
+#' @inheritParams ggPedigree
+#' @inheritParams .addScales
+#'
+#' @return A ggplot object with added labels.
+#' @keywords internal
+#'
+.addLabels <- function(p, config) {
+  if (config$label_method == "ggrepel") {
+    p <- p +
+      ggrepel::geom_text_repel(ggplot2::aes(label = !!rlang::sym(config$label_col)),
+        nudge_y = config$label_nudge_y * config$generation_height,
+        nudge_x = config$label_nudge_x * config$generation_width,
+        size = config$label_text_size,
+        na.rm = TRUE,
+        max.overlaps = config$label_max_overlaps,
+        segment.size = config$line_width * .5,
+        angle = config$label_text_angle,
+        segment.color = config$label_segment_color
+      )
+  } else if (config$label_method == "geom_label") {
+    p <- p +
+      ggplot2::geom_label(ggplot2::aes(label = !!rlang::sym(config$label_col)),
+        nudge_y = config$label_nudge_y * config$generation_height,
+        nudge_x = config$label_nudge_x * config$generation_width,
+        size = config$label_text_size,
+        angle = config$label_text_angle,
+        na.rm = TRUE
+      )
+  } else if (config$label_method == "geom_text") {
+    p <- p +
+      ggplot2::geom_text(ggplot2::aes(label = !!rlang::sym(config$label_col)),
+        nudge_y = config$label_nudge_y * config$generation_height,
+        nudge_x = config$label_nudge_x * config$generation_width,
+        size = config$label_text_size,
+        angle = config$label_text_angle,
+        na.rm = TRUE
+      )
+  }
+  return(p)
+}

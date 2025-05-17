@@ -53,8 +53,8 @@ processExtras <- function(ped, config = list()) {
   # ---- 3. Give every extra appearance a unique numeric personID -----------
 
   # Assign a new ID to each extra appearance
-  if (is.numeric(ped$personID)||is.integer(ped$personID)||is.double(ped$personID) # numeric
-      ) {
+  if (is.numeric(ped$personID) || is.integer(ped$personID) || is.double(ped$personID) # numeric
+  ) {
     ped <- ped |>
       dplyr::arrange(.data$personID, .data$newID) |>
       dplyr::mutate(
