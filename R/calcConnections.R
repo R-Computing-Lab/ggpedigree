@@ -4,7 +4,7 @@
 #' sibling, and spousal connections. Optionally processes duplicate appearances
 #' of individuals (marked as `extra`) to ensure relational accuracy.
 #'
-#' @inheritParams ggpedigree
+#' @inheritParams  ggpedigree
 #' @param config List of configuration parameters. Currently unused but passed through to internal helpers.
 #' @return A `data.frame` containing connection points and midpoints for graphical rendering. Includes:
 #'   \itemize{
@@ -31,11 +31,16 @@ calculateConnections <- function(ped,
   # Default configuration placeholder
   default_config <- list()
   config <- utils::modifyList(default_config, config)
+  # Capture type-safe NAs for each ID column
+  na_person <- ped$personID[NA_integer_]
 
 
   # Add spouseID if missing
   if (!all("spouseID" %in% names(ped))) {
-    ped$spouseID <- NA
+    # make it match the personID type
+    # Initialize spouseID with NA of the same type as personID
+
+    ped$spouseID <- na_person
     # Attempt to infer spouse based on parenthood (not always reliable)
     # this will give you the mom that is the spouse of the dad
     # ped$spouseID <- ped$momID[match(ped$personID, ped$dadID)]
@@ -46,6 +51,9 @@ calculateConnections <- function(ped,
       ped$momID[match(ped$personID, ped$dadID)],
       ped$dadID[match(ped$personID, ped$momID)]
     )
+
+    # Ensure class matches personID exactly (in case factor, character, etc.)
+    attributes(ped$spouseID) <- attributes(ped$personID)
   }
   # Add famID if missing (used for grouping)
   if (!all("famID" %in% names(ped))) {
@@ -61,8 +69,8 @@ calculateConnections <- function(ped,
         couple_hash = symKey(.data$personID, .data$spouseID)
       ) |>
       dplyr::mutate(
-        parent_hash = gsub("NA.NA", NA, .data$parent_hash),
-        couple_hash = gsub("NA.NA", NA, .data$couple_hash)
+        parent_hash = gsub("NA.NA", NA_character_, .data$parent_hash),
+        couple_hash = gsub("NA.NA", NA_character_, .data$couple_hash)
       )
   }
 
@@ -253,7 +261,7 @@ calculateConnections <- function(ped,
     plot_connections <- list(
       connections = connections,
       self_coords = full_extra$self_coords,
-      connections_spouse_segment = build_connections_spouse_segment(
+      connections_spouse_segment = buildSpouseSegments(
         ped = ped,
         connections_for_FOO = connections_for_spouses
       )
@@ -262,7 +270,7 @@ calculateConnections <- function(ped,
     plot_connections <- list(
       connections = connections,
       self_coords = FALSE,
-      connections_spouse_segment = build_connections_spouse_segment(
+      connections_spouse_segment = buildSpouseSegments(
         ped = ped,
         connections_for_FOO = connections_for_spouses
       )
@@ -271,8 +279,16 @@ calculateConnections <- function(ped,
   return(plot_connections)
 }
 
-
-build_connections_spouse_segment <- function(ped, connections_for_FOO, use_hash = TRUE) {
+#' Build spouse segments
+#'
+#' @inheritParams calculateConnections
+#' @param connections_for_FOO A data frame containing the connections for the spouse segments
+#' @param use_hash Logical. If TRUE, use the parent_hash to build segments. If FALSE, use the spouseID.
+#' @return A data frame with the spouse segments
+#' @keywords internal
+#'
+#'
+buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
   if (use_hash == TRUE) {
     # I want to make segments for each hash, because some people have multiple spouses
     # this is to add those missing segments
