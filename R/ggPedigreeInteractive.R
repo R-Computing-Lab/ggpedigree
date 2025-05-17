@@ -54,7 +54,8 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
   # Set default styling and layout parameters
   default_config <- list(
     label_method = "geom_text",
-    include_labels = TRUE, # default to FALSE
+    include_labels = FALSE, # default to FALSE
+    include_tooltips = TRUE,
     tooltip_cols = c(personID, "sex", status_col),
     return_static = FALSE
   )
@@ -84,22 +85,28 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
       paste(paste(tooltip_cols, row, sep = ": "), collapse = "<br>"))
   }
 
-  static_plot <- static_plot +
-    ggplot2::aes(text = tooltip_fmt(ped, config$tooltip_cols))
 
   ## 3. Convert ggplot → plotly ---------------------------------------------
   if (config$return_static == TRUE) {
-  return(static_plot)
+   return(static_plot)
     } else {
-  plt <- plotly::ggplotly(static_plot,
-                          tooltip = "text",
-                          width   = NULL,
-                          height  = NULL)
 
+      #   Add the tooltip text to the data frame
+      if(config$include_tooltips == TRUE) {
+        static_plot <- static_plot + aes(text = tooltip_fmt(df=ped,
+                                                            config$tooltip_cols))
 
-  }
-
-
+        plt <- plotly::ggplotly(static_plot,
+                                tooltip = "text",
+                                width   = NULL,
+                                height  = NULL)
+      } else {
+        plt <- plotly::ggplotly(static_plot,
+                               # tooltip = "text",
+                                width   = NULL,
+                                height  = NULL)
+      }
+}
   if (as_widget==TRUE) {
     return(plt)
   } else {

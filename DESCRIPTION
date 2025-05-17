@@ -34,6 +34,8 @@ Suggests:
     NlsyLinks,
     rmarkdown,
     tibble,
+    corrplot,
+    readxl,
     htmlwidgets,
     testthat (>= 3.0.0)
 VignetteBuilder: 
