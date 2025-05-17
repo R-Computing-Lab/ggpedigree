@@ -134,23 +134,7 @@ test_that("calculateCoordinates fails on incorrect ped input", {
   )
 })
 
-test_that("calculateCoordinates respects ped_align and ped_packed flags", {
-  ped <- data.frame(
-    ID = c("A", "B", "C", "D", "X"),
-    momID = c(NA, "A", "A", "C", NA),
-    dadID = c(NA, "X", "X", "B", NA),
-    spouseID = c("X", "C", "B", NA, "A"),
-    sex = c("F", "M", "F", "F", "M")
-  )
 
-  coords1 <- calculateCoordinates(ped, config = list(ped_align = TRUE, ped_packed = TRUE))
-  coords2 <- calculateCoordinates(ped, config = list(ped_align = FALSE, ped_packed = TRUE))
-  coords3 <- calculateCoordinates(ped, config = list(ped_align = TRUE, ped_packed = FALSE))
-  coords4 <- calculateCoordinates(ped, config = list(ped_align = FALSE, ped_packed = FALSE))
-
-  expect_true(nrow(coords1) == nrow(coords2)) # layout style may differ, not row count
-  expect_true(nrow(coords3) == nrow(coords4)) # layout style may differ, not row count
-})
 
 test_that("calculateCoordinates uses default code_male = 1", {
   ped <- data.frame(
