@@ -22,7 +22,8 @@ Imports:
     dplyr,
     stringr,
     utils,
-    plotly
+    plotly,
+    reshape2
 Suggests: 
     EasyMx,
     viridis,
