@@ -82,6 +82,11 @@ ggPedigree <- function(ped, famID = "famID",
     segment_self_color = "black",
     segment_sibling_color = "black",
     segment_spouse_color = "black",
+    # segment linetypes
+    segment_self_linetype = "dotdash",
+    segment_self_angle = 90,
+    segment_lineend = "round",
+    segment_linejoin = "round",
     # sex
     sex_color = TRUE,
     sex_shape_labs = c("Female", "Male", "Unknown"),
@@ -201,6 +206,8 @@ ggPedigree <- function(ped, famID = "famID",
         yend = .data$y_pos
       ),
       linewidth = config$line_width,
+      lineend = config$segment_lineend,
+      linejoin = config$segment_linejoin,
       color = config$segment_spouse_color,
       na.rm = TRUE
     )
@@ -216,6 +223,8 @@ ggPedigree <- function(ped, famID = "famID",
       yend = .data$y_midparent
     ),
     linewidth = config$line_width,
+    lineend = config$segment_lineend,
+    linejoin = config$segment_linejoin,
     color = config$segment_parent_color,
     na.rm = TRUE
   ) +
@@ -229,6 +238,8 @@ ggPedigree <- function(ped, famID = "famID",
         yend = .data$y_mid_sib - gap_off
       ),
       linewidth = config$line_width,
+      lineend = config$segment_lineend,
+      linejoin = config$segment_linejoin,
       color = config$segment_offspring_color,
       na.rm = TRUE
     ) +
@@ -242,6 +253,8 @@ ggPedigree <- function(ped, famID = "famID",
         yend = .data$y_pos
       ),
       linewidth = config$line_width,
+      lineend = config$segment_lineend,
+      linejoin = config$segment_linejoin,
       color = config$segment_sibling_color,
       na.rm = TRUE
     )
@@ -384,7 +397,10 @@ ggPedigree <- function(ped, famID = "famID",
       ),
       linewidth = config$line_width,
       color = config$segment_self_color,
-      angle = 90,
+      lineend = config$segment_lineend,
+      linejoin = config$segment_linejoin,
+      linetype = config$segment_self_linetype,
+      angle = config$segment_self_angle,
       curvature = -0.2,
       na.rm = TRUE
     )

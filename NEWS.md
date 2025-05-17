@@ -1,3 +1,8 @@
+# ggpedigree 0.4.0
+* Allows support for character-based IDs
+* Added linejoin, lineend, segment_self_linetype, option to the `ggpedigree` functions.
+* Added unit tests for calculateConnections, calculateConnections, and ggpedigree functions.
+
 # ggpedigree 0.3.0
 * Expose more labeling options in the `ggpedigree` function to allow for more customization, including nudging labels, and changing the variable used.
 * Added option to add an outline to the pedigree plot.

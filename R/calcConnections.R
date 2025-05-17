@@ -31,11 +31,16 @@ calculateConnections <- function(ped,
   # Default configuration placeholder
   default_config <- list()
   config <- utils::modifyList(default_config, config)
+  # Capture type-safe NAs for each ID column
+  na_person <- ped$personID[NA_integer_]
 
 
   # Add spouseID if missing
   if (!all("spouseID" %in% names(ped))) {
-    ped$spouseID <- NA
+# make it match the personID type
+    # Initialize spouseID with NA of the same type as personID
+
+    ped$spouseID <- na_person
     # Attempt to infer spouse based on parenthood (not always reliable)
     # this will give you the mom that is the spouse of the dad
     # ped$spouseID <- ped$momID[match(ped$personID, ped$dadID)]
@@ -46,6 +51,9 @@ calculateConnections <- function(ped,
       ped$momID[match(ped$personID, ped$dadID)],
       ped$dadID[match(ped$personID, ped$momID)]
     )
+
+    # Ensure class matches personID exactly (in case factor, character, etc.)
+    attributes(ped$spouseID) <- attributes(ped$personID)
   }
   # Add famID if missing (used for grouping)
   if (!all("famID" %in% names(ped))) {
@@ -61,8 +69,8 @@ calculateConnections <- function(ped,
         couple_hash = symKey(.data$personID, .data$spouseID)
       ) |>
       dplyr::mutate(
-        parent_hash = gsub("NA.NA", NA, .data$parent_hash),
-        couple_hash = gsub("NA.NA", NA, .data$couple_hash)
+        parent_hash = gsub("NA.NA", NA_character_, .data$parent_hash),
+        couple_hash = gsub("NA.NA", NA_character_, .data$couple_hash)
       )
   }
 

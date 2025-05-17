@@ -52,16 +52,37 @@ processExtras <- function(ped, config = list()) {
 
   # ---- 3. Give every extra appearance a unique numeric personID -----------
 
-  ped <- ped |>
-    dplyr::arrange(.data$personID, .data$newID) |>
-    dplyr::mutate(
-      coreID = .data$personID,
-      personID = dplyr::if_else(
-        .data$extra,
-        .data$personID + .data$newID / 1000, # numeric, unique
-        .data$personID
+  # Assign a new ID to each extra appearance
+  if (is.numeric(ped$personID)||is.integer(ped$personID)||is.double(ped$personID) # numeric
+      ) {
+    ped <- ped |>
+      dplyr::arrange(.data$personID, .data$newID) |>
+      dplyr::mutate(
+        coreID = .data$personID,
+        personID = dplyr::if_else(
+          .data$extra,
+          .data$personID + .data$newID / 1000, # numeric, unique
+          .data$personID
+        )
       )
-    )
+  } else {
+    ped <- ped |>
+      dplyr::arrange(.data$personID, .data$newID) |>
+      dplyr::mutate(
+        coreID = as.character(.data$personID),
+        momID = as.character(.data$momID),
+        dadID = as.character(.data$dadID),
+        spouseID = as.character(.data$spouseID),
+        personID = as.character(.data$personID),
+        personID = dplyr::if_else(
+          .data$extra,
+          paste0(.data$personID, "_", .data$newID), # character, unique
+          .data$personID
+        ),
+        personID = gsub("NA", NA_character_, .data$personID)
+      )
+  }
+
 
   # ---- 4. Isolate duplicates for relationship resolution --------------------
   ped <- ped |> # flag anyone with extra appearances
@@ -119,8 +140,8 @@ processExtras <- function(ped, config = list()) {
       y_parent_hash = mean(c(.data$y_dad, .data$y_mom), na.rm = TRUE)
     ) |>
     dplyr::select(
-      .data$newID, .data$personID,
-      .data$x_parent_hash, .data$y_parent_hash
+      "newID", "personID",
+      "x_parent_hash", "y_parent_hash"
     )
 
 
@@ -199,7 +220,7 @@ processExtras <- function(ped, config = list()) {
   closest_dup <- function(target_core, x0, y0) {
     cand <- dup_xy[dup_xy$coreID == target_core, ]
     if (nrow(cand) == 0L) {
-      return(NA_real_)
+      return(dup_xy$coreID[NA_integer_]) # return correct NA type
     }
     # compute Manhattan (“city‑block”) distance for all candidates
     d <- computeDistance(
@@ -237,7 +258,7 @@ processExtras <- function(ped, config = list()) {
         "{col}" := {
           tgt <- .data[[col]]
           if (is.na(tgt)) {
-            NA_real_
+            tgt[NA_integer_] # return correct NA type
           } else {
             closest_dup(tgt, .data$x_pos, .data$y_pos)
           }
@@ -245,11 +266,6 @@ processExtras <- function(ped, config = list()) {
       ) |>
       dplyr::ungroup()
   }
-
-
-
-
-
 
   # remove parent ids from all but the closest coreID,
   # if there's no choice to be made, then keep existing momID
@@ -261,32 +277,28 @@ processExtras <- function(ped, config = list()) {
     dplyr::mutate(
       momID = dplyr::case_when(
         .data$personID == .data$parent_choice ~ .data$momID,
-        !is.na(.data$parent_choice) ~ NA_real_,
+        !is.na(.data$parent_choice) ~ ped$momID[NA_integer_],
         TRUE ~ .data$momID
       ),
       dadID = dplyr::case_when(
         .data$personID == .data$parent_choice ~ .data$dadID,
-        !is.na(.data$parent_choice) ~ NA_real_,
+        !is.na(.data$parent_choice) ~ ped$dadID[NA_integer_],
         TRUE ~ .data$dadID
       ),
       spouseID = dplyr::case_when(
         .data$personID == .data$spouse_choice ~ .data$spouseID,
-        !is.na(.data$spouse_choice) ~ NA_real_,
+        !is.na(.data$spouse_choice) ~ ped$spouseID[NA_integer_],
         TRUE ~ .data$spouseID
       )
     ) |>
     dplyr::select(
-      -.data$parent_choice, -.data$spouse_choice,
+      -"parent_choice", -"spouse_choice",
       -dplyr::starts_with("newID")
     )
   ped <- ped |>
     relink("spouseID") |>
     relink("momID") |>
     relink("dadID")
-
-
-  #
-
 
   # rehash
   ped <- ped |>
@@ -295,8 +307,8 @@ processExtras <- function(ped, config = list()) {
       couple_hash = symKey(.data$personID, .data$spouseID)
     ) |>
     dplyr::mutate(
-      parent_hash = gsub("NA.NA", NA_real_, .data$parent_hash),
-      couple_hash = gsub("NA.NA", NA_real_, .data$couple_hash)
+      parent_hash = gsub("NA.NA", NA_character_, .data$parent_hash),
+      couple_hash = gsub("NA.NA", NA_character_, .data$couple_hash)
     )
   # ---- 6. remove duplicates and return ------------------------------------
 
@@ -314,15 +326,6 @@ processExtras <- function(ped, config = list()) {
       x_otherself = .data$x_pos_other,
       y_otherself = .data$y_pos_other
     ) |>
-    # dplyr::select(
-    #    .data$personID,
-    #    #      .data$coreID,
-    #    .data$x_pos,
-    #    .data$y_pos,
-    #    .data$x_otherself,
-    #   .data$y_otherself,
-    #
-    #  ) |>
     unique()
 
 

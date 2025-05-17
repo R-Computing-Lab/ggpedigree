@@ -1,6 +1,6 @@
 Package: ggpedigree
 Title: ggplot2 Extensions for Pedigree Diagrams
-Version: 0.3.0
+Version: 0.4.0
 Date/Publication: 05.16.2025
 Authors@R: c(
     person("S. Mason", "Garrison", email= "garrissm@wfu.edu", role = c("aut", "cre", "cph"),
