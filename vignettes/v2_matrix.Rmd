@@ -47,14 +47,14 @@ Here we show how to compute additive genetic and mitochondrial relatedness matri
 
 ```{r}
 
-sumped <- summarizePedigrees(ds, famID = "famID", personID = "personID",  nbiggest = 5)
+sumped <- summarizePedigrees(redsquirrels, famID = "famID", personID = "personID",  nbiggest = 5)
 
 
 # Set target family for visualization
 fam_filter <- sumped$biggest_families$famID[3]
 
 # Filter for the largest family, recode sex if needed
-ped_filtered <- ds %>%
+ped_filtered <- redsquirrels %>%
   recodeSex(code_female = "F") %>%
   filter(famID == fam_filter)
 
@@ -64,11 +64,11 @@ mit_mat <- ped2mit(ped_filtered, isChild_method = "partialparent", sparse = FALS
 ```
 
 
-Visualizing Relatedness Matrices
+# Visualizing Relatedness Matrices
 The ggRelatednessMatrix function plots a relatedness matrix as a heatmap, with options for clustering and color customization. This approach mirrors the style of plots produced in the original red squirrel data analysis.
 
 
-# Plot additive genetic relatedness
+## Plot additive genetic relatedness
 
 ```{r}
 p_add <- ggRelatednessMatrix(
@@ -85,7 +85,7 @@ p_add
 ```
 
 
-# Plot mitochondrial relatedness
+## Plot mitochondrial relatedness
 
 ```{r}
 p_mit <- ggRelatednessMatrix(
@@ -101,7 +101,8 @@ p_mit <- ggRelatednessMatrix(
 p_mit
 ```
 
-Customization Options
+# Customization Options
+
 You can adjust clustering, color scales, labels, and more using the config list. For example, to turn off clustering:
 
 ```{r}
@@ -112,7 +113,7 @@ p_add_noclust <- ggRelatednessMatrix(
 p_add_noclust
 ```
 
-Comparison to Base R and Other Approaches
+# Comparison to Base R and Other Approaches
 For comparison, here is how the same matrix would be plotted in base R, as in earlier squirrel analyses:
 
 ```{r}
