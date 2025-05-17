@@ -39,3 +39,34 @@ test_that("makeSymmetricKey handles special characters consistently", {
   expect_equal(makeSymmetricKey("💡", "💬"), "💡.💬")
   expect_equal(makeSymmetricKey("💬", "💡"), "💡.💬")
 })
+
+
+test_that("calculateCoordinates respects ped_align and ped_packed flags", {
+  ped <- data.frame(
+    ID = c("A", "B", "C", "D", "X"),
+    momID = c(NA, "A", "A", "C", NA),
+    dadID = c(NA, "X", "X", "B", NA),
+    spouseID = c("X", "C", "B", NA, "A"),
+    sex = c("F", "M", "F", "F", "M")
+  )
+
+  coords1 <- calculateCoordinates(ped, config = list(ped_align = TRUE, ped_packed = TRUE))
+
+
+  midsbydadid <- getMidpoints(data=coords1, group_vars=c("dadID"), x_vars="x_pos", y_vars="y_pos",
+               x_out="x_midpoint", y_out="y_midpoint")
+  expect_equal(length(unique(ped$dadID[!is.na(ped$dadID)])), # all non-missing dadIDs
+               length(midsbydadid$dadID))
+
+  midsbyspid <- getMidpoints(data=coords1, group_vars=c("spouseID"), x_vars="x_pos", y_vars="y_pos",
+                             x_out="x_midpoint", y_out="y_midpoint",method = "median")
+  expect_equal(length(unique(ped$spouseID[!is.na(ped$spouseID)])), # all non-missing spouseIDs
+               length(midsbyspid$spouseID))
+
+  midsbymomid <- getMidpoints(data=coords1, group_vars=c("momID"), x_vars="x_pos", y_vars="y_pos",
+                             x_out="x_midpoint", y_out="y_midpoint",method = "weighted_mean")
+  expect_equal(length(unique(ped$momID[!is.na(ped$momID)])), # all non-missing momids
+               length(midsbymomid$momID))
+
+
+})
