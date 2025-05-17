@@ -8,3 +8,4 @@ docs
 R/plot.ped.R
 R/plot.ped.X
 CRAN-SUBMISSION
+data-raw/catlogo.svg
