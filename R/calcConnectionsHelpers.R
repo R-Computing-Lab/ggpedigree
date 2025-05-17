@@ -14,7 +14,11 @@
 #' @param p Numeric. The order of the Minkowski distance. If NULL, defaults to 2 for Euclidean and 1 for Manhattan. If
 #' Minkowski method is used, p should be specified.
 
-computeDistance <- function(method = "euclidean", x1, y1, x2, y2,
+computeDistance <- function(method = "euclidean",
+                            x1,
+                            y1,
+                            x2,
+                            y2,
                             p = NULL) {
   method <- tolower(method)
 
@@ -22,7 +26,9 @@ computeDistance <- function(method = "euclidean", x1, y1, x2, y2,
     Min_p <- switch(method,
       euclidean = 2,
       cityblock = 1,
-      stop("Invalid distance method. Choose from 'euclidean', 'cityblock', or specify p.")
+      stop(
+        "Invalid distance method. Choose from 'euclidean', 'cityblock', or specify p."
+      )
     )
   } else {
     Min_p <- p
@@ -57,17 +63,22 @@ computeDistance <- function(method = "euclidean", x1, y1, x2, y2,
 #' @return A `data.frame` grouped by `group_vars` with new columns `x_out` and `y_out` containing midpoint coordinates.
 #' @keywords internal
 
-getMidpoints <- function(data, group_vars,
-                         x_vars, y_vars,
-                         x_out, y_out, method = "mean",
+getMidpoints <- function(data,
+                         group_vars,
+                         x_vars,
+                         y_vars,
+                         x_out,
+                         y_out,
+                         method = "mean",
                          require_non_missing = group_vars) {
   # -----
   # Filter for complete data if requested
   if (!is.null(require_non_missing)) {
     data <- data |>
-      dplyr::filter(
-        dplyr::if_all(!!!rlang::syms(require_non_missing), ~ !is.na(.))
-      )
+      dplyr::filter(dplyr::if_all(
+        !!!rlang::syms(require_non_missing),
+        ~ !is.na(.)
+      ))
   }
 
   # -----
@@ -76,11 +87,9 @@ getMidpoints <- function(data, group_vars,
 
   if (method == "mean") {
     # Average all xs and Average of all y values
-
     data |>
       dplyr::group_by(!!!rlang::syms(group_vars)) |>
-      dplyr::summarize(
-        !!x_out := mean(c(!!!rlang::syms(x_vars)), na.rm = TRUE),
+      dplyr::summarize(!!x_out := mean(c(!!!rlang::syms(x_vars)), na.rm = TRUE),
         !!y_out := mean(c(!!!rlang::syms(y_vars)), na.rm = TRUE),
         .groups = "drop"
       )
@@ -109,27 +118,30 @@ getMidpoints <- function(data, group_vars,
     data |>
       dplyr::group_by(!!!rlang::syms(group_vars)) |>
       dplyr::summarize(
-        !!x_out := mean(c(
-          dplyr::first(.data[[x_vars[1]]]),
-          dplyr::first(.data[[x_vars[2]]])
-        ), na.rm = TRUE),
-        !!y_out := mean(c(
-          dplyr::first(.data[[y_vars[1]]]),
-          dplyr::first(.data[[y_vars[2]]])
-        ), na.rm = TRUE),
+        !!x_out := mean(
+          c(
+            dplyr::first(.data[[x_vars[1]]]),
+            dplyr::first(.data[[x_vars[2]]])
+          ),
+          na.rm = TRUE
+        ),
+        !!y_out := mean(
+          c(
+            dplyr::first(.data[[y_vars[1]]]),
+            dplyr::first(.data[[y_vars[2]]])
+          ),
+          na.rm = TRUE
+        ),
         .groups = "drop"
       )
   } else if (method == "meanxfirst") {
     # Use the mean of all x coordinates and the first y coordinate
     data |>
       dplyr::group_by(!!!rlang::syms(group_vars)) |>
-      dplyr::summarize(
-        !!x_out := mean(c(!!!rlang::syms(x_vars)), na.rm = TRUE),
-        !!y_out := mean(c(
-          dplyr::first(.data[[y_vars[1]]]),
-          dplyr::first(.data[[y_vars[2]]])
-        ), na.rm = TRUE),
-        .groups = "drop"
+      dplyr::summarize(!!x_out := mean(c(!!!rlang::syms(x_vars)), na.rm = TRUE), !!y_out := mean(c(
+        dplyr::first(.data[[y_vars[1]]]), dplyr::first(.data[[y_vars[2]]])
+      ), na.rm = TRUE),
+      .groups = "drop"
       )
   } else if (method == "meanyfirst") {
     # First x, mean of all y
@@ -137,10 +149,8 @@ getMidpoints <- function(data, group_vars,
       dplyr::group_by(!!!rlang::syms(group_vars)) |>
       dplyr::summarize(
         !!x_out := mean(c(
-          dplyr::first(.data[[x_vars[1]]]),
-          dplyr::first(.data[[x_vars[2]]])
-        ), na.rm = TRUE),
-        !!y_out := mean(c(!!!rlang::syms(y_vars)), na.rm = TRUE),
+          dplyr::first(.data[[x_vars[1]]]), dplyr::first(.data[[x_vars[2]]])
+        ), na.rm = TRUE), !!y_out := mean(c(!!!rlang::syms(y_vars)), na.rm = TRUE),
         .groups = "drop"
       )
   } else {
@@ -173,7 +183,11 @@ getMidpoints <- function(data, group_vars,
 #' @keywords internal
 
 
-getRelativeCoordinates <- function(ped, connections, relativeIDvar, x_name, y_name,
+getRelativeCoordinates <- function(ped,
+                                   connections,
+                                   relativeIDvar,
+                                   x_name,
+                                   y_name,
                                    #  relationship = "one-to-one",
                                    personID = "personID",
                                    multiple = "all",
@@ -199,8 +213,7 @@ getRelativeCoordinates <- function(ped, connections, relativeIDvar, x_name, y_na
   if ("newID" %in% names(ped)) {
     rel_connections <- rel_connections |>
       dplyr::select(
-        !!personID,
-        "newID",
+        !!personID, "newID",
         !!relativeIDvar,
         !!x_name,
         !!y_name
@@ -220,11 +233,44 @@ getRelativeCoordinates <- function(ped, connections, relativeIDvar, x_name, y_na
 
   return(rel_connections)
 }
+#' Generate a symmetric key for two IDs
+#'
+#' This function generates a symmetric key for two IDs, ensuring that the order of the IDs does not matter.
+#'
+#' @param id1 First ID
+#' @param id2 Second ID
+#' @param sep Separator to use between the IDs
+#'
+#' @return A string representing the symmetric key
+#' @keywords internal
 
+makeSymmetricKey <- function(id1, id2, sep = ".") {
+  if (missing(id1) || missing(id2)) {
+    stop("Both id1 and id2 must be provided.")
+  }
+  # Require same type
+  if (mode(id1) != mode(id2)) {
+ # if they're both a n
+    if (mode(id1)  %in% c("integer", "double") &&
+        mode(id2) %in% c("integer", "double")) {
+      # Numeric comparison
+    } else {
+      stop(paste0("id1 and id2 must be of the same type.",
+                  " id1 is ", mode(id1), " and id2 is ", mode(id2)))
+    }
+  }
+  if(is.character(id1) || is.character(id2)) {
+  #  byte-wise comparison
+    # Assign stable, reproducible numeric codes to each string
+    levels_all <- sort(unique(c(id1, id2)))
+    id1_num <- match(id1, levels_all)
+    id2_num <- match(id2, levels_all)
 
-symKey <- function(id1, id2, sep = ".") {
-  dplyr::if_else(id1 < id2,
-    paste0(id1, sep, id2),
-    paste0(id2, sep, id1)
-  )
+  } else {
+    # Numeric comparison
+    id1_num <- as.numeric(id1)
+    id2_num <- as.numeric(id2)
+  }
+  dplyr::if_else(id1_num<id2_num, paste0(id1, sep, id2),
+                 paste0(id2, sep, id1))
 }

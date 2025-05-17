@@ -26,7 +26,7 @@ options(citation.bibtex.max = 0)
 ![License](https://img.shields.io/badge/License-GPL_v3-blue.svg)
 <!-- badges: end -->
 
-The ggpedigree R package complements the BGmisc package by providing a set of functions for visualizing pedigree data using ggplot2 and plotly. It is designed to work seamlessly with the BGmisc package, which provides tools for simulating, manipulating, and modeling pedigree data. It extends the plotting functionality of the `kinship2` package, which is widely used for pedigree analysis in R.
+The `ggpedigree` R package complements the BGmisc package by providing a set of functions for visualizing pedigree data using `ggplot2` and `plotly`. It is designed to work seamlessly with the `BGmisc` package, which provides tools for simulating, manipulating, and modeling pedigree data. It extends the plotting functionality of the `kinship2` package, which is widely used for pedigree analysis in R.
 
 ## Installation
 
@@ -36,7 +36,7 @@ You can install the released version of ggpedigree from [CRAN](https://cran.r-pr
 install.packages("ggpedigree")
 ```
 
-To install the development version of ggpedigree from [GitHub](https://github.com/) use:
+To install the development version of `ggpedigree` from [GitHub](https://github.com/) use:
 
 ```r
 # install.packages("devtools")

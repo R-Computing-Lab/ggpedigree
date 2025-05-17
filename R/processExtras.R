@@ -199,8 +199,7 @@ processExtras <- function(ped, config = list()) {
       ) |>
       dplyr::ungroup() |>
       dplyr::select("coreID", "personID") |>
-      dplyr::rename(parent_choice  = "personID")
-
+      dplyr::rename(parent_choice = "personID")
   } else {
     # if there are spouseID == momID or spouseID == dadID, then parent choice needs to be the 2nd closest
     parent_winner <- extras |>
@@ -213,7 +212,7 @@ processExtras <- function(ped, config = list()) {
       dplyr::filter(.data$rank == .data$pick_rank) |>
       dplyr::ungroup() |>
       dplyr::select("coreID", "personID") |>
-      dplyr::rename(parent_choice  = "personID")
+      dplyr::rename(parent_choice = "personID")
   }
   # ---- 7. row‑wise relink using nearest appearance -------------------------
 
@@ -307,8 +306,8 @@ processExtras <- function(ped, config = list()) {
   # rehash
   ped <- ped |>
     dplyr::mutate(
-      parent_hash = symKey(.data$momID, .data$dadID),
-      couple_hash = symKey(.data$personID, .data$spouseID)
+      parent_hash = makeSymmetricKey(.data$momID, .data$dadID),
+      couple_hash = makeSymmetricKey(.data$personID, .data$spouseID)
     ) |>
     dplyr::mutate(
       parent_hash = gsub("NA.NA", NA_character_, .data$parent_hash),

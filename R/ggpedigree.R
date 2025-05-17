@@ -63,7 +63,7 @@ ggPedigree <- function(ped, famID = "famID",
     include_labels = TRUE,
     label_col = "personID",
     label_max_overlaps = 15,
-    label_method = "ggrepel",
+    label_method = "ggrepel", # "geom_label" or "geom_text"
     label_nudge_x = 0,
     label_nudge_y = -.10,
     label_segment_color = NA,
@@ -352,8 +352,8 @@ ggPedigree <- function(ped, famID = "famID",
     otherself <- plot_connections$self_coords |>
       dplyr::filter(!is.na(.data$x_otherself)) |>
       dplyr::mutate(
-        otherself_xkey = symKey(.data$x_otherself, .data$x_pos) # ,
-        #  otherself_ykey = symKey(.data$y_otherself, .data$y_pos)
+        otherself_xkey = makeSymmetricKey(.data$x_otherself, .data$x_pos) # ,
+        #  otherself_ykey = makeSymmetricKey(.data$y_otherself, .data$y_pos)
       ) |>
       # unique combinations of x_otherself and x_pos and y_otherself and y_pos
       dplyr::distinct(.data$otherself_xkey, .keep_all = TRUE)
@@ -430,9 +430,6 @@ ggPedigree <- function(ped, famID = "famID",
 #' @export
 ggpedigree <- ggPedigree
 
-#' @rdname ggPedigree
-#' @export
-ggped <- ggPedigree
 
 #' @title Add Scales to ggplot Pedigree Plot
 #' @inheritParams ggPedigree
@@ -478,7 +475,8 @@ ggped <- ggPedigree
 #' @keywords internal
 #'
 .addLabels <- function(p, config) {
-  if (config$label_method == "ggrepel") {
+  if (config$label_method %in% c("geom_text_repel", "ggrepel", "geom_label_repel")
+      ) {
     p <- p +
       ggrepel::geom_text_repel(ggplot2::aes(label = !!rlang::sym(config$label_col)),
         nudge_y = config$label_nudge_y * config$generation_height,

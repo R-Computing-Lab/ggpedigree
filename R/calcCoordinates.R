@@ -28,9 +28,12 @@ utils::globalVariables(c(":="))
 #'
 #' @export
 
-calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
+calculateCoordinates <- function(ped,
+                                 personID = "ID",
+                                 momID = "momID",
                                  dadID = "dadID",
-                                 spouseID = "spouseID", sexVar = "sex",
+                                 spouseID = "spouseID",
+                                 sexVar = "sex",
                                  code_male = NULL,
                                  config = list()) {
   if (!inherits(ped, "data.frame")) {
@@ -38,7 +41,9 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
   }
 
   if (!all(c(personID, momID, dadID) %in% names(ped))) {
-    stop("At least one of the required ID variables (personID, momID, dadID) was not found in `ped`")
+    stop(
+      "At least one of the required ID variables (personID, momID, dadID) was not found in `ped`"
+    )
   }
 
   # -----
@@ -55,9 +60,7 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
   config <- utils::modifyList(default_config, config)
 
   # Recode sex values in case non-standard codes are used (e.g., "M"/"F")
-  ped_recode <- BGmisc::recodeSex(ped,
-    code_male = code_male
-  )
+  ped_recode <- BGmisc::recodeSex(ped, code_male = code_male)
 
   # Construct a pedigree object to compute layout coordinates
   ped_ped <- kinship2::pedigree(
@@ -66,25 +69,27 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
     momid = ped[[momID]],
     sex = ped_recode[[sexVar]],
   )
-  #
+
   if ("hints" %in% names(config)) {
     # Check if hints are provided
     autohint <- tryCatch(
-      kinship2::autohint(ped_ped, config$hints,
+      kinship2::autohint(
+        ped_ped,
+        config$hints,
         align = config$ped_align,
         packed = config$ped_packed
       ),
       error = function(e) {
         warning("Your hints caused an error and were not used. Using default hints instead.")
-        kinship2::autohint(
-          ped_ped,
+        kinship2::autohint(ped_ped,
           align = config$ped_align,
           packed = config$ped_packed
         )
       }
     )
     # Align pedigree for plotting
-    pos <- kinship2::align.pedigree(ped_ped,
+    pos <- kinship2::align.pedigree(
+      ped_ped,
       packed = config$ped_packed,
       align = config$ped_align,
       width = config$ped_width,
@@ -94,10 +99,9 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
     # -----
     # Extract layout information
     # -----
-
-
     # Align pedigree for plotting
-    pos <- kinship2::align.pedigree(ped_ped,
+    pos <- kinship2::align.pedigree(
+      ped_ped,
       packed = config$ped_packed,
       align = config$ped_align,
       width = config$ped_width
@@ -109,17 +113,12 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
   nid_vector <- nid_vector[nid_vector != 0] # Remove zero entries (empty cells)
 
 
-  # Flatten coordinate matrix
-  # pos_vector <- as.vector(pos$pos)
-  #  spouse_vector <- as.vector(pos$spouse)
-
 
   # Initialize coordinate columns in the data frame
   ped$nid <- NA
   ped$x_pos <- NA
   ped$x_order <- NA
   ped$y_order <- NA
-
 
   # Determine matrix indices for all non-zero entries
   nid_pos <- which(pos$nid != 0, arr.ind = TRUE)
@@ -137,7 +136,6 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
   # 2 = subject plotted to the immediate right is an inbred spouse
   # 0 = not a spouse
 
-
   # Populate coordinates from nid positions
   for (i in seq_along(nid_vector)) {
     y_coords[i] <- nid_pos[i, "row"]
@@ -149,8 +147,6 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
   # -----
   # Fill in the data frame with coordinates
   # -----
-
-
   # Match each individual to their primary layout position
   tmp <- match(1:length(ped_ped$id), nid_vector)
 
@@ -171,11 +167,10 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
   duplicate_nids <- names(appearance_counts[appearance_counts > 1]) |>
     as.integer()
 
-  # Initialize list to collect extra rows
-  extra_rows <- list()
+  # Prepare flat list of (nid_val, idx) for all extra appearances
+  extra_info <- list()
 
   # Create duplicate rows for extra appearances
-
   # For each duplicate nid
   for (nid_val in duplicate_nids) {
     # All appearance positions
@@ -188,20 +183,36 @@ calculateCoordinates <- function(ped, personID = "ID", momID = "momID",
     # Extra indices are the appearances NOT used by match()
     extra_indices <- setdiff(appearance_indices, used_index)
 
-    for (idx in extra_indices) {
-      new_row <- ped[ped[[personID]] == ped_ped$id[nid_val], , drop = FALSE]
+    if (length(extra_indices) > 0) {
+      extra_info[[as.character(nid_val)]] <- data.frame(
+        nid = nid_val,
+        idx = extra_indices
+      )
+    }
+  }
+  if (length(extra_info) > 0) {
+  # Bind into single data.frame of all extras
+  extra_df <- do.call(rbind, extra_info)
+  # Initialize list to collect extra rows
+  extra_rows <- vector("list", nrow(extra_df))
+  # Single loop over the flat index/nid map
 
+  for (i in seq_len(nrow(extra_df))) {
+      idx <- extra_df$idx[i]
+      nid_val <- extra_df$nid[i]
+
+      new_row <- ped[ped[[personID]] == ped_ped$id[nid_val], , drop = FALSE]
       new_row$nid <- nid_val
       new_row$x_order <- x_coords[idx]
       new_row$y_order <- y_coords[idx]
       new_row$x_pos <- x_pos[idx]
       new_row$y_pos <- y_coords[idx]
 
-      extra_rows[[length(extra_rows) + 1]] <- new_row
+      extra_rows[[i]] <- new_row
     }
+} else {
+    extra_rows <- list()
   }
-
-
   # Combine original and extra rows, marking extras
   if (length(extra_rows) > 0) {
     ped_extra <- do.call(rbind, extra_rows)

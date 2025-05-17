@@ -19,12 +19,12 @@ branch](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-de
 ![License](https://img.shields.io/badge/License-GPL_v3-blue.svg)
 <!-- badges: end -->
 
-The ggpedigree R package complements the BGmisc package by providing a
-set of functions for visualizing pedigree data using ggplot2. It is
-designed to work seamlessly with the BGmisc package, which provides
-tools for simulating, manipulating, and modeling pedigree data. It
-extends the plotting functionality of the `kinship2` package, which is
-widely used for pedigree analysis in R.
+The `ggpedigree` R package complements the BGmisc package by providing a
+set of functions for visualizing pedigree data using `ggplot2` and
+`plotly`. It is designed to work seamlessly with the `BGmisc` package,
+which provides tools for simulating, manipulating, and modeling pedigree
+data. It extends the plotting functionality of the `kinship2` package,
+which is widely used for pedigree analysis in R.
 
 ## Installation
 
@@ -35,7 +35,7 @@ You can install the released version of ggpedigree from
 install.packages("ggpedigree")
 ```
 
-To install the development version of ggpedigree from
+To install the development version of `ggpedigree` from
 [GitHub](https://github.com/) use:
 
 ``` r
@@ -51,7 +51,7 @@ cite the following:
     citation(package = "ggpedigree")
 
 Garrison S (05.16.2025). *ggpedigree: ggplot2 Extensions for Pedigree
-Diagrams*. R package version 0.3.0,
+Diagrams*. R package version 0.4.0,
 <https://github.com/R-Computing-Lab/ggpedigree/>.
 
 A BibTeX entry for LaTeX users is
@@ -60,7 +60,7 @@ A BibTeX entry for LaTeX users is
       title = {ggpedigree: ggplot2 Extensions for Pedigree Diagrams},
       author = {S. Mason Garrison},
       year = {05.16.2025},
-      note = {R package version 0.3.0},
+      note = {R package version 0.4.0},
       url = {https://github.com/R-Computing-Lab/ggpedigree/},
     }
 
