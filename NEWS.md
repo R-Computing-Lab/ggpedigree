@@ -3,6 +3,7 @@
 * Added linejoin, lineend, segment_self_linetype, option to the `ggpedigree` functions.
 * Added unit tests for calculateConnections, calculateConnections, and ggpedigree functions.
 * Refactored ggpedigree function with .addScales and .addLabels functions to improve readability and maintainability.
+* Renamed symKey to makeSymmetricKey, extended it to support character-based IDs, and added unit tests.
 
 # ggpedigree 0.3.0
 Submitted to CRAN on 2025-05-16

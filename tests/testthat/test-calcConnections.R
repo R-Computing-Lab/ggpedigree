@@ -160,7 +160,7 @@ test_that("calculateConnections computes parental coordinates correctly", {
     personID = c("A", "B", "C"),
     momID = c(NA, NA, "A"),
     dadID = c(NA, NA, "B"),
-    spouseID = c(NA, NA, NA),
+    spouseID = c(NA_character_, NA_character_, NA_character_),
     x_pos = c(1, 3, 2), # layout positions
     y_pos = c(1, 1, 2),
     extra = FALSE

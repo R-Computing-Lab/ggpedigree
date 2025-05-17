@@ -65,8 +65,8 @@ calculateConnections <- function(ped,
   if (!all("parent_hash" %in% names(ped))) {
     ped <- ped |>
       dplyr::mutate(
-        parent_hash = symKey(.data$momID, .data$dadID),
-        couple_hash = symKey(.data$personID, .data$spouseID)
+        parent_hash = makeSymmetricKey(.data$momID, .data$dadID),
+        couple_hash = makeSymmetricKey(.data$personID, .data$spouseID)
       ) |>
       dplyr::mutate(
         parent_hash = gsub("NA.NA", NA_character_, .data$parent_hash),
