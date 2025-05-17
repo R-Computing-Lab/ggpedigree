@@ -21,7 +21,8 @@ Imports:
     rlang,
     dplyr,
     stringr,
-    utils
+    utils,
+    plotly
 Suggests: 
     EasyMx,
     viridis,
@@ -32,6 +33,7 @@ Suggests:
     NlsyLinks,
     rmarkdown,
     tibble,
+    htmlwidgets,
     testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr

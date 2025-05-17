@@ -4,6 +4,7 @@
 * Added unit tests for calculateConnections, calculateConnections, and ggpedigree functions.
 * Refactored ggpedigree function with .addScales and .addLabels functions to improve readability and maintainability.
 * Renamed symKey to makeSymmetricKey, extended it to support character-based IDs, and added unit tests.
+* Added a new function `ggPedigreeInteractive` to create interactive pedigree plots using `plotly`. Added a vignette to demonstrate its usage.
 
 # ggpedigree 0.3.0
 Submitted to CRAN on 2025-05-16

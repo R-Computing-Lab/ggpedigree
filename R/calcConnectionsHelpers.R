@@ -253,7 +253,7 @@ makeSymmetricKey <- function(id1, id2, sep = ".") {
  # if they're both a n
     if (mode(id1)  %in% c("integer", "double") &&
         mode(id2) %in% c("integer", "double")) {
-        next
+      # Numeric comparison
     } else {
       stop(paste0("id1 and id2 must be of the same type.",
                   " id1 is ", mode(id1), " and id2 is ", mode(id2)))
