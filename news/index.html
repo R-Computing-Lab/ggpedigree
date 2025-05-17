@@ -18,7 +18,8 @@
       <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/plots.html">Plotting pedigrees with `ggPedigree()`</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/interactiveplots.html">Interactive Pedigree Plotting with `ggPedigreeInteractive()`</a></li>
+    <li><a class="dropdown-item" href="../articles/plots.html">Plotting pedigrees with `ggPedigree()`</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -42,6 +43,8 @@
 <li>Added linejoin, lineend, segment_self_linetype, option to the <code>ggpedigree</code> functions.</li>
 <li>Added unit tests for calculateConnections, calculateConnections, and ggpedigree functions.</li>
 <li>Refactored ggpedigree function with .addScales and .addLabels functions to improve readability and maintainability.</li>
+<li>Renamed symKey to makeSymmetricKey, extended it to support character-based IDs, and added unit tests.</li>
+<li>Added a new function <code>ggPedigreeInteractive</code> to create interactive pedigree plots using <code>plotly</code>. Added a vignette to demonstrate its usage.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.0" id="ggpedigree-030">ggpedigree 0.3.0<a class="anchor" aria-label="anchor" href="#ggpedigree-030"></a></h2>
