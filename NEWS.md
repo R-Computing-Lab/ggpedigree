@@ -5,6 +5,7 @@
 * Refactored ggpedigree function with .addScales and .addLabels functions to improve readability and maintainability.
 
 # ggpedigree 0.3.0
+Submitted to CRAN on 2025-05-16
 * Expose more labeling options in the `ggpedigree` function to allow for more customization, including nudging labels, and changing the variable used.
 * Added option to add an outline to the pedigree plot.
 * Made the config options more consistent and user-friendly.

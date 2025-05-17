@@ -145,7 +145,9 @@ test_that("calculateConnections respects duplicated appearances (extra)", {
   duplicate_row$extra <- TRUE
   ped <- rbind(ped, duplicate_row)
 
-  conn_out <- calculateConnections(ped)
+  # creates a many-to-many relationship
+  expect_warning(calculateConnections(ped))
+  conn_out <- calculateConnections(ped) %>% suppressWarnings()
   conns <- conn_out$connections
 
   expect_true(any(conns$personID == "A"))
@@ -241,8 +243,8 @@ test_that("calculateConnections resolves 'extra' rows properly", {
     y_pos = c(1, 1),
     extra = c(FALSE, TRUE)
   )
-
-  result <- calculateConnections(ped)
+  expect_warning(calculateConnections(ped))
+  result <- calculateConnections(ped) %>% suppressWarnings()
   conns <- result$connections
   # at the connections stage its flagged as extra true
   expect_true(all(conns$extra == TRUE))

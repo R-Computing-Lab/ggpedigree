@@ -48,7 +48,7 @@ processExtras <- function(ped, config = list()) {
       dadSpouse = dplyr::if_else(!is.na(.data$spouseID) & !is.na(.data$dadID) & (.data$spouseID == .data$dadID), TRUE, FALSE),
       total_blue = .data$dadSpouse | .data$momSpouse
     ) |>
-    dplyr::select(-.data$dadSpouse, -.data$momSpouse)
+    dplyr::select(-"dadSpouse", -"momSpouse")
 
   # ---- 3. Give every extra appearance a unique numeric personID -----------
 
@@ -186,7 +186,8 @@ processExtras <- function(ped, config = list()) {
     dplyr::group_by(.data$coreID, .data$spouseID) |>
     dplyr::slice_min(.data$dist_spouse, n = 1, with_ties = FALSE) |>
     dplyr::ungroup() |>
-    dplyr::select("coreID", spouse_choice = .data$personID)
+    dplyr::select("coreID", "personID") |>
+    dplyr::rename(spouse_choice = "personID")
 
 
   if (sum(ped$total_blue, na.rm = TRUE) == 0) {
@@ -197,7 +198,9 @@ processExtras <- function(ped, config = list()) {
         with_ties = FALSE
       ) |>
       dplyr::ungroup() |>
-      dplyr::select("coreID", parent_choice = .data$personID)
+      dplyr::select("coreID", "personID") |>
+      dplyr::rename(parent_choice  = "personID")
+
   } else {
     # if there are spouseID == momID or spouseID == dadID, then parent choice needs to be the 2nd closest
     parent_winner <- extras |>
@@ -209,7 +212,8 @@ processExtras <- function(ped, config = list()) {
       ) |>
       dplyr::filter(.data$rank == .data$pick_rank) |>
       dplyr::ungroup() |>
-      dplyr::select("coreID", parent_choice = .data$personID)
+      dplyr::select("coreID", "personID") |>
+      dplyr::rename(parent_choice  = "personID")
   }
   # ---- 7. row‑wise relink using nearest appearance -------------------------
 
@@ -310,7 +314,7 @@ processExtras <- function(ped, config = list()) {
       parent_hash = gsub("NA.NA", NA_character_, .data$parent_hash),
       couple_hash = gsub("NA.NA", NA_character_, .data$couple_hash)
     )
-  # ---- 6. remove duplicates and return ------------------------------------
+  # ---- 8. remove duplicates and return ------------------------------------
 
   # Coordinates of the individual's other appearance ("self")
   self_coords <- extras |>
