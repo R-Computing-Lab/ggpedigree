@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   v0_plots: v0_plots.html
   v1_interactiveplots: v1_interactiveplots.html
-last_built: 2025-05-17T17:55Z
+last_built: 2025-05-17T22:07Z
 urls:
   reference: https://r-computing-lab.github.io/ggpedigree/reference
   article: https://r-computing-lab.github.io/ggpedigree/articles
