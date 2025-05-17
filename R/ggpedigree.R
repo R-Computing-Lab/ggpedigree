@@ -96,7 +96,8 @@ ggPedigree <- function(ped, famID = "famID",
     status_affected_lab = "affected",
     status_affected_shape = 4,
     status_unaffected_lab = "unaffected",
-    status_vals = c(1, 0)
+    status_vals = c(1, 0),
+    color_palette = c("white", "orange", "red")
     #  hints = NULL
   )
 
