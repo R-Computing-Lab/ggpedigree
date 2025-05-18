@@ -69,8 +69,7 @@ ggPedigreeInteractive(
 
 `ggPedigreeInteractive()` accepts the same config list as `ggPedigree()`,
 plus the tooltip_cols argument for hover text.
-Below we enable node labels, nudge them upward a little, colour by sex, and show
-both the `personID` and name fields in the hover:
+Below we enable node labels, nudge them upward a little, color by sex, and show both the `personID` and name fields in the hover:
 
 ```{r customize-aesthetics}
 plt <- ggPedigreeInteractive(
@@ -93,6 +92,7 @@ plt
 # Further customisation
 
 ## Adding tooltips
+
 Because the function returns a Plotly object, you can layer additional modifications on top:
 
 ```{r further-customization} 

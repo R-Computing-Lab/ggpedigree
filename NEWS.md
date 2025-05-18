@@ -1,5 +1,5 @@
 # ggpedigree 0.4.0
-
+## in progress
 * Allows support for character-based IDs
 * Added linejoin, lineend, segment_self_linetype, option to the `ggpedigree` functions.
 * Added unit tests for calculateConnections, calculateConnections, and ggpedigree functions.
@@ -9,6 +9,8 @@
 * Added redsquirrels dataset to the package for testing and examples.
 * Added a new function `ggRelatednessMatrix` to create heatmaps of relatedness matrices.
 * Added new vignette to demonstrate ggRelatednessMatrix
+* Added graphic tests for `ggpedigree`, ggPedigreeInteractive, and ggRelatednessMatrix functions.
+
 
 # ggpedigree 0.3.0
 Submitted to CRAN on 2025-05-16

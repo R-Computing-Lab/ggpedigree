@@ -80,3 +80,139 @@ test_that("calculateCoordinates respects ped_align and ped_packed flags", {
     length(midsbymomid$momID)
   )
 })
+
+test_that("computeDistances behaves in small data", {
+  ped <- data.frame(
+    ID = c("A", "B", "C", "D", "X"),
+    momID = c(NA, "A", "A", "C", NA),
+    dadID = c(NA, "X", "X", "B", NA),
+    spouseID = c("X", "C", "B", NA, "A"),
+    sex = c("F", "M", "F", "F", "M")
+  )
+
+  coords1 <- calculateCoordinates(ped, config = list(ped_align = TRUE, ped_packed = TRUE))
+
+  # Test with euclidean distance
+  dist_euclidean <- computeDistance(
+    method = "euclidean",
+    x1 = coords1$x_pos,
+    y1 = coords1$y_pos,
+    x2 = coords1$x_pos,
+    y2 = coords1$y_pos
+  )
+  expect_equal(length(dist_euclidean), nrow(coords1))
+
+  # Test with manhattan/cityblock distance
+  # Note: The method "manhattan" is equivalent to "cityblock"
+  dist_cityblock <- computeDistance(
+    method = "cityblock",
+    x1 = coords1$x_pos,
+    y1 = coords1$y_pos,
+    x2 = coords1$x_pos,
+    y2 = coords1$y_pos
+  )
+  dist_manhattan <- computeDistance(
+    method = "manhattan",
+    x1 = coords1$x_pos,
+    y1 = coords1$y_pos,
+    x2 = coords1$x_pos,
+    y2 = coords1$y_pos
+  )
+  expect_equal(length(dist_manhattan), nrow(coords1))
+  expect_equal(length(dist_cityblock), nrow(coords1))
+  expect_equal(dist_manhattan, dist_cityblock)
+
+  # p parameter
+  # Test with p = 1 (manhattan distance)
+  dist_manhattan_p1 <- computeDistance(
+    p = 1,
+    x1 = coords1$x_pos,
+    y1 = coords1$y_pos,
+    x2 = coords1$x_pos,
+    y2 = coords1$y_pos
+  )
+  expect_equal(length(dist_manhattan_p1), nrow(coords1))
+  expect_equal(dist_manhattan, dist_manhattan_p1)
+  # Test with p = 2 (euclidean distance)
+  dist_euclidean_p2 <- computeDistance(
+    p = 2,
+    x1 = coords1$x_pos,
+    y1 = coords1$y_pos,
+    x2 = coords1$x_pos,
+    y2 = coords1$y_pos
+  )
+  expect_equal(length(dist_euclidean_p2), nrow(coords1))
+  expect_equal(dist_euclidean, dist_euclidean_p2)
+  # Test with p = 0.5 (fractional distance)
+
+  dist_fractional <- computeDistance(
+    p = 0.5,
+    x1 = coords1$x_pos,
+    y1 = coords1$y_pos,
+    x2 = coords1$x_pos,
+    y2 = coords1$y_pos
+  )
+  expect_equal(length(dist_fractional), nrow(coords1))
+  expect_equal(dist_fractional, dist_euclidean)
+})
+
+# test_that("computeDistances behaves in big data", {
+#   data("redsquirrels")
+#   ped <- redsquirrels %>%
+#     dplyr::rename(ID = personID) # needs phatnom parents
+#
+#   coords1 <- calculateCoordinates(ped, config = list(ped_align = FALSE, ped_packed = FALSE))
+#
+#   # Test with euclidean distance
+#   dist_euclidean <- computeDistance( method = "euclidean",
+#                                      x1 = coords1$x_pos,
+#                                      y1 = coords1$y_pos,
+#                                      x2 = coords1$x_pos,
+#                                      y2 = coords1$y_pos)
+#   expect_equal(length(dist_euclidean), nrow(coords1))
+#
+#   # Test with manhattan/cityblock distance
+#   # Note: The method "manhattan" is equivalent to "cityblock"
+#   dist_cityblock <- computeDistance( method = "cityblock",
+#                                      x1 = coords1$x_pos,
+#                                      y1 = coords1$y_pos,
+#                                      x2 = coords1$x_pos,
+#                                      y2 = coords1$y_pos)
+#   dist_manhattan <- computeDistance( method = "manhattan",
+#                                      x1 = coords1$x_pos,
+#                                      y1 = coords1$y_pos,
+#                                      x2 = coords1$x_pos,
+#                                      y2 = coords1$y_pos)
+#   expect_equal(length(dist_manhattan), nrow(coords1))
+#   expect_equal(length(dist_cityblock), nrow(coords1))
+#   expect_equal(dist_manhattan, dist_cityblock)
+#
+#   # p parameter
+#   # Test with p = 1 (manhattan distance)
+#   dist_manhattan_p1 <- computeDistance( p = 1,
+#                                         x1 = coords1$x_pos,
+#                                         y1 = coords1$y_pos,
+#                                         x2 = coords1$x_pos,
+#                                         y2 = coords1$y_pos)
+#   expect_equal(length(dist_manhattan_p1), nrow(coords1))
+#   expect_equal(dist_manhattan, dist_manhattan_p1)
+#   # Test with p = 2 (euclidean distance)
+#   dist_euclidean_p2 <- computeDistance( p = 2,
+#                                         x1 = coords1$x_pos,
+#                                         y1 = coords1$y_pos,
+#                                         x2 = coords1$x_pos,
+#                                         y2 = coords1$y_pos)
+#   expect_equal(length(dist_euclidean_p2), nrow(coords1))
+#   expect_equal(dist_euclidean, dist_euclidean_p2)
+#   # Test with p = 0.5 (fractional distance)
+#
+#   dist_fractional <- computeDistance( p = 0.5,
+#                                       x1 = coords1$x_pos,
+#                                       y1 = coords1$y_pos,
+#                                       x2 = coords1$x_pos,
+#                                       y2 = coords1$y_pos)
+#   expect_equal(length(dist_fractional), nrow(coords1))
+#   expect_equal(dist_fractional, dist_euclidean)
+#
+#
+# })

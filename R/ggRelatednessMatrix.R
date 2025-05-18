@@ -101,3 +101,7 @@ ggRelatednessMatrix <- function(
     ggplot2::coord_fixed()
   return(p)
 }
+
+#' @rdname ggRelatednessMatrix
+#' @export
+ggrelatednessmatrix <- ggRelatednessMatrix

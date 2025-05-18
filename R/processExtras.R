@@ -170,12 +170,12 @@ processExtras <- function(ped, config = list()) {
         x1 = .data$x_pos, y1 = .data$y_pos,
         x2 = .data$x_spouse, y2 = .data$y_spouse
       ),
-      total_parent_dist_cityblock = computeDistance(
+      parent_dist_mid = computeDistance(
         method = "cityblock",
         x1 = .data$x_pos, y1 = .data$y_pos,
         x2 = .data$x_parent_hash, y2 = .data$y_parent_hash
       ),
-      total_parent_dist2 = .data$dist_mom + .data$dist_dad
+      parent_dist_sum = .data$dist_mom + .data$dist_dad
     )
 
 
@@ -193,7 +193,7 @@ processExtras <- function(ped, config = list()) {
   if (sum(ped$total_blue, na.rm = TRUE) == 0) {
     parent_winner <- extras |>
       dplyr::group_by(.data$coreID) |>
-      dplyr::slice_min(.data$total_parent_dist_cityblock,
+      dplyr::slice_min(.data$parent_dist_mid,
         n = 1,
         with_ties = FALSE
       ) |>
@@ -202,9 +202,10 @@ processExtras <- function(ped, config = list()) {
       dplyr::rename(parent_choice = "personID")
   } else {
     # if there are spouseID == momID or spouseID == dadID, then parent choice needs to be the 2nd closest
+    # this version penalizes total distance by summing the distances to mom and dad
     parent_winner <- extras |>
       dplyr::group_by(.data$coreID) |>
-      dplyr::arrange(.data$total_parent_dist2, .by_group = TRUE) |>
+      dplyr::arrange(.data$parent_dist_sum, .by_group = TRUE) |>
       dplyr::mutate(
         rank       = dplyr::row_number(), # 1 = closest, 2 = second‑closest …
         pick_rank  = dplyr::if_else(any(.data$total_blue), 2L, 1L) # group‑level choice
@@ -238,11 +239,11 @@ processExtras <- function(ped, config = list()) {
       1L
     } # 2nd if blue present, else 1st
 
-    if (length(ord) < pick) pick <- 1L
-
+    if (length(ord) < pick) {
+      pick <- 1L
+    }
 
     cand$personID[ord[pick]]
-
 
     #  cand$personID[
     #    which.min(
@@ -272,7 +273,6 @@ processExtras <- function(ped, config = list()) {
 
   # remove parent ids from all but the closest coreID,
   # if there's no choice to be made, then keep existing momID
-
 
   ped <- ped |>
     dplyr::left_join(spouse_winner, by = "coreID") |>
@@ -331,12 +331,10 @@ processExtras <- function(ped, config = list()) {
     ) |>
     unique()
 
-
   full_extra <- list(
     ped = ped,
     self_coords = self_coords
   )
-
 
   return(full_extra)
 }

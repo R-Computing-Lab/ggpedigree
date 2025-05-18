@@ -2,9 +2,24 @@
 % Please edit documentation in R/ggPedigreeInteractive.R
 \name{ggPedigreeInteractive}
 \alias{ggPedigreeInteractive}
+\alias{ggpedigreeinteractive}
 \title{Interactive pedigree plot (Plotly wrapper around ggPedigree)}
 \usage{
 ggPedigreeInteractive(
+  ped,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  status_col = NULL,
+  tooltip_cols = NULL,
+  config = list(),
+  debug = FALSE,
+  as_widget = TRUE,
+  ...
+)
+
+ggpedigreeinteractive(
   ped,
   famID = "famID",
   personID = "personID",
