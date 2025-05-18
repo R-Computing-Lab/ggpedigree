@@ -8,17 +8,17 @@ suppressPackageStartupMessages({
   library(reshape2)
 })
 
-
 ## -----------------------------------------------------------------------------
-
+library(ggpedigree)
 # Load the example data
 data("redsquirrels")
 
-
-
 ## -----------------------------------------------------------------------------
-
-sumped <- summarizePedigrees(redsquirrels, famID = "famID", personID = "personID",  nbiggest = 5)
+sumped <- summarizePedigrees(redsquirrels,
+  famID = "famID",
+  personID = "personID",
+  nbiggest = 5
+)
 
 
 # Set target family for visualization
@@ -76,7 +76,7 @@ if (requireNamespace("corrplot", quietly = TRUE)) {
     is.corr = FALSE,
     title = "Additive Relatedness (Base R)",
     order = "hclust",
-    col = corrplot::COL1('Reds', 100)
+    col = corrplot::COL1("Reds", 100)
   )
 }
 

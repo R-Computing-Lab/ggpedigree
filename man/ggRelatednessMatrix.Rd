@@ -22,12 +22,37 @@ Plots a relatedness matrix using ggplot2 with config options.
 }
 \details{
 Config options include:
-\itemize{
-  \item{\code{color_palette}}{A vector of colors for the heatmap (default: Reds scale)}
-  \item{\code{scale_midpoint}}{Numeric midpoint for diverging color scale (default: 0.25)}
-  \item{\code{title}}{Plot title}
-  \item{\code{cluster}}{Logical; should rows/cols be clustered (default: TRUE)}
-  \item{\code{xlab}, \code{ylab}}{Axis labels}
-  \item{\code{text_size}}{Axis text size}
+ \describe{
+  \item{color_palette}{A vector of colors for the heatmap (default: Reds scale)}
+  \item{scale_midpoint}{Numeric midpoint for diverging color scale (default: 0.25)}
+  \item{title}{Plot title}
+  \item{cluster}{Logical; should rows/cols be clustered (default: TRUE)}
+  \item{xlab, ylab}{Axis labels}
+  \item{text_size}{Axis text size}
 }
+}
+\examples{
+library(BGmisc)
+library(ggplot2)
+library(reshape2)
+library(viridis)
+
+# Example relatedness matrix
+set.seed(123)
+mat <- matrix(runif(100, 0, 1), nrow = 10)
+rownames(mat) <- paste0("ID", 1:10)
+colnames(mat) <- paste0("ID", 1:10)
+
+# Plot the relatedness matrix
+ggRelatednessMatrix(mat,
+  config = list(
+    color_palette = c("white", "gold", "red"),
+    scale_midpoint = 0.5,
+    cluster = TRUE,
+    title = "Relatedness Matrix",
+    xlab = "Individuals",
+    ylab = "Individuals",
+    text_size = 8
+  )
+)
 }

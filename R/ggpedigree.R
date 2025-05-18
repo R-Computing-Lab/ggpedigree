@@ -477,7 +477,7 @@ ggpedigree <- ggPedigree
 #'
 .addLabels <- function(p, config) {
   if (config$label_method %in% c("geom_text_repel", "ggrepel", "geom_label_repel")
-      ) {
+  ) {
     p <- p +
       ggrepel::geom_text_repel(ggplot2::aes(label = !!rlang::sym(config$label_col)),
         nudge_y = config$label_nudge_y * config$generation_height,

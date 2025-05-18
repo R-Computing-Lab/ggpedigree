@@ -28,9 +28,6 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
                                   debug = FALSE,
                                   as_widget = TRUE,
                                   ...) {
-
-
-
   if (!inherits(ped, "data.frame")) {
     stop("ped should be a data.frame or inherit to a data.frame")
   }
@@ -41,15 +38,15 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
     } else if (config$label_method == "geom_label") {
       message("geom_GeomLabel() has yet to be implemented in plotly")
     }
- #   if (!config$label_method %in% c("geom_label", "geom_text")) {
-  #    stop("label_method must be either 'geom_label' or 'geom_text'")
- #   }
+    #   if (!config$label_method %in% c("geom_label", "geom_text")) {
+    #    stop("label_method must be either 'geom_label' or 'geom_text'")
+    #   }
   }
   # -----
   # STEP 1: Configuration and Preparation
   # -----
-  if(!is.null(tooltip_cols)) {
-  config$tooltip_cols <- tooltip_cols
+  if (!is.null(tooltip_cols)) {
+    config$tooltip_cols <- tooltip_cols
   }
   # Set default styling and layout parameters
   default_config <- list(
@@ -63,54 +60,60 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
 
   ## 1. Build the static ggplot using the existing engine
   static_plot <- ggPedigree(ped,
-                            famID       = famID,
-                            personID    = personID,
-                            momID       = momID,
-                            dadID       = dadID,
-                            status_col  = status_col,
-                            config      = config,
-                            debug       = debug,
-                            ...)
+    famID       = famID,
+    personID    = personID,
+    momID       = momID,
+    dadID       = dadID,
+    status_col  = status_col,
+    config      = config,
+    debug       = debug,
+    ...
+  )
 
   ## 2. Identify data columns for tooltips ----------------------------------
   #   When ggplotly is called, it creates a single data frame that merges all
   #   layer data.  We therefore build a 'text' aesthetic ahead of time so that
   #   it survives the conversion.
-  config$tooltip_cols <- intersect(config$tooltip_cols, names(ped))  # guard against typos
-  if (length(config$tooltip_cols) == 0L)
+  config$tooltip_cols <- intersect(config$tooltip_cols, names(ped)) # guard against typos
+  if (length(config$tooltip_cols) == 0L) {
     stop("None of the specified tooltip_cols found in `ped`.")
+  }
 
   tooltip_fmt <- function(df, tooltip_cols) {
-    apply(df[tooltip_cols], 1, function(row)
-      paste(paste(tooltip_cols, row, sep = ": "), collapse = "<br>"))
+    apply(df[tooltip_cols], 1, function(row) {
+      paste(paste(tooltip_cols, row, sep = ": "), collapse = "<br>")
+    })
   }
 
 
   ## 3. Convert ggplot → plotly ---------------------------------------------
   if (config$return_static == TRUE) {
-   return(static_plot)
+    return(static_plot)
+  } else {
+    #   Add the tooltip text to the data frame
+    if (config$include_tooltips == TRUE) {
+      static_plot <- static_plot + ggplot2::aes(text = tooltip_fmt(
+        df = ped,
+        config$tooltip_cols
+      ))
+
+      plt <- plotly::ggplotly(static_plot,
+        tooltip = "text",
+        width   = NULL,
+        height  = NULL
+      )
     } else {
-
-      #   Add the tooltip text to the data frame
-      if(config$include_tooltips == TRUE) {
-        static_plot <- static_plot + aes(text = tooltip_fmt(df=ped,
-                                                            config$tooltip_cols))
-
-        plt <- plotly::ggplotly(static_plot,
-                                tooltip = "text",
-                                width   = NULL,
-                                height  = NULL)
-      } else {
-        plt <- plotly::ggplotly(static_plot,
-                               # tooltip = "text",
-                                width   = NULL,
-                                height  = NULL)
-      }
-}
-  if (as_widget==TRUE) {
+      plt <- plotly::ggplotly(static_plot,
+        # tooltip = "text",
+        width = NULL,
+        height = NULL
+      )
+    }
+  }
+  if (as_widget == TRUE) {
     return(plt)
   } else {
-    class(plt) <- c("plotly", class(plt))  # ensure proper S3 dispatch
+    class(plt) <- c("plotly", class(plt)) # ensure proper S3 dispatch
     return(plt)
   }
 }

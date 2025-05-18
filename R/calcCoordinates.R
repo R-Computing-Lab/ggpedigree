@@ -191,13 +191,13 @@ calculateCoordinates <- function(ped,
     }
   }
   if (length(extra_info) > 0) {
-  # Bind into single data.frame of all extras
-  extra_df <- do.call(rbind, extra_info)
-  # Initialize list to collect extra rows
-  extra_rows <- vector("list", nrow(extra_df))
-  # Single loop over the flat index/nid map
+    # Bind into single data.frame of all extras
+    extra_df <- do.call(rbind, extra_info)
+    # Initialize list to collect extra rows
+    extra_rows <- vector("list", nrow(extra_df))
+    # Single loop over the flat index/nid map
 
-  for (i in seq_len(nrow(extra_df))) {
+    for (i in seq_len(nrow(extra_df))) {
       idx <- extra_df$idx[i]
       nid_val <- extra_df$nid[i]
 
@@ -210,7 +210,7 @@ calculateCoordinates <- function(ped,
 
       extra_rows[[i]] <- new_row
     }
-} else {
+  } else {
     extra_rows <- list()
   }
   # Combine original and extra rows, marking extras

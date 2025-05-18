@@ -11,11 +11,15 @@ library(BGmisc)
 ## Create dataframe
 
 Ped <- read_excel("data-raw/Pedigree_dryadcopy.xlsx",
-    col_types = c("numeric", "numeric", "numeric",
-        "text")) %>% rename(momID = dam,
-                            personID = id,
-                            dadID = sire, sex = Sex
-                            )
+  col_types = c(
+    "numeric", "numeric", "numeric",
+    "text"
+  )
+) %>% rename(
+  momID = dam,
+  personID = id,
+  dadID = sire, sex = Sex
+)
 
 ds <- ped2fam(Ped, famID = "famID", personID = "personID")
 
