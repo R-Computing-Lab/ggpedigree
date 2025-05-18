@@ -26,6 +26,7 @@ computeDistance <- function(method = "euclidean",
     Min_p <- switch(method,
       euclidean = 2,
       cityblock = 1,
+      manhattan = 1,
       stop(
         "Invalid distance method. Choose from 'euclidean', 'cityblock', or specify p."
       )
@@ -104,7 +105,6 @@ getMidpoints <- function(data,
       )
   } else if (method == "weighted_mean") {
     # Weighted average (same weight for all unless specified externally)
-
     data |>
       dplyr::group_by(!!!rlang::syms(group_vars)) |>
       dplyr::summarize(
@@ -272,7 +272,8 @@ makeSymmetricKey <- function(id1, id2, sep = ".") {
     id1_num <- as.numeric(id1)
     id2_num <- as.numeric(id2)
   }
-  dplyr::if_else(id1_num < id2_num, paste0(id1, sep, id2),
+  dplyr::if_else(id1_num < id2_num,
+    paste0(id1, sep, id2),
     paste0(id2, sep, id1)
   )
 }

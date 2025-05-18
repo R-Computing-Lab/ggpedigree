@@ -2,9 +2,12 @@
 % Please edit documentation in R/ggRelatednessMatrix.R
 \name{ggRelatednessMatrix}
 \alias{ggRelatednessMatrix}
+\alias{ggrelatednessmatrix}
 \title{Plot a relatedness matrix as a heatmap (ggpedigree style)}
 \usage{
 ggRelatednessMatrix(mat, config = list(), ...)
+
+ggrelatednessmatrix(mat, config = list(), ...)
 }
 \arguments{
 \item{mat}{A square numeric matrix of relatedness values (precomputed, e.g., from ped2add).}
