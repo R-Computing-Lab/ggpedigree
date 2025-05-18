@@ -8,7 +8,6 @@ vignette: >
 ---
 
 
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages({
@@ -18,7 +17,6 @@ suppressPackageStartupMessages({
   library(dplyr)
   library(reshape2)
 })
-
 ```
 
 # Introduction
@@ -30,14 +28,12 @@ We will use the new ggRelatednessMatrix function to create ggplot2-based heatmap
 
 ## Data Preparation
 
-First, load pedigree data (here, as in the original vignette, from Excel):
+First, load pedigree data and required libraries. The example data is from the Kluane Red Squirrel Project, which has been running since 1987. The data are available on Dryad at https://doi.org/10.5061/dryad.2z34tmpr3.
 
 ```{r}
-
+library(ggpedigree)
 # Load the example data
 data("redsquirrels")
-
-
 ```
 
 
@@ -46,8 +42,11 @@ data("redsquirrels")
 Here we show how to compute additive genetic and mitochondrial relatedness matrices for a target family, as in the red squirrel analysis.
 
 ```{r}
-
-sumped <- summarizePedigrees(redsquirrels, famID = "famID", personID = "personID",  nbiggest = 5)
+sumped <- summarizePedigrees(redsquirrels,
+  famID = "famID",
+  personID = "personID",
+  nbiggest = 5
+)
 
 
 # Set target family for visualization
@@ -114,7 +113,7 @@ p_add_noclust
 ```
 
 # Comparison to Base R and Other Approaches
-For comparison, here is how the same matrix would be plotted in base R, as in earlier squirrel analyses:
+For comparison, here is how the same matrix would be plotted in corrplot, as in earlier squirrel analyses:
 
 ```{r}
 if (requireNamespace("corrplot", quietly = TRUE)) {
@@ -126,7 +125,7 @@ if (requireNamespace("corrplot", quietly = TRUE)) {
     is.corr = FALSE,
     title = "Additive Relatedness (Base R)",
     order = "hclust",
-    col = corrplot::COL1('Reds', 100)
+    col = corrplot::COL1("Reds", 100)
   )
 }
 ```

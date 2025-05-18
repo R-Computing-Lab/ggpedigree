@@ -8,12 +8,11 @@ knitr::opts_chunk$set(
 
 ## -----------------------------------------------------------------------------
 # Load required packages
-library(BGmisc)# ships the sample 'potter' pedigree
-library(ggplot2)# used internally by ggPedigree*
-library(viridis)# viridis for color palettes
-library(plotly)# conversion layer for interactivity
-library(ggpedigree)# the package itself
-
+library(BGmisc) # ships the sample 'potter' pedigree
+library(ggplot2) # used internally by ggPedigree*
+library(viridis) # viridis for color palettes
+library(plotly) # conversion layer for interactivity
+library(ggpedigree) # the package itself
 
 ## -----------------------------------------------------------------------------
 # Load the example data
@@ -25,7 +24,6 @@ head(potter)
 ggPedigreeInteractive(potter)
 
 ## ----basic-usage-2------------------------------------------------------------
-
 ggPedigreeInteractive(
   potter,
   famID    = "famID",
@@ -34,14 +32,13 @@ ggPedigreeInteractive(
   dadID    = "dadID"
 ) |> plotly::hide_legend()
 
-
 ## ----customize-aesthetics-----------------------------------------------------
 plt <- ggPedigreeInteractive(
   potter,
-  famID    = "famID",
+  famID = "famID",
   personID = "personID",
-  momID    = "momID",
-  dadID    = "dadID",
+  momID = "momID",
+  dadID = "dadID",
   config = list(
     label_nudge_y   = -.25,
     include_labels  = TRUE,
@@ -72,15 +69,15 @@ htmlwidgets::saveWidget(
 ## -----------------------------------------------------------------------------
 static <- ggPedigreeInteractive(
   potter,
-  famID    = "famID",
+  famID = "famID",
   personID = "personID",
-  momID    = "momID",
-  dadID    = "dadID",
+  momID = "momID",
+  dadID = "dadID",
   config = list(
-    label_nudge_y   = -.25,
-    include_labels  = TRUE,
-    label_method    = "geom_text",
-    sex_color       = TRUE,
+    label_nudge_y = -.25,
+    include_labels = TRUE,
+    label_method = "geom_text",
+    sex_color = TRUE,
     return_static = TRUE
   ),
   tooltip_cols = c("personID", "name")
@@ -111,11 +108,10 @@ static_plot <- static +
 
 static_plot
 
-
 ## ----static-to-interactive----------------------------------------------------
-
 plotly::ggplotly(static_plot,
-                          tooltip = "text",
-                          width   = NULL,
-                          height  = NULL)
+  tooltip = "text",
+  width   = NULL,
+  height  = NULL
+)
 

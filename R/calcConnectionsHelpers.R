@@ -250,27 +250,29 @@ makeSymmetricKey <- function(id1, id2, sep = ".") {
   }
   # Require same type
   if (mode(id1) != mode(id2)) {
- # if they're both a n
-    if (mode(id1)  %in% c("integer", "double") &&
-        mode(id2) %in% c("integer", "double")) {
+    # if they're both a n
+    if (mode(id1) %in% c("integer", "double") &&
+      mode(id2) %in% c("integer", "double")) {
       # Numeric comparison
     } else {
-      stop(paste0("id1 and id2 must be of the same type.",
-                  " id1 is ", mode(id1), " and id2 is ", mode(id2)))
+      stop(paste0(
+        "id1 and id2 must be of the same type.",
+        " id1 is ", mode(id1), " and id2 is ", mode(id2)
+      ))
     }
   }
-  if(is.character(id1) || is.character(id2)) {
-  #  byte-wise comparison
+  if (is.character(id1) || is.character(id2)) {
+    #  byte-wise comparison
     # Assign stable, reproducible numeric codes to each string
     levels_all <- sort(unique(c(id1, id2)))
     id1_num <- match(id1, levels_all)
     id2_num <- match(id2, levels_all)
-
   } else {
     # Numeric comparison
     id1_num <- as.numeric(id1)
     id2_num <- as.numeric(id2)
   }
-  dplyr::if_else(id1_num<id2_num, paste0(id1, sep, id2),
-                 paste0(id2, sep, id1))
+  dplyr::if_else(id1_num < id2_num, paste0(id1, sep, id2),
+    paste0(id2, sep, id1)
+  )
 }
