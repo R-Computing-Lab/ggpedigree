@@ -84,58 +84,55 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
       paste(paste(tooltip_cols, row, sep = ": "), collapse = "<br>")
     })
   }
-
-
   ## 3. Convert ggplot → plotly ---------------------------------------------
-  if (config$return_static == TRUE) {
-    return(static_plot)
-  } else {
-    #   Add the tooltip text to the data frame
-    if (config$include_tooltips == TRUE) {
-      # add tooltips to geom_point layers
-      point_layers <- which(sapply(static_plot$layers, function(l) {
-        inherits(l$geom, "GeomPoint")
-      }))
-      if (length(point_layers) == 0L) {
-        warnings("No GeomPoint layer found for tooltips.")
+  #   Add the tooltip text to the data frame
+  if (config$include_tooltips == TRUE) {
+    # add tooltips to geom_point layers
+    point_layers <- which(sapply(static_plot$layers, function(l) {
+      inherits(l$geom, "GeomPoint")
+    }))
+    if (length(point_layers) == 0L) {
+      warnings("No GeomPoint layer found for tooltips.")
 
-        static_plot <- static_plot + ggplot2::aes(text = tooltip_fmt(
-          df = ped,
-          config$tooltip_cols
-        ))
-      } else {
-        for (i in point_layers) {
-          static_plot$layers[[i]]$mapping <- utils::modifyList(
-            static_plot$layers[[i]]$mapping,
-            ggplot2::aes(text = tooltip_fmt(
-              df = ped,
-              tooltip_cols = config$tooltip_cols
-            ))
-          )
-        }
-      }
-      plt <- plotly::ggplotly(static_plot,
-        tooltip = "text",
-        width   = NULL,
-        height  = NULL
-      )
+      static_plot <- static_plot + ggplot2::aes(text = tooltip_fmt(
+        df = ped,
+        config$tooltip_cols
+      ))
     } else {
-      plt <- plotly::ggplotly(static_plot,
-        # tooltip = "text",
-        width = NULL,
-        height = NULL
-      )
+      for (i in point_layers) {
+        static_plot$layers[[i]]$mapping <- utils::modifyList(
+          static_plot$layers[[i]]$mapping,
+          ggplot2::aes(text = tooltip_fmt(
+            df = ped,
+            tooltip_cols = config$tooltip_cols
+          ))
+        )
+      }
     }
+    plt <- plotly::ggplotly(static_plot,
+      tooltip = "text",
+      width   = NULL,
+      height  = NULL
+    )
+  } else {
+    plt <- plotly::ggplotly(static_plot,
+      # tooltip = "text",
+      width = NULL,
+      height = NULL
+    )
   }
 
-  if (as_widget == TRUE) {
+
+  # return the static plot if requested
+  if (config$return_static == TRUE) {
+    return(static_plot) # return the static plot
+  } else if (as_widget == TRUE) {
     return(plt)
   } else {
     class(plt) <- c("plotly", class(plt)) # ensure proper S3 dispatch
     return(plt)
   }
 }
-
 #' @rdname ggPedigreeInteractive
 #' @export
 ggpedigreeinteractive <- ggPedigreeInteractive
