@@ -4,7 +4,6 @@
 <url><loc>https://r-computing-lab.github.io/ggpedigree/CONTRIBUTING.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/LICENSE.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/articles/index.html</loc></url>
-<url><loc>https://r-computing-lab.github.io/ggpedigree/articles/potter_interactive.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/articles/v0_plots.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/articles/v1_interactiveplots.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/articles/v2_matrix.html</loc></url>
@@ -22,8 +21,10 @@
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/generateSpouseList.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/getMidpoints.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/getRelativeCoordinates.html</loc></url>
+<url><loc>https://r-computing-lab.github.io/ggpedigree/reference/ggPedigree.core.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/ggPedigree.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/ggPedigreeInteractive.html</loc></url>
+<url><loc>https://r-computing-lab.github.io/ggpedigree/reference/ggRelatednessMatrix.core.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/ggRelatednessMatrix.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/ggpedigree-package.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/index.html</loc></url>
