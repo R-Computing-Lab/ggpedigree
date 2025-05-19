@@ -346,15 +346,23 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>This vignette demonstrates how to calculate and visualize relatedness
 matrices for animal pedigrees using functions from the BGmisc and
 ggpedigree packages. We focus on Kluane Red Squirrel Project data, but
-the workflow generalizes to any pedigree dataset.</p>
+the workflow generalizes to any pedigree dataset. The
+<code>ggRelatednessMatrix</code> function is a new addition to the
+ggpedigree package, which provides a flexible and visually appealing way
+to explore patterns of genetic and mitochondrial relatedness within
+families. This function is designed to work seamlessly with the
+<code>ped2add</code> and <code>ped2mit</code> functions from the BGmisc
+package, which calculate additive genetic and mitochondrial relatedness
+matrices, respectively.</p>
 <p>We will use the new ggRelatednessMatrix function to create
 ggplot2-based heatmaps of relatedness matrices, inspired by the
 approaches in the original squirrel population analyses.</p>
 <div id="data-preparation" class="section level2">
 <h2>Data Preparation</h2>
 <p>First, load pedigree data and required libraries. The example data is
-from the Kluane Red Squirrel Project, which has been running since 1987.
-The data are available on Dryad at <a href="https://doi.org/10.5061/dryad.2z34tmpr3" class="uri">https://doi.org/10.5061/dryad.2z34tmpr3</a>.</p>
+the life‐history and reproductive metrics for 7,799 individual red
+squirrels from the Kluane Red Squirrel Project (1987–present). See the
+redsquirrels data documentation for more details.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(ggpedigree)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co"># Load the example data</span></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;redsquirrels&quot;</span>)</span></code></pre></div>

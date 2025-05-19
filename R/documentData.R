@@ -1,19 +1,37 @@
 #' Kluane Red Squirrel Data
 #'
-#' These data are from the Kluane Red Squirrel Project, which has been running since 1987. The data are available on Dryad at https://doi.org/10.5061/dryad.2z34tmpr3. The pedigree data are in the file `Pedigree_dryadcopy.xlsx` and the phenotype data are in the file `LRS_fordryad.xlsx`.
+#' A tidy data frame of life‐history and reproductive metrics for 7,799 individual red squirrels
+#' from the Kluane Red Squirrel Project (1987–present).
+#' Each row corresponds to one squirrel with associated pedigree links and reproductive success summaries.
+#' The original data are published under a CC0 1.0 Universal Public Domain Dedication:
+#'
+#' McFarlane, S. Eryn; Boutin, Stan; Humphries, Murray M. et al. (2015). Data from:
+#' Very low levels of direct additive genetic variance in fitness and fitness components in a red squirrel population [Dataset].
+#' Dryad. <https://doi.org/10.5061/dryad.n5q05>
 #'
 #' @format ## `redsquirrels`
-#' A data frame with 7799 rows and 5 columns:
+#' A data frame with 7799 rows and 16 columns:
 #' \describe{
 #'   \item{personID}{Unique identifier for each squirrel}
-#'   \item{famID}{Unique identifier for each family. Derived from ped2fam}
 #'   \item{momID, dadID}{Unique identifiers for each squirrel's parents}
 #'   \item{sex}{Biological sex of the squirrel}
+#'   \item{famID}{Unique identifier for each family. Derived from ped2fam}
+#'   \item{byear}{Birth year of the squirrel}
+#'   \item{dyear}{Death year of the squirrel}
+#'   \item{lrs}{lifetime reproductive success for the squirrel}
+#'   \item{ars_mean}{Mean annual reproductive success for the squirrel}
+#'   \item{ars_max}{Maximum ARS value for the squirrel}
+#'   \item{ars_med}{Median ARS value for the squirrel}
+#'   \item{ars_min}{Minimum ARS value for the squirrel}
+#'   \item{ars_sd}{Standard deviation of ARS values for the squirrel}
+#'   \item{ars_n}{Number of ARS values for the squirrel}
+#'   \item{year_first}{First year of ARS data for the squirrel}
+#'   \item{year_last}{Last year of ARS data for the squirrel}
 #'   ...
 #' }
 #' @docType data
 #' @keywords datasets
 #' @name redsquirrels
 #' @usage data(redsquirrels)
-#' @source <https://doi.org/10.5061/dryad.2z34tmpr3>
+#' @source <https://doi.org/10.5061/dryad.n5q05>
 "redsquirrels"
