@@ -21,13 +21,20 @@ data("potter")
 head(potter)
 
 ## ----basic-usage-2------------------------------------------------------------
-ggPedigreeInteractive(
+plt <- ggPedigreeInteractive(
   potter,
   famID    = "famID",
   personID = "personID",
   momID    = "momID",
   dadID    = "dadID"
 ) |> plotly::hide_legend()
+
+## ----eval=FALSE, include=TRUE-------------------------------------------------
+# plt
+
+## ----echo=FALSE---------------------------------------------------------------
+# reduce file size for CRAN
+plotly::partial_bundle(plt)
 
 ## ----customize-aesthetics-----------------------------------------------------
 plt <- ggPedigreeInteractive(
@@ -44,16 +51,30 @@ plt <- ggPedigreeInteractive(
   ),
   tooltip_cols = c("personID", "name")
 )
-plt
+
+
+## ----eval=FALSE, include=TRUE-------------------------------------------------
+# plt
+
+## ----echo=FALSE---------------------------------------------------------------
+# reduce file size for CRAN
+plotly::partial_bundle(plt)
 
 ## ----further-customization----------------------------------------------------
-plt %>%
+plt2 <- plt %>%
   plotly::layout(
     title = "The Potter Family Tree (interactive)",
     hoverlabel = list(bgcolor = "white"),
     margin = list(l = 50, r = 50, t = 50, b = 50)
   ) %>%
   plotly::config(displayModeBar = TRUE)
+
+## ----eval=FALSE, include=TRUE-------------------------------------------------
+# plt2
+
+## ----echo=FALSE---------------------------------------------------------------
+# reduce file size for CRAN
+plotly::partial_bundle(plt2)
 
 ## ----save-widget, eval=FALSE--------------------------------------------------
 # htmlwidgets::saveWidget(
@@ -106,9 +127,16 @@ static_plot <- static +
 static_plot
 
 ## ----static-to-interactive----------------------------------------------------
-plotly::ggplotly(static_plot,
+plt2 <- plotly::ggplotly(static_plot,
   tooltip = "text",
   width   = NULL,
   height  = NULL
 )
+
+## ----eval=FALSE, include=TRUE-------------------------------------------------
+# plt2
+
+## ----echo=FALSE---------------------------------------------------------------
+# reduce file size for CRAN
+plotly::partial_bundle(plt2)
 
