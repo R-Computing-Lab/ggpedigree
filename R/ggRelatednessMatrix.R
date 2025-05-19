@@ -5,6 +5,8 @@
 #' @param mat A square numeric matrix of relatedness values (precomputed, e.g., from ped2add).
 #' @param config A list of graphical and display parameters.
 #'   See Details for available options.
+#' @param interactive Logical; if TRUE, returns an interactive plotly object.
+#' @param tooltip_cols A character vector of column names to include in tooltips.
 #' @param ... Additional arguments passed to ggplot2 layers.
 #'
 #' @details
@@ -20,11 +22,6 @@
 #' @return A ggplot object displaying the relatedness matrix as a heatmap.
 #' @export
 #' @examples
-#' library(BGmisc)
-#' library(ggplot2)
-#' library(reshape2)
-#' library(viridis)
-#'
 #' # Example relatedness matrix
 #' set.seed(123)
 #' mat <- matrix(runif(100, 0, 1), nrow = 10)
@@ -46,8 +43,13 @@
 ggRelatednessMatrix <- function(
     mat,
     config = list(),
+    interactive = FALSE,
+    tooltip_cols = NULL,
     ...) {
-  stopifnot(is.matrix(mat))
+  # Check if the input is a matrix
+  if (!is.matrix(mat)) {
+    stop("Input 'mat' must be a matrix.")
+  }
   default_config <- list(
     color_palette = c("white", "gold", "red"),
     scale_midpoint = 0.25,
@@ -55,10 +57,82 @@ ggRelatednessMatrix <- function(
     title = "Relatedness Matrix",
     xlab = "Individual",
     ylab = "Individual",
-    text_size = 8
+    text_size = 8,
+    include_tooltips = TRUE,
+    tooltip_cols = c("ID1", "ID2", "value")
   )
 
+  if (!is.null(tooltip_cols)) {
+    config$tooltip_cols <- tooltip_cols
+  }
+
   config <- utils::modifyList(default_config, config)
+
+  # Core plot
+  p_list <- ggRelatednessMatrix.core(
+    mat = mat,
+    config = config, ...
+  )
+
+  static_plot <- p_list$plot
+  ped <- p_list$data
+
+  if (interactive) {
+    # If interactive is TRUE, use plotly
+    if (!requireNamespace("plotly", quietly = TRUE)) {
+      stop("The 'plotly' package is required for interactive plots.")
+    }
+    if (config$include_tooltips) {
+      ## 2. Identify data columns for tooltips ----------------------------------
+      #   When ggplotly is called, it creates a single data frame that merges all
+      #   layer data.  We therefore build a 'text' aesthetic ahead of time so that
+      #   it survives the conversion.
+      config$tooltip_cols <- intersect(config$tooltip_cols, names(ped)) # guard against typos
+      if (length(config$tooltip_cols) == 0L) {
+        stop("None of the specified tooltip_cols found in `ped`.")
+      }
+
+      tooltip_fmt <- function(df, tooltip_cols) {
+        apply(df[tooltip_cols], 1, function(row) {
+          paste(paste(tooltip_cols, row, sep = ": "), collapse = "<br>")
+        })
+      }
+      # add tooltips to geom_point layers
+
+
+      static_plot <- static_plot + ggplot2::aes(text = tooltip_fmt(
+        df = ped,
+        config$tooltip_cols
+      ))
+    }
+
+
+    p <- plotly::ggplotly(static_plot, tooltip = "text")
+
+
+    return(p)
+  } else {
+    # If interactive is FALSE, return the ggplot object
+    return(static_plot)
+  }
+}
+
+#' @title Core Function for ggRelatednessMatrix
+#' @description
+#' This function is the core implementation of the ggRelatednessMatrix function.
+#' It handles the data preparation, layout calculation,
+#' and plotting of the pedigree diagram.
+#' It is not intended to be called directly by users.
+#'
+#' @inheritParams ggRelatednessMatrix
+#' @keywords internal
+
+ggRelatednessMatrix.core <- function(
+    mat,
+    config = list(),
+    ...) {
+  stopifnot(is.matrix(mat))
+
   mat_plot <- mat
 
   # Optionally cluster
@@ -70,12 +144,17 @@ ggRelatednessMatrix <- function(
 
 
   df_melted <- reshape2::melt(mat_plot)
-  colnames(df_melted) <- c("Var1", "Var2", "value")
-  df_melted$Var1 <- factor(df_melted$Var1, levels = unique(df_melted$Var1))
-  df_melted$Var2 <- factor(df_melted$Var2, levels = unique(df_melted$Var2))
+
+  colnames(df_melted) <- c("ID1", "ID2", "value")
+  df_melted$ID1 <- factor(df_melted$ID1, levels = unique(df_melted$ID1))
+  df_melted$ID2 <- factor(df_melted$ID2, levels = unique(df_melted$ID2))
+
+  # rotate x-axis labels
+  df_melted$ID2 <- factor(df_melted$ID2, levels = rev(levels(df_melted$ID2)))
+
   p <- ggplot2::ggplot(
     df_melted,
-    ggplot2::aes(x = .data$Var2, y = .data$Var1, fill = .data$value)
+    ggplot2::aes(x = .data$ID2, y = .data$ID1, fill = .data$value)
   ) +
     ggplot2::geom_raster(interpolate = TRUE, hjust = 0, vjust = 0) +
     ggplot2::scale_fill_gradient2(
@@ -99,7 +178,14 @@ ggRelatednessMatrix <- function(
       title = config$title
     ) +
     ggplot2::coord_fixed()
-  return(p)
+
+  return(
+    list(
+      plot = p,
+      data = df_melted,
+      config = config
+    )
+  )
 }
 
 #' @rdname ggRelatednessMatrix

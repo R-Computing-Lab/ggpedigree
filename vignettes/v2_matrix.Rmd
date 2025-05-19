@@ -1,21 +1,28 @@
 ---
-title: "Visualizing Relatedness Matrices with `ggRelatednessMatrix()`"
+title: "Visualizing Relatedness Matrices with ggRelatednessMatrix()"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Visualizing Relatedness Matrices with `ggRelatednessMatrix()`}
+  %\VignetteIndexEntry{Visualizing Relatedness Matrices with ggRelatednessMatrix()}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5,
+  echo = TRUE
+)
+
 suppressPackageStartupMessages({
   library(BGmisc)
   library(ggplot2)
-  library(readxl)
   library(dplyr)
   library(reshape2)
+  library(tidyverse)
 })
 ```
 
@@ -67,23 +74,6 @@ mit_mat <- ped2mit(ped_filtered, isChild_method = "partialparent", sparse = FALS
 The ggRelatednessMatrix function plots a relatedness matrix as a heatmap, with options for clustering and color customization. This approach mirrors the style of plots produced in the original red squirrel data analysis.
 
 
-## Plot additive genetic relatedness
-
-```{r}
-p_add <- ggRelatednessMatrix(
-  add_mat,
-  config = list(
-    color_palette = c("white", "orange", "red"),
-    scale_midpoint = 0.55,
-    cluster = TRUE,
-    title = "Additive Genetic Relatedness",
-    text_size = 15
-  )
-)
-p_add
-```
-
-
 ## Plot mitochondrial relatedness
 
 ```{r}
@@ -97,8 +87,39 @@ p_mit <- ggRelatednessMatrix(
     text_size = 6
   )
 )
-p_mit
+p_mit +
+  labs(
+    x = "Individuals",
+    y = "Individuals"
+  ) +
+  theme(
+    axis.text.y = element_blank(),
+    axis.text.x = element_text(angle = -45, size = rel(.5))
+  )
 ```
+
+
+## Plot additive genetic relatedness
+
+Here we plot the additive genetic relatedness matrix with a custom color palette and interactive features. The `ggRelatednessMatrix` function allows for easy customization of the color palette, scale midpoint, clustering, and other plot aesthetics.
+
+```{r}
+p_add <- ggRelatednessMatrix(
+  add_mat,
+  interactive = TRUE,
+  config = list(
+    color_palette = c("white", "orange", "red"),
+    scale_midpoint = 0.55,
+    cluster = TRUE,
+    title = "Additive Genetic Relatedness",
+    text_size = 5
+  )
+)
+p_add
+```
+
+
+
 
 # Customization Options
 
@@ -113,6 +134,7 @@ p_add_noclust
 ```
 
 # Comparison to Base R and Other Approaches
+
 For comparison, here is how the same matrix would be plotted in corrplot, as in earlier squirrel analyses:
 
 ```{r}
@@ -123,9 +145,11 @@ if (requireNamespace("corrplot", quietly = TRUE)) {
     type = "lower",
     col.lim = c(0, 1.25),
     is.corr = FALSE,
-    title = "Additive Relatedness (Base R)",
+    title = "Additive Relatedness",
     order = "hclust",
-    col = corrplot::COL1("Reds", 100)
+    col = corrplot::COL1("Reds", 100),
+    tl.pos = "l", tl.col = "black", tl.srt = 5, tl.cex = 0.2,
+    mar = c(0, 0, 2, 0)
   )
 }
 ```

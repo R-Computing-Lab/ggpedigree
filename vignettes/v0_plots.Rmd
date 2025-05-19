@@ -1,8 +1,8 @@
 ---
-title: "Plotting pedigrees with `ggPedigree()`"
+title: "Plotting pedigrees with ggPedigree()"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Plotting pedigrees with `ggPedigree()`}
+  %\VignetteIndexEntry{Plotting pedigrees with ggPedigree()}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

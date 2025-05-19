@@ -3,11 +3,11 @@
 * Allows support for character-based IDs
 * Added linejoin, lineend, segment_self_linetype, option to the `ggpedigree` functions.
 * Added unit tests for calculateConnections, calculateConnections, and ggpedigree functions.
-* Refactored ggpedigree function with .addScales and .addLabels functions to improve readability and maintainability.
+* Refactored ggpedigree function into ggpedigree.core and .addScales and .addLabels functions to improve readability and maintainability.
 * Renamed symKey to makeSymmetricKey, extended it to support character-based IDs, and added unit tests.
 * Added a new function `ggPedigreeInteractive` to create interactive pedigree plots using `plotly`. Added a vignette to demonstrate its usage.
 * Added redsquirrels dataset to the package for testing and examples.
-* Added a new function `ggRelatednessMatrix` to create heatmaps of relatedness matrices.
+* Added a new function `ggRelatednessMatrix` and subfunction `ggRelatednessMatrix.core` to create heatmaps of relatedness matrices.
 * Added new vignette to demonstrate ggRelatednessMatrix
 * Added graphic tests for `ggpedigree`, ggPedigreeInteractive, and ggRelatednessMatrix functions.
 

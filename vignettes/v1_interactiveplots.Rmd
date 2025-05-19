@@ -1,8 +1,8 @@
 ---
-title: "Interactive Pedigree Plotting with `ggPedigreeInteractive()`"
+title: "Interactive Pedigree Plotting with ggPedigreeInteractive()"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Interactive Pedigree Plotting with `ggPedigreeInteractive()`}
+  %\VignetteIndexEntry{Interactive Pedigree Plotting with ggPedigreeInteractive()}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -5,15 +5,31 @@
 \alias{ggrelatednessmatrix}
 \title{Plot a relatedness matrix as a heatmap (ggpedigree style)}
 \usage{
-ggRelatednessMatrix(mat, config = list(), ...)
+ggRelatednessMatrix(
+  mat,
+  config = list(),
+  interactive = FALSE,
+  tooltip_cols = NULL,
+  ...
+)
 
-ggrelatednessmatrix(mat, config = list(), ...)
+ggrelatednessmatrix(
+  mat,
+  config = list(),
+  interactive = FALSE,
+  tooltip_cols = NULL,
+  ...
+)
 }
 \arguments{
 \item{mat}{A square numeric matrix of relatedness values (precomputed, e.g., from ped2add).}
 
 \item{config}{A list of graphical and display parameters.
 See Details for available options.}
+
+\item{interactive}{Logical; if TRUE, returns an interactive plotly object.}
+
+\item{tooltip_cols}{A character vector of column names to include in tooltips.}
 
 \item{...}{Additional arguments passed to ggplot2 layers.}
 }
@@ -35,11 +51,6 @@ Config options include:
 }
 }
 \examples{
-library(BGmisc)
-library(ggplot2)
-library(reshape2)
-library(viridis)
-
 # Example relatedness matrix
 set.seed(123)
 mat <- matrix(runif(100, 0, 1), nrow = 10)

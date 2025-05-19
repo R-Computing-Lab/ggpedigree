@@ -6,12 +6,6 @@
 #' zoom, and pan functionality.
 #'
 #' @inheritParams ggPedigree
-#' @param tooltip_cols Character vector of column names to show when hovering.
-#'        Defaults to c("personID", "sex").  Additional columns present in `ped`
-#'        can be supplied – they will be added to the Plotly tooltip text.
-#' @param as_widget Logical; if TRUE (default) returns a plotly htmlwidget.
-#'        If FALSE, returns the underlying plotly object (useful for further
-#'        customisation before printing).
 #' @return A plotly htmlwidget (or plotly object if `as_widget = FALSE`).
 #' @examples
 #' library(BGmisc)
@@ -28,6 +22,9 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
                                   debug = FALSE,
                                   as_widget = TRUE,
                                   ...) {
+  if (!requireNamespace("plotly", quietly = TRUE)) {
+    stop("The 'plotly' package is required for interactive plots.")
+  }
   if (!inherits(ped, "data.frame")) {
     stop("ped should be a data.frame or inherit to a data.frame")
   }
@@ -59,7 +56,7 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
   config <- utils::modifyList(default_config, config)
 
   ## 1. Build the static ggplot using the existing engine
-  static_plot <- ggPedigree(ped,
+  static_plot <- ggPedigree.core(ped,
     famID       = famID,
     personID    = personID,
     momID       = momID,

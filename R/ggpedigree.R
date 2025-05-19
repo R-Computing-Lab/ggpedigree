@@ -13,6 +13,13 @@
 #' @param status_col Character string specifying the column name for affected status. Defaults to NULL.
 #' @param debug Logical. If TRUE, prints debugging information. Default: FALSE.
 #' @param hints Data frame with hints for layout adjustments. Default: NULL.
+#' @param interactive Logical. If TRUE, generates an interactive plot using `plotly`. Default: FALSE.
+#' @param tooltip_cols Character vector of column names to show when hovering.
+#'        Defaults to c("personID", "sex").  Additional columns present in `ped`
+#'        can be supplied – they will be added to the Plotly tooltip text.
+#' @param as_widget Logical; if TRUE (default) returns a plotly htmlwidget.
+#'        If FALSE, returns the underlying plotly object (useful for further
+#'        customization before printing).
 #' @param ... Additional arguments passed to `ggplot2` functions.
 #' @param config A list of configuration options for customizing the plot. The list can include:
 #'  \describe{
@@ -39,18 +46,86 @@
 #'
 #' @export
 
-ggPedigree <- function(ped, famID = "famID",
+ggPedigree <- function(ped,
+                       famID = "famID",
                        personID = "personID",
                        momID = "momID",
                        dadID = "dadID",
                        status_col = NULL,
+                       tooltip_cols = NULL,
+                       as_widget = FALSE,
                        config = list(),
                        debug = FALSE,
                        hints = NULL,
+                       interactive = FALSE,
                        ...) {
+  if (!inherits(ped, "data.frame")) {
+    stop("ped should be a data.frame or inherit to a data.frame")
+  }
+
+
+  if (interactive == TRUE && requireNamespace("plotly", quietly = TRUE)) {
+    # Call the interactive function with the provided arguments
+    ggPedigreeInteractive(
+      ped = ped,
+      famID = famID,
+      personID = personID,
+      momID = momID,
+      dadID = dadID,
+      status_col = status_col,
+      config = config,
+      debug = debug,
+      hints = hints,
+      as_widget = as_widget,
+      tooltip_cols = tooltip_cols,
+      ...
+    )
+  } else {
+    if (interactive == TRUE && !requireNamespace("plotly", quietly = TRUE)) {
+      message("The 'plotly' package is required for interactive plots.")
+    }
+    # Call the core function with the provided arguments
+    ggPedigree.core(
+      ped = ped,
+      famID = famID,
+      personID = personID,
+      momID = momID,
+      dadID = dadID,
+      status_col = status_col,
+      config = config,
+      debug = debug,
+      hints = hints,
+      ...
+    )
+  }
+}
+
+#' @title Core Function for ggPedigree
+#' @description
+#' This function is the core implementation of the ggPedigree function.
+#' It handles the data preparation, layout calculation,
+#' and plotting of the pedigree diagram.
+#' It is not intended to be called directly by users.
+#'
+#' @inheritParams ggPedigree
+#' @keywords internal
+
+
+ggPedigree.core <- function(ped, famID = "famID",
+                            personID = "personID",
+                            momID = "momID",
+                            dadID = "dadID",
+                            status_col = NULL,
+                            config = list(),
+                            debug = FALSE,
+                            hints = NULL,
+                            ...) {
   # -----
   # STEP 1: Configuration and Preparation
   # -----
+  if (!inherits(ped, "data.frame")) {
+    stop("ped should be a data.frame or inherit to a data.frame")
+  }
 
   # Set default styling and layout parameters
   default_config <- list(
