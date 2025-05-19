@@ -20,9 +20,11 @@ countOffspring <- function(ped, personID = "ID", momID = "momID", dadID = "dadID
     stop("At least one of the following needed ID variables were not found: personID, momID, dadID")
   }
   ped$offspring <- 0
-  ped$offspring <- sapply(ped[[personID]], function(id) {
+
+  # ped$offspring <- sapply(ped[[personID]], function(id) {
+  ped$offspring <- vapply(ped[[personID]], function(id) {
     sum(ped[[momID]] == id, na.rm = TRUE) + sum(ped[[dadID]] == id, na.rm = TRUE)
-  })
+  }, integer(1))
   return(ped)
 }
 
@@ -87,7 +89,7 @@ generateSpouseList <- function(ped, personID = "personID", momID = "momID", dadI
   colnames(spouselist) <- c("ID1", "ID2", "sex1", "sex2")
 
   unique_pairs <- unique(ped[, c(momID, dadID)])
-  for (i in 1:nrow(unique_pairs)) {
+  for (i in seq_len(nrow(unique_pairs))) {
     id1 <- unique_pairs[i, 1]
     id2 <- unique_pairs[i, 2]
     if (!is.na(id1) & !is.na(id2)) {

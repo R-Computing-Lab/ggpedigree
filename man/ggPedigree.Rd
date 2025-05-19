@@ -12,9 +12,12 @@ ggPedigree(
   momID = "momID",
   dadID = "dadID",
   status_col = NULL,
+  tooltip_cols = NULL,
+  as_widget = FALSE,
   config = list(),
   debug = FALSE,
   hints = NULL,
+  interactive = FALSE,
   ...
 )
 
@@ -25,9 +28,12 @@ ggpedigree(
   momID = "momID",
   dadID = "dadID",
   status_col = NULL,
+  tooltip_cols = NULL,
+  as_widget = FALSE,
   config = list(),
   debug = FALSE,
   hints = NULL,
+  interactive = FALSE,
   ...
 )
 }
@@ -43,6 +49,14 @@ ggpedigree(
 \item{dadID}{Character string specifying the column name for father IDs. Defaults to "dadID".}
 
 \item{status_col}{Character string specifying the column name for affected status. Defaults to NULL.}
+
+\item{tooltip_cols}{Character vector of column names to show when hovering.
+Defaults to c("personID", "sex").  Additional columns present in `ped`
+can be supplied – they will be added to the Plotly tooltip text.}
+
+\item{as_widget}{Logical; if TRUE (default) returns a plotly htmlwidget.
+If FALSE, returns the underlying plotly object (useful for further
+customization before printing).}
 
 \item{config}{A list of configuration options for customizing the plot. The list can include:
 \describe{
@@ -61,6 +75,8 @@ ggpedigree(
 \item{debug}{Logical. If TRUE, prints debugging information. Default: FALSE.}
 
 \item{hints}{Data frame with hints for layout adjustments. Default: NULL.}
+
+\item{interactive}{Logical. If TRUE, generates an interactive plot using `plotly`. Default: FALSE.}
 
 \item{...}{Additional arguments passed to `ggplot2` functions.}
 }

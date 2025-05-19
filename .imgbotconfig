@@ -1,0 +1,9 @@
+{
+    "schedule": "daily", // daily|weekly|monthly
+    "ignoredFiles": [
+    	"*.svg",                   // by extension
+    ],
+    "aggressiveCompression": "true", // true|false
+    "compressWiki": "true", // true|false
+    "minKBReduced": 10 // set reduction threshold (default to 10)
+}

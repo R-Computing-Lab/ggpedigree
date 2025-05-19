@@ -1,11 +1,18 @@
 ## ----setup, include=FALSE-----------------------------------------------------
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5,
+  echo = TRUE
+)
+
 suppressPackageStartupMessages({
   library(BGmisc)
   library(ggplot2)
-  library(readxl)
   library(dplyr)
   library(reshape2)
+  library(tidyverse)
 })
 
 ## -----------------------------------------------------------------------------
@@ -34,19 +41,6 @@ add_mat <- ped2add(ped_filtered, isChild_method = "partialparent", sparse = FALS
 mit_mat <- ped2mit(ped_filtered, isChild_method = "partialparent", sparse = FALSE)
 
 ## -----------------------------------------------------------------------------
-p_add <- ggRelatednessMatrix(
-  add_mat,
-  config = list(
-    color_palette = c("white", "orange", "red"),
-    scale_midpoint = 0.55,
-    cluster = TRUE,
-    title = "Additive Genetic Relatedness",
-    text_size = 15
-  )
-)
-p_add
-
-## -----------------------------------------------------------------------------
 p_mit <- ggRelatednessMatrix(
   mit_mat,
   config = list(
@@ -57,7 +51,29 @@ p_mit <- ggRelatednessMatrix(
     text_size = 6
   )
 )
-p_mit
+p_mit +
+  labs(
+    x = "Individuals",
+    y = "Individuals"
+  ) +
+  theme(
+    axis.text.y = element_blank(),
+    axis.text.x = element_text(angle = -45, size = rel(.5))
+  )
+
+## -----------------------------------------------------------------------------
+p_add <- ggRelatednessMatrix(
+  add_mat,
+  interactive = TRUE,
+  config = list(
+    color_palette = c("white", "orange", "red"),
+    scale_midpoint = 0.55,
+    cluster = TRUE,
+    title = "Additive Genetic Relatedness",
+    text_size = 5
+  )
+)
+p_add
 
 ## -----------------------------------------------------------------------------
 p_add_noclust <- ggRelatednessMatrix(
@@ -74,9 +90,11 @@ if (requireNamespace("corrplot", quietly = TRUE)) {
     type = "lower",
     col.lim = c(0, 1.25),
     is.corr = FALSE,
-    title = "Additive Relatedness (Base R)",
+    title = "Additive Relatedness",
     order = "hclust",
-    col = corrplot::COL1("Reds", 100)
+    col = corrplot::COL1("Reds", 100),
+    tl.pos = "l", tl.col = "black", tl.srt = 5, tl.cex = 0.2,
+    mar = c(0, 0, 2, 0)
   )
 }
 

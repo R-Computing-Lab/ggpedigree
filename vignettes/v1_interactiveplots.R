@@ -20,9 +20,6 @@ data("potter")
 # Display the first few rows of the dataset
 head(potter)
 
-## ----basic-usage--------------------------------------------------------------
-ggPedigreeInteractive(potter)
-
 ## ----basic-usage-2------------------------------------------------------------
 ggPedigreeInteractive(
   potter,
@@ -58,13 +55,13 @@ plt %>%
   ) %>%
   plotly::config(displayModeBar = TRUE)
 
-## ----save-widget--------------------------------------------------------------
-htmlwidgets::saveWidget(
-  plt,
-  file = "potter_interactive.html",
-  selfcontained = TRUE
-)
-# Note: The above code will save the widget in the current working directory.
+## ----save-widget, eval=FALSE--------------------------------------------------
+# htmlwidgets::saveWidget(
+#   plt,
+#   file = "potter_interactive.html",
+#   selfcontained = TRUE
+# )
+# # Note: The above code will save the widget in the current working directory.
 
 ## -----------------------------------------------------------------------------
 static <- ggPedigreeInteractive(

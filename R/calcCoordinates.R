@@ -80,7 +80,8 @@ calculateCoordinates <- function(ped,
         packed = config$ped_packed
       ),
       error = function(e) {
-        warning("Your hints caused an error and were not used. Using default hints instead.")
+        warning("Your hints caused an error and were not used.
+                Using default hints instead.")
         kinship2::autohint(ped_ped,
           align = config$ped_align,
           packed = config$ped_packed

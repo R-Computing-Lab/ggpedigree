@@ -68,7 +68,7 @@ can be supplied – they will be added to the Plotly tooltip text.}
 
 \item{as_widget}{Logical; if TRUE (default) returns a plotly htmlwidget.
 If FALSE, returns the underlying plotly object (useful for further
-customisation before printing).}
+customization before printing).}
 
 \item{...}{Additional arguments passed to `ggplot2` functions.}
 }

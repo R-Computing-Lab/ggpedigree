@@ -1,34 +1,41 @@
 ---
-title: "Visualizing Relatedness Matrices with `ggRelatednessMatrix()`"
+title: "Visualizing Relatedness Matrices with ggRelatednessMatrix()"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Visualizing Relatedness Matrices with `ggRelatednessMatrix()`}
+  %\VignetteIndexEntry{Visualizing Relatedness Matrices with ggRelatednessMatrix()}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5,
+  echo = TRUE
+)
+
 suppressPackageStartupMessages({
   library(BGmisc)
   library(ggplot2)
-  library(readxl)
   library(dplyr)
   library(reshape2)
+  library(tidyverse)
 })
 ```
 
 # Introduction
 
-This vignette demonstrates how to calculate and visualize relatedness matrices for animal pedigrees using functions from the BGmisc and ggpedigree packages.
-We focus on Kluane Red Squirrel Project data, but the workflow generalizes to any pedigree dataset.
+This vignette demonstrates how to calculate and visualize relatedness matrices for animal pedigrees using functions from the BGmisc and ggpedigree packages. We focus on Kluane Red Squirrel Project data, but the workflow generalizes to any pedigree dataset.
+The `ggRelatednessMatrix` function is a new addition to the ggpedigree package, which provides a flexible and visually appealing way to explore patterns of genetic and mitochondrial relatedness within families. This function is designed to work seamlessly with the `ped2add` and `ped2mit` functions from the BGmisc package, which calculate additive genetic and mitochondrial relatedness matrices, respectively.
 
 We will use the new ggRelatednessMatrix function to create ggplot2-based heatmaps of relatedness matrices, inspired by the approaches in the original squirrel population analyses.
 
 ## Data Preparation
 
-First, load pedigree data and required libraries. The example data is from the Kluane Red Squirrel Project, which has been running since 1987. The data are available on Dryad at https://doi.org/10.5061/dryad.2z34tmpr3.
+First, load pedigree data and required libraries. The example data is the life‐history and reproductive metrics for 7,799 individual red squirrels from the Kluane Red Squirrel Project (1987–present). See the redsquirrels data documentation for more details.
 
 ```{r}
 library(ggpedigree)
@@ -67,23 +74,6 @@ mit_mat <- ped2mit(ped_filtered, isChild_method = "partialparent", sparse = FALS
 The ggRelatednessMatrix function plots a relatedness matrix as a heatmap, with options for clustering and color customization. This approach mirrors the style of plots produced in the original red squirrel data analysis.
 
 
-## Plot additive genetic relatedness
-
-```{r}
-p_add <- ggRelatednessMatrix(
-  add_mat,
-  config = list(
-    color_palette = c("white", "orange", "red"),
-    scale_midpoint = 0.55,
-    cluster = TRUE,
-    title = "Additive Genetic Relatedness",
-    text_size = 15
-  )
-)
-p_add
-```
-
-
 ## Plot mitochondrial relatedness
 
 ```{r}
@@ -97,8 +87,39 @@ p_mit <- ggRelatednessMatrix(
     text_size = 6
   )
 )
-p_mit
+p_mit +
+  labs(
+    x = "Individuals",
+    y = "Individuals"
+  ) +
+  theme(
+    axis.text.y = element_blank(),
+    axis.text.x = element_text(angle = -45, size = rel(.5))
+  )
 ```
+
+
+## Plot additive genetic relatedness
+
+Here we plot the additive genetic relatedness matrix with a custom color palette and interactive features. The `ggRelatednessMatrix` function allows for easy customization of the color palette, scale midpoint, clustering, and other plot aesthetics.
+
+```{r}
+p_add <- ggRelatednessMatrix(
+  add_mat,
+  interactive = TRUE,
+  config = list(
+    color_palette = c("white", "orange", "red"),
+    scale_midpoint = 0.55,
+    cluster = TRUE,
+    title = "Additive Genetic Relatedness",
+    text_size = 5
+  )
+)
+p_add
+```
+
+
+
 
 # Customization Options
 
@@ -113,6 +134,7 @@ p_add_noclust
 ```
 
 # Comparison to Base R and Other Approaches
+
 For comparison, here is how the same matrix would be plotted in corrplot, as in earlier squirrel analyses:
 
 ```{r}
@@ -123,9 +145,11 @@ if (requireNamespace("corrplot", quietly = TRUE)) {
     type = "lower",
     col.lim = c(0, 1.25),
     is.corr = FALSE,
-    title = "Additive Relatedness (Base R)",
+    title = "Additive Relatedness",
     order = "hclust",
-    col = corrplot::COL1("Reds", 100)
+    col = corrplot::COL1("Reds", 100),
+    tl.pos = "l", tl.col = "black", tl.srt = 5, tl.cex = 0.2,
+    mar = c(0, 0, 2, 0)
   )
 }
 ```

@@ -1,8 +1,8 @@
 ---
-title: "Interactive Pedigree Plotting with `ggPedigreeInteractive()`"
+title: "Interactive Pedigree Plotting with ggPedigreeInteractive()"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Interactive Pedigree Plotting with `ggPedigreeInteractive()`}
+  %\VignetteIndexEntry{Interactive Pedigree Plotting with ggPedigreeInteractive()}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -50,11 +50,12 @@ head(potter)
 
 A minimal call is just:
 
-```{r basic-usage}
+```r
 ggPedigreeInteractive(potter)
 ```
 
 ...but you will usually want to identify the core primary‑key columns in advance:
+
 ```{r basic-usage-2}
 ggPedigreeInteractive(
   potter,
@@ -67,9 +68,9 @@ ggPedigreeInteractive(
 
 # Customising labels and tool‑tips
 
-`ggPedigreeInteractive()` accepts the same config list as `ggPedigree()`,
-plus the tooltip_cols argument for hover text.
-Below we enable node labels, nudge them upward a little, color by sex, and show both the `personID` and name fields in the hover:
+`ggPedigreeInteractive()` accepts the same config list as `ggPedigree()`, 
+plus the tooltip_cols argument for hover text. Below we enable node labels, 
+nudge them upward a little, color by sex, and show both the `personID` and name fields in the hover:
 
 ```{r customize-aesthetics}
 plt <- ggPedigreeInteractive(
@@ -107,7 +108,7 @@ plt %>%
 
 You can also save the widget as standalone HTML:
 
-```{r save-widget}
+```{r save-widget, eval=FALSE}
 htmlwidgets::saveWidget(
   plt,
   file = "potter_interactive.html",
