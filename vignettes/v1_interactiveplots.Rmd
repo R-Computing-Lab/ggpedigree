@@ -57,7 +57,7 @@ ggPedigreeInteractive(potter)
 ...but you will usually want to identify the core primary‑key columns in advance:
 
 ```{r basic-usage-2}
-ggPedigreeInteractive(
+plt <- ggPedigreeInteractive(
   potter,
   famID    = "famID",
   personID = "personID",
@@ -65,6 +65,16 @@ ggPedigreeInteractive(
   dadID    = "dadID"
 ) |> plotly::hide_legend()
 ```
+
+```{r eval=FALSE, include=TRUE}
+plt
+```
+
+```{r echo=FALSE}
+# reduce file size for CRAN
+plotly::partial_bundle(plt)
+```
+
 
 # Customising labels and tool‑tips
 
@@ -87,7 +97,15 @@ plt <- ggPedigreeInteractive(
   ),
   tooltip_cols = c("personID", "name")
 )
+
+```
+```{r eval=FALSE, include=TRUE}
 plt
+```
+
+```{r echo=FALSE}
+# reduce file size for CRAN
+plotly::partial_bundle(plt)
 ```
 
 # Further customisation
@@ -97,7 +115,7 @@ plt
 Because the function returns a Plotly object, you can layer additional modifications on top:
 
 ```{r further-customization} 
-plt %>%
+plt2 <- plt %>%
   plotly::layout(
     title = "The Potter Family Tree (interactive)",
     hoverlabel = list(bgcolor = "white"),
@@ -105,7 +123,14 @@ plt %>%
   ) %>%
   plotly::config(displayModeBar = TRUE)
 ```  
+```{r eval=FALSE, include=TRUE}
+plt2
+```
 
+```{r echo=FALSE}
+# reduce file size for CRAN
+plotly::partial_bundle(plt2)
+```
 You can also save the widget as standalone HTML:
 
 ```{r save-widget, eval=FALSE}
@@ -170,11 +195,20 @@ static_plot
 You can also convert the static plot back to an interactive plot using `plotly::ggplotly()`:
 
 ```{r static-to-interactive}
-plotly::ggplotly(static_plot,
+plt2 <- plotly::ggplotly(static_plot,
   tooltip = "text",
   width   = NULL,
   height  = NULL
 )
+```
+
+```{r eval=FALSE, include=TRUE}
+plt2
+```
+
+```{r echo=FALSE}
+# reduce file size for CRAN
+plotly::partial_bundle(plt2)
 ```
 
 

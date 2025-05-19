@@ -59,7 +59,8 @@ ggRelatednessMatrix <- function(
     ylab = "Individual",
     text_size = 8,
     include_tooltips = TRUE,
-    tooltip_cols = c("ID1", "ID2", "value")
+    tooltip_cols = c("ID1", "ID2", "value"),
+    rounding = 5
   )
 
   if (!is.null(tooltip_cols)) {
@@ -77,7 +78,7 @@ ggRelatednessMatrix <- function(
   static_plot <- p_list$plot
   ped <- p_list$data
 
-  if (interactive) {
+  if (interactive==TRUE) {
     # If interactive is TRUE, use plotly
     if (!requireNamespace("plotly", quietly = TRUE)) {
       stop("The 'plotly' package is required for interactive plots.")
@@ -110,7 +111,13 @@ ggRelatednessMatrix <- function(
     p <- plotly::ggplotly(static_plot, tooltip = "text")
 
 
-    return(p)
+    if (config$as_widget == TRUE) {
+      return(p)
+    } else {
+      class(p) <- c("plotly", class(p)) # ensure proper S3 dispatch
+      return(p)
+    }
+
   } else {
     # If interactive is FALSE, return the ggplot object
     return(static_plot)
@@ -144,10 +151,14 @@ ggRelatednessMatrix.core <- function(
 
 
   df_melted <- reshape2::melt(mat_plot)
-
   colnames(df_melted) <- c("ID1", "ID2", "value")
-  df_melted$ID1 <- factor(df_melted$ID1, levels = unique(df_melted$ID1))
-  df_melted$ID2 <- factor(df_melted$ID2, levels = unique(df_melted$ID2))
+
+  df_melted <- df_melted |>
+    dplyr::mutate(
+      ID1 = factor(.data$ID1, levels = unique(.data$ID1)),
+      ID2 = factor(.data$ID2, levels = unique(.data$ID2)),
+      value = round(.data$value, config$rounding)
+    )
 
   # rotate x-axis labels
   df_melted$ID2 <- factor(df_melted$ID2, levels = rev(levels(df_melted$ID2)))

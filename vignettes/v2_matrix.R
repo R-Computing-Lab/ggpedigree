@@ -70,10 +70,18 @@ p_add <- ggRelatednessMatrix(
     scale_midpoint = 0.55,
     cluster = TRUE,
     title = "Additive Genetic Relatedness",
-    text_size = 5
+    text_size = 5,
+    rounding = 4,
+    as_widget = FALSE
   )
 )
-p_add
+
+## ----eval=FALSE, include=TRUE-------------------------------------------------
+# p_add
+
+## ----echo=FALSE---------------------------------------------------------------
+# reduce file size for CRAN
+plotly::partial_bundle(p_add)
 
 ## -----------------------------------------------------------------------------
 p_add_noclust <- ggRelatednessMatrix(
