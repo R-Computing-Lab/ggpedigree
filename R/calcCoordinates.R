@@ -113,8 +113,6 @@ calculateCoordinates <- function(ped,
   nid_vector <- as.vector(pos$nid)
   nid_vector <- nid_vector[nid_vector != 0] # Remove zero entries (empty cells)
 
-
-
   # Initialize coordinate columns in the data frame
   ped$nid <- NA
   ped$x_pos <- NA
