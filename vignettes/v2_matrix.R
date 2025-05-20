@@ -41,47 +41,39 @@ add_mat <- ped2add(ped_filtered, isChild_method = "partialparent", sparse = FALS
 mit_mat <- ped2mit(ped_filtered, isChild_method = "partialparent", sparse = FALSE)
 
 ## -----------------------------------------------------------------------------
-p_mit <- ggRelatednessMatrix(
-  mit_mat,
-  config = list(
-    color_palette = c("white", "skyblue", "darkblue"),
-    scale_midpoint = 0.55,
-    cluster = TRUE,
-    title = "Mitochondrial Relatedness",
-    text_size = 6
-  )
-)
-p_mit +
-  labs(
-    x = "Individuals",
-    y = "Individuals"
-  ) +
-  theme(
-    axis.text.y = element_blank(),
-    axis.text.x = element_text(angle = -45, size = rel(.5))
-  )
-
-## -----------------------------------------------------------------------------
 p_add <- ggRelatednessMatrix(
   add_mat,
-  interactive = TRUE,
   config = list(
     color_palette = c("white", "orange", "red"),
     scale_midpoint = 0.55,
     cluster = TRUE,
     title = "Additive Genetic Relatedness",
-    text_size = 5,
-    rounding = 4,
-    as_widget = FALSE
+    text_size = 5
+  )
+)
+
+p_add
+
+## ----mit_mat------------------------------------------------------------------
+p_mit <- ggRelatednessMatrix(
+  mit_mat,
+  interactive = TRUE,
+  config = list(
+    color_palette = c("white", "skyblue", "darkblue"),
+    scale_midpoint = 0.55,
+    cluster = TRUE,
+    title = "Mitochondrial Relatedness",
+    text_size = 6,
+    as_widget = TRUE
   )
 )
 
 ## ----eval=FALSE, include=TRUE-------------------------------------------------
-# p_add
+# p_mit
 
 ## ----echo=FALSE---------------------------------------------------------------
 # reduce file size for CRAN
-plotly::partial_bundle(p_add)
+plotly::partial_bundle(p_mit)
 
 ## -----------------------------------------------------------------------------
 p_add_noclust <- ggRelatednessMatrix(

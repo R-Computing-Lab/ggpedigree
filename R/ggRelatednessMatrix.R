@@ -60,7 +60,8 @@ ggRelatednessMatrix <- function(
     text_size = 8,
     include_tooltips = TRUE,
     tooltip_cols = c("ID1", "ID2", "value"),
-    rounding = 5
+    rounding = 5,
+    as_widget = FALSE
   )
 
   if (!is.null(tooltip_cols)) {

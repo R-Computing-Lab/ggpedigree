@@ -1,5 +1,5 @@
 # ggpedigree 0.4.0
-## in progress
+## Status: Active
 * Allows support for character-based IDs
 * Added linejoin, lineend, segment_self_linetype, option to the `ggpedigree` functions.
 * Added unit tests for calculateConnections, calculateConnections, and ggpedigree functions.
@@ -9,11 +9,11 @@
 * Added redsquirrels dataset to the package for testing and examples.
 * Added a new function `ggRelatednessMatrix` and subfunction `ggRelatednessMatrix.core` to create heatmaps of relatedness matrices.
 * Added new vignette to demonstrate ggRelatednessMatrix
-* Added graphic tests for `ggpedigree`, ggPedigreeInteractive, and ggRelatednessMatrix functions.
-
+* Added graphic tests for `ggpedigree`, `ggPedigreeInteractive`, and `ggRelatednessMatrix` functions.
+* Updated the README and vignettes to reflect the new features and improvements.
+* Updated description to comply with CRAN policies.
 
 # ggpedigree 0.3.0
-Submitted to CRAN on 2025-05-16
 * Expose more labeling options in the `ggpedigree` function to allow for more customization, including nudging labels, and changing the variable used.
 * Added option to add an outline to the pedigree plot.
 * Made the config options more consistent and user-friendly.

@@ -1,8 +1,11 @@
 
 # Description
 
+As requested, I have now updated the description file to comply with CRAN policies.
+
 This is a new package that provides a set of functions for manipulating and visualizing pedigree data in R. 
 It is designed to be used in conjunction with the BGmisc package, which provides tools for simulating, manipulating, and modeling pedigree data.
+
 
 # Test Environments
 
