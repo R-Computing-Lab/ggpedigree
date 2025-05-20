@@ -91,7 +91,7 @@ p_add
 
 
 
-## Plot mitochondrial relatedness
+## Plot Interactively
 
 Here we plot the mitochondrial relatedness matrix with a custom color palette and interactive features.
 

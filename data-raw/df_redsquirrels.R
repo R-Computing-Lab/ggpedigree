@@ -83,6 +83,7 @@ ds <- ped2fam(Ped, famID = "famID", personID = "personID")
 ds$personID %>%
   unique() %>%
   length() # 7799
+
 ds_grouped <- ds %>%
   group_by(personID, momID, dadID, sex, famID, byear, dyear, lrs) %>%
   summarise(
@@ -143,9 +144,6 @@ ds_grouped <- ds %>%
       TRUE ~ ars_n
     )
   )
-
-
-
 
 redsquirrels <- ds_grouped
 
