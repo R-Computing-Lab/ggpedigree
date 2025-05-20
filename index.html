@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>ggplot2 Extensions for Pedigree Diagrams • ggpedigree</title>
+<title>Visualizing Pedigrees with ggplot2 and plotly • ggpedigree</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="ggplot2 Extensions for Pedigree Diagrams">
-<meta name="description" content="Provides plotting functions for visualizing pedigrees in behavior genetics and kinship research. The package complements BGmisc [Garrison et al. (2024) &lt;doi:10.21105/joss.06203&gt;] by rendering pedigrees using the ggplot2 framework and offers a modern alternative to the base-graphics pedigree plot in kinship2 [Sinnwell et al. (2014) &lt;doi:10.1159/000363105&gt;]. Features include support for duplicated individuals, complex mating structures, integration with simulated pedigrees, and layout customization. Designed to integrate with inferred or simulated pedigrees generated using BGmisc [Lyu et al. (2024) &lt;doi:10.1101/2024.12.19.629449&gt;].">
-<meta property="og:description" content="Provides plotting functions for visualizing pedigrees in behavior genetics and kinship research. The package complements BGmisc [Garrison et al. (2024) &lt;doi:10.21105/joss.06203&gt;] by rendering pedigrees using the ggplot2 framework and offers a modern alternative to the base-graphics pedigree plot in kinship2 [Sinnwell et al. (2014) &lt;doi:10.1159/000363105&gt;]. Features include support for duplicated individuals, complex mating structures, integration with simulated pedigrees, and layout customization. Designed to integrate with inferred or simulated pedigrees generated using BGmisc [Lyu et al. (2024) &lt;doi:10.1101/2024.12.19.629449&gt;].">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Visualizing Pedigrees with ggplot2 and plotly">
+<meta name="description" content="Provides plotting functions for visualizing pedigrees in behavior genetics and kinship research. The package complements BGmisc [Garrison et al. (2024) &lt;doi:10.21105/joss.06203&gt;] by rendering pedigrees using the ggplot2 framework and offers a modern alternative to the base-graphics pedigree plot in kinship2 [Sinnwell et al. (2014) &lt;doi:10.1159/000363105&gt;]. Features include support for duplicated individuals, complex mating structures, integration with simulated pedigrees, and layout customization.">
+<meta property="og:description" content="Provides plotting functions for visualizing pedigrees in behavior genetics and kinship research. The package complements BGmisc [Garrison et al. (2024) &lt;doi:10.21105/joss.06203&gt;] by rendering pedigrees using the ggplot2 framework and offers a modern alternative to the base-graphics pedigree plot in kinship2 [Sinnwell et al. (2014) &lt;doi:10.1159/000363105&gt;]. Features include support for duplicated individuals, complex mating structures, integration with simulated pedigrees, and layout customization.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -59,7 +59,14 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The <code>ggpedigree</code> R package complements the BGmisc package by providing a set of functions for visualizing pedigree data using <code>ggplot2</code> and <code>plotly</code>. It is designed to work seamlessly with the <code>BGmisc</code> package, which provides tools for simulating, manipulating, and modeling pedigree data. It extends the plotting functionality of the <code>kinship2</code> package, which is widely used for pedigree analysis in R.</p>
+<p><code>ggpedigree</code> provides modern tools for visualizing pedigree structures using both ‘ggplot2’ and ‘plotly’. It is designed to work seamlessly with the <code>BGmisc</code> package for simulated or empirical pedigree data, and extends the plotting capabilities of the base-graphics functions in <code>kinship2</code>.</p>
+<p>The package supports:</p>
+<ul>
+<li><p>Static, publication-ready pedigree plots using the <code>ggplot2</code> framework</p></li>
+<li><p>Interactive pedigree visualizations using <code>plotly</code></p></li>
+<li><p>Layout customization, complex mating structures, and duplicated individuals</p></li>
+</ul>
+<p><code>ggpedigree</code> is useful in behavior genetics, kinship analysis, and any research involving complex pedigree data.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -76,10 +83,10 @@
 </h2>
 <p>If you use ggpedigree in your research or wish to refer to it, please cite the following:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">citation</span>(<span class="at">package =</span> <span class="st">"ggpedigree"</span>)</span></code></pre></div>
-<p>Garrison S (05.16.2025). <em>ggpedigree: ggplot2 Extensions for Pedigree Diagrams</em>. R package version 0.4.0, <a href="https://github.com/R-Computing-Lab/ggpedigree/" class="external-link uri">https://github.com/R-Computing-Lab/ggpedigree/</a>.</p>
+<p>Garrison S (05.16.2025). <em>ggpedigree: Visualizing Pedigrees with ‘ggplot2’ and ‘plotly’</em>. R package version 0.4.0, <a href="https://github.com/R-Computing-Lab/ggpedigree/" class="external-link uri">https://github.com/R-Computing-Lab/ggpedigree/</a>.</p>
 <p>A BibTeX entry for LaTeX users is</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="sc">@</span>Manual{,</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  title <span class="ot">=</span> {ggpedigree<span class="sc">:</span> ggplot2 Extensions <span class="cf">for</span> Pedigree Diagrams},</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  title <span class="ot">=</span> {ggpedigree<span class="sc">:</span> Visualizing Pedigrees with <span class="st">'ggplot2'</span> and <span class="st">'plotly'</span>},</span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  author <span class="ot">=</span> {S. Mason Garrison},</span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  year <span class="ot">=</span> {<span class="dv">05</span>.<span class="fl">16.2025</span>},</span>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  note <span class="ot">=</span> {R package version <span class="dv">0</span>.<span class="fl">4.0</span>},</span>
