@@ -72,7 +72,13 @@ plt
 
 ```{r echo=FALSE}
 # reduce file size for CRAN
-plotly::partial_bundle(plt)
+if (interactive()) {
+  # If running interactively, use plotly::partial_bundle
+  # to reduce file size for CRAN
+  plotly::partial_bundle(plt)
+} else {
+  plotly::partial_bundle(plt, local = TRUE)
+}
 ```
 
 
@@ -104,7 +110,13 @@ plt
 
 ```{r echo=FALSE}
 # reduce file size for CRAN
-plotly::partial_bundle(plt)
+if (interactive()) {
+  # If running interactively, use plotly::partial_bundle
+  # to reduce file size for CRAN
+  plotly::partial_bundle(plt)
+} else {
+  plotly::partial_bundle(plt, local = TRUE)
+}
 ```
 
 # Further customisation
@@ -128,7 +140,13 @@ plt2
 
 ```{r echo=FALSE}
 # reduce file size for CRAN
-plotly::partial_bundle(plt2)
+if (interactive()) {
+  # If running interactively, use plotly::partial_bundle
+  # to reduce file size for CRAN
+  plotly::partial_bundle(plt2)
+} else {
+  plotly::partial_bundle(plt2, local = TRUE)
+}
 ```
 You can also save the widget as standalone HTML:
 
@@ -207,7 +225,13 @@ plt2
 
 ```{r echo=FALSE}
 # reduce file size for CRAN
-plotly::partial_bundle(plt2)
+if (interactive()) {
+  # If running interactively, use plotly::partial_bundle
+  # to reduce file size for CRAN
+  plotly::partial_bundle(plt2)
+} else {
+  plotly::partial_bundle(plt2, local = TRUE)
+}
 ```
 
 

@@ -34,7 +34,13 @@ plt <- ggPedigreeInteractive(
 
 ## ----echo=FALSE---------------------------------------------------------------
 # reduce file size for CRAN
-plotly::partial_bundle(plt)
+if (interactive()) {
+  # If running interactively, use plotly::partial_bundle
+  # to reduce file size for CRAN
+  plotly::partial_bundle(plt)
+} else {
+  plotly::partial_bundle(plt, local = TRUE)
+}
 
 ## ----customize-aesthetics-----------------------------------------------------
 plt <- ggPedigreeInteractive(
@@ -57,7 +63,13 @@ plt <- ggPedigreeInteractive(
 
 ## ----echo=FALSE---------------------------------------------------------------
 # reduce file size for CRAN
-plotly::partial_bundle(plt)
+if (interactive()) {
+  # If running interactively, use plotly::partial_bundle
+  # to reduce file size for CRAN
+  plotly::partial_bundle(plt)
+} else {
+  plotly::partial_bundle(plt, local = TRUE)
+}
 
 ## ----further-customization----------------------------------------------------
 plt2 <- plt %>%
@@ -73,7 +85,13 @@ plt2 <- plt %>%
 
 ## ----echo=FALSE---------------------------------------------------------------
 # reduce file size for CRAN
-plotly::partial_bundle(plt2)
+if (interactive()) {
+  # If running interactively, use plotly::partial_bundle
+  # to reduce file size for CRAN
+  plotly::partial_bundle(plt2)
+} else {
+  plotly::partial_bundle(plt2, local = TRUE)
+}
 
 ## ----save-widget, eval=FALSE--------------------------------------------------
 # htmlwidgets::saveWidget(
@@ -137,5 +155,11 @@ plt2 <- plotly::ggplotly(static_plot,
 
 ## ----echo=FALSE---------------------------------------------------------------
 # reduce file size for CRAN
-plotly::partial_bundle(plt2)
+if (interactive()) {
+  # If running interactively, use plotly::partial_bundle
+  # to reduce file size for CRAN
+  plotly::partial_bundle(plt2)
+} else {
+  plotly::partial_bundle(plt2, local = TRUE)
+}
 

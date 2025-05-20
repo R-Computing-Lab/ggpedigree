@@ -12,7 +12,7 @@ It is designed to be used in conjunction with the BGmisc package, which provides
 
 1. Local OS: Windows 11 x64 (build 26120), R version 4.5.0 (2025-04-11 ucrt)
 2. **GitHub Actions**:  
-    - [Link](https://github.com/R-Computing-Lab/ggpedigree/actions/runs/15143341248)
+    - [Link](https://github.com/R-Computing-Lab/ggpedigree/actions/runs/15145889225)
     - macOS (latest version) with the latest R release.
     - Windows (latest version) with the latest R release.
     - Ubuntu (latest version) with:
