@@ -6,7 +6,7 @@ knitr::opts_chunk$set(
   fig.height = 5
 )
 
-## -----------------------------------------------------------------------------
+## ----load-packages------------------------------------------------------------
 # Load required packages
 library(BGmisc) # ships the sample 'potter' pedigree
 library(ggplot2) # used internally by ggPedigree*
@@ -14,7 +14,7 @@ library(viridis) # viridis for color palettes
 library(plotly) # conversion layer for interactivity
 library(ggpedigree) # the package itself
 
-## -----------------------------------------------------------------------------
+## ----load-data----------------------------------------------------------------
 # Load the example data
 data("potter")
 # Display the first few rows of the dataset
@@ -52,7 +52,6 @@ plt <- ggPedigreeInteractive(
   tooltip_cols = c("personID", "name")
 )
 
-
 ## ----eval=FALSE, include=TRUE-------------------------------------------------
 # plt
 
@@ -84,7 +83,7 @@ plotly::partial_bundle(plt2)
 # )
 # # Note: The above code will save the widget in the current working directory.
 
-## -----------------------------------------------------------------------------
+## ----static-plot--------------------------------------------------------------
 static <- ggPedigreeInteractive(
   potter,
   famID = "famID",

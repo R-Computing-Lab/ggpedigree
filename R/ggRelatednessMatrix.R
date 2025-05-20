@@ -60,7 +60,8 @@ ggRelatednessMatrix <- function(
     text_size = 8,
     include_tooltips = TRUE,
     tooltip_cols = c("ID1", "ID2", "value"),
-    rounding = 5
+    rounding = 5,
+    as_widget = FALSE
   )
 
   if (!is.null(tooltip_cols)) {
@@ -78,7 +79,7 @@ ggRelatednessMatrix <- function(
   static_plot <- p_list$plot
   ped <- p_list$data
 
-  if (interactive==TRUE) {
+  if (interactive == TRUE) {
     # If interactive is TRUE, use plotly
     if (!requireNamespace("plotly", quietly = TRUE)) {
       stop("The 'plotly' package is required for interactive plots.")
@@ -117,7 +118,6 @@ ggRelatednessMatrix <- function(
       class(p) <- c("plotly", class(p)) # ensure proper S3 dispatch
       return(p)
     }
-
   } else {
     # If interactive is FALSE, return the ggplot object
     return(static_plot)
@@ -148,7 +148,6 @@ ggRelatednessMatrix.core <- function(
     ord <- hc$order
     mat_plot <- mat[ord, ord, drop = FALSE]
   }
-
 
   df_melted <- reshape2::melt(mat_plot)
   colnames(df_melted) <- c("ID1", "ID2", "value")

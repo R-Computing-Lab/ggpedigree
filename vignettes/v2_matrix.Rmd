@@ -71,61 +71,54 @@ mit_mat <- ped2mit(ped_filtered, isChild_method = "partialparent", sparse = FALS
 
 
 # Visualizing Relatedness Matrices
-The ggRelatednessMatrix function plots a relatedness matrix as a heatmap, with options for clustering and color customization. This approach mirrors the style of plots produced in the original red squirrel data analysis.
 
-
-## Plot mitochondrial relatedness
-
-```{r}
-p_mit <- ggRelatednessMatrix(
-  mit_mat,
-  config = list(
-    color_palette = c("white", "skyblue", "darkblue"),
-    scale_midpoint = 0.55,
-    cluster = TRUE,
-    title = "Mitochondrial Relatedness",
-    text_size = 6
-  )
-)
-p_mit +
-  labs(
-    x = "Individuals",
-    y = "Individuals"
-  ) +
-  theme(
-    axis.text.y = element_blank(),
-    axis.text.x = element_text(angle = -45, size = rel(.5))
-  )
-```
-
-
-## Plot additive genetic relatedness
-
-Here we plot the additive genetic relatedness matrix with a custom color palette and interactive features. The `ggRelatednessMatrix` function allows for easy customization of the color palette, scale midpoint, clustering, and other plot aesthetics.
+The ggRelatednessMatrix function plots a relatedness matrix as a heatmap, with options for clustering and color customization. Here we show how to create a static plot of the additive genetic relatedness matrix.
 
 ```{r}
 p_add <- ggRelatednessMatrix(
   add_mat,
-  interactive = TRUE,
   config = list(
     color_palette = c("white", "orange", "red"),
     scale_midpoint = 0.55,
     cluster = TRUE,
     title = "Additive Genetic Relatedness",
-    text_size = 5,
-    rounding = 4,
-    as_widget = FALSE
+    text_size = 5
+  )
+)
+
+p_add
+```
+
+
+
+## Plot Interactively
+
+Here we plot the mitochondrial relatedness matrix with a custom color palette and interactive features.
+
+```{r mit_mat}
+p_mit <- ggRelatednessMatrix(
+  mit_mat,
+  interactive = TRUE,
+  config = list(
+    color_palette = c("white", "skyblue", "darkblue"),
+    scale_midpoint = 0.55,
+    cluster = TRUE,
+    title = "Mitochondrial Relatedness",
+    text_size = 6,
+    as_widget = TRUE
   )
 )
 ```
 
+Dragging the mouse over the plot will show the relatedness value for each pair of individuals. You can also zoom in and out using the mouse wheel or by clicking and dragging.
+
 ```{r eval=FALSE, include=TRUE}
-p_add
+p_mit
 ```
 
 ```{r echo=FALSE}
 # reduce file size for CRAN
-plotly::partial_bundle(p_add)
+plotly::partial_bundle(p_mit)
 ```
 
 
