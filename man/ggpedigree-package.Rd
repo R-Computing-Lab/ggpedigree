@@ -3,9 +3,9 @@
 \docType{package}
 \name{ggpedigree-package}
 \alias{ggpedigree-package}
-\title{ggpedigree: ggplot2 Extensions for Pedigree Diagrams}
+\title{ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'}
 \description{
-Provides plotting functions for visualizing pedigrees in behavior genetics and kinship research. The package complements 'BGmisc' [Garrison et al. (2024) \doi{10.21105/joss.06203}] by rendering pedigrees using the 'ggplot2' framework and offers a modern alternative to the base-graphics pedigree plot in 'kinship2' [Sinnwell et al. (2014) \doi{10.1159/000363105}]. Features include support for duplicated individuals, complex mating structures, integration with simulated pedigrees, and layout customization. Designed to integrate with inferred or simulated pedigrees generated using 'BGmisc' [Lyu et al. (2024) \doi{10.1101/2024.12.19.629449}].
+Provides plotting functions for visualizing pedigrees in behavior genetics and kinship research. The package complements 'BGmisc' [Garrison et al. (2024) \doi{10.21105/joss.06203}] by rendering pedigrees using the 'ggplot2' framework and offers a modern alternative to the base-graphics pedigree plot in 'kinship2' [Sinnwell et al. (2014) \doi{10.1159/000363105}]. Features include support for duplicated individuals, complex mating structures, integration with simulated pedigrees, and layout customization.
 }
 \seealso{
 Useful links:
