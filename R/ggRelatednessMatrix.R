@@ -78,7 +78,7 @@ ggRelatednessMatrix <- function(
   static_plot <- p_list$plot
   ped <- p_list$data
 
-  if (interactive==TRUE) {
+  if (interactive == TRUE) {
     # If interactive is TRUE, use plotly
     if (!requireNamespace("plotly", quietly = TRUE)) {
       stop("The 'plotly' package is required for interactive plots.")
@@ -117,7 +117,6 @@ ggRelatednessMatrix <- function(
       class(p) <- c("plotly", class(p)) # ensure proper S3 dispatch
       return(p)
     }
-
   } else {
     # If interactive is FALSE, return the ggplot object
     return(static_plot)
