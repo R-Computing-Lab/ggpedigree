@@ -43,6 +43,7 @@ mit_mat <- ped2mit(ped_filtered, isChild_method = "partialparent", sparse = FALS
 ## -----------------------------------------------------------------------------
 p_add <- ggRelatednessMatrix(
   add_mat,
+  interactive = FALSE,
   config = list(
     color_palette = c("white", "orange", "red"),
     scale_midpoint = 0.55,
@@ -73,7 +74,11 @@ p_mit <- ggRelatednessMatrix(
 
 ## ----echo=FALSE---------------------------------------------------------------
 # reduce file size for CRAN
-plotly::partial_bundle(p_mit)
+if (interactive()) {
+  plotly::partial_bundle(p_mit)
+} else {
+  plotly::partial_bundle(p_mit, local = TRUE)
+}
 
 ## -----------------------------------------------------------------------------
 p_add_noclust <- ggRelatednessMatrix(

@@ -77,6 +77,7 @@ The ggRelatednessMatrix function plots a relatedness matrix as a heatmap, with o
 ```{r}
 p_add <- ggRelatednessMatrix(
   add_mat,
+  interactive = FALSE,
   config = list(
     color_palette = c("white", "orange", "red"),
     scale_midpoint = 0.55,
@@ -118,7 +119,11 @@ p_mit
 
 ```{r echo=FALSE}
 # reduce file size for CRAN
-plotly::partial_bundle(p_mit)
+if (interactive()) {
+  plotly::partial_bundle(p_mit)
+} else {
+  plotly::partial_bundle(p_mit, local = TRUE)
+}
 ```
 
 

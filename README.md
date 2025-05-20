@@ -16,7 +16,7 @@ downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggpedigree)](https://cr
 [![R-CMD-check](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-check.yaml)
 [![Dev
 branch](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-devcheck.yaml/badge.svg)](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-devcheck.yaml)
-[![codecov](https://codecov.io/gh/R-Computing-Lab/ggpedigree/branch/main/graph/badge.svg?token=xXWYDcD9CF)](https://codecov.io/gh/R-Computing-Lab/ggpedigree)
+[![codecov](https://codecov.io/gh/R-Computing-Lab/ggpedigree/branch/main/graph/badge.svg?token=xXWYDcD9CF)](https://app.codecov.io/gh/R-Computing-Lab/ggpedigree)
 ![License](https://img.shields.io/badge/License-GPL_v3-blue.svg)
 <!-- badges: end -->
 
@@ -62,7 +62,7 @@ cite the following:
 
     citation(package = "ggpedigree")
 
-Garrison S (05.16.2025). *ggpedigree: Visualizing Pedigrees with
+Garrison S (05.20.2025). *ggpedigree: Visualizing Pedigrees with
 ‘ggplot2’ and ‘plotly’*. R package version 0.4.0,
 <https://github.com/R-Computing-Lab/ggpedigree/>.
 
@@ -71,7 +71,7 @@ A BibTeX entry for LaTeX users is
     @Manual{,
       title = {ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'},
       author = {S. Mason Garrison},
-      year = {05.16.2025},
+      year = {05.20.2025},
       note = {R package version 0.4.0},
       url = {https://github.com/R-Computing-Lab/ggpedigree/},
     }
