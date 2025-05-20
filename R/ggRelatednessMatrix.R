@@ -149,7 +149,6 @@ ggRelatednessMatrix.core <- function(
     mat_plot <- mat[ord, ord, drop = FALSE]
   }
 
-
   df_melted <- reshape2::melt(mat_plot)
   colnames(df_melted) <- c("ID1", "ID2", "value")
 
