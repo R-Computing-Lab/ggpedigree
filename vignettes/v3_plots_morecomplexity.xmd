@@ -120,7 +120,7 @@ Here is the same pedigree, but using `ggPedigree()` from {ggpedigree}. This func
 ```{r message=FALSE, warning=FALSE}
 
 
-ggPedigreeInteractive(df_repaired,
+plt <- ggPedigreeInteractive(df_repaired,
   status_col = "affected",
   personID = "ID",
   config = list(
@@ -129,17 +129,23 @@ ggPedigreeInteractive(df_repaired,
     code_male = "M",
     status_affected_lab = 1,
     affected_shape = 4,
-  #  ped_width = 14,
-    include_tooltips = FALSE,
+    ped_width = 14,
+    include_tooltips = TRUE,
     label_nudge_y   = -.25,
     include_labels  = TRUE,
-    label_method    = "geom_text",
+   # label_method    = "geom_text",
     segment_self_color = "purple",
-  tooltip_cols = c("name")
+  tooltip_cols = c("ID", "name")
   )
 
 )
 
+
+htmlwidgets::saveWidget(
+  plt,
+  file = "got.html",
+  selfcontained = TRUE
+)
 
 ```
 
