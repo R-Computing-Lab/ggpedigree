@@ -71,16 +71,19 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
   #   When ggplotly is called, it creates a single data frame that merges all
   #   layer data.  We therefore build a 'text' aesthetic ahead of time so that
   #   it survives the conversion.
-  config$tooltip_cols <- intersect(config$tooltip_cols, names(ped)) # guard against typos
+if(personID != "personID" && personID %in% config$tooltip_cols) {
+  # replace config$tooltip_cols with personID, core function renames it to "personID"
+  config$tooltip_cols <- gsub(personID, "personID", config$tooltip_cols)
+ }
+  config$tooltip_cols <- intersect(config$tooltip_cols, names(static_plot$data)) # guard against typos
+
   if (length(config$tooltip_cols) == 0L) {
     stop("None of the specified tooltip_cols found in `ped`.")
   }
-
-  tooltip_fmt <- function(df, tooltip_cols) {
-    apply(df[tooltip_cols], 1, function(row) {
-      paste(paste(tooltip_cols, row, sep = ": "), collapse = "<br>")
-    })
+  if (config$return_static == TRUE) {
+    return(static_plot) # return the static plot
   }
+
   ## 3. Convert ggplot → plotly ---------------------------------------------
   #   Add the tooltip text to the data frame
   if (config$include_tooltips == TRUE) {
@@ -88,29 +91,35 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
     point_layers <- which(sapply(static_plot$layers, function(l) {
       inherits(l$geom, "GeomPoint")
     }))
+
     if (length(point_layers) == 0L) {
       warnings("No GeomPoint layer found for tooltips.")
 
       static_plot <- static_plot + ggplot2::aes(text = tooltip_fmt(
-        df = ped,
+        df = static_plot$data,
         config$tooltip_cols
       ))
     } else {
+    #  static_ped <- static_plot$data
+
+
       for (i in point_layers) {
         static_plot$layers[[i]]$mapping <- utils::modifyList(
           static_plot$layers[[i]]$mapping,
           ggplot2::aes(text = tooltip_fmt(
-            df = ped,
+            df = static_plot$data,
             tooltip_cols = config$tooltip_cols
           ))
         )
       }
     }
+
     plt <- plotly::ggplotly(static_plot,
       tooltip = "text",
       width   = NULL,
       height  = NULL
     )
+
   } else {
     plt <- plotly::ggplotly(static_plot,
       # tooltip = "text",
@@ -119,11 +128,7 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
     )
   }
 
-
-  # return the static plot if requested
-  if (config$return_static == TRUE) {
-    return(static_plot) # return the static plot
-  } else if (as_widget == TRUE) {
+if (as_widget == TRUE) {
     return(plt)
   } else {
     class(plt) <- c("plotly", class(plt)) # ensure proper S3 dispatch
@@ -133,3 +138,20 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
 #' @rdname ggPedigreeInteractive
 #' @export
 ggpedigreeinteractive <- ggPedigreeInteractive
+
+#' @title Format tooltip text
+#' @description
+#' Format tooltip text for ggplotly
+#'
+#' @param df A data frame containing the data to be displayed in the tooltip.
+#' @param tooltip_cols A character vector of column names to be included in the tooltip.
+#'
+#' @return A character vector of formatted tooltip text for each row in the data frame.
+#'
+#' @keywords internal
+
+tooltip_fmt <- function(df, tooltip_cols) {
+  apply(df[tooltip_cols], 1, function(row) {
+    paste(paste(tooltip_cols, row, sep = ": "), collapse = "<br>")
+  })
+}

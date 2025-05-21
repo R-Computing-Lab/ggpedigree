@@ -183,6 +183,7 @@ static <- ggPedigreeInteractive(
 ```
 
 The static plot can be further customized using ggplot2 functions. 
+
 ```{r static-plot-customization}
 static_plot <- static +
   ggplot2::labs(
