@@ -46,7 +46,10 @@
 #' ggPedigree(hazard, famID = "famID", personID = "ID", config = list(code_male = 0))
 #'
 #' @export
-
+#' @import ggplot2 dplyr BGmisc ggrepel
+#' @importFrom rlang sym
+#' @importFrom utils modifyList
+#'
 ggPedigree <- function(ped,
                        famID = "famID",
                        personID = "personID",
@@ -175,7 +178,7 @@ ggPedigree.core <- function(ped, famID = "famID",
     status_affected_shape = 4,
     status_unaffected_lab = "unaffected",
     status_vals = c(1, 0),
-    color_palette = c("white", "orange", "red")
+    color_palette = c("blue", "orange", "red")
     #  hints = NULL
   )
 
@@ -538,12 +541,29 @@ ggpedigree <- ggPedigree
 
   # Add color scale for sex or affected status if applicable
   if (config$sex_color == TRUE) {
+    if (!is.null(config$color_palette)) {
+      p <- p + ggplot2::scale_color_manual(
+        values = config$color_palette,
+        labels = config$sex_shape_labs
+      )
+    }else{
     p <- p +
-      ggplot2::scale_color_discrete(labels = config$sex_shape_labs) +
+      ggplot2::scale_color_discrete(labels = config$sex_shape_labs)
+    }
+
+    p <- p +
       ggplot2::labs(color = "Sex", shape = "Sex")
   } else if (!is.null(status_col)) {
+    if (!is.null(config$color_palette)) {
+      p <- p + ggplot2::scale_color_manual(
+        values = config$color_palette,
+        labels = config$status_labs
+      )
+    } else {
     p <- p +
-      ggplot2::scale_color_discrete(labels = config$status_labs) +
+      ggplot2::scale_color_discrete(labels = config$status_labs)
+    }
+    p <- p +
       ggplot2::labs(color = "Affected", shape = "Sex")
   } else {
     p <- p + ggplot2::labs(shape = "Sex")

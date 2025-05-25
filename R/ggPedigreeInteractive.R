@@ -106,8 +106,6 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
       ))
     } else {
       #  static_ped <- static_plot$data
-
-
       for (i in point_layers) {
         static_plot$layers[[i]]$mapping <- utils::modifyList(
           static_plot$layers[[i]]$mapping,
