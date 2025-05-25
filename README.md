@@ -10,7 +10,7 @@
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R package
-version](https://www.r-pkg.org/badges/version/ggpedigree)](https://www.r-pkg.org/badges/version/ggpedigree)
+version](https://www.r-pkg.org/badges/version/ggpedigree)](https://CRAN.R-project.org/package=ggpedigree)
 [![Package
 downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggpedigree)](https://cranlogs.r-pkg.org/badges/grand-total/ggpedigree)</br>
 [![R-CMD-check](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-check.yaml)
@@ -62,18 +62,20 @@ cite the following:
 
     citation(package = "ggpedigree")
 
-Garrison S (05.20.2025). *ggpedigree: Visualizing Pedigrees with
-‘ggplot2’ and ‘plotly’*. R package version 0.4.0,
-<https://github.com/R-Computing-Lab/ggpedigree/>.
+Garrison S (2025). *ggpedigree: Visualizing Pedigrees with ‘ggplot2’ and
+‘plotly’*. <doi:10.32614/CRAN.package.ggpedigree>
+<https://doi.org/10.32614/CRAN.package.ggpedigree>, R package version
+0.4.0, <https://CRAN.R-project.org/package=ggpedigree>.
 
 A BibTeX entry for LaTeX users is
 
     @Manual{,
       title = {ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'},
       author = {S. Mason Garrison},
-      year = {05.20.2025},
+      year = {2025},
       note = {R package version 0.4.0},
-      url = {https://github.com/R-Computing-Lab/ggpedigree/},
+      url = {https://CRAN.R-project.org/package=ggpedigree},
+      doi = {10.32614/CRAN.package.ggpedigree},
     }
 
 ## Contributing

@@ -24,7 +24,7 @@ jobs:
           - {os: windows-latest, r: 'release', rtools: '42'}
           - {os: ubuntu-latest, r: 'devel', rtools: '', http-user-agent: 'release'}
           - {os: ubuntu-latest, r: 'release', rtools: ''}
-          - {os: ubuntu-latest, r: 'oldrel-1', rtools: ''}
+#          - {os: ubuntu-latest, r: 'oldrel-1', rtools: ''}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}

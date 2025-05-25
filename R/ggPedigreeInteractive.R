@@ -80,9 +80,7 @@ if(personID != "personID" && personID %in% config$tooltip_cols) {
   if (length(config$tooltip_cols) == 0L) {
     stop("None of the specified tooltip_cols found in `ped`.")
   }
-  if (config$return_static == TRUE) {
-    return(static_plot) # return the static plot
-  }
+
 
   ## 3. Convert ggplot → plotly ---------------------------------------------
   #   Add the tooltip text to the data frame
@@ -127,8 +125,9 @@ if(personID != "personID" && personID %in% config$tooltip_cols) {
       height = NULL
     )
   }
-
-if (as_widget == TRUE) {
+  if (config$return_static == TRUE) {
+    return(static_plot) # return the static plot
+  } else if (as_widget == TRUE) {
     return(plt)
   } else {
     class(plt) <- c("plotly", class(plt)) # ensure proper S3 dispatch

@@ -1,7 +1,7 @@
 Package: ggpedigree
 Title: Visualizing Pedigrees with 'ggplot2' and 'plotly'
 Version: 0.4.0
-Date/Publication: 05.20.2025
+Date/Publication: 05.24.2025
 Authors@R: c(
     person("S. Mason", "Garrison", email= "garrissm@wfu.edu", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-4804-6003"))
