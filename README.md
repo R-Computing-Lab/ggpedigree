@@ -63,9 +63,8 @@ cite the following:
     citation(package = "ggpedigree")
 
 Garrison S (2025). *ggpedigree: Visualizing Pedigrees with ‘ggplot2’ and
-‘plotly’*. <doi:10.32614/CRAN.package.ggpedigree>
-<https://doi.org/10.32614/CRAN.package.ggpedigree>, R package version
-0.4.0, <https://CRAN.R-project.org/package=ggpedigree>.
+‘plotly’*. R package version 0.4.1,
+<https://github.com/R-Computing-Lab/ggpedigree/>.
 
 A BibTeX entry for LaTeX users is
 
@@ -73,9 +72,8 @@ A BibTeX entry for LaTeX users is
       title = {ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'},
       author = {S. Mason Garrison},
       year = {2025},
-      note = {R package version 0.4.0},
-      url = {https://CRAN.R-project.org/package=ggpedigree},
-      doi = {10.32614/CRAN.package.ggpedigree},
+      note = {R package version 0.4.1},
+      url = {https://github.com/R-Computing-Lab/ggpedigree/},
     }
 
 ## Contributing
