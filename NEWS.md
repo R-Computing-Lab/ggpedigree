@@ -1,5 +1,8 @@
-# ggpedigree 0.4.0
+# ggpedigree 0.4.1
 ## Status: Active
+* Fixed a bug in the `ggpedigree` function that caused an error when using a custom ID name and requesting the plot to be returned as a ggplot object.
+
+# ggpedigree 0.4.0
 * Allows support for character-based IDs
 * Added linejoin, lineend, segment_self_linetype, option to the `ggpedigree` functions.
 * Added unit tests for calculateConnections, calculateConnections, and ggpedigree functions.

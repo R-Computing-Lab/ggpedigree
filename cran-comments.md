@@ -1,12 +1,6 @@
 
 # Description
-
-As requested, I have now updated the description file to include quotes in the title. 
-My apologies for missing that in the previous submission.
-
-This is a new package that provides a set of functions for manipulating and visualizing pedigree data in R. 
-It is designed to be used in conjunction with the BGmisc package, which provides tools for simulating, manipulating, and modeling pedigree data.
-
+This is a hotfix for the previous submission of the package "ggpedigree" (v0.4.0). I found a small error that occurs if you try to make an interactive plot using a custom ID name and a want the plot to be returned as a ggplot object. 
 
 # Test Environments
 
