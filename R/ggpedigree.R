@@ -225,7 +225,8 @@ ggPedigree.core <- function(ped, famID = "famID",
   # -----
 
   # Standardize sex variable using code_male convention
-  ds_ped <- BGmisc::recodeSex(ds_ped, recode_male = config$code_male)
+  ds_ped <- BGmisc::recodeSex(ds_ped,
+                              recode_male = config$code_male)
 
   # -----
   # STEP 4: Coordinate Generation
@@ -335,9 +336,6 @@ ggPedigree.core <- function(ped, famID = "famID",
       na.rm = TRUE
     )
 
-
-
-
   # -----
   # STEP 8: Add Points (nodes)
   # -----
@@ -422,6 +420,9 @@ ggPedigree.core <- function(ped, famID = "famID",
     p <- .addLabels(p = p, config = config)
   }
 
+  # -----
+  # STEP 10: Add optional self-segment lines
+  # -----
 
   # Self-segment (for duplicate layout appearances of same person)
   if (inherits(plot_connections$self_coords, "data.frame")) {
@@ -457,7 +458,7 @@ ggPedigree.core <- function(ped, famID = "famID",
 
 
   # -----
-  # STEP 10: Scales, Theme
+  # STEP 11: Scales, Theme
   # -----
 
   p <- p +
@@ -479,10 +480,8 @@ ggPedigree.core <- function(ped, famID = "famID",
       )
   }
 
-
-
   # -----
-  # STEP 11: Final Legend Adjustments
+  # STEP 12: Final Legend Adjustments
   # -----
   # Adjust legend labels and colors based on the configuration
   if (config$apply_default_scales == TRUE) {
