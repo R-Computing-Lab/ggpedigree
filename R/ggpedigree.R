@@ -162,12 +162,14 @@ ggPedigree.core <- function(ped, famID = "famID",
     segment_sibling_color = "black",
     segment_spouse_color = "black",
     # segment linetypes
-    segment_self_linetype = "dotdash",
-    segment_self_angle = 90,
     segment_linewidth = 0.5,
     segment_linetype = 1,
     segment_lineend = "round",
     segment_linejoin = "round",
+    # segment self aesthetics
+    segment_self_linetype = "dotdash",
+    segment_self_angle = 90,
+    segment_self_curvature = -0.2,
     # sex
     sex_color = TRUE,
     sex_shape_labs = c("Female", "Male", "Unknown"),
@@ -178,10 +180,9 @@ ggPedigree.core <- function(ped, famID = "famID",
     status_affected_shape = 4,
     status_unaffected_lab = "unaffected",
     status_vals = c(1, 0),
-    color_palette = c("blue", "orange", "red")
+    color_palette = c("#440154FF","#FDE725FF", "#21908CFF" )
     #  hints = NULL
   )
-
 
 
 
@@ -462,7 +463,7 @@ ggPedigree.core <- function(ped, famID = "famID",
       linejoin = config$segment_linejoin,
       linetype = config$segment_self_linetype,
       angle = config$segment_self_angle,
-      curvature = -0.2,
+      curvature = config$segment_self_curvature,
       na.rm = TRUE
     )
   }

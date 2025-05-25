@@ -1,6 +1,8 @@
 # ggpedigree 0.5.0
 * Added segment_linetype options to the `ggpedigree` function.
-* Added usage of color_pallette to the `ggpedigree` function.
+* Added usage of color_palette to the `ggpedigree` function.
+* Added curvature option to the `ggpedigree` function.
+
 # ggpedigree 0.4.1
 ## Status: Submitted to CRAN
 * Fixed a bug in the `ggpedigree` function that caused an error when using a custom ID name and requesting the plot to be returned as a ggplot object.

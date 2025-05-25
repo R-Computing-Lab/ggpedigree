@@ -89,7 +89,8 @@ calculateConnections <- function(ped,
     .data = ped,
     "personID",
     "x_pos", "y_pos",
-    "dadID", "momID", "parent_hash", "couple_hash",
+    "dadID", "momID",
+    "parent_hash", "couple_hash",
     "spouseID",
     "famID",
     "extra"
@@ -98,7 +99,6 @@ calculateConnections <- function(ped,
   # no duplications, so just use the same connections
   connections_for_sibs <- connections_for_spouses <- connections_for_dads <- connections_for_moms <- connections
 
-
   connections <- connections |>
     dplyr::mutate(
       link_as_mom = TRUE,
@@ -106,9 +106,6 @@ calculateConnections <- function(ped,
       link_as_spouse = TRUE,
       link_as_sibling = TRUE
     )
-
-
-
 
 
   # Get mom's coordinates
