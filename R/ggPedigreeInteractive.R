@@ -45,6 +45,13 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
   if (!is.null(tooltip_cols)) {
     config$tooltip_cols <- tooltip_cols
   }
+  if (!is.null(as_widget)) {
+    config$as_widget <- as_widget
+  }
+  if (!is.null(debug)) {
+    config$debug <- debug
+  }
+
   # Set default styling and layout parameters
   default_config <- list(
     label_method = "geom_text",
@@ -61,9 +68,9 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
     personID    = personID,
     momID       = momID,
     dadID       = dadID,
-    status_col  = status_col,
+    status_col  = config$status_col,
     config      = config,
-    debug       = debug,
+    debug       = config$debug,
     ...
   )
 
@@ -71,10 +78,10 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
   #   When ggplotly is called, it creates a single data frame that merges all
   #   layer data.  We therefore build a 'text' aesthetic ahead of time so that
   #   it survives the conversion.
-if(personID != "personID" && personID %in% config$tooltip_cols) {
-  # replace config$tooltip_cols with personID, core function renames it to "personID"
-  config$tooltip_cols <- gsub(personID, "personID", config$tooltip_cols)
- }
+  if (personID != "personID" && personID %in% config$tooltip_cols) {
+    # replace config$tooltip_cols with personID, core function renames it to "personID"
+    config$tooltip_cols <- gsub(personID, "personID", config$tooltip_cols)
+  }
   config$tooltip_cols <- intersect(config$tooltip_cols, names(static_plot$data)) # guard against typos
 
   if (length(config$tooltip_cols) == 0L) {
@@ -98,7 +105,7 @@ if(personID != "personID" && personID %in% config$tooltip_cols) {
         config$tooltip_cols
       ))
     } else {
-    #  static_ped <- static_plot$data
+      #  static_ped <- static_plot$data
 
 
       for (i in point_layers) {
@@ -117,7 +124,6 @@ if(personID != "personID" && personID %in% config$tooltip_cols) {
       width   = NULL,
       height  = NULL
     )
-
   } else {
     plt <- plotly::ggplotly(static_plot,
       # tooltip = "text",
@@ -127,7 +133,7 @@ if(personID != "personID" && personID %in% config$tooltip_cols) {
   }
   if (config$return_static == TRUE) {
     return(static_plot) # return the static plot
-  } else if (as_widget == TRUE) {
+  } else if (config$as_widget == TRUE) {
     return(plt)
   } else {
     class(plt) <- c("plotly", class(plt)) # ensure proper S3 dispatch
@@ -138,19 +144,24 @@ if(personID != "personID" && personID %in% config$tooltip_cols) {
 #' @export
 ggpedigreeinteractive <- ggPedigreeInteractive
 
+#' @rdname ggPedigreeInteractive
+#' @export
+ggpedigreeInteractive <- ggPedigreeInteractive
+
 #' @title Format tooltip text
 #' @description
 #' Format tooltip text for ggplotly
 #'
 #' @param df A data frame containing the data to be displayed in the tooltip.
 #' @param tooltip_cols A character vector of column names to be included in the tooltip.
+#' @param sep A character string containing the separator for the columns
 #'
 #' @return A character vector of formatted tooltip text for each row in the data frame.
 #'
 #' @keywords internal
 
-tooltip_fmt <- function(df, tooltip_cols) {
+tooltip_fmt <- function(df, tooltip_cols, sep = ": ") {
   apply(df[tooltip_cols], 1, function(row) {
-    paste(paste(tooltip_cols, row, sep = ": "), collapse = "<br>")
+    paste(paste(tooltip_cols, row, sep = sep), collapse = "<br>")
   })
 }

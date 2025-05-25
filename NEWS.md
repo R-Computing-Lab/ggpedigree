@@ -1,5 +1,8 @@
+# ggpedigree 0.5.0
+* Added segment_linetype options to the `ggpedigree` function.
+
 # ggpedigree 0.4.1
-## Status: Active
+## Status: Submitted to CRAN
 * Fixed a bug in the `ggpedigree` function that caused an error when using a custom ID name and requesting the plot to be returned as a ggplot object.
 
 # ggpedigree 0.4.0

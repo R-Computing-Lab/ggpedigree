@@ -24,8 +24,9 @@
 #' @param config A list of configuration options for customizing the plot. The list can include:
 #'  \describe{
 #'     \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1.}
-#'     \item{segment_spouse_color, segment_self_color, segment_sibling_color, segment_parent_color, segment_offspring_color}{Character. Line colors for respective connection types.}
-#'     \item{label_text_size, point_size, line_width}{Numeric. Controls text size, point size, and line thickness.}
+#'     \item{segment_spouse_color, segment_self_color}{Character. Line colors for respective connection types.}
+#'     \item{segment_sibling_color, segment_parent_color, segment_offspring_color}{Character. Line colors for respective connection types.}
+#'     \item{label_text_size, point_size, segment_linewidth}{Numeric. Controls text size, point size, and line thickness.}
 #'     \item{generation_height}{Numeric. Vertical spacing multiplier between generations. Default: 1.}
 #'     \item{shape_unknown, shape_female, shape_male, affected_shape}{Integers. Shape codes for plotting each group.}
 #'     \item{sex_shape_labs}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
@@ -145,7 +146,7 @@ ggPedigree.core <- function(ped, famID = "famID",
     label_text_angle = 0,
     label_text_size = 2,
     # point and line aesthetics
-    line_width = 0.5,
+
     point_size = 4,
     # point outline
     outline = FALSE,
@@ -160,6 +161,8 @@ ggPedigree.core <- function(ped, famID = "famID",
     # segment linetypes
     segment_self_linetype = "dotdash",
     segment_self_angle = 90,
+    segment_linewidth = 0.5,
+    segment_linetype = 1,
     segment_lineend = "round",
     segment_linejoin = "round",
     # sex
@@ -226,7 +229,8 @@ ggPedigree.core <- function(ped, famID = "famID",
 
   # Standardize sex variable using code_male convention
   ds_ped <- BGmisc::recodeSex(ds_ped,
-                              recode_male = config$code_male)
+    recode_male = config$code_male
+  )
 
   # -----
   # STEP 4: Coordinate Generation
@@ -260,6 +264,7 @@ ggPedigree.core <- function(ped, famID = "famID",
   # -----
   # STEP 6: Initialize Plot
   # -----
+
   gap_off <- 0.5 * config$generation_height # single constant for all “stub” offsets
 
   p <- ggplot2::ggplot(ds, ggplot2::aes(
@@ -282,10 +287,11 @@ ggPedigree.core <- function(ped, famID = "famID",
         y = .data$y_spouse,
         yend = .data$y_pos
       ),
-      linewidth = config$line_width,
+      linewidth = config$segment_linewidth,
       lineend = config$segment_lineend,
       linejoin = config$segment_linejoin,
       color = config$segment_spouse_color,
+      linetype = config$segment_linetype,
       na.rm = TRUE
     )
 
@@ -299,7 +305,8 @@ ggPedigree.core <- function(ped, famID = "famID",
       y = .data$y_mid_sib - gap_off,
       yend = .data$y_midparent
     ),
-    linewidth = config$line_width,
+    linewidth = config$segment_linewidth,
+    linetype = config$segment_linetype,
     lineend = config$segment_lineend,
     linejoin = config$segment_linejoin,
     color = config$segment_parent_color,
@@ -314,9 +321,10 @@ ggPedigree.core <- function(ped, famID = "famID",
         y = .data$y_pos - gap_off,
         yend = .data$y_mid_sib - gap_off
       ),
-      linewidth = config$line_width,
+      linewidth = config$segment_linewidth,
       lineend = config$segment_lineend,
       linejoin = config$segment_linejoin,
+      linetype = config$segment_linetype,
       color = config$segment_offspring_color,
       na.rm = TRUE
     ) +
@@ -329,9 +337,10 @@ ggPedigree.core <- function(ped, famID = "famID",
         y = .data$y_mid_sib - gap_off,
         yend = .data$y_pos
       ),
-      linewidth = config$line_width,
+      linewidth = config$segment_linewidth,
       lineend = config$segment_lineend,
       linejoin = config$segment_linejoin,
+      linetype = config$segment_linetype,
       color = config$segment_sibling_color,
       na.rm = TRUE
     )
@@ -360,7 +369,7 @@ ggPedigree.core <- function(ped, famID = "famID",
         size = config$point_size * config$outline_multiplier,
         na.rm = TRUE,
         color = config$outline_color,
-        stroke = config$line_width
+        stroke = config$segment_linewidth
       )
   }
 
@@ -374,7 +383,7 @@ ggPedigree.core <- function(ped, famID = "famID",
         ),
         size = config$point_size,
         na.rm = TRUE,
-        stroke = config$line_width
+        stroke = config$segment_linewidth
       )
     # If affected status is present, overlay an additional marker using alpha aesthetic
     if (!is.null(status_col)) {
@@ -444,7 +453,7 @@ ggPedigree.core <- function(ped, famID = "famID",
         y = .data$y_otherself,
         yend = .data$y_pos
       ),
-      linewidth = config$line_width,
+      linewidth = config$segment_linewidth,
       color = config$segment_self_color,
       lineend = config$segment_lineend,
       linejoin = config$segment_linejoin,
@@ -559,7 +568,7 @@ ggpedigree <- ggPedigree
         size = config$label_text_size,
         na.rm = TRUE,
         max.overlaps = config$label_max_overlaps,
-        segment.size = config$line_width * .5,
+        segment.size = config$segment_linewidth * .5,
         angle = config$label_text_angle,
         segment.color = config$label_segment_color
       )
