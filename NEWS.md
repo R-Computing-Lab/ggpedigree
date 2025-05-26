@@ -2,6 +2,8 @@
 * Added segment_linetype options to the `ggpedigree` function.
 * Added usage of color_palette to the `ggpedigree` function.
 * Added curvature option to the `ggpedigree` function.
+* Add support for removing diagonal, upper triangle, and lower triangle in the `ggRelatednessMatrix` function.
+* Add support for labeling tiles
 
 # ggpedigree 0.4.1
 ## Status: Submitted to CRAN

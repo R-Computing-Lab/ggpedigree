@@ -47,7 +47,7 @@ Config options include:
   \item{title}{Plot title}
   \item{cluster}{Logical; should rows/cols be clustered (default: TRUE)}
   \item{xlab, ylab}{Axis labels}
-  \item{text_size}{Axis text size}
+  \item{layout_text_size}{Axis text size}
 }
 }
 \examples{
@@ -66,7 +66,7 @@ ggRelatednessMatrix(mat,
     title = "Relatedness Matrix",
     xlab = "Individuals",
     ylab = "Individuals",
-    text_size = 8
+    layout_text_size = 8
   )
 )
 }

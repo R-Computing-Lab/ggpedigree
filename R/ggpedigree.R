@@ -138,6 +138,11 @@ ggPedigree.core <- function(ped, famID = "famID",
     code_male = 1,
     generation_height = 1,
     generation_width = 1,
+    # layout
+    layout_text_size = 8,
+    layout_text_color = "black",
+    layout_text_angle_y = 0,
+    layout_text_angle_x = 90,
     # geom label
     include_labels = TRUE,
     label_col = "personID",

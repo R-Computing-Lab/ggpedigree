@@ -83,8 +83,9 @@ if (interactive()) {
 ## -----------------------------------------------------------------------------
 p_add_noclust <- ggRelatednessMatrix(
   add_mat,
-  config = list(cluster = FALSE, title = "Additive Relatedness (No Clustering)")
-)
+  config = list(cluster = FALSE, title = "Additive Relatedness (No Clustering)"#,
+              #  geom = "geom_raster"
+))
 p_add_noclust
 
 ## -----------------------------------------------------------------------------
