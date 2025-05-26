@@ -224,7 +224,7 @@ ggRelatednessMatrix.core <- function(
   if (config$include_labels) {
     p <- p +
       ggplot2::geom_text(
-        ggplot2::aes(label =config$label_col),
+        ggplot2::aes(label = config$label_col),
         size = config$label_text_size,
         color = config$label_text_color
       )
@@ -244,9 +244,10 @@ ggRelatednessMatrix.core <- function(
         hjust = 1, size = config$layout_text_size,
         color = config$layout_text_color
       ),
-      axis.text.y = ggplot2::element_text(size = config$layout_text_size,
-                                          angle = config$layout_text_angle_y,
-                                          color = config$layout_text_color
+      axis.text.y = ggplot2::element_text(
+        size = config$layout_text_size,
+        angle = config$layout_text_angle_y,
+        color = config$layout_text_color
       ),
     ) +
     ggplot2::labs(

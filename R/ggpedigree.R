@@ -185,7 +185,7 @@ ggPedigree.core <- function(ped, famID = "famID",
     status_affected_shape = 4,
     status_unaffected_lab = "unaffected",
     status_vals = c(1, 0),
-    color_palette = c("#440154FF","#FDE725FF", "#21908CFF" )
+    color_palette = c("#440154FF", "#FDE725FF", "#21908CFF")
     #  hints = NULL
   )
 
@@ -552,9 +552,9 @@ ggpedigree <- ggPedigree
         values = config$color_palette,
         labels = config$sex_shape_labs
       )
-    }else{
-    p <- p +
-      ggplot2::scale_color_discrete(labels = config$sex_shape_labs)
+    } else {
+      p <- p +
+        ggplot2::scale_color_discrete(labels = config$sex_shape_labs)
     }
 
     p <- p +
@@ -566,8 +566,8 @@ ggpedigree <- ggPedigree
         labels = config$status_labs
       )
     } else {
-    p <- p +
-      ggplot2::scale_color_discrete(labels = config$status_labs)
+      p <- p +
+        ggplot2::scale_color_discrete(labels = config$status_labs)
     }
     p <- p +
       ggplot2::labs(color = "Affected", shape = "Sex")
