@@ -4,7 +4,7 @@ author: "S. Mason Garrison"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Plotting Phenotypic Correlation by Degree of Relatedness}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 ```{r, message=FALSE, warning=FALSE}
 library(tibble)
 library(dplyr)
-
+library(ggpedigree)
 df<-pedigree_df <- tribble(
   ~n_pairs,
 ~addRel_min,

@@ -7,7 +7,7 @@ knitr::opts_chunk$set(
 ## ----message=FALSE, warning=FALSE---------------------------------------------
 library(tibble)
 library(dplyr)
-
+library(ggpedigree)
 df<-pedigree_df <- tribble(
   ~n_pairs,
 ~addRel_min,
@@ -43,7 +43,7 @@ df<-pedigree_df <- tribble(
 352,1.1,1.5,1.1005859375,1.12844427065416,1.125,1.25,1,1,47.7579829059829,0.545454545454545,NA,NA,0.153846153846154,0.9999,Inf,3.76616019073219,0,0.9999
 )
 
-## ----fig.show='hold'----------------------------------------------------------
+## -----------------------------------------------------------------------------
 ggPhenotypeByDegree(df=df,
                     y_var = "USA_flag_10_polychorFunction_rho",
                     y_stem_se = "USA_flag_10_polychorFunction",

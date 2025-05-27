@@ -3,7 +3,7 @@
 #' This function plots the phenotypic correlation as a function of genetic relatedness.
 #'
 #' @param df Data frame containing pairwise summary statistics. Required columns:
-#'   \describe{
+#'  \describe{
 #'     \item{addRel_min}{Minimum relatedness per group}
 #'     \item{addRel_max}{Maximum relatedness per group}
 #'     \item{n_pairs}{Number of pairs at that relatedness}
@@ -14,29 +14,29 @@
 #' @param y_se Name of the standard error column (e.g., "r_pheno_se").
 #' @param y_stem_se Optional; base stem used to construct SE ribbon bounds. (e.g., "r_pheno")
 #' @param config A list of configuration overrides. Valid entries include:
-#'   \describe{
-#'     \item{filter_n_pairs} Minimum number of pairs to include (default: 500)
-#'     \item{filter_degree_min} Minimum degree of relatedness (default: 0)
-#'     \item{filter_degree_max} Maximum degree of relatedness (default: 7)
-#'     \item{title} Plot title
-#'     \item{subtitle} Plot subtitle
-#'     \item{color_scale} Paletteer color scale name (e.g., "ggthemes::calc")
-#'     \item{only_classic_kin} If TRUE, only classic kin are shown
-#'     \item{kin_grouping} If TRUE, use classic kin × mtDNA for grouping
-#'     \item{drop_classic_kin} If TRUE, remove classic kin rows
-#'     \item{drop_non_classic_sibs}If TRUE, remove non-classic sibs (default: TRUE)
-#'     \item{annotate} If TRUE, annotate mother/father/sibling points
-#'     \item{annotate_xshift} Relative x-axis shift for annotations
-#'     \item{annotate_yshift} Relative y-axis shift for annotations
-#'     \item{point_size} Size of geom_point() points (default: 1)
-#'     \item{degree_rel} If TRUE, x-axis uses degree-of-relatedness scaling
-#'     \item{grouping} Grouping column name (default: "mtdna_factor")
-#'     \item{rounding} Number of decimal places for rounding (default: 2)
-#'     \item{threshold} Tolerance % for matching known degrees (default: 10)
-#'     \item{max_degrees} Maximum number of degrees to consider (default: 12)
+#'  \describe{
+#'     \item{filter_n_pairs}{Minimum number of pairs to include (default: 500)}
+#'     \item{filter_degree_min}{Minimum degree of relatedness (default: 0)}
+#'     \item{filter_degree_max}{Maximum degree of relatedness (default: 7)}
+#'     \item{title}{Plot title}
+#'     \item{subtitle}{Plot subtitle}
+#'     \item{color_scale}{Paletteer color scale name (e.g., "ggthemes::calc")}
+#'     \item{only_classic_kin}{If TRUE, only classic kin are shown}
+#'     \item{kin_grouping}{If TRUE, use classic kin × mtDNA for grouping}
+#'     \item{drop_classic_kin}{If TRUE, remove classic kin rows}
+#'     \item{drop_non_classic_sibs}{If TRUE, remove non-classic sibs (default: TRUE)}
+#'     \item{annotate}{If TRUE, annotate mother/father/sibling points}
+#'     \item{annotate_xshift}{Relative x-axis shift for annotations}
+#'     \item{annotate_yshift}{Relative y-axis shift for annotations}
+#'     \item{point_size}{Size of geom_point points (default: 1)}
+#'     \item{degree_rel}{If TRUE, x-axis uses degree-of-relatedness scaling}
+#'     \item{grouping}{Grouping column name (default: mtdna_factor)}
+#'     \item{rounding}{Number of decimal places for rounding (default: 2)}
+#'     \item{threshold}{Tolerance \% for matching known degrees}
+#'     \item{max_degrees}{Maximum number of degrees to consider}
 #'     }
-#'  @param ... Additional arguments passed to `ggplot2` functions.
 #'  @param data_prep Logical; if TRUE, performs data preparation steps.
+#'  @param ... Additional arguments passed to `ggplot2` functions.
 #'  @return A ggplot object containing the correlation plot.
 #'  @importFrom dplyr mutate filter pull sym
 #'  @importFrom ggplot2 ggplot aes geom_ribbon geom_line geom_point annotate labs theme
