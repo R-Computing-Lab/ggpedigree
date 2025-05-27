@@ -3,15 +3,15 @@ test_that("ggRelatednessMatrix returns a gg object", {
   data("redsquirrels")
 
   # Set up the data
-#  sumped <- BGmisc::summarizePedigrees(redsquirrels,
-#    famID = "famID",
-#    personID = "personID",
-#    nbiggest = 5
-#  )
+  #  sumped <- BGmisc::summarizePedigrees(redsquirrels,
+  #    famID = "famID",
+  #    personID = "personID",
+  #    nbiggest = 5
+  #  )
 
 
   # Set target family for visualization
-  fam_filter <- 160 #sumped$biggest_families$famID[3]
+  fam_filter <- 160 # sumped$biggest_families$famID[3]
 
   # Filter for reasonably sized family, recode sex if needed
   ped_filtered <- redsquirrels %>%
@@ -38,10 +38,9 @@ test_that("ggRelatednessMatrix returns a gg object", {
   # Check if the plot has the expected title
   expect_equal(p_add$labels$title, "Additive Genetic Relatedness")
 
-  expect_equal(paste0(p_add$layers[[1]][["constructor"]][[1]]),c("::","ggplot2","geom_tile"))
+  expect_equal(paste0(p_add$layers[[1]][["constructor"]][[1]]), c("::", "ggplot2", "geom_tile"))
   expect_true(p_add$theme$axis.text.x$angle == 90)
   expect_true(p_add$theme$axis.text.y$angle == 0)
-
 })
 
 test_that("ggRelatednessMatrix handles triangles", {
@@ -57,7 +56,7 @@ test_that("ggRelatednessMatrix handles triangles", {
 
 
   # Set target family for visualization
-  fam_filter <- 160 #sumped$biggest_families$famID[3]
+  fam_filter <- 160 # sumped$biggest_families$famID[3]
 
   # Filter for reasonably sized family, recode sex if needed
   ped_filtered <- redsquirrels %>%
@@ -84,7 +83,7 @@ test_that("ggRelatednessMatrix handles triangles", {
   expect_true(is_ggplot(p_add))
   # Check if the plot has the expected title
   expect_equal(p_add$labels$title, "Additive Genetic Relatedness")
-  expect_equal(paste0(p_add$layers[[1]][["constructor"]][[1]]),c("::","ggplot2","geom_tile"))
+  expect_equal(paste0(p_add$layers[[1]][["constructor"]][[1]]), c("::", "ggplot2", "geom_tile"))
   expect_true(p_add$theme$axis.text.x$angle == 90)
   expect_true(p_add$theme$axis.text.y$angle == 0)
   # Check if the upper triangle is excluded
@@ -92,4 +91,3 @@ test_that("ggRelatednessMatrix handles triangles", {
   # Check if the lower triangle is included
   expect_true(all(!is.na(p_add$data$value[lower.tri(p_add$data$value)])))
 })
-

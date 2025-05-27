@@ -49,7 +49,8 @@ p_add <- ggRelatednessMatrix(
     scale_midpoint = 0.55,
     cluster = TRUE,
     title = "Additive Genetic Relatedness",
-    text_size = 5
+    include_upper_triangle = F,
+    include_lower_triangle = T
   )
 )
 
@@ -83,9 +84,11 @@ if (interactive()) {
 ## -----------------------------------------------------------------------------
 p_add_noclust <- ggRelatednessMatrix(
   add_mat,
-  config = list(cluster = FALSE, title = "Additive Relatedness (No Clustering)"#,
-              #  geom = "geom_raster"
-))
+  config = list(
+    cluster = FALSE, title = "Additive Relatedness (No Clustering)" # ,
+    #  geom = "geom_raster"
+  )
+)
 p_add_noclust
 
 ## -----------------------------------------------------------------------------

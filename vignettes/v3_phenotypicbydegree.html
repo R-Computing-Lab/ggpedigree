@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Vignette Author" />
+
+<meta name="date" content="2025-05-27" />
+
+<title>Vignette Title</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Vignette Title</h1>
+<h4 class="author">Vignette Author</h4>
+<h4 class="date">2025-05-27</h4>
+
+
+
+<details>
+<summary>
+Click to expand pedigree setup
+</summary>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>df<span class="ot">&lt;-</span>pedigree_df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="sc">~</span>n_pairs,</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="sc">~</span>addRel_min,</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="sc">~</span>addRel_max,</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="sc">~</span>addRel_emp_min,</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="sc">~</span>addRel_emp_mean,</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="sc">~</span>addRel_emp_median,</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="sc">~</span>addRel_emp_max,</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="sc">~</span>mtdna,</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="sc">~</span>cnu,</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="sc">~</span>age_k1_meanFunction,</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="sc">~</span>male_k1_meanFunction,</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="sc">~</span>same_matID_meanFunction,</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="sc">~</span>same_patID_meanFunction,</span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="sc">~</span>USA_flag_10_k1_meanFunction,</span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="sc">~</span>USA_flag_10_polychorFunction_rho,</span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="sc">~</span>USA_flag_10_polychorFunction_se,</span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="sc">~</span>USA_flag_10_polychorFunction_chisq,</span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="sc">~</span>USA_flag_10_polychorFunction_df,</span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a><span class="sc">~</span>USA_flag_10_ml_polychorFunction,</span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="dv">3617250</span>,<span class="fl">0.225</span>,<span class="fl">0.275</span>,<span class="fl">0.2255859375</span>,<span class="fl">0.247734086859983</span>,<span class="fl">0.25</span>,<span class="fl">0.27490234375</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="fl">59.2335021779651</span>,<span class="fl">0.480619365892598</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">0.249700992238048</span>,<span class="fl">0.04517140756813</span>,<span class="fl">0.000691314990032303</span>,<span class="fl">0.00000799819827079773</span>,<span class="dv">0</span>,<span class="fl">0.0451713825840523</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="dv">4983424</span>,<span class="fl">0.225</span>,<span class="fl">0.275</span>,<span class="fl">0.2255859375</span>,<span class="fl">0.247985118108249</span>,<span class="fl">0.25</span>,<span class="fl">0.27490234375</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="fl">60.2924621468198</span>,<span class="fl">0.54683237363258</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">0.247046760504304</span>,<span class="fl">0.0409988164718674</span>,<span class="fl">0.000599673001112523</span>,<span class="fl">0.00000799819827079773</span>,<span class="dv">0</span>,<span class="fl">0.040998793040341</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="dv">120024</span>,<span class="fl">0.275</span>,<span class="fl">0.45</span>,<span class="fl">0.359375</span>,<span class="fl">0.42720031928978</span>,<span class="fl">0.4375</span>,<span class="fl">0.44921875</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="fl">55.3786442198885</span>,<span class="fl">0.519857671410953</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">0.208202301154754</span>,<span class="fl">0.169242204331722</span>,<span class="fl">0.00393269696620211</span>,<span class="fl">0.00000814738450571895</span>,<span class="dv">0</span>,<span class="fl">0.169234306738862</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a><span class="dv">137947</span>,<span class="fl">0.275</span>,<span class="fl">0.45</span>,<span class="fl">0.275146484375</span>,<span class="fl">0.336850848231778</span>,<span class="fl">0.34375</span>,<span class="fl">0.447265625</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="fl">58.7404851093794</span>,<span class="fl">0.436444779593302</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">0.230130064360623</span>,<span class="fl">0.0979941906533943</span>,<span class="fl">0.00359788288853913</span>,<span class="fl">0.00000800052657723427</span>,<span class="dv">0</span>,<span class="fl">0.0979945954952227</span>,</span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a><span class="dv">108989</span>,<span class="fl">0.275</span>,<span class="fl">0.45</span>,<span class="fl">0.275390625</span>,<span class="fl">0.328092281014401</span>,<span class="fl">0.3125</span>,<span class="fl">0.4453125</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="fl">60.2531852003308</span>,<span class="fl">0.619355993501189</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">0.233078768161892</span>,<span class="fl">0.0774003012451702</span>,<span class="fl">0.00404657995476565</span>,<span class="fl">0.00000800139969214797</span>,<span class="dv">0</span>,<span class="fl">0.0774005589379321</span>,</span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="dv">1668205</span>,<span class="fl">0.45</span>,<span class="fl">0.55</span>,<span class="fl">0.4501953125</span>,<span class="fl">0.495319721631096</span>,<span class="fl">0.4990234375</span>,<span class="fl">0.549560546875</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="fl">57.9295757847709</span>,<span class="fl">0.522333747318167</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">0.257514897453126</span>,<span class="fl">0.160645710133276</span>,<span class="fl">0.000975187176863543</span>,<span class="fl">0.0000904696062207222</span>,<span class="dv">0</span>,<span class="fl">0.16065612400207</span>,</span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a><span class="dv">729441</span>,<span class="fl">0.45</span>,<span class="fl">0.55</span>,<span class="fl">0.451171875</span>,<span class="fl">0.496536543871464</span>,<span class="fl">0.5</span>,<span class="fl">0.5498046875</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="fl">66.1279781018233</span>,<span class="fl">0.275059425002599</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">0.265100488202374</span>,<span class="fl">0.150191012774079</span>,<span class="fl">0.00152996759330951</span>,<span class="fl">0.00000815372914075851</span>,<span class="dv">0</span>,<span class="fl">0.150193105587773</span>,</span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a><span class="dv">747643</span>,<span class="fl">0.45</span>,<span class="fl">0.55</span>,<span class="fl">0.451171875</span>,<span class="fl">0.49663045074013</span>,<span class="fl">0.5</span>,<span class="fl">0.5478515625</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="fl">65.9430606759445</span>,<span class="fl">0.749751203807075</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">0.262018010446397</span>,<span class="fl">0.114532502819044</span>,<span class="fl">0.00154238295730097</span>,<span class="fl">0.00000800378620624542</span>,<span class="dv">0</span>,<span class="fl">0.114533380385551</span>,</span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a><span class="dv">44787</span>,<span class="fl">0.55</span>,<span class="fl">0.9</span>,<span class="fl">0.55029296875</span>,<span class="fl">0.724711065168643</span>,<span class="fl">0.75</span>,<span class="fl">0.8984375</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="fl">63.4350717031309</span>,<span class="fl">0.520855662736692</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">0.232835687466476</span>,<span class="fl">0.9999</span>,<span class="cn">Inf</span>,<span class="fl">29160.6932985728</span>,<span class="dv">0</span>,<span class="fl">0.952963916809192</span>,</span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a><span class="dv">4639</span>,<span class="fl">0.55</span>,<span class="fl">0.9</span>,<span class="fl">0.55029296875</span>,<span class="fl">0.569994330072125</span>,<span class="fl">0.5625</span>,<span class="fl">0.75</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="fl">62.3524143288736</span>,<span class="fl">0.366174409830764</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">0.231225722917566</span>,<span class="fl">0.12373864513677</span>,<span class="fl">0.0194548428304584</span>,<span class="fl">0.00000800392444944009</span>,<span class="dv">0</span>,<span class="fl">0.123740641721645</span>,</span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a><span class="dv">2744</span>,<span class="fl">0.55</span>,<span class="fl">0.9</span>,<span class="fl">0.55078125</span>,<span class="fl">0.566952741528391</span>,<span class="fl">0.5625</span>,<span class="fl">0.75</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="fl">62.2241888686131</span>,<span class="fl">0.758432087511395</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">0.228467153284672</span>,<span class="fl">0.123400997830296</span>,<span class="fl">0.0254117516477019</span>,<span class="fl">0.00000801651367510203</span>,<span class="dv">0</span>,<span class="fl">0.123405021390264</span>,</span>
+<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a><span class="dv">1018929</span>,<span class="fl">0.9</span>,<span class="fl">1.1</span>,<span class="fl">0.90234375</span>,<span class="fl">0.994306976854356</span>,<span class="dv">1</span>,<span class="fl">1.09375</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="fl">61.9059012997516</span>,<span class="fl">0.523600756854653</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">0.254706541475618</span>,<span class="fl">0.9999</span>,<span class="cn">Inf</span>,<span class="fl">12530.2189094715</span>,<span class="dv">0</span>,<span class="fl">0.9999</span>,</span>
+<span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a><span class="dv">352</span>,<span class="fl">1.1</span>,<span class="fl">1.5</span>,<span class="fl">1.1005859375</span>,<span class="fl">1.12844427065416</span>,<span class="fl">1.125</span>,<span class="fl">1.25</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="fl">47.7579829059829</span>,<span class="fl">0.545454545454545</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">0.153846153846154</span>,<span class="fl">0.9999</span>,<span class="cn">Inf</span>,<span class="fl">3.76616019073219</span>,<span class="dv">0</span>,<span class="fl">0.9999</span></span>
+<span id="cb1-37"><a href="#cb1-37" tabindex="-1"></a>)</span></code></pre></div>
+<div id="figures" class="section level2">
+<h2>Figures</h2>
+<p>The figure sizes have been customized so that you can easily put two
+images side-by-side.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">ggPhenotypeByDegree</span>(<span class="at">df=</span>df,</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>                    <span class="at">y_var =</span> <span class="st">&quot;USA_flag_10_polychorFunction_rho&quot;</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>                    <span class="at">y_stem_se =</span> <span class="st">&quot;USA_flag_10_polychorFunction&quot;</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>                    <span class="at">y_se =</span> <span class="st">&quot;USA_flag_10_polychorFunction_se&quot;</span>)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

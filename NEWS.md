@@ -6,6 +6,7 @@
 * Add support for removing diagonal, upper triangle, and lower triangle in the `ggRelatednessMatrix` function. 
 * Add support for labeling tiles
 * Added new tests for the `ggRelatednessMatrix` function.
+* Added new phenotype plotting function `ggPhenotypebyDegree` to visualize phenotypes by degree of relatedness.
 
 # ggpedigree 0.4.1
 ## Status: Submitted to CRAN

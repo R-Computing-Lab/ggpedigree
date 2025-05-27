@@ -118,7 +118,7 @@ ggPedigree(
     label_nudge_y = -.25,
     label_nudge_x = 0.45,
     label_method = "geom_text",
- #   sex_color_palette = c("black", "black"),
+    #   sex_color_palette = c("black", "black"),
     sex_color = TRUE
   )
 )
@@ -168,7 +168,7 @@ ggPedigree(
   config = list(
     code_male = 0,
     sex_color = FALSE,
-    status_code_affected   = TRUE,
+    status_code_affected = TRUE,
     status_code_unaffected = FALSE,
     status_label_affected = "Infected",
     status_label_unaffected = "Not infected",
@@ -185,8 +185,10 @@ You can also highlight specific individuals in the pedigree by creating a new co
 df <- potter
 
 df <- df %>%
-  mutate(proband = ifelse(name %in% c("Harry Potter",
-                                      "Dudley Dursley"), TRUE, FALSE))
+  mutate(proband = ifelse(name %in% c(
+    "Harry Potter",
+    "Dudley Dursley"
+  ), TRUE, FALSE))
 
 ggPedigree(
   df,

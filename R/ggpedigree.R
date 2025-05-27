@@ -181,7 +181,7 @@ ggPedigree.core <- function(ped, famID = "famID",
 
     # --- SEX SHAPES & LEGEND -------------------------------------------
     sex_color = TRUE,
-    sex_legend_title= "Sex",
+    sex_legend_title = "Sex",
     sex_shape_labs = c("Female", "Male", "Unknown"),
     sex_color_palette = c("#440154FF", "#FDE725FF", "#21908CFF"),
     sex_shape_female = 16,
@@ -189,15 +189,14 @@ ggPedigree.core <- function(ped, famID = "famID",
     sex_shape_unknown = 18,
 
     # --- STATUS *codes vs labels* (originally conflated) ---------------
-    status_code_affected   = 1,
+    status_code_affected = 1,
     status_code_unaffected = 0,
-    status_label_affected  = "Affected",
+    status_label_affected = "Affected",
     status_label_unaffected = "Unaffected",
     status_alpha_affected = 1,
     status_alpha_unaffected = 0,
     status_color_palette = c("#440154FF", "#FDE725FF"),
-
-    status_affected_shape  = 4,
+    status_affected_shape = 4,
     status_affected_legend_title = "Affected",
     show_status_legend = FALSE
     #  hints = NULL
@@ -214,15 +213,19 @@ ggPedigree.core <- function(ped, famID = "famID",
 
   config$status_codes <- c(config$status_code_affected, config$status_code_unaffected)
 
-  config$status_alpha_vals    <- stats::setNames(c(config$status_alpha_affected,
-                                    config$status_alpha_unaffected),  config$status_labs)
-  config$status_color_vals    <- stats::setNames(c(
-    config$status_color_palette[1],
-    config$status_color_palette[2]),
+  config$status_alpha_vals <- stats::setNames(c(
+    config$status_alpha_affected,
+    config$status_alpha_unaffected
+  ), config$status_labs)
+  config$status_color_vals <- stats::setNames(
+    c(
+      config$status_color_palette[1],
+      config$status_color_palette[2]
+    ),
     config$status_labs
   )
 
-  config$status_labels <-  stats::setNames(c(
+  config$status_labels <- stats::setNames(c(
     config$status_label_affected,
     config$status_label_unaffected
   ), config$status_labs)
@@ -560,7 +563,6 @@ ggpedigree <- ggPedigree
 #' @keywords internal
 #' @return A ggplot object with added scales.
 .addScales <- function(p, config, status_col = NULL) {
-
   p <- p + ggplot2::scale_shape_manual(
     values = config$sex_shape_vals,
     labels = config$sex_shape_labs
@@ -569,15 +571,17 @@ ggpedigree <- ggPedigree
   # Add alpha scale for affected status if applicable
   if (!is.null(status_col) && config$sex_color == TRUE) {
     p <- p + ggplot2::scale_alpha_manual(
-      name =  if (config$show_status_legend){
-        config$status_affected_legend_title}else{NULL},
+      name = if (config$show_status_legend) {
+        config$status_affected_legend_title
+      } else {
+        NULL
+      },
       values = config$status_alpha_vals,
       na.translate = FALSE
     )
-    if (config$show_status_legend==FALSE){
+    if (config$show_status_legend == FALSE) {
       p <- p + ggplot2::guides(alpha = "none")
-  }
-
+    }
   }
 
   # Add color scale for sex or affected status if applicable
@@ -593,12 +597,14 @@ ggpedigree <- ggPedigree
     }
 
     p <- p +
-      ggplot2::labs(color = config$sex_legend_title,
-                    shape = config$sex_legend_title)
+      ggplot2::labs(
+        color = config$sex_legend_title,
+        shape = config$sex_legend_title
+      )
   } else if (!is.null(status_col)) {
     if (!is.null(config$status_color_palette)) {
       p <- p + ggplot2::scale_color_manual(
-        values = config$status_color_vals ,
+        values = config$status_color_vals,
         labels = config$status_labels
       )
     } else {
@@ -606,8 +612,10 @@ ggpedigree <- ggPedigree
         ggplot2::scale_color_discrete(labels = config$status_labels)
     }
     p <- p +
-      ggplot2::labs(color = config$status_affected_legend_title,
-                    shape = config$sex_legend_title)
+      ggplot2::labs(
+        color = config$status_affected_legend_title,
+        shape = config$sex_legend_title
+      )
   } else {
     p <- p + ggplot2::labs(shape = config$sex_legend_title)
   }

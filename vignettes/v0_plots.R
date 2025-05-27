@@ -2,8 +2,8 @@
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 7,
-  fig.height = 5
+  fig.width = 5.6,
+  fig.height = 4
 )
 
 ## ----libraries, message=FALSE, warning=FALSE----------------------------------
@@ -57,6 +57,7 @@ ggPedigree(
     label_nudge_y = -.25,
     label_nudge_x = 0.45,
     label_method = "geom_text",
+    #   sex_color_palette = c("black", "black"),
     sex_color = TRUE
   )
 )
@@ -72,8 +73,8 @@ p <- ggPedigree(
   config = list(
     code_male = 0,
     sex_color = TRUE,
-    status_affected_lab = TRUE,
-    status_unaffected_lab = FALSE,
+    status_code_affected = TRUE,
+    status_code_unaffected = FALSE,
     status_affected_shape = 4
   )
 )
@@ -89,8 +90,11 @@ ggPedigree(
   config = list(
     code_male = 0,
     sex_color = FALSE,
-    status_affected_lab = TRUE,
-    status_unaffected_lab = FALSE
+    status_code_affected = TRUE,
+    status_code_unaffected = FALSE,
+    status_label_affected = "Infected",
+    status_label_unaffected = "Not infected",
+    status_affected_legend_title = "Status"
   )
 )
 
@@ -98,7 +102,10 @@ ggPedigree(
 df <- potter
 
 df <- df %>%
-  mutate(proband = ifelse(name %in% c("Harry Potter", "Dudley Dursley"), TRUE, FALSE))
+  mutate(proband = ifelse(name %in% c(
+    "Harry Potter",
+    "Dudley Dursley"
+  ), TRUE, FALSE))
 
 ggPedigree(
   df,
@@ -107,8 +114,8 @@ ggPedigree(
   status_col = "proband",
   config = list(
     sex_color = TRUE,
-    status_affected_lab = TRUE,
-    status_unaffected_lab = FALSE,
+    status_code_affected = TRUE,
+    status_code_unaffected = FALSE,
     status_affected_shape = 8 # star shape
   )
 )
@@ -132,6 +139,7 @@ p +
     axis.title.x     = element_blank(),
     axis.title.y     = element_blank()
   ) + scale_color_viridis(
+    option = "plasma",
     discrete = TRUE,
     labels = c("Female", "Male", "Unknown")
   )
@@ -157,8 +165,8 @@ p <- ggPedigree(
   config = list(
     code_male = 0,
     sex_color = FALSE,
-    status_affected_lab = TRUE,
-    status_unaffected_lab = FALSE,
+    status_code_affected = TRUE,
+    status_code_unaffected = FALSE,
     generation_height = 4,
     generation_width = 2,
     status_affected_shape = 4,
@@ -171,7 +179,7 @@ p + facet_wrap(~famID, scales = "free") #+ scale_color_viridis(
 #   labels = c("TRUE", "FALSE")
 #  )  + theme_bw(base_size = 14)  +  guides(colour="none", shape="none")
 
-## -----------------------------------------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 library(tibble)
 library(dplyr)
 pedigree_df <- tribble(
@@ -249,8 +257,8 @@ p <- ggPedigree(
     apply_default_scales = FALSE,
     label_method = "geom_text",
     label_col = "cleanpersonID",
-    status_affected_lab = TRUE,
-    status_unaffected_lab = FALSE,
+    status_code_affected = TRUE,
+    status_code_unaffected = FALSE,
     generation_height = 1,
     generation_width = 1,
     status_affected_shape = 4,
@@ -263,7 +271,7 @@ p <- ggPedigree(
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
 p + scale_shape_manual(
-  values = c(16, 15, 15),
+  values = c(16, 15, 14),
   labels = c("Female", "Male", "Unknown")
 ) +
   guides(shape = "none") + scale_color_viridis(
