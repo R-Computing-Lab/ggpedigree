@@ -135,15 +135,18 @@ ggPedigree.core <- function(ped, famID = "famID",
   default_config <- list(
     apply_default_scales = TRUE,
     apply_default_theme = TRUE,
+    # --- SEX ------------------------------------------------------------
     code_male = 1,
+
+    # --- LAYOUT ---------------------------------------------------------
     generation_height = 1,
     generation_width = 1,
-    # layout
     layout_text_size = 8,
     layout_text_color = "black",
     layout_text_angle_y = 0,
     layout_text_angle_x = 90,
-    # geom label
+
+    # --- LABELS ---------------------------------------------------------
     include_labels = TRUE,
     label_col = "personID",
     label_max_overlaps = 15,
@@ -153,13 +156,13 @@ ggPedigree.core <- function(ped, famID = "famID",
     label_segment_color = NA,
     label_text_angle = 0,
     label_text_size = 2,
-    # point and line aesthetics
 
+    # --- POINT / LINE AESTHETICS ---------------------------------------
     point_size = 4,
-    # point outline
     outline = FALSE,
     outline_multiplier = 1.5,
     outline_color = "black",
+
     # segment colors
     segment_offspring_color = "black",
     segment_parent_color = "black",
@@ -175,29 +178,54 @@ ggPedigree.core <- function(ped, famID = "famID",
     segment_self_linetype = "dotdash",
     segment_self_angle = 90,
     segment_self_curvature = -0.2,
-    # sex
+
+    # --- SEX SHAPES & LEGEND -------------------------------------------
     sex_color = TRUE,
+    sex_legend_title= "Sex",
     sex_shape_labs = c("Female", "Male", "Unknown"),
+    sex_color_palette = c("#440154FF", "#FDE725FF", "#21908CFF"),
     sex_shape_female = 16,
     sex_shape_male = 15,
     sex_shape_unknown = 18,
-    status_affected_lab = "affected",
-    status_affected_shape = 4,
-    status_unaffected_lab = "unaffected",
-    status_vals = c(1, 0),
-    color_palette = c("#440154FF", "#FDE725FF", "#21908CFF")
+
+    # --- STATUS *codes vs labels* (originally conflated) ---------------
+    status_code_affected   = 1,
+    status_code_unaffected = 0,
+    status_label_affected  = "Affected",
+    status_label_unaffected = "Unaffected",
+    status_alpha_affected = 1,
+    status_alpha_unaffected = 0,
+    status_color_palette = c("#440154FF", "#FDE725FF"),
+
+    status_affected_shape  = 4,
+    status_affected_legend_title = "Affected",
+    show_status_legend = FALSE
     #  hints = NULL
   )
-
-
 
   # Merge with user-specified overrides
   # This allows the user to override any of the default values
   config <- utils::modifyList(default_config, config)
 
   # Set additional internal config values based on other entries
-  config$status_labs <- c(config$status_affected_lab, config$status_unaffected_lab)
+
   config$sex_shape_vals <- c(config$sex_shape_female, config$sex_shape_male, config$sex_shape_unknown)
+  config$status_labs <- c(config$status_label_affected, config$status_label_unaffected)
+
+  config$status_codes <- c(config$status_code_affected, config$status_code_unaffected)
+
+  config$status_alpha_vals    <- stats::setNames(c(config$status_alpha_affected,
+                                    config$status_alpha_unaffected),  config$status_labs)
+  config$status_color_vals    <- stats::setNames(c(
+    config$status_color_palette[1],
+    config$status_color_palette[2]),
+    config$status_labs
+  )
+
+  config$status_labels <-  stats::setNames(c(
+    config$status_label_affected,
+    config$status_label_unaffected
+  ), config$status_labs)
 
   # -----
   # STEP 2: Pedigree Data Transformation
@@ -226,8 +254,10 @@ ggPedigree.core <- function(ped, famID = "famID",
 
   # Recode affected status into factor, if applicable
   if (!is.null(status_col)) {
-    ds_ped[[status_col]] <- factor(ds_ped[[status_col]],
-      levels = c(config$status_affected_lab, config$status_unaffected_lab)
+    ds_ped[[status_col]] <- factor(
+      ds_ped[[status_col]],
+      levels = config$status_codes,
+      labels = config$status_labels
     )
   }
 
@@ -530,6 +560,7 @@ ggpedigree <- ggPedigree
 #' @keywords internal
 #' @return A ggplot object with added scales.
 .addScales <- function(p, config, status_col = NULL) {
+
   p <- p + ggplot2::scale_shape_manual(
     values = config$sex_shape_vals,
     labels = config$sex_shape_labs
@@ -538,18 +569,22 @@ ggpedigree <- ggPedigree
   # Add alpha scale for affected status if applicable
   if (!is.null(status_col) && config$sex_color == TRUE) {
     p <- p + ggplot2::scale_alpha_manual(
-      name = NULL,
-      labels = config$status_labs,
-      values = config$status_vals,
+      name =  if (config$show_status_legend){
+        config$status_affected_legend_title}else{NULL},
+      values = config$status_alpha_vals,
       na.translate = FALSE
-    ) + ggplot2::guides(alpha = "none")
+    )
+    if (config$show_status_legend==FALSE){
+      p <- p + ggplot2::guides(alpha = "none")
+  }
+
   }
 
   # Add color scale for sex or affected status if applicable
   if (config$sex_color == TRUE) {
-    if (!is.null(config$color_palette)) {
+    if (!is.null(config$sex_color_palette)) {
       p <- p + ggplot2::scale_color_manual(
-        values = config$color_palette,
+        values = config$sex_color_palette,
         labels = config$sex_shape_labs
       )
     } else {
@@ -558,21 +593,23 @@ ggpedigree <- ggPedigree
     }
 
     p <- p +
-      ggplot2::labs(color = "Sex", shape = "Sex")
+      ggplot2::labs(color = config$sex_legend_title,
+                    shape = config$sex_legend_title)
   } else if (!is.null(status_col)) {
-    if (!is.null(config$color_palette)) {
+    if (!is.null(config$status_color_palette)) {
       p <- p + ggplot2::scale_color_manual(
-        values = config$color_palette,
-        labels = config$status_labs
+        values = config$status_color_vals ,
+        labels = config$status_labels
       )
     } else {
       p <- p +
-        ggplot2::scale_color_discrete(labels = config$status_labs)
+        ggplot2::scale_color_discrete(labels = config$status_labels)
     }
     p <- p +
-      ggplot2::labs(color = "Affected", shape = "Sex")
+      ggplot2::labs(color = config$status_affected_legend_title,
+                    shape = config$sex_legend_title)
   } else {
-    p <- p + ggplot2::labs(shape = "Sex")
+    p <- p + ggplot2::labs(shape = config$sex_legend_title)
   }
   return(p)
 }

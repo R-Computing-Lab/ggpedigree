@@ -1,9 +1,11 @@
 # ggpedigree 0.5.0
-* Added segment_linetype options to the `ggpedigree` function.
+* Added segment_linetype and custom affected labels to the `ggpedigree` function.
 * Added usage of color_palette to the `ggpedigree` function.
 * Added curvature option to the `ggpedigree` function.
-* Add support for removing diagonal, upper triangle, and lower triangle in the `ggRelatednessMatrix` function.
+* Add support for custom affected labels for affected individuals in the `ggpedigree` function.
+* Add support for removing diagonal, upper triangle, and lower triangle in the `ggRelatednessMatrix` function. 
 * Add support for labeling tiles
+* Added new tests for the `ggRelatednessMatrix` function.
 
 # ggpedigree 0.4.1
 ## Status: Submitted to CRAN
