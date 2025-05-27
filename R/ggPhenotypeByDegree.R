@@ -69,6 +69,8 @@ ggPhenotypeByDegree <- function(df,
 
   # Set default styling and layout parameters
   default_config <- list(
+    apply_default_scales = TRUE,
+    apply_default_theme = TRUE,
     point_size = 1,
     filter_n_pairs = 500,
     filter_degree_min = 0,
@@ -102,18 +104,7 @@ ggPhenotypeByDegree <- function(df,
                                   y_stem_se=y_stem_se,
                                   config = config)
 }
-  # ---- Prepare annotations plotting ----
-  if(config$annotate == TRUE) {
-    config$annotation_coords <- list(x_sib = 0.5, x_mom = 0.5, x_dad = 0.5)
-  y_val_coord <- function(filter_expr) {
-    df |> dplyr::filter(!!rlang::parse_expr(filter_expr)) |> dplyr::pull(!!y_var_sym) |> as.numeric()
-  }
-  config$annotation_coords$y_sib <- y_val_coord("cnu == 1 & addRel_center == 0.5")
-  config$annotation_coords$y_mom <- y_val_coord("cnu == 0 & mtdna == 1 & addRel_center == 0.5")
-  config$annotation_coords$y_dad <- y_val_coord("cnu == 0 & mtdna == 0 & addRel_center == 0.5")
-} else {
-  config$annotation_coords <- NULL
-}
+
   # ---- Core plotting ----
   ggPhenotypeByDegree.core(
     df = df,
@@ -145,40 +136,28 @@ ggPhenotypeByDegree.core <- function(df,
   ymax_var <- sym(paste0(y_stem_se, "_plusse"))
   grouping_sym <- sym(config$grouping)
 
-
-
-  x_value_mom <- x_value_sib <- x_value_dad <- .5
-
-  annotation_mom_x <- x_value_mom + config$annotate_xshift * x_value_mom
-  annotation_sib_x <- x_value_sib + config$annotate_xshift * x_value_sib
-  annotation_dad_x <- x_value_dad + config$annotate_xshift * x_value_dad
-
+  # ---- Prepare annotations plotting ----
   # Extract specific y-values based on provided positions, using dynamic column names
 
-  y_value_sib <- df |>
-    dplyr::filter(
-      cnu == 1,
-      addRel_center == .5
-    ) |>
-    pull(!!y_var_sym) |>
-    as.numeric()
+  if(config$annotate == TRUE) {
+    config$annotation_coords <- list(x_sib = 0.5, x_mom = 0.5, x_dad = 0.5)
+    y_val_coord <- function(filter_expr) {
+      df |> dplyr::filter(!!rlang::parse_expr(filter_expr)) |> dplyr::pull(!!y_var_sym) |> as.numeric()
+    }
+    config$annotation_coords$y_sib <- y_val_coord("cnu == 1 & addRel_center == 0.5")
+    config$annotation_coords$y_mom <- y_val_coord("cnu == 0 & mtdna == 1 & addRel_center == 0.5")
+    config$annotation_coords$y_dad <- y_val_coord("cnu == 0 & mtdna == 0 & addRel_center == 0.5")
+    config$annotation_coords$annotation_mom_x <- config$annotation_coords$x_mom + config$annotate_xshift * config$annotation_coords$x_mom
+    config$annotation_coords$annotation_sib_x <- config$annotation_coords$x_sib + config$annotate_xshift * config$annotation_coords$x_sib
+    config$annotation_coords$annotation_dad_x <- config$annotation_coords$x_dad + config$annotate_xshift * config$annotation_coords$x_dad
+    config$annotation_coords$annotation_sib_y <- config$annotation_coords$y_sib + config$annotate_yshift * config$annotation_coords$y_sib
+    config$annotation_coords$annotation_mom_y <- config$annotation_coords$y_mom + config$annotate_yshift * config$annotation_coords$y_mom
+    config$annotation_coords$annotation_dad_y <- config$annotation_coords$y_dad + config$annotate_yshift * config$annotation_coords$y_dad
+    config$annotation_coords$df_point <- df |> dplyr::filter(cnu == 1, addRel_center == .5)
+  } else {
+    config$annotation_coords <- NULL
+  }
 
-  annotation_sib_y <- y_value_sib + config$annotate_yshift * y_value_sib #- .0055
-
-  y_value_dad <- df |>
-    dplyr::filter(cnu == 0, mtdna == 0, addRel_center == .5) |>
-    pull(!!y_var_sym) |>
-    as.numeric()
-  annotation_dad_y <- y_value_dad + config$annotate_yshift * y_value_dad
-
-  y_value_mom <- df |>
-    dplyr::filter(cnu == 0, mtdna == 1, addRel_center == .5) |>
-    pull(!!y_var_sym) |>
-    as.numeric()
-
-  annotation_mom_y <- y_value_mom + config$annotate_yshift * y_value_mom
-
-  df_point <- df |> dplyr::filter(cnu == 1, addRel_center == .5)
 
   # drop rows based on filter conditions
   df <- df |>
@@ -187,7 +166,7 @@ ggPhenotypeByDegree.core <- function(df,
     dplyr::filter(n_pairs > config$filter_n_pairs & addRel_center < 1 & degree_relative < config$filter_degree_max & degree_relative > config$filter_degree_min)
 
   # drop weird sibs
-  if (config$drop_non_classic_sibs) {
+  if (config$drop_non_classic_sibs==TRUE) {
     df <- df |>
       mutate(drop = case_when(
         .data$mtdna == 1 & .data$classic_kin == 0 & .data$cnu == 1 ~ 1,
@@ -196,39 +175,37 @@ ggPhenotypeByDegree.core <- function(df,
       dplyr::filter(.data$drop != 1) |>
       select(-"drop")
   }
-
   # if only_classic_kin is TRUE, filter out non-classic kinship
-  if (config$only_classic_kin) {
+  if (config$only_classic_kin==TRUE) {
     df <- df |> dplyr::filter(.data$classic_kin == 1)
-  } else if (config$drop_classic_kin) {
+  } else if (config$drop_classic_kin== TRUE) {
     df <- df |> dplyr::filter(.data$classic_kin == 0)
   }
 
-
-
   # make plot
   core_plot <- df |>
-    ggplot(aes(
+    ggplot2::ggplot(ggplot2::aes(
       x = .data$addRel_center,
       y = !!y_var_sym,
       group = !!grouping_sym,
       color = !!grouping_sym,
       shape = !!grouping_sym
     ))
+
   if (config$only_classic_kin==TRUE | config$kin_grouping==TRUE) {
     core_plot <- core_plot +
       ggplot2::geom_ribbon(
-        aes(
+        ggplot2::aes(
           ymin = !!ymin_var,
           ymax = !!ymax_var, fill = !!grouping_sym
         ),
         alpha = .3, linetype = 0
       ) + # , stat = "smooth", method = "loess") +
-      ggplot2::geom_line(aes(linetype = !!grouping_sym))
+      ggplot2::geom_line(ggplot2::aes(linetype = !!grouping_sym))
   } else {
     core_plot <- core_plot +
       ggplot2::geom_ribbon(
-        aes(
+        ggplot2::aes(
           ymin = !!ymin_var,
           ymax = !!ymax_var,
           fill = classic_kin_factor,
@@ -240,41 +217,21 @@ ggPhenotypeByDegree.core <- function(df,
         alpha = .3, linetype = 0,
         show.legend = FALSE
       ) +
-      ggplot2::geom_line(aes(
+      ggplot2::geom_line(ggplot2::aes(
         group = !!grouping_sym,
         color = !!grouping_sym
       ), linetype = "solid")
   }
 
   core_plot <- core_plot +
-    geom_point(size = config$point_size)
+    ggplot2::geom_point(size = config$point_size)
 
   # annotate if and only if
-  if (config$annotate == TRUE) {
-    # the specifics
-    if (config$filter_degree_min == 0 & config$drop_classic_kin == FALSE) {
-      core_plot <- core_plot +
-        geom_point(data = df_point, aes(x = x_value_sib, y = y_value_sib), size = config$point_size) + # Add the single point
-        annotate("text",
-          x = annotation_sib_x, y = annotation_sib_y, label = "Sibling Correlation",
-          hjust = 0, vjust = 0, color = "black", size = 4
-        ) +
-        annotate("text",
-          x = annotation_mom_x, y = annotation_mom_y, label = "Mother-child Correlation",
-          hjust = 0, vjust = -0, color = "black", size = 4
-        ) +
-        annotate("text",
-          x = annotation_dad_x, y = annotation_dad_y, label = "Father-child Correlation",
-          hjust = 0, vjust = -0, color = "black", size = 4
-        )
-    } else if (config$filter_degree_min == 0 & config$drop_classic_kin == TRUE) {
-      core_plot <- core_plot +
-        geom_point(data = df_point, aes(x = x_value_sib, y = y_value_sib), size = config$point_size) + # Add the single point
-        annotate("text",
-          x = annotation_sib_x, y = annotation_sib_y, label = "Sibling Correlation",
-          hjust = 0, vjust = -0, color = "black", size = 4
-        )
-    }
+  if (config$annotate == TRUE && config$filter_degree_min == 0) {
+
+    core_plot <-    .addAnnotate(p = core_plot,
+                                 config = config,
+                                 y_var_sym = y_var_sym)
   }
   # naming
 
@@ -284,8 +241,12 @@ ggPhenotypeByDegree.core <- function(df,
     config$grouping_name <- paste0(config$grouping)
   }
 
-  core_plot <- core_plot +
-    theme(axis.text.x = element_text(size = 12, angle = -65, hjust = 0)) # scale_x_reverse() +
+  if (config$apply_default_theme == TRUE) {
+    core_plot <- core_plot +
+      theme(axis.text.x = element_text(size = 12, angle = -65, hjust = 0)) + ggplot2::theme_bw() +
+      theme(legend.position = "top") # scale_x_reverse() +
+  }
+
   if (config$degree_rel) {
     core_plot <- core_plot + scale_x_continuous(
       trans = scales::compose_trans("log2", "reverse"),
@@ -300,11 +261,10 @@ ggPhenotypeByDegree.core <- function(df,
         linetype = paste0(config$grouping_name),
         group = paste0(config$grouping_name),
         fill = paste0(config$grouping_name)
-      ) +
-      theme(legend.position = "top")
+      )
   } else {
     core_plot <- core_plot + scale_x_continuous(
-      trans = compose_trans("log2", "reverse"),
+      trans = scales::compose_trans("log2", "reverse"),
       breaks = scales::trans_breaks("log2", function(x) 2^x),
       labels = scales::label_parse()
     ) +
@@ -316,14 +276,17 @@ ggPhenotypeByDegree.core <- function(df,
         shape = paste0(config$grouping_name),
         linetype = paste0(config$grouping_name),
         group = paste0(config$grouping_name), fill = paste0(config$grouping_name)
-      ) +
-      theme(legend.position = "top")
+      )
   }
 
-  if (!is.null(config$color_scale)) {
-    core_plot <- core_plot + theme_bw() +
+  if (config$apply_default_scale == TRUE && !is.null(config$color_scale) && requireNamespace("paletteer", quietly = TRUE)
+      ) {
+    core_plot <- core_plot +
       paletteer::scale_color_paletteer_d(config$color_scale) +
       paletteer::scale_fill_paletteer_d(config$color_scale)
+  } else if (config$apply_default_scale == TRUE) {
+    core_plot <- core_plot + ggplot2::scale_color_brewer(palette = "Set1") +
+      ggplot2::scale_fill_brewer(palette = "Set1")
   }
   return(core_plot)
 }
@@ -383,4 +346,42 @@ ggPhenotypeByDegree.core <- function(df,
       mutate(mtdna_factor = factor(.data$mtdna, levels = c(0, 1)))
   }
   return(df)
+}
+
+#' @title Add annotates to ggplot Pedigree Plot
+#' @inheritParams ggPhenotypeByDegree
+#'
+#' @return A ggplot object with added labels.
+#' @keywords internal
+#'
+.addAnnotate <- function(p, config,y_var_sym) {
+  # the specifics
+  if (config$drop_classic_kin == FALSE) {
+    p <- p +
+      geom_point(data = config$annotation_coords$df_point, aes(x = addRel_center, y = !!y_var_sym), size = config$point_size) + # Add the single point
+      annotate("text",
+               x = config$annotation_coords$annotation_sib_x, y = config$annotation_coords$annotation_sib_y, label = "Sibling Correlation",
+               hjust = 0, vjust = 0, color = "black", size = 4
+      ) +
+      annotate("text",
+               x = config$annotation_coords$annotation_mom_x, y = config$annotation_coords$annotation_mom_y, label = "Mother-child Correlation",
+               hjust = 0, vjust = -0, color = "black", size = 4
+      ) +
+      annotate("text",
+               x = config$annotation_coords$annotation_dad_x,
+               y = config$annotation_coords$annotation_dad_y,
+               label = "Father-child Correlation",
+               hjust = 0, vjust = -0, color = "black", size = 4
+      )
+  } else if (config$drop_classic_kin == TRUE) {
+    p <- p +
+      geom_point(data = config$annotation_coords$df_point, aes(x = x_value_sib, y = y_value_sib), size = config$point_size) + # Add the single point
+      annotate("text",
+               x = config$annotation_coords$annotation_sib_x,
+               y = config$annotation_coords$annotation_sib_y,
+               label = "Sibling Correlation",
+               hjust = 0, vjust = -0, color = "black", size = 4
+      )
+  }
+  return(p)
 }
