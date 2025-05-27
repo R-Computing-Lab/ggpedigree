@@ -28,7 +28,9 @@ ggPhenotypeByDegree(
 
 \item{y_se}{Name of the standard error column (e.g., "r_pheno_se").}
 
-\item{y_stem_se}{Optional; base stem used to construct SE ribbon bounds. (e.g., "r_pheno")}
+\item{y_stem_se}{Optional; base stem used to construct SE ribbon bounds. (e.g., "r_pheno")
+@param data_prep Logical; if TRUE, performs data preparation steps.
+@param ... Additional arguments passed to `ggplot2` functions.}
 
 \item{config}{A list of configuration overrides. Valid entries include:
 \describe{
@@ -52,11 +54,7 @@ ggPhenotypeByDegree(
    \item{threshold}{Tolerance \% for matching known degrees}
    \item{max_degrees}{Maximum number of degrees to consider}
    }
-@param data_prep Logical; if TRUE, performs data preparation steps.
-@param ... Additional arguments passed to `ggplot2` functions.
-@return A ggplot object containing the correlation plot.
-@importFrom dplyr mutate filter pull sym
-@importFrom ggplot2 ggplot aes geom_ribbon geom_line geom_point annotate labs theme}
+@return A ggplot object containing the correlation plot.}
 }
 \description{
 This function plots the phenotypic correlation as a function of genetic relatedness.

@@ -29,11 +29,7 @@
    \item{threshold}{Tolerance \% for matching known degrees}
    \item{max_degrees}{Maximum number of degrees to consider}
    }
-@param data_prep Logical; if TRUE, performs data preparation steps.
-@param ... Additional arguments passed to `ggplot2` functions.
-@return A ggplot object containing the correlation plot.
-@importFrom dplyr mutate filter pull sym
-@importFrom ggplot2 ggplot aes geom_ribbon geom_line geom_point annotate labs theme}
+@return A ggplot object containing the correlation plot.}
 }
 \value{
 A ggplot object with added labels.

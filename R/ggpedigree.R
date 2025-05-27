@@ -671,6 +671,6 @@ ggpedigree <- ggPedigree
 #'
 
 
-#.preparePedigreeData <- function(ped, famID, personID, momID, dadID) {
+# .preparePedigreeData <- function(ped, famID, personID, momID, dadID) {
 #
-#}
+# }
