@@ -93,50 +93,51 @@ ggPhenotypeByDegree <- function(df,
   # Merge user config with defaults
   config <- utils::modifyList(default_config, config)
 
+
+  # ----- Data preparation -----
   if(data_prep == TRUE) {
-    # Check if required columns are present
-    required_cols <- c("addRel_min", "addRel_max", "n_pairs", "cnu", "mtdna")
-    if (!all(required_cols %in% names(df))) {
-      stop(paste("Data frame must contain the following columns:", paste(required_cols, collapse = ", ")))
-    }
-
-  if(!"addRel_center" %in% names(df)) {
-    df <- df |>
-      mutate(addRel_center = (.data$addRel_max + .data$addRel_min)/2) # Centering the addRel values
+    df <-   .preparePhenotypeByDegreeData(df=df,
+                                  y_var=y_var,
+                                  y_se=y_se,
+                                  y_stem_se=y_stem_se,
+                                  config = config)
+}
+  # ---- Prepare annotations plotting ----
+  if(config$annotate == TRUE) {
+    config$annotation_coords <- list(x_sib = 0.5, x_mom = 0.5, x_dad = 0.5)
+  y_val_coord <- function(filter_expr) {
+    df |> dplyr::filter(!!rlang::parse_expr(filter_expr)) |> dplyr::pull(!!y_var_sym) |> as.numeric()
   }
-  if(!"classic_kin" %in% names(df)) {
-    df <-  df |>
-      mutate( classic_kin =
-                case_when(
-                  .data$addRel_max %in% (2^(0:(-config$max_degrees)) * (1 + config$threshold/100)) ~ 1,
-                  .data$addRel_max == 0 ~ 1,
-    TRUE ~ 0
-  ))
+  config$annotation_coords$y_sib <- y_val_coord("cnu == 1 & addRel_center == 0.5")
+  config$annotation_coords$y_mom <- y_val_coord("cnu == 0 & mtdna == 1 & addRel_center == 0.5")
+  config$annotation_coords$y_dad <- y_val_coord("cnu == 0 & mtdna == 0 & addRel_center == 0.5")
+} else {
+  config$annotation_coords <- NULL
 }
-    if (!"degree_relative" %in% names(df)) {
-      df <- df |>
-        mutate(degree_relative = # solve for as a function of addRel_max
-                 case_when(
-                   .data$addRel_max >= (1 + config$threshold/100) ~ 0,
-                   .data$addRel_max < 1 ~ log2(1/(.data$addRel_max)*(1 + config$threshold/100))
-                 ))
-    }
+  # ---- Core plotting ----
+  ggPhenotypeByDegree.core(
+    df = df,
+    y_var = y_var,
+    y_se = y_se,
+    y_stem_se = y_stem_se,
+    config = config,
+    ...
+  )
+}
 
-    if (!paste0(y_stem_se, "_minusse") %in% names(df)) {
-      df <- df |>
-        mutate(!!sym(paste0(y_stem_se, "_minusse")) :=
-                 .data[[y_se]] - 1.96 * (.data[[y_se]]/sqrt(.data$n_pairs)))
-    }
-    if (!paste0(y_stem_se, "_plusse") %in% names(df)) {
-      df <- df |>
-        mutate(!!sym(paste0(y_stem_se, "_plusse")) :=
-                 .data[[y_se]] + 1.96 * (.data[[y_se]]/sqrt(.data$n_pairs)))
-    }
-    if (!"mtdna_factor" %in% names(df)) {
-      df <- df |>
-        mutate(mtdna_factor = factor(.data$mtdna, levels = c(0, 1)))
-    }
-}
+#' Core plotting function for ggPhenotypeByDegree
+#' This function generates the core ggplot object based on the prepared data frame.
+#' @inheritParams ggPhenotypeByDegree
+#' @return A ggplot object containing the correlation plot.
+#' @keywords internal
+
+
+ggPhenotypeByDegree.core <- function(df,
+                                     y_var,
+                                     y_se,
+                                     y_stem_se,
+                                     config,
+                                     ...) {
 
   # Dynamically create ymin and ymax variable names
   y_var_sym <- sym(y_var)
@@ -144,15 +145,13 @@ ggPhenotypeByDegree <- function(df,
   ymax_var <- sym(paste0(y_stem_se, "_plusse"))
   grouping_sym <- sym(config$grouping)
 
-  # annotation values
-  config$xshift <- config$annotate_xshift
-  config$yshift <- config$annotate_yshift
+
 
   x_value_mom <- x_value_sib <- x_value_dad <- .5
 
-  annotation_mom_x <- x_value_mom + config$xshift * x_value_mom
-  annotation_sib_x <- x_value_sib + config$xshift * x_value_sib
-  annotation_dad_x <- x_value_dad + config$xshift * x_value_dad
+  annotation_mom_x <- x_value_mom + config$annotate_xshift * x_value_mom
+  annotation_sib_x <- x_value_sib + config$annotate_xshift * x_value_sib
+  annotation_dad_x <- x_value_dad + config$annotate_xshift * x_value_dad
 
   # Extract specific y-values based on provided positions, using dynamic column names
 
@@ -164,20 +163,20 @@ ggPhenotypeByDegree <- function(df,
     pull(!!y_var_sym) |>
     as.numeric()
 
-  annotation_sib_y <- y_value_sib + config$yshift * y_value_sib #- .0055
+  annotation_sib_y <- y_value_sib + config$annotate_yshift * y_value_sib #- .0055
 
   y_value_dad <- df |>
     dplyr::filter(cnu == 0, mtdna == 0, addRel_center == .5) |>
     pull(!!y_var_sym) |>
     as.numeric()
-  annotation_dad_y <- y_value_dad + config$yshift * y_value_dad
+  annotation_dad_y <- y_value_dad + config$annotate_yshift * y_value_dad
 
   y_value_mom <- df |>
     dplyr::filter(cnu == 0, mtdna == 1, addRel_center == .5) |>
     pull(!!y_var_sym) |>
     as.numeric()
 
-  annotation_mom_y <- y_value_mom + config$yshift * y_value_mom
+  annotation_mom_y <- y_value_mom + config$annotate_yshift * y_value_mom
 
   df_point <- df |> dplyr::filter(cnu == 1, addRel_center == .5)
 
@@ -191,24 +190,26 @@ ggPhenotypeByDegree <- function(df,
   if (config$drop_non_classic_sibs) {
     df <- df |>
       mutate(drop = case_when(
-        mtdna == 1 & classic_kin == 0 & cnu == 1 ~ 1,
+        .data$mtdna == 1 & .data$classic_kin == 0 & .data$cnu == 1 ~ 1,
         TRUE ~ 0
       )) |>
-      dplyr::filter(drop != 1) |>
+      dplyr::filter(.data$drop != 1) |>
       select(-"drop")
   }
 
   # if only_classic_kin is TRUE, filter out non-classic kinship
   if (config$only_classic_kin) {
-    df <- df |> dplyr::filter(classic_kin == 1)
+    df <- df |> dplyr::filter(.data$classic_kin == 1)
   } else if (config$drop_classic_kin) {
-    df <- df |> dplyr::filter(classic_kin == 0)
+    df <- df |> dplyr::filter(.data$classic_kin == 0)
   }
+
+
 
   # make plot
   core_plot <- df |>
     ggplot(aes(
-      x = addRel_center,
+      x = .data$addRel_center,
       y = !!y_var_sym,
       group = !!grouping_sym,
       color = !!grouping_sym,
@@ -325,4 +326,61 @@ ggPhenotypeByDegree <- function(df,
       paletteer::scale_fill_paletteer_d(config$color_scale)
   }
   return(core_plot)
+}
+
+#' Prepare data for ggPhenotypeByDegree
+#' This function prepares the data frame for plotting by calculating necessary columns and ensuring required columns are present.
+#'
+#' @inheritParams ggPhenotypeByDegree
+#' @return A modified data frame with additional columns for plotting.
+#' @keywords internal
+#'
+.preparePhenotypeByDegreeData <- function(df,
+                                                y_var,
+                                                y_se = NULL,
+                                                y_stem_se = NULL,
+                                                config = list()) {
+
+  required_cols <- c("addRel_min", "addRel_max", "n_pairs", "cnu", "mtdna")
+  if (!all(required_cols %in% names(df))) {
+    stop(paste("Data frame must contain the following columns:", paste(required_cols, collapse = ", ")))
+  }
+
+  if(!"addRel_center" %in% names(df)) {
+    df <- df |>
+      mutate(addRel_center = (.data$addRel_max + .data$addRel_min)/2) # Centering the addRel values
+  }
+  if(!"classic_kin" %in% names(df)) {
+    df <-  df |>
+      mutate( classic_kin =
+                case_when(
+                  .data$addRel_max %in% (2^(0:(-config$max_degrees)) * (1 + config$threshold/100)) ~ 1,
+                  .data$addRel_max == 0 ~ 1,
+                  TRUE ~ 0
+                ))
+  }
+  if (!"degree_relative" %in% names(df)) {
+    df <- df |>
+      mutate(degree_relative = # solve for as a function of addRel_max
+               case_when(
+                 .data$addRel_max >= (1 + config$threshold/100) ~ 0,
+                 .data$addRel_max < 1 ~ log2(1/(.data$addRel_max)*(1 + config$threshold/100))
+               ))
+  }
+
+  if (!paste0(y_stem_se, "_minusse") %in% names(df)) {
+    df <- df |>
+      mutate(!!sym(paste0(y_stem_se, "_minusse")) :=
+               .data[[y_se]] - 1.96 * (.data[[y_se]]/sqrt(.data$n_pairs)))
+  }
+  if (!paste0(y_stem_se, "_plusse") %in% names(df)) {
+    df <- df |>
+      mutate(!!sym(paste0(y_stem_se, "_plusse")) :=
+               .data[[y_se]] + 1.96 * (.data[[y_se]]/sqrt(.data$n_pairs)))
+  }
+  if (!"mtdna_factor" %in% names(df)) {
+    df <- df |>
+      mutate(mtdna_factor = factor(.data$mtdna, levels = c(0, 1)))
+  }
+  return(df)
 }

@@ -234,6 +234,7 @@ ggPedigree.core <- function(ped, famID = "famID",
   # STEP 2: Pedigree Data Transformation
   # -----
 
+
   ds_ped <- BGmisc::ped2fam(ped,
     famID = famID,
     personID = personID,
@@ -664,3 +665,12 @@ ggpedigree <- ggPedigree
   }
   return(p)
 }
+#' @title Prepare Pedigree Data
+#' @description
+#' This function checks and prepares the pedigree data frame for use in ggPedigree.
+#'
+
+
+#.preparePedigreeData <- function(ped, famID, personID, momID, dadID) {
+#
+#}
