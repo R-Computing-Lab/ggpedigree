@@ -5,7 +5,16 @@
 \title{Core plotting function for ggPhenotypeByDegree
 This function generates the core ggplot object based on the prepared data frame.}
 \usage{
-ggPhenotypeByDegree.core(df, y_var, y_se, y_stem_se, config, ...)
+ggPhenotypeByDegree.core(
+  df,
+  y_var,
+  y_se,
+  y_stem_se,
+  y_ci_lb = NULL,
+  y_ci_ub = NULL,
+  config,
+  ...
+)
 }
 \arguments{
 \item{df}{Data frame containing pairwise summary statistics. Required columns:
@@ -22,6 +31,10 @@ ggPhenotypeByDegree.core(df, y_var, y_se, y_stem_se, config, ...)
 \item{y_se}{Name of the standard error column (e.g., "r_pheno_se").}
 
 \item{y_stem_se}{Optional; base stem used to construct SE ribbon bounds. (e.g., "r_pheno")}
+
+\item{y_ci_lb}{Optional; lower bound for confidence interval (e.g., "r_pheno_ci_lb").}
+
+\item{y_ci_ub}{Optional; upper bound for confidence interval (e.g., "r_pheno_ci_ub").}
 
 \item{config}{A list of configuration overrides. Valid entries include:
  \describe{

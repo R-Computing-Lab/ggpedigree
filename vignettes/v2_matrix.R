@@ -21,15 +21,15 @@ library(ggpedigree)
 data("redsquirrels")
 
 ## -----------------------------------------------------------------------------
-#sumped <- summarizePedigrees(redsquirrels,
+# sumped <- summarizePedigrees(redsquirrels,
 #  famID = "famID",
 #  personID = "personID",
 #  nbiggest = 5
-#)
+# )
 
 
 # Set target family for visualization
-fam_filter <- 160# sumped$biggest_families$famID[3]
+fam_filter <- 160 # sumped$biggest_families$famID[3]
 
 # Filter for the largest family, recode sex if needed
 ped_filtered <- redsquirrels %>%

@@ -9,6 +9,8 @@ ggPhenotypeByDegree(
   y_var,
   y_se = NULL,
   y_stem_se = NULL,
+  y_ci_lb = NULL,
+  y_ci_ub = NULL,
   config = list(),
   data_prep = TRUE,
   ...
@@ -29,6 +31,10 @@ ggPhenotypeByDegree(
 \item{y_se}{Name of the standard error column (e.g., "r_pheno_se").}
 
 \item{y_stem_se}{Optional; base stem used to construct SE ribbon bounds. (e.g., "r_pheno")}
+
+\item{y_ci_lb}{Optional; lower bound for confidence interval (e.g., "r_pheno_ci_lb").}
+
+\item{y_ci_ub}{Optional; upper bound for confidence interval (e.g., "r_pheno_ci_ub").}
 
 \item{config}{A list of configuration overrides. Valid entries include:
  \describe{
