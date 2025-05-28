@@ -9,7 +9,7 @@ ggRelatednessMatrix(
   mat,
   config = list(),
   interactive = FALSE,
-  tooltip_cols = NULL,
+  tooltip_columns = NULL,
   ...
 )
 
@@ -17,7 +17,7 @@ ggrelatednessmatrix(
   mat,
   config = list(),
   interactive = FALSE,
-  tooltip_cols = NULL,
+  tooltip_columns = NULL,
   ...
 )
 }
@@ -29,7 +29,7 @@ See Details for available options.}
 
 \item{interactive}{Logical; if TRUE, returns an interactive plotly object.}
 
-\item{tooltip_cols}{A character vector of column names to include in tooltips.}
+\item{tooltip_columns}{A character vector of column names to include in tooltips.}
 
 \item{...}{Additional arguments passed to ggplot2 layers.}
 }
@@ -47,7 +47,7 @@ Config options include:
   \item{title}{Plot title}
   \item{cluster}{Logical; should rows/cols be clustered (default: TRUE)}
   \item{xlab, ylab}{Axis labels}
-  \item{layout_text_size}{Axis text size}
+  \item{axis_text_size}{Axis text size}
 }
 }
 \examples{
@@ -66,7 +66,7 @@ ggRelatednessMatrix(mat,
     title = "Relatedness Matrix",
     xlab = "Individuals",
     ylab = "Individuals",
-    layout_text_size = 8
+    axis_text_size = 8
   )
 )
 }

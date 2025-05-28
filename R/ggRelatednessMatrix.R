@@ -6,7 +6,7 @@
 #' @param config A list of graphical and display parameters.
 #'   See Details for available options.
 #' @param interactive Logical; if TRUE, returns an interactive plotly object.
-#' @param tooltip_cols A character vector of column names to include in tooltips.
+#' @param tooltip_columns A character vector of column names to include in tooltips.
 #' @param ... Additional arguments passed to ggplot2 layers.
 #'
 #' @details
@@ -17,7 +17,7 @@
 #'   \item{title}{Plot title}
 #'   \item{cluster}{Logical; should rows/cols be clustered (default: TRUE)}
 #'   \item{xlab, ylab}{Axis labels}
-#'   \item{layout_text_size}{Axis text size}
+#'   \item{axis_text_size}{Axis text size}
 #' }
 #' @return A ggplot object displaying the relatedness matrix as a heatmap.
 #' @export
@@ -37,14 +37,14 @@
 #'     title = "Relatedness Matrix",
 #'     xlab = "Individuals",
 #'     ylab = "Individuals",
-#'     layout_text_size = 8
+#'     axis_text_size = 8
 #'   )
 #' )
 ggRelatednessMatrix <- function(
     mat,
     config = list(),
     interactive = FALSE,
-    tooltip_cols = NULL,
+    tooltip_columns = NULL,
     ...) {
   # Check if the input is a matrix
   if (!is.matrix(mat)) {
@@ -60,7 +60,7 @@ ggRelatednessMatrix <- function(
     # layout aesthetics
     layout_text_angle_x = 90, # rotate x-axis labels
     layout_text_angle_y = 0,
-    layout_text_size = 8,
+    axis_text_size = 8,
     layout_text_color = "black",
     # geom aesthetics
     geom = "geom_tile", # default geom for heatmap
@@ -71,8 +71,8 @@ ggRelatednessMatrix <- function(
     include_upper_triangle = FALSE, # whether to include upper triangle
     include_lower_triangle = TRUE, # whether to include lower triangle
     # tooltip aesthetics
-    include_tooltips = TRUE,
-    tooltip_cols = c("ID1", "ID2", "value"),
+    tooltip_include = TRUE,
+    tooltip_columns = c("ID1", "ID2", "value"),
     # label aesthetics
     include_labels = FALSE,
     label_col = "value",
@@ -88,8 +88,8 @@ ggRelatednessMatrix <- function(
     as_widget = FALSE
   )
 
-  if (!is.null(tooltip_cols)) {
-    config$tooltip_cols <- tooltip_cols
+  if (!is.null(tooltip_columns)) {
+    config$tooltip_columns <- tooltip_columns
   }
 
   config <- utils::modifyList(default_config, config)
@@ -108,19 +108,19 @@ ggRelatednessMatrix <- function(
     if (!requireNamespace("plotly", quietly = TRUE)) {
       stop("The 'plotly' package is required for interactive plots.")
     }
-    if (config$include_tooltips) {
+    if (config$tooltip_include) {
       ## 2. Identify data columns for tooltips ----------------------------------
       #   When ggplotly is called, it creates a single data frame that merges all
       #   layer data.  We therefore build a 'text' aesthetic ahead of time so that
       #   it survives the conversion.
-      config$tooltip_cols <- intersect(config$tooltip_cols, names(ped)) # guard against typos
-      if (length(config$tooltip_cols) == 0L) {
-        stop("None of the specified tooltip_cols found in `ped`.")
+      config$tooltip_columns <- intersect(config$tooltip_columns, names(ped)) # guard against typos
+      if (length(config$tooltip_columns) == 0L) {
+        stop("None of the specified tooltip_columns found in `ped`.")
       }
 
-      tooltip_fmt <- function(df, tooltip_cols) {
-        apply(df[tooltip_cols], 1, function(row) {
-          paste(paste(tooltip_cols, row, sep = ": "), collapse = "<br>")
+      tooltip_fmt <- function(df, tooltip_columns) {
+        apply(df[tooltip_columns], 1, function(row) {
+          paste(paste(tooltip_columns, row, sep = ": "), collapse = "<br>")
         })
       }
       # add tooltips to geom_point layers
@@ -128,7 +128,7 @@ ggRelatednessMatrix <- function(
 
       static_plot <- static_plot + ggplot2::aes(text = tooltip_fmt(
         df = ped,
-        config$tooltip_cols
+        config$tooltip_columns
       ))
     }
 
@@ -241,11 +241,11 @@ ggRelatednessMatrix.core <- function(
     ggplot2::theme(
       axis.text.x = ggplot2::element_text(
         angle = config$layout_text_angle_x, vjust = 0.5,
-        hjust = 1, size = config$layout_text_size,
+        hjust = 1, size = config$axis_text_size,
         color = config$layout_text_color
       ),
       axis.text.y = ggplot2::element_text(
-        size = config$layout_text_size,
+        size = config$axis_text_size,
         angle = config$layout_text_angle_y,
         color = config$layout_text_color
       ),

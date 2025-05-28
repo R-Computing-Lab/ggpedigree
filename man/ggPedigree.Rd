@@ -12,7 +12,7 @@ ggPedigree(
   momID = "momID",
   dadID = "dadID",
   status_col = NULL,
-  tooltip_cols = NULL,
+  tooltip_columns = NULL,
   as_widget = FALSE,
   config = list(),
   debug = FALSE,
@@ -28,7 +28,7 @@ ggpedigree(
   momID = "momID",
   dadID = "dadID",
   status_col = NULL,
-  tooltip_cols = NULL,
+  tooltip_columns = NULL,
   as_widget = FALSE,
   config = list(),
   debug = FALSE,
@@ -50,7 +50,7 @@ ggpedigree(
 
 \item{status_col}{Character string specifying the column name for affected status. Defaults to NULL.}
 
-\item{tooltip_cols}{Character vector of column names to show when hovering.
+\item{tooltip_columns}{Character vector of column names to show when hovering.
 Defaults to c("personID", "sex").  Additional columns present in `ped`
 can be supplied – they will be added to the Plotly tooltip text.}
 
@@ -68,7 +68,7 @@ customization before printing).}
    \item{shape_unknown, shape_female, shape_male, affected_shape}{Integers. Shape codes for plotting each group.}
    \item{sex_shape_labs}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
    \item{unaffected, affected}{Values indicating unaffected/affected status.}
-   \item{sex_color}{Logical. If TRUE, uses color to differentiate sex.}
+   \item{sex_color_include}{Logical. If TRUE, uses color to differentiate sex.}
    \item{label_max_overlaps}{Maximum number of overlaps allowed in repelled labels.}
    \item{label_segment_color}{Color used for label connector lines.}
  }}

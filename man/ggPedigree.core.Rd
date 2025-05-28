@@ -40,7 +40,7 @@ ggPedigree.core(
    \item{shape_unknown, shape_female, shape_male, affected_shape}{Integers. Shape codes for plotting each group.}
    \item{sex_shape_labs}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
    \item{unaffected, affected}{Values indicating unaffected/affected status.}
-   \item{sex_color}{Logical. If TRUE, uses color to differentiate sex.}
+   \item{sex_color_include}{Logical. If TRUE, uses color to differentiate sex.}
    \item{label_max_overlaps}{Maximum number of overlaps allowed in repelled labels.}
    \item{label_segment_color}{Color used for label connector lines.}
  }}

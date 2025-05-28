@@ -17,7 +17,7 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
                                   momID = "momID",
                                   dadID = "dadID",
                                   status_col = NULL,
-                                  tooltip_cols = NULL,
+                                  tooltip_columns = NULL,
                                   config = list(),
                                   debug = FALSE,
                                   as_widget = TRUE,
@@ -42,8 +42,8 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
   # -----
   # STEP 1: Configuration and Preparation
   # -----
-  if (!is.null(tooltip_cols)) {
-    config$tooltip_cols <- tooltip_cols
+  if (!is.null(tooltip_columns)) {
+    config$tooltip_columns <- tooltip_columns
   }
   if (!is.null(as_widget)) {
     config$as_widget <- as_widget
@@ -55,9 +55,9 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
   # Set default styling and layout parameters
   default_config <- list(
     label_method = "geom_text",
-    include_labels = FALSE, # default to FALSE
-    include_tooltips = TRUE,
-    tooltip_cols = c(personID, "sex", status_col),
+    label_include = FALSE, # default to FALSE
+    tooltip_include = TRUE,
+    tooltip_columns = c(personID, "sex", status_col),
     return_static = FALSE
   )
   config <- utils::modifyList(default_config, config)
@@ -78,20 +78,20 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
   #   When ggplotly is called, it creates a single data frame that merges all
   #   layer data.  We therefore build a 'text' aesthetic ahead of time so that
   #   it survives the conversion.
-  if (personID != "personID" && personID %in% config$tooltip_cols) {
-    # replace config$tooltip_cols with personID, core function renames it to "personID"
-    config$tooltip_cols <- gsub(personID, "personID", config$tooltip_cols)
+  if (personID != "personID" && personID %in% config$tooltip_columns) {
+    # replace config$tooltip_columns with personID, core function renames it to "personID"
+    config$tooltip_columns <- gsub(personID, "personID", config$tooltip_columns)
   }
-  config$tooltip_cols <- intersect(config$tooltip_cols, names(static_plot$data)) # guard against typos
+  config$tooltip_columns <- intersect(config$tooltip_columns, names(static_plot$data)) # guard against typos
 
-  if (length(config$tooltip_cols) == 0L) {
-    stop("None of the specified tooltip_cols found in `ped`.")
+  if (length(config$tooltip_columns) == 0L) {
+    stop("None of the specified tooltip_columns found in `ped`.")
   }
 
 
   ## 3. Convert ggplot → plotly ---------------------------------------------
   #   Add the tooltip text to the data frame
-  if (config$include_tooltips == TRUE) {
+  if (config$tooltip_include == TRUE) {
     # add tooltips to geom_point layers
     point_layers <- which(sapply(static_plot$layers, function(l) {
       inherits(l$geom, "GeomPoint")
@@ -102,7 +102,7 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
 
       static_plot <- static_plot + ggplot2::aes(text = tooltip_fmt(
         df = static_plot$data,
-        config$tooltip_cols
+        config$tooltip_columns
       ))
     } else {
       #  static_ped <- static_plot$data
@@ -111,7 +111,7 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
           static_plot$layers[[i]]$mapping,
           ggplot2::aes(text = tooltip_fmt(
             df = static_plot$data,
-            tooltip_cols = config$tooltip_cols
+            tooltip_columns = config$tooltip_columns
           ))
         )
       }
@@ -151,15 +151,15 @@ ggpedigreeInteractive <- ggPedigreeInteractive
 #' Format tooltip text for ggplotly
 #'
 #' @param df A data frame containing the data to be displayed in the tooltip.
-#' @param tooltip_cols A character vector of column names to be included in the tooltip.
+#' @param tooltip_columns A character vector of column names to be included in the tooltip.
 #' @param sep A character string containing the separator for the columns
 #'
 #' @return A character vector of formatted tooltip text for each row in the data frame.
 #'
 #' @keywords internal
 
-tooltip_fmt <- function(df, tooltip_cols, sep = ": ") {
-  apply(df[tooltip_cols], 1, function(row) {
-    paste(paste(tooltip_cols, row, sep = sep), collapse = "<br>")
+tooltip_fmt <- function(df, tooltip_columns, sep = ": ") {
+  apply(df[tooltip_columns], 1, function(row) {
+    paste(paste(tooltip_columns, row, sep = sep), collapse = "<br>")
   })
 }

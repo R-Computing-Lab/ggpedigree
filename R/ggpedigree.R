@@ -14,7 +14,7 @@
 #' @param debug Logical. If TRUE, prints debugging information. Default: FALSE.
 #' @param hints Data frame with hints for layout adjustments. Default: NULL.
 #' @param interactive Logical. If TRUE, generates an interactive plot using `plotly`. Default: FALSE.
-#' @param tooltip_cols Character vector of column names to show when hovering.
+#' @param tooltip_columns Character vector of column names to show when hovering.
 #'        Defaults to c("personID", "sex").  Additional columns present in `ped`
 #'        can be supplied – they will be added to the Plotly tooltip text.
 #' @param as_widget Logical; if TRUE (default) returns a plotly htmlwidget.
@@ -31,7 +31,7 @@
 #'     \item{shape_unknown, shape_female, shape_male, affected_shape}{Integers. Shape codes for plotting each group.}
 #'     \item{sex_shape_labs}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
 #'     \item{unaffected, affected}{Values indicating unaffected/affected status.}
-#'     \item{sex_color}{Logical. If TRUE, uses color to differentiate sex.}
+#'     \item{sex_color_include}{Logical. If TRUE, uses color to differentiate sex.}
 #'     \item{label_max_overlaps}{Maximum number of overlaps allowed in repelled labels.}
 #'     \item{label_segment_color}{Color used for label connector lines.}
 #'   }
@@ -56,7 +56,7 @@ ggPedigree <- function(ped,
                        momID = "momID",
                        dadID = "dadID",
                        status_col = NULL,
-                       tooltip_cols = NULL,
+                       tooltip_columns = NULL,
                        as_widget = FALSE,
                        config = list(),
                        debug = FALSE,
@@ -81,7 +81,7 @@ ggPedigree <- function(ped,
       debug = debug,
       hints = hints,
       as_widget = as_widget,
-      tooltip_cols = tooltip_cols,
+      tooltip_columns = tooltip_columns,
       ...
     )
   } else {
@@ -132,75 +132,7 @@ ggPedigree.core <- function(ped, famID = "famID",
   }
 
   # Set default styling and layout parameters
-  default_config <- list(
-    apply_default_scales = TRUE,
-    apply_default_theme = TRUE,
-    # --- SEX ------------------------------------------------------------
-    code_male = 1,
-
-    # --- LAYOUT ---------------------------------------------------------
-    generation_height = 1,
-    generation_width = 1,
-    layout_text_size = 8,
-    layout_text_color = "black",
-    layout_text_angle_y = 0,
-    layout_text_angle_x = 90,
-
-    # --- LABELS ---------------------------------------------------------
-    include_labels = TRUE,
-    label_col = "personID",
-    label_max_overlaps = 15,
-    label_method = "ggrepel", # "geom_label" or "geom_text"
-    label_nudge_x = 0,
-    label_nudge_y = -.10,
-    label_segment_color = NA,
-    label_text_angle = 0,
-    label_text_size = 2,
-
-    # --- POINT / LINE AESTHETICS ---------------------------------------
-    point_size = 4,
-    outline = FALSE,
-    outline_multiplier = 1.5,
-    outline_color = "black",
-
-    # segment colors
-    segment_offspring_color = "black",
-    segment_parent_color = "black",
-    segment_self_color = "black",
-    segment_sibling_color = "black",
-    segment_spouse_color = "black",
-    # segment linetypes
-    segment_linewidth = 0.5,
-    segment_linetype = 1,
-    segment_lineend = "round",
-    segment_linejoin = "round",
-    # segment self aesthetics
-    segment_self_linetype = "dotdash",
-    segment_self_angle = 90,
-    segment_self_curvature = -0.2,
-
-    # --- SEX SHAPES & LEGEND -------------------------------------------
-    sex_color = TRUE,
-    sex_legend_title = "Sex",
-    sex_shape_labs = c("Female", "Male", "Unknown"),
-    sex_color_palette = c("#440154FF", "#FDE725FF", "#21908CFF"),
-    sex_shape_female = 16,
-    sex_shape_male = 15,
-    sex_shape_unknown = 18,
-
-    # --- STATUS *codes vs labels* (originally conflated) ---------------
-    status_code_affected = 1,
-    status_code_unaffected = 0,
-    status_label_affected = "Affected",
-    status_label_unaffected = "Unaffected",
-    status_alpha_affected = 1,
-    status_alpha_unaffected = 0,
-    status_color_palette = c("#440154FF", "#FDE725FF"),
-    status_affected_shape = 4,
-    status_affected_legend_title = "Affected",
-    show_status_legend = FALSE
-    #  hints = NULL
-  )
+  default_config <- getDefaultPlotConfig()
 
   # Merge with user-specified overrides
   # This allows the user to override any of the default values
@@ -403,7 +335,7 @@ ggPedigree.core <- function(ped, famID = "famID",
   #   3. If neither is used: plot individuals using shape alone.
 
 
-  if (config$outline == TRUE) {
+  if (config$outline_include == TRUE) {
     p <- p +
       ggplot2::geom_point(
         ggplot2::aes(
@@ -416,7 +348,7 @@ ggPedigree.core <- function(ped, famID = "famID",
       )
   }
 
-  if (config$sex_color == TRUE) {
+  if (config$sex_color_include == TRUE) {
     # Use color and shape to represent sex
     p <- p +
       ggplot2::geom_point(
@@ -438,7 +370,7 @@ ggPedigree.core <- function(ped, famID = "famID",
       )
     }
   } else if (!is.null(status_col)) {
-    # If status_col is present but sex_color is FALSE,
+    # If status_col is present but sex_color_include is FALSE,
     # use shape for sex and color for affected status
     p <- p +
       ggplot2::geom_point(
@@ -468,7 +400,7 @@ ggPedigree.core <- function(ped, famID = "famID",
   # -----
   # Add labels to the points using ggrepel for better visibility
 
-  if (config$include_labels == TRUE) {
+  if (config$label_include == TRUE) {
     p <- .addLabels(p = p, config = config)
   }
 
@@ -570,9 +502,9 @@ ggpedigree <- ggPedigree
   )
 
   # Add alpha scale for affected status if applicable
-  if (!is.null(status_col) && config$sex_color == TRUE) {
+  if (!is.null(status_col) && config$sex_color_include == TRUE) {
     p <- p + ggplot2::scale_alpha_manual(
-      name = if (config$show_status_legend) {
+      name = if (config$status_legend_show) {
         config$status_affected_legend_title
       } else {
         NULL
@@ -580,13 +512,13 @@ ggpedigree <- ggPedigree
       values = config$status_alpha_vals,
       na.translate = FALSE
     )
-    if (config$show_status_legend == FALSE) {
+    if (config$status_legend_show == FALSE) {
       p <- p + ggplot2::guides(alpha = "none")
     }
   }
 
   # Add color scale for sex or affected status if applicable
-  if (config$sex_color == TRUE) {
+  if (config$sex_color_include == TRUE) {
     if (!is.null(config$sex_color_palette)) {
       p <- p + ggplot2::scale_color_manual(
         values = config$sex_color_palette,
@@ -634,7 +566,7 @@ ggpedigree <- ggPedigree
   if (config$label_method %in% c("geom_text_repel", "ggrepel", "geom_label_repel")
   ) {
     p <- p +
-      ggrepel::geom_text_repel(ggplot2::aes(label = !!rlang::sym(config$label_col)),
+      ggrepel::geom_text_repel(ggplot2::aes(label = !!rlang::sym(config$label_column)),
         nudge_y = config$label_nudge_y * config$generation_height,
         nudge_x = config$label_nudge_x * config$generation_width,
         size = config$label_text_size,
@@ -646,7 +578,7 @@ ggpedigree <- ggPedigree
       )
   } else if (config$label_method == "geom_label") {
     p <- p +
-      ggplot2::geom_label(ggplot2::aes(label = !!rlang::sym(config$label_col)),
+      ggplot2::geom_label(ggplot2::aes(label = !!rlang::sym(config$label_column)),
         nudge_y = config$label_nudge_y * config$generation_height,
         nudge_x = config$label_nudge_x * config$generation_width,
         size = config$label_text_size,
@@ -655,7 +587,7 @@ ggpedigree <- ggPedigree
       )
   } else if (config$label_method == "geom_text") {
     p <- p +
-      ggplot2::geom_text(ggplot2::aes(label = !!rlang::sym(config$label_col)),
+      ggplot2::geom_text(ggplot2::aes(label = !!rlang::sym(config$label_column)),
         nudge_y = config$label_nudge_y * config$generation_height,
         nudge_x = config$label_nudge_x * config$generation_width,
         size = config$label_text_size,
