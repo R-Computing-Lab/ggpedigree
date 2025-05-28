@@ -23,6 +23,7 @@ The example below uses a squirell pedigree dataset to illustrate how to create a
 ```{r, message=FALSE, warning=FALSE, cache=FALSE}
 library(ggpedigree)
 library(BGmisc)
+library(data.table)
 # Load the example data
 data("redsquirrels")
 library(dplyr)

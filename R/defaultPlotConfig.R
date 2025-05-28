@@ -1,6 +1,8 @@
 # defaultPlotConfig.R
 #' @title Shared Default Plotting Configuration
 #' @description Centralized configuration list used by all gg-based plotting functions.
+#' @param color_palette_default A character vector of default colors for the plot.
+#' @param segment_default_color A character string for the default color of segments in the plot.
 #' @return A named list of default plotting and layout parameters.
 #' @export
 
@@ -58,9 +60,9 @@ getDefaultPlotConfig <- function(color_palette_default =
     label_text_color           = "black",
 
     # --- POINT / OUTLINE AESTHETICS ---------------------------------------
-    point_size                 = 4,
+    point_size                 = 5,
     outline_include = FALSE,
-    outline_multiplier         = 1.5,
+    outline_multiplier         = 1.25,
     outline_color             = "black",
 
     # ---- Tooltip Aesthetics ----
@@ -102,6 +104,7 @@ getDefaultPlotConfig <- function(color_palette_default =
     sex_shape_unknown          = 18,
 
     # ---- Affected Status Controls ----
+    status_include            = TRUE,
     status_code_affected       = 1,
     status_code_unaffected     = 0,
     status_label_affected      = "Affected",

@@ -7,6 +7,7 @@ knitr::opts_chunk$set(
 ## ----message=FALSE, warning=FALSE, cache=FALSE--------------------------------
 library(ggpedigree)
 library(BGmisc)
+library(data.table)
 # Load the example data
 data("redsquirrels")
 library(dplyr)

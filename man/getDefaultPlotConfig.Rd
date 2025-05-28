@@ -9,6 +9,11 @@ getDefaultPlotConfig(
   segment_default_color = "black"
 )
 }
+\arguments{
+\item{color_palette_default}{A character vector of default colors for the plot.}
+
+\item{segment_default_color}{A character string for the default color of segments in the plot.}
+}
 \value{
 A named list of default plotting and layout parameters.
 }
