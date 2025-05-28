@@ -23,7 +23,10 @@ Imports:
     stringr,
     utils,
     plotly,
-    reshape2
+    reshape2,
+    scales,
+    tidyr,
+    paletteer
 Suggests: 
     viridis,
     knitr,

@@ -10,12 +10,13 @@ utils::globalVariables(c(".x"))
 #'     \item{n_pairs}{Number of pairs at that relatedness}
 #'     \item{cnu}{Indicator for shared nuclear environment (1 = yes, 0 = no)}
 #'     \item{mtdna}{Indicator for shared mitochondrial DNA (1 = yes, 0 = no)}
-#'   }
+#'     }
+#'
 #' @param y_var Name of the y-axis variable column (e.g., "r_pheno_rho").
 #' @param y_se Name of the standard error column (e.g., "r_pheno_se").
 #' @param y_stem_se Optional; base stem used to construct SE ribbon bounds. (e.g., "r_pheno")
-#'  @param data_prep Logical; if TRUE, performs data preparation steps.
-#'  @param ... Additional arguments passed to `ggplot2` functions.
+#' @param data_prep Logical; if TRUE, performs data preparation steps.
+#' @param ... Additional arguments passed to `ggplot2` functions.
 #' @param config A list of configuration overrides. Valid entries include:
 #'  \describe{
 #'     \item{filter_n_pairs}{Minimum number of pairs to include (default: 500)}
@@ -37,9 +38,9 @@ utils::globalVariables(c(".x"))
 #'     \item{rounding}{Number of decimal places for rounding (default: 2)}
 #'     \item{threshold}{Tolerance \% for matching known degrees}
 #'     \item{max_degrees}{Maximum number of degrees to consider}
-#'     }
-#'  @return A ggplot object containing the correlation plot.
+#' }
 #'
+#' @return A ggplot object containing the correlation plot.
 #' @export
 
 ggPhenotypeByDegree <- function(df,
@@ -118,6 +119,7 @@ ggPhenotypeByDegree <- function(df,
 #' Core plotting function for ggPhenotypeByDegree
 #' This function generates the core ggplot object based on the prepared data frame.
 #' @inheritParams ggPhenotypeByDegree
+#'
 #' @return A ggplot object containing the correlation plot.
 #' @keywords internal
 
@@ -162,8 +164,8 @@ ggPhenotypeByDegree.core <- function(df,
   # drop rows based on filter conditions
   df <- df |>
     tidyr::drop_na(!!y_var_sym) |>
-    mutate(classic_kin_factor = factor(paste0(classic_kin, mtdna))) |>
-    dplyr::filter(.data$n_pairs > config$filter_n_pairs & .data$addRel_center < 1 & .data$degree_relative < config$filter_degree_max & degree_relative > config$filter_degree_min)
+    mutate(classic_kin_factor = factor(paste0(.data$classic_kin, .data$mtdna))) |>
+    dplyr::filter(.data$n_pairs > config$filter_n_pairs & .data$addRel_center < 1 & .data$degree_relative < config$filter_degree_max & .data$degree_relative > config$filter_degree_min)
 
   # drop weird sibs
   if (config$drop_non_classic_sibs == TRUE) {
@@ -197,7 +199,8 @@ ggPhenotypeByDegree.core <- function(df,
       ggplot2::geom_ribbon(
         ggplot2::aes(
           ymin = !!ymin_var,
-          ymax = !!ymax_var, fill = !!grouping_sym
+          ymax = !!ymax_var,
+          fill = !!grouping_sym
         ),
         alpha = .3, linetype = 0
       ) + # , stat = "smooth", method = "loess") +
@@ -213,7 +216,8 @@ ggPhenotypeByDegree.core <- function(df,
           group = .data$classic_kin_factor
         ),
         stat = "smooth", span = .02,
-        outline.type = "upper", method = "lm", # group = df$classic_kin,
+        outline.type = "upper",
+        method = "lm", # group = df$classic_kin,
         alpha = .3, linetype = 0,
         show.legend = FALSE
       ) +
@@ -228,7 +232,7 @@ ggPhenotypeByDegree.core <- function(df,
 
   # annotate if and only if
   if (config$annotate == TRUE && config$filter_degree_min == 0) {
-    core_plot <- .addAnnotate(
+    core_plot <-  .addAnnotate(
       p = core_plot,
       config = config,
       y_var_sym = y_var_sym
@@ -380,7 +384,7 @@ ggPhenotypeByDegree.core <- function(df,
       )
   } else if (config$drop_classic_kin == TRUE) {
     p <- p +
-      geom_point(data = config$annotation_coords$df_point, aes(x = x_value_sib, y = y_value_sib), size = config$point_size) + # Add the single point
+      geom_point(data = config$annotation_coords$df_point, aes(x = .data$addRel_center, y = !!y_var_sym), size = config$point_size) + # Add the single point
       annotate("text",
         x = config$annotation_coords$annotation_sib_x,
         y = config$annotation_coords$annotation_sib_y,
