@@ -5,6 +5,151 @@ knitr::opts_chunk$set(
 )
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
+library(ggpedigree)
+library(BGmisc)
+# Load the example data
+data("redsquirrels")
+library(dplyr)
+library(broom)   # for tidy()
+library(purrr)   # for map_* helpers
+# Filter for the largest family, recode sex if needed
+ped_filtered <- redsquirrels %>%
+  recodeSex(code_female = "F")
+kin_degree_max <- 12 # maximum degree of relatedness to consider
+# Calculate relatedness matrices
+add_mat <- ped2add(ped_filtered, isChild_method = "partialparent", sparse = TRUE)
+mit_mat <- ped2mit(ped_filtered, isChild_method = "partialparent", sparse = TRUE)
+cn_mat <- ped2cn(ped_filtered, isChild_method = "partialparent", sparse = TRUE)
+
+df_links <- com2links(
+  writetodisk = FALSE,
+  ad_ped_matrix = add_mat, 
+  mit_ped_matrix  = mit_mat,
+  cn_ped_matrix = cn_mat,
+  drop_upper_triangular = TRUE,
+  gc = FALSE
+)
+
+dataRelatedPair_merge <- df_links %>%  
+left_join(ped_filtered %>% select(personID, lrs, ars_n),
+          by = c("ID1" = "personID")) %>%
+  rename(
+  lrs_k1 = lrs,
+    ars_n_k1 = ars_n
+  ) %>%
+  left_join(ped_filtered %>% select(personID, lrs, ars_n),
+          by = c("ID2" = "personID")) %>%  rename(
+   lrs_k2 = lrs,
+    ars_n_k2 = ars_n
+  )
+
+# double enter
+dxlist <- c( "ID1", "ID2", # intentional ordering
+                "addRel", "mitRel",
+                "cnuRel",
+                names(dataRelatedPair_merge)[endsWith(names(dataRelatedPair_merge), "_k2")],
+                names(dataRelatedPair_merge)[endsWith(names(dataRelatedPair_merge), "_k1")]
+              )
+
+dataRelatedPair_merge <- data.table::rbindlist(
+              list(
+                dataRelatedPair_merge,
+                dataRelatedPair_merge[, dxlist]
+              ),
+              use.names = FALSE
+            ) %>%
+  mutate(
+    # recode to bins that are within 10% of expected degree of relatedness cousins within 10% for .125 so .125+-.125*10 = .1125 and .125 + .125*10 = .1375, and 2^4 etc
+   #  addRel_center <- 2^(0:(-kin_degree_max)) # needs to be sliced first with range
+
+    addRel_bin = case_when(
+       addRel > 2^0 * 1.1 ~ "addRel_1+",
+      addRel > 2^0 * 0.9 & addRel < 2^0 * 1.1 ~ "addRel_1",
+      addRel  > 2^(-1) *  1.1 ~ paste0("addRel_+", 2^(-1)),
+      addRel > 2^(-1) * 0.9 & addRel< 2^(-1) * 1.1 ~ paste0("addRel_", 2^(-1)),
+      addRel  > 2^(-2) * 1.1 ~ paste0("addRel_+", 2^(-2)),
+      addRel  > 2^(-2) * 0.9 & addRel < 2^(-2) * 1.1 ~ paste0("addRel_", 2^(-2)),
+      addRel  > 2^(-3) * 1.1 ~ paste0("addRel_+", 2^(-3)),
+      addRel  > 2^(-3) * 0.9 & addRel < 2^(-3) * 1.1 ~ paste0("addRel_", 2^(-3)),
+      addRel  > 2^(-4) * 1.1 ~ paste0("addRel_+", 2^(-4)),
+      addRel  > 2^(-4) * 0.9 & addRel < 2^(-4) * 1.1 ~ paste0("addRel_", 2^(-4)),
+      addRel  > 2^(-5) * 1.1 ~ paste0("addRel_+", 2^(-5)),
+      addRel  > 2^(-5) * 0.9 & addRel < 2^(-5) * 1.1 ~ paste0("addRel_", 2^(-5)),
+      addRel  > 2^(-6) * 1.1 ~ paste0("addRel_+", 2^(-6)),
+      addRel  > 2^(-6) * 0.9 & addRel < 2^(-6) * 1.1 ~ paste0("addRel_", 2^(-6)),
+      addRel  > 2^(-7) * 1.1 ~ paste0("addRel_+", 2^(-7)),
+      addRel  > 2^(-7) * 0.9 & addRel < 2^(-7) * 1.1 ~ paste0("addRel_", 2^(-7)),
+      addRel  > 2^(-8) * 1.1 ~ paste0("addRel_+", 2^(-8)),
+      addRel  > 2^(-8) * 0.9 & addRel < 2^(-8) * 1.1 ~ paste0("addRel_", 2^(-8)),
+      addRel  > 2^(-9) * 1.1 ~ paste0("addRel_+", 2^(-9)),
+      addRel  > 2^(-9) * 0.9 & addRel < 2^(-9) * 1.1 ~ paste0("addRel_", 2^(-9)),
+      addRel  > 2^(-10) * 1.1 ~ paste0("addRel_+", 2^(-10)),
+      addRel  > 2^(-10) * 0.9 & addRel < 2^(-10) * 1.1 ~ paste0("addRel_", 2^(-10)),
+      addRel  > 2^(-11) * 1.1 ~ paste0("addRel_+", 2^(-11)),
+      addRel  > 2^(-11) * 0.9 & addRel < 2^(-11) * 1.1 ~ paste0("addRel_", 2^(-11)),
+      addRel  > 2^(-12) * 1.1 ~ paste0("addRel_+", 2^(-12)),
+      addRel  > 2^(-12) * 0.9 & addRel < 2^(-12) * 1.1 ~ paste0("addRel_", 2^(-12)),
+      addRel >  0 ~ "addRel_+0",
+      addRel ==  0 ~ "addRel_0",
+      TRUE ~ NA_character_ # catch-all for other cases
+    ),
+    addRel_factor = factor(addRel_bin, levels = c(
+      "addRel_1+", "addRel_1", paste0("addRel_+", 2^(-1)), 
+      paste0("addRel_", 2^(-1)), paste0("addRel_+", 2^(-2)),
+      paste0("addRel_", 2^(-2)), paste0("addRel_+", 2^(-3)),
+      paste0("addRel_", 2^(-3)), paste0("addRel_+", 2^(-4)),
+      paste0("addRel_", 2^(-4)), paste0("addRel_+", 2^(-5)),
+      paste0("addRel_", 2^(-5)), paste0("addRel_+", 2^(-6)),
+      paste0("addRel_", 2^(-6)), paste0("addRel_+", 2^(-7)),
+      paste0("addRel_", 2^(-7)), paste0("addRel_+", 2^(-8)),
+      paste0("addRel_", 2^(-8)), paste0("addRel_+", 2^(-9)),
+      paste0("addRel_", 2^(-9)), paste0("addRel_+", 2^(-10)),
+      paste0("addRel_", 2^(-10)), paste0("addRel_+", 2^(-11)),
+      paste0("addRel_", 2^(-11)), paste0("addRel_+", 2^(-12)),
+      paste0("addRel_", 2^(-12)), "addRel_+0", "addRel_0"
+    ))
+  ) %>% select(
+   -addRel_bin
+  )
+
+
+result <- dataRelatedPair_merge %>%
+                  group_by(addRel_factor, mitRel, cnuRel) %>%
+                  
+    summarise(
+    n                = n(),
+    lrs_cor_test     = list( tryCatch(cor.test(lrs_k1,  lrs_k2,  use = "pairwise.complete.obs"),
+                                   error = function(e) NULL)),
+                                          ,
+    ars_n_cor_test   = list(tryCatch(cor.test(ars_n_k1, ars_n_k2, use = "pairwise.complete.obs"),
+                                   error = function(e) NULL)),
+    addRel_mean = mean(addRel, na.rm = TRUE),
+    .groups = "drop"                 # eliminates the need for ungroup()
+  ) %>% 
+  ## unpack the two cor.test() objects -------------------------------
+  mutate(
+    # ---- LRS pair ----
+    cor_lrs        = map_dbl(lrs_cor_test,   ~ if (is.null(.x)) NA_real_ else .x$estimate),
+    cor_lrs_stat   = map_dbl(lrs_cor_test,   ~ if (is.null(.x)) NA_real_ else .x$statistic),
+    cor_lrs_p      = map_dbl(lrs_cor_test,   ~ if (is.null(.x)) NA_real_ else .x$p.value),
+    cor_lrs_df     = map_dbl(lrs_cor_test,   ~ if (is.null(.x)) NA_real_ else .x$parameter),
+    cor_lrs_ci_lb  = map_dbl(lrs_cor_test,   ~ if (is.null(.x)) NA_real_ else .x$conf.int[1]),
+    cor_lrs_ci_ub  = map_dbl(lrs_cor_test,   ~ if (is.null(.x)) NA_real_ else .x$conf.int[2]),
+    
+    # ---- ARS‑n pair ----
+    cor_ars_n      = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$estimate),
+    cor_ars_n_stat = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$statistic),
+    cor_ars_n_p    = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$p.value),
+    cor_ars_n_df   = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$parameter),
+    cor_ars_n_ci_lb= map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$conf.int[1]),
+    cor_ars_n_ci_ub= map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$conf.int[2])
+  ) %>% 
+  select(-lrs_cor_test, -ars_n_cor_test)   # drop the list‑columns once unpacked
+  
+  
+  
+
+## ----message=FALSE, warning=FALSE---------------------------------------------
 library(tibble)
 library(dplyr)
 library(ggpedigree)
