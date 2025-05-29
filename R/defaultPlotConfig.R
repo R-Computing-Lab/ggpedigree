@@ -17,15 +17,22 @@ getDefaultPlotConfig <- function(color_palette_default =
                                  function_name = "getDefaultPlotConfig",
                                  personID = NULL,
                                  status_column = NULL,
-                                 ...
-                                 ) {
+                                 ...) {
   # Ensure the color palette is a character vector
-  if (!is.character(color_palette_default) || length(color_palette_default) < 3) {
+  if (!is.character(color_palette_default) ||
+      length(color_palette_default) < 3) {
     stop("color_palette_default must be a character vector with at least 3 colors.")
   }
-  if (!is.character(segment_default_color) || length(segment_default_color) != 1) {
+  if (!is.character(segment_default_color) ||
+      length(segment_default_color) != 1) {
     stop("segment_default_color must be a single character string.")
   }
+
+
+  if(!stringr::str_to_lower(function_name) %in% c("ggrelatednessmatrix", "ggpedigree", "ggpedigreeinteractive", "getdefaultplotconfig")) {
+    stop(paste0("The function ", function_name, " is not supported by getDefaultPlotConfig."))
+  }
+
   core_list <- list(
     # ---- General Appearance ----
     apply_default_scales       = TRUE,
@@ -124,7 +131,8 @@ getDefaultPlotConfig <- function(color_palette_default =
     status_label_unaffected    = "Unaffected",
     status_alpha_affected      = 1,
     status_alpha_unaffected    = 0,
-    status_color_palette       = c(color_palette_default[1], color_palette_default[2]),# Use first color for affected,
+    status_color_palette       = c(color_palette_default[1], color_palette_default[2]),
+    # Use first color for affected,
     status_affected_shape      = 4,
     status_legend_title        = "Affected",
     status_legend_show         = FALSE,
@@ -135,11 +143,11 @@ getDefaultPlotConfig <- function(color_palette_default =
     return_interactive         = FALSE
   )
 
- if(stringr::str_to_lower(function_name) %in% c( "ggrelatednessmatrix")) {
-#   If the function is ggRelatednessMatrix, we need to adjust the tooltip columns
+  if (stringr::str_to_lower(function_name) %in% c("ggrelatednessmatrix")) {
+    #   If the function is ggRelatednessMatrix, we need to adjust the tooltip columns
     core_list$tooltip_columns <- c("ID1", "ID2", "value")
- }
-  if (stringr::str_to_lower(function_name)  %in% c("ggpedigree","ggpedigreeinteractive") ){
+  }
+  if (stringr::str_to_lower(function_name)  %in% c("ggpedigree", "ggpedigreeinteractive")) {
     core_list$label_method <-  "ggrepel"
   }
 
@@ -152,5 +160,6 @@ getDefaultPlotConfig <- function(color_palette_default =
     core_list$return_widget <- TRUE
     core_list$return_interactive <- TRUE
   }
+
   return(core_list)
 }
