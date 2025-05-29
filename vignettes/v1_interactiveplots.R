@@ -112,7 +112,7 @@ static <- ggPedigreeInteractive(
     label_nudge_y = -.25,
     include_labels = TRUE,
     label_method = "geom_text",
-    sex_color = TRUE,
+    sex_color_include = TRUE,
     return_static = TRUE
   ),
   tooltip_cols = c("personID", "name")
@@ -163,4 +163,36 @@ if (interactive()) {
 } else {
   plotly::partial_bundle(plt2, local = TRUE)
 }
+
+## ----interactive-customization------------------------------------------------
+
+library(BGmisc)
+data(hazard)
+
+df <- hazard
+
+ggPedigreeInteractive(
+  df,
+  famID = "famID",
+  personID = "ID",
+  momID = "momID",
+  dadID = "dadID",
+ 
+  config = list(
+    code_male = 0,
+     status_column = "affected",
+    label_nudge_y   = -.25,
+    include_labels  = TRUE,
+    include_tooltip = TRUE,
+    label_method    = "geom_text",
+    sex_color_include   = TRUE
+  ),
+  tooltip_columns = c("personID", "birthYr", "onsetYr", "deathYr")
+) %>%
+  plotly::layout(
+    title = "Hazard Pedigree (interactive)",
+    hoverlabel = list(bgcolor = "white"),
+    margin = list(l = 50, r = 50, t = 50, b = 50)
+  ) %>%
+  plotly::config(displayModeBar = TRUE)
 

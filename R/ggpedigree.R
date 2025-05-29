@@ -10,14 +10,14 @@
 #' @param personID Character string specifying the column name for individual IDs.
 #' @param momID Character string specifying the column name for mother IDs. Defaults to "momID".
 #' @param dadID Character string specifying the column name for father IDs. Defaults to "dadID".
-#' @param status_col Character string specifying the column name for affected status. Defaults to NULL.
+#' @param status_column Character string specifying the column name for affected status. Defaults to NULL.
 #' @param debug Logical. If TRUE, prints debugging information. Default: FALSE.
 #' @param hints Data frame with hints for layout adjustments. Default: NULL.
 #' @param interactive Logical. If TRUE, generates an interactive plot using `plotly`. Default: FALSE.
 #' @param tooltip_columns Character vector of column names to show when hovering.
 #'        Defaults to c("personID", "sex").  Additional columns present in `ped`
 #'        can be supplied – they will be added to the Plotly tooltip text.
-#' @param as_widget Logical; if TRUE (default) returns a plotly htmlwidget.
+#' @param return_widget Logical; if TRUE (default) returns a plotly htmlwidget.
 #'        If FALSE, returns the underlying plotly object (useful for further
 #'        customization before printing).
 #' @param ... Additional arguments passed to `ggplot2` functions.
@@ -29,7 +29,7 @@
 #'     \item{label_text_size, point_size, segment_linewidth}{Numeric. Controls text size, point size, and line thickness.}
 #'     \item{generation_height}{Numeric. Vertical spacing multiplier between generations. Default: 1.}
 #'     \item{shape_unknown, shape_female, shape_male, affected_shape}{Integers. Shape codes for plotting each group.}
-#'     \item{sex_shape_labs}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
+#'     \item{sex_shape_labels}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
 #'     \item{unaffected, affected}{Values indicating unaffected/affected status.}
 #'     \item{sex_color_include}{Logical. If TRUE, uses color to differentiate sex.}
 #'     \item{label_max_overlaps}{Maximum number of overlaps allowed in repelled labels.}
@@ -55,9 +55,9 @@ ggPedigree <- function(ped,
                        personID = "personID",
                        momID = "momID",
                        dadID = "dadID",
-                       status_col = NULL,
+                       status_column = NULL,
                        tooltip_columns = NULL,
-                       as_widget = FALSE,
+                       return_widget = FALSE,
                        config = list(),
                        debug = FALSE,
                        hints = NULL,
@@ -76,11 +76,11 @@ ggPedigree <- function(ped,
       personID = personID,
       momID = momID,
       dadID = dadID,
-      status_col = status_col,
+      status_column = status_column,
       config = config,
       debug = debug,
       hints = hints,
-      as_widget = as_widget,
+      return_widget = return_widget,
       tooltip_columns = tooltip_columns,
       ...
     )
@@ -95,7 +95,7 @@ ggPedigree <- function(ped,
       personID = personID,
       momID = momID,
       dadID = dadID,
-      status_col = status_col,
+      status_column = status_column,
       config = config,
       debug = debug,
       hints = hints,
@@ -119,7 +119,7 @@ ggPedigree.core <- function(ped, famID = "famID",
                             personID = "personID",
                             momID = "momID",
                             dadID = "dadID",
-                            status_col = NULL,
+                            status_column = NULL,
                             config = list(),
                             debug = FALSE,
                             hints = NULL,
@@ -132,7 +132,8 @@ ggPedigree.core <- function(ped, famID = "famID",
   }
 
   # Set default styling and layout parameters
-  default_config <- getDefaultPlotConfig()
+  default_config <- getDefaultPlotConfig(function_name = "ggPedigree",
+                                         personID = personID)
 
   # Merge with user-specified overrides
   # This allows the user to override any of the default values
@@ -140,27 +141,28 @@ ggPedigree.core <- function(ped, famID = "famID",
 
   # Set additional internal config values based on other entries
 
-  config$sex_shape_vals <- c(config$sex_shape_female, config$sex_shape_male, config$sex_shape_unknown)
-  config$status_labs <- c(config$status_label_affected, config$status_label_unaffected)
+  config$sex_shape_values <- c(config$sex_shape_female,
+                             config$sex_shape_male,
+                             config$sex_shape_unknown)
+  config$status_labs <- c(config$status_label_affected,
+                          config$status_label_unaffected)
+  config$status_codes <- c(config$status_code_affected,
+                           config$status_code_unaffected)
 
-  config$status_codes <- c(config$status_code_affected, config$status_code_unaffected)
-
-  config$status_alpha_vals <- stats::setNames(c(
+  config$status_alpha_values <- stats::setNames(c(
     config$status_alpha_affected,
-    config$status_alpha_unaffected
-  ), config$status_labs)
-  config$status_color_vals <- stats::setNames(
-    c(
+    config$status_alpha_unaffected),
+    config$status_labs)
+  config$status_color_values <- stats::setNames(c(
       config$status_color_palette[1],
-      config$status_color_palette[2]
-    ),
+      config$status_color_palette[2]),
     config$status_labs
   )
 
   config$status_labels <- stats::setNames(c(
     config$status_label_affected,
-    config$status_label_unaffected
-  ), config$status_labs)
+    config$status_label_unaffected),
+    config$status_labs)
 
   # -----
   # STEP 2: Pedigree Data Transformation
@@ -189,9 +191,9 @@ ggPedigree.core <- function(ped, famID = "famID",
   }
 
   # Recode affected status into factor, if applicable
-  if (!is.null(status_col)) {
-    ds_ped[[status_col]] <- factor(
-      ds_ped[[status_col]],
+  if (!is.null(status_column)) {
+    ds_ped[[status_column]] <- factor(
+      ds_ped[[status_column]],
       levels = config$status_codes,
       labels = config$status_labels
     )
@@ -240,7 +242,7 @@ ggPedigree.core <- function(ped, famID = "famID",
   # STEP 6: Initialize Plot
   # -----
 
-  gap_off <- 0.5 * config$generation_height # single constant for all “stub” offsets
+  config$gap_off <- 0.5 * config$generation_height # single constant for all “stub” offsets
 
   p <- ggplot2::ggplot(ds, ggplot2::aes(
     x = .data$x_pos,
@@ -277,7 +279,7 @@ ggPedigree.core <- function(ped, famID = "famID",
     ggplot2::aes(
       x = .data$x_mid_sib,
       xend = .data$x_midparent,
-      y = .data$y_mid_sib - gap_off,
+      y = .data$y_mid_sib - config$gap_off,
       yend = .data$y_midparent
     ),
     linewidth = config$segment_linewidth,
@@ -293,8 +295,8 @@ ggPedigree.core <- function(ped, famID = "famID",
       ggplot2::aes(
         x = .data$x_pos,
         xend = .data$x_mid_sib,
-        y = .data$y_pos - gap_off,
-        yend = .data$y_mid_sib - gap_off
+        y = .data$y_pos - config$gap_off,
+        yend = .data$y_mid_sib - config$gap_off
       ),
       linewidth = config$segment_linewidth,
       lineend = config$segment_lineend,
@@ -309,7 +311,7 @@ ggPedigree.core <- function(ped, famID = "famID",
       ggplot2::aes(
         x = .data$x_pos,
         xend = .data$x_pos,
-        y = .data$y_mid_sib - gap_off,
+        y = .data$y_mid_sib - config$gap_off,
         yend = .data$y_pos
       ),
       linewidth = config$segment_linewidth,
@@ -327,11 +329,11 @@ ggPedigree.core <- function(ped, famID = "famID",
   # Add point layers for each individual in the pedigree.
   # The appearance (color and shape) depends on two factors:
   # 1. Whether `sex_color` is enabled — this controls whether sex is encoded via both color and shape.
-  # 2. Whether `status_col` is specified — this controls whether affected status is visualized.
+  # 2. Whether `status_column` is specified — this controls whether affected status is visualized.
 
   # There are three main rendering branches:
   #   1. If sex_color == TRUE: color and shape reflect sex, and affected status is shown with a second symbol.
-  #   2. If sex_color == FALSE but status_col is present: shape reflects sex, and color reflects affected status.
+  #   2. If sex_color == FALSE but status_column is present: shape reflects sex, and color reflects affected status.
   #   3. If neither is used: plot individuals using shape alone.
 
 
@@ -361,28 +363,28 @@ ggPedigree.core <- function(ped, famID = "famID",
         stroke = config$segment_linewidth
       )
     # If affected status is present, overlay an additional marker using alpha aesthetic
-    if (!is.null(status_col)) {
+    if (!is.null(status_column)) {
       p <- p + ggplot2::geom_point(
-        ggplot2::aes(alpha = !!rlang::sym(status_col)),
+        ggplot2::aes(alpha = !!rlang::sym(status_column)),
         shape = config$status_affected_shape,
         size = config$point_size,
         na.rm = TRUE
       )
     }
-  } else if (!is.null(status_col)) {
-    # If status_col is present but sex_color_include is FALSE,
+  } else if (!is.null(status_column)) {
+    # If status_column is present but sex_color_include is FALSE,
     # use shape for sex and color for affected status
     p <- p +
       ggplot2::geom_point(
         ggplot2::aes(
-          color = as.factor(!!rlang::sym(status_col)),
+          color = as.factor(!!rlang::sym(status_column)),
           shape = as.factor(.data$sex)
         ),
         size = config$point_size,
         na.rm = TRUE
       )
   } else {
-    # If neither sex color nor status_col is active,
+    # If neither sex color nor status_column is active,
     # plot using shape (sex) only
     p <- p +
       ggplot2::geom_point(
@@ -413,12 +415,10 @@ ggPedigree.core <- function(ped, famID = "famID",
     otherself <- plot_connections$self_coords |>
       dplyr::filter(!is.na(.data$x_otherself)) |>
       dplyr::mutate(
-        otherself_xkey = makeSymmetricKey(.data$x_otherself, .data$x_pos) # ,
-        #  otherself_ykey = makeSymmetricKey(.data$y_otherself, .data$y_pos)
+        otherself_xkey = makeSymmetricKey(.data$x_otherself, .data$x_pos)
       ) |>
       # unique combinations of x_otherself and x_pos and y_otherself and y_pos
       dplyr::distinct(.data$otherself_xkey, .keep_all = TRUE)
-
 
     p <- p + ggplot2::geom_curve(
       data = otherself,
@@ -469,7 +469,9 @@ ggPedigree.core <- function(ped, famID = "famID",
   # -----
   # Adjust legend labels and colors based on the configuration
   if (config$apply_default_scales == TRUE) {
-    p <- .addScales(p = p, config = config, status_col = status_col)
+    p <- .addScales(p = p,
+                    config = config,
+                    status_column = status_column)
   }
 
   if (debug == TRUE) {
@@ -495,21 +497,22 @@ ggpedigree <- ggPedigree
 #' @param p A ggplot object.
 #' @keywords internal
 #' @return A ggplot object with added scales.
-.addScales <- function(p, config, status_col = NULL) {
+
+.addScales <- function(p, config, status_column = NULL) {
   p <- p + ggplot2::scale_shape_manual(
-    values = config$sex_shape_vals,
-    labels = config$sex_shape_labs
+    values = config$sex_shape_values,
+    labels = config$sex_shape_labels
   )
 
   # Add alpha scale for affected status if applicable
-  if (!is.null(status_col) && config$sex_color_include == TRUE) {
+  if (!is.null(status_column) && config$sex_color_include == TRUE) {
     p <- p + ggplot2::scale_alpha_manual(
       name = if (config$status_legend_show) {
-        config$status_affected_legend_title
+        config$status_legend_title
       } else {
         NULL
       },
-      values = config$status_alpha_vals,
+      values = config$status_alpha_values,
       na.translate = FALSE
     )
     if (config$status_legend_show == FALSE) {
@@ -522,11 +525,11 @@ ggpedigree <- ggPedigree
     if (!is.null(config$sex_color_palette)) {
       p <- p + ggplot2::scale_color_manual(
         values = config$sex_color_palette,
-        labels = config$sex_shape_labs
+        labels = config$sex_shape_labels
       )
     } else {
       p <- p +
-        ggplot2::scale_color_discrete(labels = config$sex_shape_labs)
+        ggplot2::scale_color_discrete(labels = config$sex_shape_labels)
     }
 
     p <- p +
@@ -534,10 +537,10 @@ ggpedigree <- ggPedigree
         color = config$sex_legend_title,
         shape = config$sex_legend_title
       )
-  } else if (!is.null(status_col)) {
+  } else if (!is.null(status_column)) {
     if (!is.null(config$status_color_palette)) {
       p <- p + ggplot2::scale_color_manual(
-        values = config$status_color_vals,
+        values = config$status_color_values,
         labels = config$status_labels
       )
     } else {
@@ -546,7 +549,7 @@ ggpedigree <- ggPedigree
     }
     p <- p +
       ggplot2::labs(
-        color = config$status_affected_legend_title,
+        color = config$status_legend_title,
         shape = config$sex_legend_title
       )
   } else {

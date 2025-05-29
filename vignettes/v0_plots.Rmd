@@ -122,7 +122,7 @@ ggPedigree(
 
 # Overlaying Status Information
 
-In many applied settings, pedigrees include binary phenotypes such as affected/unaffected status. To incorporate this, use the `status_col` argument to point to a column containing the relevant variable.
+In many applied settings, pedigrees include binary phenotypes such as affected/unaffected status. To incorporate this, use the `status_column` argument to point to a column containing the relevant variable.
 
 ```{r}
 data("hazard")
@@ -131,7 +131,7 @@ p <- ggPedigree(
   hazard,
   famID = "famID",
   personID = "ID",
-  status_col = "affected",
+  status_column = "affected",
   config = list(
     code_male = 0,
     sex_color_include = TRUE,
@@ -144,7 +144,7 @@ p <- ggPedigree(
 p
 ```
 
-The `status_col` argument allows you to specify a column that identifies affected/unaffected individuals. This column should be a factor or character vector; if not, `ggPedigree()` will coerce it.
+The `status_column` argument allows you to specify a column that identifies affected/unaffected individuals. This column should be a factor or character vector; if not, `ggPedigree()` will coerce it.
 
 The behavior differs depending on whether `sex_color_include` is also enabled:
 
@@ -160,7 +160,7 @@ ggPedigree(
   hazard,
   famID = "famID",
   personID = "ID",
-  status_col = "affected",
+  status_column = "affected",
   config = list(
     code_male = 0,
     sex_color_include = FALSE,
@@ -175,7 +175,7 @@ ggPedigree(
 
 ## Highlighting Specific Individuals
 
-You can also highlight specific individuals in the pedigree by creating a new column in your data frame. For example, if you want to highlight Harry Potter and Dudley Dursley, you can create a new column called `proband` and set it to `TRUE` for those individuals. You can specify the `affected_shape` to be a star shape (8) and use the `status_col` argument to indicate the probands.
+You can also highlight specific individuals in the pedigree by creating a new column in your data frame. For example, if you want to highlight Harry Potter and Dudley Dursley, you can create a new column called `proband` and set it to `TRUE` for those individuals. You can specify the `affected_shape` to be a star shape (8) and use the `status_column` argument to indicate the probands.
 
 ```{r}
 df <- potter
@@ -190,7 +190,7 @@ ggPedigree(
   df,
   famID = "famID",
   personID = "personID",
-  status_col = "proband",
+  status_column = "proband",
   config = list(
     sex_color_include = TRUE,
     status_code_affected = TRUE,
@@ -254,7 +254,7 @@ p <- ggPedigree(
   df,
   famID = "famID",
   personID = "ID",
-  status_col = "proband",
+  status_column = "proband",
   #  debug = TRUE,
   config = list(
     code_male = 0,
@@ -398,7 +398,7 @@ fig1 <- ggPedigree(
   df_fig1,
   famID = "famID",
   personID = "personID",
-  status_col = "proband",
+  status_column = "proband",
   debug = TRUE,
   config = list(
     code_male = 1,
@@ -450,7 +450,7 @@ p2 <- ggPedigree(
   pedigree_df,
   famID = "famID",
   personID = "personID",
-  status_col = "proband",
+  status_column = "proband",
   #  debug = TRUE,
   config = list(
     code_male = 1,

@@ -66,7 +66,7 @@ p_mit <- ggRelatednessMatrix(
     cluster = TRUE,
     title = "Mitochondrial Relatedness",
     text_size = 6,
-    as_widget = TRUE
+    return_widget = TRUE
   )
 )
 

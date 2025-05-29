@@ -6,13 +6,25 @@
 \usage{
 getDefaultPlotConfig(
   color_palette_default = c("#440154FF", "#FDE725FF", "#21908CFF"),
-  segment_default_color = "black"
+  segment_default_color = "black",
+  function_name = "getDefaultPlotConfig",
+  personID = NULL,
+  status_column = NULL,
+  ...
 )
 }
 \arguments{
 \item{color_palette_default}{A character vector of default colors for the plot.}
 
 \item{segment_default_color}{A character string for the default color of segments in the plot.}
+
+\item{function_name}{The name of the function calling this configuration.}
+
+\item{personID}{The column name for person identifiers in the data.}
+
+\item{status_column}{The column name for affected status in the data.}
+
+\item{...}{Additional arguments for future extensibility.}
 }
 \value{
 A named list of default plotting and layout parameters.

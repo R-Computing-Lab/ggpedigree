@@ -69,7 +69,7 @@ p <- ggPedigree(
   hazard,
   famID = "famID",
   personID = "ID",
-  status_col = "affected",
+  status_column = "affected",
   config = list(
     code_male = 0,
     sex_color = TRUE,
@@ -86,7 +86,7 @@ ggPedigree(
   hazard,
   famID = "famID",
   personID = "ID",
-  status_col = "affected",
+  status_column = "affected",
   config = list(
     code_male = 0,
     sex_color = FALSE,
@@ -111,7 +111,7 @@ ggPedigree(
   df,
   famID = "famID",
   personID = "personID",
-  status_col = "proband",
+  status_column = "proband",
   config = list(
     sex_color = TRUE,
     status_code_affected = TRUE,
@@ -160,7 +160,7 @@ p <- ggPedigree(
   df,
   famID = "famID",
   personID = "ID",
-  status_col = "proband",
+  status_column = "proband",
   #  debug = TRUE,
   config = list(
     code_male = 0,
@@ -249,7 +249,7 @@ p <- ggPedigree(
   pedigree_df,
   famID = "famID",
   personID = "personID",
-  status_col = "proband",
+  status_column = "proband",
   #  debug = TRUE,
   config = list(
     code_male = 1,

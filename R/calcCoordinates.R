@@ -222,6 +222,5 @@ calculateCoordinates <- function(ped,
     ped_extra <- NULL
     ped$extra <- FALSE
   }
-
   return(ped)
 }

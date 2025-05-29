@@ -463,7 +463,7 @@ options include <code>label_col</code> for the label column,
 <h1>Overlaying Status Information</h1>
 <p>In many applied settings, pedigrees include binary phenotypes such as
 affected/unaffected status. To incorporate this, use the
-<code>status_col</code> argument to point to a column containing the
+<code>status_column</code> argument to point to a column containing the
 relevant variable.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;hazard&quot;</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
@@ -471,7 +471,7 @@ relevant variable.</p>
 <span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  hazard,</span>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  <span class="at">famID =</span> <span class="st">&quot;famID&quot;</span>,</span>
 <span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  <span class="at">personID =</span> <span class="st">&quot;ID&quot;</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  <span class="at">status_col =</span> <span class="st">&quot;affected&quot;</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  <span class="at">status_column =</span> <span class="st">&quot;affected&quot;</span>,</span>
 <span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>  <span class="at">config =</span> <span class="fu">list</span>(</span>
 <span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>    <span class="at">code_male =</span> <span class="dv">0</span>,</span>
 <span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>    <span class="at">sex_color =</span> <span class="cn">TRUE</span>,</span>
@@ -483,7 +483,7 @@ relevant variable.</p>
 <span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a></span>
 <span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>p</span></code></pre></div>
 <p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
-<p>The <code>status_col</code> argument allows you to specify a column
+<p>The <code>status_column</code> argument allows you to specify a column
 that identifies affected/unaffected individuals. This column should be a
 factor or character vector; if not, <code>ggPedigree()</code> will
 coerce it.</p>
@@ -505,7 +505,7 @@ affected and <code>FALSE</code> unaffected.</p>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  hazard,</span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="at">famID =</span> <span class="st">&quot;famID&quot;</span>,</span>
 <span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="at">personID =</span> <span class="st">&quot;ID&quot;</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="at">status_col =</span> <span class="st">&quot;affected&quot;</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="at">status_column =</span> <span class="st">&quot;affected&quot;</span>,</span>
 <span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  <span class="at">config =</span> <span class="fu">list</span>(</span>
 <span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>    <span class="at">code_male =</span> <span class="dv">0</span>,</span>
 <span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>    <span class="at">sex_color =</span> <span class="cn">FALSE</span>,</span>
@@ -524,7 +524,7 @@ creating a new column in your data frame. For example, if you want to
 highlight Harry Potter and Dudley Dursley, you can create a new column
 called <code>proband</code> and set it to <code>TRUE</code> for those
 individuals. You can specify the <code>affected_shape</code> to be a
-star shape (8) and use the <code>status_col</code> argument to indicate
+star shape (8) and use the <code>status_column</code> argument to indicate
 the probands.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> potter</span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
@@ -538,7 +538,7 @@ the probands.</p>
 <span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>  df,</span>
 <span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>  <span class="at">famID =</span> <span class="st">&quot;famID&quot;</span>,</span>
 <span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>  <span class="at">personID =</span> <span class="st">&quot;personID&quot;</span>,</span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>  <span class="at">status_col =</span> <span class="st">&quot;proband&quot;</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>  <span class="at">status_column =</span> <span class="st">&quot;proband&quot;</span>,</span>
 <span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>  <span class="at">config =</span> <span class="fu">list</span>(</span>
 <span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>    <span class="at">sex_color =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>    <span class="at">status_code_affected =</span> <span class="cn">TRUE</span>,</span>
@@ -614,7 +614,7 @@ purple.</p>
 <span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>  df,</span>
 <span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>  <span class="at">famID =</span> <span class="st">&quot;famID&quot;</span>,</span>
 <span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>  <span class="at">personID =</span> <span class="st">&quot;ID&quot;</span>,</span>
-<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>  <span class="at">status_col =</span> <span class="st">&quot;proband&quot;</span>,</span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>  <span class="at">status_column =</span> <span class="st">&quot;proband&quot;</span>,</span>
 <span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>  <span class="co">#  debug = TRUE,</span></span>
 <span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a>  <span class="at">config =</span> <span class="fu">list</span>(</span>
 <span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a>    <span class="at">code_male =</span> <span class="dv">0</span>,</span>
@@ -738,7 +738,7 @@ Click to expand pedigree setup
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  pedigree_df,</span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  <span class="at">famID =</span> <span class="st">&quot;famID&quot;</span>,</span>
 <span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>  <span class="at">personID =</span> <span class="st">&quot;personID&quot;</span>,</span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>  <span class="at">status_col =</span> <span class="st">&quot;proband&quot;</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>  <span class="at">status_column =</span> <span class="st">&quot;proband&quot;</span>,</span>
 <span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>  <span class="co">#  debug = TRUE,</span></span>
 <span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>  <span class="at">config =</span> <span class="fu">list</span>(</span>
 <span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>    <span class="at">code_male =</span> <span class="dv">1</span>,</span>

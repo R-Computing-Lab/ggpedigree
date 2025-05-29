@@ -85,7 +85,7 @@ ggRelatednessMatrix <- function(
     label_text_size = 2,
     label_text_color = "black",
     rounding = 5,
-    as_widget = FALSE
+    return_widget = FALSE
   )
 
   if (!is.null(tooltip_columns)) {
@@ -136,7 +136,7 @@ ggRelatednessMatrix <- function(
     p <- plotly::ggplotly(static_plot, tooltip = "text")
 
 
-    if (config$as_widget == TRUE) {
+    if (config$return_widget == TRUE) {
       return(p)
     } else {
       class(p) <- c("plotly", class(p)) # ensure proper S3 dispatch

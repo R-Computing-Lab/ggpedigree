@@ -10,7 +10,7 @@ ggPedigree.core(
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
-  status_col = NULL,
+  status_column = NULL,
   config = list(),
   debug = FALSE,
   hints = NULL,
@@ -28,7 +28,7 @@ ggPedigree.core(
 
 \item{dadID}{Character string specifying the column name for father IDs. Defaults to "dadID".}
 
-\item{status_col}{Character string specifying the column name for affected status. Defaults to NULL.}
+\item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
 
 \item{config}{A list of configuration options for customizing the plot. The list can include:
 \describe{
@@ -38,7 +38,7 @@ ggPedigree.core(
    \item{label_text_size, point_size, segment_linewidth}{Numeric. Controls text size, point size, and line thickness.}
    \item{generation_height}{Numeric. Vertical spacing multiplier between generations. Default: 1.}
    \item{shape_unknown, shape_female, shape_male, affected_shape}{Integers. Shape codes for plotting each group.}
-   \item{sex_shape_labs}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
+   \item{sex_shape_labels}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
    \item{unaffected, affected}{Values indicating unaffected/affected status.}
    \item{sex_color_include}{Logical. If TRUE, uses color to differentiate sex.}
    \item{label_max_overlaps}{Maximum number of overlaps allowed in repelled labels.}

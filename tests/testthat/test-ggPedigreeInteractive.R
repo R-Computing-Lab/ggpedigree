@@ -6,7 +6,7 @@ test_that("ggPedigreeInteractive returns a plotly object", {
   p_widget <- ggPedigreeInteractive(potter,
     famID = "famID",
     personID = "personID",
-    as_widget = TRUE
+    return_widget = TRUE
   )
 
   expect_s3_class(p_widget, "plotly")
@@ -16,7 +16,7 @@ test_that("ggPedigreeInteractive returns a plotly object", {
   p <- ggPedigreeInteractive(potter,
     famID = "famID",
     personID = "personID",
-    as_widget = FALSE
+    return_widget = FALSE
   )
 
   expect_s3_class(p, "plotly")
@@ -34,12 +34,12 @@ test_that("ggPedigreeInteractive returns a gg object", {
     dadID = "dadID",
     config = list(
       label_nudge_y = -.25,
-      include_labels = TRUE,
+      labels_include = TRUE,
       label_method = "geom_text",
-      sex_color = TRUE,
+      sex_color_include = TRUE,
       return_static = TRUE
     ),
-    tooltip_cols = c("personID", "name")
+    tooltip_columns = c("personID", "name")
   )
   expect_s3_class(static, "gg")
 })

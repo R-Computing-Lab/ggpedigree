@@ -121,7 +121,7 @@ Here is the same pedigree, but using `ggPedigree()` from {ggpedigree}. This func
 
 
 plt <- ggPedigreeInteractive(df_repaired,
-  status_col = "affected",
+  status_column = "affected",
   personID = "ID",
   config = list(
     status_unaffected_lab = 0,

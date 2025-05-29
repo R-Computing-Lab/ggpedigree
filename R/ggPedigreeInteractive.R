@@ -6,21 +6,22 @@
 #' zoom, and pan functionality.
 #'
 #' @inheritParams ggPedigree
-#' @return A plotly htmlwidget (or plotly object if `as_widget = FALSE`).
+#' @return A plotly htmlwidget (or plotly object if `return_widget = FALSE`).
 #' @examples
 #' library(BGmisc)
 #' data("potter")
 #' ggPedigreeInteractive(potter, famID = "famID", personID = "personID")
 #' @export
-ggPedigreeInteractive <- function(ped, famID = "famID",
+ggPedigreeInteractive <- function(ped,
+                                  famID = "famID",
                                   personID = "personID",
                                   momID = "momID",
                                   dadID = "dadID",
-                                  status_col = NULL,
+                                  status_column = NULL,
                                   tooltip_columns = NULL,
                                   config = list(),
                                   debug = FALSE,
-                                  as_widget = TRUE,
+                                  return_widget = TRUE,
                                   ...) {
   if (!requireNamespace("plotly", quietly = TRUE)) {
     stop("The 'plotly' package is required for interactive plots.")
@@ -45,21 +46,19 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
   if (!is.null(tooltip_columns)) {
     config$tooltip_columns <- tooltip_columns
   }
-  if (!is.null(as_widget)) {
-    config$as_widget <- as_widget
+  if (!is.null(return_widget)) {
+    config$return_widget <- return_widget
   }
   if (!is.null(debug)) {
     config$debug <- debug
   }
 
   # Set default styling and layout parameters
-  default_config <- list(
-    label_method = "geom_text",
-    label_include = FALSE, # default to FALSE
-    tooltip_include = TRUE,
-    tooltip_columns = c(personID, "sex", status_col),
-    return_static = FALSE
-  )
+  # Set default styling and layout parameters
+  default_config <- getDefaultPlotConfig(function_name = "ggPedigreeInteractive",
+                                         personID = personID,
+                                         status_column  = config$status_column)
+
   config <- utils::modifyList(default_config, config)
 
   ## 1. Build the static ggplot using the existing engine
@@ -68,7 +67,7 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
     personID    = personID,
     momID       = momID,
     dadID       = dadID,
-    status_col  = config$status_col,
+    status_column  = config$status_column,
     config      = config,
     debug       = config$debug,
     ...
@@ -131,7 +130,7 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
   }
   if (config$return_static == TRUE) {
     return(static_plot) # return the static plot
-  } else if (config$as_widget == TRUE) {
+  } else if (config$return_widget == TRUE) {
     return(plt)
   } else {
     class(plt) <- c("plotly", class(plt)) # ensure proper S3 dispatch

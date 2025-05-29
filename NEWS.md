@@ -8,8 +8,8 @@
 * Added new tests for the `ggRelatednessMatrix` function.
 * Added new phenotype plotting function `ggPhenotypebyDegree` to visualize phenotypes by degree of relatedness.
 * Added new vignette to demonstrate `ggPhenotypebyDegree`.
-* Add default config function to ensure consistent configuration across functions.
-
+* Added a new function `getDefaultPlotConfig` to set default configuration options for the package.
+* Harmonized the configuration options across the package to use `getDefaultPlotConfig`.
 
 # ggpedigree 0.4.1
 ## Status: Submitted to CRAN
