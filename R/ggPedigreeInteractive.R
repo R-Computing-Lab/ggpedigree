@@ -55,21 +55,23 @@ ggPedigreeInteractive <- function(ped,
 
   # Set default styling and layout parameters
   # Set default styling and layout parameters
-  default_config <- getDefaultPlotConfig(function_name = "ggPedigreeInteractive",
-                                         personID = personID,
-                                         status_column  = config$status_column)
+  default_config <- getDefaultPlotConfig(
+    function_name = "ggPedigreeInteractive",
+    personID = personID,
+    status_column = config$status_column
+  )
 
   config <- utils::modifyList(default_config, config)
 
   ## 1. Build the static ggplot using the existing engine
   static_plot <- ggPedigree.core(ped,
-    famID       = famID,
-    personID    = personID,
-    momID       = momID,
-    dadID       = dadID,
-    status_column  = config$status_column,
-    config      = config,
-    debug       = config$debug,
+    famID = famID,
+    personID = personID,
+    momID = momID,
+    dadID = dadID,
+    status_column = config$status_column,
+    config = config,
+    debug = config$debug,
     ...
   )
 

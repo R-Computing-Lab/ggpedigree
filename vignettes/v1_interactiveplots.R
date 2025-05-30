@@ -51,11 +51,11 @@ plt <- ggPedigreeInteractive(
   dadID = "dadID",
   config = list(
     label_nudge_y   = -.25,
-    include_labels  = TRUE,
+    label_include  = TRUE,
     label_method    = "geom_text",
-    sex_color       = TRUE
+    sex_color_include       = TRUE
   ),
-  tooltip_cols = c("personID", "name")
+  tooltip_columns = c("personID", "name")
 )
 
 ## ----eval=FALSE, include=TRUE-------------------------------------------------
@@ -110,12 +110,12 @@ static <- ggPedigreeInteractive(
   dadID = "dadID",
   config = list(
     label_nudge_y = -.25,
-    include_labels = TRUE,
+    label_include = TRUE,
     label_method = "geom_text",
     sex_color_include = TRUE,
     return_static = TRUE
   ),
-  tooltip_cols = c("personID", "name")
+  tooltip_columns = c("personID", "name")
 )
 
 ## ----static-plot-customization------------------------------------------------
@@ -182,7 +182,7 @@ ggPedigreeInteractive(
     code_male = 0,
      status_column = "affected",
     label_nudge_y   = -.25,
-    include_labels  = TRUE,
+    label_include  = TRUE,
     include_tooltip = TRUE,
     label_method    = "geom_text",
     sex_color_include   = TRUE

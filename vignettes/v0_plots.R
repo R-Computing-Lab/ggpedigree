@@ -27,7 +27,7 @@ ggPedigree(
   personID = "personID",
   config = list(
     code_male = 1, # Here, 1 = male, 0 = female
-    sex_color = FALSE,
+    sex_color_include = FALSE,
     line_width = 1,
     segment_spouse_color = viridis_pal()(5)[1],
     segment_sibling_color = viridis_pal()(5)[2],
@@ -58,7 +58,7 @@ ggPedigree(
     label_nudge_x = 0.45,
     label_method = "geom_text",
     #   sex_color_palette = c("black", "black"),
-    sex_color = TRUE
+    sex_color_include = TRUE
   )
 )
 
@@ -72,7 +72,7 @@ p <- ggPedigree(
   status_column = "affected",
   config = list(
     code_male = 0,
-    sex_color = TRUE,
+    sex_color_include = TRUE,
     status_code_affected = TRUE,
     status_code_unaffected = FALSE,
     status_affected_shape = 4
@@ -89,7 +89,7 @@ ggPedigree(
   status_column = "affected",
   config = list(
     code_male = 0,
-    sex_color = FALSE,
+    sex_color_include = FALSE,
     status_code_affected = TRUE,
     status_code_unaffected = FALSE,
     status_label_affected = "Infected",
@@ -113,7 +113,7 @@ ggPedigree(
   personID = "personID",
   status_column = "proband",
   config = list(
-    sex_color = TRUE,
+    sex_color_include = TRUE,
     status_code_affected = TRUE,
     status_code_unaffected = FALSE,
     status_affected_shape = 8 # star shape
@@ -164,7 +164,7 @@ p <- ggPedigree(
   #  debug = TRUE,
   config = list(
     code_male = 0,
-    sex_color = FALSE,
+    sex_color_include = FALSE,
     status_code_affected = TRUE,
     status_code_unaffected = FALSE,
     generation_height = 4,
@@ -253,7 +253,7 @@ p <- ggPedigree(
   #  debug = TRUE,
   config = list(
     code_male = 1,
-    sex_color = FALSE,
+    sex_color_include = FALSE,
     apply_default_scales = FALSE,
     label_method = "geom_text",
     label_col = "cleanpersonID",

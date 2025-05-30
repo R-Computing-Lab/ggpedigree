@@ -10,8 +10,8 @@ test_that("ggPhenotypeByDegree basic functionality", {
     y_se = c(0.05, 0.04, 0.03, 0.02, 0.01)
   ) %>%
     mutate(
-      addRel_min = addRel_center*.9,
-      addRel_max = addRel_center*1.1
+      addRel_min = addRel_center * .9,
+      addRel_max = addRel_center * 1.1
     )
 
   # Call the function with basic parameters
@@ -39,8 +39,8 @@ test_that("ggPhenotypeByDegree handles missing values", {
     y_se = c(0.05, NA, 0.03, NA, 0.01)
   ) %>%
     mutate(
-      addRel_min = addRel_center*.9,
-      addRel_max = addRel_center*1.1
+      addRel_min = addRel_center * .9,
+      addRel_max = addRel_center * 1.1
     )
 
   # Call the function and expect it to handle NAs gracefully
@@ -68,8 +68,8 @@ test_that("ggPhenotypeByDegree applies custom configurations", {
     y_se = c(0.05, 0.04, 0.03, 0.02, 0.01)
   ) %>%
     mutate(
-      addRel_min = addRel_center*.9,
-      addRel_max = addRel_center*1.1
+      addRel_min = addRel_center * .9,
+      addRel_max = addRel_center * 1.1
     )
 
   # Call the function with custom configurations
@@ -93,7 +93,6 @@ test_that("ggPhenotypeByDegree applies custom configurations", {
 })
 
 test_that("ggPhenotypeByDegree handles different thresholds", {
-
   library(dplyr)
 
   # Create a sample data frame
@@ -106,8 +105,8 @@ test_that("ggPhenotypeByDegree handles different thresholds", {
     y_se = c(0.05, 0.04, 0.03, 0.02, 0.01)
   ) %>%
     mutate(
-      addRel_min = addRel_center*.8,
-      addRel_max = addRel_center*1.2
+      addRel_min = addRel_center * .8,
+      addRel_max = addRel_center * 1.2
     )
 
   # Call the function with different grouping configurations

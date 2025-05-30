@@ -74,7 +74,7 @@ ggRelatednessMatrix <- function(
     tooltip_include = TRUE,
     tooltip_columns = c("ID1", "ID2", "value"),
     # label aesthetics
-    include_labels = FALSE,
+    label_include = FALSE,
     label_col = "value",
     label_max_overlaps = 15,
     label_method = "ggrepel", # "geom_label" or "geom_text"
@@ -221,7 +221,7 @@ ggRelatednessMatrix.core <- function(
     stop("Unsupported geom type. Use 'geom_tile' or 'geom_raster'.")
   }
   # add text labels if requested
-  if (config$include_labels) {
+  if (config$label_include) {
     p <- p +
       ggplot2::geom_text(
         ggplot2::aes(label = config$label_col),

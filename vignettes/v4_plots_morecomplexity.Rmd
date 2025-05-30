@@ -30,8 +30,6 @@ We illustrate usage with a more complicated data set from BGmisc:
 # Basic usage
 
 ```{r libraries, message=FALSE, warning=FALSE}
-
-
 # Install your package from GitHub
 
 library(ggpedigree) # ggPedigree lives here
@@ -113,37 +111,27 @@ plotPedigree(df_repaired,
 Here is the same pedigree, but using `ggPedigree()` from {ggpedigree}. This function provides a more flexible and customizable way to visualize pedigrees, allowing for easy integration with other `ggplot2` functions.
 
 ```{r message=FALSE, warning=FALSE}
-
-
 plt <- ggPedigreeInteractive(df_repaired,
   status_column = "affected",
   personID = "ID",
   config = list(
-    status_unaffected_lab = 0,
-    sex_color = TRUE,
+    status_label_unaffected = 0,
+    sex_color_include = TRUE,
     code_male = "M",
-    status_affected_lab = 1,
-    affected_shape = 4,
+    status_label_affected = 1,
+    status_affected_shape = 4,
     ped_width = 14,
-    include_tooltips = TRUE,
-    label_nudge_y   = -.25,
-    include_labels  = TRUE,
-    label_method    = "geom_text",
+    tooltip_include = TRUE,
+    label_nudge_y = -.25,
+    label_include = TRUE,
+    label_method = "geom_text",
     segment_self_color = "purple",
-  tooltip_cols = c("ID", "name")
+    tooltip_columns = c("ID", "name")
   )
-
 )
 plt
 ```
-```{r}
-htmlwidgets::saveWidget(
-  plt,
-  file = "got.html",
-  selfcontained = TRUE
-)
 
-```
 
 
 

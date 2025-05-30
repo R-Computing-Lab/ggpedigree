@@ -84,7 +84,7 @@ ggPedigree(
     segment_parent_color = viridis_pal()(5)[3],
     segment_offspring_color = viridis_pal()(5)[4],
     segment_linetype = 3,
-    outline = TRUE,
+    outline_include = TRUE,
     outline_color = viridis_pal()(5)[5]
   )
 )
@@ -152,7 +152,7 @@ The `status_column` argument allows you to specify a column that identifies affe
 
 The behavior differs depending on whether `sex_color_include` is also enabled:
 
-* If `sex_color_include = TRUE`, affected individuals are overlaid with a shape (controlled by `affected_shape`), preserving the fill color by sex.
+* If `sex_color_include = TRUE`, affected individuals are overlaid with a shape (controlled by `status_affected_shape`), preserving the fill color by sex.
 
 * If `sex_color_include = FALSE`, affected and unaffected individuals are instead colored by status, using a default fill scale.
 
@@ -179,7 +179,7 @@ ggPedigree(
 
 ## Highlighting Specific Individuals
 
-You can also highlight specific individuals in the pedigree by creating a new column in your data frame. For example, if you want to highlight Harry Potter and Dudley Dursley, you can create a new column called `proband` and set it to `TRUE` for those individuals. You can specify the `affected_shape` to be a star shape (8) and use the `status_column` argument to indicate the probands.
+You can also highlight specific individuals in the pedigree by creating a new column in your data frame. For example, if you want to highlight Harry Potter and Dudley Dursley, you can create a new column called `proband` and set it to `TRUE` for those individuals. You can specify the `status_affected_shape` to be a star shape (8) and use the `status_column` argument to indicate the probands.
 
 ```{r}
 df <- potter
@@ -382,7 +382,7 @@ df_fig1 <- tribble(
 ) %>%
   mutate(
     proband = case_when(
-      personID %in% c(10011, 10022, 10023, 10025, 10031, 10032,10035, 10038) ~ TRUE,
+      personID %in% c(10011, 10022, 10023, 10025, 10031, 10032, 10035, 10038) ~ TRUE,
       TRUE ~ FALSE
     ),
     mtdnaline2 = case_when(
@@ -390,8 +390,6 @@ df_fig1 <- tribble(
       TRUE ~ FALSE
     ),
   )
-
-
 ```
 </details>
 
@@ -410,8 +408,8 @@ fig1 <- ggPedigree(
     apply_default_scales = FALSE,
     label_method = "geom_text",
     label_col = "personID",
-    point_size=5,
-    outline_include= TRUE,
+    point_size = 5,
+    outline_include = TRUE,
     status_code_affected = TRUE,
     status_code_unaffected = FALSE,
     generation_height = 1,
@@ -425,22 +423,24 @@ fig1 <- ggPedigree(
     segment_linewidth = .5
   )
 )
-#fig1
+# fig1
 
-fig1$plot + geom_point(aes(x=x_pos,y=y_pos),
-                       color="cornflowerblue",size=2,
-                       data = fig1$data %>% dplyr::filter(mtdnaline2 == TRUE)) +
-  scale_shape_manual(
-  values = c(16, 15, 14),
-  labels = c("Female", "Male", "Unknown")
+fig1$plot + geom_point(aes(x = x_pos, y = y_pos),
+  color = "cornflowerblue", size = 2,
+  data = fig1$data %>% dplyr::filter(mtdnaline2 == TRUE)
 ) +
+  scale_shape_manual(
+    values = c(16, 15, 14),
+    labels = c("Female", "Male", "Unknown")
+  ) +
   guides(shape = "none") + scale_color_manual(
-    values = c("pink", "white"))+
-    
-    #discrete = TRUE,
-   # labels = c("TRUE", "FALSE"),
+    values = c("pink", "white")
+  ) +
+
+  # discrete = TRUE,
+  # labels = c("TRUE", "FALSE"),
   #  name = ""
- # ) +
+  # ) +
   theme(
     strip.text = element_blank(),
     legend.position = "none"

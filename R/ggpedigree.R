@@ -28,7 +28,7 @@
 #'     \item{segment_sibling_color, segment_parent_color, segment_offspring_color}{Character. Line colors for respective connection types.}
 #'     \item{label_text_size, point_size, segment_linewidth}{Numeric. Controls text size, point size, and line thickness.}
 #'     \item{generation_height}{Numeric. Vertical spacing multiplier between generations. Default: 1.}
-#'     \item{shape_unknown, shape_female, shape_male, affected_shape}{Integers. Shape codes for plotting each group.}
+#'     \item{shape_unknown, shape_female, shape_male, status_affected_shape}{Integers. Shape codes for plotting each group.}
 #'     \item{sex_shape_labels}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
 #'     \item{unaffected, affected}{Values indicating unaffected/affected status.}
 #'     \item{sex_color_include}{Logical. If TRUE, uses color to differentiate sex.}
@@ -132,37 +132,18 @@ ggPedigree.core <- function(ped, famID = "famID",
   }
 
   # Set default styling and layout parameters
-  default_config <- getDefaultPlotConfig(function_name = "ggPedigree",
-                                         personID = personID)
+  default_config <- getDefaultPlotConfig(
+    function_name = "ggPedigree",
+    personID = personID
+  )
 
   # Merge with user-specified overrides
   # This allows the user to override any of the default values
-  config <- utils::modifyList(default_config, config)
-
-  # Set additional internal config values based on other entries
-
-  config$sex_shape_values <- c(config$sex_shape_female,
-                             config$sex_shape_male,
-                             config$sex_shape_unknown)
-  config$status_labs <- c(config$status_label_affected,
-                          config$status_label_unaffected)
-  config$status_codes <- c(config$status_code_affected,
-                           config$status_code_unaffected)
-
-  config$status_alpha_values <- stats::setNames(c(
-    config$status_alpha_affected,
-    config$status_alpha_unaffected),
-    config$status_labs)
-  config$status_color_values <- stats::setNames(c(
-      config$status_color_palette[1],
-      config$status_color_palette[2]),
-    config$status_labs
+  config <- buildConfig(
+    default_config = default_config,
+    config = config,
+    function_name = "ggPedigree"
   )
-
-  config$status_labels <- stats::setNames(c(
-    config$status_label_affected,
-    config$status_label_unaffected),
-    config$status_labs)
 
   # -----
   # STEP 2: Pedigree Data Transformation
@@ -328,12 +309,12 @@ ggPedigree.core <- function(ped, famID = "famID",
 
   # Add point layers for each individual in the pedigree.
   # The appearance (color and shape) depends on two factors:
-  # 1. Whether `sex_color` is enabled — this controls whether sex is encoded via both color and shape.
+  # 1. Whether `sex_color_include` is enabled — this controls whether sex is encoded via both color and shape.
   # 2. Whether `status_column` is specified — this controls whether affected status is visualized.
 
   # There are three main rendering branches:
-  #   1. If sex_color == TRUE: color and shape reflect sex, and affected status is shown with a second symbol.
-  #   2. If sex_color == FALSE but status_column is present: shape reflects sex, and color reflects affected status.
+  #   1. If sex_color_include == TRUE: color and shape reflect sex, and affected status is shown with a second symbol.
+  #   2. If sex_color_include == FALSE but status_column is present: shape reflects sex, and color reflects affected status.
   #   3. If neither is used: plot individuals using shape alone.
 
 
@@ -469,9 +450,11 @@ ggPedigree.core <- function(ped, famID = "famID",
   # -----
   # Adjust legend labels and colors based on the configuration
   if (config$apply_default_scales == TRUE) {
-    p <- .addScales(p = p,
-                    config = config,
-                    status_column = status_column)
+    p <- .addScales(
+      p = p,
+      config = config,
+      status_column = status_column
+    )
   }
 
   if (debug == TRUE) {

@@ -85,7 +85,7 @@ if (interactive()) {
 # Customising labels and tool‑tips
 
 `ggPedigreeInteractive()` accepts the same config list as `ggPedigree()`, 
-plus the tooltip_cols argument for hover text. Below we enable node labels, 
+plus the tooltip_columns argument for hover text. Below we enable node labels, 
 nudge them upward a little, color by sex, and show both the `personID` and name fields in the hover:
 
 ```{r customize-aesthetics}
@@ -96,12 +96,12 @@ plt <- ggPedigreeInteractive(
   momID = "momID",
   dadID = "dadID",
   config = list(
-    label_nudge_y   = -.25,
-    include_labels  = TRUE,
-    label_method    = "geom_text",
-    sex_color       = TRUE
+    label_nudge_y = -.25,
+    label_include = TRUE,
+    label_method = "geom_text",
+    sex_color_include = TRUE
   ),
-  tooltip_cols = c("personID", "name")
+  tooltip_columns = c("personID", "name")
 )
 ```
 ```{r eval=FALSE, include=TRUE}
@@ -173,12 +173,12 @@ static <- ggPedigreeInteractive(
   dadID = "dadID",
   config = list(
     label_nudge_y = -.25,
-    include_labels = TRUE,
+    label_include = TRUE,
     label_method = "geom_text",
     sex_color_include = TRUE,
     return_static = TRUE
   ),
-  tooltip_cols = c("personID", "name")
+  tooltip_columns = c("personID", "name")
 )
 ```
 
@@ -241,7 +241,6 @@ if (interactive()) {
 You can customize the interactive plot further by modifying the layout, adding titles, and adjusting hover labels. The `plotly::layout()` function allows you to set various layout options such as title, margins, and hover label styles.
 
 ```{r interactive-customization}
-
 library(BGmisc)
 data(hazard)
 
@@ -253,15 +252,14 @@ ggPedigreeInteractive(
   personID = "ID",
   momID = "momID",
   dadID = "dadID",
- 
   config = list(
     code_male = 0,
-     status_column = "affected",
-    label_nudge_y   = -.25,
-    include_labels  = TRUE,
+    status_column = "affected",
+    label_nudge_y = -.25,
+    label_include = TRUE,
     include_tooltip = TRUE,
-    label_method    = "geom_text",
-    sex_color_include   = TRUE
+    label_method = "geom_text",
+    sex_color_include = TRUE
   ),
   tooltip_columns = c("personID", "birthYr", "onsetYr", "deathYr")
 ) %>%

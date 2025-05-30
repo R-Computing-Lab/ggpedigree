@@ -12,7 +12,6 @@ test_that("getDefaultPlotConfig errors as expected", {
   expect_error(
     getDefaultPlotConfig(function_name = "unknownFunction")
   )
-
 })
 
 test_that("getDefaultPlotConfig returns expected defaults", {
@@ -42,8 +41,7 @@ test_that("getDefaultPlotConfig returns expected defaults", {
   expect_equal(config$generation_height, 1)
   expect_equal(config$generation_width, 1)
   expect_equal(config$sex_color_include, TRUE)
-}
-)
+})
 test_that("handles function_name variations", {
   config1 <- getDefaultPlotConfig(function_name = "ggpedigree")
   config2 <- getDefaultPlotConfig(function_name = "ggPedigreeInteractive")
@@ -59,5 +57,4 @@ test_that("handles function_name variations", {
   expect_true(config2$return_widget)
   expect_true(config2$return_interactive)
   expect_false(config2$return_static)
-}
-)
+})
