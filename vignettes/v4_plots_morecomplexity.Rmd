@@ -110,14 +110,18 @@ plotPedigree(df_repaired,
 
 Here is the same pedigree, but using `ggPedigree()` from {ggpedigree}. This function provides a more flexible and customizable way to visualize pedigrees, allowing for easy integration with other `ggplot2` functions.
 
+
 ```{r message=FALSE, warning=FALSE}
-plt <- ggPedigreeInteractive(df_repaired,
+
+pltstatic <- ggPedigree(df_repaired,
   status_column = "affected",
   personID = "ID",
   config = list(
+    return_static = TRUE,
     status_label_unaffected = 0,
     sex_color_include = TRUE,
     code_male = "M",
+    point_size=1,
     status_label_affected = 1,
     status_affected_shape = 4,
     ped_width = 14,
@@ -129,6 +133,34 @@ plt <- ggPedigreeInteractive(df_repaired,
     tooltip_columns = c("ID", "name")
   )
 )
+
+pltstatic
+```
+
+
+```{r message=FALSE, warning=FALSE}
+plt <- ggPedigreeInteractive(df_repaired,
+  status_column = "affected",
+  personID = "ID",
+  config = list(
+    status_label_unaffected = 0,
+    sex_color_include = TRUE,
+    code_male = "M",
+    point_size = 1,
+    status_label_affected = 1,
+    status_affected_shape = 4,
+    ped_width = 14,
+    segment_self_angle = 90,
+    segment_self_curvature = -0.2,
+    tooltip_include = TRUE,
+    label_nudge_y = -.25,
+    label_include = TRUE,
+    label_method = "geom_text",
+    segment_self_color = "purple",
+    tooltip_columns = c("ID", "name")
+  )
+)
+
 plt
 ```
 

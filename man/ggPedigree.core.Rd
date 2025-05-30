@@ -14,6 +14,7 @@ ggPedigree.core(
   config = list(),
   debug = FALSE,
   hints = NULL,
+  function_name = "ggPedigree",
   ...
 )
 }

@@ -108,6 +108,7 @@ getDefaultPlotConfig <- function(color_palette_default =
     segment_sibling_color = segment_default_color,
     segment_spouse_color = segment_default_color,
     segment_self_linetype = "dotdash",
+    segment_self_alpha = 0.5,
     segment_self_angle = 90,
     segment_self_curvature = -0.2,
 
@@ -147,7 +148,12 @@ getDefaultPlotConfig <- function(color_palette_default =
   if (stringr::str_to_lower(function_name) %in% c("ggpedigree", "ggpedigreeinteractive")) {
     core_list$label_method <- "ggrepel"
   }
-
+  if (stringr::str_to_lower(function_name) %in% c("ggpedigree")) {
+    core_list$label_method <- "ggrepel"
+    core_list$return_static <- FALSE
+    core_list$return_widget <- FALSE
+    core_list$return_interactive <- FALSE
+  }
   if (stringr::str_to_lower(function_name) %in% c("ggpedigreeinteractive")) {
     core_list$tooltip_columns <- c(personID, "sex", status_column)
     core_list$label_method <- "geom_text"
@@ -170,57 +176,59 @@ getDefaultPlotConfig <- function(color_palette_default =
 #' @param config A list of user-specified configuration parameters.
 #' @param function_name The name of the function for which the configuration is being built.
 #' @return A complete configuration list with all necessary parameters.
-#' @keyword internal
-buildConfig <- function(default_config = default_config,
-                        config = config,
+#'
+buildPlotConfig <- function(default_config,
+                        config,
                         function_name = "ggPedigree") {
-  config <- utils::modifyList(default_config, config)
+
+  built_config <- utils::modifyList(default_config, config)
 
   if (stringr::str_to_lower(function_name) %in%
     c("ggpedigree", "ggpedigreeinteractive")) {
     # Set additional internal config values based on other entries
-    if ("sex_shape_values" %in% names(config) == FALSE) {
-      config$sex_shape_values <- c(
-        config$sex_shape_female,
-        config$sex_shape_male,
-        config$sex_shape_unknown
+    if ("sex_shape_values" %in% names(built_config) == FALSE) {
+      built_config$sex_shape_values <- c(
+        built_config$sex_shape_female,
+        built_config$sex_shape_male,
+        built_config$sex_shape_unknown
       )
     }
-    if ("status_labs" %in% names(config) == FALSE) {
-      config$status_labs <- c(
-        config$status_label_affected,
-        config$status_label_unaffected
+    if ("status_labs" %in% names(built_config) == FALSE) {
+      built_config$status_labs <- c(
+        built_config$status_label_affected,
+        built_config$status_label_unaffected
       )
     }
-    if ("status_codes" %in% names(config) == FALSE) {
-      config$status_codes <- c(
-        config$status_code_affected,
-        config$status_code_unaffected
+    if ("status_codes" %in% names(built_config) == FALSE) {
+      built_config$status_codes <- c(
+        built_config$status_code_affected,
+        built_config$status_code_unaffected
       )
     }
-    config$status_alpha_values <- stats::setNames(
+
+    built_config$status_alpha_values <- stats::setNames(
       c(
-        config$status_alpha_affected,
-        config$status_alpha_unaffected
+        built_config$status_alpha_affected,
+        built_config$status_alpha_unaffected
       ),
-      config$status_labs
+      built_config$status_labs
     )
-    config$status_color_values <- stats::setNames(
+    built_config$status_color_values <- stats::setNames(
       c(
-        config$status_color_palette[1],
-        config$status_color_palette[2]
+        built_config$status_color_palette[1],
+        built_config$status_color_palette[2]
       ),
-      config$status_labs
+      built_config$status_labs
     )
 
-    config$status_labels <- stats::setNames(
+    built_config$status_labels <- stats::setNames(
       c(
-        config$status_label_affected,
-        config$status_label_unaffected
+        built_config$status_label_affected,
+        built_config$status_label_unaffected
       ),
-      config$status_labs
+      built_config$status_labs
     )
   }
-  return(config)
+  return(built_config)
 }
 # -----

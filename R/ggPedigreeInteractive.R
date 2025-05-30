@@ -43,6 +43,7 @@ ggPedigreeInteractive <- function(ped,
   # -----
   # STEP 1: Configuration and Preparation
   # -----
+
   if (!is.null(tooltip_columns)) {
     config$tooltip_columns <- tooltip_columns
   }
@@ -52,17 +53,19 @@ ggPedigreeInteractive <- function(ped,
   if (!is.null(debug)) {
     config$debug <- debug
   }
-
-  # Set default styling and layout parameters
   # Set default styling and layout parameters
   default_config <- getDefaultPlotConfig(
-    function_name = "ggPedigreeInteractive",
-    personID = personID,
-    status_column = config$status_column
+    function_name = "ggpedigreeinteractive",
+    personID = personID
   )
 
-  config <- utils::modifyList(default_config, config)
-
+  # Merge with user-specified overrides
+  # This allows the user to override any of the default values
+  config <- buildPlotConfig(
+    default_config = default_config,
+    config = config,
+    function_name = "ggpedigreeinteractive"
+  )
   ## 1. Build the static ggplot using the existing engine
   static_plot <- ggPedigree.core(ped,
     famID = famID,
@@ -72,6 +75,7 @@ ggPedigreeInteractive <- function(ped,
     status_column = config$status_column,
     config = config,
     debug = config$debug,
+    function_name = "ggpedigreeinteractive",
     ...
   )
 

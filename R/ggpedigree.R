@@ -70,6 +70,7 @@ ggPedigree <- function(ped,
 
   if (interactive == TRUE && requireNamespace("plotly", quietly = TRUE)) {
     # Call the interactive function with the provided arguments
+
     ggPedigreeInteractive(
       ped = ped,
       famID = famID,
@@ -88,6 +89,19 @@ ggPedigree <- function(ped,
     if (interactive == TRUE && !requireNamespace("plotly", quietly = TRUE)) {
       message("The 'plotly' package is required for interactive plots.")
     }
+    # Set default styling and layout parameters
+    default_config <- getDefaultPlotConfig(
+      function_name = "ggpedigree",
+      personID = personID
+    )
+
+    # Merge with user-specified overrides
+    # This allows the user to override any of the default values
+    config <- buildPlotConfig(
+      default_config = default_config,
+      config = config,
+      function_name = "ggpedigree"
+    )
     # Call the core function with the provided arguments
     ggPedigree.core(
       ped = ped,
@@ -123,6 +137,7 @@ ggPedigree.core <- function(ped, famID = "famID",
                             config = list(),
                             debug = FALSE,
                             hints = NULL,
+                            function_name = "ggPedigree",
                             ...) {
   # -----
   # STEP 1: Configuration and Preparation
@@ -130,20 +145,6 @@ ggPedigree.core <- function(ped, famID = "famID",
   if (!inherits(ped, "data.frame")) {
     stop("ped should be a data.frame or inherit to a data.frame")
   }
-
-  # Set default styling and layout parameters
-  default_config <- getDefaultPlotConfig(
-    function_name = "ggPedigree",
-    personID = personID
-  )
-
-  # Merge with user-specified overrides
-  # This allows the user to override any of the default values
-  config <- buildConfig(
-    default_config = default_config,
-    config = config,
-    function_name = "ggPedigree"
-  )
 
   # -----
   # STEP 2: Pedigree Data Transformation
@@ -400,7 +401,7 @@ ggPedigree.core <- function(ped, famID = "famID",
       ) |>
       # unique combinations of x_otherself and x_pos and y_otherself and y_pos
       dplyr::distinct(.data$otherself_xkey, .keep_all = TRUE)
-
+    if (config$return_interactive==FALSE){
     p <- p + ggplot2::geom_curve(
       data = otherself,
       ggplot2::aes(
@@ -416,8 +417,60 @@ ggPedigree.core <- function(ped, famID = "famID",
       linetype = config$segment_self_linetype,
       angle = config$segment_self_angle,
       curvature = config$segment_self_curvature,
+      alpha = config$segment_self_alpha,
       na.rm = TRUE
     )
+  }  else if (config$return_interactive==TRUE) {
+      # For interactive plots, use geom_segment instead of geom_curve
+      # to avoid issues with plotly rendering curves
+    # can we add some bending to the segments?
+
+
+    otherself <- otherself |>  dplyr::mutate(
+      midpoint = computeCurvedMidpoint(
+        x0 = .data$x_otherself,
+        y0 = .data$y_otherself,
+        x1 = .data$x_pos,
+        y1 = .data$y_pos,
+        curvature = config$segment_self_curvature,
+        angle = config$segment_self_angle
+      ),
+      x_midpoint = midpoint$x,
+      y_midpoint = midpoint$y
+    ) |> dplyr::select(-midpoint)
+
+      p <- p + ggplot2::geom_segment(
+        data = otherself,
+        ggplot2::aes(
+          x = .data$x_otherself,
+          xend = .data$x_midpoint,
+          y = .data$y_otherself,
+          yend = .data$y_midpoint
+        ),
+        linewidth = config$segment_linewidth,
+        color = config$segment_self_color,
+        lineend = config$segment_lineend,
+        linejoin = config$segment_linejoin,
+        linetype = config$segment_self_linetype,
+        alpha = config$segment_self_alpha,
+        na.rm = TRUE
+      ) + ggplot2::geom_segment(
+          data = otherself,
+          ggplot2::aes(
+            x = .data$x_midpoint,
+            xend = .data$x_pos,
+            y = .data$y_midpoint,
+            yend = .data$y_pos
+          ),
+          linewidth = config$segment_linewidth,
+          color = config$segment_self_color,
+          lineend = config$segment_lineend,
+          linejoin = config$segment_linejoin,
+          linetype = config$segment_self_linetype,
+          alpha = config$segment_self_alpha,
+          na.rm = TRUE
+        )
+    }
   }
 
 
@@ -592,3 +645,46 @@ ggpedigree <- ggPedigree
 # .preparePedigreeData <- function(ped, famID, personID, momID, dadID) {
 #
 # }
+#' @title Compute midpoint coordinate for curved segment
+#' @description Returns either x or y midpoint using vectorized curved offset
+#' @param x0, y0, x1, y1 Start and end points
+#' @param curvature Scalar curvature (geom_curve style)
+#' @param angle Scalar angle in degrees
+#' @param component Either "x" or "y"
+#' @return Numeric vector of midpoints (x or y)
+computeCurvedMidpoint <- function(x0, y0, x1, y1,
+                                  curvature, angle,
+                                  component =  NULL,
+                                  t = 0.5) {
+
+
+  dx <- x1 - x0
+  dy <- y1 - y0
+  len <- sqrt(dx^2 + dy^2)
+
+
+  # Midpoint of the segment
+
+  px <- (x0 + x1) * t
+  py <- (y0 + y1) * t
+
+  # Unit perpendicular vector
+  ux <- dx / len
+  uy <- dy / len
+
+  # Rotate perpendicular vector by (angle - 90) degrees
+  theta <- #angle * pi / 180 - pi/2 #
+   (angle* pi / 180 - 90) * pi / 180
+
+  # Perpendicular direction
+  perp_x <- -uy * cos(theta) - ux * sin(theta)
+  perp_y <- -uy * sin(theta) + ux * cos(theta)
+
+  offset <- curvature * len
+
+  midpoint <- data.frame(x = px + offset * perp_x,
+                         y = py + offset * perp_y)
+
+
+  midpoint
+}

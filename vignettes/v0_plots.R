@@ -34,7 +34,7 @@ ggPedigree(
     segment_parent_color = viridis_pal()(5)[3],
     segment_offspring_color = viridis_pal()(5)[4],
     segment_linetype = 3,
-    outline = TRUE,
+    outline_include = TRUE,
     outline_color = viridis_pal()(5)[5]
   )
 )
@@ -244,8 +244,88 @@ pedigree_df <- tribble(
     )
   )
 
+
+df_fig1 <- tribble(
+  ~personID, ~momID, ~dadID, ~sex, ~famID,
+  10011, NA, NA, 0, 1,
+  10012, NA, NA, 1, 1,
+  10021, NA, NA, 1, 1,
+  10022, 10011, 10012, 1, 1,
+  10023, 10011, 10012, 0, 1,
+  10024, NA, NA, 0, 1,
+  10025, 10011, 10012, 0, 1,
+  10027, NA, NA, 1, 1,
+  10031, 10023, 10021, 0, 1,
+  10032, 10023, 10021, 1, 1,
+  10035, 10023, 10021, 0, 1,
+  10036, 10024, 10022, 1, 1,
+  10037, 10024, 10022, 0, 1,
+  10038, 10025, 10027, 1, 1
+) %>%
+  mutate(
+    proband = case_when(
+      personID %in% c(10011, 10022, 10023, 10025, 10031, 10032, 10035, 10038) ~ TRUE,
+      TRUE ~ FALSE
+    ),
+    mtdnaline2 = case_when(
+      personID %in% c(10024, 10036, 10037) ~ TRUE,
+      TRUE ~ FALSE
+    ),
+  )
+
+## ----dimensions = c(6, 4)-----------------------------------------------------
+fig1 <- ggPedigree(
+  df_fig1,
+  famID = "famID",
+  personID = "personID",
+  status_column = "proband",
+  debug = TRUE,
+  config = list(
+    code_male = 1,
+    sex_color_include = FALSE,
+    apply_default_scales = FALSE,
+    label_method = "geom_text",
+    label_col = "personID",
+    point_size = 5,
+    outline_include = TRUE,
+    status_code_affected = TRUE,
+    status_code_unaffected = FALSE,
+    generation_height = 1,
+    generation_width = 1,
+    status_affected_shape = 4,
+    segment_spouse_color = "black",
+    segment_sibling_color = "black",
+    segment_parent_color = "black",
+    segment_offspring_color = "black",
+    outline_multiplier = 1.25,
+    segment_linewidth = .5
+  )
+)
+# fig1
+
+fig1$plot + geom_point(aes(x = x_pos, y = y_pos),
+  color = "cornflowerblue", size = 2,
+  data = fig1$data %>% dplyr::filter(mtdnaline2 == TRUE)
+) +
+  scale_shape_manual(
+    values = c(16, 15, 14),
+    labels = c("Female", "Male", "Unknown")
+  ) +
+  guides(shape = "none") + scale_color_manual(
+    values = c("pink", "white")
+  ) +
+
+  # discrete = TRUE,
+  # labels = c("TRUE", "FALSE"),
+  #  name = ""
+  # ) +
+  theme(
+    strip.text = element_blank(),
+    legend.position = "none"
+  )
+
 ## -----------------------------------------------------------------------------
-p <- ggPedigree(
+p2 <- ggPedigree(
   pedigree_df,
   famID = "famID",
   personID = "personID",
@@ -256,7 +336,8 @@ p <- ggPedigree(
     sex_color_include = FALSE,
     apply_default_scales = FALSE,
     label_method = "geom_text",
-    label_col = "cleanpersonID",
+    label_include = TRUE,
+    label_column = "cleanpersonID",
     status_code_affected = TRUE,
     status_code_unaffected = FALSE,
     generation_height = 1,
@@ -269,8 +350,8 @@ p <- ggPedigree(
   )
 )
 
-## ----message=FALSE, warning=FALSE---------------------------------------------
-p + scale_shape_manual(
+## ----message=FALSE, warning=FALSE,dimensions = c(6, 4)------------------------
+p2 + scale_shape_manual(
   values = c(16, 15, 14),
   labels = c("Female", "Male", "Unknown")
 ) +

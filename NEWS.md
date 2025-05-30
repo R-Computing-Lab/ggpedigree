@@ -9,8 +9,10 @@
 * Added new phenotype plotting function `ggPhenotypebyDegree` to visualize phenotypes by degree of relatedness.
 * Added new vignette to demonstrate `ggPhenotypebyDegree`.
 * Added a new function `getDefaultPlotConfig` to set default configuration options for the package.
-* Harmonized the configuration options across the package to use `getDefaultPlotConfig`.
-* Added unit tests for getDefaultPlotConfig and ggPhenotypebyDegree
+* Harmonized the configuration options across the package to use `getDefaultPlotConfig` and buildPlotConfig
+* Added unit tests for `getDefaultPlotConfig` and `ggPhenotypebyDegree`
+* Added workaround for plotly non-support for geom_curve with computeCurvedMidpoint
+
 # ggpedigree 0.4.1
 ## Status: Submitted to CRAN
 * Fixed a bug in the `ggpedigree` function that caused an error when using a custom ID name and requesting the plot to be returned as a ggplot object.

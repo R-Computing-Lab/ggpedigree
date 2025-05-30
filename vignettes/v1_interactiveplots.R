@@ -50,10 +50,10 @@ plt <- ggPedigreeInteractive(
   momID = "momID",
   dadID = "dadID",
   config = list(
-    label_nudge_y   = -.25,
-    label_include  = TRUE,
-    label_method    = "geom_text",
-    sex_color_include       = TRUE
+    label_nudge_y = -.25,
+    label_include = TRUE,
+    label_method = "geom_text",
+    sex_color_include = TRUE
   ),
   tooltip_columns = c("personID", "name")
 )
@@ -165,7 +165,6 @@ if (interactive()) {
 }
 
 ## ----interactive-customization------------------------------------------------
-
 library(BGmisc)
 data(hazard)
 
@@ -177,15 +176,14 @@ ggPedigreeInteractive(
   personID = "ID",
   momID = "momID",
   dadID = "dadID",
- 
   config = list(
     code_male = 0,
-     status_column = "affected",
-    label_nudge_y   = -.25,
-    label_include  = TRUE,
+    status_column = "affected",
+    label_nudge_y = -.25,
+    label_include = TRUE,
     include_tooltip = TRUE,
-    label_method    = "geom_text",
-    sex_color_include   = TRUE
+    label_method = "geom_text",
+    sex_color_include = TRUE
   ),
   tooltip_columns = c("personID", "birthYr", "onsetYr", "deathYr")
 ) %>%
