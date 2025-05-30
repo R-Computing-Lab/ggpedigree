@@ -31,14 +31,9 @@ We illustrate usage with a more complicated data set from BGmisc:
 
 ```{r libraries, message=FALSE, warning=FALSE}
 
-# Install remotes package if not already installed
-if(!requireNamespace("remotes", quietly = TRUE)) {
-  install.packages("remotes")
-}
 
 # Install your package from GitHub
-remotes::install_github("R-Computing-Lab/BGmisc")
-# unfortunately this requires BGmisc 1.4.0
+
 library(ggpedigree) # ggPedigree lives here
 library(BGmisc) # helper utilities & example data
 library(ggplot2) # ggplot2 for plotting
