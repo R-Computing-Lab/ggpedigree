@@ -6,7 +6,7 @@
 \usage{
 calculateCoordinates(
   ped,
-  personID = "ID",
+  personID = "personID",
   momID = "momID",
   dadID = "dadID",
   spouseID = "spouseID",

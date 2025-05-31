@@ -221,8 +221,11 @@ processExtras <- function(ped, config = list()) {
   dup_xy <- ped |>
     dplyr::select("personID", "coreID", "x_pos", "y_pos", "total_blue")
 
+  # pre-split version for faster lookup
+  dup_xy_list <- split(dup_xy, dup_xy$coreID)
+
   closest_dup <- function(target_core, x0, y0) {
-    cand <- dup_xy[dup_xy$coreID == target_core, ]
+    cand <- dup_xy_list[[as.character(target_core)]]
     if (nrow(cand) == 0L) {
       return(dup_xy$coreID[NA_integer_]) # return correct NA type
     }

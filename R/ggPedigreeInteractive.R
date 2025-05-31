@@ -6,21 +6,22 @@
 #' zoom, and pan functionality.
 #'
 #' @inheritParams ggPedigree
-#' @return A plotly htmlwidget (or plotly object if `as_widget = FALSE`).
+#' @return A plotly htmlwidget (or plotly object if `return_widget = FALSE`).
 #' @examples
 #' library(BGmisc)
 #' data("potter")
 #' ggPedigreeInteractive(potter, famID = "famID", personID = "personID")
 #' @export
-ggPedigreeInteractive <- function(ped, famID = "famID",
+ggPedigreeInteractive <- function(ped,
+                                  famID = "famID",
                                   personID = "personID",
                                   momID = "momID",
                                   dadID = "dadID",
-                                  status_col = NULL,
-                                  tooltip_cols = NULL,
+                                  status_column = NULL,
+                                  tooltip_columns = NULL,
                                   config = list(),
                                   debug = FALSE,
-                                  as_widget = TRUE,
+                                  return_widget = TRUE,
                                   ...) {
   if (!requireNamespace("plotly", quietly = TRUE)) {
     stop("The 'plotly' package is required for interactive plots.")
@@ -42,28 +43,39 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
   # -----
   # STEP 1: Configuration and Preparation
   # -----
-  if (!is.null(tooltip_cols)) {
-    config$tooltip_cols <- tooltip_cols
+
+  if (!is.null(tooltip_columns)) {
+    config$tooltip_columns <- tooltip_columns
+  }
+  if (!is.null(return_widget)) {
+    config$return_widget <- return_widget
+  }
+  if (!is.null(debug)) {
+    config$debug <- debug
   }
   # Set default styling and layout parameters
-  default_config <- list(
-    label_method = "geom_text",
-    include_labels = FALSE, # default to FALSE
-    include_tooltips = TRUE,
-    tooltip_cols = c(personID, "sex", status_col),
-    return_static = FALSE
+  default_config <- getDefaultPlotConfig(
+    function_name = "ggpedigreeinteractive",
+    personID = personID
   )
-  config <- utils::modifyList(default_config, config)
 
+  # Merge with user-specified overrides
+  # This allows the user to override any of the default values
+  config <- buildPlotConfig(
+    default_config = default_config,
+    config = config,
+    function_name = "ggpedigreeinteractive"
+  )
   ## 1. Build the static ggplot using the existing engine
   static_plot <- ggPedigree.core(ped,
-    famID       = famID,
-    personID    = personID,
-    momID       = momID,
-    dadID       = dadID,
-    status_col  = status_col,
-    config      = config,
-    debug       = debug,
+    famID = famID,
+    personID = personID,
+    momID = momID,
+    dadID = dadID,
+    status_column = config$status_column,
+    config = config,
+    debug = config$debug,
+    function_name = "ggpedigreeinteractive",
     ...
   )
 
@@ -71,20 +83,20 @@ ggPedigreeInteractive <- function(ped, famID = "famID",
   #   When ggplotly is called, it creates a single data frame that merges all
   #   layer data.  We therefore build a 'text' aesthetic ahead of time so that
   #   it survives the conversion.
-if(personID != "personID" && personID %in% config$tooltip_cols) {
-  # replace config$tooltip_cols with personID, core function renames it to "personID"
-  config$tooltip_cols <- gsub(personID, "personID", config$tooltip_cols)
- }
-  config$tooltip_cols <- intersect(config$tooltip_cols, names(static_plot$data)) # guard against typos
+  if (personID != "personID" && personID %in% config$tooltip_columns) {
+    # replace config$tooltip_columns with personID, core function renames it to "personID"
+    config$tooltip_columns <- gsub(personID, "personID", config$tooltip_columns)
+  }
+  config$tooltip_columns <- intersect(config$tooltip_columns, names(static_plot$data)) # guard against typos
 
-  if (length(config$tooltip_cols) == 0L) {
-    stop("None of the specified tooltip_cols found in `ped`.")
+  if (length(config$tooltip_columns) == 0L) {
+    stop("None of the specified tooltip_columns found in `ped`.")
   }
 
 
   ## 3. Convert ggplot → plotly ---------------------------------------------
   #   Add the tooltip text to the data frame
-  if (config$include_tooltips == TRUE) {
+  if (config$tooltip_include == TRUE) {
     # add tooltips to geom_point layers
     point_layers <- which(sapply(static_plot$layers, function(l) {
       inherits(l$geom, "GeomPoint")
@@ -95,18 +107,16 @@ if(personID != "personID" && personID %in% config$tooltip_cols) {
 
       static_plot <- static_plot + ggplot2::aes(text = tooltip_fmt(
         df = static_plot$data,
-        config$tooltip_cols
+        config$tooltip_columns
       ))
     } else {
-    #  static_ped <- static_plot$data
-
-
+      #  static_ped <- static_plot$data
       for (i in point_layers) {
         static_plot$layers[[i]]$mapping <- utils::modifyList(
           static_plot$layers[[i]]$mapping,
           ggplot2::aes(text = tooltip_fmt(
             df = static_plot$data,
-            tooltip_cols = config$tooltip_cols
+            tooltip_columns = config$tooltip_columns
           ))
         )
       }
@@ -117,7 +127,6 @@ if(personID != "personID" && personID %in% config$tooltip_cols) {
       width   = NULL,
       height  = NULL
     )
-
   } else {
     plt <- plotly::ggplotly(static_plot,
       # tooltip = "text",
@@ -127,7 +136,7 @@ if(personID != "personID" && personID %in% config$tooltip_cols) {
   }
   if (config$return_static == TRUE) {
     return(static_plot) # return the static plot
-  } else if (as_widget == TRUE) {
+  } else if (config$return_widget == TRUE) {
     return(plt)
   } else {
     class(plt) <- c("plotly", class(plt)) # ensure proper S3 dispatch
@@ -138,19 +147,24 @@ if(personID != "personID" && personID %in% config$tooltip_cols) {
 #' @export
 ggpedigreeinteractive <- ggPedigreeInteractive
 
+#' @rdname ggPedigreeInteractive
+#' @export
+ggpedigreeInteractive <- ggPedigreeInteractive
+
 #' @title Format tooltip text
 #' @description
 #' Format tooltip text for ggplotly
 #'
 #' @param df A data frame containing the data to be displayed in the tooltip.
-#' @param tooltip_cols A character vector of column names to be included in the tooltip.
+#' @param tooltip_columns A character vector of column names to be included in the tooltip.
+#' @param sep A character string containing the separator for the columns
 #'
 #' @return A character vector of formatted tooltip text for each row in the data frame.
 #'
 #' @keywords internal
 
-tooltip_fmt <- function(df, tooltip_cols) {
-  apply(df[tooltip_cols], 1, function(row) {
-    paste(paste(tooltip_cols, row, sep = ": "), collapse = "<br>")
+tooltip_fmt <- function(df, tooltip_columns, sep = ": ") {
+  apply(df[tooltip_columns], 1, function(row) {
+    paste(paste(tooltip_columns, row, sep = sep), collapse = "<br>")
   })
 }

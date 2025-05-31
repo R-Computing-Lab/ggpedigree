@@ -21,15 +21,15 @@ library(ggpedigree)
 data("redsquirrels")
 
 ## -----------------------------------------------------------------------------
-sumped <- summarizePedigrees(redsquirrels,
-  famID = "famID",
-  personID = "personID",
-  nbiggest = 5
-)
+# sumped <- summarizePedigrees(redsquirrels,
+#  famID = "famID",
+#  personID = "personID",
+#  nbiggest = 5
+# )
 
 
 # Set target family for visualization
-fam_filter <- sumped$biggest_families$famID[3]
+fam_filter <- 160 # sumped$biggest_families$famID[3]
 
 # Filter for the largest family, recode sex if needed
 ped_filtered <- redsquirrels %>%
@@ -49,7 +49,8 @@ p_add <- ggRelatednessMatrix(
     scale_midpoint = 0.55,
     cluster = TRUE,
     title = "Additive Genetic Relatedness",
-    text_size = 5
+    include_upper_triangle = F,
+    include_lower_triangle = T
   )
 )
 
@@ -65,7 +66,7 @@ p_mit <- ggRelatednessMatrix(
     cluster = TRUE,
     title = "Mitochondrial Relatedness",
     text_size = 6,
-    as_widget = TRUE
+    return_widget = TRUE
   )
 )
 
@@ -83,7 +84,10 @@ if (interactive()) {
 ## -----------------------------------------------------------------------------
 p_add_noclust <- ggRelatednessMatrix(
   add_mat,
-  config = list(cluster = FALSE, title = "Additive Relatedness (No Clustering)")
+  config = list(
+    cluster = FALSE, title = "Additive Relatedness (No Clustering)" # ,
+    #  geom = "geom_raster"
+  )
 )
 p_add_noclust
 

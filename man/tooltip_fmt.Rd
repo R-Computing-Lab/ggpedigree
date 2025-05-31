@@ -4,12 +4,14 @@
 \alias{tooltip_fmt}
 \title{Format tooltip text}
 \usage{
-tooltip_fmt(df, tooltip_cols)
+tooltip_fmt(df, tooltip_columns, sep = ": ")
 }
 \arguments{
 \item{df}{A data frame containing the data to be displayed in the tooltip.}
 
-\item{tooltip_cols}{A character vector of column names to be included in the tooltip.}
+\item{tooltip_columns}{A character vector of column names to be included in the tooltip.}
+
+\item{sep}{A character string containing the separator for the columns}
 }
 \value{
 A character vector of formatted tooltip text for each row in the data frame.

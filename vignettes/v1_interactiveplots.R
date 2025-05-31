@@ -50,12 +50,12 @@ plt <- ggPedigreeInteractive(
   momID = "momID",
   dadID = "dadID",
   config = list(
-    label_nudge_y   = -.25,
-    include_labels  = TRUE,
-    label_method    = "geom_text",
-    sex_color       = TRUE
+    label_nudge_y = -.25,
+    label_include = TRUE,
+    label_method = "geom_text",
+    sex_color_include = TRUE
   ),
-  tooltip_cols = c("personID", "name")
+  tooltip_columns = c("personID", "name")
 )
 
 ## ----eval=FALSE, include=TRUE-------------------------------------------------
@@ -110,12 +110,12 @@ static <- ggPedigreeInteractive(
   dadID = "dadID",
   config = list(
     label_nudge_y = -.25,
-    include_labels = TRUE,
+    label_include = TRUE,
     label_method = "geom_text",
-    sex_color = TRUE,
+    sex_color_include = TRUE,
     return_static = TRUE
   ),
-  tooltip_cols = c("personID", "name")
+  tooltip_columns = c("personID", "name")
 )
 
 ## ----static-plot-customization------------------------------------------------
@@ -137,6 +137,7 @@ static_plot <- static +
     axis.title.x     = element_blank(),
     axis.title.y     = element_blank()
   ) + scale_color_viridis(
+    option = "inferno",
     discrete = TRUE,
     labels = c("Female", "Male", "Unknown")
   )
@@ -162,4 +163,34 @@ if (interactive()) {
 } else {
   plotly::partial_bundle(plt2, local = TRUE)
 }
+
+## ----interactive-customization------------------------------------------------
+library(BGmisc)
+data(hazard)
+
+df <- hazard
+
+ggPedigreeInteractive(
+  df,
+  famID = "famID",
+  personID = "ID",
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
+    code_male = 0,
+    status_column = "affected",
+    label_nudge_y = -.25,
+    label_include = TRUE,
+    include_tooltip = TRUE,
+    label_method = "geom_text",
+    sex_color_include = TRUE
+  ),
+  tooltip_columns = c("personID", "birthYr", "onsetYr", "deathYr")
+) %>%
+  plotly::layout(
+    title = "Hazard Pedigree (interactive)",
+    hoverlabel = list(bgcolor = "white"),
+    margin = list(l = 50, r = 50, t = 50, b = 50)
+  ) %>%
+  plotly::config(displayModeBar = TRUE)
 

@@ -87,11 +87,11 @@ ds$personID %>%
 ds_grouped <- ds %>%
   group_by(personID, momID, dadID, sex, famID, byear, dyear, lrs) %>%
   summarise(
-    ars_mean = round(mean(ars, na.rm = TRUE), digits = 3),
-    ars_max = round(max(ars, na.rm = TRUE), digits = 3),
-    ars_med = round(median(ars, na.rm = TRUE), digits = 3),
-    ars_min = round(min(ars, na.rm = TRUE), digits = 3),
-    ars_sd = round(sd(ars, na.rm = TRUE), digits = 3),
+    ars_mean = round(mean(ars, na.rm = TRUE), digits = 2),
+    ars_max = round(max(ars, na.rm = TRUE), digits = 2),
+    ars_med = round(median(ars, na.rm = TRUE), digits = 2),
+    ars_min = round(min(ars, na.rm = TRUE), digits = 2),
+    ars_sd = round(sd(ars, na.rm = TRUE), digits = 2),
     ars_n = n(),
     year_first = min(year, na.rm = TRUE),
     year_last = max(year, na.rm = TRUE)
@@ -147,5 +147,5 @@ ds_grouped <- ds %>%
 
 redsquirrels <- ds_grouped
 
-write_csv(redsquirrels, here("data-raw", "redsquirrels.csv"))
+write_csv(redsquirrels, here("data-raw", "redsquirrels.csv"), na = "")
 usethis::use_data(redsquirrels, overwrite = TRUE, compress = "xz")

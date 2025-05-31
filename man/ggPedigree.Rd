@@ -11,9 +11,10 @@ ggPedigree(
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
-  status_col = NULL,
-  tooltip_cols = NULL,
-  as_widget = FALSE,
+  spouseID = "spouseID",
+  status_column = NULL,
+  tooltip_columns = NULL,
+  return_widget = FALSE,
   config = list(),
   debug = FALSE,
   hints = NULL,
@@ -27,9 +28,10 @@ ggpedigree(
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
-  status_col = NULL,
-  tooltip_cols = NULL,
-  as_widget = FALSE,
+  spouseID = "spouseID",
+  status_column = NULL,
+  tooltip_columns = NULL,
+  return_widget = FALSE,
   config = list(),
   debug = FALSE,
   hints = NULL,
@@ -48,26 +50,29 @@ ggpedigree(
 
 \item{dadID}{Character string specifying the column name for father IDs. Defaults to "dadID".}
 
-\item{status_col}{Character string specifying the column name for affected status. Defaults to NULL.}
+\item{spouseID}{Character string specifying the column name for spouse IDs. Defaults to "spouseID".}
 
-\item{tooltip_cols}{Character vector of column names to show when hovering.
+\item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
+
+\item{tooltip_columns}{Character vector of column names to show when hovering.
 Defaults to c("personID", "sex").  Additional columns present in `ped`
 can be supplied – they will be added to the Plotly tooltip text.}
 
-\item{as_widget}{Logical; if TRUE (default) returns a plotly htmlwidget.
+\item{return_widget}{Logical; if TRUE (default) returns a plotly htmlwidget.
 If FALSE, returns the underlying plotly object (useful for further
 customization before printing).}
 
 \item{config}{A list of configuration options for customizing the plot. The list can include:
 \describe{
    \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1.}
-   \item{segment_spouse_color, segment_self_color, segment_sibling_color, segment_parent_color, segment_offspring_color}{Character. Line colors for respective connection types.}
-   \item{label_text_size, point_size, line_width}{Numeric. Controls text size, point size, and line thickness.}
+   \item{segment_spouse_color, segment_self_color}{Character. Line colors for respective connection types.}
+   \item{segment_sibling_color, segment_parent_color, segment_offspring_color}{Character. Line colors for respective connection types.}
+   \item{label_text_size, point_size, segment_linewidth}{Numeric. Controls text size, point size, and line thickness.}
    \item{generation_height}{Numeric. Vertical spacing multiplier between generations. Default: 1.}
-   \item{shape_unknown, shape_female, shape_male, affected_shape}{Integers. Shape codes for plotting each group.}
-   \item{sex_shape_labs}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
+   \item{shape_unknown, shape_female, shape_male, status_affected_shape}{Integers. Shape codes for plotting each group.}
+   \item{sex_shape_labels}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
    \item{unaffected, affected}{Values indicating unaffected/affected status.}
-   \item{sex_color}{Logical. If TRUE, uses color to differentiate sex.}
+   \item{sex_color_include}{Logical. If TRUE, uses color to differentiate sex.}
    \item{label_max_overlaps}{Maximum number of overlaps allowed in repelled labels.}
    \item{label_segment_color}{Color used for label connector lines.}
  }}

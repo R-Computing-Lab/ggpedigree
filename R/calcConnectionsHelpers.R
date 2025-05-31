@@ -74,6 +74,7 @@ getMidpoints <- function(data,
                          require_non_missing = group_vars) {
   # -----
   # Filter for complete data if requested
+  # -----
   if (!is.null(require_non_missing)) {
     data <- data |>
       dplyr::filter(dplyr::if_all(

@@ -1,6 +1,6 @@
 Package: ggpedigree
 Title: Visualizing Pedigrees with 'ggplot2' and 'plotly'
-Version: 0.4.1
+Version: 0.5.0
 Date/Publication: 2025
 Authors@R: c(
     person("S. Mason", "Garrison", email= "garrissm@wfu.edu", role = c("aut", "cre", "cph"),
@@ -14,7 +14,7 @@ BugReports: https://github.com/R-Computing-Lab/ggpedigree/issues
 Depends: 
    R (>= 4.1.0)
 Imports: 
-    BGmisc,
+    BGmisc (>= 1.4.1),
     kinship2,
     ggplot2,
     ggrepel,
@@ -23,11 +23,16 @@ Imports:
     stringr,
     utils,
     plotly,
-    reshape2
+    reshape2,
+    scales,
+    tidyr,
+    paletteer
 Suggests: 
     viridis,
     knitr,
     tidyverse,
+    purrr,
+    data.table,
     discord,
     OpenMx,
     NlsyLinks,
@@ -44,3 +49,4 @@ Encoding: UTF-8
 RoxygenNote: 7.3.2
 Language: en-US
 LazyData: true
+Config/Needs/website: rmarkdown

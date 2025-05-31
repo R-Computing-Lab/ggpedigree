@@ -6,7 +6,7 @@
 #' @param config A list of graphical and display parameters.
 #'   See Details for available options.
 #' @param interactive Logical; if TRUE, returns an interactive plotly object.
-#' @param tooltip_cols A character vector of column names to include in tooltips.
+#' @param tooltip_columns A character vector of column names to include in tooltips.
 #' @param ... Additional arguments passed to ggplot2 layers.
 #'
 #' @details
@@ -17,7 +17,7 @@
 #'   \item{title}{Plot title}
 #'   \item{cluster}{Logical; should rows/cols be clustered (default: TRUE)}
 #'   \item{xlab, ylab}{Axis labels}
-#'   \item{text_size}{Axis text size}
+#'   \item{axis_text_size}{Axis text size}
 #' }
 #' @return A ggplot object displaying the relatedness matrix as a heatmap.
 #' @export
@@ -37,14 +37,14 @@
 #'     title = "Relatedness Matrix",
 #'     xlab = "Individuals",
 #'     ylab = "Individuals",
-#'     text_size = 8
+#'     axis_text_size = 8
 #'   )
 #' )
 ggRelatednessMatrix <- function(
     mat,
     config = list(),
     interactive = FALSE,
-    tooltip_cols = NULL,
+    tooltip_columns = NULL,
     ...) {
   # Check if the input is a matrix
   if (!is.matrix(mat)) {
@@ -57,15 +57,39 @@ ggRelatednessMatrix <- function(
     title = "Relatedness Matrix",
     xlab = "Individual",
     ylab = "Individual",
-    text_size = 8,
-    include_tooltips = TRUE,
-    tooltip_cols = c("ID1", "ID2", "value"),
+    # layout aesthetics
+    layout_text_angle_x = 90, # rotate x-axis labels
+    layout_text_angle_y = 0,
+    axis_text_size = 8,
+    layout_text_color = "black",
+    # geom aesthetics
+    geom = "geom_tile", # default geom for heatmap
+    geom_interpolate = TRUE, # for raster
+    tile_color = NA, # border color for tiles
+    # diagonal
+    include_diagonal = TRUE, # whether to include diagonal elements
+    include_upper_triangle = FALSE, # whether to include upper triangle
+    include_lower_triangle = TRUE, # whether to include lower triangle
+    # tooltip aesthetics
+    tooltip_include = TRUE,
+    tooltip_columns = c("ID1", "ID2", "value"),
+    # label aesthetics
+    label_include = FALSE,
+    label_col = "value",
+    label_max_overlaps = 15,
+    label_method = "ggrepel", # "geom_label" or "geom_text"
+    label_nudge_x = 0,
+    label_nudge_y = -.10,
+    label_segment_color = NA,
+    label_text_angle = 0,
+    label_text_size = 2,
+    label_text_color = "black",
     rounding = 5,
-    as_widget = FALSE
+    return_widget = FALSE
   )
 
-  if (!is.null(tooltip_cols)) {
-    config$tooltip_cols <- tooltip_cols
+  if (!is.null(tooltip_columns)) {
+    config$tooltip_columns <- tooltip_columns
   }
 
   config <- utils::modifyList(default_config, config)
@@ -84,19 +108,19 @@ ggRelatednessMatrix <- function(
     if (!requireNamespace("plotly", quietly = TRUE)) {
       stop("The 'plotly' package is required for interactive plots.")
     }
-    if (config$include_tooltips) {
+    if (config$tooltip_include) {
       ## 2. Identify data columns for tooltips ----------------------------------
       #   When ggplotly is called, it creates a single data frame that merges all
       #   layer data.  We therefore build a 'text' aesthetic ahead of time so that
       #   it survives the conversion.
-      config$tooltip_cols <- intersect(config$tooltip_cols, names(ped)) # guard against typos
-      if (length(config$tooltip_cols) == 0L) {
-        stop("None of the specified tooltip_cols found in `ped`.")
+      config$tooltip_columns <- intersect(config$tooltip_columns, names(ped)) # guard against typos
+      if (length(config$tooltip_columns) == 0L) {
+        stop("None of the specified tooltip_columns found in `ped`.")
       }
 
-      tooltip_fmt <- function(df, tooltip_cols) {
-        apply(df[tooltip_cols], 1, function(row) {
-          paste(paste(tooltip_cols, row, sep = ": "), collapse = "<br>")
+      tooltip_fmt <- function(df, tooltip_columns) {
+        apply(df[tooltip_columns], 1, function(row) {
+          paste(paste(tooltip_columns, row, sep = ": "), collapse = "<br>")
         })
       }
       # add tooltips to geom_point layers
@@ -104,7 +128,7 @@ ggRelatednessMatrix <- function(
 
       static_plot <- static_plot + ggplot2::aes(text = tooltip_fmt(
         df = ped,
-        config$tooltip_cols
+        config$tooltip_columns
       ))
     }
 
@@ -112,7 +136,7 @@ ggRelatednessMatrix <- function(
     p <- plotly::ggplotly(static_plot, tooltip = "text")
 
 
-    if (config$as_widget == TRUE) {
+    if (config$return_widget == TRUE) {
       return(p)
     } else {
       class(p) <- c("plotly", class(p)) # ensure proper S3 dispatch
@@ -149,7 +173,23 @@ ggRelatednessMatrix.core <- function(
     mat_plot <- mat[ord, ord, drop = FALSE]
   }
 
+  # Ensure diagonal is included
+  if (isFALSE(config$include_diagonal)) {
+    diag(mat_plot) <- NA
+  }
+  # Optionally include upper/lower triangle
+
+  if (isFALSE(config$include_upper_triangle)) {
+    # note that this gets rotated, so upper triangle is actually lower triangle in the plot
+    mat_plot[lower.tri(mat_plot)] <- NA
+  }
+  if (isFALSE(config$include_lower_triangle)) {
+    # note that this gets rotated, so upper triangle is actually lower triangle in the plot
+    mat_plot[upper.tri(mat_plot)] <- NA
+  }
+
   df_melted <- reshape2::melt(mat_plot)
+
   colnames(df_melted) <- c("ID1", "ID2", "value")
 
   df_melted <- df_melted |>
@@ -162,11 +202,35 @@ ggRelatednessMatrix.core <- function(
   # rotate x-axis labels
   df_melted$ID2 <- factor(df_melted$ID2, levels = rev(levels(df_melted$ID2)))
 
+  # filter out NA values
+  df_melted <- df_melted[!is.na(df_melted$value), ]
+
+
   p <- ggplot2::ggplot(
     df_melted,
     ggplot2::aes(x = .data$ID2, y = .data$ID1, fill = .data$value)
-  ) +
-    ggplot2::geom_raster(interpolate = TRUE, hjust = 0, vjust = 0) +
+  )
+
+  if (config$geom == "geom_tile") {
+    p <- p +
+      ggplot2::geom_tile(color = config$tile_color, ...)
+  } else if (config$geom == "geom_raster") {
+    p <- p +
+      ggplot2::geom_raster(interpolate = config$geom_interpolate, hjust = 0, vjust = 0, ...)
+  } else {
+    stop("Unsupported geom type. Use 'geom_tile' or 'geom_raster'.")
+  }
+  # add text labels if requested
+  if (config$label_include) {
+    p <- p +
+      ggplot2::geom_text(
+        ggplot2::aes(label = config$label_col),
+        size = config$label_text_size,
+        color = config$label_text_color
+      )
+  }
+
+  p <- p +
     ggplot2::scale_fill_gradient2(
       low = config$color_palette[1],
       mid = config$color_palette[2],
@@ -176,10 +240,15 @@ ggRelatednessMatrix.core <- function(
     ggplot2::theme_minimal() +
     ggplot2::theme(
       axis.text.x = ggplot2::element_text(
-        angle = 90, vjust = 0.5,
-        hjust = 1, size = config$text_size
+        angle = config$layout_text_angle_x, vjust = 0.5,
+        hjust = 1, size = config$axis_text_size,
+        color = config$layout_text_color
       ),
-      axis.text.y = ggplot2::element_text(size = config$text_size)
+      axis.text.y = ggplot2::element_text(
+        size = config$axis_text_size,
+        angle = config$layout_text_angle_y,
+        color = config$layout_text_color
+      ),
     ) +
     ggplot2::labs(
       x = config$xlab,

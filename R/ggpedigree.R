@@ -10,27 +10,29 @@
 #' @param personID Character string specifying the column name for individual IDs.
 #' @param momID Character string specifying the column name for mother IDs. Defaults to "momID".
 #' @param dadID Character string specifying the column name for father IDs. Defaults to "dadID".
-#' @param status_col Character string specifying the column name for affected status. Defaults to NULL.
+#' @param spouseID Character string specifying the column name for spouse IDs. Defaults to "spouseID".
+#' @param status_column Character string specifying the column name for affected status. Defaults to NULL.
 #' @param debug Logical. If TRUE, prints debugging information. Default: FALSE.
 #' @param hints Data frame with hints for layout adjustments. Default: NULL.
 #' @param interactive Logical. If TRUE, generates an interactive plot using `plotly`. Default: FALSE.
-#' @param tooltip_cols Character vector of column names to show when hovering.
+#' @param tooltip_columns Character vector of column names to show when hovering.
 #'        Defaults to c("personID", "sex").  Additional columns present in `ped`
 #'        can be supplied – they will be added to the Plotly tooltip text.
-#' @param as_widget Logical; if TRUE (default) returns a plotly htmlwidget.
+#' @param return_widget Logical; if TRUE (default) returns a plotly htmlwidget.
 #'        If FALSE, returns the underlying plotly object (useful for further
 #'        customization before printing).
 #' @param ... Additional arguments passed to `ggplot2` functions.
 #' @param config A list of configuration options for customizing the plot. The list can include:
 #'  \describe{
 #'     \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1.}
-#'     \item{segment_spouse_color, segment_self_color, segment_sibling_color, segment_parent_color, segment_offspring_color}{Character. Line colors for respective connection types.}
-#'     \item{label_text_size, point_size, line_width}{Numeric. Controls text size, point size, and line thickness.}
+#'     \item{segment_spouse_color, segment_self_color}{Character. Line colors for respective connection types.}
+#'     \item{segment_sibling_color, segment_parent_color, segment_offspring_color}{Character. Line colors for respective connection types.}
+#'     \item{label_text_size, point_size, segment_linewidth}{Numeric. Controls text size, point size, and line thickness.}
 #'     \item{generation_height}{Numeric. Vertical spacing multiplier between generations. Default: 1.}
-#'     \item{shape_unknown, shape_female, shape_male, affected_shape}{Integers. Shape codes for plotting each group.}
-#'     \item{sex_shape_labs}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
+#'     \item{shape_unknown, shape_female, shape_male, status_affected_shape}{Integers. Shape codes for plotting each group.}
+#'     \item{sex_shape_labels}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
 #'     \item{unaffected, affected}{Values indicating unaffected/affected status.}
-#'     \item{sex_color}{Logical. If TRUE, uses color to differentiate sex.}
+#'     \item{sex_color_include}{Logical. If TRUE, uses color to differentiate sex.}
 #'     \item{label_max_overlaps}{Maximum number of overlaps allowed in repelled labels.}
 #'     \item{label_segment_color}{Color used for label connector lines.}
 #'   }
@@ -45,15 +47,19 @@
 #' ggPedigree(hazard, famID = "famID", personID = "ID", config = list(code_male = 0))
 #'
 #' @export
-
+#' @import ggplot2 dplyr BGmisc ggrepel
+#' @importFrom rlang sym
+#' @importFrom utils modifyList
+#'
 ggPedigree <- function(ped,
                        famID = "famID",
                        personID = "personID",
                        momID = "momID",
                        dadID = "dadID",
-                       status_col = NULL,
-                       tooltip_cols = NULL,
-                       as_widget = FALSE,
+                       spouseID = "spouseID",
+                       status_column = NULL,
+                       tooltip_columns = NULL,
+                       return_widget = FALSE,
                        config = list(),
                        debug = FALSE,
                        hints = NULL,
@@ -66,32 +72,48 @@ ggPedigree <- function(ped,
 
   if (interactive == TRUE && requireNamespace("plotly", quietly = TRUE)) {
     # Call the interactive function with the provided arguments
+
     ggPedigreeInteractive(
       ped = ped,
       famID = famID,
       personID = personID,
+      spouseID = spouseID,
       momID = momID,
       dadID = dadID,
-      status_col = status_col,
+      status_column = status_column,
       config = config,
       debug = debug,
       hints = hints,
-      as_widget = as_widget,
-      tooltip_cols = tooltip_cols,
+      return_widget = return_widget,
+      tooltip_columns = tooltip_columns,
       ...
     )
   } else {
     if (interactive == TRUE && !requireNamespace("plotly", quietly = TRUE)) {
       message("The 'plotly' package is required for interactive plots.")
     }
+    # Set default styling and layout parameters
+    default_config <- getDefaultPlotConfig(
+      function_name = "ggpedigree",
+      personID = personID
+    )
+
+    # Merge with user-specified overrides
+    # This allows the user to override any of the default values
+    config <- buildPlotConfig(
+      default_config = default_config,
+      config = config,
+      function_name = "ggpedigree"
+    )
     # Call the core function with the provided arguments
     ggPedigree.core(
       ped = ped,
       famID = famID,
       personID = personID,
+      spouseID = spouseID,
       momID = momID,
       dadID = dadID,
-      status_col = status_col,
+      status_column = status_column,
       config = config,
       debug = debug,
       hints = hints,
@@ -115,10 +137,12 @@ ggPedigree.core <- function(ped, famID = "famID",
                             personID = "personID",
                             momID = "momID",
                             dadID = "dadID",
-                            status_col = NULL,
+                            spouseID = "spouseID",
+                            status_column = NULL,
                             config = list(),
                             debug = FALSE,
                             hints = NULL,
+                            function_name = "ggPedigree",
                             ...) {
   # -----
   # STEP 1: Configuration and Preparation
@@ -127,69 +151,10 @@ ggPedigree.core <- function(ped, famID = "famID",
     stop("ped should be a data.frame or inherit to a data.frame")
   }
 
-  # Set default styling and layout parameters
-  default_config <- list(
-    apply_default_scales = TRUE,
-    apply_default_theme = TRUE,
-    code_male = 1,
-    generation_height = 1,
-    generation_width = 1,
-    # geom label
-    include_labels = TRUE,
-    label_col = "personID",
-    label_max_overlaps = 15,
-    label_method = "ggrepel", # "geom_label" or "geom_text"
-    label_nudge_x = 0,
-    label_nudge_y = -.10,
-    label_segment_color = NA,
-    label_text_angle = 0,
-    label_text_size = 2,
-    # point and line aesthetics
-    line_width = 0.5,
-    point_size = 4,
-    # point outline
-    outline = FALSE,
-    outline_multiplier = 1.5,
-    outline_color = "black",
-    # segment colors
-    segment_offspring_color = "black",
-    segment_parent_color = "black",
-    segment_self_color = "black",
-    segment_sibling_color = "black",
-    segment_spouse_color = "black",
-    # segment linetypes
-    segment_self_linetype = "dotdash",
-    segment_self_angle = 90,
-    segment_lineend = "round",
-    segment_linejoin = "round",
-    # sex
-    sex_color = TRUE,
-    sex_shape_labs = c("Female", "Male", "Unknown"),
-    sex_shape_female = 16,
-    sex_shape_male = 15,
-    sex_shape_unknown = 18,
-    status_affected_lab = "affected",
-    status_affected_shape = 4,
-    status_unaffected_lab = "unaffected",
-    status_vals = c(1, 0),
-    color_palette = c("white", "orange", "red")
-    #  hints = NULL
-  )
-
-
-
-
-  # Merge with user-specified overrides
-  # This allows the user to override any of the default values
-  config <- utils::modifyList(default_config, config)
-
-  # Set additional internal config values based on other entries
-  config$status_labs <- c(config$status_affected_lab, config$status_unaffected_lab)
-  config$sex_shape_vals <- c(config$sex_shape_female, config$sex_shape_male, config$sex_shape_unknown)
-
   # -----
   # STEP 2: Pedigree Data Transformation
   # -----
+
 
   ds_ped <- BGmisc::ped2fam(ped,
     famID = famID,
@@ -208,14 +173,16 @@ ggPedigree.core <- function(ped, famID = "famID",
   }
 
   # If personID is not "personID", rename to "personID" internally
-  if (personID != "personID") {
-    ds_ped <- dplyr::rename(ds_ped, personID = !!personID)
-  }
+  #  if (personID != "personID") {
+  #   ds_ped <- dplyr::rename(ds_ped, personID = !!personID)
+  #  }
 
   # Recode affected status into factor, if applicable
-  if (!is.null(status_col)) {
-    ds_ped[[status_col]] <- factor(ds_ped[[status_col]],
-      levels = c(config$status_affected_lab, config$status_unaffected_lab)
+  if (!is.null(status_column)) {
+    ds_ped[[status_column]] <- factor(
+      ds_ped[[status_column]],
+      levels = config$status_codes,
+      labels = config$status_labels
     )
   }
 
@@ -226,7 +193,8 @@ ggPedigree.core <- function(ped, famID = "famID",
 
   # Standardize sex variable using code_male convention
   ds_ped <- BGmisc::recodeSex(ds_ped,
-                              recode_male = config$code_male)
+    recode_male = config$code_male
+  )
 
   # -----
   # STEP 4: Coordinate Generation
@@ -234,9 +202,10 @@ ggPedigree.core <- function(ped, famID = "famID",
 
   # Compute layout coordinates using pedigree structure
   ds <- calculateCoordinates(ds_ped,
-    personID = "personID",
+    personID = personID,
     momID = momID,
     dadID = dadID,
+    spouseID = spouseID,
     code_male = config$code_male,
     config = config
   )
@@ -254,13 +223,44 @@ ggPedigree.core <- function(ped, famID = "famID",
   # -----
 
   # Generate a connection table for plotting lines (parents, spouses, etc.)
-  plot_connections <- calculateConnections(ds, config = config)
+  plot_connections <- calculateConnections(ds,
+    config = config,
+    personID = personID,
+    spouseID = spouseID,
+    momID = momID, dadID = dadID
+  )
 
   connections <- plot_connections$connections
+  # restore names
+  if (personID != "personID") {
+    # Rename personID to the user-specified name
+    names(connections)[names(connections) == "personID"] <- personID
+  }
+  if (momID != "momID") {
+    # Rename momID to the user-specified name
+    names(connections)[names(connections) == "momID"] <- momID
+  }
+  if (dadID != "dadID") {
+    # Rename dadID to the user-specified name
+    names(connections)[names(connections) == "dadID"] <- dadID
+  }
+  if ("spouseID" %in% names(connections) && spouseID != "spouseID") {
+    # Rename spouseID to the user-specified name
+    names(connections)[names(connections) == "spouseID"] <- spouseID
+  }
+  # Rename famID to the user-specified name
+  if (famID != "famID") {
+    # Rename famID to the user-specified name
+    names(connections)[names(connections) == "famID"] <- famID
+  }
+
+
   # -----
   # STEP 6: Initialize Plot
   # -----
-  gap_off <- 0.5 * config$generation_height # single constant for all “stub” offsets
+
+  config$gap_hoff <- 0.5 * config$generation_height # single constant for all “stub” offsets
+  config$gap_woff <- 0.5 * config$generation_width # single constant for all “stub” offsets
 
   p <- ggplot2::ggplot(ds, ggplot2::aes(
     x = .data$x_pos,
@@ -282,10 +282,11 @@ ggPedigree.core <- function(ped, famID = "famID",
         y = .data$y_spouse,
         yend = .data$y_pos
       ),
-      linewidth = config$line_width,
+      linewidth = config$segment_linewidth,
       lineend = config$segment_lineend,
       linejoin = config$segment_linejoin,
       color = config$segment_spouse_color,
+      linetype = config$segment_linetype,
       na.rm = TRUE
     )
 
@@ -296,10 +297,11 @@ ggPedigree.core <- function(ped, famID = "famID",
     ggplot2::aes(
       x = .data$x_mid_sib,
       xend = .data$x_midparent,
-      y = .data$y_mid_sib - gap_off,
+      y = .data$y_mid_sib - config$gap_hoff,
       yend = .data$y_midparent
     ),
-    linewidth = config$line_width,
+    linewidth = config$segment_linewidth,
+    linetype = config$segment_linetype,
     lineend = config$segment_lineend,
     linejoin = config$segment_linejoin,
     color = config$segment_parent_color,
@@ -311,27 +313,77 @@ ggPedigree.core <- function(ped, famID = "famID",
       ggplot2::aes(
         x = .data$x_pos,
         xend = .data$x_mid_sib,
-        y = .data$y_pos - gap_off,
-        yend = .data$y_mid_sib - gap_off
+        y = .data$y_pos - config$gap_hoff,
+        yend = .data$y_mid_sib - config$gap_hoff
       ),
-      linewidth = config$line_width,
+      linewidth = config$segment_linewidth,
       lineend = config$segment_lineend,
       linejoin = config$segment_linejoin,
+      linetype = config$segment_linetype,
       color = config$segment_offspring_color,
       na.rm = TRUE
-    ) +
-    # Sibling vertical drop line
+    )
+  # Sibling vertical drop line
+  # special handling for twin siblings
+  if (inherits(plot_connections$twin_coords, "data.frame")) {
+
+    plot_connections$twin_coords <- plot_connections$twin_coords |>
+      dplyr::mutate(
+        x_start = .data$x_pos + config$segment_mz_t * (.data$x_mid_twin - .data$x_pos),
+        y_start = .data$y_pos + config$segment_mz_t * ((.data$y_mid_twin - config$gap_hoff) - .data$y_pos),
+        x_end   = .data$x_twin + config$segment_mz_t * (.data$x_mid_twin - .data$x_twin),
+        y_end   = .data$y_twin + config$segment_mz_t * ((.data$y_mid_twin - config$gap_hoff) - .data$y_twin)
+      )
+
+
+    p <- p +
+      ggplot2::geom_segment(
+        data = plot_connections$twin_coords,
+        ggplot2::aes(
+          x = .data$x_pos,
+          xend = .data$x_mid_twin,
+          y = .data$y_pos,
+          yend = .data$y_mid_twin - config$gap_hoff
+        ),
+        linewidth = config$segment_linewidth,
+        lineend = config$segment_lineend,
+        linejoin = config$segment_linejoin,
+        linetype = config$segment_linetype,
+        color = config$segment_sibling_color,
+        na.rm = TRUE
+      ) + # horizontal line to twin midpoint for MZ twins
+      ggplot2::geom_segment(
+        data = plot_connections$twin_coords |>
+          dplyr::filter(.data$mz == TRUE),
+        ggplot2::aes(
+          x = .data$x_start,
+          xend = .data$x_end,
+          y = .data$y_start,
+          yend = .data$y_end
+        ),
+        linewidth = config$segment_linewidth,
+        lineend = config$segment_lineend,
+        linejoin = config$segment_linejoin,
+        linetype = config$segment_mz_linetype,
+        color = config$segment_mz_color,
+        alpha = config$segment_mz_alpha,
+        na.rm = TRUE
+      )
+  }
+  p <- p +
     ggplot2::geom_segment(
-      data = connections,
+      data = connections |>
+        dplyr::filter(.data$link_as_twin == FALSE),
       ggplot2::aes(
         x = .data$x_pos,
         xend = .data$x_pos,
-        y = .data$y_mid_sib - gap_off,
+        y = .data$y_mid_sib - config$gap_hoff,
         yend = .data$y_pos
       ),
-      linewidth = config$line_width,
+      linewidth = config$segment_linewidth,
       lineend = config$segment_lineend,
       linejoin = config$segment_linejoin,
+      linetype = config$segment_linetype,
       color = config$segment_sibling_color,
       na.rm = TRUE
     )
@@ -342,16 +394,16 @@ ggPedigree.core <- function(ped, famID = "famID",
 
   # Add point layers for each individual in the pedigree.
   # The appearance (color and shape) depends on two factors:
-  # 1. Whether `sex_color` is enabled — this controls whether sex is encoded via both color and shape.
-  # 2. Whether `status_col` is specified — this controls whether affected status is visualized.
+  # 1. Whether `sex_color_include` is enabled — this controls whether sex is encoded via both color and shape.
+  # 2. Whether `status_column` is specified — this controls whether affected status is visualized.
 
   # There are three main rendering branches:
-  #   1. If sex_color == TRUE: color and shape reflect sex, and affected status is shown with a second symbol.
-  #   2. If sex_color == FALSE but status_col is present: shape reflects sex, and color reflects affected status.
+  #   1. If sex_color_include == TRUE: color and shape reflect sex, and affected status is shown with a second symbol.
+  #   2. If sex_color_include == FALSE but status_column is present: shape reflects sex, and color reflects affected status.
   #   3. If neither is used: plot individuals using shape alone.
 
 
-  if (config$outline == TRUE) {
+  if (config$outline_include == TRUE) {
     p <- p +
       ggplot2::geom_point(
         ggplot2::aes(
@@ -360,11 +412,11 @@ ggPedigree.core <- function(ped, famID = "famID",
         size = config$point_size * config$outline_multiplier,
         na.rm = TRUE,
         color = config$outline_color,
-        stroke = config$line_width
+        stroke = config$segment_linewidth
       )
   }
 
-  if (config$sex_color == TRUE) {
+  if (config$sex_color_include == TRUE) {
     # Use color and shape to represent sex
     p <- p +
       ggplot2::geom_point(
@@ -374,31 +426,31 @@ ggPedigree.core <- function(ped, famID = "famID",
         ),
         size = config$point_size,
         na.rm = TRUE,
-        stroke = config$line_width
+        stroke = config$segment_linewidth
       )
     # If affected status is present, overlay an additional marker using alpha aesthetic
-    if (!is.null(status_col)) {
+    if (!is.null(status_column)) {
       p <- p + ggplot2::geom_point(
-        ggplot2::aes(alpha = !!rlang::sym(status_col)),
+        ggplot2::aes(alpha = !!rlang::sym(status_column)),
         shape = config$status_affected_shape,
         size = config$point_size,
         na.rm = TRUE
       )
     }
-  } else if (!is.null(status_col)) {
-    # If status_col is present but sex_color is FALSE,
+  } else if (!is.null(status_column)) {
+    # If status_column is present but sex_color_include is FALSE,
     # use shape for sex and color for affected status
     p <- p +
       ggplot2::geom_point(
         ggplot2::aes(
-          color = as.factor(!!rlang::sym(status_col)),
+          color = as.factor(!!rlang::sym(status_column)),
           shape = as.factor(.data$sex)
         ),
         size = config$point_size,
         na.rm = TRUE
       )
   } else {
-    # If neither sex color nor status_col is active,
+    # If neither sex color nor status_column is active,
     # plot using shape (sex) only
     p <- p +
       ggplot2::geom_point(
@@ -416,7 +468,7 @@ ggPedigree.core <- function(ped, famID = "famID",
   # -----
   # Add labels to the points using ggrepel for better visibility
 
-  if (config$include_labels == TRUE) {
+  if (config$label_include == TRUE) {
     p <- .addLabels(p = p, config = config)
   }
 
@@ -429,33 +481,82 @@ ggPedigree.core <- function(ped, famID = "famID",
     otherself <- plot_connections$self_coords |>
       dplyr::filter(!is.na(.data$x_otherself)) |>
       dplyr::mutate(
-        otherself_xkey = makeSymmetricKey(.data$x_otherself, .data$x_pos) # ,
-        #  otherself_ykey = makeSymmetricKey(.data$y_otherself, .data$y_pos)
+        otherself_xkey = makeSymmetricKey(.data$x_otherself, .data$x_pos)
       ) |>
       # unique combinations of x_otherself and x_pos and y_otherself and y_pos
-      dplyr::distinct(.data$otherself_xkey, .keep_all = TRUE)
+      dplyr::distinct(.data$otherself_xkey, .keep_all = TRUE) |>
+      unique()
+    if (config$return_interactive == FALSE) {
+      p <- p + ggplot2::geom_curve(
+        data = otherself,
+        ggplot2::aes(
+          x = .data$x_otherself,
+          xend = .data$x_pos,
+          y = .data$y_otherself,
+          yend = .data$y_pos
+        ),
+        linewidth = config$segment_linewidth,
+        color = config$segment_self_color,
+        lineend = config$segment_lineend,
+        linejoin = config$segment_linejoin,
+        linetype = config$segment_self_linetype,
+        angle = config$segment_self_angle,
+        curvature = config$segment_self_curvature,
+        alpha = config$segment_self_alpha,
+        na.rm = TRUE
+      )
+    } else if (config$return_interactive == TRUE) {
+      # For interactive plots, use geom_segment instead of geom_curve
+      # to avoid issues with plotly rendering curves
 
+      otherself <- otherself |>
+        dplyr::mutate(
+          midpoint = computeCurvedMidpoint(
+            x0 = .data$x_otherself,
+            y0 = .data$y_otherself,
+            x1 = .data$x_pos,
+            y1 = .data$y_pos,
+            curvature = config$segment_self_curvature,
+            angle = config$segment_self_angle
+          ),
+          x_midpoint = midpoint$x,
+          y_midpoint = midpoint$y
+        ) |>
+        dplyr::select(-midpoint)
 
-    p <- p + ggplot2::geom_curve(
-      data = otherself,
-      ggplot2::aes(
-        x = .data$x_otherself,
-        xend = .data$x_pos,
-        y = .data$y_otherself,
-        yend = .data$y_pos
-      ),
-      linewidth = config$line_width,
-      color = config$segment_self_color,
-      lineend = config$segment_lineend,
-      linejoin = config$segment_linejoin,
-      linetype = config$segment_self_linetype,
-      angle = config$segment_self_angle,
-      curvature = -0.2,
-      na.rm = TRUE
-    )
+      p <- p + ggplot2::geom_segment(
+        data = otherself,
+        ggplot2::aes(
+          x = .data$x_otherself,
+          xend = .data$x_midpoint,
+          y = .data$y_otherself,
+          yend = .data$y_midpoint
+        ),
+        linewidth = config$segment_linewidth,
+        color = config$segment_self_color,
+        lineend = config$segment_lineend,
+        linejoin = config$segment_linejoin,
+        linetype = config$segment_self_linetype,
+        alpha = config$segment_self_alpha,
+        na.rm = TRUE
+      ) + ggplot2::geom_segment(
+        data = otherself,
+        ggplot2::aes(
+          x = .data$x_midpoint,
+          xend = .data$x_pos,
+          y = .data$y_midpoint,
+          yend = .data$y_pos
+        ),
+        linewidth = config$segment_linewidth,
+        color = config$segment_self_color,
+        lineend = config$segment_lineend,
+        linejoin = config$segment_linejoin,
+        linetype = config$segment_self_linetype,
+        alpha = config$segment_self_alpha,
+        na.rm = TRUE
+      )
+    }
   }
-
-
 
   # -----
   # STEP 11: Scales, Theme
@@ -485,7 +586,11 @@ ggPedigree.core <- function(ped, famID = "famID",
   # -----
   # Adjust legend labels and colors based on the configuration
   if (config$apply_default_scales == TRUE) {
-    p <- .addScales(p = p, config = config, status_col = status_col)
+    p <- .addScales(
+      p = p,
+      config = config,
+      status_column = status_column
+    )
   }
 
   if (debug == TRUE) {
@@ -511,33 +616,63 @@ ggpedigree <- ggPedigree
 #' @param p A ggplot object.
 #' @keywords internal
 #' @return A ggplot object with added scales.
-.addScales <- function(p, config, status_col = NULL) {
+
+.addScales <- function(p, config, status_column = NULL) {
   p <- p + ggplot2::scale_shape_manual(
-    values = config$sex_shape_vals,
-    labels = config$sex_shape_labs
+    values = config$sex_shape_values,
+    labels = config$sex_shape_labels
   )
 
   # Add alpha scale for affected status if applicable
-  if (!is.null(status_col) && config$sex_color == TRUE) {
+  if (!is.null(status_column) && config$sex_color_include == TRUE) {
     p <- p + ggplot2::scale_alpha_manual(
-      name = NULL,
-      labels = config$status_labs,
-      values = config$status_vals,
+      name = if (config$status_legend_show) {
+        config$status_legend_title
+      } else {
+        NULL
+      },
+      values = config$status_alpha_values,
       na.translate = FALSE
-    ) + ggplot2::guides(alpha = "none")
+    )
+    if (config$status_legend_show == FALSE) {
+      p <- p + ggplot2::guides(alpha = "none")
+    }
   }
 
   # Add color scale for sex or affected status if applicable
-  if (config$sex_color == TRUE) {
+  if (config$sex_color_include == TRUE) {
+    if (!is.null(config$sex_color_palette)) {
+      p <- p + ggplot2::scale_color_manual(
+        values = config$sex_color_palette,
+        labels = config$sex_shape_labels
+      )
+    } else {
+      p <- p +
+        ggplot2::scale_color_discrete(labels = config$sex_shape_labels)
+    }
+
     p <- p +
-      ggplot2::scale_color_discrete(labels = config$sex_shape_labs) +
-      ggplot2::labs(color = "Sex", shape = "Sex")
-  } else if (!is.null(status_col)) {
+      ggplot2::labs(
+        color = config$sex_legend_title,
+        shape = config$sex_legend_title
+      )
+  } else if (!is.null(status_column)) {
+    if (!is.null(config$status_color_palette)) {
+      p <- p + ggplot2::scale_color_manual(
+        values = config$status_color_values,
+        labels = config$status_labels
+      )
+    } else {
+      p <- p +
+        ggplot2::scale_color_discrete(labels = config$status_labels)
+    }
     p <- p +
-      ggplot2::scale_color_discrete(labels = config$status_labs) +
-      ggplot2::labs(color = "Affected", shape = "Sex")
+      ggplot2::labs(
+        color = config$status_legend_title,
+        shape = config$sex_legend_title
+      )
   } else {
-    p <- p + ggplot2::labs(shape = "Sex")
+    p <- p + ggplot2::labs(shape = config$sex_legend_title)
   }
   return(p)
 }
@@ -553,19 +688,19 @@ ggpedigree <- ggPedigree
   if (config$label_method %in% c("geom_text_repel", "ggrepel", "geom_label_repel")
   ) {
     p <- p +
-      ggrepel::geom_text_repel(ggplot2::aes(label = !!rlang::sym(config$label_col)),
+      ggrepel::geom_text_repel(ggplot2::aes(label = !!rlang::sym(config$label_column)),
         nudge_y = config$label_nudge_y * config$generation_height,
         nudge_x = config$label_nudge_x * config$generation_width,
         size = config$label_text_size,
         na.rm = TRUE,
         max.overlaps = config$label_max_overlaps,
-        segment.size = config$line_width * .5,
+        segment.size = config$segment_linewidth * .5,
         angle = config$label_text_angle,
         segment.color = config$label_segment_color
       )
   } else if (config$label_method == "geom_label") {
     p <- p +
-      ggplot2::geom_label(ggplot2::aes(label = !!rlang::sym(config$label_col)),
+      ggplot2::geom_label(ggplot2::aes(label = !!rlang::sym(config$label_column)),
         nudge_y = config$label_nudge_y * config$generation_height,
         nudge_x = config$label_nudge_x * config$generation_width,
         size = config$label_text_size,
@@ -574,7 +709,7 @@ ggpedigree <- ggPedigree
       )
   } else if (config$label_method == "geom_text") {
     p <- p +
-      ggplot2::geom_text(ggplot2::aes(label = !!rlang::sym(config$label_col)),
+      ggplot2::geom_text(ggplot2::aes(label = !!rlang::sym(config$label_column)),
         nudge_y = config$label_nudge_y * config$generation_height,
         nudge_x = config$label_nudge_x * config$generation_width,
         size = config$label_text_size,
@@ -583,4 +718,60 @@ ggpedigree <- ggPedigree
       )
   }
   return(p)
+}
+#' @title Prepare Pedigree Data
+#' @description
+#' This function checks and prepares the pedigree data frame for use in ggPedigree.
+#'
+
+
+# .preparePedigreeData <- function(ped, famID, personID, momID, dadID) {
+#
+# }
+#' @title Compute midpoint coordinate for curved segment
+#' @description Returns either x or y midpoint using vectorized curved offset
+#' @param x0 Numeric vector of x coordinates for start points
+#' @param y0 Numeric vector of y coordinates for start points
+#' @param x1 Numeric vector of x coordinates for end points
+#' @param y1 Numeric vector of y coordinates for end points
+#' @param t Scalar value between 0 and 1 for interpolation (default is 0.5) setting the midpoint
+#' @param curvature Scalar curvature (geom_curve style)
+#' @param angle Scalar angle in degrees
+#' @param component Either "x" or "y"
+#' @return Numeric vector of midpoints (x or y)
+computeCurvedMidpoint <- function(x0, y0, x1, y1,
+                                  curvature, angle,
+                                  component = NULL,
+                                  t = 0.5) {
+  dx <- x1 - x0
+  dy <- y1 - y0
+  len <- sqrt(dx^2 + dy^2)
+
+
+  # Midpoint of the segment
+
+  px <- (x0 + x1) * t
+  py <- (y0 + y1) * t
+
+  # Unit perpendicular vector
+  ux <- dx / len
+  uy <- dy / len
+
+  # Rotate perpendicular vector by (angle - 90) degrees
+  theta <- angle * pi / 180 - 2 * 90 * pi / 180 #
+  #   (angle* pi / 180 - 90) * pi / 180
+
+  # Perpendicular direction
+  perp_x <- -uy * cos(theta) - ux * sin(theta)
+  perp_y <- -uy * sin(theta) + ux * cos(theta)
+
+  offset <- curvature * len
+
+  midpoint <- data.frame(
+    x = px + offset * perp_x,
+    y = py + offset * perp_y
+  )
+
+
+  midpoint
 }

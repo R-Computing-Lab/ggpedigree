@@ -29,7 +29,7 @@ utils::globalVariables(c(":="))
 #' @export
 
 calculateCoordinates <- function(ped,
-                                 personID = "ID",
+                                 personID = "personID",
                                  momID = "momID",
                                  dadID = "dadID",
                                  spouseID = "spouseID",
@@ -222,6 +222,5 @@ calculateCoordinates <- function(ped,
     ped_extra <- NULL
     ped$extra <- FALSE
   }
-
   return(ped)
 }
