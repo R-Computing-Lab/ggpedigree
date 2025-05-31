@@ -88,9 +88,9 @@ ds_grouped <- ds %>%
   group_by(personID, momID, dadID, sex, famID, byear, dyear, lrs) %>%
   summarise(
     ars_mean = round(mean(ars, na.rm = TRUE), digits = 2),
-    ars_max = round(max(ars, na.rm = TRUE), digits = 1),
+    ars_max = round(max(ars, na.rm = TRUE), digits = 2),
     ars_med = round(median(ars, na.rm = TRUE), digits = 2),
-    ars_min = round(min(ars, na.rm = TRUE), digits = 1),
+    ars_min = round(min(ars, na.rm = TRUE), digits = 2),
     ars_sd = round(sd(ars, na.rm = TRUE), digits = 2),
     ars_n = n(),
     year_first = min(year, na.rm = TRUE),
