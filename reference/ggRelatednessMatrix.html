@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,9 +18,12 @@
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/v0_plots.html">Plotting pedigrees with ggPedigree()</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/v0_plots_extended.html">More Complex Pedigree Plots with ggPedigree</a></li>
+    <li><a class="dropdown-item" href="../articles/v0_plots.html">Plotting pedigrees with ggPedigree()</a></li>
     <li><a class="dropdown-item" href="../articles/v1_interactiveplots.html">Interactive Pedigree Plotting with ggPedigreeInteractive()</a></li>
     <li><a class="dropdown-item" href="../articles/v2_matrix.html">Visualizing Relatedness Matrices with ggRelatednessMatrix()</a></li>
+    <li><a class="dropdown-item" href="../articles/v3_phenotypicbydegree.html">Extended Plotting Phenotypic Correlation by Degree of Relatedness</a></li>
+    <li><a class="dropdown-item" href="../articles/v4_plots_morecomplexity.html">Plotting more complicated pedigrees with `ggPedigree()`</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -35,7 +38,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Plot a relatedness matrix as a heatmap (ggpedigree style)</h1>
-      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/v0.4.1/R/ggRelatednessMatrix.R" class="external-link"><code>R/ggRelatednessMatrix.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/main/R/ggRelatednessMatrix.R" class="external-link"><code>R/ggRelatednessMatrix.R</code></a></small>
       <div class="d-none name"><code>ggRelatednessMatrix.Rd</code></div>
     </div>
 
@@ -49,7 +52,7 @@
 <span>  <span class="va">mat</span>,</span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  interactive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  tooltip_cols <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tooltip_columns <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -57,7 +60,7 @@
 <span>  <span class="va">mat</span>,</span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  interactive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  tooltip_cols <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tooltip_columns <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -79,7 +82,7 @@ See Details for available options.</p></dd>
 <dd><p>Logical; if TRUE, returns an interactive plotly object.</p></dd>
 
 
-<dt id="arg-tooltip-cols">tooltip_cols<a class="anchor" aria-label="anchor" href="#arg-tooltip-cols"></a></dt>
+<dt id="arg-tooltip-columns">tooltip_columns<a class="anchor" aria-label="anchor" href="#arg-tooltip-columns"></a></dt>
 <dd><p>A character vector of column names to include in tooltips.</p></dd>
 
 
@@ -108,7 +111,7 @@ See Details for available options.</p></dd>
   <dt>xlab, ylab</dt>
 <dd><p>Axis labels</p></dd>
 
-  <dt>text_size</dt>
+  <dt>axis_text_size</dt>
 <dd><p>Axis text size</p></dd>
 
 
@@ -131,7 +134,7 @@ See Details for available options.</p></dd>
 <span class="r-in"><span>    title <span class="op">=</span> <span class="st">"Relatedness Matrix"</span>,</span></span>
 <span class="r-in"><span>    xlab <span class="op">=</span> <span class="st">"Individuals"</span>,</span></span>
 <span class="r-in"><span>    ylab <span class="op">=</span> <span class="st">"Individuals"</span>,</span></span>
-<span class="r-in"><span>    text_size <span class="op">=</span> <span class="fl">8</span></span></span>
+<span class="r-in"><span>    axis_text_size <span class="op">=</span> <span class="fl">8</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ggRelatednessMatrix-1.png" alt="" width="700" height="433"></span>
@@ -146,7 +149,7 @@ See Details for available options.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>

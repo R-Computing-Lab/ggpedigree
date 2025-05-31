@@ -13,7 +13,7 @@ It is not intended to be called directly by users."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,9 +24,12 @@ It is not intended to be called directly by users."></head><body>
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/v0_plots.html">Plotting pedigrees with ggPedigree()</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/v0_plots_extended.html">More Complex Pedigree Plots with ggPedigree</a></li>
+    <li><a class="dropdown-item" href="../articles/v0_plots.html">Plotting pedigrees with ggPedigree()</a></li>
     <li><a class="dropdown-item" href="../articles/v1_interactiveplots.html">Interactive Pedigree Plotting with ggPedigreeInteractive()</a></li>
     <li><a class="dropdown-item" href="../articles/v2_matrix.html">Visualizing Relatedness Matrices with ggRelatednessMatrix()</a></li>
+    <li><a class="dropdown-item" href="../articles/v3_phenotypicbydegree.html">Extended Plotting Phenotypic Correlation by Degree of Relatedness</a></li>
+    <li><a class="dropdown-item" href="../articles/v4_plots_morecomplexity.html">Plotting more complicated pedigrees with `ggPedigree()`</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -41,7 +44,7 @@ It is not intended to be called directly by users."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Core Function for ggPedigree</h1>
-      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/v0.4.1/R/ggpedigree.R" class="external-link"><code>R/ggpedigree.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/main/R/ggpedigree.R" class="external-link"><code>R/ggpedigree.R</code></a></small>
       <div class="d-none name"><code>ggPedigree.core.Rd</code></div>
     </div>
 
@@ -60,10 +63,12 @@ It is not intended to be called directly by users.</p>
 <span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
 <span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
 <span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
-<span>  status_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  spouseID <span class="op">=</span> <span class="st">"spouseID"</span>,</span>
+<span>  status_column <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  debug <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  hints <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  function_name <span class="op">=</span> <span class="st">"ggPedigree"</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -92,7 +97,11 @@ It is not intended to be called directly by users.</p>
 <dd><p>Character string specifying the column name for father IDs. Defaults to "dadID".</p></dd>
 
 
-<dt id="arg-status-col">status_col<a class="anchor" aria-label="anchor" href="#arg-status-col"></a></dt>
+<dt id="arg-spouseid">spouseID<a class="anchor" aria-label="anchor" href="#arg-spouseid"></a></dt>
+<dd><p>Character string specifying the column name for spouse IDs. Defaults to "spouseID".</p></dd>
+
+
+<dt id="arg-status-column">status_column<a class="anchor" aria-label="anchor" href="#arg-status-column"></a></dt>
 <dd><p>Character string specifying the column name for affected status. Defaults to NULL.</p></dd>
 
 
@@ -100,25 +109,28 @@ It is not intended to be called directly by users.</p>
 <dd><p>A list of configuration options for customizing the plot. The list can include:</p><dl><dt>code_male</dt>
 <dd><p>Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1.</p></dd>
 
-   <dt>segment_spouse_color, segment_self_color, segment_sibling_color, segment_parent_color, segment_offspring_color</dt>
+   <dt>segment_spouse_color, segment_self_color</dt>
 <dd><p>Character. Line colors for respective connection types.</p></dd>
 
-   <dt>label_text_size, point_size, line_width</dt>
+   <dt>segment_sibling_color, segment_parent_color, segment_offspring_color</dt>
+<dd><p>Character. Line colors for respective connection types.</p></dd>
+
+   <dt>label_text_size, point_size, segment_linewidth</dt>
 <dd><p>Numeric. Controls text size, point size, and line thickness.</p></dd>
 
    <dt>generation_height</dt>
 <dd><p>Numeric. Vertical spacing multiplier between generations. Default: 1.</p></dd>
 
-   <dt>shape_unknown, shape_female, shape_male, affected_shape</dt>
+   <dt>shape_unknown, shape_female, shape_male, status_affected_shape</dt>
 <dd><p>Integers. Shape codes for plotting each group.</p></dd>
 
-   <dt>sex_shape_labs</dt>
+   <dt>sex_shape_labels</dt>
 <dd><p>Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")</p></dd>
 
    <dt>unaffected, affected</dt>
 <dd><p>Values indicating unaffected/affected status.</p></dd>
 
-   <dt>sex_color</dt>
+   <dt>sex_color_include</dt>
 <dd><p>Logical. If TRUE, uses color to differentiate sex.</p></dd>
 
    <dt>label_max_overlaps</dt>
@@ -153,7 +165,7 @@ It is not intended to be called directly by users.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>

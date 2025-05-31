@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,9 +33,12 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/v0_plots.html">Plotting pedigrees with ggPedigree()</a></li>
+<li><a class="dropdown-item" href="../articles/v0_plots_extended.html">More Complex Pedigree Plots with ggPedigree</a></li>
+    <li><a class="dropdown-item" href="../articles/v0_plots.html">Plotting pedigrees with ggPedigree()</a></li>
     <li><a class="dropdown-item" href="../articles/v1_interactiveplots.html">Interactive Pedigree Plotting with ggPedigreeInteractive()</a></li>
     <li><a class="dropdown-item" href="../articles/v2_matrix.html">Visualizing Relatedness Matrices with ggRelatednessMatrix()</a></li>
+    <li><a class="dropdown-item" href="../articles/v3_phenotypicbydegree.html">Extended Plotting Phenotypic Correlation by Degree of Relatedness</a></li>
+    <li><a class="dropdown-item" href="../articles/v4_plots_morecomplexity.html">Plotting more complicated pedigrees with `ggPedigree()`</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -61,7 +64,7 @@
       <h1>Plotting pedigrees with ggPedigree()</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/v0.4.1/vignettes/v0_plots.Rmd" class="external-link"><code>vignettes/v0_plots.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/main/vignettes/v0_plots.Rmd" class="external-link"><code>vignettes/v0_plots.Rmd</code></a></small>
       <div class="d-none name"><code>v0_plots.Rmd</code></div>
     </div>
 
@@ -108,12 +111,13 @@ manipulation.</p>
 and individual IDs. Here’s a basic pedigree plot using the
 <code>potter</code> data:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"potter"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span><span class="va">potter</span>,</span>
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
 <span>  personID <span class="op">=</span> <span class="st">"personID"</span></span>
+<span><span class="co"># config  = list(segment_mz_color = NA) # color for monozygotic twins</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="v0_plots_files/figure-html/basic-usage-1.png" width="672"></p>
+<p><img src="v0_plots_files/figure-html/basic-usage-1.png" width="537.6"></p>
 <p>Behind the scenes, <code><a href="../reference/ggPedigree.html">ggPedigree()</a></code>:</p>
 <ol style="list-style-type: decimal">
 <li><p>reshapes the data by family (<code><a href="https://r-computing-lab.github.io/BGmisc/reference/ped2fam.html" class="external-link">ped2fam()</a></code>),</p></li>
@@ -142,17 +146,18 @@ segments:</p>
 <span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    code_male <span class="op">=</span> <span class="fl">1</span>, <span class="co"># Here, 1 = male, 0 = female</span></span>
-<span>    sex_color <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    sex_color_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    line_width <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>    segment_spouse_color <span class="op">=</span> <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span><span class="op">)</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
 <span>    segment_sibling_color <span class="op">=</span> <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span><span class="op">)</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span>
 <span>    segment_parent_color <span class="op">=</span> <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span><span class="op">)</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>,</span>
 <span>    segment_offspring_color <span class="op">=</span> <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span><span class="op">)</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span>,</span>
-<span>    outline <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    segment_linetype <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>    outline_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    outline_color <span class="op">=</span> <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span><span class="op">)</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="v0_plots_files/figure-html/customize-aesthetics-1.png" width="672"></p>
+<p><img src="v0_plots_files/figure-html/customize-aesthetics-1.png" width="537.6"></p>
 <p>As with any <code>ggplot2</code> object, further theming and labeling
 can be applied using layers or themes. For instance:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -161,7 +166,7 @@ can be applied using layers or themes. For instance:</p>
 <span>  personID <span class="op">=</span> <span class="st">"personID"</span></span>
 <span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code></pre></div>
-<p><img src="v0_plots_files/figure-html/unnamed-chunk-1-1.png" width="672"></p>
+<p><img src="v0_plots_files/figure-html/unnamed-chunk-1-1.png" width="537.6"></p>
 <p>This can be particularly useful for matching house styles in academic
 publications or removing clutter for presentations.</p>
 <div class="section level3">
@@ -187,10 +192,11 @@ options include <code>label_col</code> for the label column,
 <span>    label_nudge_y <span class="op">=</span> <span class="op">-</span><span class="fl">.25</span>,</span>
 <span>    label_nudge_x <span class="op">=</span> <span class="fl">0.45</span>,</span>
 <span>    label_method <span class="op">=</span> <span class="st">"geom_text"</span>,</span>
-<span>    sex_color <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    <span class="co">#   sex_color_palette = c("black", "black"),</span></span>
+<span>    sex_color_include <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="v0_plots_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
+<p><img src="v0_plots_files/figure-html/unnamed-chunk-2-1.png" width="537.6"></p>
 </div>
 </div>
 <div class="section level2">
@@ -198,7 +204,7 @@ options include <code>label_col</code> for the label column,
 </h2>
 <p>In many applied settings, pedigrees include binary phenotypes such as
 affected/unaffected status. To incorporate this, use the
-<code>status_col</code> argument to point to a column containing the
+<code>status_column</code> argument to point to a column containing the
 relevant variable.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hazard"</span><span class="op">)</span></span>
@@ -207,31 +213,32 @@ relevant variable.</p>
 <span>  <span class="va">hazard</span>,</span>
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
 <span>  personID <span class="op">=</span> <span class="st">"ID"</span>,</span>
-<span>  status_col <span class="op">=</span> <span class="st">"affected"</span>,</span>
+<span>  status_column <span class="op">=</span> <span class="st">"affected"</span>,</span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    code_male <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>    sex_color <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    status_affected_lab <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    status_unaffected_lab <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    sex_color_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    status_code_affected <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    status_code_unaffected <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    status_affected_shape <span class="op">=</span> <span class="fl">4</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p</span></span></code></pre></div>
-<p><img src="v0_plots_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
-<p>The <code>status_col</code> argument allows you to specify a column
-that identifies affected/unaffected individuals. This column should be a
-factor or character vector; if not, <code><a href="../reference/ggPedigree.html">ggPedigree()</a></code> will
-coerce it.</p>
-<p>The behavior differs depending on whether <code>sex_color</code> is
-also enabled:</p>
+<p><img src="v0_plots_files/figure-html/unnamed-chunk-3-1.png" width="537.6"></p>
+<p>The <code>status_column</code> argument allows you to specify a
+column that identifies affected/unaffected individuals. This column
+should be a factor or character vector; if not,
+<code><a href="../reference/ggPedigree.html">ggPedigree()</a></code> will coerce it.</p>
+<p>The behavior differs depending on whether
+<code>sex_color_include</code> is also enabled:</p>
 <ul>
-<li><p>If <code>sex_color = TRUE</code>, affected individuals are
-overlaid with a shape (controlled by <code>affected_shape</code>),
-preserving the fill color by sex.</p></li>
-<li><p>If <code>sex_color = FALSE</code>, affected and unaffected
-individuals are instead colored by status, using a default fill
-scale.</p></li>
+<li><p>If <code>sex_color_include = TRUE</code>, affected individuals
+are overlaid with a shape (controlled by
+<code>status_affected_shape</code>), preserving the fill color by
+sex.</p></li>
+<li><p>If <code>sex_color_include = FALSE</code>, affected and
+unaffected individuals are instead colored by status, using a default
+fill scale.</p></li>
 </ul>
 <p>You can control how values are interpreted via the
 <code>affected</code> and <code>unaffected</code> parameters in
@@ -242,15 +249,18 @@ affected and <code>FALSE</code> unaffected.</p>
 <span>  <span class="va">hazard</span>,</span>
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
 <span>  personID <span class="op">=</span> <span class="st">"ID"</span>,</span>
-<span>  status_col <span class="op">=</span> <span class="st">"affected"</span>,</span>
+<span>  status_column <span class="op">=</span> <span class="st">"affected"</span>,</span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    code_male <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>    sex_color <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    status_affected_lab <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    status_unaffected_lab <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    sex_color_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    status_code_affected <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    status_code_unaffected <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    status_label_affected <span class="op">=</span> <span class="st">"Infected"</span>,</span>
+<span>    status_label_unaffected <span class="op">=</span> <span class="st">"Not infected"</span>,</span>
+<span>    status_affected_legend_title <span class="op">=</span> <span class="st">"Status"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="v0_plots_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
+<p><img src="v0_plots_files/figure-html/unnamed-chunk-4-1.png" width="537.6"></p>
 <div class="section level3">
 <h3 id="highlighting-specific-individuals">Highlighting Specific Individuals<a class="anchor" aria-label="anchor" href="#highlighting-specific-individuals"></a>
 </h3>
@@ -258,28 +268,31 @@ affected and <code>FALSE</code> unaffected.</p>
 creating a new column in your data frame. For example, if you want to
 highlight Harry Potter and Dudley Dursley, you can create a new column
 called <code>proband</code> and set it to <code>TRUE</code> for those
-individuals. You can specify the <code>affected_shape</code> to be a
-star shape (8) and use the <code>status_col</code> argument to indicate
-the probands.</p>
+individuals. You can specify the <code>status_affected_shape</code> to
+be a star shape (8) and use the <code>status_column</code> argument to
+indicate the probands.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">potter</span></span>
 <span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>proband <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Harry Potter"</span>, <span class="st">"Dudley Dursley"</span><span class="op">)</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>proband <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Harry Potter"</span>,</span>
+<span>    <span class="st">"Dudley Dursley"</span></span>
+<span>  <span class="op">)</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
 <span>  <span class="va">df</span>,</span>
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
 <span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
-<span>  status_col <span class="op">=</span> <span class="st">"proband"</span>,</span>
+<span>  status_column <span class="op">=</span> <span class="st">"proband"</span>,</span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    sex_color <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    status_affected_lab <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    status_unaffected_lab <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    sex_color_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    status_code_affected <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    status_code_unaffected <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    status_affected_shape <span class="op">=</span> <span class="fl">8</span> <span class="co"># star shape</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="v0_plots_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
+<p><img src="v0_plots_files/figure-html/unnamed-chunk-5-1.png" width="537.6"></p>
 </div>
 </div>
 <div class="section level2">
@@ -294,7 +307,7 @@ x-axis scale.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">famID</span>, scales <span class="op">=</span> <span class="st">"free_x"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="v0_plots_files/figure-html/facet_wrap-1.png" width="672"></p>
+<p><img src="v0_plots_files/figure-html/facet_wrap-1.png" width="537.6"></p>
 </div>
 <div class="section level2">
 <h2 id="adjusting-plot-appearance">Adjusting Plot Appearance<a class="anchor" aria-label="anchor" href="#adjusting-plot-appearance"></a>
@@ -317,207 +330,21 @@ the visualization.</p>
 <span>    axis.title.x     <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    axis.title.y     <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html" class="external-link">scale_color_viridis</a></span><span class="op">(</span></span>
+<span>    option <span class="op">=</span> <span class="st">"plasma"</span>,</span>
 <span>    discrete <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="st">"Male"</span>, <span class="st">"Unknown"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; Scale for <span style="color: #00BB00;">colour</span> is already present.</span></span>
 <span><span class="co">#&gt; Adding another scale for <span style="color: #00BB00;">colour</span>, which will replace the existing scale.</span></span></code></pre></div>
-<p><img src="v0_plots_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+<p><img src="v0_plots_files/figure-html/unnamed-chunk-6-1.png" width="537.6"></p>
 </div>
 <div class="section level2">
 <h2 id="advanced-example-large-pedigrees-with-self-loops">Advanced Example: Large Pedigrees with self-loops<a class="anchor" aria-label="anchor" href="#advanced-example-large-pedigrees-with-self-loops"></a>
 </h2>
-<p>In this section, we demonstrate how to create a more complex pedigree
-plot with multiple families. We use the <code>inbreeding</code> dataset
-from the <code>BGmisc</code> package, which contains several
-multigenerational pedigrees with consanguinity. Note that in these plots
-that some individuals may appear in multiple places within the pedigree.
-This is common in large pedigrees, especially when there are overlapping
-generations or multiple marriages. Here the colors are set to be the
-same for all segments, except for self-loops, which are colored
-purple.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/R-Computing-Lab/BGmisc/" class="external-link">BGmisc</a></span><span class="op">)</span> <span class="co"># helper utilities &amp; example data</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"inbreeding"</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">inbreeding</span> <span class="co"># multigenerational pedigree with consanguinity</span></span>
-<span></span>
-<span></span>
-<span><span class="co"># df  &lt;- dplyr::filter(df, famID %in% c(5, 7))</span></span>
-<span></span>
-<span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
-<span>  <span class="va">df</span>,</span>
-<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
-<span>  personID <span class="op">=</span> <span class="st">"ID"</span>,</span>
-<span>  status_col <span class="op">=</span> <span class="st">"proband"</span>,</span>
-<span>  <span class="co">#  debug = TRUE,</span></span>
-<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    code_male <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>    sex_color <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    status_affected_lab <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    status_unaffected_lab <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    generation_height <span class="op">=</span> <span class="fl">4</span>,</span>
-<span>    generation_width <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>    status_affected_shape <span class="op">=</span> <span class="fl">4</span>,</span>
-<span>    segment_self_color <span class="op">=</span> <span class="st">"purple"</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">famID</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span> <span class="co">#+ scale_color_viridis(</span></span></code></pre></div>
-<p><img src="v0_plots_files/figure-html/self-loops-1.png" width="672"></p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#   discrete = TRUE,</span></span>
-<span><span class="co">#   labels = c("TRUE", "FALSE")</span></span>
-<span><span class="co">#  )  + theme_bw(base_size = 14)  +  guides(colour="none", shape="none")</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="example-constructing-custom-pedigrees-for-publication">Example: Constructing Custom Pedigrees for Publication<a class="anchor" aria-label="anchor" href="#example-constructing-custom-pedigrees-for-publication"></a>
-</h2>
-<p>Here we demonstrate how to create a custom pedigree using the
-<code>ggpedigree package</code>. The data shown here were generated
-using the <code><a href="https://r-computing-lab.github.io/BGmisc/reference/simulatePedigree.html" class="external-link">simulatePedigree()</a></code> function from the {BGmisc}
-package, which is the parent package to {ggpedigree}. These simulated
-pedigrees were used in a study evaluating statistical power and
-estimation bias for a variance decomposition model that includes
-mitochondrial DNA (mtDNA) effects.</p>
-<p>The simulation generated thousands of extended pedigree structures
-varying in depth, sibship size, mating structure, and maternal lineage
-overlap. The example below shows one of the simulated pedigrees and is
-the version included in the final manuscript:</p>
-<blockquote>
-<p>Detecting mtDNA effects with an Extended Pedigree Model: An Analysis
-of Statistical Power and Estimation Bias Xuanyu Lyu, S. Alexandra Burt,
-Michael D. Hunter, Rachel Good, Sarah L. Carroll, S. Mason Garrison
-Preprint available at: <a href="https://doi.org/10.1101/2024.12.19.629449" class="external-link uri">https://doi.org/10.1101/2024.12.19.629449</a></p>
-</blockquote>
-<p>The structure includes multiple generations, sibling sets, and
-overlapping parental lineages, and was chosen to illustrate the
-complexity of the simulated pedigrees used in the power study.</p>
-<div class="section level3">
-<h3 id="preparing-the-data">Preparing the data<a class="anchor" aria-label="anchor" href="#preparing-the-data"></a>
-</h3>
-<p>Each row represents one individual. Variables include
-<code>personID</code>, <code>momID</code>, <code>dadID</code>,
-<code>sex</code>, and <code>famID</code>. The proband variable is
-included to demonstrate status overlays. For plotting, we normalize
-identifiers in family 1 to avoid ID collisions across families.</p>
-<details><summary>
-Click to expand pedigree setup
-</summary><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="va">pedigree_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
-<span>  <span class="op">~</span><span class="va">personID</span>, <span class="op">~</span><span class="va">momID</span>, <span class="op">~</span><span class="va">dadID</span>, <span class="op">~</span><span class="va">sex</span>, <span class="op">~</span><span class="va">famID</span>,</span>
-<span>  <span class="fl">10011</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10012</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10021</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10022</span>, <span class="fl">10011</span>, <span class="fl">10012</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10023</span>, <span class="fl">10011</span>, <span class="fl">10012</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10024</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10025</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10026</span>, <span class="fl">10011</span>, <span class="fl">10012</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10027</span>, <span class="fl">10011</span>, <span class="fl">10012</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10031</span>, <span class="fl">10023</span>, <span class="fl">10021</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10032</span>, <span class="fl">10023</span>, <span class="fl">10021</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10033</span>, <span class="fl">10023</span>, <span class="fl">10021</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10034</span>, <span class="fl">10023</span>, <span class="fl">10021</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10035</span>, <span class="fl">10023</span>, <span class="fl">10021</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10036</span>, <span class="fl">10024</span>, <span class="fl">10022</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10037</span>, <span class="fl">10024</span>, <span class="fl">10022</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10038</span>, <span class="fl">10025</span>, <span class="fl">10027</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10039</span>, <span class="fl">10025</span>, <span class="fl">10027</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10310</span>, <span class="fl">10025</span>, <span class="fl">10027</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10311</span>, <span class="fl">10025</span>, <span class="fl">10027</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10312</span>, <span class="fl">10025</span>, <span class="fl">10027</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">10011</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10012</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10021</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10022</span>, <span class="fl">10011</span>, <span class="fl">10012</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10023</span>, <span class="fl">10011</span>, <span class="fl">10012</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10024</span>, <span class="fl">10011</span>, <span class="fl">10012</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10025</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10026</span>, <span class="fl">10011</span>, <span class="fl">10012</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10027</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10031</span>, <span class="fl">10021</span>, <span class="fl">10023</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10032</span>, <span class="fl">10021</span>, <span class="fl">10023</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10033</span>, <span class="fl">10021</span>, <span class="fl">10023</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10034</span>, <span class="fl">10022</span>, <span class="fl">10025</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10035</span>, <span class="fl">10022</span>, <span class="fl">10025</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10036</span>, <span class="fl">10022</span>, <span class="fl">10025</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10310</span>, <span class="fl">10022</span>, <span class="fl">10025</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10037</span>, <span class="fl">10026</span>, <span class="fl">10027</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10038</span>, <span class="fl">10026</span>, <span class="fl">10027</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10039</span>, <span class="fl">10026</span>, <span class="fl">10027</span>, <span class="fl">0</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10311</span>, <span class="fl">10026</span>, <span class="fl">10027</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span>
-<span>  <span class="fl">10312</span>, <span class="fl">10026</span>, <span class="fl">10027</span>, <span class="fl">1</span>, <span class="fl">2</span></span>
-<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    cleanpersonID <span class="op">=</span> <span class="va">personID</span> <span class="op">-</span> <span class="fl">10000</span>,</span>
-<span>    personID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">famID</span> <span class="op">==</span> <span class="fl">1</span>, <span class="va">personID</span> <span class="op">-</span> <span class="fl">10000</span>, <span class="va">personID</span><span class="op">)</span>,</span>
-<span>    momID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">famID</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">momID</span><span class="op">)</span>, <span class="va">momID</span> <span class="op">-</span> <span class="fl">10000</span>, <span class="va">momID</span><span class="op">)</span>,</span>
-<span>    dadID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">famID</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">dadID</span><span class="op">)</span>, <span class="va">dadID</span> <span class="op">-</span> <span class="fl">10000</span>, <span class="va">dadID</span><span class="op">)</span>,</span>
-<span>    proband <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
-<span>      <span class="va">personID</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">11</span>, <span class="fl">22</span>, <span class="fl">23</span>, <span class="fl">26</span>, <span class="fl">27</span>, <span class="fl">31</span>, <span class="fl">32</span>, <span class="fl">33</span>, <span class="fl">34</span>, <span class="fl">35</span><span class="op">)</span> <span class="op">~</span> <span class="cn">TRUE</span>,</span>
-<span>      <span class="va">personID</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>        <span class="fl">10011</span>, <span class="fl">10022</span>, <span class="fl">10022</span>, <span class="fl">10023</span>, <span class="fl">10024</span>, <span class="fl">10026</span>,</span>
-<span>        <span class="fl">10034</span>, <span class="fl">10035</span>, <span class="fl">10036</span>, <span class="fl">10310</span>,</span>
-<span>        <span class="fl">10037</span>, <span class="fl">10038</span>, <span class="fl">10039</span>, <span class="fl">10311</span>,</span>
-<span>        <span class="fl">10312</span></span>
-<span>      <span class="op">)</span> <span class="op">~</span> <span class="cn">TRUE</span>,</span>
-<span>      <span class="cn">TRUE</span> <span class="op">~</span> <span class="cn">FALSE</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
-</details>
-</div>
-<div class="section level3">
-<h3 id="plotting-the-pedigree">Plotting the pedigree<a class="anchor" aria-label="anchor" href="#plotting-the-pedigree"></a>
-</h3>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
-<span>  <span class="va">pedigree_df</span>,</span>
-<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
-<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
-<span>  status_col <span class="op">=</span> <span class="st">"proband"</span>,</span>
-<span>  <span class="co">#  debug = TRUE,</span></span>
-<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    code_male <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    sex_color <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    apply_default_scales <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    label_method <span class="op">=</span> <span class="st">"geom_text"</span>,</span>
-<span>    label_col <span class="op">=</span> <span class="st">"cleanpersonID"</span>,</span>
-<span>    status_affected_lab <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    status_unaffected_lab <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    generation_height <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    generation_width <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    status_affected_shape <span class="op">=</span> <span class="fl">4</span>,</span>
-<span>    segment_spouse_color <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span>    segment_sibling_color <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span>    segment_parent_color <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span>    segment_offspring_color <span class="op">=</span> <span class="st">"black"</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p>We finish by adjusting the legend and shape scale for visual
-clarity:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_shape_manual</a></span><span class="op">(</span></span>
-<span>  values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">16</span>, <span class="fl">15</span>, <span class="fl">15</span><span class="op">)</span>,</span>
-<span>  labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="st">"Male"</span>, <span class="st">"Unknown"</span><span class="op">)</span></span>
-<span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html" class="external-link">scale_color_viridis</a></span><span class="op">(</span></span>
-<span>    discrete <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TRUE"</span>, <span class="st">"FALSE"</span><span class="op">)</span>,</span>
-<span>    name <span class="op">=</span> <span class="st">"Founding MtDNA Line"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">famID</span>, scales <span class="op">=</span> <span class="st">"free"</span>, shrink <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
-<span>    strip.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    legend.position <span class="op">=</span> <span class="st">"bottom"</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
-<p><img src="v0_plots_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
-</div>
+<p>Additional examples are provided as articles that demonstrate more
+complex pedigree plots. You can find these on the <a href="https://r-computing-lab.github.io/ggpedigree/">ggpedigree
+website</a>. These articles cover advanced topics such as: multiple
+families, self-loops, and other advanced features.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
@@ -530,7 +357,7 @@ clarity:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
