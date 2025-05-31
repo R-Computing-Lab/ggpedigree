@@ -8,7 +8,7 @@ getDefaultPlotConfig(
   color_palette_default = c("#440154FF", "#FDE725FF", "#21908CFF"),
   segment_default_color = "black",
   function_name = "getDefaultPlotConfig",
-  personID = NULL,
+  personID = "personID",
   status_column = NULL,
   ...
 )

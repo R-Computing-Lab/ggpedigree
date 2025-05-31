@@ -31,6 +31,8 @@ Suggests:
     viridis,
     knitr,
     tidyverse,
+    purrr,
+    data.table,
     discord,
     OpenMx,
     NlsyLinks,
