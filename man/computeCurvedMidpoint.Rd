@@ -16,7 +16,13 @@ computeCurvedMidpoint(
 )
 }
 \arguments{
-\item{x0, }{y0, x1, y1 Start and end points}
+\item{x0}{Numeric vector of x coordinates for start points}
+
+\item{y0}{Numeric vector of y coordinates for start points}
+
+\item{x1}{Numeric vector of x coordinates for end points}
+
+\item{y1}{Numeric vector of y coordinates for end points}
 
 \item{curvature}{Scalar curvature (geom_curve style)}
 

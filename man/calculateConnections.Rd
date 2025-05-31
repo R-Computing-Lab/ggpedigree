@@ -4,12 +4,30 @@
 \alias{calculateConnections}
 \title{Calculate connections for a pedigree dataset}
 \usage{
-calculateConnections(ped, config = list())
+calculateConnections(
+  ped,
+  config = list(),
+  spouseID = "spouseID",
+  personID = "personID",
+  momID = "momID",
+  famID = "famID",
+  dadID = "dadID"
+)
 }
 \arguments{
 \item{ped}{A data frame containing the pedigree data. Needs personID, momID, and dadID columns}
 
 \item{config}{List of configuration parameters. Currently unused but passed through to internal helpers.}
+
+\item{spouseID}{Character string specifying the column name for spouse IDs. Defaults to "spouseID".}
+
+\item{personID}{Character string specifying the column name for individual IDs.}
+
+\item{momID}{Character string specifying the column name for mother IDs. Defaults to "momID".}
+
+\item{famID}{Character string specifying the column name for family IDs.}
+
+\item{dadID}{Character string specifying the column name for father IDs. Defaults to "dadID".}
 }
 \value{
 A `data.frame` containing connection points and midpoints for graphical rendering. Includes:

@@ -112,7 +112,6 @@ Here is the same pedigree, but using `ggPedigree()` from {ggpedigree}. This func
 
 
 ```{r message=FALSE, warning=FALSE}
-
 pltstatic <- ggPedigree(df_repaired,
   status_column = "affected",
   personID = "ID",
@@ -121,7 +120,7 @@ pltstatic <- ggPedigree(df_repaired,
     status_label_unaffected = 0,
     sex_color_include = TRUE,
     code_male = "M",
-    point_size=1,
+    point_size = 1,
     status_label_affected = 1,
     status_affected_shape = 4,
     ped_width = 14,

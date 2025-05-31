@@ -31,8 +31,10 @@ test_that("calculateCoordinates Code M works for characters", {
     sex = c("F", "M", "F", "F", "M")
   )
 
-  coords <- calculateCoordinates(ped, code_male = "M", personID = "ID",
-                                 spouseID = "spouseID")
+  coords <- calculateCoordinates(ped,
+    code_male = "M", personID = "ID",
+    spouseID = "spouseID"
+  )
 
   expect_true(all(c("x_order", "y_order", "x_pos", "y_pos", "nid") %in% names(coords)))
   expect_true(all(coords$ID %in% ped$ID)) # ID retention
@@ -166,8 +168,10 @@ test_that("calculateCoordinates returns extra rows when duplicated appearances",
     sex = c("F", "M", "F")
   )
 
-  coords <- calculateCoordinates(ped, code_male = "M", personID = "ID",
-                                 spouseID = "spouseID")
+  coords <- calculateCoordinates(ped,
+    code_male = "M", personID = "ID",
+    spouseID = "spouseID"
+  )
 
   # Manually simulate layout duplication
   expect_true("extra" %in% names(coords))

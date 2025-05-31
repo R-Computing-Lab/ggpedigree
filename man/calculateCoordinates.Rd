@@ -9,7 +9,7 @@ calculateCoordinates(
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
-  spouseID = "spID",
+  spouseID = "spouseID",
   sexVar = "sex",
   code_male = NULL,
   config = list()

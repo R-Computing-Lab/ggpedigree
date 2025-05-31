@@ -20,12 +20,15 @@
 
 calculateConnections <- function(ped,
                                  config = list(),
-                                 spouseID = "spouseID") {
+                                 spouseID = "spouseID",
+                                 personID = "personID",
+                                 momID = "momID", famID = "famID",
+                                 dadID = "dadID") {
   # Check inputs -----------------------------------------------------------
   if (!inherits(ped, "data.frame")) {
     stop("ped should be a data.frame or inherit to a data.frame")
   }
-  if (!all(c("personID", "x_pos", "y_pos", "dadID", "momID") %in% names(ped))) {
+  if (!all(c(personID, "x_pos", "y_pos", dadID, momID) %in% names(ped))) {
     stop("ped must contain personID, x_pos, y_pos, dadID, and momID columns")
   }
 
@@ -34,6 +37,11 @@ calculateConnections <- function(ped,
   config <- utils::modifyList(default_config, config)
   # Capture type-safe NAs for each ID column
   na_person <- ped$personID[NA_integer_]
+
+  # rename columns to match expected names
+  names(ped)[names(ped) == personID] <- "personID"
+  names(ped)[names(ped) == momID] <- "momID"
+  names(ped)[names(ped) == dadID] <- "dadID"
 
 
   # Add spouseID if missing
@@ -56,12 +64,15 @@ calculateConnections <- function(ped,
     # Ensure class matches personID exactly (in case factor, character, etc.)
     attributes(ped$spouseID) <- attributes(ped$personID)
   } else {
-   # rename spouseID to match
+    # rename spouseID to match
     names(ped)[names(ped) == spouseID] <- "spouseID"
   }
   # Add famID if missing (used for grouping)
-  if (!all("famID" %in% names(ped))) {
+  if (!all(famID %in% names(ped))) {
     ped$famID <- 1
+  } else {
+    # rename famID to match
+    names(ped)[names(ped) == famID] <- "famID"
   }
 
   # create a unique parent_hash for each individual
@@ -257,6 +268,10 @@ calculateConnections <- function(ped,
       x_mid_sib = dplyr::if_else(.data$link_as_sibling, .data$x_mid_sib, NA_real_),
       y_mid_sib = dplyr::if_else(.data$link_as_sibling, .data$y_mid_sib, NA_real_)
     )
+  # restore the original names of variables
+
+
+
 
   if (exists("full_extra")) {
     plot_connections <- list(

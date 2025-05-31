@@ -10,6 +10,7 @@
 #' @param personID Character string specifying the column name for individual IDs.
 #' @param momID Character string specifying the column name for mother IDs. Defaults to "momID".
 #' @param dadID Character string specifying the column name for father IDs. Defaults to "dadID".
+#' @param spouseID Character string specifying the column name for spouse IDs. Defaults to "spouseID".
 #' @param status_column Character string specifying the column name for affected status. Defaults to NULL.
 #' @param debug Logical. If TRUE, prints debugging information. Default: FALSE.
 #' @param hints Data frame with hints for layout adjustments. Default: NULL.
@@ -55,6 +56,7 @@ ggPedigree <- function(ped,
                        personID = "personID",
                        momID = "momID",
                        dadID = "dadID",
+                       spouseID = "spouseID",
                        status_column = NULL,
                        tooltip_columns = NULL,
                        return_widget = FALSE,
@@ -75,6 +77,7 @@ ggPedigree <- function(ped,
       ped = ped,
       famID = famID,
       personID = personID,
+      spouseID = spouseID,
       momID = momID,
       dadID = dadID,
       status_column = status_column,
@@ -107,6 +110,7 @@ ggPedigree <- function(ped,
       ped = ped,
       famID = famID,
       personID = personID,
+      spouseID = spouseID,
       momID = momID,
       dadID = dadID,
       status_column = status_column,
@@ -133,6 +137,7 @@ ggPedigree.core <- function(ped, famID = "famID",
                             personID = "personID",
                             momID = "momID",
                             dadID = "dadID",
+                            spouseID = "spouseID",
                             status_column = NULL,
                             config = list(),
                             debug = FALSE,
@@ -168,9 +173,9 @@ ggPedigree.core <- function(ped, famID = "famID",
   }
 
   # If personID is not "personID", rename to "personID" internally
-  if (personID != "personID") {
-    ds_ped <- dplyr::rename(ds_ped, personID = !!personID)
-  }
+  #  if (personID != "personID") {
+  #   ds_ped <- dplyr::rename(ds_ped, personID = !!personID)
+  #  }
 
   # Recode affected status into factor, if applicable
   if (!is.null(status_column)) {
@@ -200,6 +205,7 @@ ggPedigree.core <- function(ped, famID = "famID",
     personID = personID,
     momID = momID,
     dadID = dadID,
+    spouseID = spouseID,
     code_male = config$code_male,
     config = config
   )
@@ -217,9 +223,38 @@ ggPedigree.core <- function(ped, famID = "famID",
   # -----
 
   # Generate a connection table for plotting lines (parents, spouses, etc.)
-  plot_connections <- calculateConnections(ds, config = config)
+  plot_connections <- calculateConnections(ds,
+    config = config,
+    personID = personID,
+    spouseID = spouseID,
+    momID = momID, dadID = dadID
+  )
 
   connections <- plot_connections$connections
+  # restore names
+  if (personID != "personID") {
+    # Rename personID to the user-specified name
+    names(connections)[names(connections) == "personID"] <- personID
+  }
+  if (momID != "momID") {
+    # Rename momID to the user-specified name
+    names(connections)[names(connections) == "momID"] <- momID
+  }
+  if (dadID != "dadID") {
+    # Rename dadID to the user-specified name
+    names(connections)[names(connections) == "dadID"] <- dadID
+  }
+  if ("spouseID" %in% names(connections) && spouseID != "spouseID") {
+    # Rename spouseID to the user-specified name
+    names(connections)[names(connections) == "spouseID"] <- spouseID
+  }
+  # Rename famID to the user-specified name
+  if (famID != "famID") {
+    # Rename famID to the user-specified name
+    names(connections)[names(connections) == "famID"] <- famID
+  }
+
+
   # -----
   # STEP 6: Initialize Plot
   # -----
@@ -400,44 +435,45 @@ ggPedigree.core <- function(ped, famID = "famID",
         otherself_xkey = makeSymmetricKey(.data$x_otherself, .data$x_pos)
       ) |>
       # unique combinations of x_otherself and x_pos and y_otherself and y_pos
-      dplyr::distinct(.data$otherself_xkey, .keep_all = TRUE) |> unique()
-    if (config$return_interactive==FALSE){
-    p <- p + ggplot2::geom_curve(
-      data = otherself,
-      ggplot2::aes(
-        x = .data$x_otherself,
-        xend = .data$x_pos,
-        y = .data$y_otherself,
-        yend = .data$y_pos
-      ),
-      linewidth = config$segment_linewidth,
-      color = config$segment_self_color,
-      lineend = config$segment_lineend,
-      linejoin = config$segment_linejoin,
-      linetype = config$segment_self_linetype,
-      angle = config$segment_self_angle,
-      curvature = config$segment_self_curvature,
-      alpha = config$segment_self_alpha,
-      na.rm = TRUE
-    )
-  }  else if (config$return_interactive==TRUE) {
+      dplyr::distinct(.data$otherself_xkey, .keep_all = TRUE) |>
+      unique()
+    if (config$return_interactive == FALSE) {
+      p <- p + ggplot2::geom_curve(
+        data = otherself,
+        ggplot2::aes(
+          x = .data$x_otherself,
+          xend = .data$x_pos,
+          y = .data$y_otherself,
+          yend = .data$y_pos
+        ),
+        linewidth = config$segment_linewidth,
+        color = config$segment_self_color,
+        lineend = config$segment_lineend,
+        linejoin = config$segment_linejoin,
+        linetype = config$segment_self_linetype,
+        angle = config$segment_self_angle,
+        curvature = config$segment_self_curvature,
+        alpha = config$segment_self_alpha,
+        na.rm = TRUE
+      )
+    } else if (config$return_interactive == TRUE) {
       # For interactive plots, use geom_segment instead of geom_curve
       # to avoid issues with plotly rendering curves
-    # can we add some bending to the segments?
 
-
-    otherself <- otherself |>  dplyr::mutate(
-      midpoint = computeCurvedMidpoint(
-        x0 = .data$x_otherself,
-        y0 = .data$y_otherself,
-        x1 = .data$x_pos,
-        y1 = .data$y_pos,
-        curvature = config$segment_self_curvature,
-        angle = config$segment_self_angle
-      ),
-      x_midpoint = midpoint$x,
-      y_midpoint = midpoint$y
-    ) |> dplyr::select(-midpoint)
+      otherself <- otherself |>
+        dplyr::mutate(
+          midpoint = computeCurvedMidpoint(
+            x0 = .data$x_otherself,
+            y0 = .data$y_otherself,
+            x1 = .data$x_pos,
+            y1 = .data$y_pos,
+            curvature = config$segment_self_curvature,
+            angle = config$segment_self_angle
+          ),
+          x_midpoint = midpoint$x,
+          y_midpoint = midpoint$y
+        ) |>
+        dplyr::select(-midpoint)
 
       p <- p + ggplot2::geom_segment(
         data = otherself,
@@ -455,21 +491,21 @@ ggPedigree.core <- function(ped, famID = "famID",
         alpha = config$segment_self_alpha,
         na.rm = TRUE
       ) + ggplot2::geom_segment(
-          data = otherself,
-          ggplot2::aes(
-            x = .data$x_midpoint,
-            xend = .data$x_pos,
-            y = .data$y_midpoint,
-            yend = .data$y_pos
-          ),
-          linewidth = config$segment_linewidth,
-          color = config$segment_self_color,
-          lineend = config$segment_lineend,
-          linejoin = config$segment_linejoin,
-          linetype = config$segment_self_linetype,
-          alpha = config$segment_self_alpha,
-          na.rm = TRUE
-        )
+        data = otherself,
+        ggplot2::aes(
+          x = .data$x_midpoint,
+          xend = .data$x_pos,
+          y = .data$y_midpoint,
+          yend = .data$y_pos
+        ),
+        linewidth = config$segment_linewidth,
+        color = config$segment_self_color,
+        lineend = config$segment_lineend,
+        linejoin = config$segment_linejoin,
+        linetype = config$segment_self_linetype,
+        alpha = config$segment_self_alpha,
+        na.rm = TRUE
+      )
     }
   }
 
@@ -645,17 +681,18 @@ ggpedigree <- ggPedigree
 # }
 #' @title Compute midpoint coordinate for curved segment
 #' @description Returns either x or y midpoint using vectorized curved offset
-#' @param x0, y0, x1, y1 Start and end points
+#' @param x0 Numeric vector of x coordinates for start points
+#' @param y0 Numeric vector of y coordinates for start points
+#' @param x1 Numeric vector of x coordinates for end points
+#' @param y1 Numeric vector of y coordinates for end points
 #' @param curvature Scalar curvature (geom_curve style)
 #' @param angle Scalar angle in degrees
 #' @param component Either "x" or "y"
 #' @return Numeric vector of midpoints (x or y)
 computeCurvedMidpoint <- function(x0, y0, x1, y1,
                                   curvature, angle,
-                                  component =  NULL,
+                                  component = NULL,
                                   t = 0.5) {
-
-
   dx <- x1 - x0
   dy <- y1 - y0
   len <- sqrt(dx^2 + dy^2)
@@ -671,8 +708,8 @@ computeCurvedMidpoint <- function(x0, y0, x1, y1,
   uy <- dy / len
 
   # Rotate perpendicular vector by (angle - 90) degrees
-  theta <- #angle * pi / 180 - pi/2 #
-   (angle* pi / 180 - 90) * pi / 180
+  theta <- angle * pi / 180 - 2 * 90 * pi / 180 #
+  #   (angle* pi / 180 - 90) * pi / 180
 
   # Perpendicular direction
   perp_x <- -uy * cos(theta) - ux * sin(theta)
@@ -680,8 +717,10 @@ computeCurvedMidpoint <- function(x0, y0, x1, y1,
 
   offset <- curvature * len
 
-  midpoint <- data.frame(x = px + offset * perp_x,
-                         y = py + offset * perp_y)
+  midpoint <- data.frame(
+    x = px + offset * perp_x,
+    y = py + offset * perp_y
+  )
 
 
   midpoint

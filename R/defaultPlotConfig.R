@@ -15,7 +15,7 @@ getDefaultPlotConfig <- function(color_palette_default =
                                    c("#440154FF", "#FDE725FF", "#21908CFF"),
                                  segment_default_color = "black",
                                  function_name = "getDefaultPlotConfig",
-                                 personID = NULL,
+                                 personID = "personID",
                                  status_column = NULL,
                                  ...) {
   # Ensure the color palette is a character vector
@@ -151,6 +151,7 @@ getDefaultPlotConfig <- function(color_palette_default =
   }
   if (stringr::str_to_lower(function_name) %in% c("ggpedigree", "ggpedigreeinteractive")) {
     core_list$label_method <- "ggrepel"
+    core_list$label_column <- personID
   }
   if (stringr::str_to_lower(function_name) %in% c("ggpedigree")) {
     core_list$label_method <- "ggrepel"
@@ -182,9 +183,8 @@ getDefaultPlotConfig <- function(color_palette_default =
 #' @return A complete configuration list with all necessary parameters.
 #'
 buildPlotConfig <- function(default_config,
-                        config,
-                        function_name = "ggPedigree") {
-
+                            config,
+                            function_name = "ggPedigree") {
   built_config <- utils::modifyList(default_config, config)
 
   if (stringr::str_to_lower(function_name) %in%

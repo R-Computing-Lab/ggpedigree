@@ -11,6 +11,7 @@ ggPedigree(
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
+  spouseID = "spouseID",
   status_column = NULL,
   tooltip_columns = NULL,
   return_widget = FALSE,
@@ -27,6 +28,7 @@ ggpedigree(
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
+  spouseID = "spouseID",
   status_column = NULL,
   tooltip_columns = NULL,
   return_widget = FALSE,
@@ -47,6 +49,8 @@ ggpedigree(
 \item{momID}{Character string specifying the column name for mother IDs. Defaults to "momID".}
 
 \item{dadID}{Character string specifying the column name for father IDs. Defaults to "dadID".}
+
+\item{spouseID}{Character string specifying the column name for spouse IDs. Defaults to "spouseID".}
 
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
 

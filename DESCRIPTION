@@ -14,7 +14,7 @@ BugReports: https://github.com/R-Computing-Lab/ggpedigree/issues
 Depends: 
    R (>= 4.1.0)
 Imports: 
-    BGmisc,
+    BGmisc (>= 1.4.1),
     kinship2,
     ggplot2,
     ggrepel,

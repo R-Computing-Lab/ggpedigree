@@ -6,6 +6,7 @@ test_that("ggPedigreeInteractive returns a plotly object", {
   p_widget <- ggPedigreeInteractive(potter,
     famID = "famID",
     personID = "personID",
+    spouseID = "spouseID",
     return_widget = TRUE
   )
 
@@ -32,6 +33,7 @@ test_that("ggPedigreeInteractive returns a gg object", {
     personID = "personID",
     momID = "momID",
     dadID = "dadID",
+    spouseID = "spouseID",
     config = list(
       label_nudge_y = -.25,
       labels_include = TRUE,
