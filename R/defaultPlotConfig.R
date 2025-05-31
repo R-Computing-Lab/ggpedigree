@@ -93,9 +93,13 @@ getDefaultPlotConfig <- function(color_palette_default =
     axis_text_angle_y = 0,
     axis_text_size = 8,
     axis_text_color = "black",
+
+    # ---- Generation Scale Settings ----
     generation_height = 1,
     generation_width = 1,
-
+    ped_packed = TRUE,
+    ped_align = TRUE,
+    ped_width = 15,
 
     # ---- Segment Drawing Options ----
     segment_linewidth = 0.5,

@@ -19,7 +19,8 @@
 #' @export
 
 calculateConnections <- function(ped,
-                                 config = list()) {
+                                 config = list(),
+                                 spouseID = "spouseID") {
   # Check inputs -----------------------------------------------------------
   if (!inherits(ped, "data.frame")) {
     stop("ped should be a data.frame or inherit to a data.frame")
@@ -36,7 +37,7 @@ calculateConnections <- function(ped,
 
 
   # Add spouseID if missing
-  if (!all("spouseID" %in% names(ped))) {
+  if (!all(spouseID %in% names(ped))) {
     # make it match the personID type
     # Initialize spouseID with NA of the same type as personID
 
@@ -54,6 +55,9 @@ calculateConnections <- function(ped,
 
     # Ensure class matches personID exactly (in case factor, character, etc.)
     attributes(ped$spouseID) <- attributes(ped$personID)
+  } else {
+   # rename spouseID to match
+    names(ped)[names(ped) == spouseID] <- "spouseID"
   }
   # Add famID if missing (used for grouping)
   if (!all("famID" %in% names(ped))) {

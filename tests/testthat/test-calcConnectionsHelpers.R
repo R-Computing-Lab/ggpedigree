@@ -50,7 +50,8 @@ test_that("calculateCoordinates respects ped_align and ped_packed flags", {
     sex = c("F", "M", "F", "F", "M")
   )
 
-  coords1 <- calculateCoordinates(ped, config = list(ped_align = TRUE, ped_packed = TRUE))
+  coords1 <- calculateCoordinates(ped, config = list(ped_align = TRUE, ped_packed = TRUE),
+                                  personID = "ID", spouseID = "spouseID")
 
 
   midsbydadid <- getMidpoints(
@@ -90,7 +91,8 @@ test_that("computeDistances behaves in small data", {
     sex = c("F", "M", "F", "F", "M")
   )
 
-  coords1 <- calculateCoordinates(ped, config = list(ped_align = TRUE, ped_packed = TRUE))
+  coords1 <- calculateCoordinates(ped, config = list(ped_align = TRUE, ped_packed = TRUE),
+                                  personID = "ID", spouseID = "spouseID")
 
   # Test with euclidean distance
   dist_euclidean <- computeDistance(

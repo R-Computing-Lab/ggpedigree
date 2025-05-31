@@ -197,7 +197,7 @@ ggPedigree.core <- function(ped, famID = "famID",
 
   # Compute layout coordinates using pedigree structure
   ds <- calculateCoordinates(ds_ped,
-    personID = "personID",
+    personID = personID,
     momID = momID,
     dadID = dadID,
     code_male = config$code_male,
@@ -400,7 +400,7 @@ ggPedigree.core <- function(ped, famID = "famID",
         otherself_xkey = makeSymmetricKey(.data$x_otherself, .data$x_pos)
       ) |>
       # unique combinations of x_otherself and x_pos and y_otherself and y_pos
-      dplyr::distinct(.data$otherself_xkey, .keep_all = TRUE)
+      dplyr::distinct(.data$otherself_xkey, .keep_all = TRUE) |> unique()
     if (config$return_interactive==FALSE){
     p <- p + ggplot2::geom_curve(
       data = otherself,
@@ -472,8 +472,6 @@ ggPedigree.core <- function(ped, famID = "famID",
         )
     }
   }
-
-
 
   # -----
   # STEP 11: Scales, Theme

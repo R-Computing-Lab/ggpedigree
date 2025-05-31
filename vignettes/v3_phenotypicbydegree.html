@@ -12,7 +12,7 @@
 
 <meta name="author" content="S. Mason Garrison" />
 
-<meta name="date" content="2025-05-28" />
+<meta name="date" content="2025-05-30" />
 
 <title>Plotting Phenotypic Correlation by Degree of Relatedness</title>
 
@@ -341,7 +341,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Plotting Phenotypic Correlation by Degree
 of Relatedness</h1>
 <h4 class="author">S. Mason Garrison</h4>
-<h4 class="date">2025-05-28</h4>
+<h4 class="date">2025-05-30</h4>
 
 
 
@@ -473,7 +473,7 @@ degrees of relatedness.</p>
 <span id="cb1-118"><a href="#cb1-118" tabindex="-1"></a>    <span class="at">n_pairs =</span> <span class="fu">n</span>() <span class="sc">/</span> <span class="dv">2</span>, <span class="co"># divide by 2 to account for double counting</span></span>
 <span id="cb1-119"><a href="#cb1-119" tabindex="-1"></a>    <span class="at">lrs_cor_test =</span> <span class="fu">list</span>(<span class="fu">tryCatch</span>(<span class="fu">cor.test</span>(lrs_k1, lrs_k2, <span class="at">use =</span> <span class="st">&quot;pairwise.complete.obs&quot;</span>),</span>
 <span id="cb1-120"><a href="#cb1-120" tabindex="-1"></a>      <span class="at">error =</span> <span class="cf">function</span>(e) <span class="cn">NULL</span></span>
-<span id="cb1-121"><a href="#cb1-121" tabindex="-1"></a>    )), ,</span>
+<span id="cb1-121"><a href="#cb1-121" tabindex="-1"></a>    )),</span>
 <span id="cb1-122"><a href="#cb1-122" tabindex="-1"></a>    <span class="at">ars_n_cor_test =</span> <span class="fu">list</span>(<span class="fu">tryCatch</span>(<span class="fu">cor.test</span>(ars_n_k1, ars_n_k2, <span class="at">use =</span> <span class="st">&quot;pairwise.complete.obs&quot;</span>),</span>
 <span id="cb1-123"><a href="#cb1-123" tabindex="-1"></a>      <span class="at">error =</span> <span class="cf">function</span>(e) <span class="cn">NULL</span></span>
 <span id="cb1-124"><a href="#cb1-124" tabindex="-1"></a>    )),</span>

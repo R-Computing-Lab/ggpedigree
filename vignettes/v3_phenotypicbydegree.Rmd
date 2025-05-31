@@ -141,7 +141,7 @@ result <- dataRelatedPair_merge %>%
     n_pairs = n() / 2, # divide by 2 to account for double counting
     lrs_cor_test = list(tryCatch(cor.test(lrs_k1, lrs_k2, use = "pairwise.complete.obs"),
       error = function(e) NULL
-    )), ,
+    )),
     ars_n_cor_test = list(tryCatch(cor.test(ars_n_k1, ars_n_k2, use = "pairwise.complete.obs"),
       error = function(e) NULL
     )),

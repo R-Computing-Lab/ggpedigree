@@ -6,10 +6,10 @@
 \usage{
 calculateCoordinates(
   ped,
-  personID = "ID",
+  personID = "personID",
   momID = "momID",
   dadID = "dadID",
-  spouseID = "spouseID",
+  spouseID = "spID",
   sexVar = "sex",
   code_male = NULL,
   config = list()
