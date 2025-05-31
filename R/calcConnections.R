@@ -413,12 +413,25 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
 
 buildTwinSegments <- function(ped, connections_for_FOO) {
   # Get twin coordinates
+  if (!"twinID" %in% names(ped)) {
+    stop("ped must contain twinID column to build twin segments")
+  }
+  if (!all(c("x_pos", "y_pos") %in% names(ped))) {
+    stop("ped must contain x_pos and y_pos columns to build twin segments")
+  }
+  if(!"zygosity" %in% names(ped)) {
+    ped$zygocity <- NA_character_
+  }
+
   twin_connections <- ped |>
+    dplyr::filter(!is.na(.data$twinID)) |>
+   dplyr::mutate(
+      mz = ifelse(stringr::str_to_lower(.data$zygosity) %in% c("mz","monozygotic","identical"), TRUE, FALSE),
+    ) |>
     dplyr::select(
       "personID", "x_pos",
-      "y_pos", "twinID"
+      "y_pos", "twinID", "mz"
     ) |>
-    dplyr::filter(!is.na(.data$twinID)) |>
     dplyr::left_join(connections_for_FOO,
       by = c("twinID" = "personID"),
       suffix = c("", "_twin"),

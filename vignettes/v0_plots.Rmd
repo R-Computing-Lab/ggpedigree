@@ -52,6 +52,11 @@ potter <- potter %>%
       name == "Fred Weasley" ~ 13,
       name == "George Weasley" ~ 12,
       TRUE ~ NA_real_
+    ),
+    zygosity = case_when(
+      name == "Fred Weasley" ~ "mz",
+      name == "George Weasley" ~ "mz",
+      TRUE ~ NA_character_
     )
   ) # Add a twinID column for demonstration purposes
 
@@ -59,6 +64,7 @@ potter <- potter %>%
 ggPedigree(potter,
   famID = "famID",
   personID = "personID"
+# config  = list(segment_mz_color = NA) # color for monozygotic twins
 )
 ```
 
