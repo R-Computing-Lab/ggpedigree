@@ -11,12 +11,13 @@ library(data.table)
 # Load the example data
 data("redsquirrels")
 library(dplyr)
-library(broom) # for tidy()
+#library(broom) # for tidy()
 library(purrr) # for map_* helpers
 # Filter for the largest family, recode sex if needed
 ped_filtered <- redsquirrels %>%
   recodeSex(code_female = "F") %>%
   filter(famID == 160)
+
 kin_degree_max <- 12 # maximum degree of relatedness to consider
 # Calculate relatedness matrices
 add_mat <- ped2add(ped_filtered, isChild_method = "partialparent", sparse = TRUE)
