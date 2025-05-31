@@ -15,9 +15,25 @@ library(tidyverse) # for data wrangling
 
 ## ----basic-usage--------------------------------------------------------------
 data("potter")
+potter <- potter %>%
+  mutate(
+    twinID = case_when(
+      name == "Fred Weasley" ~ 13,
+      name == "George Weasley" ~ 12,
+      TRUE ~ NA_real_
+    ),
+    zygosity = case_when(
+      name == "Fred Weasley" ~ "mz",
+      name == "George Weasley" ~ "mz",
+      TRUE ~ NA_character_
+    )
+  ) # Add a twinID column for demonstration purposes
+
+
 ggPedigree(potter,
   famID = "famID",
   personID = "personID"
+# config  = list(segment_mz_color = NA) # color for monozygotic twins
 )
 
 ## ----customize-aesthetics-----------------------------------------------------
@@ -168,6 +184,7 @@ p <- ggPedigree(
     status_code_affected = TRUE,
     status_code_unaffected = FALSE,
     generation_height = 4,
+    point_size = 2,
     generation_width = 2,
     status_affected_shape = 4,
     segment_self_color = "purple"
