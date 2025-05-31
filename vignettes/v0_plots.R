@@ -13,22 +13,27 @@ library(ggplot2) # ggplot2 for plotting
 library(viridis) # viridis for color palettes
 library(tidyverse) # for data wrangling
 
-## ----basic-usage--------------------------------------------------------------
-data("potter")
-potter <- potter %>%
-  mutate(
-    twinID = case_when(
-      name == "Fred Weasley" ~ 13,
-      name == "George Weasley" ~ 12,
-      TRUE ~ NA_real_
-    ),
-    zygosity = case_when(
-      name == "Fred Weasley" ~ "mz",
-      name == "George Weasley" ~ "mz",
-      TRUE ~ NA_character_
+## ----load-data, include=FALSE-------------------------------------------------
+# if you don't have the most recent version of BGmisc, you may need to install it first as a stop-gap I've added the data loading here
+data("potter") # load example data from BGmisc
+if (!"twinID" %in% names(potter)) {
+  # Add twinID and zygosity columns for demonstration purposes
+  potter <- potter %>%
+    mutate(
+      twinID = case_when(
+        name == "Fred Weasley" ~ 13,
+        name == "George Weasley" ~ 12,
+        TRUE ~ NA_real_
+      ),
+      zygosity = case_when(
+        name == "Fred Weasley" ~ "mz",
+        name == "George Weasley" ~ "mz",
+        TRUE ~ NA_character_
+      )
     )
-  ) # Add a twinID column for demonstration purposes
+}
 
+## ----basic-usage--------------------------------------------------------------
 
 ggPedigree(potter,
   famID = "famID",
@@ -159,40 +164,4 @@ p +
     discrete = TRUE,
     labels = c("Female", "Male", "Unknown")
   )
-
-## ----self-loops, message=FALSE, warning=FALSE---------------------------------
-library(BGmisc) # helper utilities & example data
-
-data("inbreeding")
-
-
-df <- inbreeding # multigenerational pedigree with consanguinity
-
-
-# df  <- dplyr::filter(df, famID %in% c(5, 7))
-
-
-p <- ggPedigree(
-  df,
-  famID = "famID",
-  personID = "ID",
-  status_column = "proband",
-  #  debug = TRUE,
-  config = list(
-    code_male = 0,
-    sex_color_include = FALSE,
-    status_code_affected = TRUE,
-    status_code_unaffected = FALSE,
-    generation_height = 4,
-    point_size = 2,
-    generation_width = 2,
-    status_affected_shape = 4,
-    segment_self_color = "purple"
-  )
-)
-
-p + facet_wrap(~famID, scales = "free") #+ scale_color_viridis(
-#   discrete = TRUE,
-#   labels = c("TRUE", "FALSE")
-#  )  + theme_bw(base_size = 14)  +  guides(colour="none", shape="none")
 

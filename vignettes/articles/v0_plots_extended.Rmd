@@ -1,8 +1,8 @@
 ---
-title: "Constructing Custom Pedigrees for Publication"
+title: "More Complex Pedigree Plots with ggPedigree"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Constructing Custom Pedigrees for Publication`}
+  %\VignetteIndexEntry{More Complex Pedigree Plots with ggPedigree}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -22,6 +22,7 @@ library(ggplot2) # ggplot2 for plotting
 library(viridis) # viridis for color palettes
 library(tidyverse) # for data wrangling
 ```
+
 
 # Constructing Custom Pedigrees for Publication
 
@@ -240,3 +241,46 @@ p2 + scale_shape_manual(
     legend.position = "bottom"
   )
 ```
+
+# More Complex Pedigree Plots with ggPedigree
+
+In this section, we demonstrate how to create a more complex pedigree plot with multiple families. We use the `inbreeding` dataset from the `BGmisc` package, which contains several multigenerational pedigrees with consanguinity. Note that in these plots that some individuals may appear in multiple places within the pedigree. This is common in large pedigrees, especially when there are overlapping generations or multiple marriages. Here the colors are set to be the same for all segments, except for self-loops, which are colored purple.
+
+```{r self-loops, message=FALSE, warning=FALSE}
+library(BGmisc) # helper utilities & example data
+
+data("inbreeding")
+
+
+df <- inbreeding # multigenerational pedigree with consanguinity
+
+
+# df  <- dplyr::filter(df, famID %in% c(5, 7))
+
+
+p <- ggPedigree(
+  df,
+  famID = "famID",
+  personID = "ID",
+  status_column = "proband",
+  #  debug = TRUE,
+  config = list(
+    code_male = 0,
+    sex_color_include = FALSE,
+    status_code_affected = TRUE,
+    status_code_unaffected = FALSE,
+    generation_height = 4,
+    point_size = 2,
+    generation_width = 2,
+    status_affected_shape = 4,
+    segment_self_color = "purple"
+  )
+)
+
+p + facet_wrap(~famID, scales = "free") #+ scale_color_viridis(
+#   discrete = TRUE,
+#   labels = c("TRUE", "FALSE")
+#  )  + theme_bw(base_size = 14)  +  guides(colour="none", shape="none")
+```
+
+
