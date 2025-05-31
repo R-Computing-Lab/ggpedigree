@@ -12,6 +12,7 @@
 * Harmonized the configuration options across the package to use `getDefaultPlotConfig` and buildPlotConfig
 * Added unit tests for `getDefaultPlotConfig` and `ggPhenotypebyDegree`
 * Added workaround for plotly non-support for geom_curve with computeCurvedMidpoint
+* Adding twin plotting features
 
 # ggpedigree 0.4.1
 ## Status: Submitted to CRAN

@@ -259,7 +259,8 @@ ggPedigree.core <- function(ped, famID = "famID",
   # STEP 6: Initialize Plot
   # -----
 
-  config$gap_off <- 0.5 * config$generation_height # single constant for all “stub” offsets
+  config$gap_hoff <- 0.5 * config$generation_height # single constant for all “stub” offsets
+  config$gap_woff <- 0.5 * config$generation_width # single constant for all “stub” offsets
 
   p <- ggplot2::ggplot(ds, ggplot2::aes(
     x = .data$x_pos,
@@ -296,7 +297,7 @@ ggPedigree.core <- function(ped, famID = "famID",
     ggplot2::aes(
       x = .data$x_mid_sib,
       xend = .data$x_midparent,
-      y = .data$y_mid_sib - config$gap_off,
+      y = .data$y_mid_sib - config$gap_hoff,
       yend = .data$y_midparent
     ),
     linewidth = config$segment_linewidth,
@@ -312,8 +313,8 @@ ggPedigree.core <- function(ped, famID = "famID",
       ggplot2::aes(
         x = .data$x_pos,
         xend = .data$x_mid_sib,
-        y = .data$y_pos - config$gap_off,
-        yend = .data$y_mid_sib - config$gap_off
+        y = .data$y_pos - config$gap_hoff,
+        yend = .data$y_mid_sib - config$gap_hoff
       ),
       linewidth = config$segment_linewidth,
       lineend = config$segment_lineend,
@@ -321,14 +322,62 @@ ggPedigree.core <- function(ped, famID = "famID",
       linetype = config$segment_linetype,
       color = config$segment_offspring_color,
       na.rm = TRUE
-    ) +
-    # Sibling vertical drop line
+    )
+  # Sibling vertical drop line
+  # special handling for twin siblings
+  if (inherits(plot_connections$twin_coords, "data.frame")) {
+
+    plot_connections$twin_coords <- plot_connections$twin_coords |>
+      dplyr::mutate(
+        x_start = .data$x_pos + config$segment_mz_t * (.data$x_mid_twin - .data$x_pos),
+        y_start = .data$y_pos + config$segment_mz_t * ((.data$y_mid_twin - config$gap_hoff) - .data$y_pos),
+        x_end   = .data$x_twin + config$segment_mz_t * (.data$x_mid_twin - .data$x_twin),
+        y_end   = .data$y_twin + config$segment_mz_t * ((.data$y_mid_twin - config$gap_hoff) - .data$y_twin)
+      )
+
+
+    p <- p +
+      ggplot2::geom_segment(
+        data = plot_connections$twin_coords,
+        ggplot2::aes(
+          x = .data$x_pos,
+          xend = .data$x_mid_twin,
+          y = .data$y_pos,
+          yend = .data$y_mid_twin - config$gap_hoff
+        ),
+        linewidth = config$segment_linewidth,
+        lineend = config$segment_lineend,
+        linejoin = config$segment_linejoin,
+        linetype = config$segment_linetype,
+        color = config$segment_sibling_color,
+        na.rm = TRUE
+      ) + # horizontal line to twin midpoint for MZ twins
+      ggplot2::geom_segment(
+        data = plot_connections$twin_coords |>
+          dplyr::filter(.data$mz == TRUE),
+        ggplot2::aes(
+          x = .data$x_start,
+          xend = .data$x_end,
+          y = .data$y_start,
+          yend = .data$y_end
+        ),
+        linewidth = config$segment_linewidth,
+        lineend = config$segment_lineend,
+        linejoin = config$segment_linejoin,
+        linetype = config$segment_mz_linetype,
+        color = config$segment_mz_color,
+        alpha = config$segment_mz_alpha,
+        na.rm = TRUE
+      )
+  }
+  p <- p +
     ggplot2::geom_segment(
-      data = connections,
+      data = connections |>
+        dplyr::filter(.data$link_as_twin == FALSE),
       ggplot2::aes(
         x = .data$x_pos,
         xend = .data$x_pos,
-        y = .data$y_mid_sib - config$gap_off,
+        y = .data$y_mid_sib - config$gap_hoff,
         yend = .data$y_pos
       ),
       linewidth = config$segment_linewidth,
