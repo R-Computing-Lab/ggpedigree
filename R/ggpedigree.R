@@ -321,10 +321,31 @@ ggPedigree.core <- function(ped, famID = "famID",
       linetype = config$segment_linetype,
       color = config$segment_offspring_color,
       na.rm = TRUE
-    ) +
-    # Sibling vertical drop line
+    )
+  # Sibling vertical drop line
+  # special handling for twin siblings
+  if (inherits(plot_connections$twin_coords, "data.frame")) {
+    p <- p +
+      ggplot2::geom_segment(
+        data = plot_connections$twin_coords,
+        ggplot2::aes(
+          x = .data$x_pos,
+          xend = .data$x_mid_twin,
+          y = .data$y_pos,
+          yend = .data$y_mid_twin - config$gap_off
+        ),
+        linewidth = config$segment_linewidth,
+        lineend = config$segment_lineend,
+        linejoin = config$segment_linejoin,
+        linetype = config$segment_linetype,
+        color = config$segment_sibling_color,
+        na.rm = TRUE
+      )
+  }
+  p <- p +
     ggplot2::geom_segment(
-      data = connections,
+      data = connections |>
+        dplyr::filter(.data$link_as_twin == FALSE),
       ggplot2::aes(
         x = .data$x_pos,
         xend = .data$x_pos,
