@@ -36,6 +36,7 @@ library(ggpedigree) # the package itself
 
 
 # Example data
+
 The package includes a small toy pedigree for the Harry Potter universe:
 
 ```{r load-data}

@@ -29,6 +29,8 @@ computeCurvedMidpoint(
 \item{angle}{Scalar angle in degrees}
 
 \item{component}{Either "x" or "y"}
+
+\item{t}{Scalar value between 0 and 1 for interpolation (default is 0.5) setting the midpoint}
 }
 \value{
 Numeric vector of midpoints (x or y)

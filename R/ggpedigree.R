@@ -685,6 +685,7 @@ ggpedigree <- ggPedigree
 #' @param y0 Numeric vector of y coordinates for start points
 #' @param x1 Numeric vector of x coordinates for end points
 #' @param y1 Numeric vector of y coordinates for end points
+#' @param t Scalar value between 0 and 1 for interpolation (default is 0.5) setting the midpoint
 #' @param curvature Scalar curvature (geom_curve style)
 #' @param angle Scalar angle in degrees
 #' @param component Either "x" or "y"
