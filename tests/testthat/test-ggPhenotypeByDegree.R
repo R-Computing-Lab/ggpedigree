@@ -1,5 +1,5 @@
 test_that("ggPhenotypeByDegree basic functionality", {
-  library(dplyr)
+
   # Create a sample data frame
   df <- data.frame(
     addRel_center = c(.5^c(1, 0, 2, 3, 4)),
@@ -9,7 +9,7 @@ test_that("ggPhenotypeByDegree basic functionality", {
     y_var = c(0.2, 0.3, 0.4, 0.5, 0.6),
     y_se = c(0.05, 0.04, 0.03, 0.02, 0.01)
   ) %>%
-    mutate(
+    dplyr::mutate(
       addRel_min = addRel_center * .9,
       addRel_max = addRel_center * 1.1
     )
@@ -27,7 +27,6 @@ test_that("ggPhenotypeByDegree basic functionality", {
 })
 
 test_that("ggPhenotypeByDegree handles missing values", {
-  library(dplyr)
 
   # Create a sample data frame with NA values
   df <- data.frame(
@@ -38,7 +37,7 @@ test_that("ggPhenotypeByDegree handles missing values", {
     y_var = c(0.2, NA, 0.4, 0.5, NA),
     y_se = c(0.05, NA, 0.03, NA, 0.01)
   ) %>%
-    mutate(
+    dplyr::mutate(
       addRel_min = addRel_center * .9,
       addRel_max = addRel_center * 1.1
     )
@@ -56,7 +55,7 @@ test_that("ggPhenotypeByDegree handles missing values", {
 })
 
 test_that("ggPhenotypeByDegree applies custom configurations", {
-  library(dplyr)
+
 
   # Create a sample data frame
   df <- data.frame(
@@ -67,7 +66,7 @@ test_that("ggPhenotypeByDegree applies custom configurations", {
     y_var = c(0.2, 0.3, 0.4, 0.5, 0.6),
     y_se = c(0.05, 0.04, 0.03, 0.02, 0.01)
   ) %>%
-    mutate(
+    dplyr::mutate(
       addRel_min = addRel_center * .9,
       addRel_max = addRel_center * 1.1
     )
@@ -93,7 +92,7 @@ test_that("ggPhenotypeByDegree applies custom configurations", {
 })
 
 test_that("ggPhenotypeByDegree handles different thresholds", {
-  library(dplyr)
+
 
   # Create a sample data frame
   df <- data.frame(
@@ -104,7 +103,7 @@ test_that("ggPhenotypeByDegree handles different thresholds", {
     y_var = c(0.2, 0.3, 0.4, 0.5, 0.6),
     y_se = c(0.05, 0.04, 0.03, 0.02, 0.01)
   ) %>%
-    mutate(
+    dplyr::mutate(
       addRel_min = addRel_center * .8,
       addRel_max = addRel_center * 1.2
     )
@@ -124,7 +123,7 @@ test_that("ggPhenotypeByDegree handles different thresholds", {
   expect_s3_class(p, "gg")
 })
 test_that("ggPhenotypeByDegree handles empty data frames", {
-  library(dplyr)
+
   # Create an empty data frame
   df_empty <- data.frame(
     addRel_center = numeric(0),
@@ -132,9 +131,7 @@ test_that("ggPhenotypeByDegree handles empty data frames", {
     cnu = numeric(0),
     mtdna = numeric(0),
     y_var = numeric(0),
-    y_se = numeric(0)
-  ) %>%
-    mutate(
+    y_se = numeric(0),
       addRel_min = numeric(0),
       addRel_max = numeric(0)
     )
