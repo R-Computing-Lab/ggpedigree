@@ -56,6 +56,8 @@ ggpedigree(
 
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
 
+\item{focal_fill_column}{Character string specifying the column name for focal fill color.}
+
 \item{tooltip_columns}{Character vector of column names to show when hovering.
 Defaults to c("personID", "sex").  Additional columns present in `ped`
 can be supplied – they will be added to the Plotly tooltip text.}

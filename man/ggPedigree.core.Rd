@@ -33,6 +33,8 @@ ggPedigree.core(
 
 \item{spouseID}{Character string specifying the column name for spouse IDs. Defaults to "spouseID".}
 
+\item{focal_fill_column}{Character string specifying the column name for focal fill color.}
+
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
 
 \item{config}{A list of configuration options for customizing the plot. The list can include:

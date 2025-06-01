@@ -186,3 +186,37 @@ df <- inbreeding
   )
   expect_s3_class(p, "gg") # Should return a ggplot object
 })
+
+test_that("focal fill works", {
+  library(BGmisc)
+  data("potter") # load example data from BGmisc
+
+  p <- ggPedigree(potter,
+    famID = "famID",
+    personID = "personID",
+    config = list(
+      focal_fill_include = TRUE,
+      sex_color_include=FALSE,
+      focal_fill_personID = 1
+    )
+  )
+  expect_s3_class(p, "gg") # Should return a ggplot object
+  expect_true("focal_fill" %in% names(p$data)) # focal_fill column should be present
+  expect_true(all(p$data$focal_fill >= 0 & p$data$focal_fill <= 1)) # focal_fill values should be between 0 and 1
+
+  p2 <- ggPedigree(potter,
+                  famID = "famID",
+                  personID = "personID",
+                  config = list(
+                    focal_fill_include = TRUE,
+                    sex_color_include=FALSE,
+                    focal_fill_force_zero = TRUE,
+                    focal_fill_personID = 1
+                  )
+  )
+  expect_s3_class(p2, "gg") # Should return a ggplot object
+  expect_true("focal_fill" %in% names(p2$data)) # focal_fill column should be present
+  expect_true(any(is.na(p2$data$focal_fill))) # focal_fill values should be ge 0 and 1
+  expect_true(all(p2$data$focal_fill[!is.na(p2$data$focal_fill)] > 0 & p2$data$focal_fill[!is.na(p2$data$focal_fill)] <= 1)) # focal_fill values should be greater than 0 and less than or equal to 1
+
+})
