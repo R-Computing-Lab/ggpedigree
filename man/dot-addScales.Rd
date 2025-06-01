@@ -25,6 +25,8 @@
  }}
 
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
+
+\item{focal_fill_column}{Character string specifying the column name for focal fill color.}
 }
 \value{
 A ggplot object with added scales.

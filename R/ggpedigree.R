@@ -21,6 +21,8 @@
 #' @param return_widget Logical; if TRUE (default) returns a plotly htmlwidget.
 #'        If FALSE, returns the underlying plotly object (useful for further
 #'        customization before printing).
+#' @param focal_fill_column Character string specifying the column name for focal fill color.
+#'
 #' @param ... Additional arguments passed to `ggplot2` functions.
 #' @param config A list of configuration options for customizing the plot. The list can include:
 #'  \describe{
