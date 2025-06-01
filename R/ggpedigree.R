@@ -498,7 +498,7 @@ ggPedigree.core <- function(ped, famID = "famID",
         linewidth = config$segment_linewidth,
         color = config$segment_self_color,
         lineend = config$segment_lineend,
-        linejoin = config$segment_linejoin,
+      #  linejoin = config$segment_linejoin,
         linetype = config$segment_self_linetype,
         angle = config$segment_self_angle,
         curvature = config$segment_self_curvature,
@@ -519,10 +519,10 @@ ggPedigree.core <- function(ped, famID = "famID",
             curvature = config$segment_self_curvature,
             angle = config$segment_self_angle
           ),
-          x_midpoint = midpoint$x,
-          y_midpoint = midpoint$y
+          x_midpoint = .data$midpoint$x,
+          y_midpoint = .data$midpoint$y
         ) |>
-        dplyr::select(-midpoint)
+        dplyr::select(-"midpoint")
 
       p <- p + ggplot2::geom_segment(
         data = otherself,

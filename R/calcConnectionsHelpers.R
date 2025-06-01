@@ -113,47 +113,47 @@ getMidpoints <- function(data,
         !!y_out := stats::weighted.mean(c(!!!rlang::syms(y_vars)), na.rm = TRUE),
         .groups = "drop"
       )
-  } else if (method == "first_pair") {
-    # Use only the first value in each pair of x/y coordinates
-    # This is useful for spousal pairs or sibling groups
-    data |>
-      dplyr::group_by(!!!rlang::syms(group_vars)) |>
-      dplyr::summarize(
-        !!x_out := mean(
-          c(
-            dplyr::first(.data[[x_vars[1]]]),
-            dplyr::first(.data[[x_vars[2]]])
-          ),
-          na.rm = TRUE
-        ),
-        !!y_out := mean(
-          c(
-            dplyr::first(.data[[y_vars[1]]]),
-            dplyr::first(.data[[y_vars[2]]])
-          ),
-          na.rm = TRUE
-        ),
-        .groups = "drop"
-      )
-  } else if (method == "meanxfirst") {
-    # Use the mean of all x coordinates and the first y coordinate
-    data |>
-      dplyr::group_by(!!!rlang::syms(group_vars)) |>
-      dplyr::summarize(!!x_out := mean(c(!!!rlang::syms(x_vars)), na.rm = TRUE), !!y_out := mean(c(
-        dplyr::first(.data[[y_vars[1]]]), dplyr::first(.data[[y_vars[2]]])
-      ), na.rm = TRUE),
-      .groups = "drop"
-      )
-  } else if (method == "meanyfirst") {
-    # First x, mean of all y
-    data |>
-      dplyr::group_by(!!!rlang::syms(group_vars)) |>
-      dplyr::summarize(
-        !!x_out := mean(c(
-          dplyr::first(.data[[x_vars[1]]]), dplyr::first(.data[[x_vars[2]]])
-        ), na.rm = TRUE), !!y_out := mean(c(!!!rlang::syms(y_vars)), na.rm = TRUE),
-        .groups = "drop"
-      )
+  # } else if (method == "first_pair") {
+  #   # Use only the first value in each pair of x/y coordinates
+  #   # This is useful for spousal pairs or sibling groups
+  #   data |> dplyr::filter(!is.na(.data[[group_vars]])) |>
+  #     dplyr::group_by(!!!rlang::syms(group_vars)) |>
+  #     dplyr::summarize(
+  #       !!x_out := mean(
+  #         c(
+  #           dplyr::first(.data[[x_vars[1]]]),
+  #          dplyr::first(.data[[x_vars[2]]])
+  #         ),
+  #         na.rm = TRUE
+  #       ),
+  #      !!y_out := mean(
+  #         c(
+  #          dplyr::first(.data[[y_vars[1]]]),
+  #           dplyr::first(.data[[y_vars[2]]])
+  #         ),
+  #         na.rm = TRUE
+  #       ),
+  #       .groups = "drop"
+  #     )
+  # } else if (method == "meanxfirst") {
+  #   # Use the mean of all x coordinates and the first y coordinate
+  #   data |> dplyr::filter(!is.na(.data[[group_vars]])) |>
+  #     dplyr::group_by(!!!rlang::syms(group_vars)) |>
+  #     dplyr::summarize(!!x_out := mean(c(!!!rlang::syms(x_vars)), na.rm = TRUE), !!y_out := mean(c(
+  #       dplyr::first(.data[[y_vars[1]]]), dplyr::first(.data[[y_vars[2]]])
+  #     ), na.rm = TRUE),
+  #     .groups = "drop"
+  #     )
+  # } else if (method == "meanyfirst") {
+  #   # First x, mean of all y
+  #   data |> dplyr::filter(!is.na(.data[[group_vars]])) |>
+  #     dplyr::group_by(!!!rlang::syms(group_vars)) |>
+  #     dplyr::summarize(
+  #       !!x_out := mean(c(
+  #         dplyr::first(.data[[x_vars[1]]]), dplyr::first(.data[[x_vars[2]]])
+  #       ), na.rm = TRUE), !!y_out := mean(c(!!!rlang::syms(y_vars)), na.rm = TRUE),
+  #       .groups = "drop"
+  #     )
   } else {
     # Handle unsupported method argument
     stop("Unsupported method.")

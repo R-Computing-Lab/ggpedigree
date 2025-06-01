@@ -28,6 +28,7 @@ Imports:
     tidyr,
     paletteer
 Suggests: 
+    mockery,
     viridis,
     knitr,
     tidyverse,
