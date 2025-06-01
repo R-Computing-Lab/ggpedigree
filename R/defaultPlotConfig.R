@@ -146,7 +146,9 @@ getDefaultPlotConfig <- function(color_palette_default =
     # -- Output Options ----
     return_static = TRUE,
     return_widget = FALSE,
-    return_interactive = FALSE
+    return_interactive = FALSE,
+    # ---- Debugging Options ----
+    override_many2many = FALSE
   )
 
   if (stringr::str_to_lower(function_name) %in% c("ggrelatednessmatrix")) {

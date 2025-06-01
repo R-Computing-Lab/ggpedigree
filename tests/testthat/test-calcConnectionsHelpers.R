@@ -82,6 +82,43 @@ test_that("calculateCoordinates respects ped_align and ped_packed flags", {
     length(unique(ped$momID[!is.na(ped$momID)])), # all non-missing momids
     length(midsbymomid$momID)
   )
+  #
+  # first_pairbymomid <- getMidpoints(
+  #   data = coords1, group_vars = c("momID"), x_vars = "x_pos", y_vars = "y_pos",
+  #   x_out = "x_midpoint", y_out = "y_midpoint", method = "first_pair"
+  # )
+  # expect_equal(
+  #   length(unique(ped$momID[!is.na(ped$momID)])), # all non-missing momids
+  #   length(first_pairbymomid$momID)
+  # )
+  # # meanxfirst
+  # meanxfirstbydadid <- getMidpoints(
+  #   data = coords1, group_vars = c("dadID"), x_vars = "x_pos", y_vars = "y_pos",
+  #   x_out = "x_midpoint", y_out = "y_midpoint", method = "meanxfirst"
+  # )
+  # expect_equal(
+  #   length(unique(ped$dadID[!is.na(ped$dadID)])), # all non-missing dadIDs
+  #   length(meanxfirstbydadid$dadID)
+  # )
+  #
+  # # meanyfirst
+  # meanyfirstbyspid <- getMidpoints(
+  #   data = coords1, group_vars = c("spID"), x_vars = "x_pos", y_vars = "y_pos",
+  #   x_out = "x_midpoint", y_out = "y_midpoint", method = "meanyfirst"
+  # )
+  # expect_equal(
+  #   length(unique(ped$spID[!is.na(ped$spID)])), # all non-missing spouseIDs
+  #   length(meanyfirstbyspid$spID)
+  # )
+
+ expect_error(
+   getMidpoints(
+     data = coords1, group_vars = c("spID"), x_vars = "x_pos", y_vars = "y_pos",
+     x_out = "x_midpoint", y_out = "y_midpoint", method = "unsupported "
+   ),
+   "Unsupported method."
+  )
+
 })
 
 test_that("computeDistances behaves in small data", {
@@ -161,6 +198,9 @@ test_that("computeDistances behaves in small data", {
   expect_equal(length(dist_fractional), nrow(coords1))
   expect_equal(dist_fractional, dist_euclidean)
 })
+
+
+
 
 # test_that("computeDistances behaves in big data", {
 #   data("redsquirrels")
