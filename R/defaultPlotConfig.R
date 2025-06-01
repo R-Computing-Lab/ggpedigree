@@ -6,6 +6,7 @@
 #' @param function_name The name of the function calling this configuration.
 #' @param personID The column name for person identifiers in the data.
 #' @param status_column The column name for affected status in the data.
+#' @param color_scale_midpoint A numeric value for the midpoint of the color scale.
 #' @param ... Additional arguments for future extensibility.
 #' @return A named list of default plotting and layout parameters.
 #' @export
