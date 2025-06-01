@@ -20,7 +20,7 @@ processExtras <- function(ped, config = list()) {
   if (!inherits(ped, "data.frame")) {
     stop("ped must be a data.frame")
   }
-default_config <- list(
+  default_config <- list(
     override_many2many = FALSE # default behavior
   )
   config <- utils::modifyList(default_config, config)
@@ -322,11 +322,11 @@ default_config <- list(
   # ---- 8. remove duplicates and return ------------------------------------
 
   # Coordinates of the individual's other appearance ("self")
-  if(config$override_many2many==TRUE){
+  if (config$override_many2many == TRUE) {
     self_relationship <- "many-to-many"
   } else {
     self_relationship <- NULL
-    }
+  }
   self_coords <- extras |>
     dplyr::left_join(
       ped,

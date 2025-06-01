@@ -27,7 +27,7 @@ library(data.table)
 # Load the example data
 data("redsquirrels")
 library(dplyr)
-#library(broom) # for tidy()
+# library(broom) # for tidy()
 library(purrr) # for map_* helpers
 # Filter for the largest family, recode sex if needed
 ped_filtered <- redsquirrels %>%

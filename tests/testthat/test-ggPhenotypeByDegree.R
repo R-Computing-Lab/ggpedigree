@@ -1,5 +1,4 @@
 test_that("ggPhenotypeByDegree basic functionality", {
-
   # Create a sample data frame
   df <- data.frame(
     addRel_center = c(.5^c(1, 0, 2, 3, 4)),
@@ -27,7 +26,6 @@ test_that("ggPhenotypeByDegree basic functionality", {
 })
 
 test_that("ggPhenotypeByDegree handles missing values", {
-
   # Create a sample data frame with NA values
   df <- data.frame(
     addRel_center = c(.5^c(1, 0, 2, 3, 4)),
@@ -54,8 +52,7 @@ test_that("ggPhenotypeByDegree handles missing values", {
   expect_s3_class(p, "gg")
 })
 
-test_that("ggPhenotypeByDegree applies custom  drops correctly",{
-
+test_that("ggPhenotypeByDegree applies custom  drops correctly", {
   # Create a sample data frame
   df <- data.frame(
     addRel_center = c(.5^c(1, 0, 2, 3, 4)),
@@ -76,10 +73,12 @@ test_that("ggPhenotypeByDegree applies custom  drops correctly",{
       dplyr::select(-addRel_center),
     y_var = "y_var",
     y_se = "y_se",
-    config = list(drop_classic_kin = TRUE,
-                  default_scales = FALSE,
-                  degree_rel =FALSE,
-                 annotate=FALSE)
+    config = list(
+      drop_classic_kin = TRUE,
+      default_scales = FALSE,
+      degree_rel = FALSE,
+      annotate = FALSE
+    )
   )
 
   # Check if the output is a ggplot object
@@ -87,11 +86,8 @@ test_that("ggPhenotypeByDegree applies custom  drops correctly",{
   # Check if the data has been filtered correctly
   expect_true(all(is.na(p$data$y_var) | p$data$y_var != 0.3))
   expect_true("addRel_center" %in% names(p$data) == TRUE)
-}
-)
+})
 test_that("ggPhenotypeByDegree applies custom configurations", {
-
-
   # Create a sample data frame
   df <- data.frame(
     addRel_center = c(.5^c(1, 0, 2, 3, 4)),
@@ -127,8 +123,6 @@ test_that("ggPhenotypeByDegree applies custom configurations", {
 })
 
 test_that("ggPhenotypeByDegree handles different thresholds", {
-
-
   # Create a sample data frame
   df <- data.frame(
     addRel_center = c(.5^c(1, 0, 2, 3, 4)),
@@ -161,7 +155,6 @@ test_that("ggPhenotypeByDegree handles different thresholds", {
   expect_true(all(p$data$addRel_center >= 0))
 })
 test_that("ggPhenotypeByDegree handles empty data frames", {
-
   # Create an empty data frame
   df_empty <- data.frame(
     addRel_center = numeric(0),
@@ -170,9 +163,9 @@ test_that("ggPhenotypeByDegree handles empty data frames", {
     mtdna = numeric(0),
     y_var = numeric(0),
     y_se = numeric(0),
-      addRel_min = numeric(0),
-      addRel_max = numeric(0)
-    )
+    addRel_min = numeric(0),
+    addRel_max = numeric(0)
+  )
 
   # Call the function with the empty data frame
   p <- ggPhenotypeByDegree(
