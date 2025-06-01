@@ -212,6 +212,10 @@ ggPedigree.core <- function(ped, famID = "famID",
                          component = config$focal_fill_component,
                          config = config),
         by = "personID")
+  } else if (config$focal_fill_include==TRUE && !is.null(focal_fill_column)) {
+    # If fill_column is specified, use it directly
+    ds_ped <- ds_ped %>%
+      dplyr::mutate(focal_fill = !!rlang::sym(focal_fill_column))
   }
   # -----
   # STEP 4: Coordinate Generation

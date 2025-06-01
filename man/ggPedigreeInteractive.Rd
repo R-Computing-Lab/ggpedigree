@@ -14,6 +14,7 @@ ggPedigreeInteractive(
   dadID = "dadID",
   status_column = NULL,
   tooltip_columns = NULL,
+  focal_fill_column = NULL,
   config = list(),
   debug = FALSE,
   return_widget = TRUE,
@@ -28,6 +29,7 @@ ggpedigreeinteractive(
   dadID = "dadID",
   status_column = NULL,
   tooltip_columns = NULL,
+  focal_fill_column = NULL,
   config = list(),
   debug = FALSE,
   return_widget = TRUE,
@@ -42,6 +44,7 @@ ggpedigreeInteractive(
   dadID = "dadID",
   status_column = NULL,
   tooltip_columns = NULL,
+  focal_fill_column = NULL,
   config = list(),
   debug = FALSE,
   return_widget = TRUE,
@@ -64,6 +67,8 @@ ggpedigreeInteractive(
 \item{tooltip_columns}{Character vector of column names to show when hovering.
 Defaults to c("personID", "sex").  Additional columns present in `ped`
 can be supplied – they will be added to the Plotly tooltip text.}
+
+\item{focal_fill_column}{Character string specifying the column name for focal fill color.}
 
 \item{config}{A list of configuration options for customizing the plot. The list can include:
 \describe{
