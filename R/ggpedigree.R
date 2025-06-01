@@ -519,8 +519,8 @@ ggPedigree.core <- function(ped, famID = "famID",
             curvature = config$segment_self_curvature,
             angle = config$segment_self_angle
           ),
-          x_midpoint = midpoint$x,
-          y_midpoint = midpoint$y
+          x_midpoint = .data$midpoint$x,
+          y_midpoint = .data$midpoint$y
         ) |>
         dplyr::select(-"midpoint")
 
