@@ -15,7 +15,7 @@ test_that("ggPedigreeInteractive behaves same as ggPedigree interactive is true"
 
   # Test with hints
   p <- ggPedigree(potter,
-                  interactive = TRUE,
+    interactive = TRUE,
     famID = "famID",
     personID = "personID",
     spouseID = "spouseID",
@@ -33,7 +33,7 @@ test_that("ggPedigreeInteractive behaves same as ggPedigree interactive is true"
   expect_equal(p_widget$x$frames, p$x$frames)
   expect_equal(p_widget$x$source, p$x$source)
   expect_equal(p_widget$x$elementId, p$x$elementId)
- # expect_equal(p_widget$x$attrs, p$x$attrs)
+  # expect_equal(p_widget$x$attrs, p$x$attrs)
   expect_equal(p_widget$x$config, p$x$config)
   expect_equal(p_widget$sizingPolicy, p$sizingPolicy)
 })

@@ -67,11 +67,9 @@ if (!"twinID" %in% names(potter)) {
 
 
 ```{r basic-usage}
-
 ggPedigree(potter,
   famID = "famID",
   personID = "personID"
-# config  = list(segment_mz_color = NA) # color for monozygotic twins
 )
 ```
 
@@ -200,7 +198,7 @@ ggPedigree(
 
 ## Highlighting Specific Individuals
 
-You can also highlight specific individuals in the pedigree by creating a new column in your data frame. For example, if you want to highlight Harry Potter and Dudley Dursley, you can create a new column called `proband` and set it to `TRUE` for those individuals. You can specify the `status_affected_shape` to be a star shape (8) and use the `status_column` argument to indicate the probands.
+You can also highlight specific individuals in the pedigree through other approaches, such as by creating a new column in your data frame. For example, if you want to highlight Harry Potter and Dudley Dursley, you can create a new column called `proband` and set it to `TRUE` for those individuals. You can specify the `status_affected_shape` to be a star shape (8) and use the `status_column` argument to indicate the probands.
 
 ```{r}
 df <- potter
@@ -223,6 +221,83 @@ ggPedigree(
     status_affected_shape = 8 # star shape
   )
 )
+```
+
+## Highlighting Harry Potter
+
+Alternatively, you can use what I've called focal filling. The `focal_fill` argument allows you to highlight one person and their relatives without modifying the data frame. This is particularly useful when you want to emphasize a specific individual, such as Harry Potter, in the pedigree plot. The `focal_fill_personID` argument allows you to specify the person ID to highlight, and the `focal_fill_include` argument determines whether to include this highlighting in the plot. Other arguments like `focal_fill_method`, `focal_fill_n_breaks`, and `focal_fill_scale_midpoint` control the appearance of the highlighted area. Notably, you can select focal_fill_component to a specific component, such as "additive", which will highlight the additive genetic relatives of the focal person. 
+
+
+```{r focal_fill}
+ggPedigree(potter,
+  famID = "famID",
+  personID = "personID",
+  config = list(
+    focal_fill_personID = 7,
+    focal_fill_include = TRUE,
+    focal_fill_high_color = "yellow",
+    focal_fill_mid_color = "red",
+    focal_fill_low_color = "#0D082AFF",
+    focal_fill_force_zero = TRUE,
+    focal_fill_na_value = "black",
+    focal_fill_scale_midpoint = 0.5,
+    focal_fill_component = "additive",
+    focal_fill_method = "gradient",
+    focal_fill_n_breaks = NULL,
+    focal_fill_legend_title = "Genetic Relatives \nof Harry Potter",
+    # "additive",
+    sex_color_include = FALSE
+  ) # highlight Harry Potter
+  # config  = list(segment_mz_color = NA) # color for monozygotic twins
+)
+```
+
+Here we highlight Harry Potter (ID 7) and his relatives in the pedigree plot. Other components can be highlighted by changing the `focal_fill_component` argument. For example, you can set it to "mitochondrial" to highlight mitochondrial relatives, or "x" to highlight X-linked relatives. The `focal_fill_method` can be set to "gradient" for a smooth gradient effect or "steps" for distinct color breaks.
+
+
+```{r focal_fill_mitochondrial}
+m1 <- ggPedigree(potter,
+  famID = "famID",
+  personID = "personID",
+  config = list(
+    focal_fill_personID = 7,
+    focal_fill_include = TRUE,
+    focal_fill_high_color = "green",
+    # focal_fill_mid_color = "white",
+    focal_fill_low_color = "black",
+    focal_fill_scale_midpoint = 0.55,
+    focal_fill_component = "mitochondrial",
+    focal_fill_method = "steps",
+    focal_fill_n_breaks = 19,
+    focal_fill_legend_show = FALSE,
+    focal_fill_legend_title = "Mitochondrial Relatives \nof Harry Potter",
+    sex_color_include = FALSE
+  ) # highlight Harry Potter
+  # config  = list(segment_mz_color = NA) # color for monozygotic twins
+) + ggplot2::guides(shape = "none")
+m2 <- ggPedigree(potter,
+  famID = "famID",
+  personID = "personID",
+  config = list(
+    focal_fill_personID = 8,
+    focal_fill_include = TRUE,
+    focal_fill_high_color = "orange",
+    # focal_fill_mid_color = "white",
+    focal_fill_low_color = "black",
+    focal_fill_scale_midpoint = 0.55,
+    focal_fill_component = "mitochondrial",
+    focal_fill_method = "steps",
+    focal_fill_n_breaks = 19,
+    focal_fill_legend_show = FALSE,
+    focal_fill_legend_title = "Mitochondrial Relatives \nof Ginny Weasley",
+    sex_color_include = FALSE
+  ) # highlight Harry Potter
+  # config  = list(segment_mz_color = NA) # color for monozygotic twins
+) + ggplot2::guides(shape = "none")
+
+library(patchwork) # for combining plots
+m1 + m2 + plot_layout(ncol = 2) +
+  plot_annotation(title = "Mitochondrial Relatives of Harry Potter and Ginny Weasley")
 ```
 
 # Multiple families in one graphic
@@ -259,7 +334,6 @@ p +
   )
 ```
 
-# Advanced Example: Large Pedigrees with self-loops
-
+# Advanced Examples: Large Pedigrees with self-loops
 
 Additional examples are provided as articles that demonstrate more complex pedigree plots. You can find these on the [ggpedigree website](https://r-computing-lab.github.io/ggpedigree/). These articles cover advanced topics such as: multiple families, self-loops, and other advanced features.

@@ -13,6 +13,7 @@ ggPedigree(
   dadID = "dadID",
   spouseID = "spouseID",
   status_column = NULL,
+  focal_fill_column = NULL,
   tooltip_columns = NULL,
   return_widget = FALSE,
   config = list(),
@@ -30,6 +31,7 @@ ggpedigree(
   dadID = "dadID",
   spouseID = "spouseID",
   status_column = NULL,
+  focal_fill_column = NULL,
   tooltip_columns = NULL,
   return_widget = FALSE,
   config = list(),
@@ -53,6 +55,8 @@ ggpedigree(
 \item{spouseID}{Character string specifying the column name for spouse IDs. Defaults to "spouseID".}
 
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
+
+\item{focal_fill_column}{Character string specifying the column name for focal fill color.}
 
 \item{tooltip_columns}{Character vector of column names to show when hovering.
 Defaults to c("personID", "sex").  Additional columns present in `ped`

@@ -9,15 +9,21 @@
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![R package
+[![CRAN
 version](https://www.r-pkg.org/badges/version/ggpedigree)](https://CRAN.R-project.org/package=ggpedigree)
+[![CRAN
+checks](https://badges.cranchecks.info/worst/ggpedigree.svg)](https://cran.r-project.org/web/checks/check_results_ggpedigree.html)
 [![Package
-downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggpedigree)](https://cranlogs.r-pkg.org/badges/grand-total/ggpedigree)</br>
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggpedigree)](https://cranlogs.r-pkg.org/badges/grand-total/ggpedigree)
+[![codecov](https://codecov.io/gh/R-Computing-Lab/ggpedigree/branch/main/graph/badge.svg?token=xXWYDcD9CF)](https://app.codecov.io/gh/R-Computing-Lab/ggpedigree)</br>
 [![R-CMD-check](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-check.yaml)
 [![Dev
 branch](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-devcheck.yaml/badge.svg)](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-devcheck.yaml)
-[![codecov](https://codecov.io/gh/R-Computing-Lab/ggpedigree/branch/main/graph/badge.svg?token=xXWYDcD9CF)](https://app.codecov.io/gh/R-Computing-Lab/ggpedigree)
-![License](https://img.shields.io/badge/License-GPL_v3-blue.svg)
+
+[![Website
+Deployed](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/pkgdown.yaml)
+[![License](https://img.shields.io/badge/License-GPL_v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
+
 <!-- badges: end -->
 
 `ggpedigree` provides modern tools for visualizing pedigree structures
@@ -63,9 +69,8 @@ cite the following:
     citation(package = "ggpedigree")
 
 Garrison S (2025). *ggpedigree: Visualizing Pedigrees with ‘ggplot2’ and
-‘plotly’*. <doi:10.32614/CRAN.package.ggpedigree>
-<https://doi.org/10.32614/CRAN.package.ggpedigree>, R package version
-0.4.1, <https://CRAN.R-project.org/package=ggpedigree>.
+‘plotly’*. R package version 0.5.0,
+<https://github.com/R-Computing-Lab/ggpedigree/>.
 
 A BibTeX entry for LaTeX users is
 
@@ -73,9 +78,8 @@ A BibTeX entry for LaTeX users is
       title = {ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'},
       author = {S. Mason Garrison},
       year = {2025},
-      note = {R package version 0.4.1},
-      url = {https://CRAN.R-project.org/package=ggpedigree},
-      doi = {10.32614/CRAN.package.ggpedigree},
+      note = {R package version 0.5.0},
+      url = {https://github.com/R-Computing-Lab/ggpedigree/},
     }
 
 ## Contributing

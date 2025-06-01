@@ -4,7 +4,7 @@
 \alias{.addScales}
 \title{Add Scales to ggplot Pedigree Plot}
 \usage{
-.addScales(p, config, status_column = NULL)
+.addScales(p, config, status_column = NULL, focal_fill_column = NULL)
 }
 \arguments{
 \item{p}{A ggplot object.}
@@ -25,6 +25,8 @@
  }}
 
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
+
+\item{focal_fill_column}{Character string specifying the column name for focal fill color.}
 }
 \value{
 A ggplot object with added scales.

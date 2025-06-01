@@ -34,11 +34,9 @@ if (!"twinID" %in% names(potter)) {
 }
 
 ## ----basic-usage--------------------------------------------------------------
-
 ggPedigree(potter,
   famID = "famID",
   personID = "personID"
-# config  = list(segment_mz_color = NA) # color for monozygotic twins
 )
 
 ## ----customize-aesthetics-----------------------------------------------------
@@ -140,6 +138,73 @@ ggPedigree(
     status_affected_shape = 8 # star shape
   )
 )
+
+## ----focal_fill---------------------------------------------------------------
+ggPedigree(potter,
+  famID = "famID",
+  personID = "personID",
+  config = list(
+    focal_fill_personID = 7,
+    focal_fill_include = TRUE,
+    focal_fill_high_color = "yellow",
+    focal_fill_mid_color = "red",
+    focal_fill_low_color = "#0D082AFF",
+    focal_fill_force_zero = TRUE,
+    focal_fill_na_value = "black",
+    focal_fill_scale_midpoint = 0.5,
+    focal_fill_component = "additive",
+    focal_fill_method = "gradient",
+    focal_fill_n_breaks = NULL,
+    focal_fill_legend_title = "Genetic Relatives \nof Harry Potter",
+    # "additive",
+    sex_color_include = FALSE
+  ) # highlight Harry Potter
+  # config  = list(segment_mz_color = NA) # color for monozygotic twins
+)
+
+## ----focal_fill_mitochondrial-------------------------------------------------
+m1 <- ggPedigree(potter,
+  famID = "famID",
+  personID = "personID",
+  config = list(
+    focal_fill_personID = 7,
+    focal_fill_include = TRUE,
+    focal_fill_high_color = "green",
+    # focal_fill_mid_color = "white",
+    focal_fill_low_color = "black",
+    focal_fill_scale_midpoint = 0.55,
+    focal_fill_component = "mitochondrial",
+    focal_fill_method = "steps",
+    focal_fill_n_breaks = 19,
+    focal_fill_legend_show = FALSE,
+    focal_fill_legend_title = "Mitochondrial Relatives \nof Harry Potter",
+    sex_color_include = FALSE
+  ) # highlight Harry Potter
+  # config  = list(segment_mz_color = NA) # color for monozygotic twins
+) + ggplot2::guides(shape = "none")
+m2 <- ggPedigree(potter,
+  famID = "famID",
+  personID = "personID",
+  config = list(
+    focal_fill_personID = 8,
+    focal_fill_include = TRUE,
+    focal_fill_high_color = "orange",
+    # focal_fill_mid_color = "white",
+    focal_fill_low_color = "black",
+    focal_fill_scale_midpoint = 0.55,
+    focal_fill_component = "mitochondrial",
+    focal_fill_method = "steps",
+    focal_fill_n_breaks = 19,
+    focal_fill_legend_show = FALSE,
+    focal_fill_legend_title = "Mitochondrial Relatives \nof Ginny Weasley",
+    sex_color_include = FALSE
+  ) # highlight Harry Potter
+  # config  = list(segment_mz_color = NA) # color for monozygotic twins
+) + ggplot2::guides(shape = "none")
+
+library(patchwork) # for combining plots
+m1 + m2 + plot_layout(ncol = 2) +
+  plot_annotation(title = "Mitochondrial Relatives of Harry Potter and Ginny Weasley")
 
 ## ----facet_wrap---------------------------------------------------------------
 p +

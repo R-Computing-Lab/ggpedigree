@@ -1,4 +1,3 @@
-
 test_that("broken hints doesn't cause a fatal error", {
   library(BGmisc)
   data("potter") # load example data from BGmisc
@@ -12,9 +11,9 @@ test_that("broken hints doesn't cause a fatal error", {
   # Test with hints
   expect_warning(
     ggPedigree(potter,
-               famID = "famID",
-               personID = "personID",
-               config = list(hints = TRUE)
+      famID = "famID",
+      personID = "personID",
+      config = list(hints = TRUE)
     )
   )
 
@@ -40,13 +39,12 @@ test_that("broken hints doesn't cause a fatal error", {
     )
   expect_warning(
     ggPedigree(potter,
-               famID = "famID",
-               personID = "personID",
-               config = list(hints = TRUE),
-               status_column = "status"
+      famID = "famID",
+      personID = "personID",
+      config = list(hints = TRUE),
+      status_column = "status"
     )
   )
-
 })
 
 test_that("ggPedigree returns a ggplot object", {
@@ -68,7 +66,6 @@ test_that("ggPedigree returns a ggplot object", {
   expect_true(all(p$data$personID %in% potter$personID)) # ID retention
   expect_equal(nrow(p$data), nrow(potter)) # no duplicates yet
   expect_true(all(c("x_pos", "y_pos", "nid") %in% names(p$data))) # coordinate columns present
-
 })
 
 test_that("ggPedigree errors when ped not df", {
@@ -123,8 +120,7 @@ test_that("config$outline_include works", {
   data("potter") # load example data from BGmisc
   p <- ggPedigree(potter, config = list(outline_include = TRUE))
   expect_s3_class(p, "gg") # Should return a ggplot object
-}
-)
+})
 
 # handle non-standard names
 test_that("ggPedigree handles non-standard names", {
@@ -142,12 +138,11 @@ test_that("ggPedigree handles non-standard names", {
     )
 
   p <- ggPedigree(potter,
-                  famID = "family_id",
-                  personID = "individual_id",
-                  momID = "mother_id",
-                  dadID = "father_id",
-                  spouseID = "spouse_id"
-
+    famID = "family_id",
+    personID = "individual_id",
+    momID = "mother_id",
+    dadID = "father_id",
+    spouseID = "spouse_id"
   )
   expect_s3_class(p, "gg")
   expect_true(all(p$data$individual_id %in% potter$individual_id)) # ID retention
@@ -163,7 +158,7 @@ test_that("ggPedigree handles self-segment", {
   data("inbreeding") # load example data from BGmisc
 
   # Add a duplicate appearance for a person
-df <- inbreeding
+  df <- inbreeding
 
   p <- ggPedigree(
     df,
@@ -185,4 +180,76 @@ df <- inbreeding
     )
   )
   expect_s3_class(p, "gg") # Should return a ggplot object
+})
+
+test_that("focal fill works with ID", {
+  library(BGmisc)
+  data("potter") # load example data from BGmisc
+
+  p <- ggPedigree(potter,
+    famID = "famID",
+    personID = "personID",
+    config = list(
+      focal_fill_include = TRUE,
+      sex_color_include = FALSE,
+      focal_fill_personID = 1
+    )
+  )
+  expect_s3_class(p, "gg") # Should return a ggplot object
+  expect_true("focal_fill" %in% names(p$data)) # focal_fill column should be present
+  expect_true(all(p$data$focal_fill >= 0 & p$data$focal_fill <= 1)) # focal_fill values should be between 0 and 1
+
+  p2 <- ggPedigree(potter,
+    famID = "famID",
+    personID = "personID",
+    config = list(
+      focal_fill_include = TRUE,
+      sex_color_include = FALSE,
+      focal_fill_force_zero = TRUE,
+      focal_fill_personID = 1
+    )
+  )
+  expect_s3_class(p2, "gg") # Should return a ggplot object
+  expect_true("focal_fill" %in% names(p2$data)) # focal_fill column should be present
+  expect_true(any(is.na(p2$data$focal_fill))) # focal_fill values should be ge 0 and 1
+  expect_true(all(p2$data$focal_fill[!is.na(p2$data$focal_fill)] > 0 & p2$data$focal_fill[!is.na(p2$data$focal_fill)] <= 1)) # focal_fill values should be greater than 0 and less than or equal to 1
+
+  # test focal_fill with a different personID
+
+  p3 <- ggPedigree(potter,
+    famID = "famID",
+    personID = "personID",
+    config = list(
+      focal_fill_include = TRUE,
+      sex_color_include = FALSE,
+      focal_fill_personID = 8
+    )
+  )
+  expect_s3_class(p3, "gg") # Should return a ggplot object
+  expect_true("focal_fill" %in% names(p3$data)) # focal_fill column should be present
+  expect_true(all(p3$data$focal_fill >= 0 & p3$data$focal_fill <= 1)) # focal_fill values should be between 0 and 1
+  expect_true(all(p3$data$focal_fill[p3$data$personID == 8] == 1)) # focal_fill for personID 8 should be 1
+})
+
+test_that("fill works with fill_column", {
+  library(BGmisc)
+  data("potter")
+
+  p <- ggPedigree(potter,
+    famID = "famID",
+    personID = "personID",
+    focal_fill_column = "sex",
+    config = list(
+      focal_fill_method = "steps",
+      focal_fill_include = TRUE,
+      sex_color_include = FALSE
+    )
+  )
+  expect_s3_class(p, "gg") # Should return a ggplot object
+  expect_true("focal_fill" %in% names(p$data)) # focal_fill column should be present
+
+  expect_true(all(p$data$focal_fill == p$data$sex)) # focal_fill values should match column values
+  expect_true(all(p$data$focal_fill %in% c(1, 0))) # focal_fill values should be either 0 or 1
+  expect_true(all(p$data$focal_fill[p$data$sex == 1] == 1)) # focal_fill for males should be 1
+  expect_true(all(p$data$focal_fill[p$data$sex == 0] == 0)) # focal_fill for females should be 0
 })

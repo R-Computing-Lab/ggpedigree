@@ -11,6 +11,7 @@ ggPedigree.core(
   momID = "momID",
   dadID = "dadID",
   spouseID = "spouseID",
+  focal_fill_column = NULL,
   status_column = NULL,
   config = list(),
   debug = FALSE,
@@ -31,6 +32,8 @@ ggPedigree.core(
 \item{dadID}{Character string specifying the column name for father IDs. Defaults to "dadID".}
 
 \item{spouseID}{Character string specifying the column name for spouse IDs. Defaults to "spouseID".}
+
+\item{focal_fill_column}{Character string specifying the column name for focal fill color.}
 
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
 

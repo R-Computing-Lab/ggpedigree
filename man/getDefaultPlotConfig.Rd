@@ -9,6 +9,7 @@ getDefaultPlotConfig(
   segment_default_color = "black",
   function_name = "getDefaultPlotConfig",
   personID = "personID",
+  color_scale_midpoint = 0.5,
   status_column = NULL,
   ...
 )
@@ -21,6 +22,8 @@ getDefaultPlotConfig(
 \item{function_name}{The name of the function calling this configuration.}
 
 \item{personID}{The column name for person identifiers in the data.}
+
+\item{color_scale_midpoint}{A numeric value for the midpoint of the color scale.}
 
 \item{status_column}{The column name for affected status in the data.}
 
