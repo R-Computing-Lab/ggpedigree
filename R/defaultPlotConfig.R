@@ -165,7 +165,7 @@ getDefaultPlotConfig <- function(color_palette_default =
     focal_fill_force_zero = FALSE, # work around that sets zero to NA so you can distinguish from low values
     # ---- matrix settings ----
     matrix_sparse = FALSE,
-    matrix_isChild_method =  "partialparent",
+    matrix_isChild_method = "partialparent",
     # -- Output Options ----
     return_static = TRUE,
     return_widget = FALSE,
@@ -181,11 +181,9 @@ getDefaultPlotConfig <- function(color_palette_default =
   if (stringr::str_to_lower(function_name) %in% c("ggpedigree", "ggpedigreeinteractive")) {
     core_list$label_method <- "ggrepel"
     core_list$label_column <- personID
-  # core_list$focal_fill_low_color <- core_list$color_palette_low
-   #core_list$focal_fill_mid_color <- core_list$color_palette_mid
-  # core_list$focal_fill_high_color <- core_list$color_palette_high
-
-
+    # core_list$focal_fill_low_color <- core_list$color_palette_low
+    # core_list$focal_fill_mid_color <- core_list$color_palette_mid
+    # core_list$focal_fill_high_color <- core_list$color_palette_high
   }
   if (stringr::str_to_lower(function_name) %in% c("ggpedigree")) {
     core_list$label_method <- "ggrepel"

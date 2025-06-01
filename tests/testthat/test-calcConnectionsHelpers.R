@@ -111,14 +111,13 @@ test_that("calculateCoordinates respects ped_align and ped_packed flags", {
   #   length(meanyfirstbyspid$spID)
   # )
 
- expect_error(
-   getMidpoints(
-     data = coords1, group_vars = c("spID"), x_vars = "x_pos", y_vars = "y_pos",
-     x_out = "x_midpoint", y_out = "y_midpoint", method = "unsupported "
-   ),
-   "Unsupported method."
+  expect_error(
+    getMidpoints(
+      data = coords1, group_vars = c("spID"), x_vars = "x_pos", y_vars = "y_pos",
+      x_out = "x_midpoint", y_out = "y_midpoint", method = "unsupported "
+    ),
+    "Unsupported method."
   )
-
 })
 
 test_that("computeDistances behaves in small data", {

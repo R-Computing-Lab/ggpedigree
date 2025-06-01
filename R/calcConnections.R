@@ -127,7 +127,7 @@ calculateConnections <- function(ped,
 
 
   # no duplications, so just use the same connections
-  connections_skinny <-  connections
+  connections_skinny <- connections
 
   connections <- connections |>
     dplyr::mutate(
@@ -136,7 +136,7 @@ calculateConnections <- function(ped,
       link_as_spouse = TRUE,
       link_as_sibling = TRUE,
       link_as_twin = FALSE
-      )
+    )
 
 
 
@@ -419,14 +419,14 @@ buildTwinSegments <- function(ped, connections_for_FOO) {
   if (!all(c("x_pos", "y_pos") %in% names(ped))) {
     stop("ped must contain x_pos and y_pos columns to build twin segments")
   }
-  if(!"zygosity" %in% names(ped)) {
+  if (!"zygosity" %in% names(ped)) {
     ped$zygocity <- NA_character_
   }
 
   twin_connections <- ped |>
     dplyr::filter(!is.na(.data$twinID)) |>
-   dplyr::mutate(
-      mz = ifelse(stringr::str_to_lower(.data$zygosity) %in% c("mz","monozygotic","identical"), TRUE, FALSE),
+    dplyr::mutate(
+      mz = ifelse(stringr::str_to_lower(.data$zygosity) %in% c("mz", "monozygotic", "identical"), TRUE, FALSE),
     ) |>
     dplyr::select(
       "personID", "x_pos",

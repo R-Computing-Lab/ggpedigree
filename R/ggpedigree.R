@@ -185,7 +185,7 @@ ggPedigree.core <- function(ped, famID = "famID",
 
   # Standardize sex variable using code_male convention
   ds_ped <- BGmisc::recodeSex(ds_ped,
-                              recode_male = config$code_male
+    recode_male = config$code_male
   )
 
   # If personID is not "personID", rename to "personID" internally
@@ -202,17 +202,20 @@ ggPedigree.core <- function(ped, famID = "famID",
       labels = config$status_labels
     )
   }
-  if (config$focal_fill_include==TRUE && is.null(focal_fill_column)) {
+  if (config$focal_fill_include == TRUE && is.null(focal_fill_column)) {
     # If fill_column is specified but not in ds_ped, use personID as fill
     ds_ped <- ds_ped %>%
       left_join(
-        createFillColumn(ped=ds_ped,
-                         focal_fill_personID=config$focal_fill_personID,
-                         personID=personID,
-                         component = config$focal_fill_component,
-                         config = config),
-        by = "personID")
-  } else if (config$focal_fill_include==TRUE && !is.null(focal_fill_column)) {
+        createFillColumn(
+          ped = ds_ped,
+          focal_fill_personID = config$focal_fill_personID,
+          personID = personID,
+          component = config$focal_fill_component,
+          config = config
+        ),
+        by = "personID"
+      )
+  } else if (config$focal_fill_include == TRUE && !is.null(focal_fill_column)) {
     # If fill_column is specified, use it directly
     ds_ped <- ds_ped %>%
       dplyr::mutate(focal_fill = !!rlang::sym(focal_fill_column))
@@ -347,7 +350,6 @@ ggPedigree.core <- function(ped, famID = "famID",
   # Sibling vertical drop line
   # special handling for twin siblings
   if (inherits(plot_connections$twin_coords, "data.frame")) {
-
     plot_connections$twin_coords <- plot_connections$twin_coords |>
       dplyr::mutate(
         x_start = .data$x_pos + config$segment_mz_t * (.data$x_mid_twin - .data$x_pos),
@@ -448,32 +450,31 @@ ggPedigree.core <- function(ped, famID = "famID",
         size = config$point_size,
         na.rm = TRUE
       )
-
-    } else if (config$focal_fill_include == TRUE) {
-      # If status_column is not present but status_include is TRUE,
-      # use alpha aesthetic to show affected status
-      if(is.null(focal_fill_column)){
+  } else if (config$focal_fill_include == TRUE) {
+    # If status_column is not present but status_include is TRUE,
+    # use alpha aesthetic to show affected status
+    if (is.null(focal_fill_column)) {
       p <- p +
         ggplot2::geom_point(
           ggplot2::aes(
-            color =.data$focal_fill ,
+            color = .data$focal_fill,
             shape = as.factor(.data$sex)
           ),
           size = config$point_size,
           na.rm = TRUE
         )
-      } else {
-        p <- p +
-          ggplot2::geom_point(
-            ggplot2::aes(
-              color = !!rlang::sym(focal_fill_column),
-              shape = as.factor(.data$sex)
-            ),
-            size = config$point_size,
-            na.rm = TRUE
-          )
-      }
-    } else if (!is.null(status_column)) {
+    } else {
+      p <- p +
+        ggplot2::geom_point(
+          ggplot2::aes(
+            color = !!rlang::sym(focal_fill_column),
+            shape = as.factor(.data$sex)
+          ),
+          size = config$point_size,
+          na.rm = TRUE
+        )
+    }
+  } else if (!is.null(status_column)) {
     # If status_column is present but sex_color_include is FALSE,
     # use shape for sex and color for affected status
     p <- p +
@@ -499,8 +500,8 @@ ggPedigree.core <- function(ped, famID = "famID",
   }
 
   # If affected status is present, overlay an additional marker using alpha aesthetic
-  if (!is.null(status_column) &&(config$focal_fill_include==TRUE||
-      config$sex_color_include == TRUE)) {
+  if (!is.null(status_column) && (config$focal_fill_include == TRUE ||
+    config$sex_color_include == TRUE)) {
     p <- p + ggplot2::geom_point(
       ggplot2::aes(alpha = !!rlang::sym(status_column)),
       shape = config$status_affected_shape,
@@ -544,7 +545,7 @@ ggPedigree.core <- function(ped, famID = "famID",
         linewidth = config$segment_linewidth,
         color = config$segment_self_color,
         lineend = config$segment_lineend,
-      #  linejoin = config$segment_linejoin,
+        #  linejoin = config$segment_linejoin,
         linetype = config$segment_self_linetype,
         angle = config$segment_self_angle,
         curvature = config$segment_self_curvature,
@@ -705,9 +706,8 @@ ggpedigree <- ggPedigree
         color = config$sex_legend_title,
         shape = config$sex_legend_title
       )
-  } else if(config$focal_fill_include == TRUE){
-
-    if(config$focal_fill_method %in% c("steps","steps2")){
+  } else if (config$focal_fill_include == TRUE) {
+    if (config$focal_fill_method %in% c("steps", "steps2")) {
       p <- p + ggplot2::scale_colour_steps2(
         low = config$focal_fill_low_color,
         mid = config$focal_fill_mid_color,
@@ -716,31 +716,31 @@ ggpedigree <- ggPedigree
         n.breaks = config$focal_fill_n_breaks,
         na.value = config$focal_fill_na_value
       )
-    } else if (config$focal_fill_method %in% c("gradient2","gradient")){
+    } else if (config$focal_fill_method %in% c("gradient2", "gradient")) {
       p <- p + ggplot2::scale_colour_gradient2(
         low = config$focal_fill_low_color,
         mid = config$focal_fill_mid_color,
         high = config$focal_fill_high_color,
         midpoint = config$focal_fill_scale_midpoint,
         n.breaks = config$focal_fill_n_breaks,
-      na.value = config$focal_fill_na_value
+        na.value = config$focal_fill_na_value
       )
     } else {
       stop("focal_fill_method must be one of 'steps', 'steps2', 'gradient2', or 'gradient'")
-      }
-      p <- p +
-        ggplot2::labs(
-          color = if (config$focal_fill_legend_show==TRUE) {
-            config$focal_fill_legend_title
-          } else {
-            NULL
-          },
-          shape = config$sex_legend_title
-        )
-      if (config$focal_fill_legend_show == FALSE) {
-        p <- p + ggplot2::guides(color = "none")
-      }
-    } else if (!is.null(status_column)) {
+    }
+    p <- p +
+      ggplot2::labs(
+        color = if (config$focal_fill_legend_show == TRUE) {
+          config$focal_fill_legend_title
+        } else {
+          NULL
+        },
+        shape = config$sex_legend_title
+      )
+    if (config$focal_fill_legend_show == FALSE) {
+      p <- p + ggplot2::guides(color = "none")
+    }
+  } else if (!is.null(status_column)) {
     if (!is.null(config$status_color_palette)) {
       p <- p + ggplot2::scale_color_manual(
         values = config$status_color_values,
@@ -871,37 +871,42 @@ computeCurvedMidpoint <- function(x0, y0, x1, y1,
 #' @param config A list of configuration options for customizing the fill column.
 #' @return A data frame with two columns: `fill` and `personID`.
 createFillColumn <- function(ped,
-                focal_fill_personID = 2,
-                personID="personID",
-                component = "additive",
-                config = list()) {
+                             focal_fill_personID = 2,
+                             personID = "personID",
+                             component = "additive",
+                             config = list()) {
   default_config <- getDefaultPlotConfig()
 
   config <- utils::modifyList(default_config, config)
 
-  com_mat <- BGmisc::ped2com(ped = ped,
-                     component = component,
-                     personID = personID,
-                     isChild_method = config$matrix_isChild_method,
-                     sparse = config$matrix_sparse)
-if(config$matrix_sparse==FALSE){
-fill_df <- data.frame(focal_fill = com_mat[focal_fill_personID,],
-          personID =  rownames(com_mat)) # needs to match the same data type
-remove(com_mat) # remove the focal_fill_personID column
-} else if(config$matrix_sparse==TRUE) {
-  warning("Sparse matrix detected. Converting to data frame. Currently, sparse matrices are not supported for ggPedigree.")
-  com_mat <- as.matrix(com_mat)
-  fill_df <- data.frame(focal_fill = com_mat[focal_fill_personID,],
-          personID =  rownames(com_mat)) # needs to match the same data type
-  remove(com_mat)
-}
-  # Ensure fill_df$pesonID is of the same type as ped$personID
-if (is.numeric(ped$personID)) {
+  com_mat <- BGmisc::ped2com(
+    ped = ped,
+    component = component,
+    personID = personID,
+    isChild_method = config$matrix_isChild_method,
+    sparse = config$matrix_sparse
+  )
+  if (config$matrix_sparse == FALSE) {
+    fill_df <- data.frame(
+      focal_fill = com_mat[focal_fill_personID, ],
+      personID = rownames(com_mat)
+    ) # needs to match the same data type
+    remove(com_mat) # remove the focal_fill_personID column
+  } else if (config$matrix_sparse == TRUE) {
+    warning("Sparse matrix detected. Converting to data frame. Currently, sparse matrices are not supported for ggPedigree.")
+    com_mat <- as.matrix(com_mat)
+    fill_df <- data.frame(
+      focal_fill = com_mat[focal_fill_personID, ],
+      personID = rownames(com_mat)
+    ) # needs to match the same data type
+    remove(com_mat)
+  }
+  # Ensure fill_df$personID is of the same type as ped$personID
+  if (is.numeric(ped$personID)) {
     fill_df$personID <- as.numeric(fill_df$personID)
-}
-  if(config$focal_fill_force_zero == TRUE) {
-
-  # If focal_fill_force_zero is TRUE, replace 0 with NA
+  }
+  if (config$focal_fill_force_zero == TRUE) {
+    # If focal_fill_force_zero is TRUE, replace 0 with NA
     fill_df$focal_fill[fill_df$focal_fill == 0] <- NA_real_
   }
   return(fill_df)
