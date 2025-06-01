@@ -250,7 +250,7 @@ ggPedigree(potter,
 )
 ```
 
-Here we highlight Harry Potter (ID 7) and his relatives in the pedigree plot. Other components can be highlighted by changing the `focal_fill_component` argument. For example, you can set it to "mitochrondrial" to highlight mitochondrial relatives, or "x" to highlight X-linked relatives. The `focal_fill_method` can be set to "gradient" for a smooth gradient effect or "discrete" for distinct color breaks.
+Here we highlight Harry Potter (ID 7) and his relatives in the pedigree plot. Other components can be highlighted by changing the `focal_fill_component` argument. For example, you can set it to "mitochondrial" to highlight mitochondrial relatives, or "x" to highlight X-linked relatives. The `focal_fill_method` can be set to "gradient" for a smooth gradient effect or "discrete" for distinct color breaks.
 
 
 ```{r focal_fill_mitochondrial}
