@@ -9,6 +9,7 @@ getDefaultPlotConfig(
   segment_default_color = "black",
   function_name = "getDefaultPlotConfig",
   personID = "personID",
+  color_scale_midpoint = 0.5,
   status_column = NULL,
   ...
 )

@@ -494,7 +494,7 @@ ggPedigree.core <- function(ped, famID = "famID",
 
   # If affected status is present, overlay an additional marker using alpha aesthetic
   if (!is.null(status_column) &&(config$focal_fill_include==TRUE||
-      config$sex_color == TRUE)) {
+      config$sex_color_include == TRUE)) {
     p <- p + ggplot2::geom_point(
       ggplot2::aes(alpha = !!rlang::sym(status_column)),
       shape = config$status_affected_shape,
@@ -708,7 +708,7 @@ ggpedigree <- ggPedigree
         high = config$focal_fill_high_color,
         midpoint = config$focal_fill_scale_midpoint,
         n.breaks = config$focal_fill_n_breaks,
-
+        na.value = config$focal_fill_na_value
       )
     } else if (config$focal_fill_method %in% c("gradient2","gradient")){
       p <- p + ggplot2::scale_colour_gradient2(
@@ -717,6 +717,7 @@ ggpedigree <- ggPedigree
         high = config$focal_fill_high_color,
         midpoint = config$focal_fill_scale_midpoint,
         n.breaks = config$focal_fill_n_breaks,
+      na.value = config$focal_fill_na_value
       )
     } else {
       stop("focal_fill_method must be one of 'steps', 'steps2', 'gradient2', or 'gradient'")
@@ -892,5 +893,10 @@ remove(com_mat) # remove the focal_fill_personID column
 if (is.numeric(ped$personID)) {
     fill_df$personID <- as.numeric(fill_df$personID)
 }
+  if(config$focal_fill_force_zero == TRUE) {
+
+  # If focal_fill_force_zero is TRUE, replace 0 with NA
+    fill_df$focal_fill[fill_df$focal_fill == 0] <- NA_real_
+  }
   return(fill_df)
 }

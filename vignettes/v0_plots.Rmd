@@ -67,23 +67,9 @@ if (!"twinID" %in% names(potter)) {
 
 
 ```{r basic-usage}
-
 ggPedigree(potter,
   famID = "famID",
-  personID = "personID",
-  config = list(focal_fill_personID = 7,
-                focal_fill_include = TRUE,
-            #    focal_fill_high_color = "red",
-             #   focal_fill_mid_color = "orange",
-             #   focal_fill_low_color = "lightblue",
-                focal_fill_scale_midpoint = 0.5,
-                focal_fill_component = "additive",
-            focal_fill_method = "gradient",
-            focal_fill_n_breaks = 13,
-            focal_fill_legend_title = "Genetic Relatives \nof Harry Potter",
-            #"additive",
-                sex_color_include=FALSE) # highlight Harry Potter
-# config  = list(segment_mz_color = NA) # color for monozygotic twins
+  personID = "personID"
 )
 ```
 
@@ -248,13 +234,15 @@ ggPedigree(potter,
   personID = "personID",
   config = list(focal_fill_personID = 7,
                 focal_fill_include = TRUE,
-            #    focal_fill_high_color = "red",
-             #   focal_fill_mid_color = "orange",
-             #   focal_fill_low_color = "lightblue",
-                focal_fill_scale_midpoint = 0.25,
+                focal_fill_high_color = "yellow",
+                focal_fill_mid_color = "red",
+                focal_fill_low_color = "#0D082AFF",
+                focal_fill_force_zero = TRUE,
+                focal_fill_na_value =  "black",
+                focal_fill_scale_midpoint = 0.5,
                 focal_fill_component = "additive",
             focal_fill_method = "gradient",
-            focal_fill_n_breaks = 8,
+            focal_fill_n_breaks = NULL,
             focal_fill_legend_title = "Genetic Relatives \nof Harry Potter",
             #"additive",
                 sex_color_include=FALSE) # highlight Harry Potter
@@ -266,12 +254,12 @@ Here we highlight Harry Potter (ID 7) and his relatives in the pedigree plot. Ot
 
 
 ```{r focal_fill_mitochondrial}
-ggPedigree(potter,
+m1 <- ggPedigree(potter,
   famID = "famID",
   personID = "personID",
   config = list(focal_fill_personID = 7,
                 focal_fill_include = TRUE,
-                focal_fill_high_color = "hotpink",
+                focal_fill_high_color = "green",
                # focal_fill_mid_color = "white",
                 focal_fill_low_color = "black",
                 focal_fill_scale_midpoint = 0.55,
@@ -280,10 +268,30 @@ ggPedigree(potter,
             focal_fill_n_breaks = 19,
             focal_fill_legend_show = FALSE,
             focal_fill_legend_title = "Mitochondrial Relatives \nof Harry Potter",
-            #"additive",
             sex_color_include=FALSE) # highlight Harry Potter
 # config  = list(segment_mz_color = NA) # color for monozygotic twins
-)
+) + ggplot2::guides(shape = "none")
+m2 <- ggPedigree(potter,
+  famID = "famID",
+  personID = "personID",
+  config = list(focal_fill_personID = 8,
+                focal_fill_include = TRUE,
+                focal_fill_high_color = "orange",
+               # focal_fill_mid_color = "white",
+                focal_fill_low_color = "black",
+                focal_fill_scale_midpoint = 0.55,
+                focal_fill_component = "mitochondrial",
+            focal_fill_method = "steps",
+            focal_fill_n_breaks = 19,
+            focal_fill_legend_show = FALSE,
+            focal_fill_legend_title = "Mitochondrial Relatives \nof Ginny Weasley",
+            sex_color_include=FALSE) # highlight Harry Potter
+# config  = list(segment_mz_color = NA) # color for monozygotic twins
+)  + ggplot2::guides(shape = "none")
+
+library(patchwork) # for combining plots
+m1 + m2 + plot_layout(ncol = 2) +
+  plot_annotation(title = "Mitochondrial Relatives of Harry Potter and Ginny Weasley")
 ```
 # Multiple families in one graphic
 
@@ -319,7 +327,6 @@ p +
   )
 ```
 
-# Advanced Example: Large Pedigrees with self-loops
-
+# Advanced Examples: Large Pedigrees with self-loops
 
 Additional examples are provided as articles that demonstrate more complex pedigree plots. You can find these on the [ggpedigree website](https://r-computing-lab.github.io/ggpedigree/). These articles cover advanced topics such as: multiple families, self-loops, and other advanced features.
