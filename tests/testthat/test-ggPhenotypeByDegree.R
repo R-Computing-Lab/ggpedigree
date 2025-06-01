@@ -54,6 +54,41 @@ test_that("ggPhenotypeByDegree handles missing values", {
   expect_s3_class(p, "gg")
 })
 
+test_that("ggPhenotypeByDegree applies custom  drops correctly",{
+
+  # Create a sample data frame
+  df <- data.frame(
+    addRel_center = c(.5^c(1, 0, 2, 3, 4)),
+    n_pairs = c(600, 700, 800, 900, 1000),
+    cnu = c(1, 1, 1, 1, 1),
+    mtdna = c(0, 1, 0, 1, 0),
+    y_var = c(0.2, 0.3, NA, 0.5, NA),
+    y_se = c(0.05, NA, 0.03, NA, 0.01)
+  ) %>%
+    dplyr::mutate(
+      addRel_min = addRel_center * .9,
+      addRel_max = addRel_center * 1.1
+    )
+
+  # Call the function with drop_non_classic_sibs set to TRUE
+  p <- ggPhenotypeByDegree(
+    df = df %>%
+      dplyr::select(-addRel_center),
+    y_var = "y_var",
+    y_se = "y_se",
+    config = list(drop_classic_kin = TRUE,
+                  default_scales = FALSE,
+                  degree_rel =FALSE,
+                 annotate=FALSE)
+  )
+
+  # Check if the output is a ggplot object
+  expect_s3_class(p, "gg")
+  # Check if the data has been filtered correctly
+  expect_true(all(is.na(p$data$y_var) | p$data$y_var != 0.3))
+  expect_true("addRel_center" %in% names(p$data) == TRUE)
+}
+)
 test_that("ggPhenotypeByDegree applies custom configurations", {
 
 
@@ -121,6 +156,9 @@ test_that("ggPhenotypeByDegree handles different thresholds", {
 
   # Check if the output is a ggplot object
   expect_s3_class(p, "gg")
+  # Check if the threshold is applied correctly
+  expect_true(all(p$data$n_pairs >= 20))
+  expect_true(all(p$data$addRel_center >= 0))
 })
 test_that("ggPhenotypeByDegree handles empty data frames", {
 
