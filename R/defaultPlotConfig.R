@@ -16,6 +16,7 @@ getDefaultPlotConfig <- function(color_palette_default =
                                  segment_default_color = "black",
                                  function_name = "getDefaultPlotConfig",
                                  personID = "personID",
+                                 color_scale_midpoint = 0.50,
                                  status_column = NULL,
                                  ...) {
   # Ensure the color palette is a character vector
@@ -38,6 +39,10 @@ getDefaultPlotConfig <- function(color_palette_default =
     apply_default_scales = TRUE,
     apply_default_theme = TRUE,
     color_palette_default = color_palette_default,
+    color_palette_low = "#000004FF",
+    color_palette_mid = "#56106EFF",
+    color_palette_high = "#FCFDBFFF",
+    color_scale_midpoint = color_scale_midpoint,
     plot_title = NULL,
     plot_subtitle = NULL,
     value_rounding_digits = 2,
@@ -143,6 +148,21 @@ getDefaultPlotConfig <- function(color_palette_default =
     status_legend_title = "Affected",
     status_legend_show = FALSE,
 
+    # ---- Focal Fill Settings ----
+    focal_fill_include = FALSE,
+    focal_fill_legend_show = TRUE,
+    focal_fill_personID = 1,
+    focal_fill_legend_title = "Focal Fill",
+    focal_fill_high_color = "#FDE725FF",
+    focal_fill_mid_color = "#9F2A63FF",
+    focal_fill_low_color = "#0D082AFF",
+    focal_fill_scale_midpoint = color_scale_midpoint,
+    focal_fill_method = "gradient",
+    focal_fill_component = "additive",
+    focal_fill_n_breaks = NULL,
+    # ---- matrix settings ----
+    matrix_sparse = FALSE,
+    matrix_isChild_method =  "partialparent",
     # -- Output Options ----
     return_static = TRUE,
     return_widget = FALSE,
@@ -158,6 +178,11 @@ getDefaultPlotConfig <- function(color_palette_default =
   if (stringr::str_to_lower(function_name) %in% c("ggpedigree", "ggpedigreeinteractive")) {
     core_list$label_method <- "ggrepel"
     core_list$label_column <- personID
+  # core_list$focal_fill_low_color <- core_list$color_palette_low
+   #core_list$focal_fill_mid_color <- core_list$color_palette_mid
+  # core_list$focal_fill_high_color <- core_list$color_palette_high
+
+
   }
   if (stringr::str_to_lower(function_name) %in% c("ggpedigree")) {
     core_list$label_method <- "ggrepel"

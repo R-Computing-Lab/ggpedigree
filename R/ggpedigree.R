@@ -58,6 +58,7 @@ ggPedigree <- function(ped,
                        dadID = "dadID",
                        spouseID = "spouseID",
                        status_column = NULL,
+                       focal_fill_column = NULL,
                        tooltip_columns = NULL,
                        return_widget = FALSE,
                        config = list(),
@@ -81,6 +82,7 @@ ggPedigree <- function(ped,
       momID = momID,
       dadID = dadID,
       status_column = status_column,
+      focal_fill_column = focal_fill_column,
       config = config,
       debug = debug,
       hints = hints,
@@ -114,6 +116,7 @@ ggPedigree <- function(ped,
       momID = momID,
       dadID = dadID,
       status_column = status_column,
+      focal_fill_column = focal_fill_column,
       config = config,
       debug = debug,
       hints = hints,
@@ -138,6 +141,7 @@ ggPedigree.core <- function(ped, famID = "famID",
                             momID = "momID",
                             dadID = "dadID",
                             spouseID = "spouseID",
+                            focal_fill_column = NULL,
                             status_column = NULL,
                             config = list(),
                             debug = FALSE,
@@ -172,10 +176,21 @@ ggPedigree.core <- function(ped, famID = "famID",
     ds_ped <- dplyr::rename(.data = ds_ped, famID = "famID.x")
   }
 
+  # ----
+  # STEP 3: Data Cleaning and Recoding
+  # ----
+
+
+  # Standardize sex variable using code_male convention
+  ds_ped <- BGmisc::recodeSex(ds_ped,
+                              recode_male = config$code_male
+  )
+
   # If personID is not "personID", rename to "personID" internally
   #  if (personID != "personID") {
   #   ds_ped <- dplyr::rename(ds_ped, personID = !!personID)
   #  }
+
 
   # Recode affected status into factor, if applicable
   if (!is.null(status_column)) {
@@ -185,17 +200,17 @@ ggPedigree.core <- function(ped, famID = "famID",
       labels = config$status_labels
     )
   }
-
-
-  # -----
-  # STEP 3: Sex Recode
-  # -----
-
-  # Standardize sex variable using code_male convention
-  ds_ped <- BGmisc::recodeSex(ds_ped,
-    recode_male = config$code_male
-  )
-
+  if (config$focal_fill_include==TRUE && is.null(focal_fill_column)) {
+    # If fill_column is specified but not in ds_ped, use personID as fill
+    ds_ped <- ds_ped %>%
+      left_join(
+        createFillColumn(ped=ds_ped,
+                         focal_fill_personID=config$focal_fill_personID,
+                         personID=personID,
+                         component = config$focal_fill_component,
+                         config = config),
+        by = "personID")
+  }
   # -----
   # STEP 4: Coordinate Generation
   # -----
@@ -425,19 +440,34 @@ ggPedigree.core <- function(ped, famID = "famID",
           shape = as.factor(.data$sex)
         ),
         size = config$point_size,
-        na.rm = TRUE,
-        stroke = config$segment_linewidth
-      )
-    # If affected status is present, overlay an additional marker using alpha aesthetic
-    if (!is.null(status_column)) {
-      p <- p + ggplot2::geom_point(
-        ggplot2::aes(alpha = !!rlang::sym(status_column)),
-        shape = config$status_affected_shape,
-        size = config$point_size,
         na.rm = TRUE
       )
-    }
-  } else if (!is.null(status_column)) {
+
+    } else if (config$focal_fill_include == TRUE) {
+      # If status_column is not present but status_include is TRUE,
+      # use alpha aesthetic to show affected status
+      if(is.null(focal_fill_column)){
+      p <- p +
+        ggplot2::geom_point(
+          ggplot2::aes(
+            color =.data$focal_fill ,
+            shape = as.factor(.data$sex)
+          ),
+          size = config$point_size,
+          na.rm = TRUE
+        )
+      } else {
+        p <- p +
+          ggplot2::geom_point(
+            ggplot2::aes(
+              color = !!rlang::sym(focal_fill_column),
+              shape = as.factor(.data$sex)
+            ),
+            size = config$point_size,
+            na.rm = TRUE
+          )
+      }
+    } else if (!is.null(status_column)) {
     # If status_column is present but sex_color_include is FALSE,
     # use shape for sex and color for affected status
     p <- p +
@@ -462,6 +492,16 @@ ggPedigree.core <- function(ped, famID = "famID",
       )
   }
 
+  # If affected status is present, overlay an additional marker using alpha aesthetic
+  if (!is.null(status_column) &&(config$focal_fill_include==TRUE||
+      config$sex_color == TRUE)) {
+    p <- p + ggplot2::geom_point(
+      ggplot2::aes(alpha = !!rlang::sym(status_column)),
+      shape = config$status_affected_shape,
+      size = config$point_size,
+      na.rm = TRUE
+    )
+  }
 
   # -----
   # STEP 9: Add Labels
@@ -589,7 +629,8 @@ ggPedigree.core <- function(ped, famID = "famID",
     p <- .addScales(
       p = p,
       config = config,
-      status_column = status_column
+      status_column = status_column,
+      focal_fill_column = focal_fill_column
     )
   }
 
@@ -617,7 +658,9 @@ ggpedigree <- ggPedigree
 #' @keywords internal
 #' @return A ggplot object with added scales.
 
-.addScales <- function(p, config, status_column = NULL) {
+.addScales <- function(p, config,
+                       status_column = NULL,
+                       focal_fill_column = NULL) {
   p <- p + ggplot2::scale_shape_manual(
     values = config$sex_shape_values,
     labels = config$sex_shape_labels
@@ -656,7 +699,41 @@ ggpedigree <- ggPedigree
         color = config$sex_legend_title,
         shape = config$sex_legend_title
       )
-  } else if (!is.null(status_column)) {
+  } else if(config$focal_fill_include == TRUE){
+
+    if(config$focal_fill_method %in% c("steps","steps2")){
+      p <- p + ggplot2::scale_colour_steps2(
+        low = config$focal_fill_low_color,
+        mid = config$focal_fill_mid_color,
+        high = config$focal_fill_high_color,
+        midpoint = config$focal_fill_scale_midpoint,
+        n.breaks = config$focal_fill_n_breaks,
+
+      )
+    } else if (config$focal_fill_method %in% c("gradient2","gradient")){
+      p <- p + ggplot2::scale_colour_gradient2(
+        low = config$focal_fill_low_color,
+        mid = config$focal_fill_mid_color,
+        high = config$focal_fill_high_color,
+        midpoint = config$focal_fill_scale_midpoint,
+        n.breaks = config$focal_fill_n_breaks,
+      )
+    } else {
+      stop("focal_fill_method must be one of 'steps', 'steps2', 'gradient2', or 'gradient'")
+      }
+      p <- p +
+        ggplot2::labs(
+          color = if (config$focal_fill_legend_show==TRUE) {
+            config$focal_fill_legend_title
+          } else {
+            NULL
+          },
+          shape = config$sex_legend_title
+        )
+      if (config$focal_fill_legend_show == FALSE) {
+        p <- p + ggplot2::guides(color = "none")
+      }
+    } else if (!is.null(status_column)) {
     if (!is.null(config$status_color_palette)) {
       p <- p + ggplot2::scale_color_manual(
         values = config$status_color_values,
@@ -774,4 +851,46 @@ computeCurvedMidpoint <- function(x0, y0, x1, y1,
 
 
   midpoint
+}
+
+#' @title Get fill column for ggPedigree
+#' @description
+#' This function creates a fill column for ggPedigree plots as a function of
+#' the focal person relative to everyone else in the tree.
+#' @param ped A data frame containing the pedigree data.
+#' @param focal_fill_personID Numeric ID of the person to use as the focal point for fill.
+#' @param personID Character string specifying the column name for individual IDs.
+#' @param component Character string specifying the component type (e.g., "additive").
+#' @param config A list of configuration options for customizing the fill column.
+#' @return A data frame with two columns: `fill` and `personID`.
+createFillColumn <- function(ped,
+                focal_fill_personID = 2,
+                personID="personID",
+                component = "additive",
+                config = list()) {
+  default_config <- getDefaultPlotConfig()
+
+  config <- utils::modifyList(default_config, config)
+
+  com_mat <- BGmisc::ped2com(ped = ped,
+                     component = component,
+                     personID = personID,
+                     isChild_method = config$matrix_isChild_method,
+                     sparse = config$matrix_sparse)
+if(config$matrix_sparse==FALSE){
+fill_df <- data.frame(focal_fill = com_mat[focal_fill_personID,],
+          personID =  rownames(com_mat)) # needs to match the same data type
+remove(com_mat) # remove the focal_fill_personID column
+} else if(config$matrix_sparse==TRUE) {
+  warning("Sparse matrix detected. Converting to data frame. Currently, sparse matrices are not supported for ggPedigree.")
+  com_mat <- as.matrix(com_mat)
+  fill_df <- data.frame(focal_fill = com_mat[focal_fill_personID,],
+          personID =  rownames(com_mat)) # needs to match the same data type
+  remove(com_mat)
+}
+  # Ensure fill_df$pesonID is of the same type as ped$personID
+if (is.numeric(ped$personID)) {
+    fill_df$personID <- as.numeric(fill_df$personID)
+}
+  return(fill_df)
 }
