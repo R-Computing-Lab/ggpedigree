@@ -29,6 +29,7 @@ Imports:
     paletteer
 Suggests: 
     mockery,
+    patchwork,
     viridis,
     knitr,
     tidyverse,
