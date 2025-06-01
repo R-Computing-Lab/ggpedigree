@@ -231,7 +231,7 @@ test_that("focal fill works with ID", {
   expect_true(all(p3$data$focal_fill[p3$data$personID == 8] == 1)) # focal_fill for personID 8 should be 1
 })
 
-test_that("fill works with column", {
+test_that("fill works with fill_column", {
   library(BGmisc)
   data("potter")
 
@@ -247,6 +247,9 @@ test_that("fill works with column", {
   )
   expect_s3_class(p, "gg") # Should return a ggplot object
   expect_true("focal_fill" %in% names(p$data)) # focal_fill column should be present
-  expect_true(all(p$data$focal_fill == p$data$sex)) # focal_fill values should be between 0 and 1
-  expect_true(all(p$data$focal_fill %in% c(1, 0))) # focal_fill values should be either "M" or "F"
+
+  expect_true(all(p$data$focal_fill == p$data$sex)) # focal_fill values should match column values
+  expect_true(all(p$data$focal_fill %in% c(1, 0))) # focal_fill values should be either 0 or 1
+  expect_true(all(p$data$focal_fill[p$data$sex == 1] == 1)) # focal_fill for males should be 1
+  expect_true(all(p$data$focal_fill[p$data$sex == 0] == 0)) # focal_fill for females should be 0
 })
