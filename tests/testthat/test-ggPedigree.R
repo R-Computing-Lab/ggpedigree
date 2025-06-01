@@ -187,7 +187,7 @@ df <- inbreeding
   expect_s3_class(p, "gg") # Should return a ggplot object
 })
 
-test_that("focal fill works", {
+test_that("focal fill works with ID", {
   library(BGmisc)
   data("potter") # load example data from BGmisc
 
@@ -219,4 +219,40 @@ test_that("focal fill works", {
   expect_true(any(is.na(p2$data$focal_fill))) # focal_fill values should be ge 0 and 1
   expect_true(all(p2$data$focal_fill[!is.na(p2$data$focal_fill)] > 0 & p2$data$focal_fill[!is.na(p2$data$focal_fill)] <= 1)) # focal_fill values should be greater than 0 and less than or equal to 1
 
+  # test focal_fill with a different personID
+
+  p3 <- ggPedigree(potter,
+                  famID = "famID",
+                  personID = "personID",
+                  config = list(
+                    focal_fill_include = TRUE,
+                    sex_color_include=FALSE,
+                    focal_fill_personID = 8
+                  )
+  )
+  expect_s3_class(p3, "gg") # Should return a ggplot object
+  expect_true("focal_fill" %in% names(p3$data)) # focal_fill column should be present
+  expect_true(all(p3$data$focal_fill >= 0 & p3$data$focal_fill <= 1)) # focal_fill values should be between 0 and 1
+  expect_true(all(p3$data$focal_fill[p3$data$personID == 8] == 1)) # focal_fill for personID 8 should be 1
 })
+
+test_that("fill works with column",{
+    library(BGmisc)
+    data("potter")
+
+    p <- ggPedigree(potter,
+                    famID = "famID",
+                    personID = "personID",
+                    focal_fill_column = "sex",
+                    config = list(
+                     focal_fill_method = "steps",
+                     focal_fill_include = TRUE,
+                    sex_color_include=FALSE
+                    )
+    )
+    expect_s3_class(p, "gg") # Should return a ggplot object
+    expect_true("focal_fill" %in% names(p$data)) # focal_fill column should be present
+    expect_true(all(p$data$focal_fill== p$data$sex)) # focal_fill values should be between 0 and 1
+    expect_true(all(p$data$focal_fill %in% c(1, 0))) # focal_fill values should be either "M" or "F"
+  }
+  )
