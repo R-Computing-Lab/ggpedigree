@@ -160,6 +160,8 @@ getDefaultPlotConfig <- function(color_palette_default =
     focal_fill_method = "gradient",
     focal_fill_component = "additive",
     focal_fill_n_breaks = NULL,
+    focal_fill_na_value = "black",
+    focal_fill_force_zero = FALSE, # work around that sets zero to NA so you can distinguish from low values
     # ---- matrix settings ----
     matrix_sparse = FALSE,
     matrix_isChild_method =  "partialparent",
@@ -181,7 +183,7 @@ getDefaultPlotConfig <- function(color_palette_default =
   # core_list$focal_fill_low_color <- core_list$color_palette_low
    #core_list$focal_fill_mid_color <- core_list$color_palette_mid
   # core_list$focal_fill_high_color <- core_list$color_palette_high
-
+    core_list$focal_fill_color_zero <- core_list$focal_fill_low_color
 
   }
   if (stringr::str_to_lower(function_name) %in% c("ggpedigree")) {

@@ -4,7 +4,7 @@
 \alias{.addScales}
 \title{Add Scales to ggplot Pedigree Plot}
 \usage{
-.addScales(p, config, status_column = NULL)
+.addScales(p, config, status_column = NULL, focal_fill_column = NULL)
 }
 \arguments{
 \item{p}{A ggplot object.}

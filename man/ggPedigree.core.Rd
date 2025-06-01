@@ -11,6 +11,7 @@ ggPedigree.core(
   momID = "momID",
   dadID = "dadID",
   spouseID = "spouseID",
+  focal_fill_column = NULL,
   status_column = NULL,
   config = list(),
   debug = FALSE,
