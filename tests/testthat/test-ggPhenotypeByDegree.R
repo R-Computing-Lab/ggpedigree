@@ -76,8 +76,8 @@ test_that("ggPhenotypeByDegree applies custom  drops correctly", {
     config = list(
       drop_classic_kin = TRUE,
       default_scales = FALSE,
-      degree_rel = FALSE,
-      annotate = FALSE
+      use_relative_degree = FALSE,
+      annotate_include = FALSE
     )
   )
 
@@ -109,8 +109,8 @@ test_that("ggPhenotypeByDegree applies custom configurations", {
     y_se = "y_se",
     config = list(
       apply_default_theme = FALSE,
-      title = "Custom Title",
-      subtitle = "Custom Subtitle"
+      plot_title = "Custom Title",
+      plot_subtitle = "Custom Subtitle"
     )
   )
 
@@ -144,7 +144,7 @@ test_that("ggPhenotypeByDegree handles different thresholds", {
     y_se = "y_se",
     config = list(
       apply_default_theme = FALSE,
-      threshold = 20
+      match_threshold_percent  = 20
     )
   )
 

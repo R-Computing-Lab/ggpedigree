@@ -18,6 +18,7 @@ getDefaultPlotConfig <- function(color_palette_default =
                                  function_name = "getDefaultPlotConfig",
                                  personID = "personID",
                                  color_scale_midpoint = 0.50,
+                                 alpha_default = 1,
                                  status_column = NULL,
                                  ...) {
   # Ensure the color palette is a character vector
@@ -31,7 +32,7 @@ getDefaultPlotConfig <- function(color_palette_default =
   }
 
 
-  if (!stringr::str_to_lower(function_name) %in% c("ggrelatednessmatrix", "ggpedigree", "ggpedigreeinteractive", "getdefaultplotconfig")) {
+  if (!stringr::str_to_lower(function_name) %in% c("ggrelatednessmatrix", "ggpedigree", "ggphenotypebydegree", "ggpedigreeinteractive", "getdefaultplotconfig")) {
     stop(paste0("The function ", function_name, " is not supported by getDefaultPlotConfig."))
   }
 
@@ -44,6 +45,8 @@ getDefaultPlotConfig <- function(color_palette_default =
     color_palette_mid = "#56106EFF",
     color_palette_high = "#FCFDBFFF",
     color_scale_midpoint = color_scale_midpoint,
+    color_scale = "ggthemes::calc", # only used in gg
+    alpha = alpha_default,
     plot_title = NULL,
     plot_subtitle = NULL,
     value_rounding_digits = 2,
@@ -56,8 +59,9 @@ getDefaultPlotConfig <- function(color_palette_default =
     filter_degree_max = 7,
     drop_classic_kin = FALSE,
     drop_non_classic_sibs = TRUE,
-    only_classic_kin = TRUE,
+    use_only_classic_kin = TRUE,
     use_relative_degree = TRUE,
+    group_by_kin = TRUE,
 
     # ----Kinbin Settings ----
     match_threshold_percent = 10,
@@ -87,6 +91,7 @@ getDefaultPlotConfig <- function(color_palette_default =
     outline_include = FALSE,
     outline_multiplier = 1.25,
     outline_color = "black",
+
 
     # ---- Tooltip Aesthetics ----
     tooltip_include = TRUE,
@@ -163,9 +168,18 @@ getDefaultPlotConfig <- function(color_palette_default =
     focal_fill_n_breaks = NULL,
     focal_fill_na_value = "black",
     focal_fill_force_zero = FALSE, # work around that sets zero to NA so you can distinguish from low values
+
+    # ---- Confidence Intervals
+
+    ci_include = TRUE,
+    ci_ribbon_alpha = .3,
+
+
     # ---- matrix settings ----
     matrix_sparse = FALSE,
     matrix_isChild_method = "partialparent",
+
+
     # -- Output Options ----
     return_static = TRUE,
     return_widget = FALSE,
@@ -177,6 +191,12 @@ getDefaultPlotConfig <- function(color_palette_default =
   if (stringr::str_to_lower(function_name) %in% c("ggrelatednessmatrix")) {
     #   If the function is ggRelatednessMatrix, we need to adjust the tooltip columns
     core_list$tooltip_columns <- c("ID1", "ID2", "value")
+  } else if (stringr::str_to_lower(function_name) %in%
+        c("ggphenotypebydegree", "phenotypebydegree")) {
+
+    core_list$point_size <-  1
+    core_list$plot_title <- "Phenotypic Correlation vs Genetic Relatedness"
+
   }
   if (stringr::str_to_lower(function_name) %in% c("ggpedigree", "ggpedigreeinteractive")) {
     core_list$label_method <- "ggrepel"
@@ -264,7 +284,12 @@ buildPlotConfig <- function(default_config,
       ),
       built_config$status_labs
     )
+  } else if(stringr::str_to_lower(function_name) %in%
+            c("ggphenotypebydegree", "phenotypebydegree")) {
+
+
   }
+
   return(built_config)
 }
 # -----

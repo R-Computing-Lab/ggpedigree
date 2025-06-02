@@ -184,7 +184,8 @@ ggPhenotypeByDegree(
   config = list(
     only_classic_kin = FALSE,
     degree_rel = FALSE,
-    kin_grouping = TRUE
+    kin_grouping = TRUE,
+    
   )
 )
 ```

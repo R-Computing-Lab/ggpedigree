@@ -14,6 +14,7 @@
 * Added workaround for plotly non-support for geom_curve with computeCurvedMidpoint
 * Adding twin plotting features
 * Added ability to fill colors as a function of the degree of relatedness to a focal person
+* Add getDefaultPlotConfig functionality to ggPhenotypebyDegree
 
 # ggpedigree 0.4.1
 ## Status: Submitted to CRAN
