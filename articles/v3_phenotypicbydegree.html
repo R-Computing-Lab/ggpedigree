@@ -66,7 +66,7 @@
                         <h4 data-toc-skip class="author">S. Mason
 Garrison</h4>
             
-            <h4 data-toc-skip class="date">2025-06-01</h4>
+            <h4 data-toc-skip class="date">2025-06-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/main/vignettes/articles/v3_phenotypicbydegree.Rmd" class="external-link"><code>vignettes/articles/v3_phenotypicbydegree.Rmd</code></a></small>
       <div class="d-none name"><code>v3_phenotypicbydegree.Rmd</code></div>
@@ -79,10 +79,12 @@ degree of relatedness using the <code>ggPhenotypeByDegree</code>
 function from the <code>ggpedigree</code> package. This function is
 particularly useful for analyzing and visualizing the relationship
 between phenotypic traits and genetic relatedness in pedigree data.</p>
-<p>The example below uses a squirrel pedigree dataset to illustrate how
-to create a plot showing the phenotypic correlation across different
-degrees of relatedness.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+The example below uses a squirrel pedigree dataset to illustrate how to
+create a plot showing the phenotypic correlation across different
+degrees of relatedness.
+<details><summary>
+Click to expand pedigree setup
+</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/R-Computing-Lab/ggpedigree/" class="external-link">ggpedigree</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/R-Computing-Lab/BGmisc/" class="external-link">BGmisc</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
@@ -234,7 +236,7 @@ degrees of relatedness.</p>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">lrs_cor_test</span>, <span class="op">-</span><span class="va">ars_n_cor_test</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># drop the list‑columns once unpacked</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>cnu <span class="op">=</span> <span class="va">cnuRel</span>, mtdna <span class="op">=</span> <span class="va">mitRel</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+</details><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPhenotypeByDegree.html">ggPhenotypeByDegree</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">result</span>,</span>
 <span>  y_var <span class="op">=</span> <span class="st">"cor_lrs"</span>,</span>
