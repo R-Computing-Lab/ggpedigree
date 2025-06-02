@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggpedigree.R
 \name{computeCurvedMidpoint}
 \alias{computeCurvedMidpoint}
-\title{Prepare Pedigree Data}
+\title{Compute midpoint coordinate for curved segment}
 \usage{
 computeCurvedMidpoint(
   x0,
@@ -34,9 +34,8 @@ computeCurvedMidpoint(
 }
 \value{
 Numeric vector of midpoints (x or y)
+ @keywords internal
 }
 \description{
-This function checks and prepares the pedigree data frame for use in ggPedigree.
-
 Returns either x or y midpoint using vectorized curved offset
 }

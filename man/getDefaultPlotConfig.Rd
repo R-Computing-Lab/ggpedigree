@@ -7,10 +7,13 @@
 getDefaultPlotConfig(
   color_palette_default = c("#440154FF", "#FDE725FF", "#21908CFF"),
   segment_default_color = "black",
+  segment_default_linetype = 1,
   function_name = "getDefaultPlotConfig",
   personID = "personID",
   color_scale_midpoint = 0.5,
   status_column = NULL,
+  overlay_shape = 4,
+  overlay_color = "black",
   ...
 )
 }
@@ -26,6 +29,8 @@ getDefaultPlotConfig(
 \item{color_scale_midpoint}{A numeric value for the midpoint of the color scale.}
 
 \item{status_column}{The column name for affected status in the data.}
+
+\item{overlay_shape}{The shape used for overlaying points in the plot.}
 
 \item{...}{Additional arguments for future extensibility.}
 }

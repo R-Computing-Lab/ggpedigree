@@ -11,13 +11,13 @@
 #' @param momID Character string specifying the column name for mother IDs. Defaults to "momID".
 #' @param dadID Character string specifying the column name for father IDs. Defaults to "dadID".
 #' @param spouseID Character string specifying the column name for spouse IDs. Defaults to "spouseID".
-#'  @param matID Character string specifying the column name for maternal lines Defaults to "matID".
-#'  @param patID Character string specifying the column name for paternal lines Defaults to "patID".
+#' @param matID Character string specifying the column name for maternal lines Defaults to "matID".
+#' @param patID Character string specifying the column name for paternal lines Defaults to "patID".
 #' @param status_column Character string specifying the column name for affected status. Defaults to NULL.
 #' @param debug Logical. If TRUE, prints debugging information. Default: FALSE.
 #' @param hints Data frame with hints for layout adjustments. Default: NULL.
 #' @param interactive Logical. If TRUE, generates an interactive plot using `plotly`. Default: FALSE.
-#'  @param overlay_column Character string specifying the column name for overlay alpha values.
+#' @param overlay_column Character string specifying the column name for overlay alpha values.
 #' @param tooltip_columns Character vector of column names to show when hovering.
 #'        Defaults to c("personID", "sex").  Additional columns present in `ped`
 #'        can be supplied – they will be added to the Plotly tooltip text.

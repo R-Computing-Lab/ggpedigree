@@ -12,9 +12,12 @@ ggPedigree(
   momID = "momID",
   dadID = "dadID",
   spouseID = "spouseID",
+  matID = "matID",
+  patID = "patID",
   status_column = NULL,
   focal_fill_column = NULL,
   tooltip_columns = NULL,
+  overlay_column = NULL,
   return_widget = FALSE,
   config = list(),
   debug = FALSE,
@@ -30,9 +33,12 @@ ggpedigree(
   momID = "momID",
   dadID = "dadID",
   spouseID = "spouseID",
+  matID = "matID",
+  patID = "patID",
   status_column = NULL,
   focal_fill_column = NULL,
   tooltip_columns = NULL,
+  overlay_column = NULL,
   return_widget = FALSE,
   config = list(),
   debug = FALSE,
@@ -54,13 +60,20 @@ ggpedigree(
 
 \item{spouseID}{Character string specifying the column name for spouse IDs. Defaults to "spouseID".}
 
+\item{matID}{Character string specifying the column name for maternal lines Defaults to "matID".}
+
+\item{patID}{Character string specifying the column name for paternal lines Defaults to "patID".}
+
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
 
 \item{focal_fill_column}{Character string specifying the column name for focal fill color.}
 
 \item{tooltip_columns}{Character vector of column names to show when hovering.
 Defaults to c("personID", "sex").  Additional columns present in `ped`
-can be supplied – they will be added to the Plotly tooltip text.}
+can be supplied – they will be added to the Plotly tooltip text.
+Defaults to NULL, which uses the default tooltip columns.}
+
+\item{overlay_column}{Character string specifying the column name for overlay alpha values.}
 
 \item{return_widget}{Logical; if TRUE (default) returns a plotly htmlwidget.
 If FALSE, returns the underlying plotly object (useful for further
