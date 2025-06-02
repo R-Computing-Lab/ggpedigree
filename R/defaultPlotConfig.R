@@ -125,155 +125,140 @@
 #' @export
 
 
-getDefaultPlotConfig <- function( function_name = "getDefaultPlotConfig",
-                                   personID = "personID",
-                                   status_column = NULL,
-                                   alpha_default = 1,
-                                  # ---- General Appearance ----
-                                  apply_default_scales = TRUE,
-                                  apply_default_theme = TRUE,
-                                  segment_default_color = "black",
-                                  color_palette_default = c("#440154FF", "#FDE725FF", "#21908CFF"),
-                                  color_palette_low = "#000004FF",
-                                  color_palette_mid = "#56106EFF",
-                                  color_palette_high = "#FCFDBFFF",
-                                  color_scale_midpoint = 0.50,
-                                  color_scale = "ggthemes::calc", # only used in gg
-                                  alpha = alpha_default,
-                                  plot_title = NULL,
-                                  plot_subtitle = NULL,
-                                  value_rounding_digits = 2,
-                                  # --- SEX ------------------------------------------------------------
-                                  code_male = 1,
-
-                                  # ---- Filtering and Computation ----
-                                  filter_n_pairs = 500,
-                                  filter_degree_min = 0,
-                                  filter_degree_max = 7,
-                                  drop_classic_kin = FALSE,
-                                  drop_non_classic_sibs = TRUE,
-                                  use_only_classic_kin = TRUE,
-                                  use_relative_degree = TRUE,
-                                  group_by_kin = TRUE,
-
-                                  # ----Kinbin Settings ----
-                                  match_threshold_percent = 10,
-                                  max_degree_levels = 12,
-                                  grouping_column = "mtdna_factor",
-
-
-                                  # ---- Annotation Settings ----
-                                  annotate_include = TRUE,
-                                  annotate_x_shift = -0.1,
-                                  annotate_y_shift = 0.005,
-
-                                  # ---- Label Aesthetics ----
-                                  label_include = TRUE,
-                                  label_column = "personID",
-                                  label_method = "ggrepel",
-                                  label_max_overlaps = 15,
-                                  label_nudge_x = 0,
-                                  label_nudge_y = -0.10,
-                                  label_segment_color = NA,
-                                  label_text_angle = 0,
-                                  label_text_size = 2,
-                                  label_text_color = "black",
-
-                                  # --- POINT / OUTLINE AESTHETICS ---------------------------------------
-                                  point_size = 4,
-                                  outline_include = FALSE,
-                                  outline_multiplier = 1.25,
-                                  outline_color = "black",
-
-
-                                  # ---- Tooltip Aesthetics ----
-                                  tooltip_include = TRUE,
-                                  tooltip_columns = c("ID1", "ID2", "value"),
-
-                                  # ---- Axis and Layout Settings ----
-                                  axis_x_label = NULL,
-                                  axis_y_label = NULL,
-                                  axis_text_angle_x = 90,
-                                  axis_text_angle_y = 0,
-                                  axis_text_size = 8,
-                                  axis_text_color = "black",
-
-                                  # ---- Generation Scale Settings ----
-                                  generation_height = 1,
-                                  generation_width = 1,
-                                  ped_packed = TRUE,
-                                  ped_align = TRUE,
-                                  ped_width = 15,
-
-                                  # ---- Segment Drawing Options ----
-                                  segment_linewidth = 0.5,
-                                  segment_linetype = 1,
-                                  segment_lineend = "round",
-                                  segment_linejoin = "round",
-                                  segment_offspring_color = segment_default_color,
-                                  segment_parent_color = segment_default_color,
-                                  segment_self_color = segment_default_color,
-                                  segment_sibling_color = segment_default_color,
-                                  segment_spouse_color = segment_default_color,
-                                  segment_mz_color = segment_default_color,
-                                  segment_mz_linetype = 1,
-                                  segment_mz_alpha = 1,
-                                  segment_mz_t = .6,
-                                  segment_self_linetype = "dotdash",
-                                  segment_self_alpha = 0.5,
-                                  segment_self_angle = 90,
-                                  segment_self_curvature = -0.2,
-
-                                  # ---- Sex Legend and Appearance ----
-                                  sex_color_include = TRUE,
-                                  sex_legend_title = "Sex",
-                                  sex_shape_labels = c("Female", "Male", "Unknown"),
-                                  sex_color_palette = color_palette_default,
-                                  sex_shape_female = 16,
-                                  sex_shape_male = 15,
-                                  sex_shape_unknown = 18,
-
-                                  # ---- Affected Status Controls ----
-                                  status_include = TRUE,
-                                  status_code_affected = 1,
-                                  status_code_unaffected = 0,
-                                  status_label_affected = "Affected",
-                                  status_label_unaffected = "Unaffected",
-                                  status_alpha_affected = 1,
-                                  status_alpha_unaffected = 0,
-                                  status_color_palette = c(color_palette_default[1], color_palette_default[2]),
-                                  # Use first color for affected,
-                                  status_affected_shape = 4,
-                                  status_legend_title = "Affected",
-                                  status_legend_show = FALSE,
-
-                                  # ---- Focal Fill Settings ----
-                                  focal_fill_include = FALSE,
-                                  focal_fill_legend_show = TRUE,
-                                  focal_fill_personID = 1,
-                                  focal_fill_legend_title = "Focal Fill",
-                                  focal_fill_high_color = "#FDE725FF",
-                                  focal_fill_mid_color = "#9F2A63FF",
-                                  focal_fill_low_color = "#0D082AFF",
-                                  focal_fill_scale_midpoint = color_scale_midpoint,
-                                  focal_fill_method = "gradient",
-                                  focal_fill_component = "additive",
-                                  focal_fill_n_breaks = NULL,
-                                  focal_fill_na_value = "black",
-                                  focal_fill_force_zero = FALSE, # work around that sets zero to NA so you can distinguish from low values
-
-                                  # ---- Confidence Intervals
-                                  ci_include = TRUE,
-                                  ci_ribbon_alpha = .3,
-                                  # ---- matrix settings ----
-                                  matrix_sparse = FALSE,
-                                  matrix_isChild_method = "partialparent",
-                                  # -- Output Options ----
-                                  return_static = TRUE,
-                                  return_widget = FALSE,
-                                  return_interactive = FALSE,
-                                  # ---- Debugging Options ----
-                                  override_many2many = FALSE,
+getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
+                                 personID = "personID",
+                                 status_column = NULL,
+                                 alpha_default = 1,
+                                 # ---- General Appearance ----
+                                 apply_default_scales = TRUE,
+                                 apply_default_theme = TRUE,
+                                 segment_default_color = "black",
+                                 color_palette_default = c("#440154FF", "#FDE725FF", "#21908CFF"),
+                                 color_palette_low = "#000004FF",
+                                 color_palette_mid = "#56106EFF",
+                                 color_palette_high = "#FCFDBFFF",
+                                 color_scale_midpoint = 0.50,
+                                 color_scale = "ggthemes::calc", # only used in gg
+                                 alpha = alpha_default,
+                                 plot_title = NULL,
+                                 plot_subtitle = NULL,
+                                 value_rounding_digits = 2,
+                                 # --- SEX ------------------------------------------------------------
+                                 code_male = 1,
+                                 # ---- Filtering and Computation ----
+                                 filter_n_pairs = 500,
+                                 filter_degree_min = 0,
+                                 filter_degree_max = 7,
+                                 drop_classic_kin = FALSE,
+                                 drop_non_classic_sibs = TRUE,
+                                 use_only_classic_kin = TRUE,
+                                 use_relative_degree = TRUE,
+                                 group_by_kin = TRUE,
+                                 # ----Kinbin Settings ----
+                                 match_threshold_percent = 10,
+                                 max_degree_levels = 12,
+                                 grouping_column = "mtdna_factor",
+                                 # ---- Annotation Settings ----
+                                 annotate_include = TRUE,
+                                 annotate_x_shift = -0.1,
+                                 annotate_y_shift = 0.005,
+                                 # ---- Label Aesthetics ----
+                                 label_include = TRUE,
+                                 label_column = "personID",
+                                 label_method = "ggrepel",
+                                 label_max_overlaps = 15,
+                                 label_nudge_x = 0,
+                                 label_nudge_y = -0.10,
+                                 label_segment_color = NA,
+                                 label_text_angle = 0,
+                                 label_text_size = 2,
+                                 label_text_color = "black",
+                                 # --- POINT / OUTLINE AESTHETICS ---------------------------------------
+                                 point_size = 4,
+                                 outline_include = FALSE,
+                                 outline_multiplier = 1.25,
+                                 outline_color = "black",
+                                 # ---- Tooltip Aesthetics ----
+                                 tooltip_include = TRUE,
+                                 tooltip_columns = c("ID1", "ID2", "value"),
+                                 # ---- Axis and Layout Settings ----
+                                 axis_x_label = NULL,
+                                 axis_y_label = NULL,
+                                 axis_text_angle_x = 90,
+                                 axis_text_angle_y = 0,
+                                 axis_text_size = 8,
+                                 axis_text_color = "black",
+                                 # ---- Generation Scale Settings ----
+                                 generation_height = 1,
+                                 generation_width = 1,
+                                 ped_packed = TRUE,
+                                 ped_align = TRUE,
+                                 ped_width = 15,
+                                 # ---- Segment Drawing Options ----
+                                 segment_linewidth = 0.5,
+                                 segment_linetype = 1,
+                                 segment_lineend = "round",
+                                 segment_linejoin = "round",
+                                 segment_offspring_color = segment_default_color,
+                                 segment_parent_color = segment_default_color,
+                                 segment_self_color = segment_default_color,
+                                 segment_sibling_color = segment_default_color,
+                                 segment_spouse_color = segment_default_color,
+                                 segment_mz_color = segment_default_color,
+                                 segment_mz_linetype = 1,
+                                 segment_mz_alpha = 1,
+                                 segment_mz_t = .6,
+                                 segment_self_linetype = "dotdash",
+                                 segment_self_alpha = 0.5,
+                                 segment_self_angle = 90,
+                                 segment_self_curvature = -0.2,
+                                 # ---- Sex Legend and Appearance ----
+                                 sex_color_include = TRUE,
+                                 sex_legend_title = "Sex",
+                                 sex_shape_labels = c("Female", "Male", "Unknown"),
+                                 sex_color_palette = color_palette_default,
+                                 sex_shape_female = 16,
+                                 sex_shape_male = 15,
+                                 sex_shape_unknown = 18,
+                                 # ---- Affected Status Controls ----
+                                 status_include = TRUE,
+                                 status_code_affected = 1,
+                                 status_code_unaffected = 0,
+                                 status_label_affected = "Affected",
+                                 status_label_unaffected = "Unaffected",
+                                 status_alpha_affected = 1,
+                                 status_alpha_unaffected = 0,
+                                 status_color_palette = c(color_palette_default[1], color_palette_default[2]),
+                                 # Use first color for affected,
+                                 status_affected_shape = 4,
+                                 status_legend_title = "Affected",
+                                 status_legend_show = FALSE,
+                                 # ---- Focal Fill Settings ----
+                                 focal_fill_include = FALSE,
+                                 focal_fill_legend_show = TRUE,
+                                 focal_fill_personID = 1,
+                                 focal_fill_legend_title = "Focal Fill",
+                                 focal_fill_high_color = "#FDE725FF",
+                                 focal_fill_mid_color = "#9F2A63FF",
+                                 focal_fill_low_color = "#0D082AFF",
+                                 focal_fill_scale_midpoint = color_scale_midpoint,
+                                 focal_fill_method = "gradient",
+                                 focal_fill_component = "additive",
+                                 focal_fill_n_breaks = NULL,
+                                 focal_fill_na_value = "black",
+                                 focal_fill_force_zero = FALSE, # work around that sets zero to NA so you can distinguish from low values
+                                 # ---- Confidence Intervals
+                                 ci_include = TRUE,
+                                 ci_ribbon_alpha = .3,
+                                 # ---- matrix settings ----
+                                 matrix_sparse = FALSE,
+                                 matrix_isChild_method = "partialparent",
+                                 # -- Output Options ----
+                                 return_static = TRUE,
+                                 return_widget = FALSE,
+                                 return_interactive = FALSE,
+                                 # ---- Debugging Options ----
+                                 override_many2many = FALSE,
                                  ...) {
   # Ensure the color palette is a character vector
   if (!is.character(color_palette_default) ||
@@ -445,14 +430,12 @@ getDefaultPlotConfig <- function( function_name = "getDefaultPlotConfig",
     #   If the function is ggRelatednessMatrix, we need to adjust the tooltip columns
     core_list$tooltip_columns <- c("ID1", "ID2", "value")
   } else if (stringr::str_to_lower(function_name) %in%
-        c("ggphenotypebydegree", "phenotypebydegree")) {
-
-    core_list$point_size <-  1
+    c("ggphenotypebydegree", "phenotypebydegree")) {
+    core_list$point_size <- 1
     core_list$plot_title <- "Phenotypic Correlation vs Genetic Relatedness"
     core_list$return_static <- FALSE
     core_list$return_widget <- FALSE
     core_list$return_interactive <- FALSE
-
   }
   if (stringr::str_to_lower(function_name) %in% c("ggpedigree", "ggpedigreeinteractive")) {
     core_list$label_method <- "ggrepel"
@@ -540,8 +523,8 @@ buildPlotConfig <- function(default_config,
       ),
       built_config$status_labs
     )
-  } else if(stringr::str_to_lower(function_name) %in%
-            c("ggphenotypebydegree", "phenotypebydegree")) {
+  } else if (stringr::str_to_lower(function_name) %in%
+    c("ggphenotypebydegree", "phenotypebydegree")) {
 
 
   }

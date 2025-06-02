@@ -144,7 +144,7 @@ test_that("ggPhenotypeByDegree handles different thresholds", {
     y_se = "y_se",
     config = list(
       apply_default_theme = FALSE,
-      match_threshold_percent  = 20
+      match_threshold_percent = 20
     )
   )
 

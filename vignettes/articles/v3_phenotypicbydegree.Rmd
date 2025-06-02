@@ -32,8 +32,7 @@ library(dplyr)
 library(purrr) # for map_* helpers
 # Filter for the largest family, recode sex if needed
 ped_filtered <- redsquirrels %>%
-  recodeSex(code_female = "F") #%>%
-  filter(famID == 160)
+  recodeSex(code_female = "F")  %>% filter(famID == 160)
 
 kin_degree_max <- 12 # maximum degree of relatedness to consider
 # Calculate relatedness matrices
@@ -93,8 +92,12 @@ assign_addRel_bin <- function(rel) {
       return(paste0("addRel_+", val))
     }
   }
-  if (!is.na(rel) && rel > 2^0 * 1.1) return("addRel_1+")
-  if (!is.na(rel) && rel == 0) return("addRel_0")
+  if (!is.na(rel) && rel > 2^0 * 1.1) {
+    return("addRel_1+")
+  }
+  if (!is.na(rel) && rel == 0) {
+    return("addRel_0")
+  }
   return(NA_character_)
 }
 
@@ -139,16 +142,16 @@ result <- dataRelatedPair_merge %>%
     cor_lrs_stat = map_dbl(lrs_cor_test, ~ if (is.null(.x)) NA_real_ else .x$statistic),
     cor_lrs_p = map_dbl(lrs_cor_test, ~ if (is.null(.x)) NA_real_ else .x$p.value),
     cor_lrs_df = map_dbl(lrs_cor_test, ~ if (is.null(.x)) NA_real_ else .x$parameter),
-    cor_lrs_ci_lb = map_dbl(lrs_cor_test, ~ if (is.null(.x)) NA_real_ else .x$conf.int[1]*sqrt(2)),
-    cor_lrs_ci_ub = map_dbl(lrs_cor_test, ~ if (is.null(.x)) NA_real_ else .x$conf.int[2]*sqrt(2)),
+    cor_lrs_ci_lb = map_dbl(lrs_cor_test, ~ if (is.null(.x)) NA_real_ else .x$conf.int[1] * sqrt(2)),
+    cor_lrs_ci_ub = map_dbl(lrs_cor_test, ~ if (is.null(.x)) NA_real_ else .x$conf.int[2] * sqrt(2)),
 
     # ---- ARS‑n pair ----
     cor_ars_n = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$estimate),
     cor_ars_n_stat = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$statistic),
     cor_ars_n_p = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$p.value),
     cor_ars_n_df = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$parameter),
-    cor_ars_n_ci_lb = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$conf.int[1]*sqrt(2)),
-    cor_ars_n_ci_ub = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$conf.int[2]*sqrt(2))
+    cor_ars_n_ci_lb = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$conf.int[1] * sqrt(2)),
+    cor_ars_n_ci_ub = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$conf.int[2] * sqrt(2))
   ) %>%
   select(-lrs_cor_test, -ars_n_cor_test) %>% # drop the list‑columns once unpacked
   rename(cnu = cnuRel, mtdna = mitRel)

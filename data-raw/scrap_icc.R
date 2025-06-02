@@ -1,5 +1,3 @@
-
-
 library(dplyr)
 library(tidyr)
 library(purrr)
@@ -38,7 +36,10 @@ result_lrs_icc_adjusted <- dataRelatedPair_merge %>%
       }
     }),
     # Compute average number of lrs observations per person
-    avg_m = map_dbl(data, ~ .x %>% count(personID) %>% summarise(mean(n)) %>% pull()),
+    avg_m = map_dbl(data, ~ .x %>%
+      count(personID) %>%
+      summarise(mean(n)) %>%
+      pull()),
     # Join to your existing correlation results
     .keep = "unused"
   ) %>%
@@ -81,7 +82,9 @@ compute_avg_m_from_long <- function(df, person_col = "personID", value_col = "va
     pull(avg_m)
 }
 adjust_se_by_icc <- function(se_raw, icc, avg_m) {
-  if (is.na(se_raw) || is.na(icc) || is.na(avg_m)) return(NA_real_)
+  if (is.na(se_raw) || is.na(icc) || is.na(avg_m)) {
+    return(NA_real_)
+  }
   design_effect <- 1 + (avg_m - 1) * icc
   se_raw * sqrt(design_effect)
 }
@@ -104,5 +107,3 @@ extract_person_trait_long <- function(df, trait) {
     ) %>%
     rename(personID = ID)
 }
-
-
