@@ -5,28 +5,350 @@
 \title{Shared Default Plotting Configuration}
 \usage{
 getDefaultPlotConfig(
-  color_palette_default = c("#440154FF", "#FDE725FF", "#21908CFF"),
-  segment_default_color = "black",
   function_name = "getDefaultPlotConfig",
   personID = "personID",
-  color_scale_midpoint = 0.5,
-  alpha_default = 1,
   status_column = NULL,
+  alpha_default = 1,
+  apply_default_scales = TRUE,
+  apply_default_theme = TRUE,
+  segment_default_color = "black",
+  color_palette_default = c("#440154FF", "#FDE725FF", "#21908CFF"),
+  color_palette_low = "#000004FF",
+  color_palette_mid = "#56106EFF",
+  color_palette_high = "#FCFDBFFF",
+  color_scale_midpoint = 0.5,
+  color_scale = "ggthemes::calc",
+  alpha = alpha_default,
+  plot_title = NULL,
+  plot_subtitle = NULL,
+  value_rounding_digits = 2,
+  code_male = 1,
+  filter_n_pairs = 500,
+  filter_degree_min = 0,
+  filter_degree_max = 7,
+  drop_classic_kin = FALSE,
+  drop_non_classic_sibs = TRUE,
+  use_only_classic_kin = TRUE,
+  use_relative_degree = TRUE,
+  group_by_kin = TRUE,
+  match_threshold_percent = 10,
+  max_degree_levels = 12,
+  grouping_column = "mtdna_factor",
+  annotate_include = TRUE,
+  annotate_x_shift = -0.1,
+  annotate_y_shift = 0.005,
+  label_include = TRUE,
+  label_column = "personID",
+  label_method = "ggrepel",
+  label_max_overlaps = 15,
+  label_nudge_x = 0,
+  label_nudge_y = -0.1,
+  label_segment_color = NA,
+  label_text_angle = 0,
+  label_text_size = 2,
+  label_text_color = "black",
+  point_size = 4,
+  outline_include = FALSE,
+  outline_multiplier = 1.25,
+  outline_color = "black",
+  tooltip_include = TRUE,
+  tooltip_columns = c("ID1", "ID2", "value"),
+  axis_x_label = NULL,
+  axis_y_label = NULL,
+  axis_text_angle_x = 90,
+  axis_text_angle_y = 0,
+  axis_text_size = 8,
+  axis_text_color = "black",
+  generation_height = 1,
+  generation_width = 1,
+  ped_packed = TRUE,
+  ped_align = TRUE,
+  ped_width = 15,
+  segment_linewidth = 0.5,
+  segment_linetype = 1,
+  segment_lineend = "round",
+  segment_linejoin = "round",
+  segment_offspring_color = segment_default_color,
+  segment_parent_color = segment_default_color,
+  segment_self_color = segment_default_color,
+  segment_sibling_color = segment_default_color,
+  segment_spouse_color = segment_default_color,
+  segment_mz_color = segment_default_color,
+  segment_mz_linetype = 1,
+  segment_mz_alpha = 1,
+  segment_mz_t = 0.6,
+  segment_self_linetype = "dotdash",
+  segment_self_alpha = 0.5,
+  segment_self_angle = 90,
+  segment_self_curvature = -0.2,
+  sex_color_include = TRUE,
+  sex_legend_title = "Sex",
+  sex_shape_labels = c("Female", "Male", "Unknown"),
+  sex_color_palette = color_palette_default,
+  sex_shape_female = 16,
+  sex_shape_male = 15,
+  sex_shape_unknown = 18,
+  status_include = TRUE,
+  status_code_affected = 1,
+  status_code_unaffected = 0,
+  status_label_affected = "Affected",
+  status_label_unaffected = "Unaffected",
+  status_alpha_affected = 1,
+  status_alpha_unaffected = 0,
+  status_color_palette = c(color_palette_default[1], color_palette_default[2]),
+  status_affected_shape = 4,
+  status_legend_title = "Affected",
+  status_legend_show = FALSE,
+  focal_fill_include = FALSE,
+  focal_fill_legend_show = TRUE,
+  focal_fill_personID = 1,
+  focal_fill_legend_title = "Focal Fill",
+  focal_fill_high_color = "#FDE725FF",
+  focal_fill_mid_color = "#9F2A63FF",
+  focal_fill_low_color = "#0D082AFF",
+  focal_fill_scale_midpoint = color_scale_midpoint,
+  focal_fill_method = "gradient",
+  focal_fill_component = "additive",
+  focal_fill_n_breaks = NULL,
+  focal_fill_na_value = "black",
+  focal_fill_force_zero = FALSE,
+  ci_include = TRUE,
+  ci_ribbon_alpha = 0.3,
+  matrix_sparse = FALSE,
+  matrix_isChild_method = "partialparent",
+  return_static = TRUE,
+  return_widget = FALSE,
+  return_interactive = FALSE,
+  override_many2many = FALSE,
   ...
 )
 }
 \arguments{
-\item{color_palette_default}{A character vector of default colors for the plot.}
-
-\item{segment_default_color}{A character string for the default color of segments in the plot.}
-
 \item{function_name}{The name of the function calling this configuration.}
 
 \item{personID}{The column name for person identifiers in the data.}
 
-\item{color_scale_midpoint}{A numeric value for the midpoint of the color scale.}
-
 \item{status_column}{The column name for affected status in the data.}
+
+\item{alpha_default}{Default alpha transparency level.}
+
+\item{apply_default_scales}{Whether to apply default color scales.}
+
+\item{apply_default_theme}{Whether to apply default ggplot2 theme.}
+
+\item{segment_default_color}{A character string for the default color of segments in the plot.}
+
+\item{color_palette_default}{A character vector of default colors for the plot.}
+
+\item{color_palette_low}{Color for the low end of a gradient.}
+
+\item{color_palette_mid}{Color for the midpoint of a gradient.}
+
+\item{color_palette_high}{Color for the high end of a gradient.}
+
+\item{color_scale_midpoint}{Midpoint value for continuous color scales.}
+
+\item{color_scale}{Name of the color scale used (e.g., "ggthemes::calc").}
+
+\item{alpha}{Default alpha transparency for plot elements.}
+
+\item{plot_title}{Main title of the plot.}
+
+\item{plot_subtitle}{Subtitle of the plot.}
+
+\item{value_rounding_digits}{Number of digits to round displayed values.}
+
+\item{code_male}{Integer code for males in data.}
+
+\item{filter_n_pairs}{Threshold to filter maximum number of pairs.}
+
+\item{filter_degree_min}{Minimum degree value used in filtering.}
+
+\item{filter_degree_max}{Maximum degree value used in filtering.}
+
+\item{drop_classic_kin}{Whether to exclude classic kin categories.}
+
+\item{drop_non_classic_sibs}{Whether to exclude non-classic sibs.}
+
+\item{use_only_classic_kin}{Whether to restrict analysis to classic kinship.}
+
+\item{use_relative_degree}{Whether to use relative degrees instead of absolute.}
+
+\item{group_by_kin}{Whether to group output by kinship group.}
+
+\item{match_threshold_percent}{Kinbin matching threshold as a percentage.}
+
+\item{max_degree_levels}{Maximum number of degree levels to show.}
+
+\item{grouping_column}{Name of column used for grouping.}
+
+\item{annotate_include}{Whether to include annotations.}
+
+\item{annotate_x_shift}{Horizontal shift applied to annotation text.}
+
+\item{annotate_y_shift}{Vertical shift applied to annotation text.}
+
+\item{label_include}{Whether to display labels on plot points.}
+
+\item{label_column}{Column to use for text labels.}
+
+\item{label_method}{Method used for labeling (e.g., ggrepel, geom_text).}
+
+\item{label_max_overlaps}{Maximum number of overlapping labels.}
+
+\item{label_nudge_x}{Horizontal nudge for label text.}
+
+\item{label_nudge_y}{Vertical nudge for label text.}
+
+\item{label_segment_color}{Segment color for label connectors.}
+
+\item{label_text_angle}{Text angle for labels.}
+
+\item{label_text_size}{Font size for labels.}
+
+\item{label_text_color}{Color of the label text.}
+
+\item{point_size}{Size of points drawn in plot.}
+
+\item{outline_include}{Whether to include outlines around points.}
+
+\item{outline_multiplier}{Multiplier to compute outline size from point size.}
+
+\item{outline_color}{Color used for point outlines.}
+
+\item{tooltip_include}{Whether tooltips are shown in interactive plots.}
+
+\item{tooltip_columns}{Columns to include in tooltips.}
+
+\item{axis_x_label}{Label for the X-axis.}
+
+\item{axis_y_label}{Label for the Y-axis.}
+
+\item{axis_text_angle_x}{Angle of X-axis text.}
+
+\item{axis_text_angle_y}{Angle of Y-axis text.}
+
+\item{axis_text_size}{Font size of axis text.}
+
+\item{axis_text_color}{Color of axis text.}
+
+\item{generation_height}{Vertical spacing of generations.}
+
+\item{generation_width}{Horizontal spacing of generations.}
+
+\item{ped_packed}{Whether the pedigree should use packed layout.}
+
+\item{ped_align}{Whether to align pedigree generations.}
+
+\item{ped_width}{Plot width of the pedigree block.}
+
+\item{segment_linewidth}{Line width for segments.}
+
+\item{segment_linetype}{Line type for segments.}
+
+\item{segment_lineend}{Line end type for segments.}
+
+\item{segment_linejoin}{Line join type for segments.}
+
+\item{segment_offspring_color}{Color for offspring segments.}
+
+\item{segment_parent_color}{Color for parent segments.}
+
+\item{segment_self_color}{Color for self-loop segments.}
+
+\item{segment_sibling_color}{Color for sibling segments.}
+
+\item{segment_spouse_color}{Color for spouse segments.}
+
+\item{segment_mz_color}{Color for monozygotic twin segments.}
+
+\item{segment_mz_linetype}{Line type for MZ segments.}
+
+\item{segment_mz_alpha}{Alpha for MZ segments.}
+
+\item{segment_mz_t}{Tuning parameter for MZ segment layout.}
+
+\item{segment_self_linetype}{Line type for self-loop segments.}
+
+\item{segment_self_alpha}{Alpha value for self-loop segments.}
+
+\item{segment_self_angle}{Angle of self-loop segment.}
+
+\item{segment_self_curvature}{Curvature of self-loop segment.}
+
+\item{sex_color_include}{Whether to color nodes by sex.}
+
+\item{sex_legend_title}{Title of the sex legend.}
+
+\item{sex_shape_labels}{Labels used in sex legend.}
+
+\item{sex_shape_female}{Shape for female nodes.}
+
+\item{sex_shape_male}{Shape for male nodes.}
+
+\item{sex_shape_unknown}{Shape for unknown sex nodes.}
+
+\item{status_include}{Whether to display affected status.}
+
+\item{status_code_affected}{Value that encodes affected status.}
+
+\item{status_code_unaffected}{Value that encodes unaffected status.}
+
+\item{status_label_affected}{Label for affected status.}
+
+\item{status_label_unaffected}{Label for unaffected status.}
+
+\item{status_alpha_affected}{Alpha for affected individuals.}
+
+\item{status_alpha_unaffected}{Alpha for unaffected individuals.}
+
+\item{status_affected_shape}{Shape for affected individuals.}
+
+\item{status_legend_title}{Title of the status legend.}
+
+\item{status_legend_show}{Whether to show the status legend.}
+
+\item{focal_fill_include}{Whether to fill focal individuals.}
+
+\item{focal_fill_legend_show}{Whether to show legend for focal fill.}
+
+\item{focal_fill_personID}{ID of focal individual.}
+
+\item{focal_fill_legend_title}{Title of focal fill legend.}
+
+\item{focal_fill_high_color}{High-end color for focal gradient.}
+
+\item{focal_fill_mid_color}{Midpoint color for focal gradient.}
+
+\item{focal_fill_low_color}{Low-end color for focal gradient.}
+
+\item{focal_fill_scale_midpoint}{Midpoint for focal fill scale.}
+
+\item{focal_fill_method}{Method used for focal fill gradient.}
+
+\item{focal_fill_component}{Component type for focal fill.}
+
+\item{focal_fill_n_breaks}{Number of breaks in focal fill scale.}
+
+\item{focal_fill_na_value}{Color for NA values in focal fill.}
+
+\item{focal_fill_force_zero}{Whether to force zero to NA in focal fill.}
+
+\item{ci_include}{Whether to show confidence intervals.}
+
+\item{ci_ribbon_alpha}{Alpha level for CI ribbons.}
+
+\item{matrix_sparse}{Whether matrix input is sparse.}
+
+\item{matrix_isChild_method}{Method used for isChild matrix derivation.}
+
+\item{return_static}{Whether to return a static plot.}
+
+\item{return_widget}{Whether to return a widget object.}
+
+\item{return_interactive}{Whether to return an interactive plot.}
+
+\item{override_many2many}{Whether to override many-to-many link logic.}
 
 \item{...}{Additional arguments for future extensibility.}
 }
@@ -35,4 +357,8 @@ A named list of default plotting and layout parameters.
 }
 \description{
 Centralized configuration list used by all gg-based plotting functions.
+Returns a named list of default settings used by all gg-based plotting functions.
+This configuration can be overridden by supplying a list of key-value pairs to
+plotting functions such as `ggPedigree()`, `ggRelatednessMatrix()`, and `ggPhenotypeByDegree()`.
+Each key corresponds to a configurable plot, layout, or aesthetic behavior.
 }

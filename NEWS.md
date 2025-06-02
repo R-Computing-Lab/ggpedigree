@@ -15,6 +15,7 @@
 * Adding twin plotting features
 * Added ability to fill colors as a function of the degree of relatedness to a focal person
 * Add getDefaultPlotConfig functionality to ggPhenotypebyDegree
+* Fully documented getDefaultPlotConfig so that each config option is clear and understandable.
 
 # ggpedigree 0.4.1
 ## Status: Submitted to CRAN
