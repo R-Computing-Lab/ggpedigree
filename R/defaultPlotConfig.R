@@ -82,6 +82,7 @@
 #' @param segment_self_angle Angle of self-loop segment.
 #' @param segment_self_curvature Curvature of self-loop segment.
 #' @param sex_color_include Whether to color nodes by sex.
+#' @param sex_color_palette A character vector of colors for sex.
 #' @param sex_legend_title Title of the sex legend.
 #' @param sex_shape_labels Labels used in sex legend.
 #' @param sex_shape_female Shape for female nodes.
@@ -95,6 +96,7 @@
 #' @param status_alpha_affected Alpha for affected individuals.
 #' @param status_alpha_unaffected Alpha for unaffected individuals.
 #' @param status_affected_shape Shape for affected individuals.
+#' @param status_color_palette A character vector of colors for affected status.
 #' @param status_legend_title Title of the status legend.
 #' @param status_legend_show Whether to show the status legend.
 #' @param focal_fill_include Whether to fill focal individuals.

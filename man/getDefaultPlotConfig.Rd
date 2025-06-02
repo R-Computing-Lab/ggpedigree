@@ -282,6 +282,8 @@ getDefaultPlotConfig(
 
 \item{sex_shape_labels}{Labels used in sex legend.}
 
+\item{sex_color_palette}{A character vector of colors for sex.}
+
 \item{sex_shape_female}{Shape for female nodes.}
 
 \item{sex_shape_male}{Shape for male nodes.}
@@ -301,6 +303,8 @@ getDefaultPlotConfig(
 \item{status_alpha_affected}{Alpha for affected individuals.}
 
 \item{status_alpha_unaffected}{Alpha for unaffected individuals.}
+
+\item{status_color_palette}{A character vector of colors for affected status.}
 
 \item{status_affected_shape}{Shape for affected individuals.}
 
