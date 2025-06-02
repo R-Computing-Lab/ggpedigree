@@ -12,22 +12,22 @@
     \item{filter_n_pairs}{Minimum number of pairs to include (default: 500)}
     \item{filter_degree_min}{Minimum degree of relatedness (default: 0)}
     \item{filter_degree_max}{Maximum degree of relatedness (default: 7)}
-    \item{title}{Plot title}
-    \item{subtitle}{Plot subtitle}
+    \item{plot_title}{Plot title}
+    \item{plot_subtitle}{Plot subtitle}
     \item{color_scale}{Paletteer color scale name (e.g., "ggthemes::calc")}
-    \item{only_classic_kin}{If TRUE, only classic kin are shown}
-    \item{kin_grouping}{If TRUE, use classic kin × mtDNA for grouping}
+    \item{use_only_classic_kin}{If TRUE, only classic kin are shown}
+    \item{group_by_kin}{If TRUE, use classic kin × mtDNA for grouping}
     \item{drop_classic_kin}{If TRUE, remove classic kin rows}
     \item{drop_non_classic_sibs}{If TRUE, remove non-classic sibs (default: TRUE)}
-    \item{annotate}{If TRUE, annotate mother/father/sibling points}
-    \item{annotate_xshift}{Relative x-axis shift for annotations}
-    \item{annotate_yshift}{Relative y-axis shift for annotations}
+    \item{annotate_include}{If TRUE, annotate mother/father/sibling points}
+    \item{annotate_x_shift}{Relative x-axis shift for annotations}
+    \item{annotate_y_shift}{Relative y-axis shift for annotations}
     \item{point_size}{Size of geom_point points (default: 1)}
-    \item{degree_rel}{If TRUE, x-axis uses degree-of-relatedness scaling}
-    \item{grouping}{Grouping column name (default: mtdna_factor)}
-    \item{rounding}{Number of decimal places for rounding (default: 2)}
-    \item{threshold}{Tolerance \% for matching known degrees}
-    \item{max_degrees}{Maximum number of degrees to consider}
+    \item{use_relative_degree}{If TRUE, x-axis uses degree-of-relatedness scaling}
+    \item{grouping_column}{Grouping column name (default: mtdna_factor)}
+    \item{value_rounding_digits}{Number of decimal places for rounding (default: 2)}
+    \item{match_threshold_percent}{Tolerance \% for matching known degrees}
+    \item{max_degree_levels}{Maximum number of degrees to consider}
 }}
 }
 \value{

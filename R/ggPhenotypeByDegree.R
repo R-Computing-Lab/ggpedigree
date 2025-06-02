@@ -24,22 +24,22 @@ utils::globalVariables(c(".x"))
 #'     \item{filter_n_pairs}{Minimum number of pairs to include (default: 500)}
 #'     \item{filter_degree_min}{Minimum degree of relatedness (default: 0)}
 #'     \item{filter_degree_max}{Maximum degree of relatedness (default: 7)}
-#'     \item{title}{Plot title}
-#'     \item{subtitle}{Plot subtitle}
+#'     \item{plot_title}{Plot title}
+#'     \item{plot_subtitle}{Plot subtitle}
 #'     \item{color_scale}{Paletteer color scale name (e.g., "ggthemes::calc")}
-#'     \item{only_classic_kin}{If TRUE, only classic kin are shown}
-#'     \item{kin_grouping}{If TRUE, use classic kin × mtDNA for grouping}
+#'     \item{use_only_classic_kin}{If TRUE, only classic kin are shown}
+#'     \item{group_by_kin}{If TRUE, use classic kin × mtDNA for grouping}
 #'     \item{drop_classic_kin}{If TRUE, remove classic kin rows}
 #'     \item{drop_non_classic_sibs}{If TRUE, remove non-classic sibs (default: TRUE)}
-#'     \item{annotate}{If TRUE, annotate mother/father/sibling points}
-#'     \item{annotate_xshift}{Relative x-axis shift for annotations}
-#'     \item{annotate_yshift}{Relative y-axis shift for annotations}
+#'     \item{annotate_include}{If TRUE, annotate mother/father/sibling points}
+#'     \item{annotate_x_shift}{Relative x-axis shift for annotations}
+#'     \item{annotate_y_shift}{Relative y-axis shift for annotations}
 #'     \item{point_size}{Size of geom_point points (default: 1)}
-#'     \item{degree_rel}{If TRUE, x-axis uses degree-of-relatedness scaling}
-#'     \item{grouping}{Grouping column name (default: mtdna_factor)}
-#'     \item{rounding}{Number of decimal places for rounding (default: 2)}
-#'     \item{threshold}{Tolerance \% for matching known degrees}
-#'     \item{max_degrees}{Maximum number of degrees to consider}
+#'     \item{use_relative_degree}{If TRUE, x-axis uses degree-of-relatedness scaling}
+#'     \item{grouping_column}{Grouping column name (default: mtdna_factor)}
+#'     \item{value_rounding_digits}{Number of decimal places for rounding (default: 2)}
+#'     \item{match_threshold_percent}{Tolerance \% for matching known degrees}
+#'     \item{max_degree_levels}{Maximum number of degrees to consider}
 #' }
 #'
 #' @return A ggplot object containing the correlation plot.
@@ -69,40 +69,50 @@ ggPhenotypeByDegree <- function(df,
     y_stem_se <- sub("_se$", "", y_se)
   }
 
+  # Set default styling and layout parameters
+  default_config <- getDefaultPlotConfig(
+    function_name = "ggphenotypebydegree",
+  )
+
+  # Merge with user-specified overrides
+  # This allows the user to override any of the default values
+  config <- buildPlotConfig(
+    default_config = default_config,
+    config = config,
+    function_name = "ggphenotypebydegree"
+  )
 
   # Set default styling and layout parameters
-  default_config <- list(
-    apply_default_scales = TRUE,
-    apply_default_theme = TRUE,
-    point_size = 1,
-    ribbon_alpha = 0.3,
+  #  default_config <- list(
+  #    apply_default_scales = TRUE,
+  #    apply_default_theme = TRUE,
+  #   point_size = 1,
+  #    ci_ribbon_alpha = 0.3,
 
-    # Filter parameters
-    filter_n_pairs = 500,
-    filter_degree_min = 0,
-    filter_degree_max = 7,
-    # Plotting parameters
-    title = "Phenotypic Correlation vs Genetic Relatedness",
-    subtitle = NULL,
-    color_scale = "ggthemes::calc",
+  # Filter parameters
+  #   filter_n_pairs = 500,
+  #  filter_degree_min = 0,
+  #  filter_degree_max = 7,
+  # Plotting parameters
+  #    plot_title = "Phenotypic Correlation vs Genetic Relatedness",
+  #    subtitle = NULL,
+  #    color_scale = "ggthemes::calc",
 
-    # Configuration parameters
-    only_classic_kin = TRUE,
-    kin_grouping = TRUE,
-    drop_classic_kin = FALSE,
-    drop_non_classic_sibs = TRUE,
-    # Annotation parameters
-    annotate = TRUE,
-    annotate_xshift = -0.1,
-    annotate_yshift = 0.005,
+  # Configuration parameters
+  #   use_only_classic_kin = TRUE,
+  #  group_by_kin = TRUE,
+  #   drop_classic_kin = FALSE,
+  #  drop_non_classic_sibs = TRUE,
+  # Annotation parameters
 
-    # Grouping and scaling parameters
-    degree_rel = TRUE,
-    grouping = "mtdna_factor",
-    rounding = 2,
-    threshold = 10,
-    max_degrees = 12
-  )
+
+  # Grouping and scaling parameters
+  #  use_relative_degree = TRUE,
+  #   grouping_column = "mtdna_factor",
+  #    value_rounding_digits = 2,
+  #   match_threshold_percent = 10,
+  #    max_degree_levels = 12
+  #  )
 
   # Merge user config with defaults
   config <- utils::modifyList(default_config, config)
@@ -157,17 +167,17 @@ ggPhenotypeByDegree.core <- function(df,
     ymin_var <- rlang::sym(paste0(y_stem_se, "_minusse"))
     ymax_var <- rlang::sym(paste0(y_stem_se, "_plusse"))
   }
-  if (config$grouping == "mtdna_factor") {
+  if (config$grouping_column == "mtdna_factor") {
     config$grouping_name <- "mtDNA"
   } else {
-    config$grouping_name <- paste0(config$grouping)
+    config$grouping_name <- paste0(config$grouping_column)
   }
-  grouping_sym <- rlang::sym(config$grouping)
+  grouping_sym <- rlang::sym(config$grouping_column)
 
   # ---- Prepare annotations plotting ----
   # Extract specific y-values based on provided positions, using dynamic column names
 
-  if (config$annotate == TRUE) {
+  if (config$annotate_include == TRUE) {
     config$annotation_coords <- list(x_sib = 0.5, x_mom = 0.5, x_dad = 0.5)
     y_val_coord <- function(filter_expr) {
       df |>
@@ -178,12 +188,12 @@ ggPhenotypeByDegree.core <- function(df,
     config$annotation_coords$y_sib <- y_val_coord(".data$cnu == 1 & .data$addRel_center == 0.5")
     config$annotation_coords$y_mom <- y_val_coord(".data$cnu == 0 & .data$mtdna == 1 & .data$addRel_center == 0.5")
     config$annotation_coords$y_dad <- y_val_coord(".data$cnu == 0 & .data$mtdna == 0 & .data$addRel_center == 0.5")
-    config$annotation_coords$annotation_mom_x <- config$annotation_coords$x_mom + config$annotate_xshift * config$annotation_coords$x_mom
-    config$annotation_coords$annotation_sib_x <- config$annotation_coords$x_sib + config$annotate_xshift * config$annotation_coords$x_sib
-    config$annotation_coords$annotation_dad_x <- config$annotation_coords$x_dad + config$annotate_xshift * config$annotation_coords$x_dad
-    config$annotation_coords$annotation_sib_y <- config$annotation_coords$y_sib + config$annotate_yshift * config$annotation_coords$y_sib
-    config$annotation_coords$annotation_mom_y <- config$annotation_coords$y_mom + config$annotate_yshift * config$annotation_coords$y_mom
-    config$annotation_coords$annotation_dad_y <- config$annotation_coords$y_dad + config$annotate_yshift * config$annotation_coords$y_dad
+    config$annotation_coords$annotation_mom_x <- config$annotation_coords$x_mom + config$annotate_x_shift * config$annotation_coords$x_mom
+    config$annotation_coords$annotation_sib_x <- config$annotation_coords$x_sib + config$annotate_x_shift * config$annotation_coords$x_sib
+    config$annotation_coords$annotation_dad_x <- config$annotation_coords$x_dad + config$annotate_x_shift * config$annotation_coords$x_dad
+    config$annotation_coords$annotation_sib_y <- config$annotation_coords$y_sib + config$annotate_y_shift * config$annotation_coords$y_sib
+    config$annotation_coords$annotation_mom_y <- config$annotation_coords$y_mom + config$annotate_y_shift * config$annotation_coords$y_mom
+    config$annotation_coords$annotation_dad_y <- config$annotation_coords$y_dad + config$annotate_y_shift * config$annotation_coords$y_dad
     config$annotation_coords$df_point <- df |> dplyr::filter(.data$cnu == 1, .data$addRel_center == .5)
   } else {
     config$annotation_coords <- NULL
@@ -205,8 +215,8 @@ ggPhenotypeByDegree.core <- function(df,
       dplyr::filter(.data$drop != 1) |>
       dplyr::select(-"drop")
   }
-  # if only_classic_kin is TRUE, filter out non-classic kinship
-  if (config$only_classic_kin == TRUE) {
+  # if use_only_classic_kin is TRUE, filter out non-classic kinship
+  if (config$use_only_classic_kin == TRUE) {
     df <- df |> dplyr::filter(.data$classic_kin == 1)
   } else if (config$drop_classic_kin == TRUE) {
     df <- df |> dplyr::filter(.data$classic_kin == 0)
@@ -222,7 +232,7 @@ ggPhenotypeByDegree.core <- function(df,
       shape = !!grouping_sym
     ))
 
-  if (config$only_classic_kin == TRUE | config$kin_grouping == TRUE) {
+  if (config$use_only_classic_kin == TRUE | config$group_by_kin == TRUE) {
     core_plot <- core_plot +
       ggplot2::geom_ribbon(
         ggplot2::aes(
@@ -230,7 +240,7 @@ ggPhenotypeByDegree.core <- function(df,
           ymax = !!ymax_var,
           fill = !!grouping_sym
         ),
-        alpha = config$ribbon_alpha,
+        alpha = config$ci_ribbon_alpha,
         linetype = 0
       ) + # , stat = "smooth", method = "loess") +
       ggplot2::geom_line(ggplot2::aes(linetype = !!grouping_sym))
@@ -247,7 +257,7 @@ ggPhenotypeByDegree.core <- function(df,
         stat = "smooth", span = .02,
         outline.type = "upper",
         method = "lm", # group = df$classic_kin,
-        alpha = config$ribbon_alpha,
+        alpha = config$ci_ribbon_alpha,
         linetype = 0,
         show.legend = FALSE
       ) +
@@ -261,7 +271,7 @@ ggPhenotypeByDegree.core <- function(df,
     ggplot2::geom_point(size = config$point_size)
 
   # annotate if and only if
-  if (config$annotate == TRUE && config$filter_degree_min == 0) {
+  if (config$annotate_include == TRUE && config$filter_degree_min == 0) {
     core_plot <- .addAnnotate(
       p = core_plot,
       config = config,
@@ -279,7 +289,7 @@ ggPhenotypeByDegree.core <- function(df,
       ggplot2::theme(legend.position = "top") # scale_x_reverse() +
   }
 
-  if (config$degree_rel == TRUE) {
+  if (config$use_relative_degree == TRUE) {
     core_plot <- core_plot + scale_x_continuous(
       trans = scales::compose_trans("log2", "reverse"),
       breaks = scales::trans_breaks("log2", function(x) 2^x),
@@ -287,8 +297,9 @@ ggPhenotypeByDegree.core <- function(df,
     ) +
       labs(
         x = "Degree of Relatedness", y = "Correlation",
-        title = config$title,
-        subtitle = config$subtitle, color = config$grouping_name,
+        title = config$plot_title,
+        subtitle = config$plot_subtitle,
+        color = config$grouping_name,
         shape = config$grouping_name,
         linetype = config$grouping_name,
         group = config$grouping_name,
@@ -302,8 +313,8 @@ ggPhenotypeByDegree.core <- function(df,
     ) +
       labs(
         x = "Coefficient of Genetic Variation",
-        y = "Correlation", title = config$title,
-        subtitle = config$subtitle,
+        y = "Correlation", title = config$plot_title,
+        subtitle = config$plot_subtitle,
         color = config$grouping_name,
         shape = config$grouping_name,
         linetype = config$grouping_name,
@@ -355,7 +366,7 @@ ggPhenotypeByDegree.core <- function(df,
       dplyr::mutate(
         classic_kin =
           dplyr::case_when(
-            .data$addRel_max %in% (2^(0:(-config$max_degrees)) * (1 + config$threshold / 100)) ~ 1,
+            .data$addRel_max %in% (2^(0:(-config$max_degree_levels)) * (1 + config$match_threshold_percent / 100)) ~ 1,
             .data$addRel_max == 0 ~ 1,
             TRUE ~ 0
           )
@@ -366,8 +377,8 @@ ggPhenotypeByDegree.core <- function(df,
       dplyr::mutate(
         degree_relative = # solve for as a function of addRel_max
           dplyr::case_when(
-            .data$addRel_max >= (1 + config$threshold / 100) ~ 0,
-            .data$addRel_max < 1 ~ log2(1 / (.data$addRel_max) * (1 + config$threshold / 100))
+            .data$addRel_max >= (1 + config$match_threshold_percent / 100) ~ 0,
+            .data$addRel_max < 1 ~ log2(1 / (.data$addRel_max) * (1 + config$match_threshold_percent / 100))
           )
       )
   }
