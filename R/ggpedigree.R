@@ -11,13 +11,17 @@
 #' @param momID Character string specifying the column name for mother IDs. Defaults to "momID".
 #' @param dadID Character string specifying the column name for father IDs. Defaults to "dadID".
 #' @param spouseID Character string specifying the column name for spouse IDs. Defaults to "spouseID".
+#'  @param matID Character string specifying the column name for maternal lines Defaults to "matID".
+#'  @param patID Character string specifying the column name for paternal lines Defaults to "patID".
 #' @param status_column Character string specifying the column name for affected status. Defaults to NULL.
 #' @param debug Logical. If TRUE, prints debugging information. Default: FALSE.
 #' @param hints Data frame with hints for layout adjustments. Default: NULL.
 #' @param interactive Logical. If TRUE, generates an interactive plot using `plotly`. Default: FALSE.
+#'  @param overlay_column Character string specifying the column name for overlay alpha values.
 #' @param tooltip_columns Character vector of column names to show when hovering.
 #'        Defaults to c("personID", "sex").  Additional columns present in `ped`
 #'        can be supplied – they will be added to the Plotly tooltip text.
+#'        Defaults to NULL, which uses the default tooltip columns.
 #' @param return_widget Logical; if TRUE (default) returns a plotly htmlwidget.
 #'        If FALSE, returns the underlying plotly object (useful for further
 #'        customization before printing).
@@ -59,9 +63,12 @@ ggPedigree <- function(ped,
                        momID = "momID",
                        dadID = "dadID",
                        spouseID = "spouseID",
+                       matID = "matID",
+                       patID = "patID",
                        status_column = NULL,
                        focal_fill_column = NULL,
                        tooltip_columns = NULL,
+                       overlay_column = NULL,
                        return_widget = FALSE,
                        config = list(),
                        debug = FALSE,
@@ -83,6 +90,9 @@ ggPedigree <- function(ped,
       spouseID = spouseID,
       momID = momID,
       dadID = dadID,
+      matID = matID,
+      patID = patID,
+      overlay_column = overlay_column,
       status_column = status_column,
       focal_fill_column = focal_fill_column,
       config = config,
@@ -117,6 +127,9 @@ ggPedigree <- function(ped,
       spouseID = spouseID,
       momID = momID,
       dadID = dadID,
+      matID = matID,
+      patID = patID,
+      overlay_column = overlay_column,
       status_column = status_column,
       focal_fill_column = focal_fill_column,
       config = config,
@@ -143,7 +156,10 @@ ggPedigree.core <- function(ped, famID = "famID",
                             momID = "momID",
                             dadID = "dadID",
                             spouseID = "spouseID",
+                            matID = "matID",
+                            patID = "patID",
                             focal_fill_column = NULL,
+                            overlay_column = NULL,
                             status_column = NULL,
                             config = list(),
                             debug = FALSE,
@@ -161,22 +177,45 @@ ggPedigree.core <- function(ped, famID = "famID",
   # STEP 2: Pedigree Data Transformation
   # -----
 
-
+if (all(c(famID,patID,matID) %in% names(ped))) {
+  ds_ped <- ped
+  } else {
+  if (!famID %in% names(ped)) {
   ds_ped <- BGmisc::ped2fam(ped,
     famID = famID,
     personID = personID,
     momID = momID,
     dadID = dadID
   )
+  } else {
+    ds_ped <- ped
+  }
+  if (!patID %in% names(ds_ped)) {
+      ds_ped <- BGmisc::ped2paternal(ds_ped,
+        patID = patID,
+        personID = personID,
+        momID = momID,
+        dadID = dadID
+      )
+    }
+    if (!matID %in% names(ds_ped)) {
+   ds_ped <- BGmisc::ped2maternal(ds_ped,
+        matID = matID,
+        personID = personID,
+        momID = momID,
+        dadID = dadID
+      )
+    }
+  }
 
   # Clean duplicated famID columns if present
 
-  if ("famID.y" %in% names(ds_ped)) {
-    ds_ped <- dplyr::select(.data = ds_ped, -"famID.y")
-  }
-  if ("famID.x" %in% names(ds_ped)) {
-    ds_ped <- dplyr::rename(.data = ds_ped, famID = "famID.x")
-  }
+#  if ("famID.y" %in% names(ds_ped)) {
+ #   ds_ped <- dplyr::select(.data = ds_ped, -"famID.y")
+#  }
+#  if ("famID.x" %in% names(ds_ped)) {
+#    ds_ped <- dplyr::rename(.data = ds_ped, famID = "famID.x")
+ # }
 
   # ----
   # STEP 3: Data Cleaning and Recoding
@@ -204,6 +243,17 @@ ggPedigree.core <- function(ped, famID = "famID",
   }
   if (config$focal_fill_include == TRUE && is.null(focal_fill_column)) {
     # If fill_column is specified but not in ds_ped, use personID as fill
+    if(config$focal_fill_component %in%  c(
+      "additive",
+      "common nuclear",
+      "mitochondrial",
+      "mtdna", "mitochondria"
+    )) {
+      # If focal_fill_component is specified, create fill column based on component
+      # This will create a fill column based on the component specified in the config
+      # and the personID.
+      # The function createFillColumn will handle the logic of creating the fill column
+      # based on the component and personID.
     ds_ped <- ds_ped %>%
       left_join(
         createFillColumn(
@@ -215,10 +265,64 @@ ggPedigree.core <- function(ped, famID = "famID",
         ),
         by = "personID"
       )
-  } else if (config$focal_fill_include == TRUE && !is.null(focal_fill_column)) {
+  } else if(config$focal_fill_component %in%  c(
+    "maternal",
+    "matID",matID, patID,famID,
+    "patID",
+    "paternal",
+    "famID",
+    "paternal line", "maternal line",
+    "maternal lineages", "paternal lineages",
+    "family", "family lineages"
+  )
+  ) {
+    config$focal_fill_component_recode <- switch(
+      config$focal_fill_component,
+      "maternal" = matID,
+      "paternal" = patID,
+      "famID" = famID,
+      "matID" = matID,
+      "patID" = patID,
+      "paternal line" = patID,
+      "maternal line" = matID,
+      "paternal lineages" = patID,
+      "maternal lineages" = matID,
+      "family" = famID,
+      "family lineages" = famID,
+      matID = matID,
+      patID = patID,
+      famID = famID
+    )
+    # If focal_fill_component is specified, create fill column based on component
+    # This will create a fill column based on the component specified in the config
+
+    switch(config$focal_fill_component_recode,
+        matID = {
+        # If focal_fill_component is maternal, use matID as fill
+        ds_ped <- ds_ped %>%
+          dplyr::mutate(focal_fill = as.factor(.data[[matID]]))
+        focal_fill_column <- "matID"
+      },
+      patID = {
+        # If focal_fill_component is paternal, use patID as fill
+        ds_ped <- ds_ped %>%
+          dplyr::mutate(focal_fill = as.factor(.data[[patID]]))
+        focal_fill_column <- "patID"
+      },
+      famID = {
+        # If focal_fill_component is famID, use famID as fill
+        ds_ped <- ds_ped %>%
+          dplyr::mutate(focal_fill = as.factor(.data[[famID]]))
+        focal_fill_column <- "famID"
+      }
+    )
+
+}
+} else if (config$focal_fill_include == TRUE && !is.null(focal_fill_column)) {
     # If fill_column is specified, use it directly
     ds_ped <- ds_ped %>%
       dplyr::mutate(focal_fill = !!rlang::sym(focal_fill_column))
+
   }
   # -----
   # STEP 4: Coordinate Generation
@@ -251,7 +355,8 @@ ggPedigree.core <- function(ped, famID = "famID",
     config = config,
     personID = personID,
     spouseID = spouseID,
-    momID = momID, dadID = dadID
+    momID = momID,
+    dadID = dadID
   )
 
   connections <- plot_connections$connections
@@ -290,7 +395,6 @@ ggPedigree.core <- function(ped, famID = "famID",
     x = .data$x_pos,
     y = .data$y_pos
   ))
-
 
   # -----
   # STEP 7: Add Segments
@@ -358,7 +462,6 @@ ggPedigree.core <- function(ped, famID = "famID",
         y_end   = .data$y_twin + config$segment_mz_t * ((.data$y_mid_twin - config$gap_hoff) - .data$y_twin)
       )
 
-
     p <- p +
       ggplot2::geom_segment(
         data = plot_connections$twin_coords,
@@ -424,92 +527,26 @@ ggPedigree.core <- function(ped, famID = "famID",
   #   1. If sex_color_include == TRUE: color and shape reflect sex, and affected status is shown with a second symbol.
   #   2. If sex_color_include == FALSE but status_column is present: shape reflects sex, and color reflects affected status.
   #   3. If neither is used: plot individuals using shape alone.
+  p <- .addNodes(
+    p = p,
+    config = config,
+    focal_fill_column = focal_fill_column,
+    status_column = status_column
+  )
+  # Add overlay points for affected status if applicable
+if (config$sex_color_include==TRUE ||
+    config$focal_fill_include == TRUE ||
+    config$overlay_include == TRUE) {
+  # If overlay_column is specified, use it for alpha aesthetic
 
-
-  if (config$outline_include == TRUE) {
-    p <- p +
-      ggplot2::geom_point(
-        ggplot2::aes(
-          shape = as.factor(.data$sex)
-        ),
-        size = config$point_size * config$outline_multiplier,
-        na.rm = TRUE,
-        color = config$outline_color,
-        stroke = config$segment_linewidth
-      )
-  }
-
-  if (config$sex_color_include == TRUE) {
-    # Use color and shape to represent sex
-    p <- p +
-      ggplot2::geom_point(
-        ggplot2::aes(
-          color = as.factor(.data$sex),
-          shape = as.factor(.data$sex)
-        ),
-        size = config$point_size,
-        na.rm = TRUE
-      )
-  } else if (config$focal_fill_include == TRUE) {
-    # If status_column is not present but status_include is TRUE,
-    # use alpha aesthetic to show affected status
-    if (is.null(focal_fill_column)) {
-      p <- p +
-        ggplot2::geom_point(
-          ggplot2::aes(
-            color = .data$focal_fill,
-            shape = as.factor(.data$sex)
-          ),
-          size = config$point_size,
-          na.rm = TRUE
-        )
-    } else {
-      p <- p +
-        ggplot2::geom_point(
-          ggplot2::aes(
-            color = !!rlang::sym(focal_fill_column),
-            shape = as.factor(.data$sex)
-          ),
-          size = config$point_size,
-          na.rm = TRUE
-        )
-    }
-  } else if (!is.null(status_column)) {
-    # If status_column is present but sex_color_include is FALSE,
-    # use shape for sex and color for affected status
-    p <- p +
-      ggplot2::geom_point(
-        ggplot2::aes(
-          color = as.factor(!!rlang::sym(status_column)),
-          shape = as.factor(.data$sex)
-        ),
-        size = config$point_size,
-        na.rm = TRUE
-      )
-  } else {
-    # If neither sex color nor status_column is active,
-    # plot using shape (sex) only
-    p <- p +
-      ggplot2::geom_point(
-        ggplot2::aes(
-          shape = as.factor(.data$sex)
-        ),
-        size = config$point_size,
-        na.rm = TRUE
-      )
-  }
-
-  # If affected status is present, overlay an additional marker using alpha aesthetic
-  if (!is.null(status_column) && (config$focal_fill_include == TRUE ||
-    config$sex_color_include == TRUE)) {
-    p <- p + ggplot2::geom_point(
-      ggplot2::aes(alpha = !!rlang::sym(status_column)),
-      shape = config$status_affected_shape,
-      size = config$point_size,
-      na.rm = TRUE
-    )
-  }
-
+ p <- .addOverlay(
+    p = p,
+    config = config,
+    focal_fill_column = focal_fill_column,
+    status_column = status_column,
+    overlay_column = overlay_column
+  )
+}
   # -----
   # STEP 9: Add Labels
   # -----
@@ -525,84 +562,11 @@ ggPedigree.core <- function(ped, famID = "famID",
 
   # Self-segment (for duplicate layout appearances of same person)
   if (inherits(plot_connections$self_coords, "data.frame")) {
-    otherself <- plot_connections$self_coords |>
-      dplyr::filter(!is.na(.data$x_otherself)) |>
-      dplyr::mutate(
-        otherself_xkey = makeSymmetricKey(.data$x_otherself, .data$x_pos)
-      ) |>
-      # unique combinations of x_otherself and x_pos and y_otherself and y_pos
-      dplyr::distinct(.data$otherself_xkey, .keep_all = TRUE) |>
-      unique()
-    if (config$return_interactive == FALSE) {
-      p <- p + ggplot2::geom_curve(
-        data = otherself,
-        ggplot2::aes(
-          x = .data$x_otherself,
-          xend = .data$x_pos,
-          y = .data$y_otherself,
-          yend = .data$y_pos
-        ),
-        linewidth = config$segment_linewidth,
-        color = config$segment_self_color,
-        lineend = config$segment_lineend,
-        #  linejoin = config$segment_linejoin,
-        linetype = config$segment_self_linetype,
-        angle = config$segment_self_angle,
-        curvature = config$segment_self_curvature,
-        alpha = config$segment_self_alpha,
-        na.rm = TRUE
-      )
-    } else if (config$return_interactive == TRUE) {
-      # For interactive plots, use geom_segment instead of geom_curve
-      # to avoid issues with plotly rendering curves
-
-      otherself <- otherself |>
-        dplyr::mutate(
-          midpoint = computeCurvedMidpoint(
-            x0 = .data$x_otherself,
-            y0 = .data$y_otherself,
-            x1 = .data$x_pos,
-            y1 = .data$y_pos,
-            curvature = config$segment_self_curvature,
-            angle = config$segment_self_angle
-          ),
-          x_midpoint = .data$midpoint$x,
-          y_midpoint = .data$midpoint$y
-        ) |>
-        dplyr::select(-"midpoint")
-
-      p <- p + ggplot2::geom_segment(
-        data = otherself,
-        ggplot2::aes(
-          x = .data$x_otherself,
-          xend = .data$x_midpoint,
-          y = .data$y_otherself,
-          yend = .data$y_midpoint
-        ),
-        linewidth = config$segment_linewidth,
-        color = config$segment_self_color,
-        lineend = config$segment_lineend,
-        linejoin = config$segment_linejoin,
-        linetype = config$segment_self_linetype,
-        alpha = config$segment_self_alpha,
-        na.rm = TRUE
-      ) + ggplot2::geom_segment(
-        data = otherself,
-        ggplot2::aes(
-          x = .data$x_midpoint,
-          xend = .data$x_pos,
-          y = .data$y_midpoint,
-          yend = .data$y_pos
-        ),
-        linewidth = config$segment_linewidth,
-        color = config$segment_self_color,
-        lineend = config$segment_lineend,
-        linejoin = config$segment_linejoin,
-        linetype = config$segment_self_linetype,
-        alpha = config$segment_self_alpha,
-        na.rm = TRUE
-      )
-    }
+    p <- .addSelfSegment(
+      p = p,
+      config = config,
+      plot_connections = plot_connections
+    )
   }
 
   # -----
@@ -658,6 +622,227 @@ ggPedigree.core <- function(ped, famID = "famID",
 #' @export
 ggpedigree <- ggPedigree
 
+#' @title Add Nodes to ggplot Pedigree Plot
+#' @inheritParams ggPedigree
+#' @param p A ggplot object.
+#' @keywords internal
+#'
+.addNodes <- function(p,
+                      config,
+                      focal_fill_column = NULL,
+                      status_column = NULL) {
+
+  if (config$outline_include == TRUE) {
+    p <- p +
+      ggplot2::geom_point(
+        ggplot2::aes(
+          shape = as.factor(.data$sex)
+        ),
+        size = config$point_size * config$outline_multiplier,
+        na.rm = TRUE,
+        color = config$outline_color,
+        stroke = config$segment_linewidth
+      )
+  }
+
+  if (config$sex_color_include == TRUE) {
+    # Use color and shape to represent sex
+    p <- p +
+      ggplot2::geom_point(
+        ggplot2::aes(
+          color = as.factor(.data$sex),
+          shape = as.factor(.data$sex)
+        ),
+        size = config$point_size,
+        na.rm = TRUE
+      )
+  } else if (config$focal_fill_include == TRUE) {
+    # If status_column is not present but status_include is TRUE,
+    # use alpha aesthetic to show affected status
+    if (is.null(focal_fill_column)) {
+      p <- p +
+        ggplot2::geom_point(
+          ggplot2::aes(
+            color = .data$focal_fill,
+            shape = as.factor(.data$sex)
+          ),
+          size = config$point_size,
+          na.rm = TRUE
+        )
+    } else {
+      p <- p +
+        ggplot2::geom_point(
+          ggplot2::aes(
+            color = !!rlang::sym(focal_fill_column),
+            shape = as.factor(.data$sex)
+          ),
+          size = config$point_size,
+          na.rm = TRUE
+        )
+    }
+  } else if (config$status_include==TRUE && !is.null(status_column)) {
+    # If status_column is present but sex_color_include is FALSE,
+    # use shape for sex and color for affected status
+    p <- p +
+      ggplot2::geom_point(
+        ggplot2::aes(
+          color = as.factor(!!rlang::sym(status_column)),
+          shape = as.factor(.data$sex)
+        ),
+        size = config$point_size,
+        na.rm = TRUE
+      )
+  } else {
+    # If neither sex color nor status_column is active,
+    # plot using shape (sex) only
+    p <- p +
+      ggplot2::geom_point(
+        ggplot2::aes(
+          shape = as.factor(.data$sex)
+        ),
+        size = config$point_size,
+        na.rm = TRUE
+      )
+  }
+
+
+return(p)
+}
+
+#' @title Add Overlay to ggplot Pedigree Plot
+#' @inheritParams ggPedigree
+#' @param p A ggplot object.
+#' @keywords internal
+#' @return A ggplot object with added overlay.
+#'
+.addOverlay <- function(p, config,
+                        focal_fill_column = NULL,
+                        status_column = NULL,
+                        overlay_column = NULL) {
+    if(config$overlay_include == TRUE & !is.null(overlay_column)){
+      # If overlay_column is specified, use it for alpha aesthetic
+      p <- p + ggplot2::geom_point(
+        ggplot2::aes(alpha = !!rlang::sym(overlay_column)),
+        shape = config$overlay_shape,
+        size = config$point_size,
+        color = config$overlay_color,
+        na.rm = TRUE
+      )
+    } else if (config$status_include == TRUE && !is.null(status_column)) {
+      # If no overlay_column is specified, use status_column for alpha aesthetic
+      #
+      p <- p + ggplot2::geom_point(
+        ggplot2::aes(alpha = !!rlang::sym(status_column)),
+        shape = config$status_shape_affected,
+        size = config$point_size,
+        color = config$status_color_affected,
+        na.rm = TRUE
+      )
+    }  else if (config$focal_fill_include == TRUE && !is.null(focal_fill_column)) {
+      # If focal_fill_column is specified, use it for alpha aesthetic
+      p <- p + ggplot2::geom_point(
+        ggplot2::aes(alpha = !!rlang::sym(focal_fill_column)),
+        shape = config$focal_fill_shape,
+        size = config$point_size,
+        color = config$focal_fill_mid_color,
+        na.rm = TRUE
+      )
+    }
+
+    return(p)
+}
+
+#' @title Add Self Segments to ggplot Pedigree Plot
+#' @inheritParams ggPedigree
+#' @param p A ggplot object.
+#' @keywords internal
+#' @return A ggplot object with added scales.
+
+.addSelfSegment <- function(p,
+                            config,
+                            plot_connections) {
+
+  otherself <- plot_connections$self_coords |>
+    dplyr::filter(!is.na(.data$x_otherself)) |>
+    dplyr::mutate(
+      otherself_xkey = makeSymmetricKey(.data$x_otherself, .data$x_pos)
+    ) |>
+    # unique combinations of x_otherself and x_pos and y_otherself and y_pos
+    dplyr::distinct(.data$otherself_xkey, .keep_all = TRUE) |>
+    unique()
+  if (config$return_interactive == FALSE) {
+    p <- p + ggplot2::geom_curve(
+      data = otherself,
+      ggplot2::aes(
+        x = .data$x_otherself,
+        xend = .data$x_pos,
+        y = .data$y_otherself,
+        yend = .data$y_pos
+      ),
+      linewidth = config$segment_linewidth,
+      color = config$segment_self_color,
+      lineend = config$segment_lineend,
+      #  linejoin = config$segment_linejoin,
+      linetype = config$segment_self_linetype,
+      angle = config$segment_self_angle,
+      curvature = config$segment_self_curvature,
+      alpha = config$segment_self_alpha,
+      na.rm = TRUE
+    )
+  } else if (config$return_interactive == TRUE) {
+    # For interactive plots, use geom_segment instead of geom_curve
+    # to avoid issues with plotly rendering curves
+
+    otherself <- otherself |>
+      dplyr::mutate(
+        midpoint = computeCurvedMidpoint(
+          x0 = .data$x_otherself,
+          y0 = .data$y_otherself,
+          x1 = .data$x_pos,
+          y1 = .data$y_pos,
+          curvature = config$segment_self_curvature,
+          angle = config$segment_self_angle
+        ),
+        x_midpoint = .data$midpoint$x,
+        y_midpoint = .data$midpoint$y
+      ) |>
+      dplyr::select(-"midpoint")
+
+    p <- p + ggplot2::geom_segment(
+      data = otherself,
+      ggplot2::aes(
+        x = .data$x_otherself,
+        xend = .data$x_midpoint,
+        y = .data$y_otherself,
+        yend = .data$y_midpoint
+      ),
+      linewidth = config$segment_linewidth,
+      color = config$segment_self_color,
+      lineend = config$segment_lineend,
+      linejoin = config$segment_linejoin,
+      linetype = config$segment_self_linetype,
+      alpha = config$segment_self_alpha,
+      na.rm = TRUE
+    ) + ggplot2::geom_segment(
+      data = otherself,
+      ggplot2::aes(
+        x = .data$x_midpoint,
+        xend = .data$x_pos,
+        y = .data$y_midpoint,
+        yend = .data$y_pos
+      ),
+      linewidth = config$segment_linewidth,
+      color = config$segment_self_color,
+      lineend = config$segment_lineend,
+      linejoin = config$segment_linejoin,
+      linetype = config$segment_self_linetype,
+      alpha = config$segment_self_alpha,
+      na.rm = TRUE
+    )
+  }
+  return(p)
+}
+
 
 #' @title Add Scales to ggplot Pedigree Plot
 #' @inheritParams ggPedigree
@@ -674,7 +859,7 @@ ggpedigree <- ggPedigree
   )
 
   # Add alpha scale for affected status if applicable
-  if (!is.null(status_column) && config$sex_color_include == TRUE) {
+  if (!is.null(status_column) && config$sex_color_include == TRUE &&config$status_include == TRUE) {
     p <- p + ggplot2::scale_alpha_manual(
       name = if (config$status_legend_show) {
         config$status_legend_title
@@ -740,7 +925,7 @@ ggpedigree <- ggPedigree
     if (config$focal_fill_legend_show == FALSE) {
       p <- p + ggplot2::guides(color = "none")
     }
-  } else if (!is.null(status_column)) {
+  } else if (!is.null(status_column) && config$status_include == TRUE){
     if (!is.null(config$status_color_palette)) {
       p <- p + ggplot2::scale_color_manual(
         values = config$status_color_values,
@@ -803,13 +988,28 @@ ggpedigree <- ggPedigree
   }
   return(p)
 }
-#' @title Prepare Pedigree Data
-#' @description
-#' This function checks and prepares the pedigree data frame for use in ggPedigree.
-#'
 
 
-# .preparePedigreeData <- function(ped, famID, personID, momID, dadID) {
+
+# @title Prepare Pedigree Data
+# @description
+# This function checks and prepares the pedigree data frame for use in ggPedigree.
+#
+#
+#
+# .preparePedigreeData <- function(ped, famID = "famID",
+#                                  personID = "personID",
+#                                  momID = "momID",
+#                                  dadID = "dadID",
+#                                  spouseID = "spouseID",
+#                                  status_column = NULL,
+#                                  focal_fill_column = NULL,
+#                                  config = list(),
+#                                  function_name = "ggPedigree") {
+#
+#   default_config <- getDefaultPlotConfig()
+#
+#   config <- utils::modifyList(default_config, config)
 #
 # }
 #' @title Compute midpoint coordinate for curved segment
@@ -823,6 +1023,7 @@ ggpedigree <- ggPedigree
 #' @param angle Scalar angle in degrees
 #' @param component Either "x" or "y"
 #' @return Numeric vector of midpoints (x or y)
+#'  @keywords internal
 computeCurvedMidpoint <- function(x0, y0, x1, y1,
                                   curvature, angle,
                                   component = NULL,
@@ -830,7 +1031,6 @@ computeCurvedMidpoint <- function(x0, y0, x1, y1,
   dx <- x1 - x0
   dy <- y1 - y0
   len <- sqrt(dx^2 + dy^2)
-
 
   # Midpoint of the segment
 
@@ -856,7 +1056,6 @@ computeCurvedMidpoint <- function(x0, y0, x1, y1,
     y = py + offset * perp_y
   )
 
-
   midpoint
 }
 
@@ -870,6 +1069,7 @@ computeCurvedMidpoint <- function(x0, y0, x1, y1,
 #' @param component Character string specifying the component type (e.g., "additive").
 #' @param config A list of configuration options for customizing the fill column.
 #' @return A data frame with two columns: `fill` and `personID`.
+#' @keywords internal
 createFillColumn <- function(ped,
                              focal_fill_personID = 2,
                              personID = "personID",
@@ -893,7 +1093,7 @@ createFillColumn <- function(ped,
     ) # needs to match the same data type
     remove(com_mat) # remove the focal_fill_personID column
   } else if (config$matrix_sparse == TRUE) {
-    warning("Sparse matrix detected. Converting to data frame. Currently, sparse matrices are not supported for ggPedigree.")
+    warning("Sparse matrix detected. Converting to data frame. Currently, sparse matrices are not supported for ggPedigree processing.")
     com_mat <- as.matrix(com_mat)
     fill_df <- data.frame(
       focal_fill = com_mat[focal_fill_personID, ],

@@ -7,6 +7,7 @@
 #' @param personID The column name for person identifiers in the data.
 #' @param status_column The column name for affected status in the data.
 #' @param color_scale_midpoint A numeric value for the midpoint of the color scale.
+#' @param overlay_shape The shape used for overlaying points in the plot.
 #' @param ... Additional arguments for future extensibility.
 #' @return A named list of default plotting and layout parameters.
 #' @export
@@ -15,10 +16,13 @@
 getDefaultPlotConfig <- function(color_palette_default =
                                    c("#440154FF", "#FDE725FF", "#21908CFF"),
                                  segment_default_color = "black",
+                                 segment_default_linetype = 1,
                                  function_name = "getDefaultPlotConfig",
                                  personID = "personID",
                                  color_scale_midpoint = 0.50,
                                  status_column = NULL,
+                                 overlay_shape = 4,
+                                 overlay_color = "black",
                                  ...) {
   # Ensure the color palette is a character vector
   if (!is.character(color_palette_default) ||
@@ -109,7 +113,7 @@ getDefaultPlotConfig <- function(color_palette_default =
 
     # ---- Segment Drawing Options ----
     segment_linewidth = 0.5,
-    segment_linetype = 1,
+    segment_linetype = segment_default_linetype,
     segment_lineend = "round",
     segment_linejoin = "round",
     segment_offspring_color = segment_default_color,
@@ -118,7 +122,7 @@ getDefaultPlotConfig <- function(color_palette_default =
     segment_sibling_color = segment_default_color,
     segment_spouse_color = segment_default_color,
     segment_mz_color = segment_default_color,
-    segment_mz_linetype = 1,
+    segment_mz_linetype = segment_default_linetype,
     segment_mz_alpha = 1,
     segment_mz_t = .6,
     segment_self_linetype = "dotdash",
@@ -144,10 +148,27 @@ getDefaultPlotConfig <- function(color_palette_default =
     status_alpha_affected = 1,
     status_alpha_unaffected = 0,
     status_color_palette = c(color_palette_default[1], color_palette_default[2]),
-    # Use first color for affected,
-    status_affected_shape = 4,
     status_legend_title = "Affected",
     status_legend_show = FALSE,
+    status_shape_affected = overlay_shape,
+    status_color_affected = overlay_color, # Use first color for affected
+    # Use first color for affected,
+
+    overlay_shape = overlay_shape,
+    overlay_code_affected = 1,
+    overlay_code_unaffected = 0,
+    overlay_label_affected = "Affected",
+    overlay_label_unaffected = "Unaffected",
+    overlay_alpha_affected = 1,
+    overlay_alpha_unaffected = 0,
+    overlay_color = "black",
+    overlay_alpha_affected = 1,
+    overlay_alpha_unaffected = 0,
+    overlay_include = FALSE,
+    overlay_legend_title = "Overlay",
+    overlay_legend_show = FALSE,
+
+
 
     # ---- Focal Fill Settings ----
     focal_fill_include = FALSE,
@@ -157,6 +178,7 @@ getDefaultPlotConfig <- function(color_palette_default =
     focal_fill_high_color = "#FDE725FF",
     focal_fill_mid_color = "#9F2A63FF",
     focal_fill_low_color = "#0D082AFF",
+    focal_fill_shape = overlay_shape,
     focal_fill_scale_midpoint = color_scale_midpoint,
     focal_fill_method = "gradient",
     focal_fill_component = "additive",

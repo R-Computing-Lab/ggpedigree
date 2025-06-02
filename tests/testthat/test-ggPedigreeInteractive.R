@@ -48,6 +48,8 @@ test_that("ggPedigreeInteractive returns a gg object", {
     momID = "momID",
     dadID = "dadID",
     spouseID = "spouseID",
+    patID = "patID",
+    matID = "matID",
     config = list(
       label_nudge_y = -.25,
       labels_include = TRUE,
