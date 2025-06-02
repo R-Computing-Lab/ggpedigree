@@ -19,7 +19,8 @@ knitr::opts_chunk$set(
 This vignette demonstrates how to visualize phenotypic correlation by degree of relatedness using the `ggPhenotypeByDegree` function from the `ggpedigree` package. This function is particularly useful for analyzing and visualizing the relationship between phenotypic traits and genetic relatedness in pedigree data.
 
 The example below uses a squirrel pedigree dataset to illustrate how to create a plot showing the phenotypic correlation across different degrees of relatedness.
-
+<details>
+<summary>Click to expand pedigree setup</summary>
 ```{r, message=FALSE, warning=FALSE, cache=FALSE}
 library(ggpedigree)
 library(BGmisc)
@@ -173,7 +174,7 @@ result <- dataRelatedPair_merge %>%
   select(-lrs_cor_test, -ars_n_cor_test) %>% # drop the list‑columns once unpacked
   rename(cnu = cnuRel, mtdna = mitRel)
 ```
-
+</details>
 ```{r, message=FALSE, warning=FALSE}
 ggPhenotypeByDegree(
   df = result,
