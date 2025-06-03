@@ -1,3 +1,6 @@
+# ggpedigree 0.5.1
+* Fix tooltip appearing in `ggPedigreeInteractive` when tooltip_include is set to FALSE.
+
 # ggpedigree 0.5.0
 * Added segment_linetype and custom affected labels to the `ggpedigree` function.
 * Added usage of color_palette to the `ggpedigree` function.

@@ -144,6 +144,7 @@ ggPedigreeInteractive <- function(ped,
   } else {
     plt <- tryCatch(
       plotly::ggplotly(static_plot,
+                       tooltip = NULL,
         width = NULL,
         height = NULL
       ),
