@@ -96,9 +96,20 @@ getDefaultPlotConfig(
   status_alpha_affected = 1,
   status_alpha_unaffected = 0,
   status_color_palette = c(color_palette_default[1], color_palette_default[2]),
-  status_affected_shape = 4,
+  status_shape_affected = 4,
   status_legend_title = "Affected",
   status_legend_show = FALSE,
+  overlay_shape = 4,
+  overlay_code_affected = 1,
+  overlay_code_unaffected = 0,
+  overlay_label_affected = "Affected",
+  overlay_label_unaffected = "Unaffected",
+  overlay_alpha_affected = 1,
+  overlay_alpha_unaffected = 0,
+  overlay_color = "black",
+  overlay_include = FALSE,
+  overlay_legend_title = "Overlay",
+  overlay_legend_show = FALSE,
   focal_fill_include = FALSE,
   focal_fill_legend_show = TRUE,
   focal_fill_personID = 1,
@@ -306,11 +317,11 @@ getDefaultPlotConfig(
 
 \item{status_color_palette}{A character vector of colors for affected status.}
 
-\item{status_affected_shape}{Shape for affected individuals.}
-
 \item{status_legend_title}{Title of the status legend.}
 
 \item{status_legend_show}{Whether to show the status legend.}
+
+\item{overlay_shape}{The shape used for overlaying points in the plot.}
 
 \item{focal_fill_include}{Whether to fill focal individuals.}
 
@@ -355,6 +366,8 @@ getDefaultPlotConfig(
 \item{override_many2many}{Whether to override many-to-many link logic.}
 
 \item{...}{Additional arguments for future extensibility.}
+
+\item{status_affected_shape}{Shape for affected individuals.}
 }
 \value{
 A named list of default plotting and layout parameters.

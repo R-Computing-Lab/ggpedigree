@@ -128,10 +128,8 @@
 
 
 getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
-
                                  personID = "personID",
                                  status_column = NULL,
-
                                  alpha_default = 1,
                                  # ---- General Appearance ----
                                  apply_default_scales = TRUE,
@@ -237,24 +235,18 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  status_shape_affected = 4,
                                  status_legend_title = "Affected",
                                  status_legend_show = FALSE,
-								 
-								 
-
+                                 # ----  overlay  Settings ----
                                  overlay_shape = 4,
-    overlay_code_affected = 1,
-    overlay_code_unaffected = 0,
-    overlay_label_affected = "Affected",
-    overlay_label_unaffected = "Unaffected",
-    overlay_alpha_affected = 1,
-    overlay_alpha_unaffected = 0,
-    overlay_color = "black",
-    overlay_alpha_affected = 1,
-    overlay_alpha_unaffected = 0,
-    overlay_include = FALSE,
-    overlay_legend_title = "Overlay",
-    overlay_legend_show = FALSE,                                
-
-
+                                 overlay_code_affected = 1,
+                                 overlay_code_unaffected = 0,
+                                 overlay_label_affected = "Affected",
+                                 overlay_label_unaffected = "Unaffected",
+                                 overlay_alpha_affected = 1,
+                                 overlay_alpha_unaffected = 0,
+                                 overlay_color = "black",
+                                 overlay_include = FALSE,
+                                 overlay_legend_title = "Overlay",
+                                 overlay_legend_show = FALSE,
                                  # ---- Focal Fill Settings ----
                                  focal_fill_include = FALSE,
                                  focal_fill_legend_show = TRUE,
@@ -269,9 +261,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  focal_fill_n_breaks = NULL,
                                  focal_fill_na_value = "black",
                                  focal_fill_force_zero = FALSE, # work around that sets zero to NA so you can distinguish from low values
-   # Use first color for affected,
-
-								# ---- Confidence Intervals
+                                 # Use first color for affected,
+                                 # ---- Confidence Intervals
                                  ci_include = TRUE,
                                  ci_ribbon_alpha = .3,
                                  # ---- matrix settings ----
@@ -283,7 +274,6 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  return_interactive = FALSE,
                                  # ---- Debugging Options ----
                                  override_many2many = FALSE,
-
                                  ...) {
   # Ensure the color palette is a character vector
   if (!is.character(color_palette_default) ||
@@ -418,7 +408,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     status_affected_shape = status_affected_shape,
     status_legend_title = status_legend_title,
     status_legend_show = status_legend_show,
-	
+
     # ----  overlay  Settings ----
 
     overlay_shape = overlay_shape,
