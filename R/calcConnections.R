@@ -420,7 +420,7 @@ buildTwinSegments <- function(ped, connections_for_FOO) {
     stop("ped must contain x_pos and y_pos columns to build twin segments")
   }
   if (!"zygosity" %in% names(ped)) {
-    ped$zygocity <- NA_character_
+    ped$zygosity <- NA_character_
   }
 
   twin_connections <- ped |>
