@@ -32,8 +32,7 @@ library(dplyr)
 library(purrr) # for map_* helpers
 # Filter for the largest family, recode sex if needed
 ped_filtered <- redsquirrels %>%
-  recodeSex(code_female = "F") %>%
-  filter(famID == 160)
+  recodeSex(code_female = "F")  %>% filter(famID == 160)
 
 kin_degree_max <- 12 # maximum degree of relatedness to consider
 # Calculate relatedness matrices
@@ -49,7 +48,9 @@ df_links <- com2links(
   drop_upper_triangular = TRUE,
   gc = FALSE
 )
+```
 
+```{r message=FALSE, warning=FALSE} 
 dataRelatedPair_merge <- df_links %>%
   left_join(ped_filtered %>% select(personID, lrs, ars_n),
     by = c("ID1" = "personID")
@@ -75,6 +76,33 @@ dxlist <- c(
   names(dataRelatedPair_merge)[endsWith(names(dataRelatedPair_merge), "_k1")]
 )
 
+kin_degrees <- 0:12
+rel_vals <- 2^(-kin_degrees)
+rel_bins <- purrr::map_chr(rel_vals, ~ paste0("addRel_", .x))
+rel_labels <- c("addRel_1+" = "addRel_1+")
+
+# bin assignment function
+assign_addRel_bin <- function(rel) {
+  for (val in rel_vals) {
+    upper <- val * 1.1
+    lower <- val * 0.9
+    if (!is.na(rel) && rel >= lower && rel <= upper) {
+      return(paste0("addRel_", val))
+    } else if (!is.na(rel) && rel > upper) {
+      return(paste0("addRel_+", val))
+    }
+  }
+  if (!is.na(rel) && rel > 2^0 * 1.1) {
+    return("addRel_1+")
+  }
+  if (!is.na(rel) && rel == 0) {
+    return("addRel_0")
+  }
+  return(NA_character_)
+}
+
+
+
 dataRelatedPair_merge <- data.table::rbindlist(
   list(
     dataRelatedPair_merge,
@@ -82,59 +110,13 @@ dataRelatedPair_merge <- data.table::rbindlist(
   ),
   use.names = FALSE
 ) %>%
-  mutate(
-    # recode to bins that are within 10% of expected degree of relatedness cousins within 10% for .125 so .125+-.125*10 = .1125 and .125 + .125*10 = .1375, and 2^4 etc
-    #  addRel_center <- 2^(0:(-kin_degree_max)) # needs to be sliced first with range
-    addRel_bin = case_when(
-      addRel > 2^0 * 1.1 ~ "addRel_1+",
-      addRel > 2^0 * 0.9 & addRel < 2^0 * 1.1 ~ "addRel_1",
-      addRel > 2^(-1) * 1.1 ~ paste0("addRel_+", 2^(-1)),
-      addRel > 2^(-1) * 0.9 & addRel < 2^(-1) * 1.1 ~ paste0("addRel_", 2^(-1)),
-      addRel > 2^(-2) * 1.1 ~ paste0("addRel_+", 2^(-2)),
-      addRel > 2^(-2) * 0.9 & addRel < 2^(-2) * 1.1 ~ paste0("addRel_", 2^(-2)),
-      addRel > 2^(-3) * 1.1 ~ paste0("addRel_+", 2^(-3)),
-      addRel > 2^(-3) * 0.9 & addRel < 2^(-3) * 1.1 ~ paste0("addRel_", 2^(-3)),
-      addRel > 2^(-4) * 1.1 ~ paste0("addRel_+", 2^(-4)),
-      addRel > 2^(-4) * 0.9 & addRel < 2^(-4) * 1.1 ~ paste0("addRel_", 2^(-4)),
-      addRel > 2^(-5) * 1.1 ~ paste0("addRel_+", 2^(-5)),
-      addRel > 2^(-5) * 0.9 & addRel < 2^(-5) * 1.1 ~ paste0("addRel_", 2^(-5)),
-      addRel > 2^(-6) * 1.1 ~ paste0("addRel_+", 2^(-6)),
-      addRel > 2^(-6) * 0.9 & addRel < 2^(-6) * 1.1 ~ paste0("addRel_", 2^(-6)),
-      addRel > 2^(-7) * 1.1 ~ paste0("addRel_+", 2^(-7)),
-      addRel > 2^(-7) * 0.9 & addRel < 2^(-7) * 1.1 ~ paste0("addRel_", 2^(-7)),
-      addRel > 2^(-8) * 1.1 ~ paste0("addRel_+", 2^(-8)),
-      addRel > 2^(-8) * 0.9 & addRel < 2^(-8) * 1.1 ~ paste0("addRel_", 2^(-8)),
-      addRel > 2^(-9) * 1.1 ~ paste0("addRel_+", 2^(-9)),
-      addRel > 2^(-9) * 0.9 & addRel < 2^(-9) * 1.1 ~ paste0("addRel_", 2^(-9)),
-      addRel > 2^(-10) * 1.1 ~ paste0("addRel_+", 2^(-10)),
-      addRel > 2^(-10) * 0.9 & addRel < 2^(-10) * 1.1 ~ paste0("addRel_", 2^(-10)),
-      addRel > 2^(-11) * 1.1 ~ paste0("addRel_+", 2^(-11)),
-      addRel > 2^(-11) * 0.9 & addRel < 2^(-11) * 1.1 ~ paste0("addRel_", 2^(-11)),
-      addRel > 2^(-12) * 1.1 ~ paste0("addRel_+", 2^(-12)),
-      addRel > 2^(-12) * 0.9 & addRel < 2^(-12) * 1.1 ~ paste0("addRel_", 2^(-12)),
-      addRel > 0 ~ "addRel_+0",
-      addRel == 0 ~ "addRel_0",
-      TRUE ~ NA_character_ # catch-all for other cases
-    ),
-    addRel_factor = factor(addRel_bin, levels = c(
-      "addRel_1+", "addRel_1", paste0("addRel_+", 2^(-1)),
-      paste0("addRel_", 2^(-1)), paste0("addRel_+", 2^(-2)),
-      paste0("addRel_", 2^(-2)), paste0("addRel_+", 2^(-3)),
-      paste0("addRel_", 2^(-3)), paste0("addRel_+", 2^(-4)),
-      paste0("addRel_", 2^(-4)), paste0("addRel_+", 2^(-5)),
-      paste0("addRel_", 2^(-5)), paste0("addRel_+", 2^(-6)),
-      paste0("addRel_", 2^(-6)), paste0("addRel_+", 2^(-7)),
-      paste0("addRel_", 2^(-7)), paste0("addRel_+", 2^(-8)),
-      paste0("addRel_", 2^(-8)), paste0("addRel_+", 2^(-9)),
-      paste0("addRel_", 2^(-9)), paste0("addRel_+", 2^(-10)),
-      paste0("addRel_", 2^(-10)), paste0("addRel_+", 2^(-11)),
-      paste0("addRel_", 2^(-11)), paste0("addRel_+", 2^(-12)),
-      paste0("addRel_", 2^(-12)), "addRel_+0", "addRel_0"
-    ))
-  ) %>%
-  select(
-    -addRel_bin
-  )
+  mutate(addRel_bin = vapply(addRel, assign_addRel_bin, character(1))) %>%
+  mutate(addRel_factor = factor(addRel_bin, levels = c("addRel_1+", rel_bins, paste0("addRel_+", rel_vals), "addRel_+0", "addRel_0"))) %>%
+  select(-addRel_bin)
+
+
+
+
 
 
 result <- dataRelatedPair_merge %>%
@@ -160,21 +142,22 @@ result <- dataRelatedPair_merge %>%
     cor_lrs_stat = map_dbl(lrs_cor_test, ~ if (is.null(.x)) NA_real_ else .x$statistic),
     cor_lrs_p = map_dbl(lrs_cor_test, ~ if (is.null(.x)) NA_real_ else .x$p.value),
     cor_lrs_df = map_dbl(lrs_cor_test, ~ if (is.null(.x)) NA_real_ else .x$parameter),
-    cor_lrs_ci_lb = map_dbl(lrs_cor_test, ~ if (is.null(.x)) NA_real_ else .x$conf.int[1]),
-    cor_lrs_ci_ub = map_dbl(lrs_cor_test, ~ if (is.null(.x)) NA_real_ else .x$conf.int[2]),
+    cor_lrs_ci_lb = map_dbl(lrs_cor_test, ~ if (is.null(.x)) NA_real_ else .x$conf.int[1] * sqrt(2)),
+    cor_lrs_ci_ub = map_dbl(lrs_cor_test, ~ if (is.null(.x)) NA_real_ else .x$conf.int[2] * sqrt(2)),
 
     # ---- ARS‑n pair ----
     cor_ars_n = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$estimate),
     cor_ars_n_stat = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$statistic),
     cor_ars_n_p = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$p.value),
     cor_ars_n_df = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$parameter),
-    cor_ars_n_ci_lb = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$conf.int[1]),
-    cor_ars_n_ci_ub = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$conf.int[2])
+    cor_ars_n_ci_lb = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$conf.int[1] * sqrt(2)),
+    cor_ars_n_ci_ub = map_dbl(ars_n_cor_test, ~ if (is.null(.x)) NA_real_ else .x$conf.int[2] * sqrt(2))
   ) %>%
   select(-lrs_cor_test, -ars_n_cor_test) %>% # drop the list‑columns once unpacked
   rename(cnu = cnuRel, mtdna = mitRel)
 ```
 </details>
+
 ```{r, message=FALSE, warning=FALSE}
 ggPhenotypeByDegree(
   df = result,
@@ -182,9 +165,14 @@ ggPhenotypeByDegree(
   y_ci_lb = "cor_lrs_ci_lb",
   y_ci_ub = "cor_lrs_ci_ub",
   config = list(
-    only_classic_kin = FALSE,
-    degree_rel = FALSE,
-    kin_grouping = TRUE
+    use_only_classic_kin = FALSE,
+    drop_classic_kin = FALSE,
+    group_by_kin = TRUE,
+    use_relative_degree = TRUE,
+    drop_non_classic_sibs = FALSE,
+    filter_degree_max = 12,
+    grouping_column = "mtdna_factor",
+    filter_n_pairs = 10
   )
 )
 ```

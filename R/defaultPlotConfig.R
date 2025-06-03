@@ -1,28 +1,289 @@
 # defaultPlotConfig.R
 #' @title Shared Default Plotting Configuration
 #' @description Centralized configuration list used by all gg-based plotting functions.
+#' Returns a named list of default settings used by all gg-based plotting functions.
+#' This configuration can be overridden by supplying a list of key-value pairs to
+#' plotting functions such as `ggPedigree()`, `ggRelatednessMatrix()`, and `ggPhenotypeByDegree()`.
+#' Each key corresponds to a configurable plot, layout, or aesthetic behavior.
 #' @param color_palette_default A character vector of default colors for the plot.
 #' @param segment_default_color A character string for the default color of segments in the plot.
 #' @param function_name The name of the function calling this configuration.
 #' @param personID The column name for person identifiers in the data.
 #' @param status_column The column name for affected status in the data.
-#' @param color_scale_midpoint A numeric value for the midpoint of the color scale.
 #' @param overlay_shape The shape used for overlaying points in the plot.
+#' @param color_scale_midpoint Midpoint value for continuous color scales.
+#' @param alpha_default Default alpha transparency level.
+#' @param apply_default_scales Whether to apply default color scales.
+#' @param apply_default_theme Whether to apply default ggplot2 theme.
+#' @param color_palette_low Color for the low end of a gradient.
+#' @param color_palette_mid Color for the midpoint of a gradient.
+#' @param color_palette_high Color for the high end of a gradient.
+#' @param color_scale Name of the color scale used (e.g., "ggthemes::calc").
+#' @param alpha Default alpha transparency for plot elements.
+#' @param plot_title Main title of the plot.
+#' @param plot_subtitle Subtitle of the plot.
+#' @param value_rounding_digits Number of digits to round displayed values.
+#' @param code_male Integer code for males in data.
+#' @param filter_n_pairs Threshold to filter maximum number of pairs.
+#' @param filter_degree_min Minimum degree value used in filtering.
+#' @param filter_degree_max Maximum degree value used in filtering.
+#' @param drop_classic_kin Whether to exclude classic kin categories.
+#' @param drop_non_classic_sibs Whether to exclude non-classic sibs.
+#' @param use_only_classic_kin Whether to restrict analysis to classic kinship.
+#' @param use_relative_degree Whether to use relative degrees instead of absolute.
+#' @param group_by_kin Whether to group output by kinship group.
+#' @param match_threshold_percent Kinbin matching threshold as a percentage.
+#' @param max_degree_levels Maximum number of degree levels to show.
+#' @param grouping_column Name of column used for grouping.
+#' @param annotate_include Whether to include annotations.
+#' @param annotate_x_shift Horizontal shift applied to annotation text.
+#' @param annotate_y_shift Vertical shift applied to annotation text.
+#' @param label_include Whether to display labels on plot points.
+#' @param label_column Column to use for text labels.
+#' @param label_method Method used for labeling (e.g., ggrepel, geom_text).
+#' @param label_max_overlaps Maximum number of overlapping labels.
+#' @param label_nudge_x Horizontal nudge for label text.
+#' @param label_nudge_y Vertical nudge for label text.
+#' @param label_segment_color Segment color for label connectors.
+#' @param label_text_angle Text angle for labels.
+#' @param label_text_size Font size for labels.
+#' @param label_text_color Color of the label text.
+#' @param point_size Size of points drawn in plot.
+#' @param outline_include Whether to include outlines around points.
+#' @param outline_multiplier Multiplier to compute outline size from point size.
+#' @param outline_color Color used for point outlines.
+#' @param tooltip_include Whether tooltips are shown in interactive plots.
+#' @param tooltip_columns Columns to include in tooltips.
+#' @param axis_x_label Label for the X-axis.
+#' @param axis_y_label Label for the Y-axis.
+#' @param axis_text_angle_x Angle of X-axis text.
+#' @param axis_text_angle_y Angle of Y-axis text.
+#' @param axis_text_size Font size of axis text.
+#' @param axis_text_color Color of axis text.
+#' @param generation_height Vertical spacing of generations.
+#' @param generation_width Horizontal spacing of generations.
+#' @param ped_packed Whether the pedigree should use packed layout.
+#' @param ped_align Whether to align pedigree generations.
+#' @param ped_width Plot width of the pedigree block.
+#' @param segment_linewidth Line width for segments.
+#' @param segment_linetype Line type for segments.
+#' @param segment_lineend Line end type for segments.
+#' @param segment_linejoin Line join type for segments.
+#' @param segment_offspring_color Color for offspring segments.
+#' @param segment_parent_color Color for parent segments.
+#' @param segment_self_color Color for self-loop segments.
+#' @param segment_sibling_color Color for sibling segments.
+#' @param segment_spouse_color Color for spouse segments.
+#' @param segment_mz_color Color for monozygotic twin segments.
+#' @param segment_mz_linetype Line type for MZ segments.
+#' @param segment_mz_alpha Alpha for MZ segments.
+#' @param segment_mz_t Tuning parameter for MZ segment layout.
+#' @param segment_self_linetype Line type for self-loop segments.
+#' @param segment_self_alpha Alpha value for self-loop segments.
+#' @param segment_self_angle Angle of self-loop segment.
+#' @param segment_self_curvature Curvature of self-loop segment.
+#' @param sex_color_include Whether to color nodes by sex.
+#' @param sex_color_palette A character vector of colors for sex.
+#' @param sex_legend_title Title of the sex legend.
+#' @param sex_shape_labels Labels used in sex legend.
+#' @param sex_shape_female Shape for female nodes.
+#' @param sex_shape_male Shape for male nodes.
+#' @param sex_shape_unknown Shape for unknown sex nodes.
+#' @param status_include Whether to display affected status.
+#' @param status_code_affected Value that encodes affected status.
+#' @param status_code_unaffected Value that encodes unaffected status.
+#' @param status_label_affected Label for affected status.
+#' @param status_label_unaffected Label for unaffected status.
+#' @param status_alpha_affected Alpha for affected individuals.
+#' @param status_alpha_unaffected Alpha for unaffected individuals.
+#' @param status_affected_shape Shape for affected individuals.
+#' @param status_color_palette A character vector of colors for affected status.
+#' @param status_legend_title Title of the status legend.
+#' @param status_legend_show Whether to show the status legend.
+#' @param focal_fill_include Whether to fill focal individuals.
+#' @param focal_fill_legend_show Whether to show legend for focal fill.
+#' @param focal_fill_personID ID of focal individual.
+#' @param focal_fill_legend_title Title of focal fill legend.
+#' @param focal_fill_high_color High-end color for focal gradient.
+#' @param focal_fill_mid_color Midpoint color for focal gradient.
+#' @param focal_fill_low_color Low-end color for focal gradient.
+#' @param focal_fill_scale_midpoint Midpoint for focal fill scale.
+#' @param focal_fill_method Method used for focal fill gradient.
+#' @param focal_fill_component Component type for focal fill.
+#' @param focal_fill_n_breaks Number of breaks in focal fill scale.
+#' @param focal_fill_na_value Color for NA values in focal fill.
+#' @param focal_fill_force_zero Whether to force zero to NA in focal fill.
+#' @param ci_include Whether to show confidence intervals.
+#' @param ci_ribbon_alpha Alpha level for CI ribbons.
+#' @param matrix_sparse Whether matrix input is sparse.
+#' @param matrix_isChild_method Method used for isChild matrix derivation.
+#' @param return_static Whether to return a static plot.
+#' @param return_widget Whether to return a widget object.
+#' @param return_interactive Whether to return an interactive plot.
+#' @param override_many2many Whether to override many-to-many link logic.
 #' @param ... Additional arguments for future extensibility.
 #' @return A named list of default plotting and layout parameters.
 #' @export
 
 
-getDefaultPlotConfig <- function(color_palette_default =
-                                   c("#440154FF", "#FDE725FF", "#21908CFF"),
-                                 segment_default_color = "black",
-                                 segment_default_linetype = 1,
-                                 function_name = "getDefaultPlotConfig",
+
+getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
+
                                  personID = "personID",
-                                 color_scale_midpoint = 0.50,
                                  status_column = NULL,
+
+                                 alpha_default = 1,
+                                 # ---- General Appearance ----
+                                 apply_default_scales = TRUE,
+                                 apply_default_theme = TRUE,
+                                 segment_default_color = "black",
+                                 color_palette_default = c("#440154FF", "#FDE725FF", "#21908CFF"),
+                                 color_palette_low = "#000004FF",
+                                 color_palette_mid = "#56106EFF",
+                                 color_palette_high = "#FCFDBFFF",
+                                 color_scale_midpoint = 0.50,
+                                 color_scale = "ggthemes::calc", # only used in gg
+                                 alpha = alpha_default,
+                                 plot_title = NULL,
+                                 plot_subtitle = NULL,
+                                 value_rounding_digits = 2,
+                                 # --- SEX ------------------------------------------------------------
+                                 code_male = 1,
+                                 # ---- Filtering and Computation ----
+                                 filter_n_pairs = 500,
+                                 filter_degree_min = 0,
+                                 filter_degree_max = 7,
+                                 drop_classic_kin = FALSE,
+                                 drop_non_classic_sibs = TRUE,
+                                 use_only_classic_kin = TRUE,
+                                 use_relative_degree = TRUE,
+                                 group_by_kin = TRUE,
+                                 # ----Kinbin Settings ----
+                                 match_threshold_percent = 10,
+                                 max_degree_levels = 12,
+                                 grouping_column = "mtdna_factor",
+                                 # ---- Annotation Settings ----
+                                 annotate_include = TRUE,
+                                 annotate_x_shift = -0.1,
+                                 annotate_y_shift = 0.005,
+                                 # ---- Label Aesthetics ----
+                                 label_include = TRUE,
+                                 label_column = "personID",
+                                 label_method = "ggrepel",
+                                 label_max_overlaps = 15,
+                                 label_nudge_x = 0,
+                                 label_nudge_y = -0.10,
+                                 label_segment_color = NA,
+                                 label_text_angle = 0,
+                                 label_text_size = 2,
+                                 label_text_color = "black",
+                                 # --- POINT / OUTLINE AESTHETICS ---------------------------------------
+                                 point_size = 4,
+                                 outline_include = FALSE,
+                                 outline_multiplier = 1.25,
+                                 outline_color = "black",
+                                 # ---- Tooltip Aesthetics ----
+                                 tooltip_include = TRUE,
+                                 tooltip_columns = c("ID1", "ID2", "value"),
+                                 # ---- Axis and Layout Settings ----
+                                 axis_x_label = NULL,
+                                 axis_y_label = NULL,
+                                 axis_text_angle_x = 90,
+                                 axis_text_angle_y = 0,
+                                 axis_text_size = 8,
+                                 axis_text_color = "black",
+                                 # ---- Generation Scale Settings ----
+                                 generation_height = 1,
+                                 generation_width = 1,
+                                 ped_packed = TRUE,
+                                 ped_align = TRUE,
+                                 ped_width = 15,
+                                 # ---- Segment Drawing Options ----
+                                 segment_linewidth = 0.5,
+                                 segment_linetype = 1,
+                                 segment_lineend = "round",
+                                 segment_linejoin = "round",
+                                 segment_offspring_color = segment_default_color,
+                                 segment_parent_color = segment_default_color,
+                                 segment_self_color = segment_default_color,
+                                 segment_sibling_color = segment_default_color,
+                                 segment_spouse_color = segment_default_color,
+                                 segment_mz_color = segment_default_color,
+                                 segment_mz_linetype = 1,
+                                 segment_mz_alpha = 1,
+                                 segment_mz_t = .6,
+                                 segment_self_linetype = "dotdash",
+                                 segment_self_alpha = 0.5,
+                                 segment_self_angle = 90,
+                                 segment_self_curvature = -0.2,
+                                 # ---- Sex Legend and Appearance ----
+                                 sex_color_include = TRUE,
+                                 sex_legend_title = "Sex",
+                                 sex_shape_labels = c("Female", "Male", "Unknown"),
+                                 sex_color_palette = color_palette_default,
+                                 sex_shape_female = 16,
+                                 sex_shape_male = 15,
+                                 sex_shape_unknown = 18,
+                                 # ---- Affected Status Controls ----
+                                 status_include = TRUE,
+                                 status_code_affected = 1,
+                                 status_code_unaffected = 0,
+                                 status_label_affected = "Affected",
+                                 status_label_unaffected = "Unaffected",
+                                 status_alpha_affected = 1,
+                                 status_alpha_unaffected = 0,
+                                 status_color_palette = c(color_palette_default[1], color_palette_default[2]),
+                                 # Use first color for affected,
+                                 status_shape_affected = 4,
+                                 status_legend_title = "Affected",
+                                 status_legend_show = FALSE,
+								 
+								 
+
                                  overlay_shape = 4,
-                                 overlay_color = "black",
+    overlay_code_affected = 1,
+    overlay_code_unaffected = 0,
+    overlay_label_affected = "Affected",
+    overlay_label_unaffected = "Unaffected",
+    overlay_alpha_affected = 1,
+    overlay_alpha_unaffected = 0,
+    overlay_color = "black",
+    overlay_alpha_affected = 1,
+    overlay_alpha_unaffected = 0,
+    overlay_include = FALSE,
+    overlay_legend_title = "Overlay",
+    overlay_legend_show = FALSE,                                
+
+
+                                 # ---- Focal Fill Settings ----
+                                 focal_fill_include = FALSE,
+                                 focal_fill_legend_show = TRUE,
+                                 focal_fill_personID = 1,
+                                 focal_fill_legend_title = "Focal Fill",
+                                 focal_fill_high_color = "#FDE725FF",
+                                 focal_fill_mid_color = "#9F2A63FF",
+                                 focal_fill_low_color = "#0D082AFF",
+                                 focal_fill_scale_midpoint = color_scale_midpoint,
+                                 focal_fill_method = "gradient",
+                                 focal_fill_component = "additive",
+                                 focal_fill_n_breaks = NULL,
+                                 focal_fill_na_value = "black",
+                                 focal_fill_force_zero = FALSE, # work around that sets zero to NA so you can distinguish from low values
+   # Use first color for affected,
+
+								# ---- Confidence Intervals
+                                 ci_include = TRUE,
+                                 ci_ribbon_alpha = .3,
+                                 # ---- matrix settings ----
+                                 matrix_sparse = FALSE,
+                                 matrix_isChild_method = "partialparent",
+                                 # -- Output Options ----
+                                 return_static = TRUE,
+                                 return_widget = FALSE,
+                                 return_interactive = FALSE,
+                                 # ---- Debugging Options ----
+                                 override_many2many = FALSE,
+
                                  ...) {
   # Ensure the color palette is a character vector
   if (!is.character(color_palette_default) ||
@@ -35,170 +296,186 @@ getDefaultPlotConfig <- function(color_palette_default =
   }
 
 
-  if (!stringr::str_to_lower(function_name) %in% c("ggrelatednessmatrix", "ggpedigree", "ggpedigreeinteractive", "getdefaultplotconfig")) {
+  if (!stringr::str_to_lower(function_name) %in% c("ggrelatednessmatrix", "ggpedigree", "ggphenotypebydegree", "ggpedigreeinteractive", "getdefaultplotconfig")) {
     stop(paste0("The function ", function_name, " is not supported by getDefaultPlotConfig."))
   }
 
   core_list <- list(
     # ---- General Appearance ----
-    apply_default_scales = TRUE,
-    apply_default_theme = TRUE,
+    apply_default_scales = apply_default_scales,
+    apply_default_theme = apply_default_theme,
     color_palette_default = color_palette_default,
-    color_palette_low = "#000004FF",
-    color_palette_mid = "#56106EFF",
-    color_palette_high = "#FCFDBFFF",
+    color_palette_low = color_palette_low,
+    color_palette_mid = color_palette_mid,
+    color_palette_high = color_palette_high,
     color_scale_midpoint = color_scale_midpoint,
-    plot_title = NULL,
-    plot_subtitle = NULL,
-    value_rounding_digits = 2,
+    color_scale = color_scale, # only used in gg
+    alpha = alpha,
+    plot_title = plot_title,
+    plot_subtitle = plot_subtitle,
+    value_rounding_digits = value_rounding_digits,
     # --- SEX ------------------------------------------------------------
-    code_male = 1,
+    code_male = code_male,
 
     # ---- Filtering and Computation ----
-    filter_n_pairs = 500,
-    filter_degree_min = 0,
-    filter_degree_max = 7,
-    drop_classic_kin = FALSE,
-    drop_non_classic_sibs = TRUE,
-    only_classic_kin = TRUE,
-    use_relative_degree = TRUE,
+    filter_n_pairs = filter_n_pairs,
+    filter_degree_min = filter_degree_min,
+    filter_degree_max = filter_degree_max,
+    drop_classic_kin = drop_classic_kin,
+    drop_non_classic_sibs = drop_non_classic_sibs,
+    use_only_classic_kin = use_only_classic_kin,
+    use_relative_degree = use_relative_degree,
+    group_by_kin = group_by_kin,
 
     # ----Kinbin Settings ----
-    match_threshold_percent = 10,
-    max_degree_levels = 12,
-    grouping_column = "mtdna_factor",
-
+    match_threshold_percent = match_threshold_percent,
+    max_degree_levels = max_degree_levels,
+    grouping_column = grouping_column,
 
     # ---- Annotation Settings ----
-    annotate_include = TRUE,
-    annotate_x_shift = -0.1,
-    annotate_y_shift = 0.005,
+    annotate_include = annotate_include,
+    annotate_x_shift = annotate_x_shift,
+    annotate_y_shift = annotate_y_shift,
 
     # ---- Label Aesthetics ----
-    label_include = TRUE,
-    label_column = "personID",
-    label_method = "ggrepel",
-    label_max_overlaps = 15,
-    label_nudge_x = 0,
-    label_nudge_y = -0.10,
-    label_segment_color = NA,
-    label_text_angle = 0,
-    label_text_size = 2,
-    label_text_color = "black",
+    label_include = label_include,
+    label_column = label_column,
+    label_method = label_method,
+    label_max_overlaps = label_max_overlaps,
+    label_nudge_x = label_nudge_x,
+    label_nudge_y = label_nudge_y,
+    label_segment_color = label_segment_color,
+    label_text_angle = label_text_angle,
+    label_text_size = label_text_size,
+    label_text_color = label_text_color,
 
     # --- POINT / OUTLINE AESTHETICS ---------------------------------------
-    point_size = 4,
-    outline_include = FALSE,
-    outline_multiplier = 1.25,
-    outline_color = "black",
+    point_size = point_size,
+    outline_include = outline_include,
+    outline_multiplier = outline_multiplier,
+    outline_color = outline_color,
+
 
     # ---- Tooltip Aesthetics ----
-    tooltip_include = TRUE,
-    tooltip_columns = c("ID1", "ID2", "value"),
+    tooltip_include = tooltip_include,
+    tooltip_columns = tooltip_columns,
 
     # ---- Axis and Layout Settings ----
-    axis_x_label = NULL,
-    axis_y_label = NULL,
-    axis_text_angle_x = 90,
-    axis_text_angle_y = 0,
-    axis_text_size = 8,
-    axis_text_color = "black",
+    axis_x_label = axis_x_label,
+    axis_y_label = axis_y_label,
+    axis_text_angle_x = axis_text_angle_x,
+    axis_text_angle_y = axis_text_angle_y,
+    axis_text_size = axis_text_size,
+    axis_text_color = axis_text_color,
 
     # ---- Generation Scale Settings ----
-    generation_height = 1,
-    generation_width = 1,
-    ped_packed = TRUE,
-    ped_align = TRUE,
-    ped_width = 15,
+    generation_height = generation_height,
+    generation_width = generation_width,
+    ped_packed = ped_packed,
+    ped_align = ped_align,
+    ped_width = ped_width,
 
     # ---- Segment Drawing Options ----
-    segment_linewidth = 0.5,
-    segment_linetype = segment_default_linetype,
-    segment_lineend = "round",
-    segment_linejoin = "round",
-    segment_offspring_color = segment_default_color,
-    segment_parent_color = segment_default_color,
-    segment_self_color = segment_default_color,
-    segment_sibling_color = segment_default_color,
-    segment_spouse_color = segment_default_color,
-    segment_mz_color = segment_default_color,
-    segment_mz_linetype = segment_default_linetype,
-    segment_mz_alpha = 1,
-    segment_mz_t = .6,
-    segment_self_linetype = "dotdash",
-    segment_self_alpha = 0.5,
-    segment_self_angle = 90,
-    segment_self_curvature = -0.2,
+
+    segment_linewidth = segment_linewidth,
+    segment_linetype = segment_linetype,
+    segment_lineend = segment_lineend,
+    segment_linejoin = segment_linejoin,
+    segment_offspring_color = segment_offspring_color,
+    segment_parent_color = segment_parent_color,
+    segment_self_color = segment_self_color,
+    segment_sibling_color = segment_sibling_color,
+    segment_spouse_color = segment_spouse_color,
+    segment_mz_color = segment_mz_color,
+    segment_mz_linetype = segment_mz_linetype,
+    segment_mz_alpha = segment_mz_alpha,
+    segment_mz_t = segment_mz_t,
+    segment_self_linetype = segment_self_linetype,
+    segment_self_alpha = segment_self_alpha,
+    segment_self_angle = segment_self_angle,
+    segment_self_curvature = segment_self_curvature,
+
 
     # ---- Sex Legend and Appearance ----
-    sex_color_include = TRUE,
-    sex_legend_title = "Sex",
-    sex_shape_labels = c("Female", "Male", "Unknown"),
-    sex_color_palette = color_palette_default,
-    sex_shape_female = 16,
-    sex_shape_male = 15,
-    sex_shape_unknown = 18,
+    sex_color_include = sex_color_include,
+    sex_legend_title = sex_legend_title,
+    sex_shape_labels = sex_shape_labels,
+    sex_color_palette = sex_color_palette,
+    sex_shape_female = sex_shape_female,
+    sex_shape_male = sex_shape_male,
+    sex_shape_unknown = sex_shape_unknown,
 
     # ---- Affected Status Controls ----
-    status_include = TRUE,
-    status_code_affected = 1,
-    status_code_unaffected = 0,
-    status_label_affected = "Affected",
-    status_label_unaffected = "Unaffected",
-    status_alpha_affected = 1,
-    status_alpha_unaffected = 0,
-    status_color_palette = c(color_palette_default[1], color_palette_default[2]),
-    status_legend_title = "Affected",
-    status_legend_show = FALSE,
-    status_shape_affected = overlay_shape,
-    status_color_affected = overlay_color, # Use first color for affected
+    status_include = status_include,
+    status_code_affected = status_code_affected,
+    status_code_unaffected = status_code_unaffected,
+    status_label_affected = status_label_affected,
+    status_label_unaffected = status_label_unaffected,
+    status_alpha_affected = status_alpha_affected,
+    status_alpha_unaffected = status_alpha_unaffected,
+    status_color_palette = status_color_palette,
     # Use first color for affected,
+    status_affected_shape = status_affected_shape,
+    status_legend_title = status_legend_title,
+    status_legend_show = status_legend_show,
+	
+    # ----  overlay  Settings ----
 
     overlay_shape = overlay_shape,
-    overlay_code_affected = 1,
-    overlay_code_unaffected = 0,
-    overlay_label_affected = "Affected",
-    overlay_label_unaffected = "Unaffected",
-    overlay_alpha_affected = 1,
-    overlay_alpha_unaffected = 0,
-    overlay_color = "black",
-    overlay_alpha_affected = 1,
-    overlay_alpha_unaffected = 0,
-    overlay_include = FALSE,
-    overlay_legend_title = "Overlay",
-    overlay_legend_show = FALSE,
-
-
+    overlay_code_affected = overlay_code_affected,
+    overlay_code_unaffected = overlay_code_unaffected,
+    overlay_label_affected = overlay_label_affected,
+    overlay_label_unaffected = overlay_label_unaffected,
+    overlay_alpha_unaffected = overlay_alpha_unaffected,
+    overlay_color = overlay_color,
+    overlay_alpha_affected = overlay_alpha_affected,
+    overlay_include = overlay_include,
+    overlay_legend_title = overlay_legend_title,
+    overlay_legend_show = overlay_legend_show,
 
     # ---- Focal Fill Settings ----
-    focal_fill_include = FALSE,
-    focal_fill_legend_show = TRUE,
-    focal_fill_personID = 1,
-    focal_fill_legend_title = "Focal Fill",
-    focal_fill_high_color = "#FDE725FF",
-    focal_fill_mid_color = "#9F2A63FF",
-    focal_fill_low_color = "#0D082AFF",
-    focal_fill_shape = overlay_shape,
-    focal_fill_scale_midpoint = color_scale_midpoint,
-    focal_fill_method = "gradient",
-    focal_fill_component = "additive",
-    focal_fill_n_breaks = NULL,
-    focal_fill_na_value = "black",
-    focal_fill_force_zero = FALSE, # work around that sets zero to NA so you can distinguish from low values
+    focal_fill_include = focal_fill_include,
+    focal_fill_legend_show = focal_fill_legend_show,
+    focal_fill_personID = focal_fill_personID,
+    focal_fill_legend_title = focal_fill_legend_title,
+    focal_fill_high_color = focal_fill_high_color,
+    focal_fill_mid_color = focal_fill_mid_color,
+    focal_fill_low_color = focal_fill_low_color,
+    focal_fill_scale_midpoint = focal_fill_scale_midpoint,
+    focal_fill_method = focal_fill_method,
+    focal_fill_component = focal_fill_component,
+    focal_fill_n_breaks = focal_fill_n_breaks,
+    focal_fill_na_value = focal_fill_na_value,
+    focal_fill_force_zero = focal_fill_force_zero, # work around that sets zero to NA so you can distinguish from low values
+
+    # ---- Confidence Intervals
+
+    ci_include = ci_include,
+    ci_ribbon_alpha = ci_ribbon_alpha,
+
     # ---- matrix settings ----
-    matrix_sparse = FALSE,
-    matrix_isChild_method = "partialparent",
+    matrix_sparse = matrix_sparse,
+    matrix_isChild_method = matrix_isChild_method,
+
+
     # -- Output Options ----
-    return_static = TRUE,
-    return_widget = FALSE,
-    return_interactive = FALSE,
+    return_static = return_static,
+    return_widget = return_widget,
+    return_interactive = return_interactive,
     # ---- Debugging Options ----
-    override_many2many = FALSE
+    override_many2many = override_many2many
   )
 
   if (stringr::str_to_lower(function_name) %in% c("ggrelatednessmatrix")) {
     #   If the function is ggRelatednessMatrix, we need to adjust the tooltip columns
     core_list$tooltip_columns <- c("ID1", "ID2", "value")
+  } else if (stringr::str_to_lower(function_name) %in%
+    c("ggphenotypebydegree", "phenotypebydegree")) {
+    core_list$point_size <- 1
+    core_list$plot_title <- "Phenotypic Correlation vs Genetic Relatedness"
+    core_list$return_static <- FALSE
+    core_list$return_widget <- FALSE
+    core_list$return_interactive <- FALSE
   }
   if (stringr::str_to_lower(function_name) %in% c("ggpedigree", "ggpedigreeinteractive")) {
     core_list$label_method <- "ggrepel"
@@ -286,7 +563,12 @@ buildPlotConfig <- function(default_config,
       ),
       built_config$status_labs
     )
+  } else if (stringr::str_to_lower(function_name) %in%
+    c("ggphenotypebydegree", "phenotypebydegree")) {
+
+
   }
+
   return(built_config)
 }
 # -----
