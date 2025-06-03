@@ -12,6 +12,7 @@ ggPedigreeInteractive(
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
+  twinID = "twinID",
   status_column = NULL,
   tooltip_columns = NULL,
   focal_fill_column = NULL,
@@ -27,6 +28,7 @@ ggpedigreeinteractive(
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
+  twinID = "twinID",
   status_column = NULL,
   tooltip_columns = NULL,
   focal_fill_column = NULL,
@@ -42,6 +44,7 @@ ggpedigreeInteractive(
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
+  twinID = "twinID",
   status_column = NULL,
   tooltip_columns = NULL,
   focal_fill_column = NULL,
@@ -61,6 +64,8 @@ ggpedigreeInteractive(
 \item{momID}{Character string specifying the column name for mother IDs. Defaults to "momID".}
 
 \item{dadID}{Character string specifying the column name for father IDs. Defaults to "dadID".}
+
+\item{twinID}{Character string specifying the column name for twin IDs. Defaults to "twinID".}
 
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
 

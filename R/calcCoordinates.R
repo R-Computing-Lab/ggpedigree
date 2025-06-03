@@ -34,6 +34,7 @@ calculateCoordinates <- function(ped,
                                  dadID = "dadID",
                                  spouseID = "spouseID",
                                  sexVar = "sex",
+                                 twinID = "twinID",
                                  code_male = NULL,
                                  config = list()) {
   if (!inherits(ped, "data.frame")) {

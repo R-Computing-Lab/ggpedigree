@@ -1,7 +1,15 @@
-test_that("ggPedigreeInteractive behaves same as ggPedigree interactive is true", {
+test_that("ggPedigreeInteractive behaves same as ggPedigree interactive is true without twins", {
   library(BGmisc)
-  data("potter")
-
+  data("potter") # load example data from BGmisc
+  if ("twinID" %in% names(potter) && "zygosity" %in% names(potter)) {
+    # Remove twinID and zygosity columns for this test
+    potter <- potter %>%
+      select(-twinID, -zygosity)
+  } else if ("twinID" %in% names(potter) && !"zygosity" %in% names(potter)){
+    # Add twinID and zygosity columns for demonstration purposes
+    potter <- potter %>%
+      select(-twinID)
+  }
   # Test with hints
   p_widget <- ggPedigreeInteractive(potter,
     famID = "famID",
@@ -37,9 +45,110 @@ test_that("ggPedigreeInteractive behaves same as ggPedigree interactive is true"
   expect_equal(p_widget$x$config, p$x$config)
   expect_equal(p_widget$sizingPolicy, p$sizingPolicy)
 })
+
+test_that("ggPedigreeInteractive behaves same as ggPedigree interactive is true with twins", {
+  library(BGmisc)
+  data("potter") # load example data from BGmisc
+  if (!"twinID" %in% names(potter) || !"zygosity" %in% names(potter)) {
+    # Add twinID and zygosity columns for demonstration purposes
+    potter <- potter %>%
+      mutate(
+        twinID = case_when(
+          name == "Fred Weasley" ~ 13,
+          name == "George Weasley" ~ 12,
+          TRUE ~ NA_real_
+        ),
+        zygosity = case_when(
+          name == "Fred Weasley" ~ "mz",
+          name == "George Weasley" ~ "mz",
+          TRUE ~ NA_character_
+        )
+      )
+  }
+
+  p_widget <- ggPedigreeInteractive(potter,
+                                    famID = "famID",
+                                    personID = "personID",
+                                    spouseID = "spouseID",
+                                    return_widget = TRUE
+  )
+
+  expect_s3_class(p_widget, "plotly")
+  expect_s3_class(p_widget, "htmlwidget")
+
+
+  p <- ggPedigree(potter,
+                  interactive = TRUE,
+                  famID = "famID",
+                  personID = "personID",
+                  spouseID = "spouseID",
+                  return_widget = TRUE
+  )
+
+  expect_s3_class(p, "plotly")
+  expect_s3_class(p, "htmlwidget")
+
+
+  expect_equal(p_widget$height, p$height)
+  expect_equal(p_widget$width, p$width)
+  expect_equal(p_widget$x$layout, p$x$layout)
+  expect_equal(p_widget$x$data, p$x$data)
+  expect_equal(p_widget$x$frames, p$x$frames)
+  expect_equal(p_widget$x$source, p$x$source)
+  expect_equal(p_widget$x$elementId, p$x$elementId)
+  # expect_equal(p_widget$x$attrs, p$x$attrs)
+  expect_equal(p_widget$x$config, p$x$config)
+  expect_equal(p_widget$sizingPolicy, p$sizingPolicy)
+
+  #without zygosity
+  potter_no_zyg <- potter %>%
+    select(-zygosity)
+
+  p_widget_nozyg <- ggPedigreeInteractive(potter_no_zyg,
+                                           famID = "famID",
+                                           personID = "personID",
+                                           spouseID = "spouseID",
+                                           return_widget = TRUE)
+
+  expect_s3_class(p_widget_nozyg, "plotly")
+  expect_s3_class(p_widget_nozyg, "htmlwidget")
+
+
+  p_nozyg <- ggPedigree(potter_no_zyg,
+                        interactive = TRUE,
+                        famID = "famID",
+                        personID = "personID",
+                        spouseID = "spouseID",
+                        return_widget = TRUE
+  )
+
+  expect_s3_class(p_nozyg, "plotly")
+  expect_s3_class(p_nozyg, "htmlwidget")
+
+
+  expect_equal(p_widget_nozyg$height, p_nozyg$height)
+  expect_equal(p_widget_nozyg$width, p_nozyg$width)
+  expect_equal(p_widget_nozyg$x$layout, p_nozyg$x$layout)
+  expect_equal(p_widget_nozyg$x$data, p_nozyg$x$data)
+  expect_equal(p_widget_nozyg$x$frames, p_nozyg$x$frames)
+  expect_equal(p_widget_nozyg$x$source, p_nozyg$x$source)
+  expect_equal(p_widget_nozyg$x$elementId, p_nozyg$x$elementId)
+  # expect_equal(p_widget_nozyg$x$attrs, p_nozyg$x$attrs)
+  expect_equal(p_widget_nozyg$x$config, p_nozyg$x$config)
+  expect_equal(p_widget_nozyg$sizingPolicy, p_nozyg$sizingPolicy)
+})
 test_that("ggPedigreeInteractive returns a gg object", {
   library(BGmisc)
-  data("potter")
+  data("potter") # load example data from BGmisc
+  if ("twinID" %in% names(potter) && "zygosity" %in% names(potter)) {
+    # Remove twinID and zygosity columns for this test
+    potter <- potter %>%
+      select(-twinID, -zygosity)
+  } else if ("twinID" %in% names(potter) && !"zygosity" %in% names(potter)){
+    # Add twinID and zygosity columns for demonstration purposes
+    potter <- potter %>%
+      select(-twinID)
+  }
 
   static <- ggPedigreeInteractive(
     potter,

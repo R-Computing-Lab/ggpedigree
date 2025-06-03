@@ -17,6 +17,7 @@ ggPedigreeInteractive <- function(ped,
                                   personID = "personID",
                                   momID = "momID",
                                   dadID = "dadID",
+                                  twinID = "twinID",
                                   status_column = NULL,
                                   tooltip_columns = NULL,
                                   focal_fill_column = NULL,
@@ -73,6 +74,7 @@ ggPedigreeInteractive <- function(ped,
     personID = personID,
     momID = momID,
     dadID = dadID,
+    twinID = twinID,
     status_column = config$status_column,
     config = config,
     debug = config$debug,
@@ -112,7 +114,6 @@ ggPedigreeInteractive <- function(ped,
         config$tooltip_columns
       ))
     } else {
-      #  static_ped <- static_plot$data
       for (i in point_layers) {
         static_plot$layers[[i]]$mapping <- utils::modifyList(
           static_plot$layers[[i]]$mapping,
@@ -131,7 +132,7 @@ ggPedigreeInteractive <- function(ped,
     )
   } else {
     plt <- plotly::ggplotly(static_plot,
-      # tooltip = "text",
+       tooltip = NULL,
       width = NULL,
       height = NULL
     )
