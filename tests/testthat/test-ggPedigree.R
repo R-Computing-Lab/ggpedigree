@@ -1,11 +1,14 @@
 test_that("broken hints doesn't cause a fatal error", {
   library(BGmisc)
   data("potter") # load example data from BGmisc
-
-  if ("twinID" %in% names(potter)) {
+  if ("twinID" %in% names(potter) && "zygosity" %in% names(potter)) {
     # Remove twinID and zygosity columns for this test
     potter <- potter %>%
       select(-twinID, -zygosity)
+  } else if ("twinID" %in% names(potter) && !"zygosity" %in% names(potter)){
+    # Add twinID and zygosity columns for demonstration purposes
+    potter <- potter %>%
+      select(-twinID)
   }
 
   # Test with hints
@@ -50,10 +53,14 @@ test_that("broken hints doesn't cause a fatal error", {
 test_that("ggPedigree returns a ggplot object", {
   library(BGmisc)
   data("potter") # load example data from BGmisc
-  if ("twinID" %in% names(potter)) {
+  if ("twinID" %in% names(potter) && "zygosity" %in% names(potter)) {
     # Remove twinID and zygosity columns for this test
     potter <- potter %>%
       select(-twinID, -zygosity)
+  } else if ("twinID" %in% names(potter) && !"zygosity" %in% names(potter)){
+    # Add twinID and zygosity columns for demonstration purposes
+    potter <- potter %>%
+    select(-twinID)
   }
 
   # Test with hints

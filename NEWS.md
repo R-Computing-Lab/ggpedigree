@@ -12,7 +12,7 @@
 * Harmonized the configuration options across the package to use `getDefaultPlotConfig` and buildPlotConfig
 * Added unit tests for `getDefaultPlotConfig` and `ggPhenotypebyDegree`
 * Added workaround for plotly non-support for geom_curve with computeCurvedMidpoint
-* Adding twin plotting features
+* Adding fully twin plotting features
 * Added ability to fill colors as a function of the degree of relatedness to a focal person
 * Add getDefaultPlotConfig functionality to ggPhenotypebyDegree
 * Fully documented getDefaultPlotConfig so that each config option is clear and understandable.

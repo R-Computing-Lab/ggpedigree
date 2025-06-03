@@ -11,6 +11,7 @@ calculateConnections(
   personID = "personID",
   momID = "momID",
   famID = "famID",
+  twinID = "twinID",
   dadID = "dadID"
 )
 }
@@ -26,6 +27,8 @@ calculateConnections(
 \item{momID}{Character string specifying the column name for mother IDs. Defaults to "momID".}
 
 \item{famID}{Character string specifying the column name for family IDs.}
+
+\item{twinID}{Character string specifying the column name for twin IDs. Defaults to "twinID".}
 
 \item{dadID}{Character string specifying the column name for father IDs. Defaults to "dadID".}
 }
