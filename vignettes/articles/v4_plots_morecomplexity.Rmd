@@ -129,10 +129,12 @@ pltstatic <- ggPedigree(df_repaired,
     label_nudge_y = -.25,
     label_include = TRUE,
     label_method = "geom_text",
-    segment_self_color = "purple",
+  #  segment_self_color = "purple",
+ #   label_segment_color = "gray",
     tooltip_columns = c("ID", "name")
   )
 )
+# note that the Estermont family is breaking
 
 pltstatic
 ```
