@@ -96,7 +96,7 @@
 #' @param status_label_unaffected Label for unaffected status.
 #' @param status_alpha_affected Alpha for affected individuals.
 #' @param status_alpha_unaffected Alpha for unaffected individuals.
-#' @param status_affected_shape Shape for affected individuals.
+#' @param status_shape_affected Shape for affected individuals.
 #' @param status_color_palette A character vector of colors for affected status.
 #' @param status_legend_title Title of the status legend.
 #' @param status_legend_show Whether to show the status legend.
@@ -215,7 +215,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  segment_self_angle = 90,
                                  segment_self_curvature = -0.2,
                                  # ---- Sex Legend and Appearance ----
-                                 sex_color_include = TRUE,
+                                 sex_color_include = FALSE,
                                  sex_legend_title = "Sex",
                                  sex_shape_labels = c("Female", "Male", "Unknown"),
                                  sex_color_palette = color_palette_default,
@@ -232,6 +232,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  status_alpha_unaffected = 0,
                                  status_color_palette = c(color_palette_default[1], color_palette_default[2]),
                                  # Use first color for affected,
+                                 status_color_affected = "black",
+                                 status_color_unaffected = color_palette_default[2],
                                  status_shape_affected = 4,
                                  status_legend_title = "Affected",
                                  status_legend_show = FALSE,
@@ -345,7 +347,6 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     outline_multiplier = outline_multiplier,
     outline_color = outline_color,
 
-
     # ---- Tooltip Aesthetics ----
     tooltip_include = tooltip_include,
     tooltip_columns = tooltip_columns,
@@ -404,8 +405,9 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     status_alpha_affected = status_alpha_affected,
     status_alpha_unaffected = status_alpha_unaffected,
     status_color_palette = status_color_palette,
-    # Use first color for affected,
-    status_affected_shape = status_affected_shape,
+    status_color_affected = status_color_affected,
+    status_color_unaffected = status_color_unaffected,
+    status_shape_affected = status_shape_affected,
     status_legend_title = status_legend_title,
     status_legend_show = status_legend_show,
 

@@ -73,6 +73,7 @@ jon_id <- df_got %>%
 dany_id <- df_got %>%
   filter(name == "Daenerys Targaryen") %>%
   pull(ID)
+
 ```
 
 Here we've added phantom IDs to the dataset, which are used to represent individuals who are not directly related to the family tree but are still part of the pedigree structure. This is useful for visualizing complex relationships, such as half-siblings or step-siblings.
@@ -137,26 +138,43 @@ pltstatic
 ```
 
 
-```{r message=FALSE, warning=FALSE}
-plt <- ggPedigreeInteractive(df_repaired,
-  status_column = "affected",
-  personID = "ID",
+```{r}
+
+df_repaired %>% rename(
+personID = ID
+) -> df_repaired_renamed
+plt <- ggPedigreeInteractive(df_repaired_renamed,
+#  status_column = "affected",
+  personID = "personID",
   config = list(
-    status_label_unaffected = 0,
-    sex_color_include = TRUE,
+   # status_label_unaffected = 0,
+    sex_color_include = FALSE,
+    focal_fill_personID = 353,
+    focal_fill_include = TRUE,
     code_male = "M",
     point_size = 1,
+    status_include=FALSE,
     status_label_affected = 1,
-    status_affected_shape = 4,
+    status_shape_affected = 4,
     ped_width = 14,
-    segment_self_angle = 90,
-    segment_self_curvature = -0.2,
-    tooltip_include = TRUE,
+    segment_spouse_color = "red",
+    segment_sibling_color =  "blue",
+    segment_parent_color = "green",
+    segment_offspring_color = "purple",
+    segment_mz_color = "orange",
+   # segment_self_angle = 90,
+   # segment_self_curvature = -0.2,
+   focal_fill_force_zero = TRUE,
+   
+   focal_fill_mid_color = "orange",
+   focal_fill_low_color = "#9F2A63FF",
+    focal_fill_na_value = "black",
+    tooltip_include = FALSE,
     label_nudge_y = -.25,
     label_include = TRUE,
     label_method = "geom_text",
-    segment_self_color = "purple",
-    tooltip_columns = c("ID", "name")
+    segment_self_color = NA,
+    tooltip_columns = c("personID", "name")
   )
 )
 

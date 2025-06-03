@@ -317,6 +317,8 @@ getDefaultPlotConfig(
 
 \item{status_color_palette}{A character vector of colors for affected status.}
 
+\item{status_shape_affected}{Shape for affected individuals.}
+
 \item{status_legend_title}{Title of the status legend.}
 
 \item{status_legend_show}{Whether to show the status legend.}
@@ -366,8 +368,6 @@ getDefaultPlotConfig(
 \item{override_many2many}{Whether to override many-to-many link logic.}
 
 \item{...}{Additional arguments for future extensibility.}
-
-\item{status_affected_shape}{Shape for affected individuals.}
 }
 \value{
 A named list of default plotting and layout parameters.

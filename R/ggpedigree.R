@@ -35,7 +35,7 @@
 #'     \item{segment_sibling_color, segment_parent_color, segment_offspring_color}{Character. Line colors for respective connection types.}
 #'     \item{label_text_size, point_size, segment_linewidth}{Numeric. Controls text size, point size, and line thickness.}
 #'     \item{generation_height}{Numeric. Vertical spacing multiplier between generations. Default: 1.}
-#'     \item{shape_unknown, shape_female, shape_male, status_affected_shape}{Integers. Shape codes for plotting each group.}
+#'     \item{shape_unknown, shape_female, shape_male, status_shape_affected}{Integers. Shape codes for plotting each group.}
 #'     \item{sex_shape_labels}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
 #'     \item{unaffected, affected}{Values indicating unaffected/affected status.}
 #'     \item{sex_color_include}{Logical. If TRUE, uses color to differentiate sex.}
@@ -715,6 +715,7 @@ ggpedigree <- ggPedigree
                         focal_fill_column = NULL,
                         status_column = NULL,
                         overlay_column = NULL) {
+#  print("Adding overlay to the plot...")
   if (config$overlay_include == TRUE & !is.null(overlay_column)) {
     # If overlay_column is specified, use it for alpha aesthetic
     p <- p + ggplot2::geom_point(
