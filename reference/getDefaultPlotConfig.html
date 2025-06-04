@@ -15,7 +15,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior."></h
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -153,9 +153,22 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  status_alpha_affected <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  status_alpha_unaffected <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  status_color_palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">color_palette_default</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">color_palette_default</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>  status_affected_shape <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>  status_color_affected <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>  status_color_unaffected <span class="op">=</span> <span class="va">color_palette_default</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span>
+<span>  status_shape_affected <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  status_legend_title <span class="op">=</span> <span class="st">"Affected"</span>,</span>
 <span>  status_legend_show <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  overlay_shape <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>  overlay_code_affected <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  overlay_code_unaffected <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  overlay_label_affected <span class="op">=</span> <span class="st">"Affected"</span>,</span>
+<span>  overlay_label_unaffected <span class="op">=</span> <span class="st">"Unaffected"</span>,</span>
+<span>  overlay_alpha_affected <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  overlay_alpha_unaffected <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  overlay_color <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>  overlay_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  overlay_legend_title <span class="op">=</span> <span class="st">"Overlay"</span>,</span>
+<span>  overlay_legend_show <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  focal_fill_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  focal_fill_legend_show <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  focal_fill_personID <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -168,7 +181,16 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  focal_fill_component <span class="op">=</span> <span class="st">"additive"</span>,</span>
 <span>  focal_fill_n_breaks <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  focal_fill_na_value <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>  focal_fill_shape <span class="op">=</span> <span class="fl">21</span>,</span>
 <span>  focal_fill_force_zero <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  focal_fill_hue_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">360</span><span class="op">)</span>,</span>
+<span>  focal_fill_chroma <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  focal_fill_lightness <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  focal_fill_hue_direction <span class="op">=</span> <span class="st">"horizontal"</span>,</span>
+<span>  focal_fill_viridis_option <span class="op">=</span> <span class="st">"D"</span>,</span>
+<span>  focal_fill_viridis_begin <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  focal_fill_viridis_end <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  focal_fill_viridis_direction <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  ci_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  ci_ribbon_alpha <span class="op">=</span> <span class="fl">0.3</span>,</span>
 <span>  matrix_sparse <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -542,14 +564,22 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 
 <dt id="arg-status-alpha-unaffected">status_alpha_unaffected<a class="anchor" aria-label="anchor" href="#arg-status-alpha-unaffected"></a></dt>
-<dd><p>Alpha for unaffected individuals.</p></dd>
+<dd><p>Alpha for unaffected individuals. Default is 0 (transparent).</p></dd>
 
 
 <dt id="arg-status-color-palette">status_color_palette<a class="anchor" aria-label="anchor" href="#arg-status-color-palette"></a></dt>
 <dd><p>A character vector of colors for affected status.</p></dd>
 
 
-<dt id="arg-status-affected-shape">status_affected_shape<a class="anchor" aria-label="anchor" href="#arg-status-affected-shape"></a></dt>
+<dt id="arg-status-color-affected">status_color_affected<a class="anchor" aria-label="anchor" href="#arg-status-color-affected"></a></dt>
+<dd><p>Color for affected individuals.</p></dd>
+
+
+<dt id="arg-status-color-unaffected">status_color_unaffected<a class="anchor" aria-label="anchor" href="#arg-status-color-unaffected"></a></dt>
+<dd><p>Color for unaffected individuals.</p></dd>
+
+
+<dt id="arg-status-shape-affected">status_shape_affected<a class="anchor" aria-label="anchor" href="#arg-status-shape-affected"></a></dt>
 <dd><p>Shape for affected individuals.</p></dd>
 
 
@@ -559,6 +589,50 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 <dt id="arg-status-legend-show">status_legend_show<a class="anchor" aria-label="anchor" href="#arg-status-legend-show"></a></dt>
 <dd><p>Whether to show the status legend.</p></dd>
+
+
+<dt id="arg-overlay-shape">overlay_shape<a class="anchor" aria-label="anchor" href="#arg-overlay-shape"></a></dt>
+<dd><p>Shape used for overlaying points in the plot. Default is 4 (cross).</p></dd>
+
+
+<dt id="arg-overlay-code-affected">overlay_code_affected<a class="anchor" aria-label="anchor" href="#arg-overlay-code-affected"></a></dt>
+<dd><p>Code for affected individuals in overlay. Default is 1.</p></dd>
+
+
+<dt id="arg-overlay-code-unaffected">overlay_code_unaffected<a class="anchor" aria-label="anchor" href="#arg-overlay-code-unaffected"></a></dt>
+<dd><p>Code for unaffected individuals in overlay. Default is 0.</p></dd>
+
+
+<dt id="arg-overlay-label-affected">overlay_label_affected<a class="anchor" aria-label="anchor" href="#arg-overlay-label-affected"></a></dt>
+<dd><p>Label for affected individuals in overlay. Default is "Affected".</p></dd>
+
+
+<dt id="arg-overlay-label-unaffected">overlay_label_unaffected<a class="anchor" aria-label="anchor" href="#arg-overlay-label-unaffected"></a></dt>
+<dd><p>Label for unaffected individuals in overlay. Default is "Unaffected".</p></dd>
+
+
+<dt id="arg-overlay-alpha-affected">overlay_alpha_affected<a class="anchor" aria-label="anchor" href="#arg-overlay-alpha-affected"></a></dt>
+<dd><p>Alpha for affected individuals in overlay. Default is 1.</p></dd>
+
+
+<dt id="arg-overlay-alpha-unaffected">overlay_alpha_unaffected<a class="anchor" aria-label="anchor" href="#arg-overlay-alpha-unaffected"></a></dt>
+<dd><p>Alpha for unaffected individuals in overlay. Default is 0.</p></dd>
+
+
+<dt id="arg-overlay-color">overlay_color<a class="anchor" aria-label="anchor" href="#arg-overlay-color"></a></dt>
+<dd><p>Color for overlay points. Default is "black".</p></dd>
+
+
+<dt id="arg-overlay-include">overlay_include<a class="anchor" aria-label="anchor" href="#arg-overlay-include"></a></dt>
+<dd><p>Whether to include overlay points in the plot. Default is FALSE.</p></dd>
+
+
+<dt id="arg-overlay-legend-title">overlay_legend_title<a class="anchor" aria-label="anchor" href="#arg-overlay-legend-title"></a></dt>
+<dd><p>Title of the overlay legend. Default is "Overlay".</p></dd>
+
+
+<dt id="arg-overlay-legend-show">overlay_legend_show<a class="anchor" aria-label="anchor" href="#arg-overlay-legend-show"></a></dt>
+<dd><p>Whether to show the overlay legend. Default is FALSE.</p></dd>
 
 
 <dt id="arg-focal-fill-include">focal_fill_include<a class="anchor" aria-label="anchor" href="#arg-focal-fill-include"></a></dt>
@@ -609,8 +683,44 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <dd><p>Color for NA values in focal fill.</p></dd>
 
 
+<dt id="arg-focal-fill-shape">focal_fill_shape<a class="anchor" aria-label="anchor" href="#arg-focal-fill-shape"></a></dt>
+<dd><p>Shape used for focal fill points.</p></dd>
+
+
 <dt id="arg-focal-fill-force-zero">focal_fill_force_zero<a class="anchor" aria-label="anchor" href="#arg-focal-fill-force-zero"></a></dt>
 <dd><p>Whether to force zero to NA in focal fill.</p></dd>
+
+
+<dt id="arg-focal-fill-hue-range">focal_fill_hue_range<a class="anchor" aria-label="anchor" href="#arg-focal-fill-hue-range"></a></dt>
+<dd><p>Hue range for focal fill colors.</p></dd>
+
+
+<dt id="arg-focal-fill-chroma">focal_fill_chroma<a class="anchor" aria-label="anchor" href="#arg-focal-fill-chroma"></a></dt>
+<dd><p>Chroma value for focal fill colors.</p></dd>
+
+
+<dt id="arg-focal-fill-lightness">focal_fill_lightness<a class="anchor" aria-label="anchor" href="#arg-focal-fill-lightness"></a></dt>
+<dd><p>Lightness value for focal fill colors.</p></dd>
+
+
+<dt id="arg-focal-fill-hue-direction">focal_fill_hue_direction<a class="anchor" aria-label="anchor" href="#arg-focal-fill-hue-direction"></a></dt>
+<dd><p>Direction of focal fill gradient.</p></dd>
+
+
+<dt id="arg-focal-fill-viridis-option">focal_fill_viridis_option<a class="anchor" aria-label="anchor" href="#arg-focal-fill-viridis-option"></a></dt>
+<dd><p>Option for viridis color scale.</p></dd>
+
+
+<dt id="arg-focal-fill-viridis-begin">focal_fill_viridis_begin<a class="anchor" aria-label="anchor" href="#arg-focal-fill-viridis-begin"></a></dt>
+<dd><p>Start of viridis color scale.</p></dd>
+
+
+<dt id="arg-focal-fill-viridis-end">focal_fill_viridis_end<a class="anchor" aria-label="anchor" href="#arg-focal-fill-viridis-end"></a></dt>
+<dd><p>End of viridis color scale.</p></dd>
+
+
+<dt id="arg-focal-fill-viridis-direction">focal_fill_viridis_direction<a class="anchor" aria-label="anchor" href="#arg-focal-fill-viridis-direction"></a></dt>
+<dd><p>Direction of viridis color scale (1 for left to right, -1 for right to left).</p></dd>
 
 
 <dt id="arg-ci-include">ci_include<a class="anchor" aria-label="anchor" href="#arg-ci-include"></a></dt>

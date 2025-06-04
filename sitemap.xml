@@ -25,7 +25,10 @@
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/createFillColumn.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-addAnnotate.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-addLabels.html</loc></url>
+<url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-addNodes.html</loc></url>
+<url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-addOverlay.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-addScales.html</loc></url>
+<url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-addSelfSegment.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-preparePhenotypeByDegreeData.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/generateSpouseList.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/getDefaultPlotConfig.html</loc></url>
