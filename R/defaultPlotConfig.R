@@ -215,7 +215,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  segment_self_angle = 90,
                                  segment_self_curvature = -0.2,
                                  # ---- Sex Legend and Appearance ----
-                                 sex_color_include = FALSE,
+                                 sex_color_include = TRUE,
                                  sex_legend_title = "Sex",
                                  sex_shape_labels = c("Female", "Male", "Unknown"),
                                  sex_color_palette = color_palette_default,
@@ -287,8 +287,11 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     stop("segment_default_color must be a single character string.")
   }
 
-
-  if (!stringr::str_to_lower(function_name) %in% c("ggrelatednessmatrix", "ggpedigree", "ggphenotypebydegree", "ggpedigreeinteractive", "getdefaultplotconfig")) {
+  if (!stringr::str_to_lower(function_name) %in% c("ggrelatednessmatrix",
+                                                   "ggpedigree",
+                                                   "ggphenotypebydegree",
+                                                   "ggpedigreeinteractive",
+                                                   "getdefaultplotconfig")) {
     stop(paste0("The function ", function_name, " is not supported by getDefaultPlotConfig."))
   }
 
@@ -438,7 +441,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     focal_fill_component = focal_fill_component,
     focal_fill_n_breaks = focal_fill_n_breaks,
     focal_fill_na_value = focal_fill_na_value,
-    focal_fill_force_zero = focal_fill_force_zero, # work around that sets zero to NA so you can distinguish from low values
+    focal_fill_force_zero = focal_fill_force_zero,
+    # work around that sets zero to NA so you can distinguish from low values
 
     # ---- Confidence Intervals
 

@@ -81,7 +81,7 @@ getDefaultPlotConfig(
   segment_self_alpha = 0.5,
   segment_self_angle = 90,
   segment_self_curvature = -0.2,
-  sex_color_include = FALSE,
+  sex_color_include = TRUE,
   sex_legend_title = "Sex",
   sex_shape_labels = c("Female", "Male", "Unknown"),
   sex_color_palette = color_palette_default,
