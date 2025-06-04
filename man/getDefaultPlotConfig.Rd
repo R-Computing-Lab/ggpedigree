@@ -315,9 +315,13 @@ getDefaultPlotConfig(
 
 \item{status_alpha_affected}{Alpha for affected individuals.}
 
-\item{status_alpha_unaffected}{Alpha for unaffected individuals.}
+\item{status_alpha_unaffected}{Alpha for unaffected individuals. Default is 0 (transparent).}
 
 \item{status_color_palette}{A character vector of colors for affected status.}
+
+\item{status_color_affected}{Color for affected individuals.}
+
+\item{status_color_unaffected}{Color for unaffected individuals.}
 
 \item{status_shape_affected}{Shape for affected individuals.}
 
@@ -325,7 +329,27 @@ getDefaultPlotConfig(
 
 \item{status_legend_show}{Whether to show the status legend.}
 
-\item{overlay_shape}{The shape used for overlaying points in the plot.}
+\item{overlay_shape}{Shape used for overlaying points in the plot. Default is 4 (cross).}
+
+\item{overlay_code_affected}{Code for affected individuals in overlay. Default is 1.}
+
+\item{overlay_code_unaffected}{Code for unaffected individuals in overlay. Default is 0.}
+
+\item{overlay_label_affected}{Label for affected individuals in overlay. Default is "Affected".}
+
+\item{overlay_label_unaffected}{Label for unaffected individuals in overlay. Default is "Unaffected".}
+
+\item{overlay_alpha_affected}{Alpha for affected individuals in overlay. Default is 1.}
+
+\item{overlay_alpha_unaffected}{Alpha for unaffected individuals in overlay. Default is 0.}
+
+\item{overlay_color}{Color for overlay points. Default is "black".}
+
+\item{overlay_include}{Whether to include overlay points in the plot. Default is FALSE.}
+
+\item{overlay_legend_title}{Title of the overlay legend. Default is "Overlay".}
+
+\item{overlay_legend_show}{Whether to show the overlay legend. Default is FALSE.}
 
 \item{focal_fill_include}{Whether to fill focal individuals.}
 

@@ -95,11 +95,24 @@
 #' @param status_label_affected Label for affected status.
 #' @param status_label_unaffected Label for unaffected status.
 #' @param status_alpha_affected Alpha for affected individuals.
-#' @param status_alpha_unaffected Alpha for unaffected individuals.
+#' @param status_alpha_unaffected Alpha for unaffected individuals. Default is 0 (transparent).
 #' @param status_shape_affected Shape for affected individuals.
 #' @param status_color_palette A character vector of colors for affected status.
 #' @param status_legend_title Title of the status legend.
 #' @param status_legend_show Whether to show the status legend.
+#' @param status_color_affected Color for affected individuals.
+#' @param status_color_unaffected Color for unaffected individuals.
+#' @param overlay_shape  Shape used for overlaying points in the plot. Default is 4 (cross).
+#' @param overlay_code_affected  Code for affected individuals in overlay. Default is 1.
+#' @param overlay_code_unaffected  Code for unaffected individuals in overlay. Default is 0.
+#' @param overlay_label_affected  Label for affected individuals in overlay. Default is "Affected".
+#' @param overlay_label_unaffected Label for unaffected individuals in overlay. Default is "Unaffected".
+#' @param overlay_alpha_affected Alpha for affected individuals in overlay. Default is 1.
+#' @param overlay_alpha_unaffected Alpha for unaffected individuals in overlay. Default is 0.
+#' @param overlay_color  Color for overlay points. Default is "black".
+#' @param overlay_include Whether to include overlay points in the plot. Default is FALSE.
+#' @param overlay_legend_title  Title of the overlay legend. Default is "Overlay".
+#' @param overlay_legend_show  Whether to show the overlay legend. Default is FALSE.
 #' @param focal_fill_include Whether to fill focal individuals.
 #' @param focal_fill_legend_show Whether to show legend for focal fill.
 #' @param focal_fill_personID ID of focal individual.
