@@ -11,10 +11,8 @@ ggPedigree.core(
   momID = "momID",
   dadID = "dadID",
   spouseID = "spouseID",
-  matID = "matID",
-  patID = "patID",
+  twinID = "twinID",
   focal_fill_column = NULL,
-  overlay_column = NULL,
   status_column = NULL,
   config = list(),
   debug = FALSE,
@@ -36,13 +34,9 @@ ggPedigree.core(
 
 \item{spouseID}{Character string specifying the column name for spouse IDs. Defaults to "spouseID".}
 
-\item{matID}{Character string specifying the column name for maternal lines Defaults to "matID".}
-
-\item{patID}{Character string specifying the column name for paternal lines Defaults to "patID".}
+\item{twinID}{Character string specifying the column name for twin IDs. Defaults to "twinID".}
 
 \item{focal_fill_column}{Character string specifying the column name for focal fill color.}
-
-\item{overlay_column}{Character string specifying the column name for overlay alpha values.}
 
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
 

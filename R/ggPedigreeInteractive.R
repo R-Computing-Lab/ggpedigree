@@ -19,6 +19,7 @@ ggPedigreeInteractive <- function(ped,
                                   dadID = "dadID",
                                   patID = "patID",
                                   matID = "matID",
+                                  twinID = "twinID",
                                   status_column = NULL,
                                   tooltip_columns = NULL,
                                   focal_fill_column = NULL,
@@ -78,6 +79,7 @@ ggPedigreeInteractive <- function(ped,
     dadID = dadID,
     patID = patID,
     matID = matID,
+    twinID = twinID,
     status_column = config$status_column,
     overlay_column = overlay_column,
     config = config,
@@ -118,7 +120,6 @@ ggPedigreeInteractive <- function(ped,
         config$tooltip_columns
       ))
     } else {
-      #  static_ped <- static_plot$data
       for (i in point_layers) {
         static_plot$layers[[i]]$mapping <- utils::modifyList(
           static_plot$layers[[i]]$mapping,

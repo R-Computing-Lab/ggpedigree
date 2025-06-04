@@ -13,6 +13,7 @@
 #' @param spouseID Character string specifying the column name for spouse IDs. Defaults to "spouseID".
 #' @param matID Character string specifying the column name for maternal lines Defaults to "matID".
 #' @param patID Character string specifying the column name for paternal lines Defaults to "patID".
+#'@param twinID Character string specifying the column name for twin IDs. Defaults to "twinID".
 #' @param status_column Character string specifying the column name for affected status. Defaults to NULL.
 #' @param debug Logical. If TRUE, prints debugging information. Default: FALSE.
 #' @param hints Data frame with hints for layout adjustments. Default: NULL.
@@ -65,6 +66,7 @@ ggPedigree <- function(ped,
                        spouseID = "spouseID",
                        matID = "matID",
                        patID = "patID",
+                       twinID = "twinID",
                        status_column = NULL,
                        focal_fill_column = NULL,
                        tooltip_columns = NULL,
@@ -93,6 +95,7 @@ ggPedigree <- function(ped,
       matID = matID,
       patID = patID,
       overlay_column = overlay_column,
+      twinID = twinID,
       status_column = status_column,
       focal_fill_column = focal_fill_column,
       config = config,
@@ -130,6 +133,7 @@ ggPedigree <- function(ped,
       matID = matID,
       patID = patID,
       overlay_column = overlay_column,
+      twinID = twinID,
       status_column = status_column,
       focal_fill_column = focal_fill_column,
       config = config,
@@ -158,6 +162,7 @@ ggPedigree.core <- function(ped, famID = "famID",
                             spouseID = "spouseID",
                             matID = "matID",
                             patID = "patID",
+                            twinID = "twinID",
                             focal_fill_column = NULL,
                             overlay_column = NULL,
                             status_column = NULL,
@@ -332,7 +337,8 @@ ggPedigree.core <- function(ped, famID = "famID",
     dadID = dadID,
     spouseID = spouseID,
     code_male = config$code_male,
-    config = config
+    config = config,
+    twinID = twinID
   )
 
   # Apply vertical spacing factor if generation_height ≠ 1
@@ -353,7 +359,8 @@ ggPedigree.core <- function(ped, famID = "famID",
     personID = personID,
     spouseID = spouseID,
     momID = momID,
-    dadID = dadID
+    dadID = dadID,
+    twinID = twinID
   )
 
   connections <- plot_connections$connections
@@ -458,7 +465,6 @@ ggPedigree.core <- function(ped, famID = "famID",
         x_end   = .data$x_twin + config$segment_mz_t * (.data$x_mid_twin - .data$x_twin),
         y_end   = .data$y_twin + config$segment_mz_t * ((.data$y_mid_twin - config$gap_hoff) - .data$y_twin)
       )
-
     p <- p +
       ggplot2::geom_segment(
         data = plot_connections$twin_coords,
@@ -473,25 +479,29 @@ ggPedigree.core <- function(ped, famID = "famID",
         linejoin = config$segment_linejoin,
         linetype = config$segment_linetype,
         color = config$segment_sibling_color,
-        na.rm = TRUE
-      ) + # horizontal line to twin midpoint for MZ twins
-      ggplot2::geom_segment(
-        data = plot_connections$twin_coords |>
-          dplyr::filter(.data$mz == TRUE),
-        ggplot2::aes(
-          x = .data$x_start,
-          xend = .data$x_end,
-          y = .data$y_start,
-          yend = .data$y_end
-        ),
-        linewidth = config$segment_linewidth,
-        lineend = config$segment_lineend,
-        linejoin = config$segment_linejoin,
-        linetype = config$segment_mz_linetype,
-        color = config$segment_mz_color,
+        na.rm = TRUE)
+
+    if("mz" %in% names(plot_connections$twin_coords)&&
+       any(plot_connections$twin_coords$mz == TRUE)) {
+      p <- p + # horizontal line to twin midpoint for MZ twins
+       ggplot2::geom_segment(
+         data = plot_connections$twin_coords |>
+           dplyr::filter(.data$mz == TRUE),
+         ggplot2::aes(
+           x = .data$x_start,
+           xend = .data$x_end,
+           y = .data$y_start,
+           yend = .data$y_end
+         ),
+         linewidth = config$segment_linewidth,
+         lineend = config$segment_lineend,
+         linejoin = config$segment_linejoin,
+         linetype = config$segment_mz_linetype,
+         color = config$segment_mz_color,
         alpha = config$segment_mz_alpha,
-        na.rm = TRUE
-      )
+         na.rm = TRUE
+       )
+    }
   }
   p <- p +
     ggplot2::geom_segment(

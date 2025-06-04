@@ -23,6 +23,7 @@ calculateConnections <- function(ped,
                                  spouseID = "spouseID",
                                  personID = "personID",
                                  momID = "momID", famID = "famID",
+                                 twinID = "twinID",
                                  dadID = "dadID") {
   # Check inputs -----------------------------------------------------------
   if (!inherits(ped, "data.frame")) {
@@ -42,6 +43,9 @@ calculateConnections <- function(ped,
   names(ped)[names(ped) == personID] <- "personID"
   names(ped)[names(ped) == momID] <- "momID"
   names(ped)[names(ped) == dadID] <- "dadID"
+  if (!is.null(twinID) && twinID %in% names(ped)) {
+    names(ped)[names(ped) == twinID] <- "twinID"
+  }
 
 
   # Add spouseID if missing
@@ -100,7 +104,21 @@ calculateConnections <- function(ped,
         coreID = .data$personID
       )
   }
-  if ("twinID" %in% names(ped)) {
+  if ("twinID" %in% names(ped) && any(!is.na(ped$twinID)) &&
+      ("zygosity" %in% names(ped))) {
+    connections <- dplyr::select(
+      .data = ped,
+      "personID",
+      "x_pos", "y_pos",
+      "dadID", "momID",
+      "parent_hash", "couple_hash",
+      "spouseID",
+      "famID",
+      "twinID",
+      "zygosity",
+      "extra"
+    ) |> unique()
+  } else if ("twinID" %in% names(ped) && any(!is.na(ped$twinID))) {
     connections <- dplyr::select(
       .data = ped,
       "personID",
@@ -288,7 +306,7 @@ calculateConnections <- function(ped,
       y_mid_sib = dplyr::if_else(.data$link_as_sibling, .data$y_mid_sib, NA_real_)
     )
 
-  if ("twinID" %in% names(ped)) {
+  if ("twinID" %in% names(ped) && any(!is.na(ped$twinID))) {
     connections <- connections |>
       dplyr::mutate(
         link_as_twin = !is.na(.data$twinID) & .data$link_as_sibling
@@ -316,7 +334,7 @@ calculateConnections <- function(ped,
   }
 
   # Add twin connections if available
-  if ("twinID" %in% names(ped)) {
+  if ("twinID" %in% names(ped) && any(!is.na(ped$twinID))) {
     plot_connections$twin_coords <- buildTwinSegments(
       ped = ped,
       connections_for_FOO = connections_skinny

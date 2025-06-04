@@ -12,12 +12,10 @@ ggPedigreeInteractive(
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
-  patID = "patID",
-  matID = "matID",
+  twinID = "twinID",
   status_column = NULL,
   tooltip_columns = NULL,
   focal_fill_column = NULL,
-  overlay_column = NULL,
   config = list(),
   debug = FALSE,
   return_widget = TRUE,
@@ -30,12 +28,10 @@ ggpedigreeinteractive(
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
-  patID = "patID",
-  matID = "matID",
+  twinID = "twinID",
   status_column = NULL,
   tooltip_columns = NULL,
   focal_fill_column = NULL,
-  overlay_column = NULL,
   config = list(),
   debug = FALSE,
   return_widget = TRUE,
@@ -48,12 +44,10 @@ ggpedigreeInteractive(
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
-  patID = "patID",
-  matID = "matID",
+  twinID = "twinID",
   status_column = NULL,
   tooltip_columns = NULL,
   focal_fill_column = NULL,
-  overlay_column = NULL,
   config = list(),
   debug = FALSE,
   return_widget = TRUE,
@@ -71,20 +65,15 @@ ggpedigreeInteractive(
 
 \item{dadID}{Character string specifying the column name for father IDs. Defaults to "dadID".}
 
-\item{patID}{Character string specifying the column name for paternal lines Defaults to "patID".}
-
-\item{matID}{Character string specifying the column name for maternal lines Defaults to "matID".}
+\item{twinID}{Character string specifying the column name for twin IDs. Defaults to "twinID".}
 
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
 
 \item{tooltip_columns}{Character vector of column names to show when hovering.
 Defaults to c("personID", "sex").  Additional columns present in `ped`
-can be supplied – they will be added to the Plotly tooltip text.
-Defaults to NULL, which uses the default tooltip columns.}
+can be supplied – they will be added to the Plotly tooltip text.}
 
 \item{focal_fill_column}{Character string specifying the column name for focal fill color.}
-
-\item{overlay_column}{Character string specifying the column name for overlay alpha values.}
 
 \item{config}{A list of configuration options for customizing the plot. The list can include:
 \describe{
