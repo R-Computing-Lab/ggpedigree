@@ -108,7 +108,7 @@ processExtras <- function(ped, config = list()) {
     relativeIDvar = "momID",
     x_name = "x_mom",
     y_name = "y_mom",
-    multiple = "any"
+    multiple = "all" # "any"
   )
 
 
@@ -119,7 +119,7 @@ processExtras <- function(ped, config = list()) {
     relativeIDvar = "dadID",
     x_name = "x_dad",
     y_name = "y_dad",
-    multiple = "any"
+    multiple = "all" # "any"
   )
 
 

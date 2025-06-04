@@ -10,6 +10,7 @@
 #' @param function_name The name of the function calling this configuration.
 #' @param personID The column name for person identifiers in the data.
 #' @param status_column The column name for affected status in the data.
+#' @param overlay_shape The shape used for overlaying points in the plot.
 #' @param color_scale_midpoint Midpoint value for continuous color scales.
 #' @param alpha_default Default alpha transparency level.
 #' @param apply_default_scales Whether to apply default color scales.
@@ -94,11 +95,24 @@
 #' @param status_label_affected Label for affected status.
 #' @param status_label_unaffected Label for unaffected status.
 #' @param status_alpha_affected Alpha for affected individuals.
-#' @param status_alpha_unaffected Alpha for unaffected individuals.
-#' @param status_affected_shape Shape for affected individuals.
+#' @param status_alpha_unaffected Alpha for unaffected individuals. Default is 0 (transparent).
+#' @param status_shape_affected Shape for affected individuals.
 #' @param status_color_palette A character vector of colors for affected status.
 #' @param status_legend_title Title of the status legend.
 #' @param status_legend_show Whether to show the status legend.
+#' @param status_color_affected Color for affected individuals.
+#' @param status_color_unaffected Color for unaffected individuals.
+#' @param overlay_shape  Shape used for overlaying points in the plot. Default is 4 (cross).
+#' @param overlay_code_affected  Code for affected individuals in overlay. Default is 1.
+#' @param overlay_code_unaffected  Code for unaffected individuals in overlay. Default is 0.
+#' @param overlay_label_affected  Label for affected individuals in overlay. Default is "Affected".
+#' @param overlay_label_unaffected Label for unaffected individuals in overlay. Default is "Unaffected".
+#' @param overlay_alpha_affected Alpha for affected individuals in overlay. Default is 1.
+#' @param overlay_alpha_unaffected Alpha for unaffected individuals in overlay. Default is 0.
+#' @param overlay_color  Color for overlay points. Default is "black".
+#' @param overlay_include Whether to include overlay points in the plot. Default is FALSE.
+#' @param overlay_legend_title  Title of the overlay legend. Default is "Overlay".
+#' @param overlay_legend_show  Whether to show the overlay legend. Default is FALSE.
 #' @param focal_fill_include Whether to fill focal individuals.
 #' @param focal_fill_legend_show Whether to show legend for focal fill.
 #' @param focal_fill_personID ID of focal individual.
@@ -109,9 +123,20 @@
 #' @param focal_fill_scale_midpoint Midpoint for focal fill scale.
 #' @param focal_fill_method Method used for focal fill gradient.
 #' @param focal_fill_component Component type for focal fill.
+#' @param focal_fill_shape Shape used for focal fill points.
 #' @param focal_fill_n_breaks Number of breaks in focal fill scale.
 #' @param focal_fill_na_value Color for NA values in focal fill.
 #' @param focal_fill_force_zero Whether to force zero to NA in focal fill.
+#' @param focal_fill_hue_range Hue range for focal fill colors.
+#' @param focal_fill_chroma Chroma value for focal fill colors.
+#' @param focal_fill_lightness Lightness value for focal fill colors.
+#' @param focal_fill_hue_direction Direction of focal fill gradient.
+#' @param focal_fill_viridis_option Option for viridis color scale.
+#' @param focal_fill_viridis_begin Start of viridis color scale.
+#' @param focal_fill_viridis_end End of viridis color scale.
+#' @param focal_fill_viridis_direction Direction of viridis color scale (1 for left to right, -1 for right to left).
+#'
+#'
 #' @param ci_include Whether to show confidence intervals.
 #' @param ci_ribbon_alpha Alpha level for CI ribbons.
 #' @param matrix_sparse Whether matrix input is sparse.
@@ -123,6 +148,7 @@
 #' @param ... Additional arguments for future extensibility.
 #' @return A named list of default plotting and layout parameters.
 #' @export
+
 
 
 getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
@@ -230,9 +256,23 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  status_alpha_unaffected = 0,
                                  status_color_palette = c(color_palette_default[1], color_palette_default[2]),
                                  # Use first color for affected,
-                                 status_affected_shape = 4,
+                                 status_color_affected = "black",
+                                 status_color_unaffected = color_palette_default[2],
+                                 status_shape_affected = 4,
                                  status_legend_title = "Affected",
                                  status_legend_show = FALSE,
+                                 # ----  overlay  Settings ----
+                                 overlay_shape = 4,
+                                 overlay_code_affected = 1,
+                                 overlay_code_unaffected = 0,
+                                 overlay_label_affected = "Affected",
+                                 overlay_label_unaffected = "Unaffected",
+                                 overlay_alpha_affected = 1,
+                                 overlay_alpha_unaffected = 0,
+                                 overlay_color = "black",
+                                 overlay_include = FALSE,
+                                 overlay_legend_title = "Overlay",
+                                 overlay_legend_show = FALSE,
                                  # ---- Focal Fill Settings ----
                                  focal_fill_include = FALSE,
                                  focal_fill_legend_show = TRUE,
@@ -246,7 +286,17 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  focal_fill_component = "additive",
                                  focal_fill_n_breaks = NULL,
                                  focal_fill_na_value = "black",
+                                 focal_fill_shape = 21, # shape for focal fill points
                                  focal_fill_force_zero = FALSE, # work around that sets zero to NA so you can distinguish from low values
+                                 focal_fill_hue_range = c(0, 360),
+                                 focal_fill_chroma = 50,
+                                 focal_fill_lightness = 50,
+                                 focal_fill_hue_direction = "horizontal",
+                                 focal_fill_viridis_option = "D",
+                                 focal_fill_viridis_begin = 0,
+                                 focal_fill_viridis_end = 1,
+                                 focal_fill_viridis_direction = 1, # 1 for left to right, -1 for right to left
+                                 # Use first color for affected,
                                  # ---- Confidence Intervals
                                  ci_include = TRUE,
                                  ci_ribbon_alpha = .3,
@@ -270,8 +320,13 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     stop("segment_default_color must be a single character string.")
   }
 
-
-  if (!stringr::str_to_lower(function_name) %in% c("ggrelatednessmatrix", "ggpedigree", "ggphenotypebydegree", "ggpedigreeinteractive", "getdefaultplotconfig")) {
+  if (!stringr::str_to_lower(function_name) %in% c(
+    "ggrelatednessmatrix",
+    "ggpedigree",
+    "ggphenotypebydegree",
+    "ggpedigreeinteractive",
+    "getdefaultplotconfig"
+  )) {
     stop(paste0("The function ", function_name, " is not supported by getDefaultPlotConfig."))
   }
 
@@ -330,7 +385,6 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     outline_multiplier = outline_multiplier,
     outline_color = outline_color,
 
-
     # ---- Tooltip Aesthetics ----
     tooltip_include = tooltip_include,
     tooltip_columns = tooltip_columns,
@@ -351,6 +405,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     ped_width = ped_width,
 
     # ---- Segment Drawing Options ----
+
     segment_linewidth = segment_linewidth,
     segment_linetype = segment_linetype,
     segment_lineend = segment_lineend,
@@ -368,6 +423,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     segment_self_alpha = segment_self_alpha,
     segment_self_angle = segment_self_angle,
     segment_self_curvature = segment_self_curvature,
+
 
     # ---- Sex Legend and Appearance ----
     sex_color_include = sex_color_include,
@@ -387,10 +443,25 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     status_alpha_affected = status_alpha_affected,
     status_alpha_unaffected = status_alpha_unaffected,
     status_color_palette = status_color_palette,
-    # Use first color for affected,
-    status_affected_shape = status_affected_shape,
+    status_color_affected = status_color_affected,
+    status_color_unaffected = status_color_unaffected,
+    status_shape_affected = status_shape_affected,
     status_legend_title = status_legend_title,
     status_legend_show = status_legend_show,
+
+    # ----  overlay  Settings ----
+
+    overlay_shape = overlay_shape,
+    overlay_code_affected = overlay_code_affected,
+    overlay_code_unaffected = overlay_code_unaffected,
+    overlay_label_affected = overlay_label_affected,
+    overlay_label_unaffected = overlay_label_unaffected,
+    overlay_alpha_unaffected = overlay_alpha_unaffected,
+    overlay_color = overlay_color,
+    overlay_alpha_affected = overlay_alpha_affected,
+    overlay_include = overlay_include,
+    overlay_legend_title = overlay_legend_title,
+    overlay_legend_show = overlay_legend_show,
 
     # ---- Focal Fill Settings ----
     focal_fill_include = focal_fill_include,
@@ -404,14 +475,23 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     focal_fill_method = focal_fill_method,
     focal_fill_component = focal_fill_component,
     focal_fill_n_breaks = focal_fill_n_breaks,
+    focal_fill_shape = focal_fill_shape, # shape for focal fill points
     focal_fill_na_value = focal_fill_na_value,
     focal_fill_force_zero = focal_fill_force_zero, # work around that sets zero to NA so you can distinguish from low values
+    focal_fill_hue_range = focal_fill_hue_range, # hue range for focal fill
+    focal_fill_chroma = focal_fill_chroma, # chroma for focal fill
+    focal_fill_lightness = focal_fill_lightness, # lightness for focal fill
+    focal_fill_hue_direction = focal_fill_hue_direction, # direction for focal fill
+    focal_fill_viridis_option = focal_fill_viridis_option,
+    focal_fill_viridis_begin = focal_fill_viridis_begin,
+    focal_fill_viridis_end = focal_fill_viridis_end,
+    focal_fill_viridis_direction = focal_fill_viridis_direction,
+
 
     # ---- Confidence Intervals
 
     ci_include = ci_include,
     ci_ribbon_alpha = ci_ribbon_alpha,
-
 
     # ---- matrix settings ----
     matrix_sparse = matrix_sparse,

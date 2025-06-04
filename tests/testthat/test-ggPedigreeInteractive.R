@@ -5,7 +5,7 @@ test_that("ggPedigreeInteractive behaves same as ggPedigree interactive is true 
     # Remove twinID and zygosity columns for this test
     potter <- potter %>%
       select(-twinID, -zygosity)
-  } else if ("twinID" %in% names(potter) && !"zygosity" %in% names(potter)){
+  } else if ("twinID" %in% names(potter) && !"zygosity" %in% names(potter)) {
     # Add twinID and zygosity columns for demonstration purposes
     potter <- potter %>%
       select(-twinID)
@@ -67,10 +67,10 @@ test_that("ggPedigreeInteractive behaves same as ggPedigree interactive is true 
   }
 
   p_widget <- ggPedigreeInteractive(potter,
-                                    famID = "famID",
-                                    personID = "personID",
-                                    spouseID = "spouseID",
-                                    return_widget = TRUE
+    famID = "famID",
+    personID = "personID",
+    spouseID = "spouseID",
+    return_widget = TRUE
   )
 
   expect_s3_class(p_widget, "plotly")
@@ -78,11 +78,11 @@ test_that("ggPedigreeInteractive behaves same as ggPedigree interactive is true 
 
 
   p <- ggPedigree(potter,
-                  interactive = TRUE,
-                  famID = "famID",
-                  personID = "personID",
-                  spouseID = "spouseID",
-                  return_widget = TRUE
+    interactive = TRUE,
+    famID = "famID",
+    personID = "personID",
+    spouseID = "spouseID",
+    return_widget = TRUE
   )
 
   expect_s3_class(p, "plotly")
@@ -100,26 +100,27 @@ test_that("ggPedigreeInteractive behaves same as ggPedigree interactive is true 
   expect_equal(p_widget$x$config, p$x$config)
   expect_equal(p_widget$sizingPolicy, p$sizingPolicy)
 
-  #without zygosity
+  # without zygosity
   potter_no_zyg <- potter %>%
     select(-zygosity)
 
   p_widget_nozyg <- ggPedigreeInteractive(potter_no_zyg,
-                                           famID = "famID",
-                                           personID = "personID",
-                                           spouseID = "spouseID",
-                                           return_widget = TRUE)
+    famID = "famID",
+    personID = "personID",
+    spouseID = "spouseID",
+    return_widget = TRUE
+  )
 
   expect_s3_class(p_widget_nozyg, "plotly")
   expect_s3_class(p_widget_nozyg, "htmlwidget")
 
 
   p_nozyg <- ggPedigree(potter_no_zyg,
-                        interactive = TRUE,
-                        famID = "famID",
-                        personID = "personID",
-                        spouseID = "spouseID",
-                        return_widget = TRUE
+    interactive = TRUE,
+    famID = "famID",
+    personID = "personID",
+    spouseID = "spouseID",
+    return_widget = TRUE
   )
 
   expect_s3_class(p_nozyg, "plotly")
@@ -144,7 +145,7 @@ test_that("ggPedigreeInteractive returns a gg object", {
     # Remove twinID and zygosity columns for this test
     potter <- potter %>%
       select(-twinID, -zygosity)
-  } else if ("twinID" %in% names(potter) && !"zygosity" %in% names(potter)){
+  } else if ("twinID" %in% names(potter) && !"zygosity" %in% names(potter)) {
     # Add twinID and zygosity columns for demonstration purposes
     potter <- potter %>%
       select(-twinID)
@@ -157,6 +158,8 @@ test_that("ggPedigreeInteractive returns a gg object", {
     momID = "momID",
     dadID = "dadID",
     spouseID = "spouseID",
+    patID = "patID",
+    matID = "matID",
     config = list(
       label_nudge_y = -.25,
       labels_include = TRUE,

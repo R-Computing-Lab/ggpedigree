@@ -5,7 +5,7 @@ test_that("broken hints doesn't cause a fatal error", {
     # Remove twinID and zygosity columns for this test
     potter <- potter %>%
       select(-twinID, -zygosity)
-  } else if ("twinID" %in% names(potter) && !"zygosity" %in% names(potter)){
+  } else if ("twinID" %in% names(potter) && !"zygosity" %in% names(potter)) {
     # Add twinID and zygosity columns for demonstration purposes
     potter <- potter %>%
       select(-twinID)
@@ -57,10 +57,10 @@ test_that("ggPedigree returns a ggplot object", {
     # Remove twinID and zygosity columns for this test
     potter <- potter %>%
       select(-twinID, -zygosity)
-  } else if ("twinID" %in% names(potter) && !"zygosity" %in% names(potter)){
+  } else if ("twinID" %in% names(potter) && !"zygosity" %in% names(potter)) {
     # Add twinID and zygosity columns for demonstration purposes
     potter <- potter %>%
-    select(-twinID)
+      select(-twinID)
   }
 
   # Test with hints

@@ -12,10 +12,13 @@ ggPedigree(
   momID = "momID",
   dadID = "dadID",
   spouseID = "spouseID",
+  matID = "matID",
+  patID = "patID",
   twinID = "twinID",
   status_column = NULL,
   focal_fill_column = NULL,
   tooltip_columns = NULL,
+  overlay_column = NULL,
   return_widget = FALSE,
   config = list(),
   debug = FALSE,
@@ -31,10 +34,13 @@ ggpedigree(
   momID = "momID",
   dadID = "dadID",
   spouseID = "spouseID",
+  matID = "matID",
+  patID = "patID",
   twinID = "twinID",
   status_column = NULL,
   focal_fill_column = NULL,
   tooltip_columns = NULL,
+  overlay_column = NULL,
   return_widget = FALSE,
   config = list(),
   debug = FALSE,
@@ -56,6 +62,10 @@ ggpedigree(
 
 \item{spouseID}{Character string specifying the column name for spouse IDs. Defaults to "spouseID".}
 
+\item{matID}{Character string specifying the column name for maternal lines Defaults to "matID".}
+
+\item{patID}{Character string specifying the column name for paternal lines Defaults to "patID".}
+
 \item{twinID}{Character string specifying the column name for twin IDs. Defaults to "twinID".}
 
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
@@ -64,7 +74,10 @@ ggpedigree(
 
 \item{tooltip_columns}{Character vector of column names to show when hovering.
 Defaults to c("personID", "sex").  Additional columns present in `ped`
-can be supplied – they will be added to the Plotly tooltip text.}
+can be supplied – they will be added to the Plotly tooltip text.
+Defaults to NULL, which uses the default tooltip columns.}
+
+\item{overlay_column}{Character string specifying the column name for overlay alpha values.}
 
 \item{return_widget}{Logical; if TRUE (default) returns a plotly htmlwidget.
 If FALSE, returns the underlying plotly object (useful for further
@@ -77,7 +90,7 @@ customization before printing).}
    \item{segment_sibling_color, segment_parent_color, segment_offspring_color}{Character. Line colors for respective connection types.}
    \item{label_text_size, point_size, segment_linewidth}{Numeric. Controls text size, point size, and line thickness.}
    \item{generation_height}{Numeric. Vertical spacing multiplier between generations. Default: 1.}
-   \item{shape_unknown, shape_female, shape_male, status_affected_shape}{Integers. Shape codes for plotting each group.}
+   \item{shape_unknown, shape_female, shape_male, status_shape_affected}{Integers. Shape codes for plotting each group.}
    \item{sex_shape_labels}{Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")}
    \item{unaffected, affected}{Values indicating unaffected/affected status.}
    \item{sex_color_include}{Logical. If TRUE, uses color to differentiate sex.}
