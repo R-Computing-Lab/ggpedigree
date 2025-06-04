@@ -308,6 +308,33 @@ m1 + m2 + plot_layout(ncol = 2) +
   plot_annotation(title = "Mitochondrial Relatives of Harry Potter and Ginny Weasley")
 ```
 
+
+```{r focal_fill_ginny}
+
+test <- ggPedigree(potter,
+  famID = "famID",
+  personID = "personID",
+  config = list(
+    focal_fill_personID = 8,
+    focal_fill_include = TRUE,
+    # focal_fill_mid_color = "white",
+    focal_fill_low_color = "black",
+    focal_fill_scale_midpoint = 0.55,
+    focal_fill_component = "matID",
+    focal_fill_method = "viridis_d",
+    focal_fill_viridis_option = "turbo",
+    focal_fill_n_breaks = 19,
+    focal_fill_legend_show = FALSE,
+    focal_fill_legend_title = "Mitochondrial Relatives",
+    sex_color_include = FALSE,
+    overlay_include = FALSE
+  ) # highlight Harry Potter
+  # config  = list(segment_mz_color = NA) # color for monozygotic twins
+) + ggplot2::guides(shape = "none")
+
+test
+```
+
 # Multiple families in one graphic
 
 If you have multiple families in your data frame, you can use the `facet_wrap()` function from `ggplot2` to create separate plots for each family. This is useful if you want to compare the pedigrees of different families side by side. Note that you can use `scales = "free_x"` to allow each family to have its own x-axis scale.

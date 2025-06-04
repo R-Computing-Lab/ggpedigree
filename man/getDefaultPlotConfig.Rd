@@ -124,7 +124,16 @@ getDefaultPlotConfig(
   focal_fill_component = "additive",
   focal_fill_n_breaks = NULL,
   focal_fill_na_value = "black",
+  focal_fill_shape = 21,
   focal_fill_force_zero = FALSE,
+  focal_fill_hue_range = c(0, 360),
+  focal_fill_chroma = 50,
+  focal_fill_lightness = 50,
+  focal_fill_hue_direction = "horizontal",
+  focal_fill_viridis_option = "D",
+  focal_fill_viridis_begin = 0,
+  focal_fill_viridis_end = 1,
+  focal_fill_viridis_direction = 1,
   ci_include = TRUE,
   ci_ribbon_alpha = 0.3,
   matrix_sparse = FALSE,
@@ -375,7 +384,25 @@ getDefaultPlotConfig(
 
 \item{focal_fill_na_value}{Color for NA values in focal fill.}
 
+\item{focal_fill_shape}{Shape used for focal fill points.}
+
 \item{focal_fill_force_zero}{Whether to force zero to NA in focal fill.}
+
+\item{focal_fill_hue_range}{Hue range for focal fill colors.}
+
+\item{focal_fill_chroma}{Chroma value for focal fill colors.}
+
+\item{focal_fill_lightness}{Lightness value for focal fill colors.}
+
+\item{focal_fill_hue_direction}{Direction of focal fill gradient.}
+
+\item{focal_fill_viridis_option}{Option for viridis color scale.}
+
+\item{focal_fill_viridis_begin}{Start of viridis color scale.}
+
+\item{focal_fill_viridis_end}{End of viridis color scale.}
+
+\item{focal_fill_viridis_direction}{Direction of viridis color scale (1 for left to right, -1 for right to left).}
 
 \item{ci_include}{Whether to show confidence intervals.}
 

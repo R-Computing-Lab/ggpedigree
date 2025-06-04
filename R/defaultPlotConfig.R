@@ -123,9 +123,20 @@
 #' @param focal_fill_scale_midpoint Midpoint for focal fill scale.
 #' @param focal_fill_method Method used for focal fill gradient.
 #' @param focal_fill_component Component type for focal fill.
+#' @param focal_fill_shape Shape used for focal fill points.
 #' @param focal_fill_n_breaks Number of breaks in focal fill scale.
 #' @param focal_fill_na_value Color for NA values in focal fill.
 #' @param focal_fill_force_zero Whether to force zero to NA in focal fill.
+#' @param focal_fill_hue_range Hue range for focal fill colors.
+#' @param focal_fill_chroma Chroma value for focal fill colors.
+#' @param focal_fill_lightness Lightness value for focal fill colors.
+#' @param focal_fill_hue_direction Direction of focal fill gradient.
+#' @param focal_fill_viridis_option Option for viridis color scale.
+#' @param focal_fill_viridis_begin Start of viridis color scale.
+#' @param focal_fill_viridis_end End of viridis color scale.
+#' @param focal_fill_viridis_direction Direction of viridis color scale (1 for left to right, -1 for right to left).
+#'
+#'
 #' @param ci_include Whether to show confidence intervals.
 #' @param ci_ribbon_alpha Alpha level for CI ribbons.
 #' @param matrix_sparse Whether matrix input is sparse.
@@ -275,7 +286,17 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  focal_fill_component = "additive",
                                  focal_fill_n_breaks = NULL,
                                  focal_fill_na_value = "black",
+                                 focal_fill_shape = 21, # shape for focal fill points
                                  focal_fill_force_zero = FALSE, # work around that sets zero to NA so you can distinguish from low values
+                                 focal_fill_hue_range = c(0, 360),
+                                 focal_fill_chroma = 50,
+                                 focal_fill_lightness = 50,
+                                 focal_fill_hue_direction = "horizontal",
+                                 focal_fill_viridis_option = "D",
+                                 focal_fill_viridis_begin = 0,
+                                 focal_fill_viridis_end = 1,
+                                 focal_fill_viridis_direction = 1, # 1 for left to right, -1 for right to left
+
                                  # Use first color for affected,
                                  # ---- Confidence Intervals
                                  ci_include = TRUE,
@@ -453,9 +474,18 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     focal_fill_method = focal_fill_method,
     focal_fill_component = focal_fill_component,
     focal_fill_n_breaks = focal_fill_n_breaks,
+    focal_fill_shape = focal_fill_shape, # shape for focal fill points
     focal_fill_na_value = focal_fill_na_value,
-    focal_fill_force_zero = focal_fill_force_zero,
-    # work around that sets zero to NA so you can distinguish from low values
+    focal_fill_force_zero = focal_fill_force_zero,     # work around that sets zero to NA so you can distinguish from low values
+    focal_fill_hue_range = focal_fill_hue_range, # hue range for focal fill
+    focal_fill_chroma = focal_fill_chroma, # chroma for focal fill
+    focal_fill_lightness = focal_fill_lightness, # lightness for focal fill
+    focal_fill_hue_direction = focal_fill_hue_direction, # direction for focal fill
+    focal_fill_viridis_option = focal_fill_viridis_option,
+    focal_fill_viridis_begin =focal_fill_viridis_begin,
+    focal_fill_viridis_end = focal_fill_viridis_end,
+    focal_fill_viridis_direction = focal_fill_viridis_direction,
+
 
     # ---- Confidence Intervals
 

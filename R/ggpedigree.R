@@ -13,7 +13,7 @@
 #' @param spouseID Character string specifying the column name for spouse IDs. Defaults to "spouseID".
 #' @param matID Character string specifying the column name for maternal lines Defaults to "matID".
 #' @param patID Character string specifying the column name for paternal lines Defaults to "patID".
-#'@param twinID Character string specifying the column name for twin IDs. Defaults to "twinID".
+#' @param twinID Character string specifying the column name for twin IDs. Defaults to "twinID".
 #' @param status_column Character string specifying the column name for affected status. Defaults to NULL.
 #' @param debug Logical. If TRUE, prints debugging information. Default: FALSE.
 #' @param hints Data frame with hints for layout adjustments. Default: NULL.
@@ -281,6 +281,7 @@ ggPedigree.core <- function(ped, famID = "famID",
       "family", "family lineages"
     )
     ) {
+
       config$focal_fill_component_recode <- switch(config$focal_fill_component,
         "maternal" = matID,
         "paternal" = patID,
@@ -299,25 +300,24 @@ ggPedigree.core <- function(ped, famID = "famID",
       )
       # If focal_fill_component is specified, create fill column based on component
       # This will create a fill column based on the component specified in the config
-
       switch(config$focal_fill_component_recode,
         matID = {
           # If focal_fill_component is maternal, use matID as fill
           ds_ped <- ds_ped %>%
             dplyr::mutate(focal_fill = as.factor(.data[[matID]]))
-          focal_fill_column <- "matID"
+        #  focal_fill_column <- "matID"
         },
         patID = {
           # If focal_fill_component is paternal, use patID as fill
           ds_ped <- ds_ped %>%
             dplyr::mutate(focal_fill = as.factor(.data[[patID]]))
-          focal_fill_column <- "patID"
+        #  focal_fill_column <- "patID"
         },
         famID = {
           # If focal_fill_component is famID, use famID as fill
           ds_ped <- ds_ped %>%
             dplyr::mutate(focal_fill = as.factor(.data[[famID]]))
-          focal_fill_column <- "famID"
+         # focal_fill_column <- "famID"
         }
       )
     }
@@ -745,7 +745,7 @@ ggpedigree <- ggPedigree
       color = config$status_color_affected,
       na.rm = TRUE
     )
-  } else if (config$focal_fill_include == TRUE && !is.null(focal_fill_column)) {
+  }else if (config$focal_fill_include == TRUE && !is.null(focal_fill_column)) {
     # If focal_fill_column is specified, use it for alpha aesthetic
     p <- p + ggplot2::geom_point(
       ggplot2::aes(alpha = !!rlang::sym(focal_fill_column)),
@@ -916,7 +916,37 @@ ggpedigree <- ggPedigree
         n.breaks = config$focal_fill_n_breaks,
         na.value = config$focal_fill_na_value
       )
-    } else {
+    } else if(config$focal_fill_method %in% c("hue")) {
+      p <- p + ggplot2::scale_color_hue(
+       h = config$focal_fill_hue_range,
+        c = config$focal_fill_chroma,
+       l = config$focal_fill_lightness,
+       direction = config$focal_fill_hue_direction,
+        na.value = config$focal_fill_na_value,
+      )
+    } else if (config$focal_fill_method %in% c("viridis_c")) {
+      p <- p + ggplot2::scale_colour_viridis_c(
+        option = config$focal_fill_viridis_option,
+        begin = config$focal_fill_viridis_begin,
+        end = config$focal_fill_viridis_end,
+        direction = config$focal_fill_viridis_direction,
+        na.value = config$focal_fill_na_value
+      )
+    } else if (config$focal_fill_method %in% c("viridis_d")) {
+      p <- p + ggplot2::scale_colour_viridis_d(
+        option = config$focal_fill_viridis_option,
+        begin = config$focal_fill_viridis_begin,
+        end = config$focal_fill_viridis_end,
+        direction = config$focal_fill_viridis_direction,
+        na.value = config$focal_fill_na_value
+      )
+
+    }else if (config$focal_fill_method %in% c("manual")) {
+      p <- p + ggplot2::scale_color_manual(
+        values = config$focal_fill_color_values,
+        labels = config$focal_fill_labels
+      )
+   } else  {
       stop("focal_fill_method must be one of 'steps', 'steps2', 'gradient2', or 'gradient'")
     }
     p <- p +
