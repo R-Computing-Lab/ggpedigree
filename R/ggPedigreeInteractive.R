@@ -131,26 +131,27 @@ ggPedigreeInteractive <- function(ped,
       }
     }
 
-    plt <- tryCatch(plotly::ggplotly(static_plot,
-      tooltip = "text",
-      width   = NULL,
-      height  = NULL
-    ),
-    error = function(e) {
-      warning("Error in ggplotly conversion: ", e$message);
-      message("Returning static ggplot object instead.")
-      return(static_plot)
-    }
+    plt <- tryCatch(
+      plotly::ggplotly(static_plot,
+        tooltip = "text",
+        width   = NULL,
+        height  = NULL
+      ),
+      error = function(e) {
+        warning("Error in ggplotly conversion: ", e$message)
+        message("Returning static ggplot object instead.")
+        return(static_plot)
+      }
     )
   } else {
     plt <- tryCatch(
       plotly::ggplotly(static_plot,
-                       tooltip = NULL,
+        tooltip = NULL,
         width = NULL,
         height = NULL
       ),
       error = function(e) {
-        warning("Error in ggplotly conversion: ", e$message);
+        warning("Error in ggplotly conversion: ", e$message)
         message("Returning static ggplot object instead.")
         return(static_plot)
       }

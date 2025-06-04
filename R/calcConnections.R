@@ -105,7 +105,7 @@ calculateConnections <- function(ped,
       )
   }
   if ("twinID" %in% names(ped) && any(!is.na(ped$twinID)) &&
-      ("zygosity" %in% names(ped))) {
+    ("zygosity" %in% names(ped))) {
     connections <- dplyr::select(
       .data = ped,
       "personID",

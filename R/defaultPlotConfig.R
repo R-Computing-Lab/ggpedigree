@@ -296,7 +296,6 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  focal_fill_viridis_begin = 0,
                                  focal_fill_viridis_end = 1,
                                  focal_fill_viridis_direction = 1, # 1 for left to right, -1 for right to left
-
                                  # Use first color for affected,
                                  # ---- Confidence Intervals
                                  ci_include = TRUE,
@@ -321,11 +320,13 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     stop("segment_default_color must be a single character string.")
   }
 
-  if (!stringr::str_to_lower(function_name) %in% c("ggrelatednessmatrix",
-                                                   "ggpedigree",
-                                                   "ggphenotypebydegree",
-                                                   "ggpedigreeinteractive",
-                                                   "getdefaultplotconfig")) {
+  if (!stringr::str_to_lower(function_name) %in% c(
+    "ggrelatednessmatrix",
+    "ggpedigree",
+    "ggphenotypebydegree",
+    "ggpedigreeinteractive",
+    "getdefaultplotconfig"
+  )) {
     stop(paste0("The function ", function_name, " is not supported by getDefaultPlotConfig."))
   }
 
@@ -476,13 +477,13 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     focal_fill_n_breaks = focal_fill_n_breaks,
     focal_fill_shape = focal_fill_shape, # shape for focal fill points
     focal_fill_na_value = focal_fill_na_value,
-    focal_fill_force_zero = focal_fill_force_zero,     # work around that sets zero to NA so you can distinguish from low values
+    focal_fill_force_zero = focal_fill_force_zero, # work around that sets zero to NA so you can distinguish from low values
     focal_fill_hue_range = focal_fill_hue_range, # hue range for focal fill
     focal_fill_chroma = focal_fill_chroma, # chroma for focal fill
     focal_fill_lightness = focal_fill_lightness, # lightness for focal fill
     focal_fill_hue_direction = focal_fill_hue_direction, # direction for focal fill
     focal_fill_viridis_option = focal_fill_viridis_option,
-    focal_fill_viridis_begin =focal_fill_viridis_begin,
+    focal_fill_viridis_begin = focal_fill_viridis_begin,
     focal_fill_viridis_end = focal_fill_viridis_end,
     focal_fill_viridis_direction = focal_fill_viridis_direction,
 

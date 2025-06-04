@@ -281,7 +281,6 @@ ggPedigree.core <- function(ped, famID = "famID",
       "family", "family lineages"
     )
     ) {
-
       config$focal_fill_component_recode <- switch(config$focal_fill_component,
         "maternal" = matID,
         "paternal" = patID,
@@ -305,19 +304,19 @@ ggPedigree.core <- function(ped, famID = "famID",
           # If focal_fill_component is maternal, use matID as fill
           ds_ped <- ds_ped %>%
             dplyr::mutate(focal_fill = as.factor(.data[[matID]]))
-        #  focal_fill_column <- "matID"
+          #  focal_fill_column <- "matID"
         },
         patID = {
           # If focal_fill_component is paternal, use patID as fill
           ds_ped <- ds_ped %>%
             dplyr::mutate(focal_fill = as.factor(.data[[patID]]))
-        #  focal_fill_column <- "patID"
+          #  focal_fill_column <- "patID"
         },
         famID = {
           # If focal_fill_component is famID, use famID as fill
           ds_ped <- ds_ped %>%
             dplyr::mutate(focal_fill = as.factor(.data[[famID]]))
-         # focal_fill_column <- "famID"
+          # focal_fill_column <- "famID"
         }
       )
     }
@@ -479,28 +478,29 @@ ggPedigree.core <- function(ped, famID = "famID",
         linejoin = config$segment_linejoin,
         linetype = config$segment_linetype,
         color = config$segment_sibling_color,
-        na.rm = TRUE)
+        na.rm = TRUE
+      )
 
-    if("mz" %in% names(plot_connections$twin_coords)&&
-       any(plot_connections$twin_coords$mz == TRUE)) {
+    if ("mz" %in% names(plot_connections$twin_coords) &&
+      any(plot_connections$twin_coords$mz == TRUE)) {
       p <- p + # horizontal line to twin midpoint for MZ twins
-       ggplot2::geom_segment(
-         data = plot_connections$twin_coords |>
-           dplyr::filter(.data$mz == TRUE),
-         ggplot2::aes(
-           x = .data$x_start,
-           xend = .data$x_end,
-           y = .data$y_start,
-           yend = .data$y_end
-         ),
-         linewidth = config$segment_linewidth,
-         lineend = config$segment_lineend,
-         linejoin = config$segment_linejoin,
-         linetype = config$segment_mz_linetype,
-         color = config$segment_mz_color,
-        alpha = config$segment_mz_alpha,
-         na.rm = TRUE
-       )
+        ggplot2::geom_segment(
+          data = plot_connections$twin_coords |>
+            dplyr::filter(.data$mz == TRUE),
+          ggplot2::aes(
+            x = .data$x_start,
+            xend = .data$x_end,
+            y = .data$y_start,
+            yend = .data$y_end
+          ),
+          linewidth = config$segment_linewidth,
+          lineend = config$segment_lineend,
+          linejoin = config$segment_linejoin,
+          linetype = config$segment_mz_linetype,
+          color = config$segment_mz_color,
+          alpha = config$segment_mz_alpha,
+          na.rm = TRUE
+        )
     }
   }
   p <- p +
@@ -725,7 +725,7 @@ ggpedigree <- ggPedigree
                         focal_fill_column = NULL,
                         status_column = NULL,
                         overlay_column = NULL) {
-#  print("Adding overlay to the plot...")
+  #  print("Adding overlay to the plot...")
   if (config$overlay_include == TRUE & !is.null(overlay_column)) {
     # If overlay_column is specified, use it for alpha aesthetic
     p <- p + ggplot2::geom_point(
@@ -745,7 +745,7 @@ ggpedigree <- ggPedigree
       color = config$status_color_affected,
       na.rm = TRUE
     )
-  }else if (config$focal_fill_include == TRUE && !is.null(focal_fill_column)) {
+  } else if (config$focal_fill_include == TRUE && !is.null(focal_fill_column)) {
     # If focal_fill_column is specified, use it for alpha aesthetic
     p <- p + ggplot2::geom_point(
       ggplot2::aes(alpha = !!rlang::sym(focal_fill_column)),
@@ -916,12 +916,12 @@ ggpedigree <- ggPedigree
         n.breaks = config$focal_fill_n_breaks,
         na.value = config$focal_fill_na_value
       )
-    } else if(config$focal_fill_method %in% c("hue")) {
+    } else if (config$focal_fill_method %in% c("hue")) {
       p <- p + ggplot2::scale_color_hue(
-       h = config$focal_fill_hue_range,
+        h = config$focal_fill_hue_range,
         c = config$focal_fill_chroma,
-       l = config$focal_fill_lightness,
-       direction = config$focal_fill_hue_direction,
+        l = config$focal_fill_lightness,
+        direction = config$focal_fill_hue_direction,
         na.value = config$focal_fill_na_value,
       )
     } else if (config$focal_fill_method %in% c("viridis_c")) {
@@ -940,13 +940,12 @@ ggpedigree <- ggPedigree
         direction = config$focal_fill_viridis_direction,
         na.value = config$focal_fill_na_value
       )
-
-    }else if (config$focal_fill_method %in% c("manual")) {
+    } else if (config$focal_fill_method %in% c("manual")) {
       p <- p + ggplot2::scale_color_manual(
         values = config$focal_fill_color_values,
         labels = config$focal_fill_labels
       )
-   } else  {
+    } else {
       stop("focal_fill_method must be one of 'steps', 'steps2', 'gradient2', or 'gradient'")
     }
     p <- p +
