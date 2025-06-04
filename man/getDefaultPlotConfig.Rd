@@ -96,9 +96,22 @@ getDefaultPlotConfig(
   status_alpha_affected = 1,
   status_alpha_unaffected = 0,
   status_color_palette = c(color_palette_default[1], color_palette_default[2]),
-  status_affected_shape = 4,
+  status_color_affected = "black",
+  status_color_unaffected = color_palette_default[2],
+  status_shape_affected = 4,
   status_legend_title = "Affected",
   status_legend_show = FALSE,
+  overlay_shape = 4,
+  overlay_code_affected = 1,
+  overlay_code_unaffected = 0,
+  overlay_label_affected = "Affected",
+  overlay_label_unaffected = "Unaffected",
+  overlay_alpha_affected = 1,
+  overlay_alpha_unaffected = 0,
+  overlay_color = "black",
+  overlay_include = FALSE,
+  overlay_legend_title = "Overlay",
+  overlay_legend_show = FALSE,
   focal_fill_include = FALSE,
   focal_fill_legend_show = TRUE,
   focal_fill_personID = 1,
@@ -111,7 +124,16 @@ getDefaultPlotConfig(
   focal_fill_component = "additive",
   focal_fill_n_breaks = NULL,
   focal_fill_na_value = "black",
+  focal_fill_shape = 21,
   focal_fill_force_zero = FALSE,
+  focal_fill_hue_range = c(0, 360),
+  focal_fill_chroma = 50,
+  focal_fill_lightness = 50,
+  focal_fill_hue_direction = "horizontal",
+  focal_fill_viridis_option = "D",
+  focal_fill_viridis_begin = 0,
+  focal_fill_viridis_end = 1,
+  focal_fill_viridis_direction = 1,
   ci_include = TRUE,
   ci_ribbon_alpha = 0.3,
   matrix_sparse = FALSE,
@@ -302,15 +324,41 @@ getDefaultPlotConfig(
 
 \item{status_alpha_affected}{Alpha for affected individuals.}
 
-\item{status_alpha_unaffected}{Alpha for unaffected individuals.}
+\item{status_alpha_unaffected}{Alpha for unaffected individuals. Default is 0 (transparent).}
 
 \item{status_color_palette}{A character vector of colors for affected status.}
 
-\item{status_affected_shape}{Shape for affected individuals.}
+\item{status_color_affected}{Color for affected individuals.}
+
+\item{status_color_unaffected}{Color for unaffected individuals.}
+
+\item{status_shape_affected}{Shape for affected individuals.}
 
 \item{status_legend_title}{Title of the status legend.}
 
 \item{status_legend_show}{Whether to show the status legend.}
+
+\item{overlay_shape}{Shape used for overlaying points in the plot. Default is 4 (cross).}
+
+\item{overlay_code_affected}{Code for affected individuals in overlay. Default is 1.}
+
+\item{overlay_code_unaffected}{Code for unaffected individuals in overlay. Default is 0.}
+
+\item{overlay_label_affected}{Label for affected individuals in overlay. Default is "Affected".}
+
+\item{overlay_label_unaffected}{Label for unaffected individuals in overlay. Default is "Unaffected".}
+
+\item{overlay_alpha_affected}{Alpha for affected individuals in overlay. Default is 1.}
+
+\item{overlay_alpha_unaffected}{Alpha for unaffected individuals in overlay. Default is 0.}
+
+\item{overlay_color}{Color for overlay points. Default is "black".}
+
+\item{overlay_include}{Whether to include overlay points in the plot. Default is FALSE.}
+
+\item{overlay_legend_title}{Title of the overlay legend. Default is "Overlay".}
+
+\item{overlay_legend_show}{Whether to show the overlay legend. Default is FALSE.}
 
 \item{focal_fill_include}{Whether to fill focal individuals.}
 
@@ -336,7 +384,25 @@ getDefaultPlotConfig(
 
 \item{focal_fill_na_value}{Color for NA values in focal fill.}
 
+\item{focal_fill_shape}{Shape used for focal fill points.}
+
 \item{focal_fill_force_zero}{Whether to force zero to NA in focal fill.}
+
+\item{focal_fill_hue_range}{Hue range for focal fill colors.}
+
+\item{focal_fill_chroma}{Chroma value for focal fill colors.}
+
+\item{focal_fill_lightness}{Lightness value for focal fill colors.}
+
+\item{focal_fill_hue_direction}{Direction of focal fill gradient.}
+
+\item{focal_fill_viridis_option}{Option for viridis color scale.}
+
+\item{focal_fill_viridis_begin}{Start of viridis color scale.}
+
+\item{focal_fill_viridis_end}{End of viridis color scale.}
+
+\item{focal_fill_viridis_direction}{Direction of viridis color scale (1 for left to right, -1 for right to left).}
 
 \item{ci_include}{Whether to show confidence intervals.}
 

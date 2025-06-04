@@ -17,10 +17,13 @@ ggPedigreeInteractive <- function(ped,
                                   personID = "personID",
                                   momID = "momID",
                                   dadID = "dadID",
+                                  patID = "patID",
+                                  matID = "matID",
                                   twinID = "twinID",
                                   status_column = NULL,
                                   tooltip_columns = NULL,
                                   focal_fill_column = NULL,
+                                  overlay_column = NULL,
                                   config = list(),
                                   debug = FALSE,
                                   return_widget = TRUE,
@@ -74,8 +77,11 @@ ggPedigreeInteractive <- function(ped,
     personID = personID,
     momID = momID,
     dadID = dadID,
+    patID = patID,
+    matID = matID,
     twinID = twinID,
     status_column = config$status_column,
+    overlay_column = overlay_column,
     config = config,
     debug = config$debug,
     focal_fill_column = focal_fill_column,
@@ -125,16 +131,29 @@ ggPedigreeInteractive <- function(ped,
       }
     }
 
-    plt <- plotly::ggplotly(static_plot,
+    plt <- tryCatch(plotly::ggplotly(static_plot,
       tooltip = "text",
       width   = NULL,
       height  = NULL
+    ),
+    error = function(e) {
+      warning("Error in ggplotly conversion: ", e$message);
+      message("Returning static ggplot object instead.")
+      return(static_plot)
+    }
     )
   } else {
-    plt <- plotly::ggplotly(static_plot,
-       tooltip = NULL,
-      width = NULL,
-      height = NULL
+    plt <- tryCatch(
+      plotly::ggplotly(static_plot,
+                       tooltip = NULL,
+        width = NULL,
+        height = NULL
+      ),
+      error = function(e) {
+        warning("Error in ggplotly conversion: ", e$message);
+        message("Returning static ggplot object instead.")
+        return(static_plot)
+      }
     )
   }
   if (config$return_static == TRUE) {

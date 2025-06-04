@@ -30,3 +30,4 @@ A data frame with two columns: `fill` and `personID`.
 This function creates a fill column for ggPedigree plots as a function of
 the focal person relative to everyone else in the tree.
 }
+\keyword{internal}
