@@ -130,7 +130,7 @@ ggPedigreeInteractive <- function(ped,
       }
     }
 
-    plt <- tryCatch( plotly::ggplotly(static_plot,
+    plt <- tryCatch(plotly::ggplotly(static_plot,
       tooltip = "text",
       width   = NULL,
       height  = NULL

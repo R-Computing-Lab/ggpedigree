@@ -1,5 +1,6 @@
 # ggpedigree 0.5.1
 * Fix tooltip appearing in `ggPedigreeInteractive` when tooltip_include is set to FALSE.
+* Making progress on filling by matID, patID
 
 # ggpedigree 0.5.0
 * Added segment_linetype and custom affected labels to the `ggpedigree` function.
