@@ -181,7 +181,7 @@ calculateConnections <- function(ped,
     dplyr::select(
       "personID", "x_pos",
       "y_pos", "spouseID", "couple_hash"
-    ) |>
+    ) |> unique() |>
     dplyr::left_join(connections_skinny,
       by = c("spouseID" = "personID"),
       suffix = c("", "_spouse"),
@@ -198,13 +198,13 @@ calculateConnections <- function(ped,
     unique()
 
   # Combine mom, dad, and spouse coordinates
-  connections <- connections |>
+  connections <- connections |>  unique() |>
     dplyr::left_join(mom_connections,
       by = c("personID", "momID")
-    ) |>
+    ) |> unique() |>
     dplyr::left_join(dad_connections,
       by = c("personID", "dadID")
-    ) |>
+    ) |> unique() |>
     dplyr::left_join(spouse_connections,
       by = c("personID", "spouseID", "couple_hash")
     ) |>
@@ -215,6 +215,7 @@ calculateConnections <- function(ped,
   parent_midpoints <- connections |>
     dplyr::filter(.data$link_as_sibling &
       !is.na(.data$dadID) & !is.na(.data$momID)) |>
+    unique() |>
     dplyr::group_by(.data$parent_hash) |>
     dplyr::summarize(
       x_midparent = mean(c(
@@ -234,7 +235,7 @@ calculateConnections <- function(ped,
     dplyr::filter(
       .data$link_as_spouse,
       !is.na(.data$spouseID)
-    ) |>
+    ) |>   unique() |>
     dplyr::group_by(.data$spouseID, .data$couple_hash) |>
     dplyr::summarize(
       x_mid_spouse = mean(c(
@@ -256,7 +257,7 @@ calculateConnections <- function(ped,
       !is.na(.data$momID) & !is.na(.data$dadID) & # biological parents defined
         !is.na(.data$x_mom) & !is.na(.data$y_mom) & # mom’s coordinates linked
         !is.na(.data$x_dad) & !is.na(.data$y_dad) # dad’s coordinates linked
-    ) |>
+    ) |>   unique() |>
     dplyr::group_by(
       .data$parent_hash,
       .data$x_mom, .data$y_mom,
@@ -276,16 +277,16 @@ calculateConnections <- function(ped,
   connections <- connections |>
     dplyr::left_join(parent_midpoints,
       by = c("parent_hash")
-    ) |>
+    ) |>   unique() |>
     dplyr::left_join(spouse_midpoints,
       by = c("spouseID", "couple_hash")
-    ) |>
+    ) |>   unique() |>
     dplyr::left_join(sibling_midpoints,
       by = c(
         "parent_hash", "x_mom", "y_mom",
         "x_dad", "y_dad"
       )
-    ) |>
+    ) |>   unique() |>
     dplyr::mutate(
       x_mid_sib = dplyr::case_when(
         is.na(.data$x_dad) & is.na(.data$x_mom) ~ NA_real_,

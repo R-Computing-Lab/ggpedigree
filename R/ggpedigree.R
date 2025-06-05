@@ -363,6 +363,8 @@ ggPedigree.core <- function(ped, famID = "famID",
   )
 
   connections <- plot_connections$connections
+
+ # assign("DEBUG_connections", connections, envir = .GlobalEnv)
   # restore names
   if (personID != "personID") {
     # Rename personID to the user-specified name
