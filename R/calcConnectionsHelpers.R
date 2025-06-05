@@ -197,7 +197,7 @@ getRelativeCoordinates <- function(ped,
   # and join with the main pedigree data frame
   tem_connections <- connections |>
     dplyr::filter(!is.na(.data[[relativeIDvar]]))
-  if(only_unique == TRUE) {
+  if (only_unique == TRUE) {
     tem_connections <- unique(tem_connections)
   }
   rel_connections <- tem_connections |>

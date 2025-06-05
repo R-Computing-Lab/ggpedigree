@@ -91,9 +91,9 @@ processExtras <- function(ped, config = list()) {
   ped <- ped |> # flag anyone with extra appearances
     dplyr::mutate(extra = dplyr::case_when(
       .data$coreID %in% idsextras ~ TRUE,
-    #  .data$momID %in% idsextras ~ TRUE,
-   #   .data$dadID %in% idsextras ~ TRUE,
-    #  .data$spouseID %in% idsextras ~ TRUE,
+      #  .data$momID %in% idsextras ~ TRUE,
+      #   .data$dadID %in% idsextras ~ TRUE,
+      #  .data$spouseID %in% idsextras ~ TRUE,
       TRUE ~ .data$extra
     ))
 
