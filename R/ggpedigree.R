@@ -470,9 +470,9 @@ ggPedigree.core <- function(ped, famID = "famID",
       left_join(
         connections |>
           dplyr::select(
-            .data$personID, .data$x_mid_sib, .data$y_mid_sib
+            !!rlang::sym(personID), .data$x_mid_sib, .data$y_mid_sib
           ),
-        by = "personID"
+        by = join_by(personID == !!rlang::sym(personID) )
       )
     p <- p + ggplot2::geom_segment(
       data = plot_connections$twin_coords,

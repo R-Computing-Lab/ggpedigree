@@ -49,8 +49,8 @@ ggPedigree(
     sex_color_include = FALSE,
     sex_color_palette = c("pink", "blue"),
     point_size = 5,
-    outline_multiplier = 1.25,
-    line_width = 3.5,
+    outline_multiplier = 1.15,
+    line_width = 2.5,
     sex_shape_female = "💸",
     sex_shape_male = "🖤",
     segment_spouse_color = viridis_pal()(5)[1],
@@ -142,7 +142,7 @@ ggPedigree(
     status_include = TRUE,
     status_code_affected = TRUE,
     status_code_unaffected = FALSE,
-    status_shape_affected = 8 # star shape
+    status_shape_affected = 8#,#"✨"  # star shape
   )
 )
 
