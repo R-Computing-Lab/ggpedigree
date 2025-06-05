@@ -371,7 +371,7 @@ if (debug == TRUE||config$debug == TRUE) {
 if ( config$debug == TRUE) {
     message("Connections calculated. Number of connections: ", nrow(connections))
 
-  assign("DEBUG_connections", connections, envir = .GlobalEnv)
+  #assign("DEBUG_connections", connections, envir = .GlobalEnv)
 }
   # restore names
   if (personID != "personID") {

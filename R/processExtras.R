@@ -358,7 +358,7 @@ if(config$debug==TRUE) {
   if (config$debug == TRUE) {
     message("Processed ", nrow(full_extra$ped), " individuals in the pedigree.")
     message("Found ", nrow(full_extra$self_coords), " self coordinates.")
-  assign("DEBUG_full_extra", full_extra, envir = .GlobalEnv)
+  #assign("DEBUG_full_extra", full_extra, envir = .GlobalEnv)
   }
   return(full_extra)
 }
