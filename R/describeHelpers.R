@@ -92,7 +92,7 @@ generateSpouseList <- function(ped, personID = "personID", momID = "momID", dadI
   for (i in seq_len(nrow(unique_pairs))) {
     id1 <- unique_pairs[i, 1]
     id2 <- unique_pairs[i, 2]
-    if (!is.na(id1) & !is.na(id2)) {
+    if (!is.na(id1) && !is.na(id2)) {
       sex1 <- ifelse(id1 %in% ped[[personID]], ped$sex[which(ped[[personID]] == id1)], NA)
       sex2 <- ifelse(id2 %in% ped[[personID]], ped$sex[which(ped[[personID]] == id2)], NA)
       spouselist <- rbind(spouselist, data.frame(ID1 = id1, ID2 = id2, sex1 = sex1, sex2 = sex2))

@@ -133,19 +133,19 @@ pltstatic <- ggPedigree(df_repaired,
     tooltip_columns = c("ID", "name")
   )
 )
-# note that the Estermont family is breaking
 
 pltstatic
 ```
 
 
 ```{r}
-df_repaired %>% rename(
+df_repaired_renamed <- df_repaired %>% rename(
   personID = ID
-) -> df_repaired_renamed
+)
 plt <- ggPedigreeInteractive(df_repaired_renamed,
   #  status_column = "affected",
   personID = "personID",
+ # debug=TRUE,
   config = list(
     # status_label_unaffected = 0,
     sex_color_include = FALSE,
@@ -157,11 +157,11 @@ plt <- ggPedigreeInteractive(df_repaired_renamed,
     status_label_affected = 1,
     status_shape_affected = 4,
     ped_width = 14,
-    segment_spouse_color = "red",
-    segment_sibling_color = "blue",
-    segment_parent_color = "green",
-    segment_offspring_color = "purple",
-    segment_mz_color = "orange",
+  #  segment_spouse_color = "red",
+  #  segment_sibling_color = "blue",
+  #  segment_parent_color = "green",
+   # segment_offspring_color = "purple",
+  #  segment_mz_color = "orange",
     # segment_self_angle = 90,
     # segment_self_curvature = -0.2,
     focal_fill_force_zero = TRUE,
@@ -172,8 +172,8 @@ plt <- ggPedigreeInteractive(df_repaired_renamed,
     label_nudge_y = -.25,
     label_include = TRUE,
     label_method = "geom_text",
-    segment_self_color = NA,
-    tooltip_columns = c("personID", "name")
+    segment_self_color = "black",
+    tooltip_columns = c("personID", "name", "focal_fill")
   )
 )
 

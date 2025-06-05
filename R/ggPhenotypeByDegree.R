@@ -232,7 +232,7 @@ ggPhenotypeByDegree.core <- function(df,
       shape = !!grouping_sym
     ))
 
-  if (config$use_only_classic_kin == TRUE | config$group_by_kin == TRUE) {
+  if (config$use_only_classic_kin == TRUE || config$group_by_kin == TRUE) {
     core_plot <- core_plot +
       ggplot2::geom_ribbon(
         ggplot2::aes(
