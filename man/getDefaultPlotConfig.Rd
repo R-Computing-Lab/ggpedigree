@@ -419,8 +419,9 @@ getDefaultPlotConfig(
 
 \item{return_interactive}{Whether to return an interactive plot.}
 
-\item{override_many2many}{Whether to override many-to-many link logic.
-# @param debug Whether to enable debugging mode.}
+\item{debug}{Whether to enable debugging mode.}
+
+\item{override_many2many}{Whether to override many-to-many link logic.}
 
 \item{...}{Additional arguments for future extensibility.}
 }
