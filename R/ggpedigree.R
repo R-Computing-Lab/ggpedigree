@@ -470,8 +470,8 @@ ggPedigree.core <- function(ped, famID = "famID",
       left_join(
         connections |>
           dplyr::select(
-            !!rlang::sym(personID), .data$x_mid_sib, .data$y_mid_sib
-          ),
+            !!rlang::sym(personID), "x_mid_sib", "y_mid_sib"
+          ), # the twin_coords file didn't have its variables restored
         by = join_by(personID == !!rlang::sym(personID) )
       )
     p <- p + ggplot2::geom_segment(
