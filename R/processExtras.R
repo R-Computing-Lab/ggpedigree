@@ -14,7 +14,7 @@ utils::globalVariables(c("coreID")) # no alternative with group_by
 #'
 #' @keywords internal
 
-
+# note that i think that the merging by coreID might not be behaving as expected with selecting spouses and parents correctly
 processExtras <- function(ped, config = list()) {
   # ---- 1. Sanity checks and data integrity validation -----------------------
   if (!inherits(ped, "data.frame")) {
@@ -91,9 +91,9 @@ processExtras <- function(ped, config = list()) {
   ped <- ped |> # flag anyone with extra appearances
     dplyr::mutate(extra = dplyr::case_when(
       .data$coreID %in% idsextras ~ TRUE,
-      .data$momID %in% idsextras ~ TRUE,
-      .data$dadID %in% idsextras ~ TRUE,
-      .data$spouseID %in% idsextras ~ TRUE,
+      #  .data$momID %in% idsextras ~ TRUE,
+      #   .data$dadID %in% idsextras ~ TRUE,
+      #  .data$spouseID %in% idsextras ~ TRUE,
       TRUE ~ .data$extra
     ))
 

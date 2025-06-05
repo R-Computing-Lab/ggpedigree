@@ -195,8 +195,12 @@ getRelativeCoordinates <- function(ped,
                                    only_unique = TRUE) {
   # Filter only rows where the relative ID is not missing
   # and join with the main pedigree data frame
-  rel_connections <- connections |>
-    dplyr::filter(!is.na(.data[[relativeIDvar]])) |>
+  tem_connections <- connections |>
+    dplyr::filter(!is.na(.data[[relativeIDvar]]))
+  if (only_unique == TRUE) {
+    tem_connections <- unique(tem_connections)
+  }
+  rel_connections <- tem_connections |>
     # Join in the relative's coordinates from `ped`, based on relative ID
     dplyr::left_join(
       ped,

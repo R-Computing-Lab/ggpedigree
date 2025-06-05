@@ -363,6 +363,8 @@ ggPedigree.core <- function(ped, famID = "famID",
   )
 
   connections <- plot_connections$connections
+
+  # assign("DEBUG_connections", connections, envir = .GlobalEnv)
   # restore names
   if (personID != "personID") {
     # Rename personID to the user-specified name
@@ -440,7 +442,8 @@ ggPedigree.core <- function(ped, famID = "famID",
   ) +
     # Mid-sibling to parents midpoint
     ggplot2::geom_segment(
-      data = connections,
+      data = connections |>
+        dplyr::filter(.data$link_as_twin == FALSE),
       ggplot2::aes(
         x = .data$x_pos,
         xend = .data$x_mid_sib,
@@ -463,8 +466,29 @@ ggPedigree.core <- function(ped, famID = "famID",
         y_start = .data$y_pos + config$segment_mz_t * ((.data$y_mid_twin - config$gap_hoff) - .data$y_pos),
         x_end   = .data$x_twin + config$segment_mz_t * (.data$x_mid_twin - .data$x_twin),
         y_end   = .data$y_twin + config$segment_mz_t * ((.data$y_mid_twin - config$gap_hoff) - .data$y_twin)
+      ) |>
+      left_join(
+        connections |>
+          dplyr::select(
+            !!rlang::sym(personID), "x_mid_sib", "y_mid_sib"
+          ), # the twin_coords file didn't have its variables restored
+        by = join_by(personID == !!rlang::sym(personID) )
       )
-    p <- p +
+    p <- p + ggplot2::geom_segment(
+      data = plot_connections$twin_coords,
+      ggplot2::aes(
+        x = .data$x_mid_twin,
+        xend = .data$x_mid_sib,
+        y = .data$y_mid_twin - config$gap_hoff,
+        yend = .data$y_mid_sib - config$gap_hoff
+      ),
+      linewidth = config$segment_linewidth,
+      lineend = config$segment_lineend,
+      linejoin = config$segment_linejoin,
+      linetype = config$segment_linetype,
+      color = config$segment_offspring_color,
+      na.rm = TRUE
+    ) +
       ggplot2::geom_segment(
         data = plot_connections$twin_coords,
         ggplot2::aes(

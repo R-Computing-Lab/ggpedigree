@@ -219,6 +219,7 @@ calculateCoordinates <- function(ped,
     ped$extra <- FALSE
     ped_extra$extra <- TRUE
     ped <- rbind(ped, ped_extra)
+    ped_extra <- NULL
   } else {
     ped_extra <- NULL
     ped$extra <- FALSE
