@@ -1,8 +1,8 @@
 ---
-title: "More Complex Pedigree Plots with ggPedigreeInteractive"
+title: "Extended More Complex Pedigree Plots with ggPedigreeInteractive"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{More Complex Pedigree Plots with ggPedigree Interactive}
+  %\VignetteIndexEntry{Extended More Complex Pedigree Plots with ggPedigree Interactive}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
