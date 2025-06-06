@@ -171,3 +171,64 @@ test_that("ggPedigreeInteractive returns a gg object", {
   )
   expect_s3_class(static, "gg")
 })
+
+test_that("ggPedigreeInteractive handles errors", {
+  expect_error(
+    ggPedigreeInteractive("potter", famID = "famID", personID = "personID", return_widget = TRUE)
+  )
+
+
+  library(BGmisc)
+  data("potter") # load example data from BGmisc
+  if ("twinID" %in% names(potter) && "zygosity" %in% names(potter)) {
+    # Remove twinID and zygosity columns for this test
+    potter <- potter %>%
+      select(-twinID, -zygosity)
+  } else if ("twinID" %in% names(potter) && !"zygosity" %in% names(potter)) {
+    # Add twinID and zygosity columns for demonstration purposes
+    potter <- potter %>%
+      select(-twinID)
+  }
+
+  expect_message(
+    ggPedigreeInteractive(potter, famID = "famID", personID = "personID", config = list(
+      label_method = "geom_text_repel"
+    ))
+  )
+
+  expect_message(
+    ggPedigreeInteractive(potter, famID = "famID", personID = "personID", config = list(
+      label_method = "geom_label"
+    ))
+  )
+  if (!"twinID" %in% names(potter) || !"zygosity" %in% names(potter)) {
+    # Add twinID and zygosity columns for demonstration purposes
+    potter <- potter %>%
+      mutate(
+        twinID = case_when(
+          name == "Fred Weasley" ~ 13,
+          name == "George Weasley" ~ 12,
+          TRUE ~ NA_real_
+        ),
+        zygosity = case_when(
+          name == "Fred Weasley" ~ "mz",
+          name == "George Weasley" ~ "mz",
+          TRUE ~ NA_character_
+        )
+      )
+
+    expect_message(
+      ggPedigreeInteractive(potter,
+        famID = "famID",
+        personID = "personID", config = list(
+          label_method = "geom_text_repel"
+        )
+      )
+    )
+    expect_message(
+      ggPedigreeInteractive(potter, famID = "famID", personID = "personID", config = list(
+        label_method = "geom_label"
+      ))
+    )
+  }
+})
