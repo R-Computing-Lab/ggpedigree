@@ -59,7 +59,7 @@ compute_icc1_from_long <- function(df, person_col = "personID", value_col = "val
     ungroup() %>%
     pivot_wider(
       id_cols = .data[[person_col]],
-      names_from = obs,
+      names_from = .data$obs,
       values_from = .data[[value_col]]
     )
 
@@ -79,7 +79,7 @@ compute_avg_m_from_long <- function(df, person_col = "personID", value_col = "va
     filter(!is.na(.data[[value_col]])) %>%
     count(.data[[person_col]]) %>%
     summarise(avg_m = mean(n)) %>%
-    pull(avg_m)
+    pull(.data$avg_m)
 }
 adjust_se_by_icc <- function(se_raw, icc, avg_m) {
   if (is.na(se_raw) || is.na(icc) || is.na(avg_m)) {

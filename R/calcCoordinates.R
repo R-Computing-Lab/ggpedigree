@@ -178,7 +178,7 @@ calculateCoordinates <- function(ped,
 
     # Find which index was already used in tmp
     # tmp is a mapping from person index to nid_vector position
-    used_index <- tmp[which(1:length(ped_ped$id) == nid_val)]
+    used_index <- tmp[which(seq_along(ped_ped$id) == nid_val)]
 
     # Extra indices are the appearances NOT used by match()
     extra_indices <- setdiff(appearance_indices, used_index)

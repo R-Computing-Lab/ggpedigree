@@ -47,7 +47,6 @@ ggPedigree(
   config = list(
     code_male = 1, # Here, 1 = male, 0 = female
     sex_color_include = FALSE,
-   
     point_size = 5,
     outline_multiplier = 1.15,
     line_width = 2.5,
@@ -58,7 +57,7 @@ ggPedigree(
     segment_parent_color = viridis_pal()(5)[3],
     segment_offspring_color = viridis_pal()(5)[4],
     segment_mz_color = viridis_pal()(5)[5],
- #   segment_linetype = 3,
+    #   segment_linetype = 3,
     outline_include = TRUE,
     outline_color = "grey" # viridis_pal()(5)[5]
   )
@@ -143,7 +142,7 @@ ggPedigree(
     status_include = TRUE,
     status_code_affected = TRUE,
     status_code_unaffected = FALSE,
-    status_shape_affected = 8#"✨"  # star shape
+    status_shape_affected = 8 # "✨"  # star shape
   )
 )
 

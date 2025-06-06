@@ -878,7 +878,7 @@ ggpedigree <- ggPedigree
       na.rm = TRUE
     )
   }
-  return(p)
+  p
 }
 
 
@@ -1053,7 +1053,7 @@ ggpedigree <- ggPedigree
         na.rm = TRUE
       )
   }
-  return(p)
+  p
 }
 
 
@@ -1176,5 +1176,5 @@ createFillColumn <- function(ped,
     # If focal_fill_force_zero is TRUE, replace 0 with NA
     fill_df$focal_fill[fill_df$focal_fill == 0] <- NA_real_
   }
-  return(fill_df)
+  fill_df
 }

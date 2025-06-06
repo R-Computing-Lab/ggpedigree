@@ -327,7 +327,10 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     "ggpedigreeinteractive",
     "getdefaultplotconfig"
   )) {
-    stop(paste0("The function ", function_name, " is not supported by getDefaultPlotConfig."))
+    stop(paste0(
+      "The function ", function_name,
+      " is not supported by getDefaultPlotConfig."
+    ))
   }
 
   core_list <- list(
@@ -518,7 +521,10 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     core_list$return_widget <- FALSE
     core_list$return_interactive <- FALSE
   }
-  if (stringr::str_to_lower(function_name) %in% c("ggpedigree", "ggpedigreeinteractive")) {
+  if (stringr::str_to_lower(function_name) %in% c(
+    "ggpedigree",
+    "ggpedigreeinteractive"
+  )) {
     core_list$label_method <- "ggrepel"
     core_list$label_column <- personID
     # core_list$focal_fill_low_color <- core_list$color_palette_low
