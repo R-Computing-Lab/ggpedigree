@@ -209,8 +209,9 @@ processExtras <- function(ped, config = list()) {
         with_ties = FALSE
       ) |>
       dplyr::ungroup() |>
-      dplyr::select("coreID", "personID") |>
-      dplyr::rename(parent_choice = "personID")
+      dplyr::select("coreID", "personID","parent_hash") |>
+      dplyr::rename(parent_choice = "personID",
+                    parent_winning_hash = "parent_hash")
   } else {
     # if there are spouseID == momID or spouseID == dadID, then parent choice needs to be the 2nd closest
     # this version penalizes total distance by summing the distances to mom and dad
@@ -223,9 +224,18 @@ processExtras <- function(ped, config = list()) {
       ) |>
       dplyr::filter(.data$rank == .data$pick_rank) |>
       dplyr::ungroup() |>
-      dplyr::select("coreID", "personID") |>
-      dplyr::rename(parent_choice = "personID")
+      dplyr::select("coreID", "personID","parent_hash") |>
+      dplyr::rename(parent_choice = "personID",
+                    parent_winning_hash = "parent_hash")
+
   }
+
+  if (config$debug == TRUE) {
+    message("Found ", nrow(spouse_winner), " spouse winners.")
+    message("Found ", nrow(parent_winner), " parent winners.")
+  }
+
+
   # ---- 7. row‑wise relink using nearest appearance -------------------------
 
   # lookup table: every appearance of every coreID
@@ -295,11 +305,13 @@ processExtras <- function(ped, config = list()) {
       momID = dplyr::case_when(
         .data$personID == .data$parent_choice ~ .data$momID,
         !is.na(.data$parent_choice) ~ ped$momID[NA_integer_],
+        .data$parent_hash !=.data$parent_winning_hash ~ .data$momID[NA_integer_], # keep momID if parent_hash matches # should help both drop
         TRUE ~ .data$momID
       ),
       dadID = dplyr::case_when(
         .data$personID == .data$parent_choice ~ .data$dadID,
         !is.na(.data$parent_choice) ~ ped$dadID[NA_integer_],
+        .data$parent_hash != .data$parent_winning_hash ~ .data$dadID[NA_integer_], # keep dadID if parent_hash matches
         TRUE ~ .data$dadID
       ),
       spouseID = dplyr::case_when(
@@ -310,6 +322,7 @@ processExtras <- function(ped, config = list()) {
     ) |>
     dplyr::select(
       -"parent_choice", -"spouse_choice",
+      -"parent_winning_hash",
       -dplyr::starts_with("newID")
     )
   ped <- ped |>

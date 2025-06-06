@@ -151,12 +151,35 @@ calculateConnections <- function(ped,
 
   connections <- connections |>
     dplyr::mutate(
-      link_as_mom = TRUE,
-      link_as_dad = TRUE,
-      link_as_spouse = TRUE,
-      link_as_sibling = TRUE,
+     # link_as_mom = case_when(
+    #    .data$extra== FALSE ~ TRUE,
+    ##    !is.na(.data$momID) ~ TRUE,
+   #     TRUE ~ FALSE
+   #   ),
+   #   link_as_dad = case_when(
+   ##     .data$extra== FALSE ~ TRUE,
+    #    !is.na(.data$dadID) ~ TRUE,
+     #   TRUE ~ FALSE
+   #   ),
+      link_as_spouse = case_when(
+        .data$extra== FALSE ~ TRUE,
+        !is.na(.data$spouseID)&!is.na(.data$couple_hash) ~ TRUE,
+        TRUE ~ FALSE
+      ),
+      link_as_sibling = case_when(
+        .data$extra== FALSE ~ TRUE,
+        !is.na(.data$parent_hash) ~ TRUE,
+        TRUE ~ FALSE
+      ),
       link_as_twin = FALSE
     )
+
+  if ("twinID" %in% names(ped) && any(!is.na(ped$twinID))) {
+    connections <- connections |>
+      dplyr::mutate(
+        link_as_twin = !is.na(.data$twinID) & .data$link_as_sibling
+      )
+  }
 
 
 
@@ -318,12 +341,7 @@ calculateConnections <- function(ped,
       y_mid_sib = dplyr::if_else(.data$link_as_sibling, .data$y_mid_sib, NA_real_)
     )
 
-  if ("twinID" %in% names(ped) && any(!is.na(ped$twinID))) {
-    connections <- connections |>
-      dplyr::mutate(
-        link_as_twin = !is.na(.data$twinID) & .data$link_as_sibling
-      )
-  }
+
 
   if (exists("full_extra") && !is.null(full_extra$self_coords)) {
     plot_connections <- list(

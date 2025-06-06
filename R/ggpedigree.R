@@ -416,7 +416,8 @@ ggPedigree.core <- function(ped, famID = "famID",
   # Spouse link between two parents
   p <- p +
     ggplot2::geom_segment(
-      data = connections,
+      data = connections |>
+        dplyr::filter(.data$link_as_spouse == TRUE ),
       ggplot2::aes(
         x = .data$x_spouse,
         xend = .data$x_pos,
@@ -434,7 +435,8 @@ ggPedigree.core <- function(ped, famID = "famID",
   # Parent-child stub (child to mid-sibling point)
 
   p <- p + ggplot2::geom_segment(
-    data = connections,
+    data = connections |>
+      dplyr::filter(.data$link_as_sibling == TRUE),
     ggplot2::aes(
       x = .data$x_mid_sib,
       xend = .data$x_midparent,
@@ -451,7 +453,8 @@ ggPedigree.core <- function(ped, famID = "famID",
     # Mid-sibling to parents midpoint
     ggplot2::geom_segment(
       data = connections |>
-        dplyr::filter(.data$link_as_twin == FALSE),
+        dplyr::filter(.data$link_as_twin == FALSE &
+          .data$link_as_sibling == TRUE),
       ggplot2::aes(
         x = .data$x_pos,
         xend = .data$x_mid_sib,
@@ -534,11 +537,12 @@ ggPedigree.core <- function(ped, famID = "famID",
           na.rm = TRUE
         )
     }
-  }
+  } # line to mid-sibling point for non twins
   p <- p +
     ggplot2::geom_segment(
       data = connections |>
-        dplyr::filter(.data$link_as_twin == FALSE),
+        dplyr::filter(.data$link_as_twin == FALSE&
+                       .data$link_as_sibling == TRUE),
       ggplot2::aes(
         x = .data$x_pos,
         xend = .data$x_pos,

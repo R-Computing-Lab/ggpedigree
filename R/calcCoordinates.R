@@ -219,6 +219,9 @@ calculateCoordinates <- function(ped,
     ped$extra <- FALSE
     ped_extra$extra <- TRUE
     ped <- rbind(ped, ped_extra)
+  #  ped <- ped %>% mutate(
+ #     extra = ifelse(personID %in% (duplicate_nids), TRUE, extra)
+  #  )
     ped_extra <- NULL
   } else {
     ped_extra <- NULL
