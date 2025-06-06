@@ -34,7 +34,9 @@ calculateConnections <- function(ped,
   }
 
   # Default configuration placeholder
-  default_config <- list()
+  default_config <- list(
+    debug=FALSE
+  )
   config <- utils::modifyList(default_config, config)
   # Capture type-safe NAs for each ID column
   na_person <- ped$personID[NA_integer_]

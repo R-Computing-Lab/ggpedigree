@@ -47,7 +47,7 @@ ggPedigree(
   config = list(
     code_male = 1, # Here, 1 = male, 0 = female
     sex_color_include = FALSE,
-    sex_color_palette = c("pink", "blue"),
+   
     point_size = 5,
     outline_multiplier = 1.15,
     line_width = 2.5,
@@ -78,6 +78,7 @@ ggPedigree(
   personID = "personID",
   config = list(
     label_col = "name",
+    sex_color_palette = c("pink", "blue"),
     label_text_angle = -45,
     label_nudge_y = -.25,
     label_nudge_x = 0.45,
@@ -142,7 +143,7 @@ ggPedigree(
     status_include = TRUE,
     status_code_affected = TRUE,
     status_code_unaffected = FALSE,
-    status_shape_affected = 8#,#"✨"  # star shape
+    status_shape_affected = 8#"✨"  # star shape
   )
 )
 
@@ -256,7 +257,7 @@ p +
     axis.title.x     = element_blank(),
     axis.title.y     = element_blank()
   ) + scale_color_viridis(
-    option = "plasma",
+    option = "mako",
     discrete = TRUE,
     labels = c("Female", "Male", "Unknown")
   )

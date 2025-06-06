@@ -64,7 +64,7 @@ processExtras <- function(ped, config = list()) {
         coreID = .data$personID,
         personID = dplyr::if_else(
           .data$extra,
-          .data$personID + .data$newID / 1000, # numeric, unique
+          .data$personID + .data$newID / 10000, # numeric, unique
           .data$personID
         )
       )
@@ -98,7 +98,15 @@ processExtras <- function(ped, config = list()) {
     ))
 
   extras <- dplyr::filter(ped, .data$extra)
-
+if(config$debug==TRUE) {
+    message("Found ", nrow(extras), " extra appearances in the pedigree.")
+   message("Unique core IDs: ", nrow(unique(extras$coreID)))
+    message("Core IDs of extras: ", paste(unique(extras$coreID), collapse = ", "))
+  if("name" %in% names(extras)) {
+  message("Names of extras: ", paste(unique(extras$name), collapse = ", "))
+  }
+  message("Total blue count: ", sum(extras$total_blue, na.rm = TRUE))
+  }
 
   # ---- 5. Attach relative coordinates & compute distances -------------------
   # Mother's coordinates
@@ -307,7 +315,8 @@ processExtras <- function(ped, config = list()) {
   ped <- ped |>
     relink("spouseID") |>
     relink("momID") |>
-    relink("dadID")
+    relink("dadID") |>
+    unique()
 
   # rehash
   ped <- ped |>
@@ -346,6 +355,10 @@ processExtras <- function(ped, config = list()) {
     ped = ped,
     self_coords = self_coords
   )
-
+  if (config$debug == TRUE) {
+    message("Processed ", nrow(full_extra$ped), " individuals in the pedigree.")
+    message("Found ", nrow(full_extra$self_coords), " self coordinates.")
+  #assign("DEBUG_full_extra", full_extra, envir = .GlobalEnv)
+  }
   return(full_extra)
 }

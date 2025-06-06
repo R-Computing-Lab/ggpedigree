@@ -49,8 +49,8 @@ p_add <- ggRelatednessMatrix(
     scale_midpoint = 0.55,
     cluster = TRUE,
     title = "Additive Genetic Relatedness",
-    include_upper_triangle = F,
-    include_lower_triangle = T
+    include_upper_triangle = FALSE,
+    include_lower_triangle = TRUE
   )
 )
 

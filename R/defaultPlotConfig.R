@@ -135,8 +135,6 @@
 #' @param focal_fill_viridis_begin Start of viridis color scale.
 #' @param focal_fill_viridis_end End of viridis color scale.
 #' @param focal_fill_viridis_direction Direction of viridis color scale (1 for left to right, -1 for right to left).
-#'
-#'
 #' @param ci_include Whether to show confidence intervals.
 #' @param ci_ribbon_alpha Alpha level for CI ribbons.
 #' @param matrix_sparse Whether matrix input is sparse.
@@ -145,6 +143,7 @@
 #' @param return_widget Whether to return a widget object.
 #' @param return_interactive Whether to return an interactive plot.
 #' @param override_many2many Whether to override many-to-many link logic.
+#' @param debug Whether to enable debugging mode.
 #' @param ... Additional arguments for future extensibility.
 #' @return A named list of default plotting and layout parameters.
 #' @export
@@ -308,6 +307,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  return_widget = FALSE,
                                  return_interactive = FALSE,
                                  # ---- Debugging Options ----
+                                 debug = FALSE,
                                  override_many2many = FALSE,
                                  ...) {
   # Ensure the color palette is a character vector
@@ -503,7 +503,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     return_widget = return_widget,
     return_interactive = return_interactive,
     # ---- Debugging Options ----
-    override_many2many = override_many2many
+    override_many2many = override_many2many,
+    debug = debug
   )
 
   if (stringr::str_to_lower(function_name) %in% c("ggrelatednessmatrix")) {

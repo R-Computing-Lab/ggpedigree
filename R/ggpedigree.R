@@ -177,7 +177,12 @@ ggPedigree.core <- function(ped, famID = "famID",
   if (!inherits(ped, "data.frame")) {
     stop("ped should be a data.frame or inherit to a data.frame")
   }
-
+if (debug == TRUE||config$debug == TRUE) {
+    message("Debug mode is ON. Debugging information will be printed.")
+  config$debug <- TRUE
+  } else {
+    config$debug <- FALSE
+  }
   # -----
   # STEP 2: Pedigree Data Transformation
   # -----
@@ -363,8 +368,11 @@ ggPedigree.core <- function(ped, famID = "famID",
   )
 
   connections <- plot_connections$connections
+if ( config$debug == TRUE) {
+    message("Connections calculated. Number of connections: ", nrow(connections))
 
-  # assign("DEBUG_connections", connections, envir = .GlobalEnv)
+  #assign("DEBUG_connections", connections, envir = .GlobalEnv)
+}
   # restore names
   if (personID != "personID") {
     # Rename personID to the user-specified name
@@ -636,7 +644,7 @@ ggPedigree.core <- function(ped, famID = "famID",
     )
   }
 
-  if (debug == TRUE) {
+  if (config$debug == TRUE) {
     return(list(
       plot = p,
       data = ds,
@@ -750,7 +758,7 @@ ggpedigree <- ggPedigree
                         status_column = NULL,
                         overlay_column = NULL) {
   #  print("Adding overlay to the plot...")
-  if (config$overlay_include == TRUE & !is.null(overlay_column)) {
+  if (config$overlay_include == TRUE && !is.null(overlay_column)) {
     # If overlay_column is specified, use it for alpha aesthetic
     p <- p + ggplot2::geom_point(
       ggplot2::aes(alpha = !!rlang::sym(overlay_column)),

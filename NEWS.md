@@ -1,9 +1,9 @@
-# ggpedigree 0.6
+# ggpedigree 0.6.0
 * Implemented fill by matID, patID using several scales, such as hue, viridis, and others.
 * Added support for emojis in the `ggpedigree` function.
 * Solved the bug that created excessive branches
 * Made the twin sibling segments smarter
-
+* Adding more debug support
 
 # ggpedigree 0.5.1
 * Fix tooltip appearing in `ggPedigreeInteractive` when tooltip_include is set to FALSE.

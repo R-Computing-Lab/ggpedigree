@@ -141,6 +141,7 @@ getDefaultPlotConfig(
   return_static = TRUE,
   return_widget = FALSE,
   return_interactive = FALSE,
+  debug = FALSE,
   override_many2many = FALSE,
   ...
 )
@@ -417,6 +418,8 @@ getDefaultPlotConfig(
 \item{return_widget}{Whether to return a widget object.}
 
 \item{return_interactive}{Whether to return an interactive plot.}
+
+\item{debug}{Whether to enable debugging mode.}
 
 \item{override_many2many}{Whether to override many-to-many link logic.}
 
