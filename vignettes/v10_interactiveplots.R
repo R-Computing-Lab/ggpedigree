@@ -41,3 +41,4 @@ if (interactive()) {
 } else {
   plotly::partial_bundle(plt, local = TRUE)
 }
+

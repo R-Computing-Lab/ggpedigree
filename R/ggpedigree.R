@@ -177,9 +177,9 @@ ggPedigree.core <- function(ped, famID = "famID",
   if (!inherits(ped, "data.frame")) {
     stop("ped should be a data.frame or inherit to a data.frame")
   }
-if (debug == TRUE||config$debug == TRUE) {
+  if (debug == TRUE || config$debug == TRUE) {
     message("Debug mode is ON. Debugging information will be printed.")
-  config$debug <- TRUE
+    config$debug <- TRUE
   } else {
     config$debug <- FALSE
   }
@@ -368,11 +368,11 @@ if (debug == TRUE||config$debug == TRUE) {
   )
 
   connections <- plot_connections$connections
-if ( config$debug == TRUE) {
+  if (config$debug == TRUE) {
     message("Connections calculated. Number of connections: ", nrow(connections))
 
-  #assign("DEBUG_connections", connections, envir = .GlobalEnv)
-}
+    # assign("DEBUG_connections", connections, envir = .GlobalEnv)
+  }
   # restore names
   if (personID != "personID") {
     # Rename personID to the user-specified name
@@ -480,7 +480,7 @@ if ( config$debug == TRUE) {
           dplyr::select(
             !!rlang::sym(personID), "x_mid_sib", "y_mid_sib"
           ), # the twin_coords file didn't have its variables restored
-        by = join_by(personID == !!rlang::sym(personID) )
+        by = join_by(personID == !!rlang::sym(personID))
       )
     p <- p + ggplot2::geom_segment(
       data = plot_connections$twin_coords,
