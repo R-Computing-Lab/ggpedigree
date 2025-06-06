@@ -100,7 +100,7 @@ df_repaired <- checkParentIDs(df_got,
 
 Here is the classic pedigree plot of the Targaryen family, with Jon Snow and Daenerys Targaryen highlighted in black The `plotPedigree()` function from {BGmisc} provides a quick way to visualize the pedigree structure. It serves as a wrapper function from {kinship2} and is useful for quickly checking the pedigree structure.
 
-```{r, message=FALSE, warning=FALSE}
+```{r fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
 plotPedigree(df_repaired,
   affected = df_repaired$affected,
   verbose = FALSE
@@ -113,11 +113,12 @@ plotPedigree(df_repaired,
 Here is the same pedigree, but using `ggPedigree()` from {ggpedigree}. This function provides a more flexible and customizable way to visualize pedigrees, allowing for easy integration with other `ggplot2` functions.
 
 
-```{r message=TRUE}
+```{r message=TRUE,fig.height=10, fig.width=10}
 pltstatic <- ggPedigree(df_repaired,
   status_column = "affected",
   personID = "ID",
   config = list(
+    debug=F,
     return_static = TRUE,
     status_label_unaffected = 0,
     sex_color_include = TRUE,
@@ -125,10 +126,16 @@ pltstatic <- ggPedigree(df_repaired,
     point_size = 1,
     status_label_affected = 1,
     status_affected_shape = 4,
-    ped_width = 14,
+    ped_width = 11,
+    generation_width = 0.5,
+    generation_height = 0.5,
     tooltip_include = TRUE,
     label_nudge_y = -.25,
     label_include = TRUE,
+  #  segment_spouse_color = viridis_pal()(5)[1],
+  #  segment_sibling_color = viridis_pal()(5)[2],
+   # segment_parent_color = viridis_pal()(5)[3],
+    segment_offspring_color = "red",
     label_method = "geom_text",
     #  segment_self_color = "purple",
     #   label_segment_color = "gray",

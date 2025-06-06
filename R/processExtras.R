@@ -230,6 +230,7 @@ processExtras <- function(ped, config = list()) {
 
   }
 
+
   if (config$debug == TRUE) {
     message("Found ", nrow(spouse_winner), " spouse winners.")
     message("Found ", nrow(parent_winner), " parent winners.")
@@ -245,7 +246,7 @@ processExtras <- function(ped, config = list()) {
   # pre-split version for faster lookup
   dup_xy_list <- split(dup_xy, dup_xy$coreID)
 
-  closest_dup <- function(target_core, x0, y0) {
+  closest_dup <- function(target_core, x0, y0, debug=FALSE, col="printcol") {
     cand <- dup_xy_list[[as.character(target_core)]]
     if (nrow(cand) == 0L) {
       return(dup_xy$coreID[NA_integer_]) # return correct NA type
@@ -266,8 +267,82 @@ processExtras <- function(ped, config = list()) {
     if (length(ord) < pick) {
       pick <- 1L
     }
+    # Debug logging for suspicious cases
+    if (debug && length(d) > 1) {
 
-    cand$personID[ord[pick]]
+      # Check for potential problematic scenarios
+      min_dist <- min(d)
+      max_dist <- max(d)
+      dist_spread <- max_dist - min_dist
+
+      # Flag cases that might be problematic
+      suspicious <- FALSE
+      warning_msg <- col
+
+      # Case 1: Very large distance spread (person appears very far apart)
+      if (dist_spread > 15.0) {
+        suspicious <- TRUE
+        warning_msg <- paste(warning_msg, "Large distance spread:", round(dist_spread, 2))
+      }
+
+      # Case 2: Very close distances (potential tie-breaking issues)
+      if (length(d) > 1 && (d[ord[2]] - d[ord[1]]) < 0.5) {
+        suspicious <- TRUE
+        warning_msg <- paste(warning_msg, "Near tie in distances")
+      }
+
+      # Case 3: Picking a distant choice when closer one exists
+      if (pick <= length(ord) && d[ord[pick]] > 2.0 && min_dist < 1.0) {
+        suspicious <- TRUE
+        warning_msg <- paste(warning_msg, "Picking distant when close available")
+      }
+
+      # Case 4: Multiple candidates with total_blue causing 2nd choice
+      if (any(cand$total_blue, na.rm = TRUE) && pick == 2L) {
+        suspicious <- TRUE
+        warning_msg <- paste(warning_msg, "Using 2nd choice due to total_blue")
+      }
+
+      # Log suspicious cases
+      if (suspicious) {
+        cat("\n=== SUSPICIOUS CASE ===\n")
+        cat("Target:", target_core, "| Source pos:", x0, y0, "\n")
+        cat("Warning:", warning_msg, "\n")
+        cat("Number of candidates:", nrow(cand), "\n")
+        cat("Total blue present:", any(cand$total_blue, na.rm = TRUE), "\n")
+        cat("Pick strategy: position", pick, "\n")
+        # Show all candidates with their distances
+        chosen_candidate_idx <- ord[pick]  # This is the actual chosen candidate
+
+        # Show all candidates with their distances
+        for (i in 1:nrow(cand)) {
+          status <- ""
+          if (i == chosen_candidate_idx) status <- " <<< CHOSEN"
+          if (cand$total_blue[i]) status <- paste(status, "[BLUE]")
+          # Find what rank this candidate has (1=closest, 2=second closest, etc.)
+          rank_position <- which(ord == i)
+
+          cat(sprintf("  Candidate %d: pos(%.2f, %.2f) dist=%.3f rank=%d%s\n",
+                      i, cand$x_pos[i], cand$y_pos[i], d[i],
+                      rank_position, status))
+        }
+
+        # Show final choice details
+        chosen_idx <- ord[pick]
+        cat("FINAL CHOICE: Candidate", chosen_idx,
+            "at pos(", cand$x_pos[chosen_idx], ",", cand$y_pos[chosen_idx], ")",
+            "with distance", round(d[chosen_idx], 3), "\n")
+        cat("========================\n\n")
+      }
+
+      # Also log all multi-candidate cases (even non-suspicious) if you want full detail
+      # Uncomment the next block if you want to see ALL cases
+      # else if (length(d) > 1) {
+      #   cat("Multi-candidate case:", target_core, "picked pos", pick,
+      #       "distance", round(d[ord[pick]], 3), "\n")
+      # }
+    }
+    return(cand$personID[ord[pick]])
 
     #  cand$personID[
     #    which.min(
@@ -288,7 +363,7 @@ processExtras <- function(ped, config = list()) {
           if (is.na(tgt)) {
             tgt[NA_integer_] # return correct NA type
           } else {
-            closest_dup(tgt, .data$x_pos, .data$y_pos)
+            closest_dup(tgt, .data$x_pos, .data$y_pos,debug= config$debug,col=col)
           }
         }
       ) |>

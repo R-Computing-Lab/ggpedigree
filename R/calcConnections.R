@@ -162,11 +162,13 @@ calculateConnections <- function(ped,
      #   TRUE ~ FALSE
    #   ),
       link_as_spouse = case_when(
+        is.na(.data$spouseID) ~ FALSE,
         .data$extra== FALSE ~ TRUE,
         !is.na(.data$spouseID)&!is.na(.data$couple_hash) ~ TRUE,
         TRUE ~ FALSE
       ),
       link_as_sibling = case_when(
+        is.na(.data$momID) & is.na(.data$dadID) ~ FALSE,
         .data$extra== FALSE ~ TRUE,
         !is.na(.data$parent_hash) ~ TRUE,
         TRUE ~ FALSE
