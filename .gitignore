@@ -13,3 +13,4 @@ data-raw/ARS_dryadcopy.xlsx
 data-raw/Pedigree_dryadcopy.xlsx
 data-raw/LRS_fordryad.xlsx
 data-raw/cat.svg
+tests/testthat/Rplots.pdf
