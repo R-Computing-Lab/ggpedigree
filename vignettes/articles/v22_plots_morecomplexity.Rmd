@@ -96,7 +96,7 @@ df_repaired <- checkParentIDs(df_got,
 ## Visualize the Pedigree with `plotPedigree()`
 
 
-Here is the classic pedigree plot of the Targaryen family, with Jon Snow and Daenerys Targaryen highlighted in black The `plotPedigree()` function from {BGmisc} provides a quick way to visualize the pedigree structure. It serves as a wrapper function from {kinship2} and is useful for quickly checking the pedigree structure.
+Here is the classic pedigree plot of the Targaryen family, with Jon Snow and Daenerys Targaryen highlighted in black. The `plotPedigree()` function provides a quick way to visualize the pedigree structure. It serves as a wrapper function from {kinship2} and is useful for quickly checking the pedigree structure.
 
 ```{r, message=FALSE, warning=FALSE}
 plotPedigree(df_repaired,
