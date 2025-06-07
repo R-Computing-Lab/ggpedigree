@@ -213,8 +213,8 @@ library(patchwork) # for combining plots
 m1 + m2 + plot_layout(ncol = 2) +
   plot_annotation(title = "Mitochondrial Relatives of Harry Potter and Ginny Weasley")
 
-## ----focal_fill_ginny---------------------------------------------------------
-test <- ggPedigree(potter,
+## ----focal_fill_matID---------------------------------------------------------
+ggPedigree(potter,
   famID = "famID",
   personID = "personID",
   config = list(
@@ -235,7 +235,7 @@ test <- ggPedigree(potter,
   # config  = list(segment_mz_color = NA) # color for monozygotic twins
 ) + ggplot2::guides(shape = "none")
 
-test
+
 
 ## ----facet_wrap---------------------------------------------------------------
 p +
