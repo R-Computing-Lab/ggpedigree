@@ -110,7 +110,7 @@ plotPedigree(df_repaired,
 
 ## Visualize the Pedigree with `ggPedigree()`
 
-Here is the same pedigree, but using `ggPedigree()` from {ggpedigree}. This function provides a more flexible and customizable way to visualize pedigrees, allowing for easy integration with other `ggplot2` functions.
+Here is the same pedigree, but using `ggPedigree()` from {ggpedigree}. This function provides a more flexible and customizable way to visualize pedigrees, allowing for easy integration with other `ggplot2` functions. However, it is a tad more likely to produce excessive segments. This dataset is helpful for identifying boundary conditions and testing the limits of the plotting functions.
 
 
 ```{r message=TRUE,fig.height=10, fig.width=10}
@@ -126,16 +126,18 @@ pltstatic <- ggPedigree(df_repaired,
     point_size = 1,
     status_label_affected = 1,
     status_affected_shape = 4,
+  #  ped_align = FALSE,
+  #  ped_packed = FALSE,
     ped_width = 11,
-    generation_width = 0.5,
-    generation_height = 0.5,
+    generation_width = 1,
+    generation_height = 1,
     tooltip_include = TRUE,
     label_nudge_y = -.25,
     label_include = TRUE,
   #  segment_spouse_color = viridis_pal()(5)[1],
   #  segment_sibling_color = viridis_pal()(5)[2],
    # segment_parent_color = viridis_pal()(5)[3],
-    segment_offspring_color = "red",
+  #  segment_offspring_color = "red",
     label_method = "geom_text",
     #  segment_self_color = "purple",
     #   label_segment_color = "gray",
@@ -146,6 +148,9 @@ pltstatic <- ggPedigree(df_repaired,
 pltstatic
 ```
 
+## Interactive Plot with `ggPedigreeInteractive()`
+
+The `ggPedigreeInteractive()` function provides an interactive version of the pedigree plot, allowing users to explore the pedigree structure dynamically. This is particularly useful for large and complex pedigrees, as it enables zooming, panning, and tooltips for additional information. Here we highlight how related everyone is to Aegon the Conqueror.  Jon Snow, and Daenerys Targaryen are also annotated in the plot. Anyone who is not related to Aegon is colored in black, while those who are related are colored in shades of red. The focal fill color is used to highlight the most closely related individuals.
 
 ```{r}
 df_repaired_renamed <- df_repaired %>% rename(

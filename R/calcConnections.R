@@ -163,15 +163,15 @@ calculateConnections <- function(ped,
    #   ),
       link_as_spouse = case_when(
         is.na(.data$spouseID) ~ FALSE,
-        .data$extra== FALSE ~ TRUE,
-        !is.na(.data$spouseID)&!is.na(.data$couple_hash) ~ TRUE,
-        TRUE ~ FALSE
+       # .data$extra== FALSE ~ TRUE,
+        is.na(.data$couple_hash) ~ FALSE,
+        TRUE ~ TRUE
       ),
       link_as_sibling = case_when(
         is.na(.data$momID) & is.na(.data$dadID) ~ FALSE,
-        .data$extra== FALSE ~ TRUE,
-        !is.na(.data$parent_hash) ~ TRUE,
-        TRUE ~ FALSE
+       # .data$extra== FALSE ~ TRUE,
+        is.na(.data$parent_hash) ~ FALSE,
+        TRUE ~ TRUE
       ),
       link_as_twin = FALSE
     )
@@ -250,12 +250,12 @@ calculateConnections <- function(ped,
     dplyr::group_by(.data$parent_hash) |>
     dplyr::summarize(
       x_midparent = mean(c(
-        dplyr::first(.data$x_dad),
-        dplyr::first(.data$x_mom)
+        dplyr::first(.data$x_dad,na_rm = TRUE),
+        dplyr::first(.data$x_mom,na_rm = TRUE)
       )),
       y_midparent = mean(c(
-        dplyr::first(.data$y_dad),
-        dplyr::first(.data$y_mom)
+        dplyr::first(.data$y_dad,na_rm = TRUE),
+        dplyr::first(.data$y_mom,na_rm = TRUE)
       )),
       .groups = "drop"
     ) |>
@@ -271,12 +271,12 @@ calculateConnections <- function(ped,
     dplyr::group_by(.data$spouseID, .data$couple_hash) |>
     dplyr::summarize(
       x_mid_spouse = mean(c(
-        dplyr::first(.data$x_pos),
-        dplyr::first(.data$x_spouse)
+        dplyr::first(.data$x_pos,na_rm = TRUE),
+        dplyr::first(.data$x_spouse,na_rm = TRUE)
       )),
       y_mid_spouse = mean(c(
-        dplyr::first(.data$y_pos),
-        dplyr::first(.data$y_spouse)
+        dplyr::first(.data$y_pos,na_rm = TRUE),
+        dplyr::first(.data$y_spouse,na_rm = TRUE)
       )),
       .groups = "drop"
     ) |>
@@ -298,7 +298,7 @@ calculateConnections <- function(ped,
     ) |>
     dplyr::summarize(
       x_mid_sib = mean(.data$x_pos),
-      y_mid_sib = dplyr::first(.data$y_pos),
+      y_mid_sib = dplyr::first(.data$y_pos,na_rm = TRUE),
       .groups = "drop"
     ) |>
     unique()

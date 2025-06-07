@@ -95,7 +95,7 @@ p_add
 
 ## Plot Interactively
 
-Here we plot the mitochondrial relatedness matrix with a custom color palette and interactive features.
+Here we plot the mitochondrial relatedness matrix with a custom color palette and potentially with interactive features.
 
 ```{r mit_mat}
 p_mit <- ggRelatednessMatrix(

@@ -541,7 +541,7 @@ ggPedigree.core <- function(ped, famID = "famID",
   p <- p +
     ggplot2::geom_segment(
       data = connections |>
-        dplyr::filter(.data$link_as_twin == FALSE&
+        dplyr::filter(.data$link_as_twin == FALSE &
                        .data$link_as_sibling == TRUE),
       ggplot2::aes(
         x = .data$x_pos,

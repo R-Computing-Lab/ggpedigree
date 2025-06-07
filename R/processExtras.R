@@ -380,13 +380,13 @@ processExtras <- function(ped, config = list()) {
       momID = dplyr::case_when(
         .data$personID == .data$parent_choice ~ .data$momID,
         !is.na(.data$parent_choice) ~ ped$momID[NA_integer_],
-        .data$parent_hash !=.data$parent_winning_hash ~ .data$momID[NA_integer_], # keep momID if parent_hash matches # should help both drop
+       # .data$parent_hash !=.data$parent_winning_hash ~ .data$momID[NA_integer_], # keep momID if parent_hash matches # should help both drop
         TRUE ~ .data$momID
       ),
       dadID = dplyr::case_when(
         .data$personID == .data$parent_choice ~ .data$dadID,
         !is.na(.data$parent_choice) ~ ped$dadID[NA_integer_],
-        .data$parent_hash != .data$parent_winning_hash ~ .data$dadID[NA_integer_], # keep dadID if parent_hash matches
+      #  .data$parent_hash != .data$parent_winning_hash ~ .data$dadID[NA_integer_], # keep dadID if parent_hash matches
         TRUE ~ .data$dadID
       ),
       spouseID = dplyr::case_when(
@@ -397,7 +397,7 @@ processExtras <- function(ped, config = list()) {
     ) |>
     dplyr::select(
       -"parent_choice", -"spouse_choice",
-      -"parent_winning_hash",
+     # -"parent_winning_hash",
       -dplyr::starts_with("newID")
     )
   ped <- ped |>
