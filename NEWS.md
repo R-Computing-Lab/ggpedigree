@@ -1,3 +1,5 @@
+# ggpedigree 0.6.1
+* Transferred `plotPedigree()` function from BGmisc to ggpedigree.
 # ggpedigree 0.6.0
 * Implemented fill by matID, patID using several scales, such as hue, viridis, and others.
 * Added support for emojis in the `ggpedigree` function.
