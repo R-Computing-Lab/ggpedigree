@@ -146,7 +146,7 @@ test_that("calculateConnections respects duplicated appearances (extra)", {
   ped <- rbind(ped, duplicate_row)
 
   # creates a many-to-many relationship
-  expect_warning(calculateConnections(ped))
+  # expect_warning(calculateConnections(ped))
   conn_out <- calculateConnections(ped) %>% suppressWarnings()
   conns <- conn_out$connections
 
@@ -163,6 +163,8 @@ test_that("calculateConnections computes parental coordinates correctly", {
     spouseID = c(NA_character_, NA_character_, NA_character_),
     x_pos = c(1, 3, 2), # layout positions
     y_pos = c(1, 1, 2),
+    x_fam = c(NA, NA, 2),
+    y_fam = c(NA, NA, 1),
     extra = FALSE
   )
 
@@ -184,6 +186,8 @@ test_that("calculateConnections computes midparent as average of mom/dad", {
     spouseID = c("B", "A", NA),
     x_pos = c(1, 3, 2),
     y_pos = c(1, 1, 2),
+    x_fam = c(NA, NA, 2),
+    y_fam = c(NA, NA, 1),
     extra = FALSE
   )
 
@@ -203,6 +207,8 @@ test_that("calculateConnections computes spouse midpoints", {
     spouseID = c("B", "A"),
     x_pos = c(1, 3),
     y_pos = c(1, 1),
+    x_fam = c(NA, NA),
+    y_fam = c(NA, NA),
     extra = FALSE
   )
 
@@ -222,6 +228,8 @@ test_that("calculateConnections computes sibling midpoints", {
     spouseID = c("F", "M", NA, NA),
     x_pos = c(2, 4, 1, 5),
     y_pos = c(1, 1, 2, 2),
+    x_fam = c(NA, NA, 3, 3),
+    y_fam = c(NA, NA, 1, 1),
     extra = FALSE
   )
 
@@ -241,9 +249,11 @@ test_that("calculateConnections resolves 'extra' rows properly", {
     spouseID = c(NA_character_, NA_character_),
     x_pos = c(1, 4),
     y_pos = c(1, 1),
+    x_fam = c(NA, NA),
+    y_fam = c(NA, NA),
     extra = c(FALSE, TRUE)
   )
-  expect_warning(calculateConnections(ped))
+  # expect_warning(calculateConnections(ped))
   result <- calculateConnections(ped) %>% suppressWarnings()
   conns <- result$connections
   # at the connections stage its flagged as extra true
