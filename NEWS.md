@@ -1,5 +1,5 @@
 # ggpedigree 0.7.0
-* Changed the default behavior of `ggedigree` to use x_fam and y_fam for positioning families, rather than x_midparent and y_midparent. This change allows for better visualization of pedigrees with multiple families.
+* Changed the default behavior of `ggPedigree` to use x_fam and y_fam for positioning families, rather than x_midparent and y_midparent. This change allows for better visualization of pedigrees with multiple families.
 
 # ggpedigree 0.6.1
 * Transferred `plotPedigree()` function from BGmisc to ggpedigree.
