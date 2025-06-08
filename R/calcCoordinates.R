@@ -241,8 +241,8 @@ calculateCoordinates <- function(ped,
   }
   ped$x_fam <- base::rowMeans(cbind(ped$parent_left, ped$parent_right), na.rm = FALSE)
   ped$x_fam[ped$parent_fam == 0] <- NA
-  ped[[momID]][ped$parent_fam == 0] <- NA
-  ped[[dadID]][ped$parent_fam == 0] <- NA
+  ped[ped$parent_fam == 0, momID] <- NA
+  ped[ped$parent_fam == 0, dadID] <- NA
   ped$y_fam[ped$parent_fam == 0] <- NA
   ped$parent_left <- NULL
   ped$parent_right <- NULL
