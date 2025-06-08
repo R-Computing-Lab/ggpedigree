@@ -148,7 +148,7 @@ test_that("ggPedigree handles non-standard names", {
     famID = "family_id",
     personID = "individual_id",
     momID = "mother_id",
-   dadID = "father_id",
+    dadID = "father_id",
     spouseID = "spouse_id"
   )
   expect_s3_class(p, "gg")

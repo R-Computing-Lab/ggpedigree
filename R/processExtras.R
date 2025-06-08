@@ -290,7 +290,7 @@ processExtras <- function(ped, config = list()) {
 
   ped <- ped |>
     dplyr::left_join(spouse_winner, by = "coreID") |>
- #   dplyr::left_join(parent_winner, by = "coreID") |>
+    #   dplyr::left_join(parent_winner, by = "coreID") |>
     dplyr::mutate(
       # momID = dplyr::case_when(
       #   .data$personID == .data$parent_choice ~ .data$momID,
@@ -309,24 +309,24 @@ processExtras <- function(ped, config = list()) {
       )
     ) |>
     dplyr::select(
-     # -"parent_choice",
+      # -"parent_choice",
       -"spouse_choice",
       -dplyr::starts_with("newID")
     )
   ped <- ped |>
     relink("spouseID") |>
- #   relink("momID") |>
-  #  relink("dadID") |>
+    #   relink("momID") |>
+    #  relink("dadID") |>
     unique()
 
   # rehash
   ped <- ped |>
     dplyr::mutate(
- #     parent_hash = makeSymmetricKey(.data$momID, .data$dadID),
+      #     parent_hash = makeSymmetricKey(.data$momID, .data$dadID),
       couple_hash = makeSymmetricKey(.data$personID, .data$spouseID)
     ) |>
     dplyr::mutate(
-    #  parent_hash = gsub("NA.NA", NA_character_, .data$parent_hash),
+      #  parent_hash = gsub("NA.NA", NA_character_, .data$parent_hash),
       couple_hash = gsub("NA.NA", NA_character_, .data$couple_hash)
     )
   # ---- 8. remove duplicates and return ------------------------------------

@@ -203,7 +203,7 @@ ggPedigree.core <- function(ped, famID = "famID",
       ds_ped <- ped
     }
   }
-  if (config$focal_fill_include == TRUE){
+  if (config$focal_fill_include == TRUE) {
     if (!patID %in% names(ds_ped)) {
       ds_ped <- BGmisc::ped2paternal(ds_ped,
         patID = patID,

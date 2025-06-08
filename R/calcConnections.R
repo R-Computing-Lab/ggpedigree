@@ -84,7 +84,8 @@ calculateConnections <- function(ped,
   # create a unique parent_hash for each individual
   # this will be used to identify siblings
   if (!all("parent_hash" %in% names(ped))) {
-    ped <- ped |> unique() |>
+    ped <- ped |>
+      unique() |>
       dplyr::mutate(
         parent_hash = makeSymmetricKey(.data$momID, .data$dadID),
         couple_hash = makeSymmetricKey(.data$personID, .data$spouseID)
@@ -113,7 +114,7 @@ calculateConnections <- function(ped,
       "personID",
       "x_pos", "y_pos",
       "dadID", "momID",
-      "x_fam","y_fam",
+      "x_fam", "y_fam",
       "parent_hash", "couple_hash",
       "spouseID",
       "famID",
@@ -127,7 +128,7 @@ calculateConnections <- function(ped,
       "personID",
       "x_pos", "y_pos",
       "dadID", "momID",
-      "x_fam","y_fam",
+      "x_fam", "y_fam",
       "parent_hash", "couple_hash",
       "spouseID",
       "famID",
@@ -140,7 +141,7 @@ calculateConnections <- function(ped,
       "personID",
       "x_pos", "y_pos",
       "dadID", "momID",
-      "x_fam","y_fam",
+      "x_fam", "y_fam",
       "parent_hash", "couple_hash",
       "spouseID",
       "famID",
@@ -160,11 +161,11 @@ calculateConnections <- function(ped,
     )
 
   if ("twinID" %in% names(ped) && any(!is.na(ped$twinID))) {
-      connections <- connections |>
-        dplyr::mutate(
-          link_as_twin = !is.na(.data$twinID) & .data$link_as_sibling
-        )
-    }
+    connections <- connections |>
+      dplyr::mutate(
+        link_as_twin = !is.na(.data$twinID) & .data$link_as_sibling
+      )
+  }
 
 
 
@@ -232,13 +233,13 @@ calculateConnections <- function(ped,
     unique() |>
     dplyr::group_by(.data$parent_hash) |>
     dplyr::summarize(
-     x_midparent = mean(c(
-        dplyr::first(.data$x_dad,na_rm = TRUE),
-        dplyr::first(.data$x_mom,na_rm = TRUE)
+      x_midparent = mean(c(
+        dplyr::first(.data$x_dad, na_rm = TRUE),
+        dplyr::first(.data$x_mom, na_rm = TRUE)
       )),
       y_midparent = mean(c(
-        dplyr::first(.data$y_dad,na_rm = TRUE),
-        dplyr::first(.data$y_mom,na_rm = TRUE)
+        dplyr::first(.data$y_dad, na_rm = TRUE),
+        dplyr::first(.data$y_mom, na_rm = TRUE)
       )),
       .groups = "drop"
     ) |>
@@ -254,12 +255,12 @@ calculateConnections <- function(ped,
     dplyr::group_by(.data$spouseID, .data$couple_hash) |>
     dplyr::summarize(
       x_mid_spouse = mean(c(
-        dplyr::first(.data$x_pos,na_rm = TRUE),
-        dplyr::first(.data$x_spouse,na_rm = TRUE)
+        dplyr::first(.data$x_pos, na_rm = TRUE),
+        dplyr::first(.data$x_spouse, na_rm = TRUE)
       )),
       y_mid_spouse = mean(c(
-        dplyr::first(.data$y_pos,na_rm = TRUE),
-        dplyr::first(.data$y_spouse,na_rm = TRUE)
+        dplyr::first(.data$y_pos, na_rm = TRUE),
+        dplyr::first(.data$y_spouse, na_rm = TRUE)
       )),
       .groups = "drop"
     ) |>
@@ -271,8 +272,8 @@ calculateConnections <- function(ped,
       .data$link_as_sibling,
       !is.na(.data$momID) & !is.na(.data$dadID) & # biological parents defined
         !is.na(.data$x_mom) & !is.na(.data$y_mom) & # mom’s coordinates linked
-        !is.na(.data$x_dad) & !is.na(.data$y_dad) &# dad’s coordinates linked
-      !is.na(.data$x_fam)
+        !is.na(.data$x_dad) & !is.na(.data$y_dad) & # dad’s coordinates linked
+        !is.na(.data$x_fam)
     ) |>
     unique() |>
     dplyr::group_by(
@@ -332,20 +333,20 @@ calculateConnections <- function(ped,
   if (exists("full_extra") && !is.null(full_extra$self_coords)) {
     plot_connections <- list(
       connections = connections,
-      self_coords = full_extra$self_coords#,
-    #  connections_spouse_segment = buildSpouseSegments(
-    #    ped = ped,
-    #    connections_for_FOO = connections_skinny
-     # )
+      self_coords = full_extra$self_coords # ,
+      #  connections_spouse_segment = buildSpouseSegments(
+      #    ped = ped,
+      #    connections_for_FOO = connections_skinny
+      # )
     )
   } else {
     plot_connections <- list(
       connections = connections,
-      self_coords = FALSE#,
-    #  connections_spouse_segment = buildSpouseSegments(
-     #   ped = ped,
-    #    connections_for_FOO = connections_skinny
-   #   )
+      self_coords = FALSE # ,
+      #  connections_spouse_segment = buildSpouseSegments(
+      #   ped = ped,
+      #    connections_for_FOO = connections_skinny
+      #   )
     )
   }
 
@@ -358,7 +359,7 @@ calculateConnections <- function(ped,
   } else {
     plot_connections$twin_coords <- FALSE
   }
-#  assign("DEBUG_plot_connections", plot_connections, envir = .GlobalEnv)
+  #  assign("DEBUG_plot_connections", plot_connections, envir = .GlobalEnv)
   return(plot_connections)
 }
 

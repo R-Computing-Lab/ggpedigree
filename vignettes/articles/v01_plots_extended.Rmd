@@ -275,7 +275,7 @@ p <- ggPedigree(
     status_affected_shape = 4,
     segment_self_color = "purple"
   )
-) + geom_point(data=DEBUG_ped_withextras,aes(x=(parent_1+parent_2)/2,y=DEBUG_plot_connections$connections$y_midparent))
+) + geom_point(data = DEBUG_ped_withextras, aes(x = (parent_1 + parent_2) / 2, y = DEBUG_plot_connections$connections$y_midparent))
 
 p + facet_wrap(~famID, scales = "free") #+ scale_color_viridis(
 #   discrete = TRUE,

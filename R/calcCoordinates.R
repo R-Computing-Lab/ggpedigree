@@ -110,7 +110,7 @@ calculateCoordinates <- function(ped,
     )
   }
 
-#  assign("DEBUG_pos", pos, envir = .GlobalEnv)
+  #  assign("DEBUG_pos", pos, envir = .GlobalEnv)
 
   # Extract layout information
   nid_vector <- as.vector(pos$nid)
@@ -126,12 +126,12 @@ calculateCoordinates <- function(ped,
   nid_pos <- which(pos$nid != 0, arr.ind = TRUE)
 
   # Allocate coordinate vectors
- x_pos <- y_coords <- x_coords <- rep(NA, length(nid_vector))
+  x_pos <- y_coords <- x_coords <- rep(NA, length(nid_vector))
 
 
   # Initialize relatives  vector
   spouse_vector <- x_pos
-  parent_fam<- x_pos
+  parent_fam <- x_pos
   parent_right_vector <- parent_left_vector <- x_pos
   y_fam <- x_pos
   # A matrix with values
@@ -146,7 +146,7 @@ calculateCoordinates <- function(ped,
     x_pos[i] <- pos$pos[nid_pos[i, "row"], nid_pos[i, "col"]]
     spouse_vector[i] <- pos$spouse[nid_pos[i, "row"], nid_pos[i, "col"]]
     parent_fam[i] <- pos$fam[nid_pos[i, "row"], nid_pos[i, "col"]]
-    y_fam[i] <- BGmisc:::tryNA(nid_pos[i, "row"]-1)
+    y_fam[i] <- BGmisc:::tryNA(nid_pos[i, "row"] - 1)
     parent_left_vector[i] <- BGmisc:::tryNA(pos$pos[nid_pos[i, "row"] - 1, parent_fam[i] + 0])
     parent_right_vector[i] <- BGmisc:::tryNA(pos$pos[nid_pos[i, "row"] - 1, parent_fam[i] + 1])
   }
@@ -240,12 +240,12 @@ calculateCoordinates <- function(ped,
     ped$extra <- FALSE
   }
   ped$x_fam <- base::rowMeans(cbind(ped$parent_left, ped$parent_right), na.rm = FALSE)
-  ped$x_fam[ped$parent_fam==0] <- NA
-  ped[[momID]][ped$parent_fam==0] <- NA
-  ped[[dadID]][ped$parent_fam==0] <- NA
-  ped$y_fam[ped$parent_fam==0] <- NA
+  ped$x_fam[ped$parent_fam == 0] <- NA
+  ped[[momID]][ped$parent_fam == 0] <- NA
+  ped[[dadID]][ped$parent_fam == 0] <- NA
+  ped$y_fam[ped$parent_fam == 0] <- NA
   ped$parent_left <- NULL
   ped$parent_right <- NULL
-#  assign("DEBUG_ped_withextras", ped, envir = .GlobalEnv)
+  #  assign("DEBUG_ped_withextras", ped, envir = .GlobalEnv)
   return(ped)
 }
