@@ -19,7 +19,7 @@ test_that("simulated pedigree plots correctly", {
 
 
 test_that("pedigree plots correctly with affected variables", {
-    library(BGmisc)
+  library(BGmisc)
   set.seed(5)
   Ngen <- 4
   kpc <- 4
@@ -37,7 +37,7 @@ test_that("pedigree plots correctly with affected variables", {
 
 test_that("pedigree errs when affected variables named", {
   library(BGmisc)
-   data(inbreeding)
+  data(inbreeding)
 
   expect_error(plotPedigree(data, verbose = TRUE, affected = "affected"))
 })

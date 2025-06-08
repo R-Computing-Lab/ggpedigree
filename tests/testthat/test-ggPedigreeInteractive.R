@@ -218,10 +218,12 @@ test_that("ggPedigreeInteractive handles errors", {
       )
 
     expect_message(
-      ggPedigreeInteractive(potter, famID = "famID",
-                            personID = "personID", config = list(
-        label_method = "geom_text_repel"
-      ))
+      ggPedigreeInteractive(potter,
+        famID = "famID",
+        personID = "personID", config = list(
+          label_method = "geom_text_repel"
+        )
+      )
     )
     expect_message(
       ggPedigreeInteractive(potter, famID = "famID", personID = "personID", config = list(

@@ -187,6 +187,8 @@ ggPedigree.core <- function(ped, famID = "famID",
   # STEP 2: Pedigree Data Transformation
   # -----
 
+
+
   if (all(c(famID, patID, matID) %in% names(ped))) {
     ds_ped <- ped
   } else {
@@ -200,6 +202,8 @@ ggPedigree.core <- function(ped, famID = "famID",
     } else {
       ds_ped <- ped
     }
+  }
+  if (config$focal_fill_include == TRUE) {
     if (!patID %in% names(ds_ped)) {
       ds_ped <- BGmisc::ped2paternal(ds_ped,
         patID = patID,
@@ -437,9 +441,9 @@ ggPedigree.core <- function(ped, famID = "famID",
     data = connections,
     ggplot2::aes(
       x = .data$x_mid_sib,
-      xend = .data$x_midparent,
+      xend = .data$x_fam,
       y = .data$y_mid_sib - config$gap_hoff,
-      yend = .data$y_midparent
+      yend = .data$y_fam
     ),
     linewidth = config$segment_linewidth,
     linetype = config$segment_linetype,
@@ -1153,6 +1157,7 @@ createFillColumn <- function(ped,
     isChild_method = config$matrix_isChild_method,
     sparse = config$matrix_sparse
   )
+
   if (config$matrix_sparse == FALSE) {
     fill_df <- data.frame(
       focal_fill = com_mat[focal_fill_personID, ],

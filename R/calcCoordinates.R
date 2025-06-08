@@ -110,6 +110,8 @@ calculateCoordinates <- function(ped,
     )
   }
 
+  #  assign("DEBUG_pos", pos, envir = .GlobalEnv)
+
   # Extract layout information
   nid_vector <- as.vector(pos$nid)
   nid_vector <- nid_vector[nid_vector != 0] # Remove zero entries (empty cells)
@@ -124,13 +126,14 @@ calculateCoordinates <- function(ped,
   nid_pos <- which(pos$nid != 0, arr.ind = TRUE)
 
   # Allocate coordinate vectors
-  x_coords <- rep(NA, length(nid_vector))
-  y_coords <- rep(NA, length(nid_vector))
-  x_pos <- rep(NA, length(nid_vector))
+  x_pos <- y_coords <- x_coords <- rep(NA, length(nid_vector))
 
-  # Initialize spouse vector
-  spouse_vector <- rep(NA, length(nid_vector))
 
+  # Initialize relatives  vector
+  spouse_vector <- x_pos
+  parent_fam <- x_pos
+  parent_right_vector <- parent_left_vector <- x_pos
+  y_fam <- x_pos
   # A matrix with values
   # 1 = subject plotted to the immediate right is a spouse
   # 2 = subject plotted to the immediate right is an inbred spouse
@@ -142,13 +145,17 @@ calculateCoordinates <- function(ped,
     x_coords[i] <- nid_pos[i, "col"]
     x_pos[i] <- pos$pos[nid_pos[i, "row"], nid_pos[i, "col"]]
     spouse_vector[i] <- pos$spouse[nid_pos[i, "row"], nid_pos[i, "col"]]
+    parent_fam[i] <- pos$fam[nid_pos[i, "row"], nid_pos[i, "col"]]
+    y_fam[i] <- BGmisc:::tryNA(nid_pos[i, "row"] - 1)
+    parent_left_vector[i] <- BGmisc:::tryNA(pos$pos[nid_pos[i, "row"] - 1, parent_fam[i] + 0])
+    parent_right_vector[i] <- BGmisc:::tryNA(pos$pos[nid_pos[i, "row"] - 1, parent_fam[i] + 1])
   }
 
   # -----
   # Fill in the data frame with coordinates
   # -----
   # Match each individual to their primary layout position
-  tmp <- match(1:length(ped_ped$id), nid_vector)
+  tmp <- match(seq_along(ped_ped$id), nid_vector)
 
   # Fill the nid, pos, x, and y columns in ped_ped based on the mapping
   ped$nid <- nid_vector[tmp]
@@ -156,7 +163,11 @@ calculateCoordinates <- function(ped,
   ped$y_order <- y_coords[tmp]
   ped$x_pos <- x_pos[tmp]
   ped$y_pos <- y_coords[tmp]
+  ped$parent_fam <- parent_fam[tmp]
   ped$spousehint <- spouse_vector[tmp]
+  ped$parent_left <- parent_left_vector[tmp]
+  ped$parent_right <- parent_right_vector[tmp]
+  ped$y_fam <- y_fam[tmp]
 
 
   # Detect multiple layout positions for the same individual
@@ -207,7 +218,11 @@ calculateCoordinates <- function(ped,
       new_row$y_order <- y_coords[idx]
       new_row$x_pos <- x_pos[idx]
       new_row$y_pos <- y_coords[idx]
-
+      new_row$spousehint <- spouse_vector[idx]
+      new_row$parent_fam <- parent_fam[idx]
+      new_row$parent_left <- parent_left_vector[idx]
+      new_row$parent_right <- parent_right_vector[idx]
+      new_row$y_fam <- y_fam[idx]
       extra_rows[[i]] <- new_row
     }
   } else {
@@ -224,5 +239,13 @@ calculateCoordinates <- function(ped,
     ped_extra <- NULL
     ped$extra <- FALSE
   }
+  ped$x_fam <- base::rowMeans(cbind(ped$parent_left, ped$parent_right), na.rm = FALSE)
+  ped$x_fam[ped$parent_fam == 0] <- NA
+  ped[[momID]][ped$parent_fam == 0] <- NA
+  ped[[dadID]][ped$parent_fam == 0] <- NA
+  ped$y_fam[ped$parent_fam == 0] <- NA
+  ped$parent_left <- NULL
+  ped$parent_right <- NULL
+  #  assign("DEBUG_ped_withextras", ped, envir = .GlobalEnv)
   return(ped)
 }
