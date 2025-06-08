@@ -22,7 +22,7 @@ test_that("calculateConnections returns expected columns and structure", {
   expect_true(all(c(
     "personID", "x_pos", "y_pos", "momID", "dadID", "spouseID",
     "x_mom", "y_mom", "x_dad", "y_dad", "x_spouse", "y_spouse",
-    "x_midparent", "y_midparent", "x_mid_spouse", "y_mid_spouse",
+    "x_fam", "y_fam", "x_mid_spouse", "y_mid_spouse",
     "x_mid_sib", "y_mid_sib"
   ) %in% names(conns)))
 })
@@ -88,8 +88,8 @@ test_that("midparent coordinates are correct", {
   ))
 
   C_row <- conns[conns$personID == "C", ]
-  expect_equal(C_row$x_midparent, mid_x)
-  expect_equal(C_row$y_midparent, mid_y)
+  expect_equal(C_row$x_fam, mid_x)
+  expect_equal(C_row$y_fam, mid_y)
 })
 
 test_that("spouse midpoint is correctly calculated", {
@@ -195,8 +195,8 @@ test_that("calculateConnections computes midparent as average of mom/dad", {
   conns <- result$connections
   mid <- conns[conns$personID == "C", ]
 
-  expect_equal(mid$x_midparent, 2)
-  expect_equal(mid$y_midparent, 1)
+  expect_equal(mid$x_fam, 2)
+  expect_equal(mid$y_fam, 1)
 })
 
 test_that("calculateConnections computes spouse midpoints", {

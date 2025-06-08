@@ -193,7 +193,6 @@ calculateConnections <- function(ped,
       "personID", "x_pos",
       "y_pos", "spouseID", "couple_hash"
     ) |>
-    unique() |>
     dplyr::left_join(connections_skinny,
       by = c("spouseID" = "personID"),
       suffix = c("", "_spouse"),
@@ -227,23 +226,22 @@ calculateConnections <- function(ped,
 
   # Calculate midpoints between mom and dad in child row
 
-  parent_midpoints <- connections |>
-    dplyr::filter(.data$link_as_sibling &
-      !is.na(.data$dadID) & !is.na(.data$momID)) |>
-    unique() |>
-    dplyr::group_by(.data$parent_hash) |>
-    dplyr::summarize(
-      x_midparent = mean(c(
-        dplyr::first(.data$x_dad, na_rm = TRUE),
-        dplyr::first(.data$x_mom, na_rm = TRUE)
-      )),
-      y_midparent = mean(c(
-        dplyr::first(.data$y_dad, na_rm = TRUE),
-        dplyr::first(.data$y_mom, na_rm = TRUE)
-      )),
-      .groups = "drop"
-    ) |>
-    unique()
+  #  parent_midpoints <- connections |>
+  #   dplyr::filter(.data$link_as_sibling &
+  #      !is.na(.data$dadID) & !is.na(.data$momID)) |>
+  #   unique() |>
+  #    dplyr::group_by(.data$parent_hash) |>
+  #    dplyr::summarize(
+  #      x_midparent = mean(c(
+  #        dplyr::first(.data$x_dad, na_rm = TRUE),
+  #       dplyr::first(.data$x_mom, na_rm = TRUE)
+  #     )),
+  #     y_midparent = mean(c(
+  #       dplyr::first(.data$y_dad, na_rm = TRUE),
+  #       dplyr::first(.data$y_mom, na_rm = TRUE)
+  #     )),
+  #    .groups = "drop"
+  #  )
 
   # Calculate midpoints between spouses
   spouse_midpoints <- connections |>
@@ -293,10 +291,10 @@ calculateConnections <- function(ped,
   # print(parent_midpoints)
   # Merge midpoints into connections
   connections <- connections |>
-    dplyr::left_join(parent_midpoints,
-      by = c("parent_hash")
-    ) |>
-    unique() |>
+    #   dplyr::left_join(parent_midpoints,
+    #    by = c("parent_hash")
+    #   ) |>
+    #   unique() |>
     dplyr::left_join(spouse_midpoints,
       by = c("spouseID", "couple_hash")
     ) |>
@@ -322,7 +320,6 @@ calculateConnections <- function(ped,
         TRUE ~ NA_real_
       )
     ) |>
-    unique() |>
     dplyr::mutate(
       x_mid_sib = dplyr::if_else(.data$link_as_sibling, .data$x_mid_sib, NA_real_),
       y_mid_sib = dplyr::if_else(.data$link_as_sibling, .data$y_mid_sib, NA_real_)
@@ -333,20 +330,12 @@ calculateConnections <- function(ped,
   if (exists("full_extra") && !is.null(full_extra$self_coords)) {
     plot_connections <- list(
       connections = connections,
-      self_coords = full_extra$self_coords # ,
-      #  connections_spouse_segment = buildSpouseSegments(
-      #    ped = ped,
-      #    connections_for_FOO = connections_skinny
-      # )
+      self_coords = full_extra$self_coords
     )
   } else {
     plot_connections <- list(
       connections = connections,
-      self_coords = FALSE # ,
-      #  connections_spouse_segment = buildSpouseSegments(
-      #   ped = ped,
-      #    connections_for_FOO = connections_skinny
-      #   )
+      self_coords = FALSE
     )
   }
 
