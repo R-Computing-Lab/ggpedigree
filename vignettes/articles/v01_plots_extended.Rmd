@@ -275,7 +275,7 @@ p <- ggPedigree(
     status_affected_shape = 4,
     segment_self_color = "purple"
   )
-) 
+)
 
 p + facet_wrap(~famID, scales = "free") #+ scale_color_viridis(
 #   discrete = TRUE,

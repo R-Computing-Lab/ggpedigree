@@ -110,25 +110,25 @@ processExtras <- function(ped, config = list()) {
 
   # ---- 5. Attach relative coordinates & compute distances -------------------
   # Mother's coordinates
- # mom_coords <- getRelativeCoordinates(
- #   ped = ped,
- #   connections = extras,
-#    relativeIDvar = "momID",
- #   x_name = "x_mom",
-#    y_name = "y_mom",
-#    multiple = "all" # "any"
-##  )
+  # mom_coords <- getRelativeCoordinates(
+  #   ped = ped,
+  #   connections = extras,
+  #    relativeIDvar = "momID",
+  #   x_name = "x_mom",
+  #    y_name = "y_mom",
+  #    multiple = "all" # "any"
+  ##  )
 
 
   # Father's coordinates
- # dad_coords <- getRelativeCoordinates(
+  # dad_coords <- getRelativeCoordinates(
   #  ped = ped,
   #  connections = extras,
- #   relativeIDvar = "dadID",
- #   x_name = "x_dad",
- #   y_name = "y_dad",
- #   multiple = "all" # "any"
-#  )
+  #   relativeIDvar = "dadID",
+  #   x_name = "x_dad",
+  #   y_name = "y_dad",
+  #   multiple = "all" # "any"
+  #  )
 
 
   # Spouse's coordinates
@@ -142,51 +142,51 @@ processExtras <- function(ped, config = list()) {
   )
 
   # Parent hash coordinates
-#  parent_hash_coords <- extras |>
-#    dplyr::left_join(mom_coords, by = c("newID", "personID", "momID")) |>
-#    dplyr::left_join(dad_coords, by = c("newID", "personID", "dadID")) |>
-#    dplyr::filter(!is.na(.data$parent_hash)) |>
- #   dplyr::mutate(
- #     x_parent_hash = mean(c(.data$x_dad, .data$x_mom), na.rm = TRUE),
- #     y_parent_hash = mean(c(.data$y_dad, .data$y_mom), na.rm = TRUE)
- #   ) |>
+  #  parent_hash_coords <- extras |>
+  #    dplyr::left_join(mom_coords, by = c("newID", "personID", "momID")) |>
+  #    dplyr::left_join(dad_coords, by = c("newID", "personID", "dadID")) |>
+  #    dplyr::filter(!is.na(.data$parent_hash)) |>
+  #   dplyr::mutate(
+  #     x_parent_hash = mean(c(.data$x_dad, .data$x_mom), na.rm = TRUE),
+  #     y_parent_hash = mean(c(.data$y_dad, .data$y_mom), na.rm = TRUE)
+  #   ) |>
   #  dplyr::select(
   #    "newID", "personID",
- #     "x_parent_hash", "y_parent_hash"
- #   )
+  #     "x_parent_hash", "y_parent_hash"
+  #   )
 
 
   extras <- extras |>
- #   dplyr::left_join(mom_coords, by = c("newID", "personID", "momID")) |>
- #   dplyr::left_join(dad_coords, by = c("newID", "personID", "dadID")) |>
-    dplyr::left_join(spouse_coords, by = c("newID", "personID", "spouseID"))# |>
-#    dplyr::left_join(parent_hash_coords, by = c("newID", "personID"))
+    #   dplyr::left_join(mom_coords, by = c("newID", "personID", "momID")) |>
+    #   dplyr::left_join(dad_coords, by = c("newID", "personID", "dadID")) |>
+    dplyr::left_join(spouse_coords, by = c("newID", "personID", "spouseID")) # |>
+  #    dplyr::left_join(parent_hash_coords, by = c("newID", "personID"))
 
 
   # ---- 5b. compute distance metrics  --------------
   extras <- extras |>
     dplyr::mutate(
- #     dist_mom = computeDistance(
-  #      method = "cityblock",
-  #      x1 = .data$x_pos, y1 = .data$y_pos,
- #       x2 = .data$x_mom, y2 = .data$y_mom
- #     ),
-#      dist_dad = computeDistance(
- #       method = "cityblock",
- #       x1 = .data$x_pos, y1 = .data$y_pos,
- #       x2 = .data$x_dad, y2 = .data$y_dad
- #     ),
+      #     dist_mom = computeDistance(
+      #      method = "cityblock",
+      #      x1 = .data$x_pos, y1 = .data$y_pos,
+      #       x2 = .data$x_mom, y2 = .data$y_mom
+      #     ),
+      #      dist_dad = computeDistance(
+      #       method = "cityblock",
+      #       x1 = .data$x_pos, y1 = .data$y_pos,
+      #       x2 = .data$x_dad, y2 = .data$y_dad
+      #     ),
       dist_spouse = computeDistance(
         method = "cityblock",
         x1 = .data$x_pos, y1 = .data$y_pos,
         x2 = .data$x_spouse, y2 = .data$y_spouse
-      )#,
-#      parent_dist_mid = computeDistance(
-   #     method = "cityblock",
-    #    x1 = .data$x_pos, y1 = .data$y_pos,
-    #    x2 = .data$x_parent_hash, y2 = .data$y_parent_hash
-   #   ),
- #     parent_dist_sum = .data$dist_mom + .data$dist_dad
+      ) # ,
+      #      parent_dist_mid = computeDistance(
+      #     method = "cityblock",
+      #    x1 = .data$x_pos, y1 = .data$y_pos,
+      #    x2 = .data$x_parent_hash, y2 = .data$y_parent_hash
+      #   ),
+      #     parent_dist_sum = .data$dist_mom + .data$dist_dad
     )
 
 

@@ -549,9 +549,9 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     core_list$return_static <- FALSE
     core_list$return_widget <- TRUE
     core_list$return_interactive <- TRUE
-    core_list$segment_self_angle <-  -75
-    core_list$segment_self_curvature <-  -0.15
-    }
+    core_list$segment_self_angle <- -75
+    core_list$segment_self_curvature <- -0.15
+  }
 
   return(core_list)
 }

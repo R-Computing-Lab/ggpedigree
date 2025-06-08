@@ -923,7 +923,7 @@ ggpedigree <- ggPedigree
       linetype = config$segment_self_linetype,
       alpha = config$segment_self_alpha,
       na.rm = TRUE
-    )  + ggplot2::geom_segment(
+    ) + ggplot2::geom_segment(
       data = otherself,
       ggplot2::aes(
         x = .data$x_3midpoint,
@@ -1154,7 +1154,7 @@ ggpedigree <- ggPedigree
 #' @return Numeric vector of midpoints (x or y)
 #'  @keywords internal
 computeCurvedMidpoint <- function(x0, y0, x1, y1,
-                                  curvature, angle, shift=0,
+                                  curvature, angle, shift = 0,
                                   t = 0.5) {
   # Ensure t is a numeric vector
   t <- as.numeric(t)
@@ -1192,7 +1192,6 @@ computeCurvedMidpoint <- function(x0, y0, x1, y1,
 
   # Return as a data frame with x and y coordinates
   data.frame(x = x_vals, y = y_vals, t = t)
-
 }
 
 #' @title Get fill column for ggPedigree
@@ -1225,7 +1224,7 @@ createFillColumn <- function(ped,
 
   if (config$matrix_sparse == FALSE) {
     fill_df <- data.frame(
-      focal_fill = round(com_mat[focal_fill_personID, ],digits = config$value_rounding_digits),
+      focal_fill = round(com_mat[focal_fill_personID, ], digits = config$value_rounding_digits),
       personID = rownames(com_mat)
     ) # needs to match the same data type
     remove(com_mat) # remove the focal_fill_personID column
@@ -1233,7 +1232,7 @@ createFillColumn <- function(ped,
     warning("Sparse matrix detected. Converting to data frame. Currently, sparse matrices are not supported for ggPedigree processing.")
     com_mat <- as.matrix(com_mat)
     fill_df <- data.frame(
-      focal_fill = round(com_mat[focal_fill_personID, ],digits = config$value_rounding_digits),
+      focal_fill = round(com_mat[focal_fill_personID, ], digits = config$value_rounding_digits),
       personID = rownames(com_mat)
     ) # needs to match the same data type
     remove(com_mat)
