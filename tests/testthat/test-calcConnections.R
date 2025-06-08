@@ -108,7 +108,7 @@ test_that("spouse midpoint is correctly calculated", {
     dadID = "dadID",
     spouseID = "spouseID"
   )
-  conn_out <- calculateConnections(ped)
+  conn_out <- calculateConnections(ped,config = list(debug = TRUE))
   conns <- conn_out$connections
 
   A_coords <- ped[ped$personID == "A", ]

@@ -260,3 +260,40 @@ test_that("fill works with fill_column", {
   expect_true(all(p$data$focal_fill[p$data$sex == 1] == 1)) # focal_fill for males should be 1
   expect_true(all(p$data$focal_fill[p$data$sex == 0] == 0)) # focal_fill for females should be 0
 })
+
+test_that("debug", {
+  library(BGmisc)
+  data("potter")
+
+ expect_message(ggPedigree(potter,
+                  famID = "famID",
+                  personID = "personID",
+                  focal_fill_column = "sex",
+                  config = list(
+                    focal_fill_method = "steps",
+                    focal_fill_include = TRUE,
+                    sex_color_include = FALSE,
+                    debug = TRUE
+                  ))
+  )
+
+  p_debug <-  ggPedigree(potter,
+             famID = "famID",
+             personID = "personID",
+             focal_fill_column = "sex",
+             config = list(
+               focal_fill_method = "steps",
+               focal_fill_include = TRUE,
+               sex_color_include = FALSE,
+               debug = TRUE
+             ))
+
+  expect_type(p_debug, "list") # Should return a list with plot and data
+
+
+  p <- p_debug$plot
+  expect_s3_class(p, "gg") # Should return a ggplot object
+  expect_true("focal_fill" %in% names(p$data)) # focal_fill column should be present
+  expect_true(all(p$data$focal_fill == p$data$sex)) # focal_fill values should match column values
+  expect_true(all(p$data$focal_fill %in% c(1, 0))) # focal_fill values should be either 0 or 1
+})
