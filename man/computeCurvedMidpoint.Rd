@@ -4,16 +4,7 @@
 \alias{computeCurvedMidpoint}
 \title{Compute midpoint coordinate for curved segment}
 \usage{
-computeCurvedMidpoint(
-  x0,
-  y0,
-  x1,
-  y1,
-  curvature,
-  angle,
-  component = NULL,
-  t = 0.5
-)
+computeCurvedMidpoint(x0, y0, x1, y1, curvature, angle, shift = 0, t = 0.5)
 }
 \arguments{
 \item{x0}{Numeric vector of x coordinates for start points}
@@ -28,7 +19,7 @@ computeCurvedMidpoint(
 
 \item{angle}{Scalar angle in degrees}
 
-\item{component}{Either "x" or "y"}
+\item{shift}{Scalar shift in degrees (default is 0)}
 
 \item{t}{Scalar value between 0 and 1 for interpolation (default is 0.5) setting the midpoint}
 }
@@ -37,5 +28,5 @@ Numeric vector of midpoints (x or y)
  @keywords internal
 }
 \description{
-Returns either x or y midpoint using vectorized curved offset
+Returns x and y midpoint using vectorized curved offset
 }

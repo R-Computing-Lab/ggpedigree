@@ -821,7 +821,7 @@ ggpedigree <- ggPedigree
         y = .data$y_otherself,
         yend = .data$y_pos
       ),
-      linewidth = config$segment_linewidth,
+      linewidth = config$segment_self_linewidth,
       color = config$segment_self_color,
       lineend = config$segment_lineend,
       #  linejoin = config$segment_linejoin,
@@ -843,22 +843,50 @@ ggpedigree <- ggPedigree
           x1 = .data$x_pos,
           y1 = .data$y_pos,
           curvature = config$segment_self_curvature,
-          angle = config$segment_self_angle
+          angle = config$segment_self_angle,
+          t = .35
         ),
-        x_midpoint = .data$midpoint$x,
-        y_midpoint = .data$midpoint$y
+        x_1midpoint = .data$midpoint$x,
+        y_1midpoint = .data$midpoint$y
+      ) |>
+      dplyr::mutate(
+        midpoint = computeCurvedMidpoint(
+          x0 = .data$x_otherself,
+          y0 = .data$y_otherself,
+          x1 = .data$x_pos,
+          y1 = .data$y_pos,
+          curvature = config$segment_self_curvature,
+          angle = config$segment_self_angle,
+          t = .5
+        ),
+        x_2midpoint = .data$midpoint$x,
+        y_2midpoint = .data$midpoint$y
+      ) |>
+      dplyr::mutate(
+        midpoint = computeCurvedMidpoint(
+          x0 = .data$x_otherself,
+          y0 = .data$y_otherself,
+          x1 = .data$x_pos,
+          y1 = .data$y_pos,
+          curvature = config$segment_self_curvature,
+          angle = config$segment_self_angle,
+          t = .7
+        ),
+        x_3midpoint = .data$midpoint$x,
+        y_3midpoint = .data$midpoint$y
       ) |>
       dplyr::select(-"midpoint")
+
 
     p <- p + ggplot2::geom_segment(
       data = otherself,
       ggplot2::aes(
         x = .data$x_otherself,
-        xend = .data$x_midpoint,
+        xend = .data$x_1midpoint,
         y = .data$y_otherself,
-        yend = .data$y_midpoint
+        yend = .data$y_1midpoint
       ),
-      linewidth = config$segment_linewidth,
+      linewidth = config$segment_self_linewidth,
       color = config$segment_self_color,
       lineend = config$segment_lineend,
       linejoin = config$segment_linejoin,
@@ -868,12 +896,42 @@ ggpedigree <- ggPedigree
     ) + ggplot2::geom_segment(
       data = otherself,
       ggplot2::aes(
-        x = .data$x_midpoint,
+        xend = .data$x_2midpoint,
+        x = .data$x_1midpoint,
+        yend = .data$y_2midpoint,
+        y = .data$y_1midpoint
+      ),
+      linewidth = config$segment_self_linewidth,
+      color = config$segment_self_color,
+      lineend = config$segment_lineend,
+      linejoin = config$segment_linejoin,
+      linetype = config$segment_self_linetype,
+      alpha = config$segment_self_alpha,
+      na.rm = TRUE
+    ) + ggplot2::geom_segment(
+      data = otherself,
+      ggplot2::aes(
+        xend = .data$x_3midpoint,
+        x = .data$x_2midpoint,
+        yend = .data$y_3midpoint,
+        y = .data$y_2midpoint
+      ),
+      linewidth = config$segment_self_linewidth,
+      color = config$segment_self_color,
+      lineend = config$segment_lineend,
+      linejoin = config$segment_linejoin,
+      linetype = config$segment_self_linetype,
+      alpha = config$segment_self_alpha,
+      na.rm = TRUE
+    )  + ggplot2::geom_segment(
+      data = otherself,
+      ggplot2::aes(
+        x = .data$x_3midpoint,
         xend = .data$x_pos,
-        y = .data$y_midpoint,
+        y = .data$y_3midpoint,
         yend = .data$y_pos
       ),
-      linewidth = config$segment_linewidth,
+      linewidth = config$segment_self_linewidth,
       color = config$segment_self_color,
       lineend = config$segment_lineend,
       linejoin = config$segment_linejoin,
@@ -1084,7 +1142,7 @@ ggpedigree <- ggPedigree
 #
 # }
 #' @title Compute midpoint coordinate for curved segment
-#' @description Returns either x or y midpoint using vectorized curved offset
+#' @description Returns x and y midpoint using vectorized curved offset
 #' @param x0 Numeric vector of x coordinates for start points
 #' @param y0 Numeric vector of y coordinates for start points
 #' @param x1 Numeric vector of x coordinates for end points
@@ -1092,42 +1150,49 @@ ggpedigree <- ggPedigree
 #' @param t Scalar value between 0 and 1 for interpolation (default is 0.5) setting the midpoint
 #' @param curvature Scalar curvature (geom_curve style)
 #' @param angle Scalar angle in degrees
-#' @param component Either "x" or "y"
+#' @param shift Scalar shift in degrees (default is 0)
 #' @return Numeric vector of midpoints (x or y)
 #'  @keywords internal
 computeCurvedMidpoint <- function(x0, y0, x1, y1,
-                                  curvature, angle,
-                                  component = NULL,
+                                  curvature, angle, shift=0,
                                   t = 0.5) {
+  # Ensure t is a numeric vector
+  t <- as.numeric(t)
+
+  # Vector from start to end
   dx <- x1 - x0
   dy <- y1 - y0
   len <- sqrt(dx^2 + dy^2)
 
   # Midpoint of the segment
+  mx <- (x0 + x1) / 2
+  my <- (y0 + y1) / 2
 
-  px <- (x0 + x1) * t
-  py <- (y0 + y1) * t
-
-  # Unit perpendicular vector
+  # Unit direction vector
   ux <- dx / len
   uy <- dy / len
 
-  # Rotate perpendicular vector by (angle - 90) degrees
-  theta <- angle * pi / 180 - 2 * 90 * pi / 180 #
-  #   (angle* pi / 180 - 90) * pi / 180
+  # Perpendicular unit vector
+  perp_x <- -uy
+  perp_y <- ux
 
-  # Perpendicular direction
-  perp_x <- -uy * cos(theta) - ux * sin(theta)
-  perp_y <- -uy * sin(theta) + ux * cos(theta)
+  # Apply rotation: angle + shift
+  theta <- (angle + shift) * pi / 180
 
-  offset <- curvature * len
+  rot_x <- perp_x * cos(theta) - perp_y * sin(theta)
+  rot_y <- perp_x * sin(theta) + perp_y * cos(theta)
 
-  midpoint <- data.frame(
-    x = px + offset * perp_x,
-    y = py + offset * perp_y
-  )
+  # Control point (defines curvature)
+  cx <- mx + curvature * len * rot_x
+  cy <- my + curvature * len * rot_y
 
-  midpoint
+  # Quadratic Bezier formula, vectorized
+  x_vals <- (1 - t)^2 * x0 + 2 * (1 - t) * t * cx + t^2 * x1
+  y_vals <- (1 - t)^2 * y0 + 2 * (1 - t) * t * cy + t^2 * y1
+
+  # Return as a data frame with x and y coordinates
+  data.frame(x = x_vals, y = y_vals, t = t)
+
 }
 
 #' @title Get fill column for ggPedigree
@@ -1160,7 +1225,7 @@ createFillColumn <- function(ped,
 
   if (config$matrix_sparse == FALSE) {
     fill_df <- data.frame(
-      focal_fill = com_mat[focal_fill_personID, ],
+      focal_fill = round(com_mat[focal_fill_personID, ],digits = config$value_rounding_digits),
       personID = rownames(com_mat)
     ) # needs to match the same data type
     remove(com_mat) # remove the focal_fill_personID column
@@ -1168,7 +1233,7 @@ createFillColumn <- function(ped,
     warning("Sparse matrix detected. Converting to data frame. Currently, sparse matrices are not supported for ggPedigree processing.")
     com_mat <- as.matrix(com_mat)
     fill_df <- data.frame(
-      focal_fill = com_mat[focal_fill_personID, ],
+      focal_fill = round(com_mat[focal_fill_personID, ],digits = config$value_rounding_digits),
       personID = rownames(com_mat)
     ) # needs to match the same data type
     remove(com_mat)

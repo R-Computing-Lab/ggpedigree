@@ -82,6 +82,7 @@
 #' @param segment_self_alpha Alpha value for self-loop segments.
 #' @param segment_self_angle Angle of self-loop segment.
 #' @param segment_self_curvature Curvature of self-loop segment.
+#' @param segment_self_linewidth Width of self-loop segment lines.
 #' @param sex_color_include Whether to color nodes by sex.
 #' @param sex_color_palette A character vector of colors for sex.
 #' @param sex_legend_title Title of the sex legend.
@@ -167,7 +168,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  alpha = alpha_default,
                                  plot_title = NULL,
                                  plot_subtitle = NULL,
-                                 value_rounding_digits = 2,
+                                 value_rounding_digits = 5,
                                  # --- SEX ------------------------------------------------------------
                                  code_male = 1,
                                  # ---- Filtering and Computation ----
@@ -234,6 +235,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  segment_mz_alpha = 1,
                                  segment_mz_t = .6,
                                  segment_self_linetype = "dotdash",
+                                 segment_self_linewidth = .25,
                                  segment_self_alpha = 0.5,
                                  segment_self_angle = 90,
                                  segment_self_curvature = -0.2,
@@ -426,6 +428,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     segment_self_alpha = segment_self_alpha,
     segment_self_angle = segment_self_angle,
     segment_self_curvature = segment_self_curvature,
+    segment_self_linewidth = segment_self_linewidth,
 
 
     # ---- Sex Legend and Appearance ----
@@ -527,6 +530,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
   )) {
     core_list$label_method <- "ggrepel"
     core_list$label_column <- personID
+
     # core_list$focal_fill_low_color <- core_list$color_palette_low
     # core_list$focal_fill_mid_color <- core_list$color_palette_mid
     # core_list$focal_fill_high_color <- core_list$color_palette_high
@@ -545,7 +549,9 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     core_list$return_static <- FALSE
     core_list$return_widget <- TRUE
     core_list$return_interactive <- TRUE
-  }
+    core_list$segment_self_angle <-  -75
+    core_list$segment_self_curvature <-  -0.15
+    }
 
   return(core_list)
 }

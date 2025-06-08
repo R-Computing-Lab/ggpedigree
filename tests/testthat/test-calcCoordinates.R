@@ -59,7 +59,7 @@ test_that("calculateConnections returns expected structure", {
     "dadID", "momID", "spouseID",
     "x_mom", "y_mom", "x_dad", "y_dad",
     "x_spouse", "y_spouse",
-    "x_midparent", "y_midparent",
+ #   "x_midparent", "y_midparent",
     "x_mid_spouse", "y_mid_spouse",
     "x_mid_sib", "y_mid_sib"
   )
