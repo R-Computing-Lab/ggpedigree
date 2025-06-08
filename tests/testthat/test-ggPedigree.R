@@ -187,6 +187,32 @@ test_that("ggPedigree handles self-segment", {
     )
   )
   expect_s3_class(p, "gg") # Should return a ggplot object
+
+  p_debug <- ggPedigree(
+    df,
+    famID = "famID",
+    personID = "ID",
+    status_column = "proband",
+    #  debug = TRUE,
+    config = list(
+      code_male = 0,
+      debug = TRUE,
+      override_many2many = TRUE,
+      sex_color_include = FALSE,
+      status_code_affected = TRUE,
+      status_code_unaffected = FALSE,
+      generation_height = 4,
+      point_size = 2,
+      generation_width = 2,
+      status_affected_shape = 4,
+      segment_self_color = "purple"
+    )
+  )
+  expect_type(p_debug, "list") # Should return a list with plot and data
+
+
+  p <- p_debug$plot
+  expect_s3_class(p, "gg") # Should return a ggplot object
 })
 
 test_that("focal fill works with ID", {
@@ -265,28 +291,29 @@ test_that("debug", {
   library(BGmisc)
   data("potter")
 
- expect_message(ggPedigree(potter,
-                  famID = "famID",
-                  personID = "personID",
-                  focal_fill_column = "sex",
-                  config = list(
-                    focal_fill_method = "steps",
-                    focal_fill_include = TRUE,
-                    sex_color_include = FALSE,
-                    debug = TRUE
-                  ))
-  )
+  expect_message(ggPedigree(potter,
+    famID = "famID",
+    personID = "personID",
+    focal_fill_column = "sex",
+    config = list(
+      focal_fill_method = "steps",
+      focal_fill_include = TRUE,
+      sex_color_include = FALSE,
+      debug = TRUE
+    )
+  ))
 
-  p_debug <-  ggPedigree(potter,
-             famID = "famID",
-             personID = "personID",
-             focal_fill_column = "sex",
-             config = list(
-               focal_fill_method = "steps",
-               focal_fill_include = TRUE,
-               sex_color_include = FALSE,
-               debug = TRUE
-             ))
+  p_debug <- ggPedigree(potter,
+    famID = "famID",
+    personID = "personID",
+    focal_fill_column = "sex",
+    config = list(
+      focal_fill_method = "steps",
+      focal_fill_include = TRUE,
+      sex_color_include = FALSE,
+      debug = TRUE
+    )
+  )
 
   expect_type(p_debug, "list") # Should return a list with plot and data
 

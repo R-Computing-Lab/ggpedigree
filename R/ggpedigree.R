@@ -277,7 +277,9 @@ ggPedigree.core <- function(ped, famID = "famID",
             component = config$focal_fill_component,
             config = config
           ),
-          by = "personID"
+          by = join_by(
+            personID == !!rlang::sym(personID)
+          )
         )
     } else if (config$focal_fill_component %in% c(
       "maternal",
