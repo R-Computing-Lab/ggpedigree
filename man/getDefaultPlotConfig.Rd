@@ -21,7 +21,7 @@ getDefaultPlotConfig(
   alpha = alpha_default,
   plot_title = NULL,
   plot_subtitle = NULL,
-  value_rounding_digits = 2,
+  value_rounding_digits = 5,
   code_male = 1,
   filter_n_pairs = 500,
   filter_degree_min = 0,
@@ -78,6 +78,7 @@ getDefaultPlotConfig(
   segment_mz_alpha = 1,
   segment_mz_t = 0.6,
   segment_self_linetype = "dotdash",
+  segment_self_linewidth = 0.25,
   segment_self_alpha = 0.5,
   segment_self_angle = 90,
   segment_self_curvature = -0.2,
@@ -292,6 +293,8 @@ getDefaultPlotConfig(
 \item{segment_mz_t}{Tuning parameter for MZ segment layout.}
 
 \item{segment_self_linetype}{Line type for self-loop segments.}
+
+\item{segment_self_linewidth}{Width of self-loop segment lines.}
 
 \item{segment_self_alpha}{Alpha value for self-loop segments.}
 

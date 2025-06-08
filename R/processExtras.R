@@ -110,25 +110,25 @@ processExtras <- function(ped, config = list()) {
 
   # ---- 5. Attach relative coordinates & compute distances -------------------
   # Mother's coordinates
-  mom_coords <- getRelativeCoordinates(
-    ped = ped,
-    connections = extras,
-    relativeIDvar = "momID",
-    x_name = "x_mom",
-    y_name = "y_mom",
-    multiple = "all" # "any"
-  )
+  # mom_coords <- getRelativeCoordinates(
+  #   ped = ped,
+  #   connections = extras,
+  #    relativeIDvar = "momID",
+  #   x_name = "x_mom",
+  #    y_name = "y_mom",
+  #    multiple = "all" # "any"
+  ##  )
 
 
   # Father's coordinates
-  dad_coords <- getRelativeCoordinates(
-    ped = ped,
-    connections = extras,
-    relativeIDvar = "dadID",
-    x_name = "x_dad",
-    y_name = "y_dad",
-    multiple = "all" # "any"
-  )
+  # dad_coords <- getRelativeCoordinates(
+  #  ped = ped,
+  #  connections = extras,
+  #   relativeIDvar = "dadID",
+  #   x_name = "x_dad",
+  #   y_name = "y_dad",
+  #   multiple = "all" # "any"
+  #  )
 
 
   # Spouse's coordinates
@@ -142,51 +142,51 @@ processExtras <- function(ped, config = list()) {
   )
 
   # Parent hash coordinates
-  parent_hash_coords <- extras |>
-    dplyr::left_join(mom_coords, by = c("newID", "personID", "momID")) |>
-    dplyr::left_join(dad_coords, by = c("newID", "personID", "dadID")) |>
-    dplyr::filter(!is.na(.data$parent_hash)) |>
-    dplyr::mutate(
-      x_parent_hash = mean(c(.data$x_dad, .data$x_mom), na.rm = TRUE),
-      y_parent_hash = mean(c(.data$y_dad, .data$y_mom), na.rm = TRUE)
-    ) |>
-    dplyr::select(
-      "newID", "personID",
-      "x_parent_hash", "y_parent_hash"
-    )
+  #  parent_hash_coords <- extras |>
+  #    dplyr::left_join(mom_coords, by = c("newID", "personID", "momID")) |>
+  #    dplyr::left_join(dad_coords, by = c("newID", "personID", "dadID")) |>
+  #    dplyr::filter(!is.na(.data$parent_hash)) |>
+  #   dplyr::mutate(
+  #     x_parent_hash = mean(c(.data$x_dad, .data$x_mom), na.rm = TRUE),
+  #     y_parent_hash = mean(c(.data$y_dad, .data$y_mom), na.rm = TRUE)
+  #   ) |>
+  #  dplyr::select(
+  #    "newID", "personID",
+  #     "x_parent_hash", "y_parent_hash"
+  #   )
 
 
   extras <- extras |>
-    dplyr::left_join(mom_coords, by = c("newID", "personID", "momID")) |>
-    dplyr::left_join(dad_coords, by = c("newID", "personID", "dadID")) |>
-    dplyr::left_join(spouse_coords, by = c("newID", "personID", "spouseID")) |>
-    dplyr::left_join(parent_hash_coords, by = c("newID", "personID"))
+    #   dplyr::left_join(mom_coords, by = c("newID", "personID", "momID")) |>
+    #   dplyr::left_join(dad_coords, by = c("newID", "personID", "dadID")) |>
+    dplyr::left_join(spouse_coords, by = c("newID", "personID", "spouseID")) # |>
+  #    dplyr::left_join(parent_hash_coords, by = c("newID", "personID"))
 
 
   # ---- 5b. compute distance metrics  --------------
   extras <- extras |>
     dplyr::mutate(
-      dist_mom = computeDistance(
-        method = "cityblock",
-        x1 = .data$x_pos, y1 = .data$y_pos,
-        x2 = .data$x_mom, y2 = .data$y_mom
-      ),
-      dist_dad = computeDistance(
-        method = "cityblock",
-        x1 = .data$x_pos, y1 = .data$y_pos,
-        x2 = .data$x_dad, y2 = .data$y_dad
-      ),
+      #     dist_mom = computeDistance(
+      #      method = "cityblock",
+      #      x1 = .data$x_pos, y1 = .data$y_pos,
+      #       x2 = .data$x_mom, y2 = .data$y_mom
+      #     ),
+      #      dist_dad = computeDistance(
+      #       method = "cityblock",
+      #       x1 = .data$x_pos, y1 = .data$y_pos,
+      #       x2 = .data$x_dad, y2 = .data$y_dad
+      #     ),
       dist_spouse = computeDistance(
         method = "cityblock",
         x1 = .data$x_pos, y1 = .data$y_pos,
         x2 = .data$x_spouse, y2 = .data$y_spouse
-      ),
-      parent_dist_mid = computeDistance(
-        method = "cityblock",
-        x1 = .data$x_pos, y1 = .data$y_pos,
-        x2 = .data$x_parent_hash, y2 = .data$y_parent_hash
-      ),
-      parent_dist_sum = .data$dist_mom + .data$dist_dad
+      ) # ,
+      #      parent_dist_mid = computeDistance(
+      #     method = "cityblock",
+      #    x1 = .data$x_pos, y1 = .data$y_pos,
+      #    x2 = .data$x_parent_hash, y2 = .data$y_parent_hash
+      #   ),
+      #     parent_dist_sum = .data$dist_mom + .data$dist_dad
     )
 
 
@@ -201,31 +201,31 @@ processExtras <- function(ped, config = list()) {
     dplyr::rename(spouse_choice = "personID")
 
 
-  if (sum(ped$total_blue, na.rm = TRUE) == 0) {
-    parent_winner <- extras |>
-      dplyr::group_by(.data$coreID) |>
-      dplyr::slice_min(.data$parent_dist_mid,
-        n = 1,
-        with_ties = FALSE
-      ) |>
-      dplyr::ungroup() |>
-      dplyr::select("coreID", "personID") |>
-      dplyr::rename(parent_choice = "personID")
-  } else {
-    # if there are spouseID == momID or spouseID == dadID, then parent choice needs to be the 2nd closest
-    # this version penalizes total distance by summing the distances to mom and dad
-    parent_winner <- extras |>
-      dplyr::group_by(.data$coreID) |>
-      dplyr::arrange(.data$parent_dist_sum, .by_group = TRUE) |>
-      dplyr::mutate(
-        rank       = dplyr::row_number(), # 1 = closest, 2 = second‑closest …
-        pick_rank  = dplyr::if_else(any(.data$total_blue), 2L, 1L) # group‑level choice
-      ) |>
-      dplyr::filter(.data$rank == .data$pick_rank) |>
-      dplyr::ungroup() |>
-      dplyr::select("coreID", "personID") |>
-      dplyr::rename(parent_choice = "personID")
-  }
+  # if (sum(ped$total_blue, na.rm = TRUE) == 0) {
+  #   parent_winner <- extras |>
+  #     dplyr::group_by(.data$coreID) |>
+  #     dplyr::slice_min(.data$parent_dist_mid,
+  #       n = 1,
+  #       with_ties = FALSE
+  #     ) |>
+  #     dplyr::ungroup() |>
+  #     dplyr::select("coreID", "personID") |>
+  #     dplyr::rename(parent_choice = "personID")
+  # } else {
+  #   # if there are spouseID == momID or spouseID == dadID, then parent choice needs to be the 2nd closest
+  #   # this version penalizes total distance by summing the distances to mom and dad
+  #   parent_winner <- extras |>
+  #     dplyr::group_by(.data$coreID) |>
+  #     dplyr::arrange(.data$parent_dist_sum, .by_group = TRUE) |>
+  #     dplyr::mutate(
+  #       rank       = dplyr::row_number(), # 1 = closest, 2 = second‑closest …
+  #       pick_rank  = dplyr::if_else(any(.data$total_blue), 2L, 1L) # group‑level choice
+  #     ) |>
+  #     dplyr::filter(.data$rank == .data$pick_rank) |>
+  #     dplyr::ungroup() |>
+  #     dplyr::select("coreID", "personID") |>
+  #     dplyr::rename(parent_choice = "personID")
+  # }
   # ---- 7. row‑wise relink using nearest appearance -------------------------
 
   # lookup table: every appearance of every coreID
@@ -290,18 +290,18 @@ processExtras <- function(ped, config = list()) {
 
   ped <- ped |>
     dplyr::left_join(spouse_winner, by = "coreID") |>
-    dplyr::left_join(parent_winner, by = "coreID") |>
+    #   dplyr::left_join(parent_winner, by = "coreID") |>
     dplyr::mutate(
-      momID = dplyr::case_when(
-        .data$personID == .data$parent_choice ~ .data$momID,
-        !is.na(.data$parent_choice) ~ ped$momID[NA_integer_],
-        TRUE ~ .data$momID
-      ),
-      dadID = dplyr::case_when(
-        .data$personID == .data$parent_choice ~ .data$dadID,
-        !is.na(.data$parent_choice) ~ ped$dadID[NA_integer_],
-        TRUE ~ .data$dadID
-      ),
+      # momID = dplyr::case_when(
+      #   .data$personID == .data$parent_choice ~ .data$momID,
+      #   !is.na(.data$parent_choice) ~ ped$momID[NA_integer_],
+      #   TRUE ~ .data$momID
+      # ),
+      # dadID = dplyr::case_when(
+      #   .data$personID == .data$parent_choice ~ .data$dadID,
+      #   !is.na(.data$parent_choice) ~ ped$dadID[NA_integer_],
+      #   TRUE ~ .data$dadID
+      # ),
       spouseID = dplyr::case_when(
         .data$personID == .data$spouse_choice ~ .data$spouseID,
         !is.na(.data$spouse_choice) ~ ped$spouseID[NA_integer_],
@@ -309,23 +309,24 @@ processExtras <- function(ped, config = list()) {
       )
     ) |>
     dplyr::select(
-      -"parent_choice", -"spouse_choice",
+      # -"parent_choice",
+      -"spouse_choice",
       -dplyr::starts_with("newID")
     )
   ped <- ped |>
     relink("spouseID") |>
-    relink("momID") |>
-    relink("dadID") |>
+    #   relink("momID") |>
+    #  relink("dadID") |>
     unique()
 
   # rehash
   ped <- ped |>
     dplyr::mutate(
-      parent_hash = makeSymmetricKey(.data$momID, .data$dadID),
+      #     parent_hash = makeSymmetricKey(.data$momID, .data$dadID),
       couple_hash = makeSymmetricKey(.data$personID, .data$spouseID)
     ) |>
     dplyr::mutate(
-      parent_hash = gsub("NA.NA", NA_character_, .data$parent_hash),
+      #  parent_hash = gsub("NA.NA", NA_character_, .data$parent_hash),
       couple_hash = gsub("NA.NA", NA_character_, .data$couple_hash)
     )
   # ---- 8. remove duplicates and return ------------------------------------
