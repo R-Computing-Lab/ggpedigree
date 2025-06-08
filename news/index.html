@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,9 +43,18 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.0" id="ggpedigree-070">ggpedigree 0.7.0<a class="anchor" aria-label="anchor" href="#ggpedigree-070"></a></h2>
+<ul><li>Changed the default behavior of <code>ggPedigree</code> to use x_fam and y_fam for positioning families, rather than x_midparent and y_midparent. This change allows for better visualization of pedigrees with multiple families.</li>
+<li>Changed the get midpoint of curvature to better approximate geom_curv behavior.</li>
+<li>reduced redundancy in code base by not calculating the parent midpoints when not needed.</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.6.1" id="ggpedigree-061">ggpedigree 0.6.1<a class="anchor" aria-label="anchor" href="#ggpedigree-061"></a></h2>
-<ul><li>Transferred <code><a href="../reference/plotPedigree.html">plotPedigree()</a></code> function from BGmisc to ggpedigree. # ggpedigree 0.6.0</li>
-<li>Implemented fill by matID, patID using several scales, such as hue, viridis, and others.</li>
+<ul><li>Transferred <code><a href="../reference/plotPedigree.html">plotPedigree()</a></code> function from BGmisc to ggpedigree.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.6.0" id="ggpedigree-060">ggpedigree 0.6.0<a class="anchor" aria-label="anchor" href="#ggpedigree-060"></a></h2>
+<ul><li>Implemented fill by matID, patID using several scales, such as hue, viridis, and others.</li>
 <li>Added support for emojis in the <code>ggpedigree</code> function.</li>
 <li>Solved the bug that created excessive branches</li>
 <li>Made the twin sibling segments smarter</li>
