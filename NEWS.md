@@ -2,6 +2,7 @@
 * Changed the default behavior of `ggPedigree` to use x_fam and y_fam for positioning families, rather than x_midparent and y_midparent. This change allows for better visualization of pedigrees with multiple families.
 * Changed the get midpoint of curvature to better approximate geom_curv behavior.
 * reduced redundancy in code base by not calculating the parent midpoints when not needed.
+* Added default_config support for  ggRelatednessMatrix functions.
 
 # ggpedigree 0.6.1
 * Transferred `plotPedigree()` function from BGmisc to ggpedigree.
@@ -15,7 +16,6 @@
 
 # ggpedigree 0.5.1
 * Fix tooltip appearing in `ggPedigreeInteractive` when tooltip_include is set to FALSE.
-
 
 # ggpedigree 0.5.0
 * Added segment_linetype and custom affected labels to the `ggpedigree` function.

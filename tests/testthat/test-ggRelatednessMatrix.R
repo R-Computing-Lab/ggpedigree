@@ -25,9 +25,9 @@ test_that("ggRelatednessMatrix returns a gg object", {
     add_mat,
     config = list(
       color_palette = c("white", "orange", "red"),
-      scale_midpoint = 0.55,
-      cluster = TRUE,
-      title = "Additive Genetic Relatedness",
+      color_scale_midpoint = 0.55,
+      tile_cluster = TRUE,
+      plot_title = "Additive Genetic Relatedness",
       text_size = 15
     )
   )
@@ -69,13 +69,13 @@ test_that("ggRelatednessMatrix handles triangles", {
   p_add <- ggRelatednessMatrix(
     add_mat,
     config = list(
-      color_palette = c("white", "orange", "red"),
-      scale_midpoint = 0.55,
-      cluster = FALSE,
-      title = "Additive Genetic Relatedness",
-      text_size = 15,
-      include_upper_triangle = FALSE, # Test upper triangle exclusion
-      include_lower_triangle = TRUE # Test lower triangle inclusion
+      tile_color_palette = c("white", "orange", "red"),
+      color_scale_midpoint = 0.55,
+      tile_cluster = FALSE,
+      plot_title = "Additive Genetic Relatedness",
+      axis_text_size = 15,
+      matrix_upper_triangle_include = FALSE, # Test upper triangle exclusion
+      matrix_lower_triangle_include = TRUE # Test lower triangle inclusion
     )
   )
   expect_s3_class(p_add, "gg")

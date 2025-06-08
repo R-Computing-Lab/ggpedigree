@@ -137,6 +137,14 @@ getDefaultPlotConfig(
   focal_fill_viridis_direction = 1,
   ci_include = TRUE,
   ci_ribbon_alpha = 0.3,
+  tile_color_palette = c("white", "gold", "red"),
+  tile_interpolate = TRUE,
+  tile_color_border = NA,
+  tile_cluster = TRUE,
+  tile_geom = "geom_tile",
+  matrix_diagonal_include = TRUE,
+  matrix_upper_triangle_include = FALSE,
+  matrix_lower_triangle_include = TRUE,
   matrix_sparse = FALSE,
   matrix_isChild_method = "partialparent",
   return_static = TRUE,
@@ -411,6 +419,22 @@ getDefaultPlotConfig(
 \item{ci_include}{Whether to show confidence intervals.}
 
 \item{ci_ribbon_alpha}{Alpha level for CI ribbons.}
+
+\item{tile_color_palette}{Color palette for matrix plots.}
+
+\item{tile_interpolate}{Whether to interpolate colors in matrix tiles.}
+
+\item{tile_color_border}{Color border for matrix tiles.}
+
+\item{tile_cluster}{Whether to sort by clusters the matrix.}
+
+\item{tile_geom}{Geometry type for matrix tiles (e.g., "geom_tile", "geom_raster").}
+
+\item{matrix_diagonal_include}{Whether to include diagonal in matrix plots.}
+
+\item{matrix_upper_triangle_include}{Whether to include upper triangle in matrix plots.}
+
+\item{matrix_lower_triangle_include}{Whether to include lower triangle in matrix plots.}
 
 \item{matrix_sparse}{Whether matrix input is sparse.}
 

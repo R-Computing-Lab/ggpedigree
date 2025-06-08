@@ -138,6 +138,14 @@
 #' @param focal_fill_viridis_direction Direction of viridis color scale (1 for left to right, -1 for right to left).
 #' @param ci_include Whether to show confidence intervals.
 #' @param ci_ribbon_alpha Alpha level for CI ribbons.
+#' @param tile_color_palette Color palette for matrix plots.
+#' @param tile_color_border Color border for matrix tiles.
+#' @param tile_interpolate Whether to interpolate colors in matrix tiles.
+#' @param tile_geom Geometry type for matrix tiles (e.g., "geom_tile", "geom_raster").
+#' @param tile_cluster Whether to sort by clusters the matrix.
+#' @param matrix_diagonal_include Whether to include diagonal in matrix plots.
+#' @param matrix_upper_triangle_include Whether to include upper triangle in matrix plots.
+#' @param matrix_lower_triangle_include Whether to include lower triangle in matrix plots.
 #' @param matrix_sparse Whether matrix input is sparse.
 #' @param matrix_isChild_method Method used for isChild matrix derivation.
 #' @param return_static Whether to return a static plot.
@@ -301,7 +309,16 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  # ---- Confidence Intervals
                                  ci_include = TRUE,
                                  ci_ribbon_alpha = .3,
+                                 # ---- tile settings ----
+                                 tile_color_palette = c("white", "gold", "red"),
+                                 tile_interpolate = TRUE,
+                                 tile_color_border = NA,
+                                 tile_cluster = TRUE,
+                                 tile_geom = "geom_tile",
                                  # ---- matrix settings ----
+                                 matrix_diagonal_include = TRUE,
+                                 matrix_upper_triangle_include = FALSE,
+                                 matrix_lower_triangle_include = TRUE,
                                  matrix_sparse = FALSE,
                                  matrix_isChild_method = "partialparent",
                                  # -- Output Options ----
@@ -499,9 +516,18 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     ci_include = ci_include,
     ci_ribbon_alpha = ci_ribbon_alpha,
 
+    # ---- tile settings ----
+    tile_color_palette = tile_color_palette,
+    tile_color_border = tile_color_border,
+    tile_cluster = tile_cluster,
+    tile_interpolate = tile_interpolate,
+    tile_geom = tile_geom,
     # ---- matrix settings ----
     matrix_sparse = matrix_sparse,
     matrix_isChild_method = matrix_isChild_method,
+    matrix_diagonal_include = matrix_diagonal_include,
+    matrix_upper_triangle_include = matrix_upper_triangle_include,
+    matrix_lower_triangle_include = matrix_lower_triangle_include,
 
 
     # -- Output Options ----
@@ -516,6 +542,19 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
   if (stringr::str_to_lower(function_name) %in% c("ggrelatednessmatrix")) {
     #   If the function is ggRelatednessMatrix, we need to adjust the tooltip columns
     core_list$tooltip_columns <- c("ID1", "ID2", "value")
+    core_list$tile_color_palette <- c(
+      core_list$color_palette_low,
+      core_list$color_palette_mid,
+      core_list$color_palette_high
+    )
+    core_list$color_scale_midpoint <- 0.25
+    core_list$plot_title <- "Relatedness Matrix"
+    core_list$axis_x_label <- "Individual"
+    core_list$axis_y_label <- core_list$axis_x_label
+    core_list$label_include <- FALSE
+    core_list$label_column <- "value"
+    core_list$return_widget <- FALSE
+    core_list$return_interactive <- FALSE
   } else if (stringr::str_to_lower(function_name) %in%
     c("ggphenotypebydegree", "phenotypebydegree")) {
     core_list$point_size <- 1

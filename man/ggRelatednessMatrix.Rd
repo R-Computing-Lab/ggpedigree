@@ -42,11 +42,11 @@ Plots a relatedness matrix using ggplot2 with config options.
 \details{
 Config options include:
  \describe{
-  \item{color_palette}{A vector of colors for the heatmap (default: Reds scale)}
-  \item{scale_midpoint}{Numeric midpoint for diverging color scale (default: 0.25)}
-  \item{title}{Plot title}
-  \item{cluster}{Logical; should rows/cols be clustered (default: TRUE)}
-  \item{xlab, ylab}{Axis labels}
+  \item{matrix_color_palette}{A vector of colors for the heatmap (default: Reds scale)}
+  \item{color_scale_midpoint}{Numeric midpoint for diverging color scale (default: 0.25)}
+  \item{plot_title}{Plot title}
+  \item{matrix_cluster}{Logical; should rows/cols be clustered (default: TRUE)}
+  \item{axis_x_label, axis_y_label}{Axis labels}
   \item{axis_text_size}{Axis text size}
 }
 }
@@ -60,12 +60,12 @@ colnames(mat) <- paste0("ID", 1:10)
 # Plot the relatedness matrix
 ggRelatednessMatrix(mat,
   config = list(
-    color_palette = c("white", "gold", "red"),
-    scale_midpoint = 0.5,
-    cluster = TRUE,
-    title = "Relatedness Matrix",
-    xlab = "Individuals",
-    ylab = "Individuals",
+    matrix_color_palette = c("white", "gold", "red"),
+    color_scale_midpoint = 0.5,
+    matrix_cluster = TRUE,
+    plot_title = "Relatedness Matrix",
+    axis_x_label = "Individuals",
+    axis_y_label = "Individuals",
     axis_text_size = 8
   )
 )
