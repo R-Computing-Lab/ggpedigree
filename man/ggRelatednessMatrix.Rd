@@ -33,6 +33,8 @@ See Details for available options.}
 
 \item{tooltip_columns}{A character vector of column names to include in tooltips.}
 
+\item{personID}{Character; name of the column containing unique person identifiers.}
+
 \item{...}{Additional arguments passed to ggplot2 layers.}
 }
 \value{
