@@ -54,6 +54,7 @@
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  interactive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  tooltip_columns <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -62,6 +63,7 @@
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  interactive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  tooltip_columns <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -87,6 +89,10 @@ See Details for available options.</p></dd>
 <dd><p>A character vector of column names to include in tooltips.</p></dd>
 
 
+<dt id="arg-personid">personID<a class="anchor" aria-label="anchor" href="#arg-personid"></a></dt>
+<dd><p>Character; name of the column containing unique person identifiers.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional arguments passed to ggplot2 layers.</p></dd>
 
@@ -97,19 +103,19 @@ See Details for available options.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Config options include:</p><dl><dt>color_palette</dt>
+    <p>Config options include:</p><dl><dt>matrix_color_palette</dt>
 <dd><p>A vector of colors for the heatmap (default: Reds scale)</p></dd>
 
-  <dt>scale_midpoint</dt>
+  <dt>color_scale_midpoint</dt>
 <dd><p>Numeric midpoint for diverging color scale (default: 0.25)</p></dd>
 
-  <dt>title</dt>
+  <dt>plot_title</dt>
 <dd><p>Plot title</p></dd>
 
-  <dt>cluster</dt>
+  <dt>matrix_cluster</dt>
 <dd><p>Logical; should rows/cols be clustered (default: TRUE)</p></dd>
 
-  <dt>xlab, ylab</dt>
+  <dt>axis_x_label, axis_y_label</dt>
 <dd><p>Axis labels</p></dd>
 
   <dt>axis_text_size</dt>
@@ -129,12 +135,12 @@ See Details for available options.</p></dd>
 <span class="r-in"><span><span class="co"># Plot the relatedness matrix</span></span></span>
 <span class="r-in"><span><span class="fu">ggRelatednessMatrix</span><span class="op">(</span><span class="va">mat</span>,</span></span>
 <span class="r-in"><span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    color_palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"gold"</span>, <span class="st">"red"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    scale_midpoint <span class="op">=</span> <span class="fl">0.5</span>,</span></span>
-<span class="r-in"><span>    cluster <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>    title <span class="op">=</span> <span class="st">"Relatedness Matrix"</span>,</span></span>
-<span class="r-in"><span>    xlab <span class="op">=</span> <span class="st">"Individuals"</span>,</span></span>
-<span class="r-in"><span>    ylab <span class="op">=</span> <span class="st">"Individuals"</span>,</span></span>
+<span class="r-in"><span>    matrix_color_palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"gold"</span>, <span class="st">"red"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    color_scale_midpoint <span class="op">=</span> <span class="fl">0.5</span>,</span></span>
+<span class="r-in"><span>    matrix_cluster <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>    plot_title <span class="op">=</span> <span class="st">"Relatedness Matrix"</span>,</span></span>
+<span class="r-in"><span>    axis_x_label <span class="op">=</span> <span class="st">"Individuals"</span>,</span></span>
+<span class="r-in"><span>    axis_y_label <span class="op">=</span> <span class="st">"Individuals"</span>,</span></span>
 <span class="r-in"><span>    axis_text_size <span class="op">=</span> <span class="fl">8</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>

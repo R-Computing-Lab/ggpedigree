@@ -74,7 +74,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  color_palette_mid <span class="op">=</span> <span class="st">"#56106EFF"</span>,</span>
 <span>  color_palette_high <span class="op">=</span> <span class="st">"#FCFDBFFF"</span>,</span>
 <span>  color_scale_midpoint <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>  color_scale <span class="op">=</span> <span class="st">"ggthemes::calc"</span>,</span>
+<span>  color_scale_theme <span class="op">=</span> <span class="st">"ggthemes::calc"</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="va">alpha_default</span>,</span>
 <span>  plot_title <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  plot_subtitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -194,11 +194,20 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  focal_fill_viridis_direction <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  ci_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  ci_ribbon_alpha <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span>  tile_color_palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"gold"</span>, <span class="st">"red"</span><span class="op">)</span>,</span>
+<span>  tile_interpolate <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  tile_color_border <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  tile_cluster <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  tile_geom <span class="op">=</span> <span class="st">"geom_tile"</span>,</span>
+<span>  matrix_diagonal_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  matrix_upper_triangle_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  matrix_lower_triangle_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  matrix_sparse <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  matrix_isChild_method <span class="op">=</span> <span class="st">"partialparent"</span>,</span>
 <span>  return_static <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  return_widget <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  return_interactive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  return_midparent <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  debug <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  override_many2many <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -257,7 +266,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <dd><p>Midpoint value for continuous color scales.</p></dd>
 
 
-<dt id="arg-color-scale">color_scale<a class="anchor" aria-label="anchor" href="#arg-color-scale"></a></dt>
+<dt id="arg-color-scale-theme">color_scale_theme<a class="anchor" aria-label="anchor" href="#arg-color-scale-theme"></a></dt>
 <dd><p>Name of the color scale used (e.g., "ggthemes::calc").</p></dd>
 
 
@@ -737,6 +746,38 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <dd><p>Alpha level for CI ribbons.</p></dd>
 
 
+<dt id="arg-tile-color-palette">tile_color_palette<a class="anchor" aria-label="anchor" href="#arg-tile-color-palette"></a></dt>
+<dd><p>Color palette for matrix plots.</p></dd>
+
+
+<dt id="arg-tile-interpolate">tile_interpolate<a class="anchor" aria-label="anchor" href="#arg-tile-interpolate"></a></dt>
+<dd><p>Whether to interpolate colors in matrix tiles.</p></dd>
+
+
+<dt id="arg-tile-color-border">tile_color_border<a class="anchor" aria-label="anchor" href="#arg-tile-color-border"></a></dt>
+<dd><p>Color border for matrix tiles.</p></dd>
+
+
+<dt id="arg-tile-cluster">tile_cluster<a class="anchor" aria-label="anchor" href="#arg-tile-cluster"></a></dt>
+<dd><p>Whether to sort by clusters the matrix.</p></dd>
+
+
+<dt id="arg-tile-geom">tile_geom<a class="anchor" aria-label="anchor" href="#arg-tile-geom"></a></dt>
+<dd><p>Geometry type for matrix tiles (e.g., "geom_tile", "geom_raster").</p></dd>
+
+
+<dt id="arg-matrix-diagonal-include">matrix_diagonal_include<a class="anchor" aria-label="anchor" href="#arg-matrix-diagonal-include"></a></dt>
+<dd><p>Whether to include diagonal in matrix plots.</p></dd>
+
+
+<dt id="arg-matrix-upper-triangle-include">matrix_upper_triangle_include<a class="anchor" aria-label="anchor" href="#arg-matrix-upper-triangle-include"></a></dt>
+<dd><p>Whether to include upper triangle in matrix plots.</p></dd>
+
+
+<dt id="arg-matrix-lower-triangle-include">matrix_lower_triangle_include<a class="anchor" aria-label="anchor" href="#arg-matrix-lower-triangle-include"></a></dt>
+<dd><p>Whether to include lower triangle in matrix plots.</p></dd>
+
+
 <dt id="arg-matrix-sparse">matrix_sparse<a class="anchor" aria-label="anchor" href="#arg-matrix-sparse"></a></dt>
 <dd><p>Whether matrix input is sparse.</p></dd>
 
@@ -755,6 +796,10 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 <dt id="arg-return-interactive">return_interactive<a class="anchor" aria-label="anchor" href="#arg-return-interactive"></a></dt>
 <dd><p>Whether to return an interactive plot.</p></dd>
+
+
+<dt id="arg-return-midparent">return_midparent<a class="anchor" aria-label="anchor" href="#arg-return-midparent"></a></dt>
+<dd><p>Whether to return midparent values in the plot.</p></dd>
 
 
 <dt id="arg-debug">debug<a class="anchor" aria-label="anchor" href="#arg-debug"></a></dt>
