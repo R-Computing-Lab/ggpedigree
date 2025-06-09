@@ -35,7 +35,7 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/v00_plots.html">Plotting pedigrees with ggPedigree()</a></li>
     <li><a class="dropdown-item" href="../articles/v01_plots_extended.html">Extended Plotting pedigrees with ggPedigree()</a></li>
-    <li><a class="dropdown-item" href="../articles/v10_interactiveplots.html">Interactive Pedigree Plotting with ggPedigreeInteractive()</a></li>
+    <li><a class="dropdown-item" href="../articles/v10_interactiveplots.html">Interactive Pedigree Plotting with ggPedigreeInteractive</a></li>
     <li><a class="dropdown-item" href="../articles/v11_extendedinteractiveplots.html">Extended More Complex Pedigree Plots with ggPedigreeInteractive</a></li>
     <li><a class="dropdown-item" href="../articles/v20_matrix.html">Visualizing Relatedness Matrices with ggRelatednessMatrix()</a></li>
     <li><a class="dropdown-item" href="../articles/v21_phenotypicbydegree.html">Extended Plotting Phenotypic Correlation by Degree of Relatedness</a></li>
@@ -329,7 +329,7 @@ additive genetic relatives of the focal person.</p>
 <span>    <span class="co">#   focal_fill_low_color = "#0D082AFF",</span></span>
 <span>    focal_fill_force_zero <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    focal_fill_na_value <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span>    focal_fill_scale_midpoint <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    focal_fill_scale_midpoint <span class="op">=</span> <span class="fl">0.25</span>,</span>
 <span>    focal_fill_component <span class="op">=</span> <span class="st">"additive"</span>,</span>
 <span>    focal_fill_method <span class="op">=</span> <span class="st">"gradient"</span>,</span>
 <span>    focal_fill_n_breaks <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -392,7 +392,7 @@ color breaks.</p>
 <span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html" class="external-link">plot_annotation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Mitochondrial Relatives of Harry Potter and Ginny Weasley"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="v00_plots_files/figure-html/focal_fill_mitochondrial-1.png" width="537.6"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span><span class="va">potter</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span><span class="va">potter</span>,</span>
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
 <span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -411,10 +411,8 @@ color breaks.</p>
 <span>    overlay_include <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span> <span class="co"># highlight Harry Potter</span></span>
 <span>  <span class="co"># config  = list(segment_mz_color = NA) # color for monozygotic twins</span></span>
-<span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">test</span></span></code></pre></div>
-<p><img src="v00_plots_files/figure-html/focal_fill_ginny-1.png" width="537.6"></p>
+<span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="v00_plots_files/figure-html/focal_fill_matID-1.png" width="537.6"></p>
 </div>
 </div>
 <div class="section level2">
