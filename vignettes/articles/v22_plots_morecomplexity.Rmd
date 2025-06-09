@@ -179,6 +179,47 @@ plt <- ggPedigreeInteractive(df_repaired_renamed,
 )
 
 plt
+htmlwidgets::saveWidget(plt, "ggpedigreeinteractive_aegon.html", selfcontained = TRUE)
+
+plt <- ggPedigreeInteractive(df_repaired_renamed,
+  #  status_column = "affected",
+  personID = "personID",
+  # debug=TRUE,
+  config = list(
+    # status_label_unaffected = 0,
+    sex_color_include = FALSE,
+    focal_fill_personID = 339,
+    focal_fill_include = TRUE,
+    code_male = "M",
+    point_size = 1,
+    status_include = FALSE,
+    status_label_affected = 1,
+    status_shape_affected = 4,
+    ped_width = 14,
+    #  segment_spouse_color = "red",
+    #  segment_sibling_color = "blue",
+    # segment_parent_color = "green",
+    #  segment_offspring_color = "purple",
+    # segment_self_color = NA,
+    #  segment_mz_color = "orange",
+    segment_self_angle = -75,
+    segment_self_curvature = -0.15,
+    focal_fill_force_zero = TRUE,
+    focal_fill_mid_color = "orange",
+    focal_fill_low_color = "#9F2A63FF",
+    focal_fill_na_value = "black",
+    tooltip_include = TRUE,
+    label_nudge_y = -.25,
+    label_include = TRUE,
+    label_method = "geom_text",
+    segment_self_color = "black",
+    tooltip_columns = c("personID", "name", "focal_fill")
+  )
+)
+
+plt
+htmlwidgets::saveWidget(plt, "ggpedigreeinteractive_rh.html", selfcontained = TRUE)
+
 ```
 
 

@@ -273,7 +273,8 @@ p <- ggPedigree(
     point_size = 2,
     generation_width = 1,
     status_affected_shape = 4,
-    segment_self_color = "purple"
+    segment_self_color = "purple",
+    segment_self_linewidth = .5
   )
 )
 

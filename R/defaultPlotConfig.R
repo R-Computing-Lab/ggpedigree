@@ -18,7 +18,7 @@
 #' @param color_palette_low Color for the low end of a gradient.
 #' @param color_palette_mid Color for the midpoint of a gradient.
 #' @param color_palette_high Color for the high end of a gradient.
-#' @param color_scale Name of the color scale used (e.g., "ggthemes::calc").
+#' @param color_scale_theme Name of the color scale used (e.g., "ggthemes::calc").
 #' @param alpha Default alpha transparency for plot elements.
 #' @param plot_title Main title of the plot.
 #' @param plot_subtitle Subtitle of the plot.
@@ -151,6 +151,7 @@
 #' @param return_static Whether to return a static plot.
 #' @param return_widget Whether to return a widget object.
 #' @param return_interactive Whether to return an interactive plot.
+#' @param return_midparent Whether to return midparent values in the plot.
 #' @param override_many2many Whether to override many-to-many link logic.
 #' @param debug Whether to enable debugging mode.
 #' @param ... Additional arguments for future extensibility.
@@ -172,7 +173,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  color_palette_mid = "#56106EFF",
                                  color_palette_high = "#FCFDBFFF",
                                  color_scale_midpoint = 0.50,
-                                 color_scale = "ggthemes::calc", # only used in gg
+                                 color_scale_theme = "ggthemes::calc", # only used in gg
                                  alpha = alpha_default,
                                  plot_title = NULL,
                                  plot_subtitle = NULL,
@@ -325,6 +326,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  return_static = TRUE,
                                  return_widget = FALSE,
                                  return_interactive = FALSE,
+                                 return_midparent = FALSE,
                                  # ---- Debugging Options ----
                                  debug = FALSE,
                                  override_many2many = FALSE,
@@ -361,7 +363,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     color_palette_mid = color_palette_mid,
     color_palette_high = color_palette_high,
     color_scale_midpoint = color_scale_midpoint,
-    color_scale = color_scale, # only used in gg
+    color_scale_theme = color_scale_theme, # only used in gg
     alpha = alpha,
     plot_title = plot_title,
     plot_subtitle = plot_subtitle,
@@ -534,12 +536,13 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     return_static = return_static,
     return_widget = return_widget,
     return_interactive = return_interactive,
+    return_midparent = return_midparent,
     # ---- Debugging Options ----
     override_many2many = override_many2many,
     debug = debug
   )
-
-  if (stringr::str_to_lower(function_name) %in% c("ggrelatednessmatrix")) {
+lc_function_name <-  stringr::str_to_lower(function_name)
+  if (lc_function_name %in% c("ggrelatednessmatrix")) {
     #   If the function is ggRelatednessMatrix, we need to adjust the tooltip columns
     core_list$tooltip_columns <- c("ID1", "ID2", "value")
     core_list$tile_color_palette <- c(
@@ -555,15 +558,46 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     core_list$label_column <- "value"
     core_list$return_widget <- FALSE
     core_list$return_interactive <- FALSE
-  } else if (stringr::str_to_lower(function_name) %in%
+  } else if (lc_function_name %in%
     c("ggphenotypebydegree", "phenotypebydegree")) {
     core_list$point_size <- 1
     core_list$plot_title <- "Phenotypic Correlation vs Genetic Relatedness"
     core_list$return_static <- FALSE
     core_list$return_widget <- FALSE
     core_list$return_interactive <- FALSE
+
+    #  default_config <- list(
+    #    apply_default_scales = TRUE,
+    #    apply_default_theme = TRUE,
+    #   point_size = 1,
+    #    ci_ribbon_alpha = 0.3,
+
+    # Filter parameters
+    #   filter_n_pairs = 500,
+    #  filter_degree_min = 0,
+    #  filter_degree_max = 7,
+    # Plotting parameters
+    #    plot_title = "Phenotypic Correlation vs Genetic Relatedness",
+    #    subtitle = NULL,
+    #    color_scale = "ggthemes::calc",
+
+    # Configuration parameters
+    #   use_only_classic_kin = TRUE,
+    #  group_by_kin = TRUE,
+    #   drop_classic_kin = FALSE,
+    #  drop_non_classic_sibs = TRUE,
+    # Annotation parameters
+
+
+    # Grouping and scaling parameters
+    #  use_relative_degree = TRUE,
+    #   grouping_column = "mtdna_factor",
+    #    value_rounding_digits = 2,
+    #   match_threshold_percent = 10,
+    #    max_degree_levels = 12
+    #  )
   }
-  if (stringr::str_to_lower(function_name) %in% c(
+  if (lc_function_name %in% c(
     "ggpedigree",
     "ggpedigreeinteractive"
   )) {
@@ -574,13 +608,13 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     # core_list$focal_fill_mid_color <- core_list$color_palette_mid
     # core_list$focal_fill_high_color <- core_list$color_palette_high
   }
-  if (stringr::str_to_lower(function_name) %in% c("ggpedigree")) {
+  if (lc_function_name %in% c("ggpedigree")) {
     core_list$label_method <- "ggrepel"
     core_list$return_static <- FALSE
     core_list$return_widget <- FALSE
     core_list$return_interactive <- FALSE
   }
-  if (stringr::str_to_lower(function_name) %in% c("ggpedigreeinteractive")) {
+  if (lc_function_name %in% c("ggpedigreeinteractive")) {
     core_list$tooltip_columns <- c(personID, "sex", status_column)
     core_list$label_method <- "geom_text"
     core_list$label_include <- FALSE # default to FALSE

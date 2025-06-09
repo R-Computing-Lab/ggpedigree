@@ -17,7 +17,7 @@ getDefaultPlotConfig(
   color_palette_mid = "#56106EFF",
   color_palette_high = "#FCFDBFFF",
   color_scale_midpoint = 0.5,
-  color_scale = "ggthemes::calc",
+  color_scale_theme = "ggthemes::calc",
   alpha = alpha_default,
   plot_title = NULL,
   plot_subtitle = NULL,
@@ -150,6 +150,7 @@ getDefaultPlotConfig(
   return_static = TRUE,
   return_widget = FALSE,
   return_interactive = FALSE,
+  return_midparent = FALSE,
   debug = FALSE,
   override_many2many = FALSE,
   ...
@@ -180,7 +181,7 @@ getDefaultPlotConfig(
 
 \item{color_scale_midpoint}{Midpoint value for continuous color scales.}
 
-\item{color_scale}{Name of the color scale used (e.g., "ggthemes::calc").}
+\item{color_scale_theme}{Name of the color scale used (e.g., "ggthemes::calc").}
 
 \item{alpha}{Default alpha transparency for plot elements.}
 
@@ -445,6 +446,8 @@ getDefaultPlotConfig(
 \item{return_widget}{Whether to return a widget object.}
 
 \item{return_interactive}{Whether to return an interactive plot.}
+
+\item{return_midparent}{Whether to return midparent values in the plot.}
 
 \item{debug}{Whether to enable debugging mode.}
 
