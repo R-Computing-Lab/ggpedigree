@@ -158,7 +158,7 @@ ggPedigree(potter,
     #   focal_fill_low_color = "#0D082AFF",
     focal_fill_force_zero = TRUE,
     focal_fill_na_value = "black",
-    focal_fill_scale_midpoint = 0.5,
+    focal_fill_scale_midpoint = 0.25,
     focal_fill_component = "additive",
     focal_fill_method = "gradient",
     focal_fill_n_breaks = NULL,
@@ -234,7 +234,6 @@ ggPedigree(potter,
   ) # highlight Harry Potter
   # config  = list(segment_mz_color = NA) # color for monozygotic twins
 ) + ggplot2::guides(shape = "none")
-
 
 
 ## ----facet_wrap---------------------------------------------------------------

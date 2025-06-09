@@ -1,8 +1,8 @@
 ---
-title: "Interactive Pedigree Plotting with ggPedigreeInteractive()"
+title: "Interactive Pedigree Plotting with ggPedigreeInteractive"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Interactive Pedigree Plotting with ggPedigreeInteractive()}
+  %\VignetteIndexEntry{Interactive Pedigree Plotting with ggPedigreeInteractive}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -82,7 +82,5 @@ if (interactive()) {
 }
 ```
 
-The above code generates an interactive pedigree plot of the Potter family tree. You can zoom in, pan around, and hover over nodes to see more information. You can do much more with the `ggPedigreeInteractive()` function, including customizing labels, colors, and tooltips. To experience the full list of options, refer to the online article on [ggPedigreeInteractive()](https://bgmisc.github.io/ggpedigree/articles/ggPedigreeInteractive.html).
-
-
+The above code generates an interactive pedigree plot of the Potter family tree. You can zoom in, pan around, and hover over nodes to see more information. You can do much more with the `ggPedigreeInteractive()` function, including customizing labels, colors, and tooltips. To experience the full list of options, refer to the online article.
 

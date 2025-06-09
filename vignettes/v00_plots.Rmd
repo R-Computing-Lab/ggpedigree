@@ -247,7 +247,7 @@ ggPedigree(potter,
     #   focal_fill_low_color = "#0D082AFF",
     focal_fill_force_zero = TRUE,
     focal_fill_na_value = "black",
-    focal_fill_scale_midpoint = 0.5,
+    focal_fill_scale_midpoint = 0.25,
     focal_fill_component = "additive",
     focal_fill_method = "gradient",
     focal_fill_n_breaks = NULL,
@@ -308,8 +308,8 @@ m1 + m2 + plot_layout(ncol = 2) +
 ```
 
 
-```{r focal_fill_ginny}
-test <- ggPedigree(potter,
+```{r focal_fill_matID}
+ggPedigree(potter,
   famID = "famID",
   personID = "personID",
   config = list(
@@ -330,7 +330,6 @@ test <- ggPedigree(potter,
   # config  = list(segment_mz_color = NA) # color for monozygotic twins
 ) + ggplot2::guides(shape = "none")
 
-test
 ```
 
 # Multiple families in one graphic
