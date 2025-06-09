@@ -541,7 +541,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     override_many2many = override_many2many,
     debug = debug
   )
-lc_function_name <-  stringr::str_to_lower(function_name)
+  lc_function_name <- stringr::str_to_lower(function_name)
   if (lc_function_name %in% c("ggrelatednessmatrix")) {
     #   If the function is ggRelatednessMatrix, we need to adjust the tooltip columns
     core_list$tooltip_columns <- c("ID1", "ID2", "value")

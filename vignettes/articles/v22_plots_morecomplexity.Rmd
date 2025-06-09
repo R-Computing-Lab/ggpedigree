@@ -219,7 +219,6 @@ plt <- ggPedigreeInteractive(df_repaired_renamed,
 
 plt
 htmlwidgets::saveWidget(plt, "ggpedigreeinteractive_rh.html", selfcontained = TRUE)
-
 ```
 
 

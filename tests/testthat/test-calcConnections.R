@@ -13,19 +13,21 @@ test_that("calculateConnections returns expected columns and structure", {
     momID = "momID",
     dadID = "dadID",
     spouseID = "spouseID",
-    config = list(ped_align = TRUE,
-                  ped_packed = TRUE,
-                  return_midparent = TRUE)
+    config = list(
+      ped_align = TRUE,
+      ped_packed = TRUE,
+      return_midparent = TRUE
+    )
   )
 
-  conn_out <- calculateConnections(ped,config = list(return_midparent = TRUE))
+  conn_out <- calculateConnections(ped, config = list(return_midparent = TRUE))
   conns <- conn_out$connections
 
   expect_true(is.data.frame(conns))
   expect_true(all(c(
     "personID", "x_pos", "y_pos", "momID", "dadID", "spouseID",
     "x_mom", "y_mom", "x_dad", "y_dad", "x_spouse", "y_spouse",
-    "x_fam", "y_fam", "x_midparent", "y_midparent","x_mid_spouse", "y_mid_spouse",
+    "x_fam", "y_fam", "x_midparent", "y_midparent", "x_mid_spouse", "y_mid_spouse",
     "x_mid_sib", "y_mid_sib"
   ) %in% names(conns)))
 })

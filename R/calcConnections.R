@@ -200,24 +200,24 @@ calculateConnections <- function(ped,
     unique()
 
   # Calculate midpoints between mom and dad in child row
-if(config$return_midparent == TRUE) {
+  if (config$return_midparent == TRUE) {
     parent_midpoints <- connections |>
-     dplyr::filter(.data$link_as_sibling &
+      dplyr::filter(.data$link_as_sibling &
         !is.na(.data$dadID) & !is.na(.data$momID)) |>
-     unique() |>
+      unique() |>
       dplyr::group_by(.data$parent_hash) |>
       dplyr::summarize(
         x_midparent = mean(c(
           dplyr::first(.data$x_dad, na_rm = TRUE),
-         dplyr::first(.data$x_mom, na_rm = TRUE)
-       )),
-       y_midparent = mean(c(
-         dplyr::first(.data$y_dad, na_rm = TRUE),
-         dplyr::first(.data$y_mom, na_rm = TRUE)
-       )),
-      .groups = "drop"
-    )
-}
+          dplyr::first(.data$x_mom, na_rm = TRUE)
+        )),
+        y_midparent = mean(c(
+          dplyr::first(.data$y_dad, na_rm = TRUE),
+          dplyr::first(.data$y_mom, na_rm = TRUE)
+        )),
+        .groups = "drop"
+      )
+  }
   # Calculate midpoints between spouses
   spouse_midpoints <- connections |>
     dplyr::filter(
@@ -262,15 +262,15 @@ if(config$return_midparent == TRUE) {
     unique()
 
 
-if(config$return_midparent == TRUE) {
-  # print(parent_midpoints)
-  # Merge midpoints into connections
-  connections <- connections |>
+  if (config$return_midparent == TRUE) {
+    # print(parent_midpoints)
+    # Merge midpoints into connections
+    connections <- connections |>
       dplyr::left_join(parent_midpoints,
         by = c("parent_hash")
-       ) |>
-       unique()
-}
+      ) |>
+      unique()
+  }
   connections <- connections |>
     dplyr::left_join(spouse_midpoints,
       by = c("spouseID", "couple_hash")

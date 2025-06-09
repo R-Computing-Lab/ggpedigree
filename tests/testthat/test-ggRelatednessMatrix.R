@@ -118,7 +118,7 @@ test_that("ggRelatednessMatrix handles matrix diagonal", {
   p_add <- ggRelatednessMatrix(
     add_mat,
     config = list(
-     # tile_color_palette = c("white", "orange", "red"),
+      # tile_color_palette = c("white", "orange", "red"),
       color_scale_midpoint = 0.55,
       tile_cluster = FALSE,
       plot_title = "Additive Genetic Relatedness",
@@ -141,10 +141,11 @@ test_that("ggRelatednessMatrix handles matrix diagonal", {
   # Check if the upper triangle is excluded
   expect_true(all(!is.na(p_add$data$value[upper.tri(p_add$data$value)])))
   # Check if the lower triangle is included
- # expect_true(all(is.na(p_add$data$value[lower.tri(p_add$data$value)])))
+  # expect_true(all(is.na(p_add$data$value[lower.tri(p_add$data$value)])))
 
   expect_error(
-    ggRelatednessMatrix(add_mat, config = list(tile_geom = "geom_point")))
+    ggRelatednessMatrix(add_mat, config = list(tile_geom = "geom_point"))
+  )
 })
 
 test_that("ggRelatednessMatrix stops on incorrect input", {
@@ -155,7 +156,4 @@ test_that("ggRelatednessMatrix stops on incorrect input", {
   expect_error(
     ggRelatednessMatrix(data.frame(ID = 1:3))
   )
-
-
-
 })
