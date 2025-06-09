@@ -7,16 +7,17 @@
 #'   See Details for available options.
 #' @param interactive Logical; if TRUE, returns an interactive plotly object.
 #' @param tooltip_columns A character vector of column names to include in tooltips.
+#' @param personID Character; name of the column containing unique person identifiers.
 #' @param ... Additional arguments passed to ggplot2 layers.
 #'
 #' @details
 #' Config options include:
 #'  \describe{
-#'   \item{color_palette}{A vector of colors for the heatmap (default: Reds scale)}
-#'   \item{scale_midpoint}{Numeric midpoint for diverging color scale (default: 0.25)}
-#'   \item{title}{Plot title}
-#'   \item{cluster}{Logical; should rows/cols be clustered (default: TRUE)}
-#'   \item{xlab, ylab}{Axis labels}
+#'   \item{matrix_color_palette}{A vector of colors for the heatmap (default: Reds scale)}
+#'   \item{color_scale_midpoint}{Numeric midpoint for diverging color scale (default: 0.25)}
+#'   \item{plot_title}{Plot title}
+#'   \item{matrix_cluster}{Logical; should rows/cols be clustered (default: TRUE)}
+#'   \item{axis_x_label, axis_y_label}{Axis labels}
 #'   \item{axis_text_size}{Axis text size}
 #' }
 #' @return A ggplot object displaying the relatedness matrix as a heatmap.
@@ -31,12 +32,12 @@
 #' # Plot the relatedness matrix
 #' ggRelatednessMatrix(mat,
 #'   config = list(
-#'     color_palette = c("white", "gold", "red"),
-#'     scale_midpoint = 0.5,
-#'     cluster = TRUE,
-#'     title = "Relatedness Matrix",
-#'     xlab = "Individuals",
-#'     ylab = "Individuals",
+#'     matrix_color_palette = c("white", "gold", "red"),
+#'     color_scale_midpoint = 0.5,
+#'     matrix_cluster = TRUE,
+#'     plot_title = "Relatedness Matrix",
+#'     axis_x_label = "Individuals",
+#'     axis_y_label = "Individuals",
 #'     axis_text_size = 8
 #'   )
 #' )
@@ -45,54 +46,32 @@ ggRelatednessMatrix <- function(
     config = list(),
     interactive = FALSE,
     tooltip_columns = NULL,
+    personID = "personID",
     ...) {
   # Check if the input is a matrix
   if (!is.matrix(mat)) {
     stop("Input 'mat' must be a matrix.")
   }
-  default_config <- list(
-    color_palette = c("white", "gold", "red"),
-    scale_midpoint = 0.25,
-    cluster = TRUE,
-    title = "Relatedness Matrix",
-    xlab = "Individual",
-    ylab = "Individual",
-    # layout aesthetics
-    layout_text_angle_x = 90, # rotate x-axis labels
-    layout_text_angle_y = 0,
-    axis_text_size = 8,
-    layout_text_color = "black",
-    # geom aesthetics
-    geom = "geom_tile", # default geom for heatmap
-    geom_interpolate = TRUE, # for raster
-    tile_color = NA, # border color for tiles
-    # diagonal
-    include_diagonal = TRUE, # whether to include diagonal elements
-    include_upper_triangle = FALSE, # whether to include upper triangle
-    include_lower_triangle = TRUE, # whether to include lower triangle
-    # tooltip aesthetics
-    tooltip_include = TRUE,
-    tooltip_columns = c("ID1", "ID2", "value"),
-    # label aesthetics
-    label_include = FALSE,
-    label_col = "value",
-    label_max_overlaps = 15,
-    label_method = "ggrepel", # "geom_label" or "geom_text"
-    label_nudge_x = 0,
-    label_nudge_y = -.10,
-    label_segment_color = NA,
-    label_text_angle = 0,
-    label_text_size = 2,
-    label_text_color = "black",
-    rounding = 5,
-    return_widget = FALSE
+  # Set default styling and layout parameters
+  default_config <- getDefaultPlotConfig(
+    function_name = "ggrelatednessmatrix",
+    personID = personID
+  )
+
+  # Merge with user-specified overrides
+  # This allows the user to override any of the default values
+  config <- buildPlotConfig(
+    default_config = default_config,
+    config = config,
+    function_name = "ggrelatednessmatrix"
   )
 
   if (!is.null(tooltip_columns)) {
     config$tooltip_columns <- tooltip_columns
   }
-
-  config <- utils::modifyList(default_config, config)
+  if (!is.null(interactive)) {
+    config$interactive <- interactive
+  }
 
   # Core plot
   p_list <- ggRelatednessMatrix.core(
@@ -167,23 +146,23 @@ ggRelatednessMatrix.core <- function(
   mat_plot <- mat
 
   # Optionally cluster
-  if (isTRUE(config$cluster)) {
+  if (isTRUE(config$tile_cluster)) {
     hc <- stats::hclust(stats::as.dist(1 - mat))
     ord <- hc$order
     mat_plot <- mat[ord, ord, drop = FALSE]
   }
 
   # Ensure diagonal is included
-  if (isFALSE(config$include_diagonal)) {
+  if (isFALSE(config$matrix_diagonal_include)) {
     diag(mat_plot) <- NA
   }
   # Optionally include upper/lower triangle
 
-  if (isFALSE(config$include_upper_triangle)) {
+  if (isFALSE(config$matrix_upper_triangle_include)) {
     # note that this gets rotated, so upper triangle is actually lower triangle in the plot
     mat_plot[lower.tri(mat_plot)] <- NA
   }
-  if (isFALSE(config$include_lower_triangle)) {
+  if (isFALSE(config$matrix_lower_triangle_include)) {
     # note that this gets rotated, so upper triangle is actually lower triangle in the plot
     mat_plot[upper.tri(mat_plot)] <- NA
   }
@@ -196,7 +175,7 @@ ggRelatednessMatrix.core <- function(
     dplyr::mutate(
       ID1 = factor(.data$ID1, levels = unique(.data$ID1)),
       ID2 = factor(.data$ID2, levels = unique(.data$ID2)),
-      value = round(.data$value, config$rounding)
+      value = round(.data$value, config$value_rounding_digits)
     )
 
   # rotate x-axis labels
@@ -211,12 +190,12 @@ ggRelatednessMatrix.core <- function(
     ggplot2::aes(x = .data$ID2, y = .data$ID1, fill = .data$value)
   )
 
-  if (config$geom == "geom_tile") {
+  if (config$tile_geom == "geom_tile") {
     p <- p +
-      ggplot2::geom_tile(color = config$tile_color, ...)
-  } else if (config$geom == "geom_raster") {
+      ggplot2::geom_tile(color = config$tile_color_border, ...)
+  } else if (config$tile_geom == "geom_raster") {
     p <- p +
-      ggplot2::geom_raster(interpolate = config$geom_interpolate, hjust = 0, vjust = 0, ...)
+      ggplot2::geom_raster(interpolate = config$tile_interpolate, hjust = 0, vjust = 0, ...)
   } else {
     stop("Unsupported geom type. Use 'geom_tile' or 'geom_raster'.")
   }
@@ -224,7 +203,7 @@ ggRelatednessMatrix.core <- function(
   if (config$label_include) {
     p <- p +
       ggplot2::geom_text(
-        ggplot2::aes(label = config$label_col),
+        ggplot2::aes(label = config$label_column),
         size = config$label_text_size,
         color = config$label_text_color
       )
@@ -232,29 +211,29 @@ ggRelatednessMatrix.core <- function(
 
   p <- p +
     ggplot2::scale_fill_gradient2(
-      low = config$color_palette[1],
-      mid = config$color_palette[2],
-      high = config$color_palette[3],
-      midpoint = config$scale_midpoint
+      low = config$tile_color_palette[1],
+      mid = config$tile_color_palette[2],
+      high = config$tile_color_palette[3],
+      midpoint = config$color_scale_midpoint
     ) +
     ggplot2::theme_minimal() +
     ggplot2::theme(
       axis.text.x = ggplot2::element_text(
-        angle = config$layout_text_angle_x, vjust = 0.5,
+        angle = config$axis_text_angle_x, vjust = 0.5,
         hjust = 1, size = config$axis_text_size,
-        color = config$layout_text_color
+        color = config$axis_text_color
       ),
       axis.text.y = ggplot2::element_text(
         size = config$axis_text_size,
-        angle = config$layout_text_angle_y,
-        color = config$layout_text_color
+        angle = config$axis_text_angle_y,
+        color = config$axis_text_color
       ),
     ) +
     ggplot2::labs(
-      x = config$xlab,
-      y = config$ylab,
+      x = config$axis_x_label,
+      y = config$axis_y_label,
       fill = "Relatedness",
-      title = config$title
+      title = config$plot_title
     ) +
     ggplot2::coord_fixed()
 

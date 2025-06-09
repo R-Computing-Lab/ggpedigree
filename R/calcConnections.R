@@ -35,7 +35,8 @@ calculateConnections <- function(ped,
 
   # Default configuration placeholder
   default_config <- list(
-    debug = FALSE
+    debug = FALSE,
+    return_midparent = FALSE
   )
   config <- utils::modifyList(default_config, config)
 
@@ -107,47 +108,21 @@ calculateConnections <- function(ped,
         coreID = .data$personID
       )
   }
-  if ("twinID" %in% names(ped) && any(!is.na(ped$twinID)) &&
-    ("zygosity" %in% names(ped))) {
-    connections <- dplyr::select(
-      .data = ped,
-      "personID",
-      "x_pos", "y_pos",
-      "dadID", "momID",
-      "x_fam", "y_fam",
-      "parent_hash", "couple_hash",
-      "spouseID",
-      "famID",
-      "twinID",
-      "zygosity",
-      "extra"
-    ) |> unique()
-  } else if ("twinID" %in% names(ped) && any(!is.na(ped$twinID))) {
-    connections <- dplyr::select(
-      .data = ped,
-      "personID",
-      "x_pos", "y_pos",
-      "dadID", "momID",
-      "x_fam", "y_fam",
-      "parent_hash", "couple_hash",
-      "spouseID",
-      "famID",
-      "twinID",
-      "extra"
-    ) |> unique()
-  } else {
-    connections <- dplyr::select(
-      .data = ped,
-      "personID",
-      "x_pos", "y_pos",
-      "dadID", "momID",
-      "x_fam", "y_fam",
-      "parent_hash", "couple_hash",
-      "spouseID",
-      "famID",
-      "extra"
-    ) |> unique()
+
+  select_vars <- c(
+    "personID", "x_pos", "y_pos", "dadID", "momID",
+    "x_fam", "y_fam", "parent_hash", "couple_hash",
+    "spouseID", "famID", "extra"
+  )
+
+  if ("twinID" %in% names(ped) && any(!is.na(ped$twinID))) {
+    select_vars <- c(select_vars, "twinID")
   }
+  if ("zygosity" %in% names(ped)) {
+    select_vars <- c(select_vars, "zygosity")
+  }
+
+  connections <- dplyr::select(ped, dplyr::all_of(select_vars)) |> unique()
 
 
   # no duplications, so just use the same connections
@@ -225,24 +200,24 @@ calculateConnections <- function(ped,
     unique()
 
   # Calculate midpoints between mom and dad in child row
-
-  #  parent_midpoints <- connections |>
-  #   dplyr::filter(.data$link_as_sibling &
-  #      !is.na(.data$dadID) & !is.na(.data$momID)) |>
-  #   unique() |>
-  #    dplyr::group_by(.data$parent_hash) |>
-  #    dplyr::summarize(
-  #      x_midparent = mean(c(
-  #        dplyr::first(.data$x_dad, na_rm = TRUE),
-  #       dplyr::first(.data$x_mom, na_rm = TRUE)
-  #     )),
-  #     y_midparent = mean(c(
-  #       dplyr::first(.data$y_dad, na_rm = TRUE),
-  #       dplyr::first(.data$y_mom, na_rm = TRUE)
-  #     )),
-  #    .groups = "drop"
-  #  )
-
+  if (config$return_midparent == TRUE) {
+    parent_midpoints <- connections |>
+      dplyr::filter(.data$link_as_sibling &
+        !is.na(.data$dadID) & !is.na(.data$momID)) |>
+      unique() |>
+      dplyr::group_by(.data$parent_hash) |>
+      dplyr::summarize(
+        x_midparent = mean(c(
+          dplyr::first(.data$x_dad, na_rm = TRUE),
+          dplyr::first(.data$x_mom, na_rm = TRUE)
+        )),
+        y_midparent = mean(c(
+          dplyr::first(.data$y_dad, na_rm = TRUE),
+          dplyr::first(.data$y_mom, na_rm = TRUE)
+        )),
+        .groups = "drop"
+      )
+  }
   # Calculate midpoints between spouses
   spouse_midpoints <- connections |>
     dplyr::filter(
@@ -287,14 +262,16 @@ calculateConnections <- function(ped,
     unique()
 
 
-
-  # print(parent_midpoints)
-  # Merge midpoints into connections
+  if (config$return_midparent == TRUE) {
+    # print(parent_midpoints)
+    # Merge midpoints into connections
+    connections <- connections |>
+      dplyr::left_join(parent_midpoints,
+        by = c("parent_hash")
+      ) |>
+      unique()
+  }
   connections <- connections |>
-    #   dplyr::left_join(parent_midpoints,
-    #    by = c("parent_hash")
-    #   ) |>
-    #   unique() |>
     dplyr::left_join(spouse_midpoints,
       by = c("spouseID", "couple_hash")
     ) |>
@@ -324,7 +301,6 @@ calculateConnections <- function(ped,
       x_mid_sib = dplyr::if_else(.data$link_as_sibling, .data$x_mid_sib, NA_real_),
       y_mid_sib = dplyr::if_else(.data$link_as_sibling, .data$y_mid_sib, NA_real_)
     )
-
 
 
   if (exists("full_extra") && !is.null(full_extra$self_coords)) {

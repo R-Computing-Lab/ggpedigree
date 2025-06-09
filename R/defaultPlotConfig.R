@@ -18,7 +18,7 @@
 #' @param color_palette_low Color for the low end of a gradient.
 #' @param color_palette_mid Color for the midpoint of a gradient.
 #' @param color_palette_high Color for the high end of a gradient.
-#' @param color_scale Name of the color scale used (e.g., "ggthemes::calc").
+#' @param color_scale_theme Name of the color scale used (e.g., "ggthemes::calc").
 #' @param alpha Default alpha transparency for plot elements.
 #' @param plot_title Main title of the plot.
 #' @param plot_subtitle Subtitle of the plot.
@@ -138,11 +138,20 @@
 #' @param focal_fill_viridis_direction Direction of viridis color scale (1 for left to right, -1 for right to left).
 #' @param ci_include Whether to show confidence intervals.
 #' @param ci_ribbon_alpha Alpha level for CI ribbons.
+#' @param tile_color_palette Color palette for matrix plots.
+#' @param tile_color_border Color border for matrix tiles.
+#' @param tile_interpolate Whether to interpolate colors in matrix tiles.
+#' @param tile_geom Geometry type for matrix tiles (e.g., "geom_tile", "geom_raster").
+#' @param tile_cluster Whether to sort by clusters the matrix.
+#' @param matrix_diagonal_include Whether to include diagonal in matrix plots.
+#' @param matrix_upper_triangle_include Whether to include upper triangle in matrix plots.
+#' @param matrix_lower_triangle_include Whether to include lower triangle in matrix plots.
 #' @param matrix_sparse Whether matrix input is sparse.
 #' @param matrix_isChild_method Method used for isChild matrix derivation.
 #' @param return_static Whether to return a static plot.
 #' @param return_widget Whether to return a widget object.
 #' @param return_interactive Whether to return an interactive plot.
+#' @param return_midparent Whether to return midparent values in the plot.
 #' @param override_many2many Whether to override many-to-many link logic.
 #' @param debug Whether to enable debugging mode.
 #' @param ... Additional arguments for future extensibility.
@@ -164,7 +173,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  color_palette_mid = "#56106EFF",
                                  color_palette_high = "#FCFDBFFF",
                                  color_scale_midpoint = 0.50,
-                                 color_scale = "ggthemes::calc", # only used in gg
+                                 color_scale_theme = "ggthemes::calc", # only used in gg
                                  alpha = alpha_default,
                                  plot_title = NULL,
                                  plot_subtitle = NULL,
@@ -301,13 +310,23 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  # ---- Confidence Intervals
                                  ci_include = TRUE,
                                  ci_ribbon_alpha = .3,
+                                 # ---- tile settings ----
+                                 tile_color_palette = c("white", "gold", "red"),
+                                 tile_interpolate = TRUE,
+                                 tile_color_border = NA,
+                                 tile_cluster = TRUE,
+                                 tile_geom = "geom_tile",
                                  # ---- matrix settings ----
+                                 matrix_diagonal_include = TRUE,
+                                 matrix_upper_triangle_include = FALSE,
+                                 matrix_lower_triangle_include = TRUE,
                                  matrix_sparse = FALSE,
                                  matrix_isChild_method = "partialparent",
                                  # -- Output Options ----
                                  return_static = TRUE,
                                  return_widget = FALSE,
                                  return_interactive = FALSE,
+                                 return_midparent = FALSE,
                                  # ---- Debugging Options ----
                                  debug = FALSE,
                                  override_many2many = FALSE,
@@ -344,7 +363,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     color_palette_mid = color_palette_mid,
     color_palette_high = color_palette_high,
     color_scale_midpoint = color_scale_midpoint,
-    color_scale = color_scale, # only used in gg
+    color_scale_theme = color_scale_theme, # only used in gg
     alpha = alpha,
     plot_title = plot_title,
     plot_subtitle = plot_subtitle,
@@ -499,32 +518,86 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     ci_include = ci_include,
     ci_ribbon_alpha = ci_ribbon_alpha,
 
+    # ---- tile settings ----
+    tile_color_palette = tile_color_palette,
+    tile_color_border = tile_color_border,
+    tile_cluster = tile_cluster,
+    tile_interpolate = tile_interpolate,
+    tile_geom = tile_geom,
     # ---- matrix settings ----
     matrix_sparse = matrix_sparse,
     matrix_isChild_method = matrix_isChild_method,
+    matrix_diagonal_include = matrix_diagonal_include,
+    matrix_upper_triangle_include = matrix_upper_triangle_include,
+    matrix_lower_triangle_include = matrix_lower_triangle_include,
 
 
     # -- Output Options ----
     return_static = return_static,
     return_widget = return_widget,
     return_interactive = return_interactive,
+    return_midparent = return_midparent,
     # ---- Debugging Options ----
     override_many2many = override_many2many,
     debug = debug
   )
-
-  if (stringr::str_to_lower(function_name) %in% c("ggrelatednessmatrix")) {
+  lc_function_name <- stringr::str_to_lower(function_name)
+  if (lc_function_name %in% c("ggrelatednessmatrix")) {
     #   If the function is ggRelatednessMatrix, we need to adjust the tooltip columns
     core_list$tooltip_columns <- c("ID1", "ID2", "value")
-  } else if (stringr::str_to_lower(function_name) %in%
+    core_list$tile_color_palette <- c(
+      core_list$color_palette_low,
+      core_list$color_palette_mid,
+      core_list$color_palette_high
+    )
+    core_list$color_scale_midpoint <- 0.25
+    core_list$plot_title <- "Relatedness Matrix"
+    core_list$axis_x_label <- "Individual"
+    core_list$axis_y_label <- core_list$axis_x_label
+    core_list$label_include <- FALSE
+    core_list$label_column <- "value"
+    core_list$return_widget <- FALSE
+    core_list$return_interactive <- FALSE
+  } else if (lc_function_name %in%
     c("ggphenotypebydegree", "phenotypebydegree")) {
     core_list$point_size <- 1
     core_list$plot_title <- "Phenotypic Correlation vs Genetic Relatedness"
     core_list$return_static <- FALSE
     core_list$return_widget <- FALSE
     core_list$return_interactive <- FALSE
+
+    #  default_config <- list(
+    #    apply_default_scales = TRUE,
+    #    apply_default_theme = TRUE,
+    #   point_size = 1,
+    #    ci_ribbon_alpha = 0.3,
+
+    # Filter parameters
+    #   filter_n_pairs = 500,
+    #  filter_degree_min = 0,
+    #  filter_degree_max = 7,
+    # Plotting parameters
+    #    plot_title = "Phenotypic Correlation vs Genetic Relatedness",
+    #    subtitle = NULL,
+    #    color_scale = "ggthemes::calc",
+
+    # Configuration parameters
+    #   use_only_classic_kin = TRUE,
+    #  group_by_kin = TRUE,
+    #   drop_classic_kin = FALSE,
+    #  drop_non_classic_sibs = TRUE,
+    # Annotation parameters
+
+
+    # Grouping and scaling parameters
+    #  use_relative_degree = TRUE,
+    #   grouping_column = "mtdna_factor",
+    #    value_rounding_digits = 2,
+    #   match_threshold_percent = 10,
+    #    max_degree_levels = 12
+    #  )
   }
-  if (stringr::str_to_lower(function_name) %in% c(
+  if (lc_function_name %in% c(
     "ggpedigree",
     "ggpedigreeinteractive"
   )) {
@@ -535,13 +608,13 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     # core_list$focal_fill_mid_color <- core_list$color_palette_mid
     # core_list$focal_fill_high_color <- core_list$color_palette_high
   }
-  if (stringr::str_to_lower(function_name) %in% c("ggpedigree")) {
+  if (lc_function_name %in% c("ggpedigree")) {
     core_list$label_method <- "ggrepel"
     core_list$return_static <- FALSE
     core_list$return_widget <- FALSE
     core_list$return_interactive <- FALSE
   }
-  if (stringr::str_to_lower(function_name) %in% c("ggpedigreeinteractive")) {
+  if (lc_function_name %in% c("ggpedigreeinteractive")) {
     core_list$tooltip_columns <- c(personID, "sex", status_column)
     core_list$label_method <- "geom_text"
     core_list$label_include <- FALSE # default to FALSE

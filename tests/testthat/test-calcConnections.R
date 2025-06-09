@@ -12,17 +12,22 @@ test_that("calculateConnections returns expected columns and structure", {
     personID = "personID",
     momID = "momID",
     dadID = "dadID",
-    spouseID = "spouseID"
+    spouseID = "spouseID",
+    config = list(
+      ped_align = TRUE,
+      ped_packed = TRUE,
+      return_midparent = TRUE
+    )
   )
 
-  conn_out <- calculateConnections(ped)
+  conn_out <- calculateConnections(ped, config = list(return_midparent = TRUE))
   conns <- conn_out$connections
 
   expect_true(is.data.frame(conns))
   expect_true(all(c(
     "personID", "x_pos", "y_pos", "momID", "dadID", "spouseID",
     "x_mom", "y_mom", "x_dad", "y_dad", "x_spouse", "y_spouse",
-    "x_fam", "y_fam", "x_mid_spouse", "y_mid_spouse",
+    "x_fam", "y_fam", "x_midparent", "y_midparent", "x_mid_spouse", "y_mid_spouse",
     "x_mid_sib", "y_mid_sib"
   ) %in% names(conns)))
 })
@@ -108,7 +113,7 @@ test_that("spouse midpoint is correctly calculated", {
     dadID = "dadID",
     spouseID = "spouseID"
   )
-  conn_out <- calculateConnections(ped)
+  conn_out <- calculateConnections(ped, config = list(debug = TRUE))
   conns <- conn_out$connections
 
   A_coords <- ped[ped$personID == "A", ]

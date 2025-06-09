@@ -244,16 +244,16 @@ test_that("ggPedigreeInteractive returns a gg object for consang", {
     momID = "momID",
     dadID = "dadID",
     spouseID = "spouseID",
- #   patID = "patID",
-  #  matID = "matID",
+    #   patID = "patID",
+    #  matID = "matID",
     config = list(
       label_nudge_y = -.25,
       labels_include = TRUE,
-      override_many2many=TRUE,
+      override_many2many = TRUE,
       label_method = "geom_text",
       sex_color_include = TRUE,
       return_static = TRUE,
-      code_male=0
+      code_male = 0
     ),
     tooltip_columns = c("momID")
   )
@@ -265,13 +265,14 @@ test_that("ggPedigreeInteractive handles inbreeding", {
   data("inbreeding") # load example data from BGmisc
 
   p_widget_nozyg <- ggPedigreeInteractive(inbreeding,
-                                          famID = "famID",
-                                          personID = "ID",
-                                          spouseID = "spouseID",
-                                          return_widget = TRUE,
-                                          config = list(code_male=0,
-                                                        override_many2many=TRUE
-                                                        )
+    famID = "famID",
+    personID = "ID",
+    spouseID = "spouseID",
+    return_widget = TRUE,
+    config = list(
+      code_male = 0,
+      override_many2many = TRUE
+    )
   )
 
   expect_s3_class(p_widget_nozyg, "plotly")
@@ -279,13 +280,15 @@ test_that("ggPedigreeInteractive handles inbreeding", {
 
 
   p_nozyg <- ggPedigree(inbreeding,
-                        interactive = TRUE,
-                        famID = "famID",
-                        personID = "ID",
-                        spouseID = "spouseID",
-                        return_widget = TRUE,
-                        config = list(code_male=0,
-                                      override_many2many=TRUE)
+    interactive = TRUE,
+    famID = "famID",
+    personID = "ID",
+    spouseID = "spouseID",
+    return_widget = TRUE,
+    config = list(
+      code_male = 0,
+      override_many2many = TRUE
+    )
   )
 
   expect_s3_class(p_nozyg, "plotly")
@@ -303,4 +306,3 @@ test_that("ggPedigreeInteractive handles inbreeding", {
   expect_equal(p_widget_nozyg$x$config, p_nozyg$x$config)
   expect_equal(p_widget_nozyg$sizingPolicy, p_nozyg$sizingPolicy)
 })
-

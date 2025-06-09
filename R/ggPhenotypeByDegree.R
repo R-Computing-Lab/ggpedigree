@@ -83,36 +83,7 @@ ggPhenotypeByDegree <- function(df,
   )
 
   # Set default styling and layout parameters
-  #  default_config <- list(
-  #    apply_default_scales = TRUE,
-  #    apply_default_theme = TRUE,
-  #   point_size = 1,
-  #    ci_ribbon_alpha = 0.3,
 
-  # Filter parameters
-  #   filter_n_pairs = 500,
-  #  filter_degree_min = 0,
-  #  filter_degree_max = 7,
-  # Plotting parameters
-  #    plot_title = "Phenotypic Correlation vs Genetic Relatedness",
-  #    subtitle = NULL,
-  #    color_scale = "ggthemes::calc",
-
-  # Configuration parameters
-  #   use_only_classic_kin = TRUE,
-  #  group_by_kin = TRUE,
-  #   drop_classic_kin = FALSE,
-  #  drop_non_classic_sibs = TRUE,
-  # Annotation parameters
-
-
-  # Grouping and scaling parameters
-  #  use_relative_degree = TRUE,
-  #   grouping_column = "mtdna_factor",
-  #    value_rounding_digits = 2,
-  #   match_threshold_percent = 10,
-  #    max_degree_levels = 12
-  #  )
 
   # Merge user config with defaults
   config <- utils::modifyList(default_config, config)
@@ -322,11 +293,11 @@ ggPhenotypeByDegree.core <- function(df,
         fill = config$grouping_name
       )
   }
-  if (config$apply_default_scale == TRUE && !is.null(config$color_scale) && requireNamespace("paletteer", quietly = TRUE)
+  if (config$apply_default_scale == TRUE && !is.null(config$color_scale_theme) && requireNamespace("paletteer", quietly = TRUE)
   ) {
     core_plot <- core_plot +
-      paletteer::scale_color_paletteer_d(config$color_scale) +
-      paletteer::scale_fill_paletteer_d(config$color_scale)
+      paletteer::scale_color_paletteer_d(config$color_scale_theme) +
+      paletteer::scale_fill_paletteer_d(config$color_scale_theme)
   } else if (config$apply_default_scale == TRUE) {
     core_plot <- core_plot +
       ggplot2::scale_color_brewer(palette = "Set1") +
