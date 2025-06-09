@@ -7,6 +7,7 @@
 #'   See Details for available options.
 #' @param interactive Logical; if TRUE, returns an interactive plotly object.
 #' @param tooltip_columns A character vector of column names to include in tooltips.
+#' @param personID Character; name of the column containing unique person identifiers.
 #' @param ... Additional arguments passed to ggplot2 layers.
 #'
 #' @details
@@ -45,6 +46,7 @@ ggRelatednessMatrix <- function(
     config = list(),
     interactive = FALSE,
     tooltip_columns = NULL,
+    personID = "personID",
     ...) {
   # Check if the input is a matrix
   if (!is.matrix(mat)) {

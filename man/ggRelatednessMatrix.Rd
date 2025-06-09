@@ -10,6 +10,7 @@ ggRelatednessMatrix(
   config = list(),
   interactive = FALSE,
   tooltip_columns = NULL,
+  personID = "personID",
   ...
 )
 
@@ -18,6 +19,7 @@ ggrelatednessmatrix(
   config = list(),
   interactive = FALSE,
   tooltip_columns = NULL,
+  personID = "personID",
   ...
 )
 }
