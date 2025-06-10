@@ -545,11 +545,12 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
   if (lc_function_name %in% c("ggrelatednessmatrix")) {
     #   If the function is ggRelatednessMatrix, we need to adjust the tooltip columns
     core_list$tooltip_columns <- c("ID1", "ID2", "value")
-    core_list$tile_color_palette <- c(
-      core_list$color_palette_low,
-      core_list$color_palette_mid,
-      core_list$color_palette_high
-    )
+
+  #  core_list$tile_color_palette <- c(
+  #    core_list$color_palette_low,
+   #   core_list$color_palette_mid,
+   #   core_list$color_palette_high
+   # )
     core_list$color_scale_midpoint <- 0.25
     core_list$plot_title <- "Relatedness Matrix"
     core_list$axis_x_label <- "Individual"
