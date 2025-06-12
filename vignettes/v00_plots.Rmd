@@ -329,7 +329,6 @@ ggPedigree(potter,
   ) # highlight Harry Potter
   # config  = list(segment_mz_color = NA) # color for monozygotic twins
 ) + ggplot2::guides(shape = "none")
-
 ```
 
 # Multiple families in one graphic
