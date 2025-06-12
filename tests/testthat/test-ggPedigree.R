@@ -44,12 +44,14 @@ test_that("broken hints doesn't cause a fatal error", {
     ggPedigree(potter,
       famID = "famID",
       personID = "personID",
-      config = list(hints = TRUE,
-                    generation_width = 2,
-                    generation_height =2,
-                    status_code_affected = "deceased",
-                    status_code_unaffected = "alive",
-                    status_include = TRUE),
+      config = list(
+        hints = TRUE,
+        generation_width = 2,
+        generation_height = 2,
+        status_code_affected = "deceased",
+        status_code_unaffected = "alive",
+        status_include = TRUE
+      ),
       status_column = "status"
     )
   )

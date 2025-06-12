@@ -297,79 +297,81 @@ data("potter") # load the potter pedigree data
 
 df_potter <- potter %>%
   mutate(
-  name = case_when(
-    personID == 1 ~ "Vernon",
-    personID == 2 ~ "Marjorie",
-    personID == 3 ~ "Petunia",
-    personID == 4 ~ "Lily",
-    personID == 5 ~ "James",
-    personID == 6 ~ "Dudley",
-    personID == 7 ~ "Harry",
-    personID == 8 ~ "Ginny",
-    personID == 9 ~ "Arthur",
-    personID == 10 ~ "Molly",
-    personID == 11 ~ "Ron",
-    personID == 12 ~ "Fred",
-    personID == 13 ~ "George",
-    personID == 14 ~ "Percy",
-    personID == 15 ~ "Charlie",
-    personID == 16 ~ "Bill",
-    personID == 17 ~ "Hermione",
-    personID == 18 ~ "Fleur",
-    personID == 19 ~ "Gabrielle",
-    personID == 20 ~ "Audrey",
-    personID == 21 ~ "James",
-    personID == 22 ~ "Albus",
-    personID == 23 ~ "Lily",
-    personID == 24 ~ "Rose",
-    personID == 25 ~ "Hugo",
-    personID == 26 ~ "Victoire",
-    personID == 27 ~ "Dominique",
-    personID == 28 ~ "Louis",
-    personID == 29 ~ "Molly",
-    personID == 30 ~ "Lucy",
-    personID == 101 ~ "Father",
-    personID == 102 ~ "Mother",
-    personID == 103 ~ "Father",
-    personID == 104 ~ "Mother",
-    personID == 105 ~ "Father",
-    personID == 106 ~ "Mother"
-  ))
+    name = case_when(
+      personID == 1 ~ "Vernon",
+      personID == 2 ~ "Marjorie",
+      personID == 3 ~ "Petunia",
+      personID == 4 ~ "Lily",
+      personID == 5 ~ "James",
+      personID == 6 ~ "Dudley",
+      personID == 7 ~ "Harry",
+      personID == 8 ~ "Ginny",
+      personID == 9 ~ "Arthur",
+      personID == 10 ~ "Molly",
+      personID == 11 ~ "Ron",
+      personID == 12 ~ "Fred",
+      personID == 13 ~ "George",
+      personID == 14 ~ "Percy",
+      personID == 15 ~ "Charlie",
+      personID == 16 ~ "Bill",
+      personID == 17 ~ "Hermione",
+      personID == 18 ~ "Fleur",
+      personID == 19 ~ "Gabrielle",
+      personID == 20 ~ "Audrey",
+      personID == 21 ~ "James",
+      personID == 22 ~ "Albus",
+      personID == 23 ~ "Lily",
+      personID == 24 ~ "Rose",
+      personID == 25 ~ "Hugo",
+      personID == 26 ~ "Victoire",
+      personID == 27 ~ "Dominique",
+      personID == 28 ~ "Louis",
+      personID == 29 ~ "Molly",
+      personID == 30 ~ "Lucy",
+      personID == 101 ~ "Father",
+      personID == 102 ~ "Mother",
+      personID == 103 ~ "Father",
+      personID == 104 ~ "Mother",
+      personID == 105 ~ "Father",
+      personID == 106 ~ "Mother"
+    )
+  )
 
-m1 <- ggPedigree(df_potter %>% filter(personID %in% c(1:7,101:104)),
+m1 <- ggPedigree(df_potter %>% filter(personID %in% c(1:7, 101:104)),
   famID = "famID",
   personID = "personID",
   config = list(
     label_include = TRUE,
     label_column = "name",
-    point_size=5,
-   # outline_include = TRUE,
+    point_size = 5,
+    # outline_include = TRUE,
     focal_fill_personID = 7,
     outline_multiplier = 1.5,
     segment_linewidth = 0.5,
     label_text_size = 2.5,
     focal_fill_include = TRUE,
-      label_nudge_y = -0.30,
-      focal_fill_high_color = "#052f60",
-      focal_fill_mid_color = "#67aacf",
-      focal_fill_low_color = "#FCFDFD",
+    label_nudge_y = -0.30,
+    focal_fill_high_color = "#052f60",
+    focal_fill_mid_color = "#67aacf",
+    focal_fill_low_color = "#FCFDFD",
     focal_fill_force_zero = TRUE,
-   label_method="geom_text",
+    label_method = "geom_text",
     focal_fill_na_value = "grey10",
     focal_fill_scale_midpoint = 0.40,
- #   focal_fill_n_breaks = 15,
+    #   focal_fill_n_breaks = 15,
     focal_fill_component = "additive",
     focal_fill_method = "gradient2",
     focal_fill_legend_title = "Additive\nGenetic\nRelatives \nof Harry",
-    sex_legend_show=FALSE,
+    sex_legend_show = FALSE,
     # "additive",\
- #label_text_angle = -35,
+    # label_text_angle = -35,
     sex_color_include = FALSE
   ) # highlight Harry Potter
   # config  = list(segment_mz_color = NA) # color for monozygotic twins
-) + guides(shape = "none")  +   theme(
-    plot.title = element_blank(),
-    plot.title.position = "plot") + coord_cartesian(ylim = c(3.25, 1), clip = "off")
+) + guides(shape = "none") + theme(
+  plot.title = element_blank(),
+  plot.title.position = "plot"
+) + coord_cartesian(ylim = c(3.25, 1), clip = "off")
 
 m2 <- ggPedigree(df_potter,
   famID = "famID",
@@ -377,46 +379,52 @@ m2 <- ggPedigree(df_potter,
   config = list(
     label_include = TRUE,
     label_column = "name",
-    point_size=5,
-   # outline_include = TRUE,
+    point_size = 5,
+    # outline_include = TRUE,
     focal_fill_personID = 7,
     outline_multiplier = 1.5,
     segment_linewidth = 0.5,
     label_text_size = 2.5,
     label_nudge_y = -0.25,
-   label_nudge_x =.1,
+    label_nudge_x = .1,
     focal_fill_include = TRUE,
-      focal_fill_high_color = "#052f60",
-      focal_fill_mid_color = "#67aacf",
-      focal_fill_low_color = "#FCFDFD",
+    focal_fill_high_color = "#052f60",
+    focal_fill_mid_color = "#67aacf",
+    focal_fill_low_color = "#FCFDFD",
     focal_fill_force_zero = TRUE,
-       label_method="geom_text",
+    label_method = "geom_text",
     focal_fill_na_value = "grey10",
     focal_fill_scale_midpoint = 0.40,
- #   focal_fill_n_breaks = 15,
-  label_text_angle = -35,
+    #   focal_fill_n_breaks = 15,
+    label_text_angle = -35,
     focal_fill_component = "additive",
     focal_fill_method = "gradient2",
     focal_fill_legend_title = "Additive\nGenetic\nRelatives \nof Harry",
-   sex_legend_show=FALSE,
+    sex_legend_show = FALSE,
     # "additive",
     sex_color_include = FALSE
   ) # highlight Harry Potter
   # config  = list(segment_mz_color = NA) # color for monozygotic twins
-) + theme(legend.position = "none",
-          plot.title = element_blank(),
-    plot.title.position = "plot") + coord_cartesian(ylim = c(4.25, 1), clip = "off") 
-
+) + theme(
+  legend.position = "none",
+  plot.title = element_blank(),
+  plot.title.position = "plot"
+) + coord_cartesian(ylim = c(4.25, 1), clip = "off")
 ```
 
 ```{r}
 m1 + m2 +
-  plot_layout(ncol = 1, heights = c(1.1, 2.5),
-              guides = "collect", tag_level = "new") +
-  plot_annotation(tag_levels = list(c("(a)", "(b)")),
-                  theme = theme(plot.margin = margin(0, 0, 0, 0))) +
-  guides(shape = "none") & 
-  theme(legend.position = "right", 
-        plot.margin = unit(c(0, 0, 0.0, 0), "lines"))
-
+  plot_layout(
+    ncol = 1, heights = c(1.1, 2.5),
+    guides = "collect", tag_level = "new"
+  ) +
+  plot_annotation(
+    tag_levels = list(c("(a)", "(b)")),
+    theme = theme(plot.margin = margin(0, 0, 0, 0))
+  ) +
+  guides(shape = "none") &
+  theme(
+    legend.position = "right",
+    plot.margin = unit(c(0, 0, 0.0, 0), "lines")
+  )
 ```
