@@ -350,14 +350,15 @@ ggPedigree.core <- function(ped, famID = "famID",
     config = config,
     twinID = twinID
   )
-
   # Apply vertical spacing factor if generation_height ≠ 1
   if (!isTRUE(all.equal(config$generation_height, 1))) {
     ds$y_pos <- ds$y_pos * config$generation_height # expand/contract generations
+    ds$y_fam <- ds$y_fam * config$generation_height # expand/contract generations
   }
   # Apply horizontal spacing factor if generation_width ≠ 1
   if (!isTRUE(all.equal(config$generation_width, 1))) {
     ds$x_pos <- ds$x_pos * config$generation_width # expand/contract generations
+    ds$x_fam <- ds$x_fam * config$generation_width # expand/contract generations
   }
   # -----
   # STEP 5: Compute Relationship Connections
