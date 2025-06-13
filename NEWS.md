@@ -1,3 +1,7 @@
+# ggpedigree 0.7.1
+* Fixed focal_fill ID being indexed to row order, rather than the ID order.
+* Fixed bug in using fam_x and fam_y in with generation_height
+
 # ggpedigree 0.7.0
 * Changed the default behavior of `ggPedigree` to use x_fam and y_fam for positioning families, rather than x_midparent and y_midparent. This change allows for better visualization of pedigrees with multiple families.
 * Changed the get midpoint of curvature to better approximate geom_curv behavior.
