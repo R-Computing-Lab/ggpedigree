@@ -1225,21 +1225,20 @@ createFillColumn <- function(ped,
     sparse = config$matrix_sparse
   )
 
-  if (config$matrix_sparse == FALSE) {
+  if (config$matrix_sparse == TRUE) {
+     warning("Sparse matrix detected. Converting to data frame. Currently, sparse matrices are not supported for ggPedigree processing.")
+    com_mat <- as.matrix(com_mat)
+  }
+    # find the row index of  ped that matches focal_fill_personID
+     row_index <- which(ped[[personID]] == focal_fill_personID)
+    if (length(row_index) == 0) {
+      stop(paste("focal_fill_personID", focal_fill_personID, "not found in ped$personID."))
+    }
     fill_df <- data.frame(
-      focal_fill = round(com_mat[focal_fill_personID, ], digits = config$value_rounding_digits),
+      focal_fill = round(com_mat[row_index, ], digits = config$value_rounding_digits),
       personID = rownames(com_mat)
     ) # needs to match the same data type
     remove(com_mat) # remove the focal_fill_personID column
-  } else if (config$matrix_sparse == TRUE) {
-    warning("Sparse matrix detected. Converting to data frame. Currently, sparse matrices are not supported for ggPedigree processing.")
-    com_mat <- as.matrix(com_mat)
-    fill_df <- data.frame(
-      focal_fill = round(com_mat[focal_fill_personID, ], digits = config$value_rounding_digits),
-      personID = rownames(com_mat)
-    ) # needs to match the same data type
-    remove(com_mat)
-  }
   # Ensure fill_df$personID is of the same type as ped$personID
   if (is.numeric(ped$personID)) {
     fill_df$personID <- as.numeric(fill_df$personID)

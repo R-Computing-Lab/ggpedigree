@@ -235,7 +235,6 @@ ggPedigree(potter,
   # config  = list(segment_mz_color = NA) # color for monozygotic twins
 ) + ggplot2::guides(shape = "none")
 
-
 ## ----facet_wrap---------------------------------------------------------------
 p +
   facet_wrap(~famID, scales = "free_x")
