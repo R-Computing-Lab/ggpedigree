@@ -43,6 +43,7 @@ test_that("broken hints doesn't cause a fatal error", {
   expect_warning(
     ggPedigree(potter,
       famID = "famID",
+      phantoms = TRUE,
       personID = "personID",
       config = list(
         hints = TRUE,

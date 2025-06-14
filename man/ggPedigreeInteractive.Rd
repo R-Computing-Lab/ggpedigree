@@ -22,6 +22,7 @@ ggPedigreeInteractive(
   config = list(),
   debug = FALSE,
   return_widget = TRUE,
+  phantoms = FALSE,
   ...
 )
 
@@ -41,6 +42,7 @@ ggpedigreeinteractive(
   config = list(),
   debug = FALSE,
   return_widget = TRUE,
+  phantoms = FALSE,
   ...
 )
 
@@ -60,6 +62,7 @@ ggpedigreeInteractive(
   config = list(),
   debug = FALSE,
   return_widget = TRUE,
+  phantoms = FALSE,
   ...
 )
 }
@@ -111,6 +114,8 @@ Defaults to NULL, which uses the default tooltip columns.}
 \item{return_widget}{Logical; if TRUE (default) returns a plotly htmlwidget.
 If FALSE, returns the underlying plotly object (useful for further
 customization before printing).}
+
+\item{phantoms}{Logical. If TRUE, adds phantom parents for individuals without parents.}
 
 \item{...}{Additional arguments passed to `ggplot2` functions.}
 }

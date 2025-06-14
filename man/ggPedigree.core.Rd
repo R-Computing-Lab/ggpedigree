@@ -21,6 +21,7 @@ ggPedigree.core(
   debug = FALSE,
   hints = NULL,
   function_name = "ggPedigree",
+  phantoms = FALSE,
   ...
 )
 }
@@ -67,6 +68,8 @@ ggPedigree.core(
 \item{debug}{Logical. If TRUE, prints debugging information. Default: FALSE.}
 
 \item{hints}{Data frame with hints for layout adjustments. Default: NULL.}
+
+\item{phantoms}{Logical. If TRUE, adds phantom parents for individuals without parents.}
 
 \item{...}{Additional arguments passed to `ggplot2` functions.}
 }
