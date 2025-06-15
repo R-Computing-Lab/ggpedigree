@@ -209,7 +209,7 @@ ggPedigree.core <- function(ped, famID = "famID",
     }
   }
   if (config$focal_fill_include == TRUE) {
-    if (!patID %in% names(ds_ped) && config$focal_fill_component %in% c("paternal","patID", "paternal line", "paternal lineages", "paternal lineages")) {
+    if (!patID %in% names(ds_ped) && config$focal_fill_component %in% c("paternal", "patID", "paternal line", "paternal lineages", "paternal lineages")) {
       ds_ped <- BGmisc::ped2paternal(ds_ped,
         patID = patID,
         personID = personID,
@@ -245,17 +245,17 @@ ggPedigree.core <- function(ped, famID = "famID",
   ds_ped <- BGmisc::recodeSex(ds_ped,
     recode_male = config$code_male
   )
-  if(phantoms == TRUE) {
+  if (phantoms == TRUE) {
     # If phantoms are requested, add phantom parents
     ds_ped <- BGmisc::checkParentIDs(ds_ped,
-    addphantoms = TRUE,
-    repair = TRUE,
-    parentswithoutrow = FALSE,
-    repairsex = FALSE,
-    personID = personID,
-    momID = momID,
-    dadID = dadID,
-    famID = famID
+      addphantoms = TRUE,
+      repair = TRUE,
+      parentswithoutrow = FALSE,
+      repairsex = FALSE,
+      personID = personID,
+      momID = momID,
+      dadID = dadID,
+      famID = famID
     )
   }
 
@@ -1246,19 +1246,19 @@ createFillColumn <- function(ped,
   )
 
   if (config$matrix_sparse == TRUE) {
-     warning("Sparse matrix detected. Converting to data frame. Currently, sparse matrices are not supported for ggPedigree processing.")
+    warning("Sparse matrix detected. Converting to data frame. Currently, sparse matrices are not supported for ggPedigree processing.")
     com_mat <- as.matrix(com_mat)
   }
-    # find the row index of  ped that matches focal_fill_personID
-     row_index <- which(ped[[personID]] == focal_fill_personID)
-    if (length(row_index) == 0) {
-      stop(paste("focal_fill_personID", focal_fill_personID, "not found in ped$personID."))
-    }
-    fill_df <- data.frame(
-      focal_fill = round(com_mat[row_index, ], digits = config$value_rounding_digits),
-      personID = rownames(com_mat)
-    ) # needs to match the same data type
-    remove(com_mat) # remove the focal_fill_personID column
+  # find the row index of  ped that matches focal_fill_personID
+  row_index <- which(ped[[personID]] == focal_fill_personID)
+  if (length(row_index) == 0) {
+    stop(paste("focal_fill_personID", focal_fill_personID, "not found in ped$personID."))
+  }
+  fill_df <- data.frame(
+    focal_fill = round(com_mat[row_index, ], digits = config$value_rounding_digits),
+    personID = rownames(com_mat)
+  ) # needs to match the same data type
+  remove(com_mat) # remove the focal_fill_personID column
   # Ensure fill_df$personID is of the same type as ped$personID
   if (is.numeric(ped$personID)) {
     fill_df$personID <- as.numeric(fill_df$personID)
