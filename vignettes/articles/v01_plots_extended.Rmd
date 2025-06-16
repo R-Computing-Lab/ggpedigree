@@ -398,7 +398,6 @@ m2 <- ggPedigree(df_potter,
     label_nudge_x = .1,
     focal_fill_include = TRUE,
      focal_fill_high_color = "#d55e00",
-    
      focal_fill_mid_color = "#d55e00",
     focal_fill_low_color = "grey10",
     focal_fill_scale_midpoint = 0.85,
@@ -422,7 +421,7 @@ m2 <- ggPedigree(df_potter,
 ) + coord_cartesian(ylim = c(4.25, 1), clip = "off")
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE, dimensions = c(8, 8)}
 m1 + m2 +
   plot_layout(
     ncol = 1, heights = c(1.1, 2.5),
