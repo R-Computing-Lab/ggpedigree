@@ -129,6 +129,8 @@
 #' @param focal_fill_na_value Color for NA values in focal fill.
 #' @param focal_fill_force_zero Whether to force zero to NA in focal fill.
 #' @param focal_fill_hue_range Hue range for focal fill colors.
+#' @param focal_fill_color_values A character vector of colors for focal fill.
+#' @param focal_fill_labels Labels for focal fill colors.
 #' @param focal_fill_chroma Chroma value for focal fill colors.
 #' @param focal_fill_lightness Lightness value for focal fill colors.
 #' @param focal_fill_hue_direction Direction of focal fill gradient.
@@ -306,6 +308,11 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  focal_fill_viridis_begin = 0,
                                  focal_fill_viridis_end = 1,
                                  focal_fill_viridis_direction = 1, # 1 for left to right, -1 for right to left
+                                 focal_fill_color_values = c( #okabe and ito
+                                   "#052f60", "#e69f00", "#56b4e9", "#009e73",
+                                   "#f0e442", "#0072b2", "#d55e00", "#cc79a7"
+                                 ),
+                                 focal_fill_labels = c("Low", "Mid", "High"),
                                  # Use first color for affected,
                                  # ---- Confidence Intervals
                                  ci_include = TRUE,
