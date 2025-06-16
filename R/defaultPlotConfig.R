@@ -308,7 +308,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  focal_fill_viridis_begin = 0,
                                  focal_fill_viridis_end = 1,
                                  focal_fill_viridis_direction = 1, # 1 for left to right, -1 for right to left
-                                 focal_fill_color_values = c( #okabe and ito
+                                 focal_fill_color_values = c( # okabe and ito
                                    "#052f60", "#e69f00", "#56b4e9", "#009e73",
                                    "#f0e442", "#0072b2", "#d55e00", "#cc79a7"
                                  ),
@@ -650,6 +650,29 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
 buildPlotConfig <- function(default_config,
                             config,
                             function_name = "ggPedigree") {
+  # -- Detect duplicate configuration entries --
+  config_names <- names(config)
+  duplicated_keys <- config_names[duplicated(config_names)]
+
+  if (length(duplicated_keys) > 0) {
+    warning(sprintf(
+      "Duplicate config keys detected: %s. Later values will override earlier ones.",
+      paste(unique(duplicated_keys), collapse = ", ")
+    ))
+  }
+  # -- Detect unrecognized configuration entries --
+  valid_keys <- names(formals(getDefaultPlotConfig))
+  valid_keys <- setdiff(valid_keys, "function_name") # it's passed separately
+
+  unrecognized_keys <- setdiff(config_names, valid_keys)
+  if (length(unrecognized_keys) > 0) {
+    warning(sprintf(
+      "The following config values are not recognized by getDefaultPlotConfig(): %s",
+      paste(unrecognized_keys, collapse = ", ")
+    ))
+  }
+
+  # -- Merge user config with defaults --
   built_config <- utils::modifyList(default_config, config)
 
   if (stringr::str_to_lower(function_name) %in%

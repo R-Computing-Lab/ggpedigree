@@ -162,7 +162,7 @@ test_that("ggPedigreeInteractive returns a gg object", {
     matID = "matID",
     config = list(
       label_nudge_y = -.25,
-      labels_include = TRUE,
+      label_include = TRUE,
       label_method = "geom_text",
       sex_color_include = TRUE,
       return_static = TRUE
@@ -248,7 +248,7 @@ test_that("ggPedigreeInteractive returns a gg object for consang", {
     #  matID = "matID",
     config = list(
       label_nudge_y = -.25,
-      labels_include = TRUE,
+      label_include = TRUE,
       override_many2many = TRUE,
       label_method = "geom_text",
       sex_color_include = TRUE,

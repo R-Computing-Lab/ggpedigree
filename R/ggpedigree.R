@@ -260,13 +260,6 @@ ggPedigree.core <- function(ped, famID = "famID",
   }
 
 
-
-  # If personID is not "personID", rename to "personID" internally
-  #  if (personID != "personID") {
-  #   ds_ped <- dplyr::rename(ds_ped, personID = !!personID)
-  #  }
-
-
   # Recode affected status into factor, if applicable
   if (!is.null(status_column)) {
     ds_ped[[status_column]] <- factor(

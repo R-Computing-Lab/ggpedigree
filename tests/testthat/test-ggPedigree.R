@@ -18,7 +18,7 @@ test_that("broken hints doesn't cause a fatal error", {
       personID = "personID",
       config = list(hints = TRUE)
     )
-  )
+  ) %>% suppressWarnings()
 
   if (!"twinID" %in% names(potter)) {
     # Add twinID and zygosity columns for demonstration purposes
@@ -55,7 +55,7 @@ test_that("broken hints doesn't cause a fatal error", {
       ),
       status_column = "status"
     )
-  )
+  ) %>% suppressWarnings()
 })
 
 test_that("ggPedigree returns a ggplot object", {
@@ -190,7 +190,7 @@ test_that("ggPedigree handles self-segment", {
       generation_height = 4,
       point_size = 2,
       generation_width = 2,
-      status_affected_shape = 4,
+      status_shape_affected = 4,
       segment_self_color = "purple"
     )
   )
@@ -212,7 +212,7 @@ test_that("ggPedigree handles self-segment", {
       generation_height = 4,
       point_size = 2,
       generation_width = 2,
-      status_affected_shape = 4,
+      status_shape_affected = 4,
       segment_self_color = "purple"
     )
   )

@@ -75,7 +75,7 @@ test_that("ggPhenotypeByDegree applies custom  drops correctly", {
     y_se = "y_se",
     config = list(
       drop_classic_kin = TRUE,
-      default_scales = FALSE,
+      apply_default_scales = FALSE,
       use_relative_degree = FALSE,
       annotate_include = FALSE
     )

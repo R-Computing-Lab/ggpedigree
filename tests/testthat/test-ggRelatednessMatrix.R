@@ -24,11 +24,11 @@ test_that("ggRelatednessMatrix returns a gg object", {
   p_add <- ggRelatednessMatrix(
     add_mat,
     config = list(
-      color_palette = c("white", "orange", "red"),
+      tile_color_palette = c("white", "orange", "red"),
       color_scale_midpoint = 0.55,
       tile_cluster = TRUE,
       plot_title = "Additive Genetic Relatedness",
-      text_size = 15
+      label_text_size = 15
     )
   )
   expect_s3_class(p_add, "gg")

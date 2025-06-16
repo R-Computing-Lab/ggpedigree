@@ -2,6 +2,7 @@
 * Fixed focal_fill ID being indexed to row order, rather than the ID order.
 * Fixed bug in using fam_x and fam_y in with generation_height
 * Add option to add phantom parents to the pedigree plot.
+* Alerts  when duplicate or bad configs are used
 
 # ggpedigree 0.7.0
 * Changed the default behavior of `ggPedigree` to use x_fam and y_fam for positioning families, rather than x_midparent and y_midparent. This change allows for better visualization of pedigrees with multiple families.
