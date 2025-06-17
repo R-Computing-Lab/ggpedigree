@@ -24,6 +24,7 @@ ggPedigree(
   debug = FALSE,
   hints = NULL,
   interactive = FALSE,
+  phantoms = FALSE,
   ...
 )
 
@@ -46,6 +47,7 @@ ggpedigree(
   debug = FALSE,
   hints = NULL,
   interactive = FALSE,
+  phantoms = FALSE,
   ...
 )
 }
@@ -103,6 +105,8 @@ customization before printing).}
 \item{hints}{Data frame with hints for layout adjustments. Default: NULL.}
 
 \item{interactive}{Logical. If TRUE, generates an interactive plot using `plotly`. Default: FALSE.}
+
+\item{phantoms}{Logical. If TRUE, adds phantom parents for individuals without parents.}
 
 \item{...}{Additional arguments passed to `ggplot2` functions.}
 }

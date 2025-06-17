@@ -27,6 +27,7 @@ ggPedigreeInteractive <- function(ped,
                                   config = list(),
                                   debug = FALSE,
                                   return_widget = TRUE,
+                                  phantoms = FALSE,
                                   ...) {
   if (!requireNamespace("plotly", quietly = TRUE)) {
     stop("The 'plotly' package is required for interactive plots.")
@@ -85,6 +86,7 @@ ggPedigreeInteractive <- function(ped,
     config = config,
     debug = config$debug,
     focal_fill_column = focal_fill_column,
+    phantoms = phantoms,
     function_name = "ggpedigreeinteractive",
     ...
   )
