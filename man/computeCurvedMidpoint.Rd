@@ -25,8 +25,8 @@ computeCurvedMidpoint(x0, y0, x1, y1, curvature, angle, shift = 0, t = 0.5)
 }
 \value{
 Numeric vector of midpoints (x or y)
- @keywords internal
 }
 \description{
 Returns x and y midpoint using vectorized curved offset
 }
+\keyword{internal}
