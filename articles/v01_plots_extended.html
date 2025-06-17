@@ -236,6 +236,9 @@ Click to expand pedigree setup
 <span>    segment_linewidth <span class="op">=</span> <span class="fl">.5</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in buildPlotConfig(default_config = default_config, config = config, :</span></span>
+<span><span class="co">#&gt; The following config values are not recognized by getDefaultPlotConfig():</span></span>
+<span><span class="co">#&gt; label_col, status_affected_shape</span></span>
 <span><span class="co">#&gt; Debug mode is ON. Debugging information will be printed.</span></span>
 <span><span class="co">#&gt; Connections calculated. Number of connections: 14</span></span>
 <span><span class="co"># fig1</span></span>
@@ -285,7 +288,10 @@ Click to expand pedigree setup
 <span>    segment_parent_color <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>    segment_offspring_color <span class="op">=</span> <span class="st">"black"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in buildPlotConfig(default_config = default_config, config = config, :</span></span>
+<span><span class="co">#&gt; The following config values are not recognized by getDefaultPlotConfig():</span></span>
+<span><span class="co">#&gt; status_affected_shape</span></span></code></pre></div>
 <p>We finish by adjusting the legend and shape scale for visual
 clarity:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -404,12 +410,12 @@ relationships.</p>
 <span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">28</span> <span class="op">~</span> <span class="st">"Louis"</span>,</span>
 <span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">29</span> <span class="op">~</span> <span class="st">"Molly"</span>,</span>
 <span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">30</span> <span class="op">~</span> <span class="st">"Lucy"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">101</span> <span class="op">~</span> <span class="st">"Father"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">102</span> <span class="op">~</span> <span class="st">"Mother"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">103</span> <span class="op">~</span> <span class="st">"Father"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">104</span> <span class="op">~</span> <span class="st">"Mother"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">105</span> <span class="op">~</span> <span class="st">"Father"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">106</span> <span class="op">~</span> <span class="st">"Mother"</span></span>
+<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">101</span> <span class="op">~</span> <span class="st">"Mother"</span>,</span>
+<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">102</span> <span class="op">~</span> <span class="st">"Father"</span>,</span>
+<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">103</span> <span class="op">~</span> <span class="st">"Mother"</span>,</span>
+<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">104</span> <span class="op">~</span> <span class="st">"Father"</span>,</span>
+<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">105</span> <span class="op">~</span> <span class="st">"Mother"</span>,</span>
+<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">106</span> <span class="op">~</span> <span class="st">"Father"</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
@@ -419,24 +425,32 @@ relationships.</p>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    label_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    label_column <span class="op">=</span> <span class="st">"name"</span>,</span>
-<span>    point_size <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>    point_size <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>    <span class="co"># outline_include = TRUE,</span></span>
-<span>    focal_fill_personID <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>    focal_fill_personID <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>    outline_multiplier <span class="op">=</span> <span class="fl">1.5</span>,</span>
 <span>    segment_linewidth <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>    label_text_size <span class="op">=</span> <span class="fl">2.5</span>,</span>
+<span>    label_text_size <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>    focal_fill_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    label_nudge_y <span class="op">=</span> <span class="op">-</span><span class="fl">0.30</span>,</span>
-<span>    focal_fill_high_color <span class="op">=</span> <span class="st">"#052f60"</span>,</span>
-<span>    focal_fill_mid_color <span class="op">=</span> <span class="st">"#67aacf"</span>,</span>
-<span>    focal_fill_low_color <span class="op">=</span> <span class="st">"#FCFDFD"</span>,</span>
+<span>    <span class="co">#   focal_fill_method = "viridis_d",</span></span>
+<span>    <span class="co">#   focal_fill_viridis_option = "inferno",</span></span>
 <span>    focal_fill_force_zero <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    label_method <span class="op">=</span> <span class="st">"geom_text"</span>,</span>
 <span>    focal_fill_na_value <span class="op">=</span> <span class="st">"grey10"</span>,</span>
 <span>    focal_fill_scale_midpoint <span class="op">=</span> <span class="fl">0.40</span>,</span>
 <span>    <span class="co">#   focal_fill_n_breaks = 15,</span></span>
-<span>    focal_fill_component <span class="op">=</span> <span class="st">"additive"</span>,</span>
-<span>    focal_fill_method <span class="op">=</span> <span class="st">"gradient2"</span>,</span>
+<span>    focal_fill_component <span class="op">=</span> <span class="st">"matID"</span>,</span>
+<span>    focal_fill_method <span class="op">=</span> <span class="st">"manual"</span>,</span>
+<span>    focal_fill_color_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span> <span class="co"># okabe and ito</span></span>
+<span>      <span class="co">#   "#052f60",</span></span>
+<span>      <span class="st">"#e69f00"</span>, <span class="co"># "#56b4e9",</span></span>
+<span>      <span class="st">"#009e73"</span>,</span>
+<span>      <span class="st">"#f0e442"</span>, <span class="st">"#0072b2"</span>,</span>
+<span>      <span class="co"># "#d55e00",</span></span>
+<span>      <span class="st">"#cc79a7"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    focal_fill_labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>    focal_fill_legend_title <span class="op">=</span> <span class="st">"Additive\nGenetic\nRelatives \nof Harry"</span>,</span>
 <span>    sex_legend_show <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    <span class="co"># "additive",\</span></span>
@@ -448,6 +462,9 @@ relationships.</p>
 <span>  plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  plot.title.position <span class="op">=</span> <span class="st">"plot"</span></span>
 <span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3.25</span>, <span class="fl">1</span><span class="op">)</span>, clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in buildPlotConfig(default_config = default_config, config = config, :</span></span>
+<span><span class="co">#&gt; The following config values are not recognized by getDefaultPlotConfig():</span></span>
+<span><span class="co">#&gt; sex_legend_show</span></span>
 <span></span>
 <span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span><span class="va">df_potter</span>,</span>
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
@@ -455,27 +472,27 @@ relationships.</p>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    label_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    label_column <span class="op">=</span> <span class="st">"name"</span>,</span>
-<span>    point_size <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>    point_size <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>    <span class="co"># outline_include = TRUE,</span></span>
-<span>    focal_fill_personID <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>    focal_fill_personID <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>    outline_multiplier <span class="op">=</span> <span class="fl">1.5</span>,</span>
 <span>    segment_linewidth <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>    label_text_size <span class="op">=</span> <span class="fl">2.5</span>,</span>
+<span>    label_text_size <span class="op">=</span> <span class="fl">4.5</span>,</span>
 <span>    label_nudge_y <span class="op">=</span> <span class="op">-</span><span class="fl">0.25</span>,</span>
 <span>    label_nudge_x <span class="op">=</span> <span class="fl">.1</span>,</span>
 <span>    focal_fill_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    focal_fill_high_color <span class="op">=</span> <span class="st">"#052f60"</span>,</span>
-<span>    focal_fill_mid_color <span class="op">=</span> <span class="st">"#67aacf"</span>,</span>
-<span>    focal_fill_low_color <span class="op">=</span> <span class="st">"#FCFDFD"</span>,</span>
+<span>    focal_fill_high_color <span class="op">=</span> <span class="st">"#d55e00"</span>,</span>
+<span>    focal_fill_mid_color <span class="op">=</span> <span class="st">"#d55e00"</span>,</span>
+<span>    focal_fill_low_color <span class="op">=</span> <span class="st">"grey10"</span>,</span>
+<span>    focal_fill_scale_midpoint <span class="op">=</span> <span class="fl">0.85</span>,</span>
+<span>    focal_fill_component <span class="op">=</span> <span class="st">"mitochondrial"</span>,</span>
+<span>    <span class="co"># focal_fill_method = "steps",</span></span>
 <span>    focal_fill_force_zero <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    label_method <span class="op">=</span> <span class="st">"geom_text"</span>,</span>
 <span>    focal_fill_na_value <span class="op">=</span> <span class="st">"grey10"</span>,</span>
-<span>    focal_fill_scale_midpoint <span class="op">=</span> <span class="fl">0.40</span>,</span>
 <span>    <span class="co">#   focal_fill_n_breaks = 15,</span></span>
-<span>    label_text_angle <span class="op">=</span> <span class="op">-</span><span class="fl">35</span>,</span>
-<span>    focal_fill_component <span class="op">=</span> <span class="st">"additive"</span>,</span>
-<span>    focal_fill_method <span class="op">=</span> <span class="st">"gradient2"</span>,</span>
-<span>    focal_fill_legend_title <span class="op">=</span> <span class="st">"Additive\nGenetic\nRelatives \nof Harry"</span>,</span>
+<span>    label_text_angle <span class="op">=</span> <span class="op">-</span><span class="fl">30</span>,</span>
+<span>    <span class="co"># focal_fill_legend_title = "Additive\nGenetic\nRelatives \nof Harry",</span></span>
 <span>    sex_legend_show <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    <span class="co"># "additive",</span></span>
 <span>    sex_color_include <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -485,7 +502,10 @@ relationships.</p>
 <span>  legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>  plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  plot.title.position <span class="op">=</span> <span class="st">"plot"</span></span>
-<span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4.25</span>, <span class="fl">1</span><span class="op">)</span>, clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4.25</span>, <span class="fl">1</span><span class="op">)</span>, clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in buildPlotConfig(default_config = default_config, config = config, :</span></span>
+<span><span class="co">#&gt; The following config values are not recognized by getDefaultPlotConfig():</span></span>
+<span><span class="co">#&gt; sex_legend_show</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m1</span> <span class="op">+</span> <span class="va">m2</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span></span>
@@ -498,7 +518,7 @@ relationships.</p>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">&amp;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
-<span>    legend.position <span class="op">=</span> <span class="st">"right"</span>,</span>
+<span>    legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>    plot.margin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0.0</span>, <span class="fl">0</span><span class="op">)</span>, <span class="st">"lines"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="v01_plots_extended_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
