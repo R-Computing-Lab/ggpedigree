@@ -47,6 +47,7 @@ getDefaultPlotConfig(
   label_text_angle = 0,
   label_text_size = 2,
   label_text_color = "black",
+  label_text_family = "sans",
   point_size = 4,
   outline_include = FALSE,
   outline_multiplier = 1.25,
@@ -59,6 +60,7 @@ getDefaultPlotConfig(
   axis_text_angle_y = 0,
   axis_text_size = 8,
   axis_text_color = "black",
+  axis_text_family = "sans",
   generation_height = 1,
   generation_width = 1,
   ped_packed = TRUE,
@@ -244,6 +246,8 @@ getDefaultPlotConfig(
 
 \item{label_text_color}{Color of the label text.}
 
+\item{label_text_family}{Font family for label text.}
+
 \item{point_size}{Size of points drawn in plot.}
 
 \item{outline_include}{Whether to include outlines around points.}
@@ -267,6 +271,8 @@ getDefaultPlotConfig(
 \item{axis_text_size}{Font size of axis text.}
 
 \item{axis_text_color}{Color of axis text.}
+
+\item{axis_text_family}{Font family for axis text.}
 
 \item{generation_height}{Vertical spacing of generations.}
 

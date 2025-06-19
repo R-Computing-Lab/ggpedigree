@@ -1106,10 +1106,12 @@ ggpedigree <- ggPedigree
         nudge_y = config$label_nudge_y * config$generation_height,
         nudge_x = config$label_nudge_x * config$generation_width,
         size = config$label_text_size,
+        color = config$label_text_color,
         na.rm = TRUE,
         max.overlaps = config$label_max_overlaps,
         segment.size = config$segment_linewidth * .5,
         angle = config$label_text_angle,
+        family = config$label_text_family,
         segment.color = config$label_segment_color
       )
   } else if (config$label_method == "geom_label") {
@@ -1117,7 +1119,9 @@ ggpedigree <- ggPedigree
       ggplot2::geom_label(ggplot2::aes(label = !!rlang::sym(config$label_column)),
         nudge_y = config$label_nudge_y * config$generation_height,
         nudge_x = config$label_nudge_x * config$generation_width,
+        color = config$label_text_color,
         size = config$label_text_size,
+        family = config$label_text_family,
         angle = config$label_text_angle,
         na.rm = TRUE
       )
@@ -1126,6 +1130,8 @@ ggpedigree <- ggPedigree
       ggplot2::geom_text(ggplot2::aes(label = !!rlang::sym(config$label_column)),
         nudge_y = config$label_nudge_y * config$generation_height,
         nudge_x = config$label_nudge_x * config$generation_width,
+        color = config$label_text_color,
+        family = config$label_text_family,
         size = config$label_text_size,
         angle = config$label_text_angle,
         na.rm = TRUE
@@ -1168,7 +1174,7 @@ ggpedigree <- ggPedigree
 #' @param angle Scalar angle in degrees
 #' @param shift Scalar shift in degrees (default is 0)
 #' @return Numeric vector of midpoints (x or y)
-#'  @keywords internal
+#' @keywords internal
 computeCurvedMidpoint <- function(x0, y0, x1, y1,
                                   curvature, angle, shift = 0,
                                   t = 0.5) {

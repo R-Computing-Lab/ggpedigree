@@ -48,6 +48,7 @@
 #' @param label_text_angle Text angle for labels.
 #' @param label_text_size Font size for labels.
 #' @param label_text_color Color of the label text.
+#' @param label_text_family Font family for label text.
 #' @param point_size Size of points drawn in plot.
 #' @param outline_include Whether to include outlines around points.
 #' @param outline_multiplier Multiplier to compute outline size from point size.
@@ -60,6 +61,7 @@
 #' @param axis_text_angle_y Angle of Y-axis text.
 #' @param axis_text_size Font size of axis text.
 #' @param axis_text_color Color of axis text.
+#' @param axis_text_family Font family for axis text.
 #' @param generation_height Vertical spacing of generations.
 #' @param generation_width Horizontal spacing of generations.
 #' @param ped_packed Whether the pedigree should use packed layout.
@@ -210,6 +212,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  label_text_angle = 0,
                                  label_text_size = 2,
                                  label_text_color = "black",
+                                 label_text_family = "sans",
                                  # --- POINT / OUTLINE AESTHETICS ---------------------------------------
                                  point_size = 4,
                                  outline_include = FALSE,
@@ -225,6 +228,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  axis_text_angle_y = 0,
                                  axis_text_size = 8,
                                  axis_text_color = "black",
+                                 axis_text_family = "sans",
                                  # ---- Generation Scale Settings ----
                                  generation_height = 1,
                                  generation_width = 1,
@@ -409,6 +413,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     label_text_angle = label_text_angle,
     label_text_size = label_text_size,
     label_text_color = label_text_color,
+    label_text_family = label_text_family,
 
     # --- POINT / OUTLINE AESTHETICS ---------------------------------------
     point_size = point_size,
@@ -427,6 +432,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     axis_text_angle_y = axis_text_angle_y,
     axis_text_size = axis_text_size,
     axis_text_color = axis_text_color,
+    axis_text_family = axis_text_family,
 
     # ---- Generation Scale Settings ----
     generation_height = generation_height,

@@ -25,9 +25,9 @@ Imports:
     plotly,
     reshape2,
     scales,
-    tidyr,
-    paletteer
+    tidyr
 Suggests: 
+    paletteer,
     mockery,
     patchwork,
     viridis,
