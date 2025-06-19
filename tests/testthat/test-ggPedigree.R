@@ -141,7 +141,7 @@ test_that("config$outline_include works", {
 # handle non-standard names
 test_that("ggPedigree handles non-standard names", {
   library(BGmisc)
-    library(tidyverse)
+  library(tidyverse)
   data("potter") # load example data from BGmisc
 
   # Rename columns to non-standard names

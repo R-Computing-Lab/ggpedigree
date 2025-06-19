@@ -63,6 +63,8 @@ computeDistance <- function(method = "euclidean",
 
 #' @return A `data.frame` grouped by `group_vars` with new columns `x_out` and `y_out` containing midpoint coordinates.
 #' @keywords internal
+#' @importFrom dplyr filter group_by summarize if_all
+#' @importFrom stats weighted.mean  median
 
 getMidpoints <- function(data,
                          group_vars,
@@ -182,7 +184,8 @@ getMidpoints <- function(data,
 #'     \item Optionally, `newID` if present in `ped`
 #'   }
 #' @keywords internal
-
+#' @importFrom dplyr filter left_join rename select
+#' @importFrom stats setNames
 
 getRelativeCoordinates <- function(ped,
                                    connections,
@@ -248,6 +251,7 @@ getRelativeCoordinates <- function(ped,
 #'
 #' @return A string representing the symmetric key
 #' @keywords internal
+#' @importFrom dplyr if_else
 
 makeSymmetricKey <- function(id1, id2, sep = ".") {
   if (missing(id1) || missing(id2)) {
