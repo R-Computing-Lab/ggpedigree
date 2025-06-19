@@ -55,8 +55,8 @@
 #' ggPedigree(hazard, famID = "famID", personID = "ID", config = list(code_male = 0))
 #'
 #' @export
-#' @importFrom ggplot2 ggplot aes geom_segment geom_point geom_text
-#' @importFrom dplyr mutate filter left_join select
+#' @import ggplot2
+#' @importFrom dplyr mutate filter left_join select join_by case_when rename
 #' @importFrom BGmisc ped2fam ped2paternal ped2maternal recodeSex checkParentIDs
 #' @importFrom rlang sym
 #' @importFrom utils modifyList
@@ -284,8 +284,8 @@ ggPedigree.core <- function(ped, famID = "famID",
       # and the personID.
       # The function createFillColumn will handle the logic of creating the fill column
       # based on the component and personID.
-      ds_ped <- ds_ped %>%
-        left_join(
+      ds_ped <- ds_ped |>
+        dplyr::left_join(
           createFillColumn(
             ped = ds_ped,
             focal_fill_personID = config$focal_fill_personID,
@@ -293,7 +293,7 @@ ggPedigree.core <- function(ped, famID = "famID",
             component = config$focal_fill_component,
             config = config
           ),
-          by = join_by(
+          by = dplyr::join_by(
             personID == !!rlang::sym(personID)
           )
         )
@@ -329,19 +329,19 @@ ggPedigree.core <- function(ped, famID = "famID",
       switch(config$focal_fill_component_recode,
         matID = {
           # If focal_fill_component is maternal, use matID as fill
-          ds_ped <- ds_ped %>%
+          ds_ped <- ds_ped |>
             dplyr::mutate(focal_fill = as.factor(.data[[matID]]))
           #  focal_fill_column <- "matID"
         },
         patID = {
           # If focal_fill_component is paternal, use patID as fill
-          ds_ped <- ds_ped %>%
+          ds_ped <- ds_ped |>
             dplyr::mutate(focal_fill = as.factor(.data[[patID]]))
           #  focal_fill_column <- "patID"
         },
         famID = {
           # If focal_fill_component is famID, use famID as fill
-          ds_ped <- ds_ped %>%
+          ds_ped <- ds_ped |>
             dplyr::mutate(focal_fill = as.factor(.data[[famID]]))
           # focal_fill_column <- "famID"
         }
@@ -349,7 +349,7 @@ ggPedigree.core <- function(ped, famID = "famID",
     }
   } else if (config$focal_fill_include == TRUE && !is.null(focal_fill_column)) {
     # If fill_column is specified, use it directly
-    ds_ped <- ds_ped %>%
+    ds_ped <- ds_ped |>
       dplyr::mutate(focal_fill = !!rlang::sym(focal_fill_column))
   }
   # -----
