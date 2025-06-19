@@ -295,7 +295,7 @@ ggPhenotypeByDegree.core <- function(df,
   }
   if (config$apply_default_scale == TRUE && !is.null(config$color_scale_theme)
   ) {
-    if(requireNamespace("paletteer", quietly = TRUE)) {
+    if (requireNamespace("paletteer", quietly = TRUE)) {
       # Use paletteer for color scales
       core_plot <- core_plot +
         paletteer::scale_color_paletteer_d(config$color_scale_theme) +
@@ -303,7 +303,6 @@ ggPhenotypeByDegree.core <- function(df,
     } else {
       warning("The 'paletteer' package is required for custom color scales.")
     }
-
   } else if (config$apply_default_scale == TRUE) {
     core_plot <- core_plot +
       ggplot2::scale_color_brewer(palette = "Set1") +

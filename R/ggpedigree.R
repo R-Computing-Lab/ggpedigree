@@ -55,7 +55,9 @@
 #' ggPedigree(hazard, famID = "famID", personID = "ID", config = list(code_male = 0))
 #'
 #' @export
-#' @import ggplot2 dplyr BGmisc ggrepel
+#' @importFrom ggplot2 ggplot aes geom_segment geom_point geom_text
+#' @importFrom dplyr mutate filter left_join select
+#' @importFrom BGmisc ped2fam ped2paternal ped2maternal recodeSex checkParentIDs
 #' @importFrom rlang sym
 #' @importFrom utils modifyList
 #'
@@ -156,6 +158,7 @@ ggPedigree <- function(ped,
 #' It is not intended to be called directly by users.
 #'
 #' @inheritParams ggPedigree
+#'
 #' @keywords internal
 
 
@@ -1099,8 +1102,17 @@ ggpedigree <- ggPedigree
 #' @keywords internal
 #'
 .addLabels <- function(p, config) {
-  if (config$label_method %in% c("geom_text_repel", "ggrepel", "geom_label_repel")
+  if (!requireNamespace("ggrepel", quietly = TRUE) &&
+    config$label_method %in% c("geom_text_repel", "ggrepel", "geom_label_repel")) {
+    warning("The 'ggrepel' package is required for label methods 'geom_text_repel', 'ggrepel', and 'geom_label_repel'. Please install it using install.packages('ggrepel').")
+
+    config$label_method <- "geom_text" # fallback to geom_text if ggrepel is not available
+  }
+
+  if (config$label_method %in% c("geom_text_repel", "ggrepel", "geom_label_repel") && requireNamespace("ggrepel", quietly = TRUE)
   ) {
+    # If ggrepel is available, use geom_text_repel or geom_label_repel
+    # for better label placement and avoidance of overlaps
     p <- p +
       ggrepel::geom_text_repel(ggplot2::aes(label = !!rlang::sym(config$label_column)),
         nudge_y = config$label_nudge_y * config$generation_height,
