@@ -666,7 +666,8 @@ ggPedigree.core <- function(ped, famID = "famID",
       focal_fill_column = focal_fill_column
     )
   }
-
+  # add plot_connections to the plot object
+  attr(p, "connections") <- plot_connections
   if (config$debug == TRUE) {
     return(list(
       plot = p,
@@ -676,6 +677,7 @@ ggPedigree.core <- function(ped, famID = "famID",
     ))
   } else {
     # If debug is FALSE, return only the plot
+
     return(p)
   }
 }

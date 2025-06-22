@@ -1,5 +1,6 @@
 # ggpedigree (dev version)
 * Makes ggrepel a suggested package instead of a required one.
+* Make connections included in the plot by default.
 
 # ggpedigree 0.7.1
 * Fixed focal_fill ID being indexed to row order, rather than the ID order.
