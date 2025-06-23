@@ -185,34 +185,37 @@ ggPedigree.core <- function(ped, famID = "famID",
   if (!inherits(ped, "data.frame")) {
     stop("ped should be a data.frame or inherit to a data.frame")
   }
-  if (debug == TRUE || config$debug == TRUE) {
+
+  config$debug <- isTRUE(debug) || isTRUE(config$debug)
+
+  if (config$debug == TRUE) {
     message("Debug mode is ON. Debugging information will be printed.")
-    config$debug <- TRUE
-  } else {
-    config$debug <- FALSE
   }
+  # add matches for fill groups
+  fill_group_maternal <- c("maternal", "matID", "maternal line", "maternal lineages", "maternal lines")
+  fill_group_paternal <- c("paternal", "patID", "paternal line", "paternal lineages", "paternal lines")
+  fill_group_family   <- c("famID", "family", "family lineages")
+
+
   # -----
   # STEP 2: Pedigree Data Transformation
   # -----
 
-
-
-  if (all(c(famID, patID, matID) %in% names(ped))) {
-    ds_ped <- ped
+  if (!all(c(famID, patID, matID) %in% names(ped)) && !famID %in% names(ped)) {
+    ds_ped <- BGmisc::ped2fam(ped,
+                              famID = famID,
+                              personID = personID,
+                              momID = momID,
+                              dadID = dadID
+    )
   } else {
-    if (!famID %in% names(ped)) {
-      ds_ped <- BGmisc::ped2fam(ped,
-        famID = famID,
-        personID = personID,
-        momID = momID,
-        dadID = dadID
-      )
-    } else {
-      ds_ped <- ped
-    }
+    ds_ped <- ped
   }
+
   if (config$focal_fill_include == TRUE) {
-    if (!patID %in% names(ds_ped) && config$focal_fill_component %in% c("paternal", "patID", "paternal line", "paternal lineages", "paternal lineages")) {
+
+
+    if (!patID %in% names(ds_ped) && config$focal_fill_component %in% fill_group_paternal) {
       ds_ped <- BGmisc::ped2paternal(ds_ped,
         patID = patID,
         personID = personID,
@@ -220,7 +223,8 @@ ggPedigree.core <- function(ped, famID = "famID",
         dadID = dadID
       )
     }
-    if (!matID %in% names(ds_ped) && config$focal_fill_component %in% c("maternal", "matID", "maternal line", "maternal lineages", "maternal lineages")) {
+
+    if (!matID %in% names(ds_ped) && config$focal_fill_component %in% fill_group_maternal) {
       ds_ped <- BGmisc::ped2maternal(ds_ped,
         matID = matID,
         personID = personID,
@@ -230,24 +234,27 @@ ggPedigree.core <- function(ped, famID = "famID",
     }
   }
 
-  # Clean duplicated famID columns if present
-
-  #  if ("famID.y" %in% names(ds_ped)) {
-  #   ds_ped <- dplyr::select(.data = ds_ped, -"famID.y")
-  #  }
-  #  if ("famID.x" %in% names(ds_ped)) {
-  #    ds_ped <- dplyr::rename(.data = ds_ped, famID = "famID.x")
-  # }
 
   # ----
   # STEP 3: Data Cleaning and Recoding
   # ----
 
 
+  # Recode affected status into factor, if applicable
+
+    if (!is.null(status_column)) {
+    ds_ped[[status_column]] <- factor(
+      ds_ped[[status_column]],
+      levels = config$status_codes,
+      labels = config$status_labels
+    )
+  }
+
   # Standardize sex variable using code_male convention
   ds_ped <- BGmisc::recodeSex(ds_ped,
     recode_male = config$code_male
   )
+
   if (phantoms == TRUE) {
     # If phantoms are requested, add phantom parents
     ds_ped <- BGmisc::checkParentIDs(ds_ped,
@@ -262,15 +269,6 @@ ggPedigree.core <- function(ped, famID = "famID",
     )
   }
 
-
-  # Recode affected status into factor, if applicable
-  if (!is.null(status_column)) {
-    ds_ped[[status_column]] <- factor(
-      ds_ped[[status_column]],
-      levels = config$status_codes,
-      labels = config$status_labels
-    )
-  }
   if (config$focal_fill_include == TRUE && is.null(focal_fill_column)) {
     # If fill_column is specified but not in ds_ped, use personID as fill
     if (config$focal_fill_component %in% c(
@@ -298,54 +296,33 @@ ggPedigree.core <- function(ped, famID = "famID",
           )
         )
     } else if (config$focal_fill_component %in% c(
-      "maternal",
-      "matID", matID, patID, famID,
-      "patID",
-      "paternal",
-      "famID",
-      "paternal line", "maternal line",
-      "maternal lineages", "paternal lineages",
-      "family", "family lineages"
+      fill_group_family, fill_group_maternal, fill_group_paternal,
+     matID, patID, famID
     )
     ) {
-      config$focal_fill_component_recode <- switch(config$focal_fill_component,
-        "maternal" = matID,
-        "paternal" = patID,
-        "famID" = famID,
-        "matID" = matID,
-        "patID" = patID,
-        "paternal line" = patID,
-        "maternal line" = matID,
-        "paternal lineages" = patID,
-        "maternal lineages" = matID,
-        "family" = famID,
-        "family lineages" = famID,
-        matID = matID,
-        patID = patID,
-        famID = famID
-      )
       # If focal_fill_component is specified, create fill column based on component
       # This will create a fill column based on the component specified in the config
-      switch(config$focal_fill_component_recode,
-        matID = {
-          # If focal_fill_component is maternal, use matID as fill
-          ds_ped <- ds_ped |>
-            dplyr::mutate(focal_fill = as.factor(.data[[matID]]))
-          #  focal_fill_column <- "matID"
-        },
-        patID = {
-          # If focal_fill_component is paternal, use patID as fill
-          ds_ped <- ds_ped |>
-            dplyr::mutate(focal_fill = as.factor(.data[[patID]]))
-          #  focal_fill_column <- "patID"
-        },
-        famID = {
-          # If focal_fill_component is famID, use famID as fill
-          ds_ped <- ds_ped |>
-            dplyr::mutate(focal_fill = as.factor(.data[[famID]]))
-          # focal_fill_column <- "famID"
+      if (config$focal_fill_component %in% fill_group_maternal) {
+        config$focal_fill_component_recode <- matID
+        # If focal_fill_component is maternal, use matID as fill
+        ds_ped <- ds_ped |>
+          dplyr::mutate(focal_fill = as.factor(.data[[matID]]))
+      }
+      if (config$focal_fill_component %in% fill_group_paternal) {
+        config$focal_fill_component_recode <- patID
+
+        # If focal_fill_component is paternal, use patID as fill
+        ds_ped <- ds_ped |>
+          dplyr::mutate(focal_fill = as.factor(.data[[patID]]))
         }
-      )
+      if (config$focal_fill_component %in% fill_group_family) {
+        config$focal_fill_component_recode <- famID
+
+        # If focal_fill_component is famID, use famID as fill
+        ds_ped <- ds_ped |>
+          dplyr::mutate(focal_fill = as.factor(.data[[famID]]))
+      }
+
     }
   } else if (config$focal_fill_include == TRUE && !is.null(focal_fill_column)) {
     # If fill_column is specified, use it directly
@@ -391,12 +368,20 @@ ggPedigree.core <- function(ped, famID = "famID",
   )
 
   connections <- plot_connections$connections
+
   if (config$debug == TRUE) {
     message("Connections calculated. Number of connections: ", nrow(connections))
 
     # assign("DEBUG_connections", connections, envir = .GlobalEnv)
   }
   # restore names
+
+  if(twinID != "twinID" && "twinID" %in% names(connections)) {
+    # If twin coordinates are present, restore the twinID name
+    # Rename twinID to the user-specified name
+    names(connections)[names(connections) == "twinID"] <- twinID
+  }
+
   if (personID != "personID") {
     # Rename personID to the user-specified name
     names(connections)[names(connections) == "personID"] <- personID
@@ -581,24 +566,20 @@ ggPedigree.core <- function(ped, famID = "famID",
   # -----
 
   # Add point layers for each individual in the pedigree.
-  # The appearance (color and shape) depends on two factors:
-  # 1. Whether `sex_color_include` is enabled — this controls whether sex is encoded via both color and shape.
-  # 2. Whether `status_column` is specified — this controls whether affected status is visualized.
-
-  # There are three main rendering branches:
-  #   1. If sex_color_include == TRUE: color and shape reflect sex, and affected status is shown with a second symbol.
-  #   2. If sex_color_include == FALSE but status_column is present: shape reflects sex, and color reflects affected status.
-  #   3. If neither is used: plot individuals using shape alone.
   p <- .addNodes(
     p = p,
     config = config,
     focal_fill_column = focal_fill_column,
     status_column = status_column
   )
+
   # Add overlay points for affected status if applicable
   if (config$sex_color_include == TRUE ||
     config$focal_fill_include == TRUE ||
-    config$overlay_include == TRUE) {
+    config$overlay_include == TRUE ||
+    (!is.null(status_column) && config$status_include == TRUE)
+
+    ) {
     # If overlay_column is specified, use it for alpha aesthetic
 
     p <- .addOverlay(
@@ -701,9 +682,10 @@ ggpedigree <- ggPedigree
         ggplot2::aes(
           shape = as.factor(.data$sex)
         ),
-        size = config$point_size * config$outline_multiplier,
+        size = config$point_size*config$outline_multiplier+config$outline_additional_size,
         na.rm = TRUE,
         color = config$outline_color,
+        alpha = config$outline_alpha,
         stroke = config$segment_linewidth
       )
   }

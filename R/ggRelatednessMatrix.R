@@ -111,9 +111,7 @@ ggRelatednessMatrix <- function(
       ))
     }
 
-
     p <- plotly::ggplotly(static_plot, tooltip = "text")
-
 
     if (config$return_widget == TRUE) {
       return(p)
@@ -179,11 +177,12 @@ ggRelatednessMatrix.core <- function(
     )
 
   # rotate x-axis labels
-  df_melted$ID2 <- factor(df_melted$ID2, levels = rev(levels(df_melted$ID2)))
+  df_melted$ID2 <- factor(df_melted$ID2,
+    levels = rev(levels(df_melted$ID2))
+  )
 
   # filter out NA values
   df_melted <- df_melted[!is.na(df_melted$value), ]
-
 
   p <- ggplot2::ggplot(
     df_melted,
@@ -192,10 +191,19 @@ ggRelatednessMatrix.core <- function(
 
   if (config$tile_geom == "geom_tile") {
     p <- p +
-      ggplot2::geom_tile(color = config$tile_color_border, ...)
+      ggplot2::geom_tile(
+        color = config$tile_color_border,
+        na.rm = config$tile_na_rm,
+        linejoin = config$tile_linejoin,
+        ...
+      )
   } else if (config$tile_geom == "geom_raster") {
     p <- p +
-      ggplot2::geom_raster(interpolate = config$tile_interpolate, hjust = 0, vjust = 0, ...)
+      ggplot2::geom_raster(
+        interpolate = config$tile_interpolate,
+        hjust = 0,
+        vjust = 0, ...
+      )
   } else {
     stop("Unsupported geom type. Use 'geom_tile' or 'geom_raster'.")
   }
