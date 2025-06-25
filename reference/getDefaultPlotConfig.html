@@ -15,7 +15,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior."></h
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -108,6 +108,8 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  point_size <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  outline_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  outline_multiplier <span class="op">=</span> <span class="fl">1.25</span>,</span>
+<span>  outline_additional_size <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  outline_alpha <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  outline_color <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>  tooltip_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  tooltip_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ID1"</span>, <span class="st">"ID2"</span>, <span class="st">"value"</span><span class="op">)</span>,</span>
@@ -204,6 +206,8 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  tile_color_border <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  tile_cluster <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  tile_geom <span class="op">=</span> <span class="st">"geom_tile"</span>,</span>
+<span>  tile_na_rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  tile_linejoin <span class="op">=</span> <span class="st">"mitre"</span>,</span>
 <span>  matrix_diagonal_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  matrix_upper_triangle_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  matrix_lower_triangle_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -405,6 +409,14 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 <dt id="arg-outline-multiplier">outline_multiplier<a class="anchor" aria-label="anchor" href="#arg-outline-multiplier"></a></dt>
 <dd><p>Multiplier to compute outline size from point size.</p></dd>
+
+
+<dt id="arg-outline-additional-size">outline_additional_size<a class="anchor" aria-label="anchor" href="#arg-outline-additional-size"></a></dt>
+<dd><p>Additional size added to outlines.</p></dd>
+
+
+<dt id="arg-outline-alpha">outline_alpha<a class="anchor" aria-label="anchor" href="#arg-outline-alpha"></a></dt>
+<dd><p>Alpha transparency for point outlines.</p></dd>
 
 
 <dt id="arg-outline-color">outline_color<a class="anchor" aria-label="anchor" href="#arg-outline-color"></a></dt>
@@ -785,6 +797,14 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 <dt id="arg-tile-geom">tile_geom<a class="anchor" aria-label="anchor" href="#arg-tile-geom"></a></dt>
 <dd><p>Geometry type for matrix tiles (e.g., "geom_tile", "geom_raster").</p></dd>
+
+
+<dt id="arg-tile-na-rm">tile_na_rm<a class="anchor" aria-label="anchor" href="#arg-tile-na-rm"></a></dt>
+<dd><p>Whether to remove NA values in matrix tiles.</p></dd>
+
+
+<dt id="arg-tile-linejoin">tile_linejoin<a class="anchor" aria-label="anchor" href="#arg-tile-linejoin"></a></dt>
+<dd><p>Line join type for matrix tiles.</p></dd>
 
 
 <dt id="arg-matrix-diagonal-include">matrix_diagonal_include<a class="anchor" aria-label="anchor" href="#arg-matrix-diagonal-include"></a></dt>
