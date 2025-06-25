@@ -9,20 +9,19 @@ test_that("getDefaultPlotConfig errors as expected", {
     "segment_default_color must be a single character string."
   )
 
-  expect_error(
-    getDefaultPlotConfig(function_name = "unknownFunction")
-  )
+  expect_error(getDefaultPlotConfig(function_name = "unknownFunction"))
 })
 
 test_that("getDefaultPlotConfig returns expected defaults", {
   config <- getDefaultPlotConfig()
 
   expect_true(is.list(config))
-  expect_equal(length(config), 145) # Check number of default parameters
+  expect_equal(length(config), 149) # Check number of default parameters
 
   expect_equal(config$apply_default_scales, TRUE)
   expect_equal(config$apply_default_theme, TRUE)
-  expect_equal(config$color_palette_default, c("#440154FF", "#FDE725FF", "#21908CFF"))
+  expect_equal(config$color_palette_default,
+               c("#440154FF", "#FDE725FF", "#21908CFF"))
   expect_equal(config$segment_self_color, "black")
   expect_equal(config$segment_parent_color, "black")
   expect_equal(config$segment_sibling_color, "black")
@@ -41,6 +40,13 @@ test_that("getDefaultPlotConfig returns expected defaults", {
   expect_equal(config$generation_height, 1)
   expect_equal(config$generation_width, 1)
   expect_equal(config$sex_color_include, TRUE)
+  expect_equal(config$axis_text_family, "sans")
+  expect_equal(config$outline_additional_size, 0)
+  expect_equal(config$outline_multiplier, 1.25)
+  expect_equal(config$point_size, 4)
+  expect_equal(config$outline_multiplier * config$point_size, 5)
+  expect_equal(config$outline_multiplier * config$point_size + config$outline_additional_size,
+               5)
 })
 test_that("handles function_name variations", {
   config1 <- getDefaultPlotConfig(function_name = "ggpedigree")
@@ -62,10 +68,7 @@ test_that("handles function_name variations", {
 test_that("buildPlotConfig warns on unrecognized keys", {
   default_config <- getDefaultPlotConfig(function_name = "ggPedigree")
 
-  expect_warning(
-    buildPlotConfig(default_config, list(bogus_key = 1)),
-    regexp = "not recognized"
-  )
+  expect_warning(buildPlotConfig(default_config, list(bogus_key = 1)), regexp = "not recognized")
 })
 
 
@@ -73,53 +76,38 @@ test_that("buildPlotConfig warns on unrecognized keys", {
 test_that("buildPlotConfig accepts valid keys without warning", {
   default_config <- getDefaultPlotConfig(function_name = "ggPedigree")
 
-  config <- list(
-    point_size = 3,
-    label_include = FALSE
-  )
+  config <- list(point_size = 3, label_include = FALSE)
 
-  expect_silent(
-    buildPlotConfig(default_config, config)
-  )
+  expect_silent(buildPlotConfig(default_config, config))
 })
 
-test_that("buildPlotConfig  warns on duplicated keys, honors first value in duplicate", {
-  default_config <- getDefaultPlotConfig(function_name = "ggPedigree")
+test_that("buildPlotConfig  warns on duplicated keys, honors first value in duplicate",
+          {
+            default_config <- getDefaultPlotConfig(function_name = "ggPedigree")
 
-  config <- list(
-    point_size = 1,
-    point_size = 99
-  )
+            config <- list(point_size = 1, point_size = 99)
 
-  result <- suppressWarnings(buildPlotConfig(default_config, config))
-  expect_equal(result$point_size, 1)
+            result <- suppressWarnings(buildPlotConfig(default_config, config))
+            expect_equal(result$point_size, 1)
 
-  expect_warning(
-    buildPlotConfig(default_config, config),
-    regexp = "Duplicate config keys detected"
-  )
+            expect_warning(buildPlotConfig(default_config, config), regexp = "Duplicate config keys detected")
 
-  config <- list(
-    point_size = 99,
-    point_size = 1
-  )
+            config <- list(point_size = 99, point_size = 1)
 
-  result <- suppressWarnings(buildPlotConfig(default_config, config))
-  expect_equal(result$point_size, 99)
-})
+            result <- suppressWarnings(buildPlotConfig(default_config, config))
+            expect_equal(result$point_size, 99)
+          })
 
 test_that("buildPlotConfig merges valid subset overrides correctly", {
   default_config <- getDefaultPlotConfig(function_name = "ggPedigree")
 
-  custom <- list(
-    point_size = 2,
-    label_text_size = 10
-  )
+  custom <- list(point_size = 2, label_text_size = 10)
 
   result <- buildPlotConfig(default_config, custom)
   expect_equal(result$point_size, 2)
   expect_equal(result$label_text_size, 10)
-  expect_equal(result$segment_linewidth, default_config$segment_linewidth)
+  expect_equal(result$segment_linewidth,
+               default_config$segment_linewidth)
 })
 test_that("buildPlotConfig returns a list", {
   default_config <- getDefaultPlotConfig(function_name = "ggPedigree")

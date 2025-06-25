@@ -84,7 +84,8 @@ countSiblings <- function(ped, personID = "ID", momID = "momID", dadID = "dadID"
 #'   momID = "momID", dadID = "dadID", spouseID = "spouseID"
 #' )
 #' @export
-generateSpouseList <- function(ped, personID = "personID", momID = "momID", dadID = "dadID", spouseID = "spouseID") {
+generateSpouseList <- function(ped, personID = "personID",
+                               momID = "momID", dadID = "dadID", spouseID = "spouseID") {
   spouselist <- data.frame(matrix(NA, nrow = 0, ncol = 4))
   colnames(spouselist) <- c("ID1", "ID2", "sex1", "sex2")
 

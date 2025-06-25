@@ -1,5 +1,6 @@
 test_that("ggPedigreeInteractive behaves same as ggPedigree interactive is true without twins", {
   library(BGmisc)
+
   data("potter") # load example data from BGmisc
   if ("twinID" %in% names(potter) && "zygosity" %in% names(potter)) {
     # Remove twinID and zygosity columns for this test
@@ -48,6 +49,7 @@ test_that("ggPedigreeInteractive behaves same as ggPedigree interactive is true 
 
 test_that("ggPedigreeInteractive behaves same as ggPedigree interactive is true with twins", {
   library(BGmisc)
+  library(tidyverse)
   data("potter") # load example data from BGmisc
   if (!"twinID" %in% names(potter) || !"zygosity" %in% names(potter)) {
     # Add twinID and zygosity columns for demonstration purposes

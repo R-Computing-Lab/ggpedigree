@@ -1,5 +1,6 @@
 test_that("broken hints doesn't cause a fatal error", {
   library(BGmisc)
+  library(tidyverse)
   data("potter") # load example data from BGmisc
   if ("twinID" %in% names(potter) && "zygosity" %in% names(potter)) {
     # Remove twinID and zygosity columns for this test
@@ -43,7 +44,7 @@ test_that("broken hints doesn't cause a fatal error", {
   expect_warning(
     ggPedigree(potter,
       famID = "famID",
-    #  phantoms = TRUE, # not  in CRAN version
+      #  phantoms = TRUE, # not  in CRAN version
       personID = "personID",
       config = list(
         hints = TRUE,
@@ -140,6 +141,7 @@ test_that("config$outline_include works", {
 # handle non-standard names
 test_that("ggPedigree handles non-standard names", {
   library(BGmisc)
+  library(tidyverse)
   data("potter") # load example data from BGmisc
 
   # Rename columns to non-standard names

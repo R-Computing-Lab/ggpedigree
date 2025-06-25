@@ -52,6 +52,8 @@
 #' @param point_size Size of points drawn in plot.
 #' @param outline_include Whether to include outlines around points.
 #' @param outline_multiplier Multiplier to compute outline size from point size.
+#' @param outline_additional_size Additional size added to outlines.
+#' @param outline_alpha Alpha transparency for point outlines.
 #' @param outline_color Color used for point outlines.
 #' @param tooltip_include Whether tooltips are shown in interactive plots.
 #' @param tooltip_columns Columns to include in tooltips.
@@ -147,6 +149,8 @@
 #' @param tile_interpolate Whether to interpolate colors in matrix tiles.
 #' @param tile_geom Geometry type for matrix tiles (e.g., "geom_tile", "geom_raster").
 #' @param tile_cluster Whether to sort by clusters the matrix.
+#' @param tile_na_rm Whether to remove NA values in matrix tiles.
+#' @param tile_linejoin Line join type for matrix tiles.
 #' @param matrix_diagonal_include Whether to include diagonal in matrix plots.
 #' @param matrix_upper_triangle_include Whether to include upper triangle in matrix plots.
 #' @param matrix_lower_triangle_include Whether to include lower triangle in matrix plots.
@@ -217,6 +221,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  point_size = 4,
                                  outline_include = FALSE,
                                  outline_multiplier = 1.25,
+                                 outline_additional_size = 0,
+                                 outline_alpha = 1,
                                  outline_color = "black",
                                  # ---- Tooltip Aesthetics ----
                                  tooltip_include = TRUE,
@@ -327,6 +333,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  tile_color_border = NA,
                                  tile_cluster = TRUE,
                                  tile_geom = "geom_tile",
+                                 tile_na_rm = FALSE,
+                                 tile_linejoin = "mitre",
                                  # ---- matrix settings ----
                                  matrix_diagonal_include = TRUE,
                                  matrix_upper_triangle_include = FALSE,
@@ -420,6 +428,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     outline_include = outline_include,
     outline_multiplier = outline_multiplier,
     outline_color = outline_color,
+    outline_additional_size = outline_additional_size,
+    outline_alpha = outline_alpha,
 
     # ---- Tooltip Aesthetics ----
     tooltip_include = tooltip_include,
@@ -461,7 +471,6 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     segment_self_angle = segment_self_angle,
     segment_self_curvature = segment_self_curvature,
     segment_self_linewidth = segment_self_linewidth,
-
 
     # ---- Sex Legend and Appearance ----
     sex_color_include = sex_color_include,
@@ -525,9 +534,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     focal_fill_viridis_end = focal_fill_viridis_end,
     focal_fill_viridis_direction = focal_fill_viridis_direction,
 
-
     # ---- Confidence Intervals
-
     ci_include = ci_include,
     ci_ribbon_alpha = ci_ribbon_alpha,
 
@@ -537,13 +544,15 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     tile_cluster = tile_cluster,
     tile_interpolate = tile_interpolate,
     tile_geom = tile_geom,
+    tile_na_rm = tile_na_rm,
+    tile_linejoin = tile_linejoin,
+
     # ---- matrix settings ----
     matrix_sparse = matrix_sparse,
     matrix_isChild_method = matrix_isChild_method,
     matrix_diagonal_include = matrix_diagonal_include,
     matrix_upper_triangle_include = matrix_upper_triangle_include,
     matrix_lower_triangle_include = matrix_lower_triangle_include,
-
 
     # -- Output Options ----
     return_static = return_static,

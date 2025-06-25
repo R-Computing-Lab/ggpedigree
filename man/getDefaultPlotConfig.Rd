@@ -51,6 +51,8 @@ getDefaultPlotConfig(
   point_size = 4,
   outline_include = FALSE,
   outline_multiplier = 1.25,
+  outline_additional_size = 0,
+  outline_alpha = 1,
   outline_color = "black",
   tooltip_include = TRUE,
   tooltip_columns = c("ID1", "ID2", "value"),
@@ -147,6 +149,8 @@ getDefaultPlotConfig(
   tile_color_border = NA,
   tile_cluster = TRUE,
   tile_geom = "geom_tile",
+  tile_na_rm = FALSE,
+  tile_linejoin = "mitre",
   matrix_diagonal_include = TRUE,
   matrix_upper_triangle_include = FALSE,
   matrix_lower_triangle_include = TRUE,
@@ -253,6 +257,10 @@ getDefaultPlotConfig(
 \item{outline_include}{Whether to include outlines around points.}
 
 \item{outline_multiplier}{Multiplier to compute outline size from point size.}
+
+\item{outline_additional_size}{Additional size added to outlines.}
+
+\item{outline_alpha}{Alpha transparency for point outlines.}
 
 \item{outline_color}{Color used for point outlines.}
 
@@ -443,6 +451,10 @@ getDefaultPlotConfig(
 \item{tile_cluster}{Whether to sort by clusters the matrix.}
 
 \item{tile_geom}{Geometry type for matrix tiles (e.g., "geom_tile", "geom_raster").}
+
+\item{tile_na_rm}{Whether to remove NA values in matrix tiles.}
+
+\item{tile_linejoin}{Line join type for matrix tiles.}
 
 \item{matrix_diagonal_include}{Whether to include diagonal in matrix plots.}
 

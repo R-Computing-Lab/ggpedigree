@@ -13,7 +13,8 @@ utils::globalVariables(c("coreID")) # no alternative with group_by
 #' @return A modified `ped` data.frame with updated coordinates and removed duplicates.
 #'
 #' @keywords internal
-
+#' @importFrom utils modifyList
+#' @importFrom dplyr filter select mutate starts_with if_else group_by slice_min ungroup pull arrange rowwise
 # note that i think that the merging by coreID might not be behaving as expected with selecting spouses and parents correctly
 processExtras <- function(ped, config = list()) {
   # ---- 1. Sanity checks and data integrity validation -----------------------
