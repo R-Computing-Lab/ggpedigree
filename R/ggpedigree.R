@@ -995,7 +995,7 @@ ggpedigree <- ggPedigree
         shape = config$sex_legend_title
       )
   } else if (config$focal_fill_include == TRUE) {
-    if (config$focal_fill_method %in% c("steps", "steps2")) {
+    if (config$focal_fill_method %in% c("steps", "steps2", "step","step2")) {
       p <- p + ggplot2::scale_colour_steps2(
         low = config$focal_fill_low_color,
         mid = config$focal_fill_mid_color,
