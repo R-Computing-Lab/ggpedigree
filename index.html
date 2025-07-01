@@ -84,19 +84,30 @@
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"R-Computing-Lab/ggpedigree"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="demonstration">Demonstration<a class="anchor" aria-label="anchor" href="#demonstration"></a>
+</h2>
+<p>Here is a basic example of how to use <code>ggpedigree</code> to visualize a pedigree structure. The <code>potter</code> dataset contains simulated pedigree data for the Weasley family from the Harry Potter series.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span><span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-basic-usage-1.png" width="50%"></p>
+</div>
+<div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
 <p>If you use ggpedigree in your research or wish to refer to it, please cite the following:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">citation</span>(<span class="at">package =</span> <span class="st">"ggpedigree"</span>)</span></code></pre></div>
-<p>Garrison S (2025). <em>ggpedigree: Visualizing Pedigrees with ‘ggplot2’ and ‘plotly’</em>. R package version 0.7.0, <a href="https://github.com/R-Computing-Lab/ggpedigree/" class="external-link uri">https://github.com/R-Computing-Lab/ggpedigree/</a>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">citation</span>(<span class="at">package =</span> <span class="st">"ggpedigree"</span>)</span></code></pre></div>
+<p>Garrison S (2025). <em>ggpedigree: Visualizing Pedigrees with ‘ggplot2’ and ‘plotly’</em>. R package version 0.7.1, <a href="https://github.com/R-Computing-Lab/ggpedigree/" class="external-link uri">https://github.com/R-Computing-Lab/ggpedigree/</a>.</p>
 <p>A BibTeX entry for LaTeX users is</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="sc">@</span>Manual{,</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  title <span class="ot">=</span> {ggpedigree<span class="sc">:</span> Visualizing Pedigrees with <span class="st">'ggplot2'</span> and <span class="st">'plotly'</span>},</span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  author <span class="ot">=</span> {S. Mason Garrison},</span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  year <span class="ot">=</span> {<span class="dv">2025</span>},</span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  note <span class="ot">=</span> {R package version <span class="dv">0</span>.<span class="fl">7.0</span>},</span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  url <span class="ot">=</span> {https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>R<span class="sc">-</span>Computing<span class="sc">-</span>Lab<span class="sc">/</span>ggpedigree<span class="sc">/</span>},</span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="sc">@</span>Manual{,</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  title <span class="ot">=</span> {ggpedigree<span class="sc">:</span> Visualizing Pedigrees with <span class="st">'ggplot2'</span> and <span class="st">'plotly'</span>},</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  author <span class="ot">=</span> {S. Mason Garrison},</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  year <span class="ot">=</span> {<span class="dv">2025</span>},</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  note <span class="ot">=</span> {R package version <span class="dv">0</span>.<span class="fl">7.1</span>},</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  url <span class="ot">=</span> {https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>R<span class="sc">-</span>Computing<span class="sc">-</span>Lab<span class="sc">/</span>ggpedigree<span class="sc">/</span>},</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>

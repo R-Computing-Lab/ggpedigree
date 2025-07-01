@@ -89,11 +89,11 @@ It is not intended to be called directly by users.</p>
 
 
 <dt id="arg-famid">famID<a class="anchor" aria-label="anchor" href="#arg-famid"></a></dt>
-<dd><p>Character string specifying the column name for family IDs.</p></dd>
+<dd><p>Character string specifying the column name for family IDs. Defaults to "famID".</p></dd>
 
 
 <dt id="arg-personid">personID<a class="anchor" aria-label="anchor" href="#arg-personid"></a></dt>
-<dd><p>Character string specifying the column name for individual IDs.</p></dd>
+<dd><p>Character string specifying the column name for individual IDs. Defaults to "personID".</p></dd>
 
 
 <dt id="arg-momid">momID<a class="anchor" aria-label="anchor" href="#arg-momid"></a></dt>
@@ -133,7 +133,8 @@ It is not intended to be called directly by users.</p>
 
 
 <dt id="arg-config">config<a class="anchor" aria-label="anchor" href="#arg-config"></a></dt>
-<dd><p>A list of configuration options for customizing the plot. The list can include:</p><dl><dt>code_male</dt>
+<dd><p>A list of configuration options for customizing the plot.
+      See getDefaultPlotConfig for details. The list can include:</p><dl><dt>code_male</dt>
 <dd><p>Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1.</p></dd>
 
    <dt>segment_spouse_color, segment_self_color</dt>
@@ -152,7 +153,7 @@ It is not intended to be called directly by users.</p>
 <dd><p>Integers. Shape codes for plotting each group.</p></dd>
 
    <dt>sex_shape_labels</dt>
-<dd><p>Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown")</p></dd>
+<dd><p>Character vector of labels for the sex variable. (default: c("Female", "Male", "Unknown"))</p></dd>
 
    <dt>unaffected, affected</dt>
 <dd><p>Values indicating unaffected/affected status.</p></dd>

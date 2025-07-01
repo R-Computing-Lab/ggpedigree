@@ -20,7 +20,6 @@
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/buildSpouseSegments.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/calculateConnections.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/calculateCoordinates.html</loc></url>
-<url><loc>https://r-computing-lab.github.io/ggpedigree/reference/computeCurvedMidpoint.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/computeDistance.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/countOffspring.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/countSiblings.html</loc></url>
@@ -31,7 +30,10 @@
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-addOverlay.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-addScales.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-addSelfSegment.html</loc></url>
+<url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-adjustSpacing.html</loc></url>
+<url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-computeCurvedMidpoint.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-preparePhenotypeByDegreeData.html</loc></url>
+<url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-restoreNames.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/generateSpouseList.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/getDefaultPlotConfig.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/getMidpoints.html</loc></url>
