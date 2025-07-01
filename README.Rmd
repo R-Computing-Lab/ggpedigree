@@ -58,6 +58,43 @@ To install the development version of `ggpedigree` from [GitHub](https://github.
 devtools::install_github("R-Computing-Lab/ggpedigree")
 ```
 
+## Demonstration
+
+```{r load-data, include=FALSE}
+library(ggpedigree) # ggPedigree lives here
+library(BGmisc) # helper utilities & example data
+library(tidyverse)
+# if you don't have the most recent version of BGmisc, you may need to install it first as a stop-gap I've added the data loading here
+data("potter") # load example data from BGmisc
+# if (!"twinID" %in% names(potter)) {
+# Add twinID and zygosity columns for demonstration purposes
+potter <- potter %>%
+  mutate(
+    twinID = case_when(
+      name == "Fred Weasley" ~ 13,
+      name == "George Weasley" ~ 12,
+      TRUE ~ NA_real_
+    ),
+    zygosity = case_when(
+      name == "Fred Weasley" ~ "mz",
+      name == "George Weasley" ~ "mz",
+      TRUE ~ NA_character_
+    )
+  )
+# }
+```
+
+Here is a basic example of how to use `ggpedigree` to visualize a pedigree structure. The `potter` dataset contains simulated pedigree data for the Weasley family from the Harry Potter series.
+
+```{r basic-usage,out.width = "50%"}
+ggPedigree(potter,
+  famID = "famID",
+  personID = "personID"
+)
+```
+
+
+
 ## Citation
 
 If you use ggpedigree in your research or wish to refer to it, please cite the following:
