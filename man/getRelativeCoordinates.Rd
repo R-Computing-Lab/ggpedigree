@@ -26,7 +26,7 @@ getRelativeCoordinates(
 
 \item{y_name}{Character. Name of the new column to store the y-coordinate of the relative.}
 
-\item{personID}{Character string specifying the column name for individual IDs.}
+\item{personID}{Character string specifying the column name for individual IDs. Defaults to "personID".}
 
 \item{multiple}{Character. Specifies how to handle multiple matches. Options are "all" or "any".}
 

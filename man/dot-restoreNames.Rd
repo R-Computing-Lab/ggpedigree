@@ -17,7 +17,7 @@
 \arguments{
 \item{connections}{A data frame containing the connections data.}
 
-\item{personID}{Character string specifying the column name for individual IDs.}
+\item{personID}{Character string specifying the column name for individual IDs. Defaults to "personID".}
 
 \item{momID}{Character string specifying the column name for mother IDs. Defaults to "momID".}
 
@@ -27,7 +27,7 @@
 
 \item{twinID}{Character string specifying the column name for twin IDs. Defaults to "twinID".}
 
-\item{famID}{Character string specifying the column name for family IDs.}
+\item{famID}{Character string specifying the column name for family IDs. Defaults to "famID".}
 }
 \description{
 This function restores the names of the columns in the connections data frame
