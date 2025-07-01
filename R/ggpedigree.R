@@ -194,7 +194,7 @@ ggPedigree.core <- function(ped, famID = "famID",
   # add matches for fill groups
   fill_group_maternal <- c("maternal", "matID", "maternal line", "maternal lineages", "maternal lines")
   fill_group_paternal <- c("paternal", "patID", "paternal line", "paternal lineages", "paternal lines")
-  fill_group_family   <- c("famID", "family", "family lineages")
+  fill_group_family <- c("famID", "family", "family lineages", "family lines", "family line")
 
 
   # -----
@@ -203,18 +203,16 @@ ggPedigree.core <- function(ped, famID = "famID",
 
   if (!all(c(famID, patID, matID) %in% names(ped)) && !famID %in% names(ped)) {
     ds_ped <- BGmisc::ped2fam(ped,
-                              famID = famID,
-                              personID = personID,
-                              momID = momID,
-                              dadID = dadID
+      famID = famID,
+      personID = personID,
+      momID = momID,
+      dadID = dadID
     )
   } else {
     ds_ped <- ped
   }
 
   if (config$focal_fill_include == TRUE) {
-
-
     if (!patID %in% names(ds_ped) && config$focal_fill_component %in% fill_group_paternal) {
       ds_ped <- BGmisc::ped2paternal(ds_ped,
         patID = patID,
@@ -242,7 +240,7 @@ ggPedigree.core <- function(ped, famID = "famID",
 
   # Recode affected status into factor, if applicable
 
-    if (!is.null(status_column)) {
+  if (!is.null(status_column)) {
     ds_ped[[status_column]] <- factor(
       ds_ped[[status_column]],
       levels = config$status_codes,
@@ -297,7 +295,7 @@ ggPedigree.core <- function(ped, famID = "famID",
         )
     } else if (config$focal_fill_component %in% c(
       fill_group_family, fill_group_maternal, fill_group_paternal,
-     matID, patID, famID
+      matID, patID, famID
     )
     ) {
       # If focal_fill_component is specified, create fill column based on component
@@ -314,7 +312,7 @@ ggPedigree.core <- function(ped, famID = "famID",
         # If focal_fill_component is paternal, use patID as fill
         ds_ped <- ds_ped |>
           dplyr::mutate(focal_fill = as.factor(.data[[patID]]))
-        }
+      }
       if (config$focal_fill_component %in% fill_group_family) {
         config$focal_fill_component_recode <- famID
 
@@ -322,7 +320,6 @@ ggPedigree.core <- function(ped, famID = "famID",
         ds_ped <- ds_ped |>
           dplyr::mutate(focal_fill = as.factor(.data[[famID]]))
       }
-
     }
   } else if (config$focal_fill_include == TRUE && !is.null(focal_fill_column)) {
     # If fill_column is specified, use it directly
@@ -343,16 +340,18 @@ ggPedigree.core <- function(ped, famID = "famID",
     config = config,
     twinID = twinID
   )
-  # Apply vertical spacing factor if generation_height ≠ 1
-  if (!isTRUE(all.equal(config$generation_height, 1))) {
-    ds$y_pos <- ds$y_pos * config$generation_height # expand/contract generations
-    ds$y_fam <- ds$y_fam * config$generation_height # expand/contract generations
+  if (config$debug == TRUE) {
+    message("Coordinates calculated. Number of individuals: ", nrow(ds))
+
+    # assign("DEBUG_ds", ds, envir = .GlobalEnv)
   }
-  # Apply horizontal spacing factor if generation_width ≠ 1
-  if (!isTRUE(all.equal(config$generation_width, 1))) {
-    ds$x_pos <- ds$x_pos * config$generation_width # expand/contract generations
-    ds$x_fam <- ds$x_fam * config$generation_width # expand/contract generations
-  }
+  # Apply spacing factors
+  ds <- .adjustSpacing(
+    ds = ds,
+    config = config
+  )
+
+
   # -----
   # STEP 5: Compute Relationship Connections
   # -----
@@ -375,34 +374,16 @@ ggPedigree.core <- function(ped, famID = "famID",
     # assign("DEBUG_connections", connections, envir = .GlobalEnv)
   }
   # restore names
+  connections <- .restoreNames(
+    connections = connections,
+    personID = personID,
+    momID = momID,
+    dadID = dadID,
+    spouseID = spouseID,
+    twinID = twinID,
+    famID = famID
+  )
 
-  if(twinID != "twinID" && "twinID" %in% names(connections)) {
-    # If twin coordinates are present, restore the twinID name
-    # Rename twinID to the user-specified name
-    names(connections)[names(connections) == "twinID"] <- twinID
-  }
-
-  if (personID != "personID") {
-    # Rename personID to the user-specified name
-    names(connections)[names(connections) == "personID"] <- personID
-  }
-  if (momID != "momID") {
-    # Rename momID to the user-specified name
-    names(connections)[names(connections) == "momID"] <- momID
-  }
-  if (dadID != "dadID") {
-    # Rename dadID to the user-specified name
-    names(connections)[names(connections) == "dadID"] <- dadID
-  }
-  if ("spouseID" %in% names(connections) && spouseID != "spouseID") {
-    # Rename spouseID to the user-specified name
-    names(connections)[names(connections) == "spouseID"] <- spouseID
-  }
-  # Rename famID to the user-specified name
-  if (famID != "famID") {
-    # Rename famID to the user-specified name
-    names(connections)[names(connections) == "famID"] <- famID
-  }
 
 
   # -----
@@ -579,7 +560,7 @@ ggPedigree.core <- function(ped, famID = "famID",
     config$overlay_include == TRUE ||
     (!is.null(status_column) && config$status_include == TRUE)
 
-    ) {
+  ) {
     # If overlay_column is specified, use it for alpha aesthetic
 
     p <- .addOverlay(
@@ -682,7 +663,7 @@ ggpedigree <- ggPedigree
         ggplot2::aes(
           shape = as.factor(.data$sex)
         ),
-        size = config$point_size*config$outline_multiplier+config$outline_additional_size,
+        size = config$point_size * config$outline_multiplier + config$outline_additional_size,
         na.rm = TRUE,
         color = config$outline_color,
         alpha = config$outline_alpha,
@@ -840,7 +821,7 @@ ggpedigree <- ggPedigree
 
     otherself <- otherself |>
       dplyr::mutate(
-        midpoint = computeCurvedMidpoint(
+        midpoint = .computeCurvedMidpoint(
           x0 = .data$x_otherself,
           y0 = .data$y_otherself,
           x1 = .data$x_pos,
@@ -853,7 +834,7 @@ ggpedigree <- ggPedigree
         y_1midpoint = .data$midpoint$y
       ) |>
       dplyr::mutate(
-        midpoint = computeCurvedMidpoint(
+        midpoint = .computeCurvedMidpoint(
           x0 = .data$x_otherself,
           y0 = .data$y_otherself,
           x1 = .data$x_pos,
@@ -866,7 +847,7 @@ ggpedigree <- ggPedigree
         y_2midpoint = .data$midpoint$y
       ) |>
       dplyr::mutate(
-        midpoint = computeCurvedMidpoint(
+        midpoint = .computeCurvedMidpoint(
           x0 = .data$x_otherself,
           y0 = .data$y_otherself,
           x1 = .data$x_pos,
@@ -995,7 +976,7 @@ ggpedigree <- ggPedigree
         shape = config$sex_legend_title
       )
   } else if (config$focal_fill_include == TRUE) {
-    if (config$focal_fill_method %in% c("steps", "steps2", "step","step2")) {
+    if (config$focal_fill_method %in% c("steps", "steps2", "step", "step2")) {
       p <- p + ggplot2::scale_colour_steps2(
         low = config$focal_fill_low_color,
         mid = config$focal_fill_mid_color,
@@ -1159,58 +1140,6 @@ ggpedigree <- ggPedigree
 #   config <- utils::modifyList(default_config, config)
 #
 # }
-#' @title Compute midpoint coordinate for curved segment
-#' @description Returns x and y midpoint using vectorized curved offset
-#' @param x0 Numeric vector of x coordinates for start points
-#' @param y0 Numeric vector of y coordinates for start points
-#' @param x1 Numeric vector of x coordinates for end points
-#' @param y1 Numeric vector of y coordinates for end points
-#' @param t Scalar value between 0 and 1 for interpolation (default is 0.5) setting the midpoint
-#' @param curvature Scalar curvature (geom_curve style)
-#' @param angle Scalar angle in degrees
-#' @param shift Scalar shift in degrees (default is 0)
-#' @return Numeric vector of midpoints (x or y)
-#' @keywords internal
-computeCurvedMidpoint <- function(x0, y0, x1, y1,
-                                  curvature, angle, shift = 0,
-                                  t = 0.5) {
-  # Ensure t is a numeric vector
-  t <- as.numeric(t)
-
-  # Vector from start to end
-  dx <- x1 - x0
-  dy <- y1 - y0
-  len <- sqrt(dx^2 + dy^2)
-
-  # Midpoint of the segment
-  mx <- (x0 + x1) / 2
-  my <- (y0 + y1) / 2
-
-  # Unit direction vector
-  ux <- dx / len
-  uy <- dy / len
-
-  # Perpendicular unit vector
-  perp_x <- -uy
-  perp_y <- ux
-
-  # Apply rotation: angle + shift
-  theta <- (angle + shift) * pi / 180
-
-  rot_x <- perp_x * cos(theta) - perp_y * sin(theta)
-  rot_y <- perp_x * sin(theta) + perp_y * cos(theta)
-
-  # Control point (defines curvature)
-  cx <- mx + curvature * len * rot_x
-  cy <- my + curvature * len * rot_y
-
-  # Quadratic Bezier formula, vectorized
-  x_vals <- (1 - t)^2 * x0 + 2 * (1 - t) * t * cx + t^2 * x1
-  y_vals <- (1 - t)^2 * y0 + 2 * (1 - t) * t * cy + t^2 * y1
-
-  # Return as a data frame with x and y coordinates
-  data.frame(x = x_vals, y = y_vals, t = t)
-}
 
 #' @title Get fill column for ggPedigree
 #' @description
