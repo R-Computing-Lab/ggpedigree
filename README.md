@@ -60,6 +60,21 @@ To install the development version of `ggpedigree` from
 devtools::install_github("R-Computing-Lab/ggpedigree")
 ```
 
+## Demonstration
+
+Here is a basic example of how to use `ggpedigree` to visualize a
+pedigree structure. The `potter` dataset contains simulated pedigree
+data for the Weasley family from the Harry Potter series.
+
+``` r
+ggPedigree(potter,
+  famID = "famID",
+  personID = "personID"
+)
+```
+
+<img src="man/figures/README-basic-usage-1.png" width="50%" />
+
 ## Citation
 
 If you use ggpedigree in your research or wish to refer to it, please
@@ -68,7 +83,7 @@ cite the following:
     citation(package = "ggpedigree")
 
 Garrison S (2025). *ggpedigree: Visualizing Pedigrees with ‘ggplot2’ and
-‘plotly’*. R package version 0.7.0,
+‘plotly’*. R package version 0.7.1,
 <https://github.com/R-Computing-Lab/ggpedigree/>.
 
 A BibTeX entry for LaTeX users is
@@ -77,7 +92,7 @@ A BibTeX entry for LaTeX users is
       title = {ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'},
       author = {S. Mason Garrison},
       year = {2025},
-      note = {R package version 0.7.0},
+      note = {R package version 0.7.1},
       url = {https://github.com/R-Computing-Lab/ggpedigree/},
     }
 

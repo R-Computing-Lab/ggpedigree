@@ -22,11 +22,11 @@ calculateConnections(
 
 \item{spouseID}{Character string specifying the column name for spouse IDs. Defaults to "spouseID".}
 
-\item{personID}{Character string specifying the column name for individual IDs.}
+\item{personID}{Character string specifying the column name for individual IDs. Defaults to "personID".}
 
 \item{momID}{Character string specifying the column name for mother IDs. Defaults to "momID".}
 
-\item{famID}{Character string specifying the column name for family IDs.}
+\item{famID}{Character string specifying the column name for family IDs. Defaults to "famID".}
 
 \item{twinID}{Character string specifying the column name for twin IDs. Defaults to "twinID".}
 

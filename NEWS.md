@@ -1,8 +1,11 @@
 # ggpedigree (dev version)
+
+# ggpedigree 0.7.2
 * Makes ggrepel a suggested package instead of a required one.
 * Make connections included in the plot by default.
 * Expose linejoin in ggRelatednessMatrix
 * Expose outline_additive and outline_alpha to ggpedigree
+* Refactored the ggpedigree function to improve readability and maintainability.
 
 # ggpedigree 0.7.1
 * Fixed focal_fill ID being indexed to row order, rather than the ID order.

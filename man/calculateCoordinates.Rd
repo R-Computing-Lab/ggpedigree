@@ -19,7 +19,7 @@ calculateCoordinates(
 \arguments{
 \item{ped}{A data frame containing the pedigree data. Needs personID, momID, and dadID columns}
 
-\item{personID}{Character string specifying the column name for individual IDs.}
+\item{personID}{Character string specifying the column name for individual IDs. Defaults to "personID".}
 
 \item{momID}{Character string specifying the column name for mother IDs. Defaults to "momID".}
 

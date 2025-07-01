@@ -20,8 +20,10 @@ test_that("getDefaultPlotConfig returns expected defaults", {
 
   expect_equal(config$apply_default_scales, TRUE)
   expect_equal(config$apply_default_theme, TRUE)
-  expect_equal(config$color_palette_default,
-               c("#440154FF", "#FDE725FF", "#21908CFF"))
+  expect_equal(
+    config$color_palette_default,
+    c("#440154FF", "#FDE725FF", "#21908CFF")
+  )
   expect_equal(config$segment_self_color, "black")
   expect_equal(config$segment_parent_color, "black")
   expect_equal(config$segment_sibling_color, "black")
@@ -45,8 +47,10 @@ test_that("getDefaultPlotConfig returns expected defaults", {
   expect_equal(config$outline_multiplier, 1.25)
   expect_equal(config$point_size, 4)
   expect_equal(config$outline_multiplier * config$point_size, 5)
-  expect_equal(config$outline_multiplier * config$point_size + config$outline_additional_size,
-               5)
+  expect_equal(
+    config$outline_multiplier * config$point_size + config$outline_additional_size,
+    5
+  )
 })
 test_that("handles function_name variations", {
   config1 <- getDefaultPlotConfig(function_name = "ggpedigree")
@@ -81,22 +85,21 @@ test_that("buildPlotConfig accepts valid keys without warning", {
   expect_silent(buildPlotConfig(default_config, config))
 })
 
-test_that("buildPlotConfig  warns on duplicated keys, honors first value in duplicate",
-          {
-            default_config <- getDefaultPlotConfig(function_name = "ggPedigree")
+test_that("buildPlotConfig  warns on duplicated keys, honors first value in duplicate", {
+  default_config <- getDefaultPlotConfig(function_name = "ggPedigree")
 
-            config <- list(point_size = 1, point_size = 99)
+  config <- list(point_size = 1, point_size = 99)
 
-            result <- suppressWarnings(buildPlotConfig(default_config, config))
-            expect_equal(result$point_size, 1)
+  result <- suppressWarnings(buildPlotConfig(default_config, config))
+  expect_equal(result$point_size, 1)
 
-            expect_warning(buildPlotConfig(default_config, config), regexp = "Duplicate config keys detected")
+  expect_warning(buildPlotConfig(default_config, config), regexp = "Duplicate config keys detected")
 
-            config <- list(point_size = 99, point_size = 1)
+  config <- list(point_size = 99, point_size = 1)
 
-            result <- suppressWarnings(buildPlotConfig(default_config, config))
-            expect_equal(result$point_size, 99)
-          })
+  result <- suppressWarnings(buildPlotConfig(default_config, config))
+  expect_equal(result$point_size, 99)
+})
 
 test_that("buildPlotConfig merges valid subset overrides correctly", {
   default_config <- getDefaultPlotConfig(function_name = "ggPedigree")
@@ -106,8 +109,10 @@ test_that("buildPlotConfig merges valid subset overrides correctly", {
   result <- buildPlotConfig(default_config, custom)
   expect_equal(result$point_size, 2)
   expect_equal(result$label_text_size, 10)
-  expect_equal(result$segment_linewidth,
-               default_config$segment_linewidth)
+  expect_equal(
+    result$segment_linewidth,
+    default_config$segment_linewidth
+  )
 })
 test_that("buildPlotConfig returns a list", {
   default_config <- getDefaultPlotConfig(function_name = "ggPedigree")

@@ -1,4 +1,3 @@
-# defaultPlotConfig.R
 #' @title Shared Default Plotting Configuration
 #' @description Centralized configuration list used by all gg-based plotting functions.
 #' Returns a named list of default settings used by all gg-based plotting functions.
