@@ -1,0 +1,680 @@
+id,famID,momID,dadID,name,sex,url,twinID,zygosity
+1,1,566,564,Walder Frey,M,https://awoiaf.westeros.org/index.php/Walder_Frey,NA,NA
+2,1,NA,NA,Perra Royce,F,https://awoiaf.westeros.org/index.php/Perra_Royce,NA,NA
+3,1,2,1,Stevron Frey,M,https://awoiaf.westeros.org/index.php/Stevron_Frey,NA,NA
+4,1,2,1,Emmon Frey,M,https://awoiaf.westeros.org/index.php/Emmon_Frey,NA,NA
+5,1,2,1,Aenys Frey,M,https://awoiaf.westeros.org/index.php/Aenys_Frey,NA,NA
+6,1,NA,NA,Corenna Swann,F,https://awoiaf.westeros.org/index.php/Corenna_Swann,NA,NA
+7,1,6,3,Ryman Frey,M,https://awoiaf.westeros.org/index.php/Ryman_Frey,NA,NA
+8,1,NA,7,Edwyn Frey,M,https://awoiaf.westeros.org/index.php/Edwyn_Frey,NA,NA
+9,1,NA,7,Walder 'Black Walder' Frey,M,https://awoiaf.westeros.org/index.php/Walder_Frey_(son_of_Ryman),NA,NA
+10,1,NA,7,Petyr Frey,M,https://awoiaf.westeros.org/index.php/Petyr_Frey,NA,NA
+11,1,NA,NA,Janyce Hunter,F,https://awoiaf.westeros.org/index.php/Janyce_Hunter,NA,NA
+12,1,11,8,Walda Frey,F,https://awoiaf.westeros.org/index.php/Walda_Frey,NA,NA
+13,1,NA,NA,Mylenda Caron,F,https://awoiaf.westeros.org/index.php/Mylenda_Caron,NA,NA
+14,1,13,10,Perra Frey,F,https://awoiaf.westeros.org/index.php/Perra_Frey,NA,NA
+15,1,NA,NA,Jeyne Lydden,F,https://awoiaf.westeros.org/index.php/Jeyne_Lydden,NA,NA
+16,1,15,3,Aegon 'Jinglebell' Frey,M,https://awoiaf.westeros.org/index.php/Aegon_Frey_(son_of_Stevron),NA,NA
+17,1,15,3,Maegelle Frey,F,https://awoiaf.westeros.org/index.php/Maegelle_Frey,NA,NA
+18,1,NA,NA,Dafyn Vance,M,https://awoiaf.westeros.org/index.php/Dafyn_Vance,NA,NA
+19,1,17,18,Marianne Vance,F,https://awoiaf.westeros.org/index.php/Marianne_Vance,NA,NA
+20,1,17,18,Walder Vance,M,https://awoiaf.westeros.org/index.php/Walder_Vance,NA,NA
+21,1,17,18,Patrek Vance,M,https://awoiaf.westeros.org/index.php/Patrek_Vance,NA,NA
+22,1,NA,NA,Marsella Waynwood,F,https://awoiaf.westeros.org/index.php/Marsella_Waynwood,NA,NA
+23,1,22,3,Walton Frey,M,https://awoiaf.westeros.org/index.php/Walton_Frey,NA,NA
+24,1,NA,NA,Deana Hardyng,F,https://awoiaf.westeros.org/index.php/Deana_Hardyng,NA,NA
+25,1,24,23,Steffon Frey,M,https://awoiaf.westeros.org/index.php/Steffon_Frey,NA,NA
+26,1,24,23,Walda 'Fair Walda' Frey,F,https://awoiaf.westeros.org/index.php/Walda_Frey_(daughter_of_Walton),NA,NA
+27,1,24,23,Bryan Frey,M,https://awoiaf.westeros.org/index.php/Bryan_Frey,NA,NA
+28,1,584,158,Genna Lannister,F,https://awoiaf.westeros.org/index.php/Genna_Lannister,NA,NA
+29,1,28,4,Cleos Frey,M,https://awoiaf.westeros.org/index.php/Cleos_Frey,NA,NA
+30,1,28,4,Lyonel Frey,M,https://awoiaf.westeros.org/index.php/Lyonel_Frey,NA,NA
+31,1,28,4,Tion Frey,M,https://awoiaf.westeros.org/index.php/Tion_Frey,NA,NA
+32,1,28,4,Walder 'Red Walder' Frey,M,https://awoiaf.westeros.org/index.php/Walder_Frey_(son_of_Emmon),NA,NA
+33,1,NA,679,Jeyne Darry,F,https://awoiaf.westeros.org/index.php/Jeyne_Darry,NA,NA
+34,1,33,29,Tywin 'Ty' Frey,M,https://awoiaf.westeros.org/index.php/Tywin_Frey,NA,NA
+35,1,33,29,Willem Frey,M,https://awoiaf.westeros.org/index.php/Willem_Frey,NA,NA
+36,1,NA,NA,Tyana Wylde,F,https://awoiaf.westeros.org/index.php/Tyana_Wylde,NA,NA
+37,1,36,5,Aegon 'Bloodborn' Frey,M,https://awoiaf.westeros.org/index.php/Aegon_Frey_(son_of_Aenys),NA,NA
+38,1,36,5,Rhaegar Frey,M,https://awoiaf.westeros.org/index.php/Rhaegar_Frey,NA,NA
+39,1,NA,NA,Jeyne Beesbury,F,https://awoiaf.westeros.org/index.php/Jeyne_Beesbury,NA,NA
+40,1,39,38,Robert Frey,M,https://awoiaf.westeros.org/index.php/Robert_Frey,NA,NA
+41,1,39,38,Walda 'White Walda' Frey,F,https://awoiaf.westeros.org/index.php/Walda_Frey_(daughter_of_Rhaegar),NA,NA
+42,1,39,38,Jonos Frey,M,https://awoiaf.westeros.org/index.php/Jonos_Frey,NA,NA
+43,1,2,1,Perriane Frey,F,https://awoiaf.westeros.org/index.php/Perriane_Frey,NA,NA
+44,1,NA,NA,Leslyn Haigh,M,https://awoiaf.westeros.org/index.php/Leslyn_Haigh,NA,NA
+45,1,43,44,Harys Haigh,M,https://awoiaf.westeros.org/index.php/Harys_Haigh,NA,NA
+46,1,43,44,Donnel Haigh,M,https://awoiaf.westeros.org/index.php/Donnel_Haigh,NA,NA
+47,1,43,44,Alyn Haigh,M,https://awoiaf.westeros.org/index.php/Alyn_Haigh,NA,NA
+48,1,NA,45,Walder Haigh,M,https://awoiaf.westeros.org/index.php/Walder_Haigh,NA,NA
+49,1,NA,NA,Cyrenna Swann,F,https://awoiaf.westeros.org/index.php/Cyrenna_Swann,NA,NA
+50,1,49,1,Jared Frey,M,https://awoiaf.westeros.org/index.php/Jared_Frey,NA,NA
+51,1,49,1,Luceon Frey,M,https://awoiaf.westeros.org/index.php/Luceon_Frey,NA,NA
+52,1,NA,NA,Alys Frey,F,https://awoiaf.westeros.org/index.php/Alys_Frey,NA,NA
+53,1,52,50,Tytos Frey,M,https://awoiaf.westeros.org/index.php/Tytos_Frey,NA,NA
+54,1,52,50,Kyra Frey,F,https://awoiaf.westeros.org/index.php/Kyra_Frey,NA,NA
+55,1,NA,NA,Zhoe Blanetree,F,https://awoiaf.westeros.org/index.php/Zhoe_Blanetree,NA,NA
+56,1,55,53,Zia Frey,F,https://awoiaf.westeros.org/index.php/Zia_Frey,NA,NA
+57,1,55,53,Zachery Frey,M,https://awoiaf.westeros.org/index.php/Zachery_Frey,NA,NA
+58,1,NA,NA,Garse Goodbrook,M,https://awoiaf.westeros.org/index.php/Garse_Goodbrook,NA,NA
+59,1,54,58,Walder Goodbrook,M,https://awoiaf.westeros.org/index.php/Walder_Goodbrook,NA,NA
+60,1,54,58,Jeyne Goodbrook,F,https://awoiaf.westeros.org/index.php/Jeyne_Goodbrook,NA,NA
+61,1,NA,NA,Amarei Crakehall,F,https://awoiaf.westeros.org/index.php/Amarei_Crakehall,NA,NA
+62,1,61,1,Hosteen Frey,M,https://awoiaf.westeros.org/index.php/Hosteen_Frey,NA,NA
+63,1,61,1,Lythene Frey,F,https://awoiaf.westeros.org/index.php/Lythene_Frey,NA,NA
+64,1,61,1,Symond Frey,M,https://awoiaf.westeros.org/index.php/Symond_Frey,NA,NA
+65,1,61,1,Danwell Frey,M,https://awoiaf.westeros.org/index.php/Danwell_Frey,NA,NA
+66,1,61,1,Merrett Frey,M,https://awoiaf.westeros.org/index.php/Merrett_Frey,NA,NA
+67,1,61,1,Geremy Frey,M,https://awoiaf.westeros.org/index.php/Geremy_Frey,NA,NA
+68,1,61,1,Raymund Frey,M,https://awoiaf.westeros.org/index.php/Raymund_Frey,NA,NA
+69,1,NA,NA,Bellena Hawick,F,https://awoiaf.westeros.org/index.php/Bellena_Hawick,NA,NA
+70,1,69,62,Arwood Frey,M,https://awoiaf.westeros.org/index.php/Arwood_Frey,NA,NA
+71,1,NA,NA,Ryella Royce,F,https://awoiaf.westeros.org/index.php/Ryella_Royce,NA,NA
+72,1,71,70,Ryella Frey,F,https://awoiaf.westeros.org/index.php/Ryella_Frey,NA,NA
+73,1,71,70,Androw Frey,M,https://awoiaf.westeros.org/index.php/Androw_Frey,74,unknown
+74,1,71,70,Alyn Frey,M,https://awoiaf.westeros.org/index.php/Alyn_Frey,73,unknown
+75,1,71,70,Hostella Frey,F,https://awoiaf.westeros.org/index.php/Hostella_Frey,NA,NA
+76,1,NA,NA,Lucias Vypren,M,https://awoiaf.westeros.org/index.php/Lucias_Vypren,NA,NA
+77,1,63,76,Damon Vypren,M,https://awoiaf.westeros.org/index.php/Damon_Vypren,NA,NA
+78,1,63,76,Elyana Vypren,F,https://awoiaf.westeros.org/index.php/Elyana_Vypren,NA,NA
+79,1,NA,NA,Jon Wylde,M,https://awoiaf.westeros.org/index.php/Jon_Wylde,NA,NA
+80,1,78,79,Rickard Wylde,M,https://awoiaf.westeros.org/index.php/Rickard_Wylde,NA,NA
+81,1,NA,NA,Betharios of Braavos,F,https://awoiaf.westeros.org/index.php/Betharios_of_Braavos,NA,NA
+82,1,81,64,Alesander Frey,M,https://awoiaf.westeros.org/index.php/Alesander_Frey,NA,NA
+83,1,81,64,Alyx Frey,F,https://awoiaf.westeros.org/index.php/Alyx_Frey,NA,NA
+84,1,81,64,Bradamar Frey,M,https://awoiaf.westeros.org/index.php/Bradamar_Frey,NA,NA
+85,2,NA,NA,Wynafrei Whent,F,https://awoiaf.westeros.org/index.php/Wynafrei_Whent,NA,NA
+86,1,NA,NA,Mariya Darry,F,https://awoiaf.westeros.org/index.php/Mariya_Darry,NA,NA
+87,1,86,66,Amerei 'Gatehouse Ami' Frey,F,https://awoiaf.westeros.org/index.php/Amerei_Frey,NA,NA
+88,3,NA,NA,Pate of the Blue Fork,M,https://awoiaf.westeros.org/index.php/Pate_of_the_Blue_Fork,NA,NA
+89,1,86,66,Walda 'Fat Walda' Frey,F,https://awoiaf.westeros.org/index.php/Walda_Frey_(daughter_of_Merrett),NA,NA
+90,1,86,66,Marissa Frey,F,https://awoiaf.westeros.org/index.php/Marissa_Frey,NA,NA
+91,1,86,66,Walder 'Little Walder' Frey,M,https://awoiaf.westeros.org/index.php/Walder_Frey_(son_of_Merrett),NA,NA
+92,1,NA,NA,Carolei Waynwood,F,https://awoiaf.westeros.org/index.php/Carolei_Waynwood,NA,NA
+93,1,92,67,Sandor Frey,M,https://awoiaf.westeros.org/index.php/Sandor_Frey,NA,NA
+94,1,92,67,Cynthea Frey,F,https://awoiaf.westeros.org/index.php/Cynthea_Frey,NA,NA
+95,1,NA,NA,Beony Beesbury,F,https://awoiaf.westeros.org/index.php/Beony_Beesbury,NA,NA
+96,1,95,68,Robert Frey,M,https://awoiaf.westeros.org/index.php/Robert_Frey,NA,NA
+97,1,95,68,Malwyn Frey,M,https://awoiaf.westeros.org/index.php/Malwyn_Frey,NA,NA
+98,1,95,68,Sarra Frey,F,https://awoiaf.westeros.org/index.php/Sarra_Frey,99,mz
+99,1,95,68,Serra Frey,F,https://awoiaf.westeros.org/index.php/Serra_Frey,98,mz
+100,1,95,68,Cersei Frey,F,https://awoiaf.westeros.org/index.php/Cersei_Frey,NA,NA
+101,1,95,68,Tywin Frey,M,https://awoiaf.westeros.org/index.php/Tywin_Frey,102,unknown
+102,1,95,68,Jaime Frey,M,https://awoiaf.westeros.org/index.php/Jaime_Frey,101,unknown
+103,1,NA,NA,Alyssa Blackwood,F,https://awoiaf.westeros.org/index.php/Alyssa_Blackwood,NA,NA
+104,1,103,1,Lothar Frey,M,https://awoiaf.westeros.org/index.php/Lothar_Frey,NA,NA
+105,1,103,1,Jammos Frey,M,https://awoiaf.westeros.org/index.php/Jammos_Frey,NA,NA
+106,1,103,1,Whalen Frey,M,https://awoiaf.westeros.org/index.php/Whalen_Frey,NA,NA
+107,1,103,1,Morya Frey,F,https://awoiaf.westeros.org/index.php/Morya_Frey,NA,NA
+108,1,103,1,Tyta Frey,F,https://awoiaf.westeros.org/index.php/Tyta_Frey,NA,NA
+109,1,NA,NA,Leonella Lefford,F,https://awoiaf.westeros.org/index.php/Leonella_Lefford,NA,NA
+110,1,109,104,Tysane Frey,F,https://awoiaf.westeros.org/index.php/Tysane_Frey,NA,NA
+111,1,109,104,Walda Frey,F,https://awoiaf.westeros.org/index.php/Walda_Frey,NA,NA
+112,1,109,104,Emberlei Frey,F,https://awoiaf.westeros.org/index.php/Emberlei_Frey,NA,NA
+113,1,109,104,Leana Frey,F,https://awoiaf.westeros.org/index.php/Leana_Frey,NA,NA
+114,1,NA,NA,Sallei Paege,F,https://awoiaf.westeros.org/index.php/Sallei_Paege,NA,NA
+115,1,114,105,Walder 'Big Walder' Frey,M,https://awoiaf.westeros.org/index.php/Walder_Frey_(son_of_Jammos),NA,NA
+116,1,114,105,Dickon Frey,M,https://awoiaf.westeros.org/index.php/Dickon_Frey,117,unknown
+117,1,114,105,Mathis Frey,M,https://awoiaf.westeros.org/index.php/Mathis_Frey,116,unknown
+118,1,NA,NA,Sylwa Paege,F,https://awoiaf.westeros.org/index.php/Sylwa_Paege,NA,NA
+119,1,118,106,Hoster Frey,M,https://awoiaf.westeros.org/index.php/Hoster_Frey,NA,NA
+120,1,118,106,Merianne Frey,F,https://awoiaf.westeros.org/index.php/Merianne_Frey,NA,NA
+121,1,583,153,Flement Brax,M,https://awoiaf.westeros.org/index.php/Flement_Brax,NA,NA
+122,1,107,121,Robert Brax,M,https://awoiaf.westeros.org/index.php/Robert_Brax,NA,NA
+123,1,107,121,Walder Brax,M,https://awoiaf.westeros.org/index.php/Walder_Brax,NA,NA
+124,1,107,121,Jon Brax,M,https://awoiaf.westeros.org/index.php/Jon_Brax,NA,NA
+125,4,NA,NA,Sarya Whent,F,https://awoiaf.westeros.org/index.php/Sarya_Whent,NA,NA
+126,1,NA,NA,Bethany Rosby,F,https://awoiaf.westeros.org/index.php/Bethany_Rosby,NA,NA
+127,1,126,1,Perwyn Frey,M,https://awoiaf.westeros.org/index.php/Perwyn_Frey,NA,NA
+128,1,126,1,Benfrey Frey,M,https://awoiaf.westeros.org/index.php/Benfrey_Frey,NA,NA
+129,1,126,1,Willamen Frey,M,https://awoiaf.westeros.org/index.php/Willamen_Frey,NA,NA
+130,1,126,1,Olyvar Frey,M,https://awoiaf.westeros.org/index.php/Olyvar_Frey,NA,NA
+131,1,126,1,Roslin Frey,F,https://awoiaf.westeros.org/index.php/Roslin_Frey,NA,NA
+132,1,NA,NA,Jyanna Frey,F,https://awoiaf.westeros.org/index.php/Jyanna_Frey,NA,NA
+133,1,132,128,Della Frey,F,https://awoiaf.westeros.org/index.php/Della_Frey,NA,NA
+134,1,132,128,Osmund Frey,M,https://awoiaf.westeros.org/index.php/Osmund_Frey,NA,NA
+135,1,NA,NA,Annara Farring,F,https://awoiaf.westeros.org/index.php/Annara_Farring,NA,NA
+136,1,135,1,Arwyn Frey,M,https://awoiaf.westeros.org/index.php/Arwyn_Frey,NA,NA
+137,1,135,1,Wendel Frey,M,https://awoiaf.westeros.org/index.php/Wendel_Frey,NA,NA
+138,1,135,1,Colmar Frey,M,https://awoiaf.westeros.org/index.php/Colmar_Frey,NA,NA
+139,1,135,1,Waltyr Frey,M,https://awoiaf.westeros.org/index.php/Waltyr_Frey,NA,NA
+140,1,135,1,Elmar Frey,M,https://awoiaf.westeros.org/index.php/Elmar_Frey,NA,NA
+141,1,135,1,Shirei Frey,F,https://awoiaf.westeros.org/index.php/Shirei_Frey,NA,NA
+142,5,NA,NA,Joyeuse Erenford,F,https://awoiaf.westeros.org/index.php/Joyeuse_Erenford,NA,NA
+143,1,NA,144,Walda Rivers,F,https://awoiaf.westeros.org/index.php/Walda_Rivers,NA,NA
+144,1,NA,1,Walder Rivers,M,https://awoiaf.westeros.org/index.php/Walder_Rivers,NA,NA
+145,1,NA,1,Melwys Rivers,M,https://awoiaf.westeros.org/index.php/Melwys_Rivers,NA,NA
+146,1,NA,1,Jeyne Rivers,F,https://awoiaf.westeros.org/index.php/Jeyne_Rivers,NA,NA
+147,1,NA,1,Martyn Rivers,M,https://awoiaf.westeros.org/index.php/Martyn_Rivers,NA,NA
+148,1,NA,1,Ryger Rivers,M,https://awoiaf.westeros.org/index.php/Ryger_Rivers,NA,NA
+149,1,NA,1,Ronel Rivers,M,https://awoiaf.westeros.org/index.php/Ronel_Rivers,NA,NA
+150,1,NA,1,Mellara Rivers,F,https://awoiaf.westeros.org/index.php/Mellara_Rivers,NA,NA
+151,1,NA,144,Aemon Rivers,M,https://awoiaf.westeros.org/index.php/Aemon_Rivers,NA,NA
+152,1,NA,151,Walda Rivers,F,https://awoiaf.westeros.org/index.php/Walda_Rivers,NA,NA
+153,1,NA,156,Andros Brax,M,https://awoiaf.westeros.org/index.php/Andros_Brax,NA,NA
+154,1,583,153,Tytos Brax,M,https://awoiaf.westeros.org/index.php/Tytos_Brax,NA,NA
+155,1,583,153,Robert Brax,M,https://awoiaf.westeros.org/index.php/Robert_Brax,NA,NA
+156,1,NA,NA,Brax,M,NA,NA,NA
+157,1,NA,156,Rupert Brax,M,https://awoiaf.westeros.org/index.php/Rupert_Brax,NA,NA
+158,1,585,179,Tytos Lannister,M,https://awoiaf.westeros.org/index.php/Tytos_Lannister,NA,NA
+159,1,584,158,Tywin Lannister,M,https://awoiaf.westeros.org/index.php/Tywin_Lannister,NA,NA
+160,1,584,158,Kevan Lannister,M,https://awoiaf.westeros.org/index.php/Kevan_Lannister,NA,NA
+161,1,584,158,Tygett Lannister,M,https://awoiaf.westeros.org/index.php/Tygett_Lannister,NA,NA
+162,1,584,158,Gerion Lannister,M,https://awoiaf.westeros.org/index.php/Gerion_Lannister,NA,NA
+163,1,586,182,Joanna Lannister,F,https://awoiaf.westeros.org/index.php/Joanna_Lannister,NA,NA
+164,1,163,159,Jaime Lannister,M,https://awoiaf.westeros.org/index.php/Jaime_Lannister,165,dz
+165,1,163,159,Cersei Lannister,F,https://awoiaf.westeros.org/index.php/Cersei_Lannister,164,dz
+166,1,163,159,Tyrion Lannister,M,https://awoiaf.westeros.org/index.php/Tyrion_Lannister,NA,NA
+167,1,188,187,Robert Baratheon,M,https://awoiaf.westeros.org/index.php/Robert_Baratheon,NA,NA
+168,1,165,164,Joffrey Baratheon,M,https://awoiaf.westeros.org/index.php/Joffrey_Baratheon,NA,NA
+169,1,165,164,Myrcella Baratheon,F,https://awoiaf.westeros.org/index.php/Myrcella_Baratheon,NA,NA
+170,1,165,164,Tommen Baratheon,M,https://awoiaf.westeros.org/index.php/Tommen_Baratheon,NA,NA
+171,1,NA,NA,Dorna Swyft,F,https://awoiaf.westeros.org/index.php/Dorna_Swyft,NA,NA
+172,1,171,160,Lancel Lannister,M,https://awoiaf.westeros.org/index.php/Lancel_Lannister,NA,NA
+173,1,171,160,Willem Lannister,M,https://awoiaf.westeros.org/index.php/Willem_Lannister,174,unknown
+174,1,171,160,Martyn Lannister,M,https://awoiaf.westeros.org/index.php/Martyn_Lannister,173,unknown
+175,1,171,160,Janei Lannister,F,https://awoiaf.westeros.org/index.php/Janei_Lannister,NA,NA
+176,1,NA,NA,Darlessa Marbrand,F,https://awoiaf.westeros.org/index.php/Darlessa_Marbrand,NA,NA
+177,1,176,161,Tyrek Lannister,M,https://awoiaf.westeros.org/index.php/Tyrek_Lannister,NA,NA
+178,1,NA,162,Joy Hill,F,https://awoiaf.westeros.org/index.php/Joy_Hill,NA,NA
+179,1,NA,NA,Gerold Lannister,M,https://awoiaf.westeros.org/index.php/Gerold_Lannister,NA,NA
+180,1,585,179,Tywald Lannister,M,https://awoiaf.westeros.org/index.php/Tywald_Lannister,NA,NA
+181,1,585,179,Tion Lannister,M,https://awoiaf.westeros.org/index.php/Tion_Lannister,NA,NA
+182,1,585,179,Jason Lannister,M,https://awoiaf.westeros.org/index.php/Jason_Lannister,NA,NA
+183,1,586,182,Stafford Lannister,M,https://awoiaf.westeros.org/index.php/Stafford_Lannister,NA,NA
+184,1,NA,183,Daven Lannister,M,https://awoiaf.westeros.org/index.php/Daven_Lannister,NA,NA
+185,1,NA,183,Cerenna Lannister,F,https://awoiaf.westeros.org/index.php/Cerenna_Lannister,NA,NA
+186,1,NA,183,Myrielle Lannister,F,https://awoiaf.westeros.org/index.php/Myrielle_Lannister,NA,NA
+187,1,199,499,Steffon Baratheon,M,https://awoiaf.westeros.org/index.php/Steffon_Baratheon,NA,NA
+188,1,479,476,Cassana Estermont,F,https://awoiaf.westeros.org/index.php/Cassana_Estermont,NA,NA
+189,1,NA,447,Delena Florent,F,https://awoiaf.westeros.org/index.php/Delena_Florent,NA,NA
+190,1,189,167,Edric Storm,M,https://awoiaf.westeros.org/index.php/Edric_Storm,NA,NA
+191,1,NA,167,Barra Waters,F,https://awoiaf.westeros.org/index.php/Barra,NA,NA
+192,1,NA,167,Mya Stone,F,https://awoiaf.westeros.org/index.php/Mya_Stone,NA,NA
+193,1,NA,167,Gendry Waters,M,https://awoiaf.westeros.org/index.php/Gendry,NA,NA
+194,1,NA,167,Bella Rivers,F,https://awoiaf.westeros.org/index.php/Bella,NA,NA
+195,1,188,187,Stannis Baratheon,M,https://awoiaf.westeros.org/index.php/Stannis_Baratheon,NA,NA
+196,1,188,187,Renly Baratheon,M,https://awoiaf.westeros.org/index.php/Renly_Baratheon,NA,NA
+197,1,NA,440,Selyse Florent,F,https://awoiaf.westeros.org/index.php/Selyse_Florent,NA,NA
+198,1,197,195,Shireen Baratheon,F,https://awoiaf.westeros.org/index.php/Shireen_Baratheon,NA,NA
+199,1,517,200,Rhaelle Targaryen,F,https://awoiaf.westeros.org/index.php/Rhaelle_Targaryen,NA,NA
+200,1,516,282,Aegon V Targaryen,M,https://awoiaf.westeros.org/index.php/Aegon_V_Targaryen,NA,NA
+201,1,517,200,Jaehaerys II Targaryen,M,https://awoiaf.westeros.org/index.php/Jaehaerys_II_Targaryen,NA,NA
+202,1,518,201,Aerys II Targaryen,M,https://awoiaf.westeros.org/index.php/Aerys_II_Targaryen,NA,NA
+203,1,518,201,Rhaella Targaryen,F,https://awoiaf.westeros.org/index.php/Rhaella_Targaryen,NA,NA
+204,1,203,202,Rhaegar Targaryen,M,https://awoiaf.westeros.org/index.php/Rhaegar_Targaryen,NA,NA
+205,1,203,202,Viserys Targaryen,M,https://awoiaf.westeros.org/index.php/Viserys_Targaryen,NA,NA
+206,1,203,202,Daenerys Targaryen,F,https://awoiaf.westeros.org/index.php/Daenerys_Targaryen,NA,NA
+207,1,257,258,Elia Martell,F,https://awoiaf.westeros.org/index.php/Elia_Martell,NA,NA
+208,1,207,204,Rhaenys Targaryen,F,https://awoiaf.westeros.org/index.php/Rhaenys_Targaryen,NA,NA
+209,1,207,204,Aegon Targaryen,M,https://awoiaf.westeros.org/index.php/Aegon_Targaryen_(son_of_Rhaegar),NA,NA
+210,1,468,212,Lyanna Stark,F,https://awoiaf.westeros.org/index.php/Lyanna_Stark,NA,NA
+211,1,210,204,Jon Snow,M,https://awoiaf.westeros.org/index.php/Jon_Snow,NA,NA
+212,1,571,464,Rickard Stark,M,https://awoiaf.westeros.org/index.php/Rickard_Stark,NA,NA
+213,1,468,212,Brandon Stark,M,https://awoiaf.westeros.org/index.php/Brandon_Stark,NA,NA
+214,1,468,212,Eddard Stark,M,https://awoiaf.westeros.org/index.php/Eddard_Stark,NA,NA
+215,1,468,212,Benjen Stark,M,https://awoiaf.westeros.org/index.php/Benjen_Stark,NA,NA
+216,1,223,222,Catelyn Tully,F,https://awoiaf.westeros.org/index.php/Catelyn_Tully,NA,NA
+217,1,216,214,Robb Stark,M,https://awoiaf.westeros.org/index.php/Robb_Stark,NA,NA
+218,1,216,214,Sansa Stark,F,https://awoiaf.westeros.org/index.php/Sansa_Stark,NA,NA
+219,1,216,214,Arya Stark,F,https://awoiaf.westeros.org/index.php/Arya_Stark,NA,NA
+220,1,216,214,Brandon 'Bran' Stark,M,https://awoiaf.westeros.org/index.php/Bran_Stark,NA,NA
+221,1,216,214,Rickon Stark,M,https://awoiaf.westeros.org/index.php/Rickon_Stark,NA,NA
+222,1,570,255,Hoster Tully,M,https://awoiaf.westeros.org/index.php/Hoster_Tully,NA,NA
+223,1,NA,NA,Minisa Whent,F,https://awoiaf.westeros.org/index.php/Minisa_Whent,NA,NA
+224,1,223,222,Lysa Tully,F,https://awoiaf.westeros.org/index.php/Lysa_Tully,NA,NA
+225,1,223,222,Edmure Tully,M,https://awoiaf.westeros.org/index.php/Edmure_Tully,NA,NA
+226,1,538,230,Jon Arryn,M,https://awoiaf.westeros.org/index.php/Jon_Arryn,NA,NA
+227,1,224,226,Robert Arryn,M,https://awoiaf.westeros.org/index.php/Robert_Arryn,NA,NA
+228,1,NA,NA,Jeyne Royce,F,https://awoiaf.westeros.org/index.php/Jeyne_Royce,NA,NA
+229,6,NA,NA,Rowena Arryn,F,https://awoiaf.westeros.org/index.php/Rowena_Arryn,NA,NA
+230,1,NA,NA,Jasper Arryn,M,https://awoiaf.westeros.org/index.php/Jasper_Arryn,NA,NA
+231,1,538,230,Alys Arryn,F,https://awoiaf.westeros.org/index.php/Alys_Arryn,NA,NA
+232,1,538,230,Ronnel Arryn,M,https://awoiaf.westeros.org/index.php/Ronnel_Arryn,NA,NA
+233,1,NA,249,Elys Waynwood,M,https://awoiaf.westeros.org/index.php/Elys_Waynwood,NA,NA
+234,1,231,233,Waynwood,F,https://awoiaf.westeros.org/index.php/House_Waynwood,NA,NA
+235,1,NA,NA,Denys Arryn,M,https://awoiaf.westeros.org/index.php/Denys_Arryn,NA,NA
+236,1,234,235,Arryn,M,https://awoiaf.westeros.org/index.php/House_Arryn,NA,NA
+237,1,231,233,Youngest daughter of Elys Waynwood,F,https://awoiaf.westeros.org/index.php/House_Waynwood,NA,NA
+238,1,NA,NA,Hardyng,M,https://awoiaf.westeros.org/index.php/House_Hardyng,NA,NA
+239,1,237,238,Harrold Hardyng,M,https://awoiaf.westeros.org/index.php/Harrold_Hardyng,NA,NA
+240,1,231,233,Waynwood,F,https://awoiaf.westeros.org/index.php/House_Waynwood,NA,NA
+241,1,231,233,Waynwood,F,https://awoiaf.westeros.org/index.php/House_Waynwood,NA,NA
+242,1,231,233,Waynwood,F,https://awoiaf.westeros.org/index.php/House_Waynwood,NA,NA
+243,1,231,233,Waynwood,F,https://awoiaf.westeros.org/index.php/House_Waynwood,NA,NA
+244,1,231,233,Waynwood,F,https://awoiaf.westeros.org/index.php/House_Waynwood,NA,NA
+245,1,231,233,Waynwood,F,https://awoiaf.westeros.org/index.php/House_Waynwood,NA,NA
+246,1,231,233,Jasper Waynwood,M,https://awoiaf.westeros.org/index.php/Jasper_Waynwood,NA,NA
+247,1,NA,NA,Lady Belmore,F,https://awoiaf.westeros.org/index.php/House_Belmore#House_Belmore_at_the_end_of_the_third_century,NA,NA
+248,1,247,232,Elbert Arryn,M,https://awoiaf.westeros.org/index.php/Elbert_Arryn,NA,NA
+249,1,NA,NA,Waynwood,M,https://awoiaf.westeros.org/index.php/House_Waynwood,NA,NA
+250,1,NA,249,Father of Anya Waynwood,M,https://awoiaf.westeros.org/index.php/Anya_Waynwood,NA,NA
+251,1,NA,250,Anya Waynwood,F,https://awoiaf.westeros.org/index.php/Anya_Waynwood,NA,NA
+252,1,251,636,Morton Waynwood,M,https://awoiaf.westeros.org/index.php/Morton_Waynwood,NA,NA
+253,1,251,636,Donnel Waynwood,M,https://awoiaf.westeros.org/index.php/Donnel_Waynwood,NA,NA
+254,1,251,636,Wallace Waynwood,M,https://awoiaf.westeros.org/index.php/Wallace_Waynwood,NA,NA
+255,1,NA,NA,Lord Tully,M,https://awoiaf.westeros.org/index.php/Lord_Tully,NA,NA
+256,1,570,255,Brynden 'Blackfish' Tully,M,https://awoiaf.westeros.org/index.php/Brynden_Tully,NA,NA
+257,1,505,504,Princess Of Dorne,F,https://awoiaf.westeros.org/index.php/Princess_of_Dorne_(mother_of_Doran),NA,NA
+258,1,NA,NA,Consort of Dorne (Father of Doran Martell),M,https://awoiaf.westeros.org/index.php/Princess_of_Dorne_(mother_of_Doran)#Family,NA,NA
+259,1,505,504,Lewyn Martell,M,https://awoiaf.westeros.org/index.php/Lewyn_Martell,NA,NA
+260,1,257,258,Doran Martell,M,https://awoiaf.westeros.org/index.php/Doran_Martell,NA,NA
+261,1,257,258,Mors Martell,M,https://awoiaf.westeros.org/index.php/Mors_Martell,NA,NA
+262,1,257,258,Olyvar Martell,M,https://awoiaf.westeros.org/index.php/Olyvar_Martell,NA,NA
+263,1,257,258,Oberyn 'The Red Viper' Martell,M,https://awoiaf.westeros.org/index.php/Oberyn_Martell,NA,NA
+264,1,NA,273,Ellaria Sand,F,https://awoiaf.westeros.org/index.php/Ellaria_Sand,NA,NA
+265,1,264,263,Elia Sand,F,https://awoiaf.westeros.org/index.php/Elia_Sand,NA,NA
+266,1,NA,263,Obara Sand,F,https://awoiaf.westeros.org/index.php/Obara_Sand,NA,NA
+267,1,NA,263,Nymeria Sand,F,https://awoiaf.westeros.org/index.php/Nymeria_Sand,NA,NA
+268,1,NA,263,Tyene Sand,F,https://awoiaf.westeros.org/index.php/Tyene_Sand,NA,NA
+269,1,NA,263,Sarella Sand,F,https://awoiaf.westeros.org/index.php/Sarella_Sand,NA,NA
+270,1,264,263,Obella Sand,F,https://awoiaf.westeros.org/index.php/Obella_Sand,NA,NA
+271,1,264,263,Dorea Sand,F,https://awoiaf.westeros.org/index.php/Dorea_Sand,NA,NA
+272,1,264,263,Loreza Sand,F,https://awoiaf.westeros.org/index.php/Loreza_Sand,NA,NA
+273,1,NA,274,Harmen Uller,M,https://awoiaf.westeros.org/index.php/Harmen_Uller,NA,NA
+274,1,NA,NA,Lord Uller,M,https://awoiaf.westeros.org/index.php/Harmen_Uller#Family,NA,NA
+275,1,NA,274,Ulwyck Uller,M,https://awoiaf.westeros.org/index.php/Ulwyck_Uller,NA,NA
+276,1,NA,NA,Mellario of Norvos,F,https://awoiaf.westeros.org/index.php/Mellario_of_Norvos,NA,NA
+277,1,276,260,Arianne Martell,F,https://awoiaf.westeros.org/index.php/Arianne_Martell,NA,NA
+278,1,276,260,Quentyn Martell,M,https://awoiaf.westeros.org/index.php/Quentyn_Martell,NA,NA
+279,1,276,260,Trystane Martell,M,https://awoiaf.westeros.org/index.php/Trystane_Martell,NA,NA
+280,1,517,200,Duncan 'The Small' Targaryen,M,https://awoiaf.westeros.org/index.php/Duncan_Targaryen,NA,NA
+281,1,517,200,Daeron Targaryen (son of Aegon V),M,https://awoiaf.westeros.org/index.php/Daeron_Targaryen_(son_of_Aegon_V),NA,NA
+282,1,291,290,Maekar Targaryen,M,https://awoiaf.westeros.org/index.php/Maekar_Targaryen,NA,NA
+283,1,516,282,Daeron (son of Maekar) Targaryen,M,https://awoiaf.westeros.org/index.php/Daeron_Targaryen_(son_of_Maekar_I),NA,NA
+284,1,600,283,Vaella Targaryen,F,https://awoiaf.westeros.org/index.php/Vaella_Targaryen,NA,NA
+285,1,516,282,Aerion (son of Maekar) Targaryen,M,https://awoiaf.westeros.org/index.php/Aerion_Targaryen,NA,NA
+286,1,NA,285,Unknown Targaryen,M,https://awoiaf.westeros.org/index.php/House_Targaryen,NA,NA
+287,1,516,282,Aemon Targaryen,M,https://awoiaf.westeros.org/index.php/Aemon_Targaryen,NA,NA
+288,1,516,282,Rhae Targaryen,F,https://awoiaf.westeros.org/index.php/Rhae_Targaryen,NA,NA
+289,1,516,282,Daella Targaryen (daughter of Maekar I),F,https://awoiaf.westeros.org/index.php/Daella_Targaryen_(daughter_of_Maekar_I),NA,NA
+290,1,303,302,Daeron Targaryen,M,https://awoiaf.westeros.org/index.php/Daeron_Targaryen,NA,NA
+291,1,567,568,Myriah Martell,F,https://awoiaf.westeros.org/index.php/Myriah_Martell,NA,NA
+292,1,291,290,Baelor 'Breakspear' Targaryen,M,https://awoiaf.westeros.org/index.php/Baelor_Targaryen_(son_of_Daeron_II),NA,NA
+293,1,291,290,Aerys Targaryen,M,https://awoiaf.westeros.org/index.php/Aerys_Targaryen,NA,NA
+294,7,NA,NA,Aelinor Penrose,F,https://awoiaf.westeros.org/index.php/Aelinor_Penrose,NA,NA
+295,1,291,290,Rhaegel Targaryen,M,https://awoiaf.westeros.org/index.php/Rhaegel_Targaryen,NA,NA
+296,1,NA,295,Targaryen,M,https://awoiaf.westeros.org/index.php/House_Targaryen,NA,NA
+297,1,NA,295,Targaryen,M,https://awoiaf.westeros.org/index.php/House_Targaryen,NA,NA
+298,1,589,292,Valarr Targaryen,M,https://awoiaf.westeros.org/index.php/Valarr_Targaryen,NA,NA
+299,1,589,292,Matarys Targaryen,M,https://awoiaf.westeros.org/index.php/Matarys_Targaryen,NA,NA
+300,1,600,298,Stillborn Targaryen,M,https://awoiaf.westeros.org/index.php/Valarr_Targaryen#Family,NA,NA
+301,1,600,298,Stillborn Targaryen,M,https://awoiaf.westeros.org/index.php/Valarr_Targaryen#Family,NA,NA
+302,1,502,306,Aegon Targaryen,M,https://awoiaf.westeros.org/index.php/Aegon_IV_Targaryen,NA,NA
+303,1,502,306,Naerys Targaryen,F,https://awoiaf.westeros.org/index.php/Naerys_Targaryen,NA,NA
+304,1,303,302,Daenerys Targaryen,F,https://awoiaf.westeros.org/index.php/Daenerys_Targaryen,594,dz
+305,8,NA,NA,Maron Martell,M,https://awoiaf.westeros.org/index.php/Maron_Martell,NA,NA
+306,1,339,536,Viserys Targaryen,M,https://awoiaf.westeros.org/index.php/Viserys_Targaryen,NA,NA
+307,1,502,306,Aemon 'The Dragonknight' Targaryen,M,https://awoiaf.westeros.org/index.php/Aemon_Targaryen_(son_of_Viserys_II),NA,NA
+308,1,322,321,Daena Targaryen,F,https://awoiaf.westeros.org/index.php/Daena_Targaryen,NA,NA
+309,1,563,302,Aegor 'Bittersteel' Rivers,M,https://awoiaf.westeros.org/index.php/Aegor_Rivers,NA,NA
+310,1,591,302,Brynden 'Bloodraven' Targaryen,M,https://awoiaf.westeros.org/index.php/Brynden_Rivers,NA,NA
+311,1,NA,302,Shiera Seastar,F,https://awoiaf.westeros.org/index.php/Shiera_Seastar,NA,NA
+312,1,308,302,Daemon Blackfyre,M,https://awoiaf.westeros.org/index.php/Daemon_Blackfyre,NA,NA
+313,1,560,312,Aegon Blackfyre,M,https://awoiaf.westeros.org/index.php/Aegon_Blackfyre,314,unknown
+314,1,560,312,Aemon Blackfyre,M,https://awoiaf.westeros.org/index.php/Aemon_Blackfyre,313,unknown
+315,1,560,312,Daemon Blackfyre,M,https://awoiaf.westeros.org/index.php/Daemon_Blackfyre,NA,NA
+316,1,560,312,Haegon Blackfyre,M,https://awoiaf.westeros.org/index.php/Haegon_Blackfyre,NA,NA
+317,1,560,312,Father of Maelys I Blackfyre,M,https://awoiaf.westeros.org/index.php/Maelys_I_Blackfyre#Family,NA,NA
+318,1,560,312,Blackfyre,M,https://awoiaf.westeros.org/index.php/House_Blackfyre#Family,NA,NA
+319,1,560,312,Blackfyre,M,https://awoiaf.westeros.org/index.php/House_Blackfyre#Family,NA,NA
+320,1,NA,317,Maelys 'The Monstrous' Blackfyre,M,https://awoiaf.westeros.org/index.php/Maelys_I_Blackfyre,NA,NA
+321,1,339,536,Aegon Targaryen,M,https://awoiaf.westeros.org/index.php/Aegon_III_Targaryen,NA,NA
+322,1,535,529,Daenaera Velaryon,F,https://awoiaf.westeros.org/index.php/Daenaera_Velaryon,NA,NA
+323,1,322,321,Elaena Targaryen,F,https://awoiaf.westeros.org/index.php/Elaena_Targaryen,NA,NA
+324,1,322,321,Rhaena Targaryen,F,https://awoiaf.westeros.org/index.php/Rhaena_Targaryen,NA,NA
+325,1,NA,NA,Ronnel Penrose,M,https://awoiaf.westeros.org/index.php/Ronnel_Penrose,NA,NA
+326,1,323,528,Viserys Plumm,M,https://awoiaf.westeros.org/index.php/Viserys_Plumm,NA,NA
+327,1,323,325,Robin Penrose,M,https://awoiaf.westeros.org/index.php/Robin_Penrose,NA,NA
+328,1,323,325,Laena Penrose,F,https://awoiaf.westeros.org/index.php/Laena_Penrose,NA,NA
+329,1,323,325,Jocelyn Penrose,F,https://awoiaf.westeros.org/index.php/Jocelyn_Penrose,NA,NA
+330,1,323,325,Joy Penrose,F,https://awoiaf.westeros.org/index.php/Joy_Penrose,NA,NA
+331,9,NA,NA,Lord Penrose,M,https://awoiaf.westeros.org/index.php/Lord_Penrose,NA,NA
+332,9,NA,331,Cortnay Penrose,M,https://awoiaf.westeros.org/index.php/Cortnay_Penrose,NA,NA
+333,1,520,522,Alyn Velaryon,M,https://awoiaf.westeros.org/index.php/Alyn_Velaryon,NA,NA
+334,1,322,321,Daeron Targaryen,M,https://awoiaf.westeros.org/index.php/Daeron_Targaryen,NA,NA
+335,1,322,321,Baelor Targaryen,M,https://awoiaf.westeros.org/index.php/Baelor_Targaryen,NA,NA
+336,10,620,619,Aliandra Martell,F,https://awoiaf.westeros.org/index.php/Aliandra_Martell,NA,NA
+337,1,323,333,Jon Waters,M,https://awoiaf.westeros.org/index.php/Jon_Waters,338,dz
+338,1,323,333,Jeyne Waters,F,https://awoiaf.westeros.org/index.php/Jeyne_Waters,337,dz
+339,1,341,340,Rhaenyra Targaryen,F,https://awoiaf.westeros.org/index.php/Rhaenyra_Targaryen,NA,NA
+340,1,506,537,Viserys I Targaryen,M,https://awoiaf.westeros.org/index.php/Viserys_I_Targaryen,NA,NA
+341,1,515,503,Aemma Arryn,F,https://awoiaf.westeros.org/index.php/Aemma_Arryn,NA,NA
+342,1,341,340,Targaryen,M,https://awoiaf.westeros.org/index.php/Targaryen,NA,NA
+343,1,341,340,Baelon Targaryen (son of Viserys I),M,https://awoiaf.westeros.org/index.php/Baelon_Targaryen_(son_of_Viserys_I),NA,NA
+344,1,541,539,Alicent Hightower,F,https://awoiaf.westeros.org/index.php/Alicent_Hightower,NA,NA
+345,1,344,340,Aegon Targaryen,M,https://awoiaf.westeros.org/index.php/Aegon_II_Targaryen,NA,NA
+346,1,344,340,Aemond Targaryen,M,https://awoiaf.westeros.org/index.php/Aemond_Targaryen,NA,NA
+347,1,344,340,Daeron Targaryen,M,https://awoiaf.westeros.org/index.php/Daeron_Targaryen,NA,NA
+348,1,344,340,Helaena Targaryen,F,https://awoiaf.westeros.org/index.php/Helaena_Targaryen,NA,NA
+349,1,351,350,Targaryen,U,https://awoiaf.westeros.org/index.php/House_Targaryen,NA,NA
+350,1,510,352,Jaehaerys 'The Conciliator' Targaryen,M,https://awoiaf.westeros.org/index.php/Jaehaerys_I_Targaryen,NA,NA
+351,1,510,352,Alysanne 'The Good' Targaryen,F,https://awoiaf.westeros.org/index.php/Alysanne_Targaryen,NA,NA
+352,1,354,353,Aenys Targaryen,M,https://awoiaf.westeros.org/index.php/Aenys_Targaryen,NA,NA
+353,1,359,358,Aegon 'The Conqueror' Targaryen,M,https://awoiaf.westeros.org/index.php/Aegon_I_Targaryen,NA,NA
+354,1,359,358,Rhaenys Targaryen,F,https://awoiaf.westeros.org/index.php/Rhaenys_Targaryen,NA,NA
+355,1,359,358,Visenya Targaryen,F,https://awoiaf.westeros.org/index.php/Visenya_Targaryen,NA,NA
+356,1,355,353,Maegor Targaryen,M,https://awoiaf.westeros.org/index.php/Maegor_Targaryen,NA,NA
+357,11,NA,NA,Jeyne Westerling,F,https://awoiaf.westeros.org/index.php/Jeyne_Westerling,NA,NA
+358,1,NA,364,Aerion (son of Daemion) Targaryen,M,https://awoiaf.westeros.org/index.php/Aerion_Targaryen_(son_of_Daemion),NA,NA
+359,1,NA,NA,Velena Velaryon,F,https://awoiaf.westeros.org/index.php/Velena_Velaryon,NA,NA
+360,1,NA,167,Bastard of Robert Baratheon,U,https://awoiaf.westeros.org/index.php/Robert_I_Baratheon#Family,NA,NA
+361,1,NA,358,Orys Baratheon,M,https://awoiaf.westeros.org/index.php/Orys_Baratheon,NA,NA
+362,1,NA,363,Argella Durrendon,F,https://awoiaf.westeros.org/index.php/Argella_Durrendon,NA,NA
+363,1,NA,NA,Argilac 'The Arrogant' Durrendon,M,https://awoiaf.westeros.org/index.php/Argilac_Durrandon,NA,NA
+364,1,590,365,Daemion Targaryen (Lord of Dragonstone),M,https://awoiaf.westeros.org/index.php/Daemion_Targaryen,NA,NA
+365,1,370,368,Aerys Targaryen,M,https://awoiaf.westeros.org/index.php/Aerys_Targaryen_(son_of_Aegon),NA,NA
+366,1,590,365,Aelyx Targaryen,M,https://awoiaf.westeros.org/index.php/Aelyx_Targaryen,NA,NA
+367,1,590,365,Baelon Targaryen,M,https://awoiaf.westeros.org/index.php/Baelon_Targaryen,NA,NA
+368,1,372,371,Aegon Targaryen,M,https://awoiaf.westeros.org/index.php/Aegon_Targaryen_(son_of_Gaemon),NA,NA
+369,1,370,368,Maegon Targaryen,M,https://awoiaf.westeros.org/index.php/Maegon_Targaryen,NA,NA
+370,1,372,371,Eleana Targaryen,F,https://awoiaf.westeros.org/index.php/Elaena_Targaryen_(daughter_of_Gaemon),NA,NA
+371,1,NA,373,Gaemon Targaryen,M,https://awoiaf.westeros.org/index.php/Gaemon_Targaryen,NA,NA
+372,1,NA,373,Daenys Targaryen,F,https://awoiaf.westeros.org/index.php/Daenys_Targaryen,NA,NA
+373,1,NA,NA,Aenar Targaryen,M,https://awoiaf.westeros.org/index.php/Aenar_Targaryen,NA,NA
+374,12,376,375,Loras Tyrell,M,https://awoiaf.westeros.org/index.php/Loras_Tyrell,NA,NA
+375,12,382,380,Mace Tyrell,M,https://awoiaf.westeros.org/index.php/Mace_Tyrell,NA,NA
+376,12,NA,406,Alerie Hightower,F,https://awoiaf.westeros.org/index.php/Alerie_Hightower,NA,NA
+377,12,376,375,Garlan Tyrell,M,https://awoiaf.westeros.org/index.php/Garlan_Tyrell,NA,NA
+378,12,376,375,Willas Tyrell,M,https://awoiaf.westeros.org/index.php/Willas_Tyrell,NA,NA
+379,12,376,375,Margaery Tyrell,F,https://awoiaf.westeros.org/index.php/Margaery_Tyrell,NA,NA
+380,12,614,393,Luthor Tyrell,M,https://awoiaf.westeros.org/index.php/Luthor_Tyrell,NA,NA
+381,13,NA,NA,Leonette Fossoway,F,https://awoiaf.westeros.org/index.php/Leonette_Fossoway,NA,NA
+382,12,NA,439,Olenna Redwyne,F,https://awoiaf.westeros.org/index.php/Olenna_Redwyne,NA,NA
+383,12,614,393,Garth 'The Gross' Tyrell,M,https://awoiaf.westeros.org/index.php/Garth_Tyrell,NA,NA
+384,12,614,393,Moryn Tyrell,M,https://awoiaf.westeros.org/index.php/Moryn_Tyrell,NA,NA
+385,12,614,393,Gormon Tyrell,M,https://awoiaf.westeros.org/index.php/Gormon_Tyrell,NA,NA
+386,12,382,380,Janna Tyrell,F,https://awoiaf.westeros.org/index.php/Janna_Tyrell,NA,NA
+387,12,382,380,Mina Tyrell,F,https://awoiaf.westeros.org/index.php/Mina_Tyrell,NA,NA
+388,14,NA,NA,Jon Fossoway,M,https://awoiaf.westeros.org/index.php/Jon_Fossoway,NA,NA
+389,12,NA,438,Paxter Redwyne,M,https://awoiaf.westeros.org/index.php/Paxter_Redwyne,NA,NA
+390,12,387,389,Horas 'Horror' Redwyne,M,https://awoiaf.westeros.org/index.php/Horas_Redwyne,391,mz
+391,12,387,389,Hobber 'Slobber' Redwyne,M,https://awoiaf.westeros.org/index.php/Hobber_Redwyne,390,mz
+392,12,387,389,Desmera Redwyne,F,https://awoiaf.westeros.org/index.php/Desmera_Redwyne,NA,NA
+393,12,NA,NA,Lord Tyrell,M,https://awoiaf.westeros.org/index.php/Lord_Tyrell,NA,NA
+394,12,NA,383,Garse Flowers,M,https://awoiaf.westeros.org/index.php/Garse_Flowers,NA,NA
+395,12,NA,384,Luthor Tyrell,M,https://awoiaf.westeros.org/index.php/Luthor_Tyrell,NA,NA
+396,12,NA,383,Garrett Flowers,M,https://awoiaf.westeros.org/index.php/Garrett_Flowers,NA,NA
+397,12,NA,384,Leo 'The Lazy' Tyrell,M,https://awoiaf.westeros.org/index.php/Leo_Tyrell_(son_of_Moryn),NA,NA
+398,12,NA,NA,Elyn Norridge,F,https://awoiaf.westeros.org/index.php/Elyn_Norridge,NA,NA
+399,12,398,395,Theodore Tyrell,M,https://awoiaf.westeros.org/index.php/Theodore_Tyrell,NA,NA
+400,12,398,395,Olene Tyrell,F,https://awoiaf.westeros.org/index.php/Olene_Tyrell,NA,NA
+401,12,398,395,Medwick Tyrell,M,https://awoiaf.westeros.org/index.php/Medwick_Tyrell,NA,NA
+402,12,NA,NA,Lia Serry,F,https://awoiaf.westeros.org/index.php/Lia_Serry,NA,NA
+403,12,402,399,Elinor Tyrell,F,https://awoiaf.westeros.org/index.php/Elinor_Tyrell,NA,NA
+404,12,402,399,Luthor Tyrell,M,https://awoiaf.westeros.org/index.php/Luthor_Tyrell,NA,NA
+405,15,NA,NA,Leo Blackbar,M,https://awoiaf.westeros.org/index.php/Leo_Blackbar,NA,NA
+406,12,NA,425,Leyton Hightower,M,https://awoiaf.westeros.org/index.php/Leyton_Hightower,NA,NA
+407,1,448,444,Rhea Florent,F,https://awoiaf.westeros.org/index.php/Rhea_Florent,NA,NA
+408,12,NA,406,Baelor Hightower,M,https://awoiaf.westeros.org/index.php/Baelor_Hightower,NA,NA
+409,16,NA,NA,Rhonda Rowan,F,https://awoiaf.westeros.org/index.php/Rhonda_Rowan,NA,NA
+410,12,NA,406,Alysanne Hightower,F,https://awoiaf.westeros.org/index.php/Alysanne_Hightower,NA,NA
+411,12,NA,NA,Arthur Ambrose,M,https://awoiaf.westeros.org/index.php/Arthur_Ambrose,NA,NA
+412,12,NA,406,Denyse Hightower,F,https://awoiaf.westeros.org/index.php/Denyse_Hightower,NA,NA
+413,12,NA,NA,Desmond Redwyne,M,https://awoiaf.westeros.org/index.php/Desmond_Redwyne,NA,NA
+414,12,412,413,Denys Redwyne,M,https://awoiaf.westeros.org/index.php/Denys_Redwyne,NA,NA
+415,12,NA,406,Malora Hightower,F,https://awoiaf.westeros.org/index.php/Malora_Hightower,NA,NA
+416,12,NA,406,Garth Hightower,M,https://awoiaf.westeros.org/index.php/Garth_Hightower,NA,NA
+417,12,NA,406,Gunthor Hightower,M,https://awoiaf.westeros.org/index.php/Gunthor_Hightower,NA,NA
+418,17,NA,NA,Jeyne Fossoway,F,https://awoiaf.westeros.org/index.php/Jeyne_Fossoway,NA,NA
+419,12,NA,406,Leyla Hightower,F,https://awoiaf.westeros.org/index.php/Leyla_Hightower,NA,NA
+420,18,NA,NA,Jon Cupps,M,https://awoiaf.westeros.org/index.php/Jon_Cupps,NA,NA
+421,12,NA,406,Humfrey Hightower,M,https://awoiaf.westeros.org/index.php/Humfrey_Hightower,NA,NA
+422,12,NA,406,Lynesse Hightower,F,https://awoiaf.westeros.org/index.php/Lynesse_Hightower,NA,NA
+423,19,NA,488,Jorah Mormont,M,https://awoiaf.westeros.org/index.php/Jorah_Mormont,NA,NA
+424,20,NA,NA,Tregar Ormollen,M,https://awoiaf.westeros.org/index.php/Tregar_Ormollen,NA,NA
+425,12,NA,426,Lord High Tower,M,https://awoiaf.westeros.org/index.php/House_Hightower#House_Hightower_at_the_end_of_the_third_century,NA,NA
+426,12,NA,NA,Hightower,M,https://awoiaf.westeros.org/index.php/House_Hightower#House_Hightower_at_the_end_of_the_third_century,NA,NA
+427,12,NA,426,Gerold 'The White Bull' Hightower,M,https://awoiaf.westeros.org/index.php/Gerold_Hightower,NA,NA
+428,21,NA,NA,Glover,F,https://awoiaf.westeros.org/index.php/House_Glover,NA,NA
+429,19,NA,NA,Lord Mormont,M,https://awoiaf.westeros.org/index.php/Lord_Mormont,NA,NA
+430,19,615,429,Maege Mormont,F,https://awoiaf.westeros.org/index.php/Maege_Mormont,NA,NA
+431,19,430,NA,Dacey Mormont,F,https://awoiaf.westeros.org/index.php/Dacey_Mormont,NA,NA
+432,19,430,NA,Alysane Mormont,F,https://awoiaf.westeros.org/index.php/Alysane_Mormont,NA,NA
+433,19,430,NA,Lyra Mormont,F,https://awoiaf.westeros.org/index.php/Lyra_Mormont,NA,NA
+434,19,430,NA,Jorelle Mormont,F,https://awoiaf.westeros.org/index.php/Jorelle_Mormont,NA,NA
+435,19,430,NA,Lyanna Mormont,F,https://awoiaf.westeros.org/index.php/Lyanna_Mormont,NA,NA
+436,19,432,NA,Snow,F,https://awoiaf.westeros.org/index.php/Alysane_Mormont#Family,NA,NA
+437,19,432,NA,Snow,M,https://awoiaf.westeros.org/index.php/Alysane_Mormont#Family,NA,NA
+438,12,NA,439,Redwyne,M,NA,NA,NA
+439,12,NA,NA,Runceford Redwyne,M,https://awoiaf.westeros.org/index.php/Runceford_Redwyne,NA,NA
+440,1,NA,443,Ryam Florent,M,https://awoiaf.westeros.org/index.php/Ryam_Florent,NA,NA
+441,1,NA,440,Imry Florent,M,https://awoiaf.westeros.org/index.php/Imry_Florent,NA,NA
+442,1,NA,440,Erren Florent,M,https://awoiaf.westeros.org/index.php/Erren_Florent,NA,NA
+443,1,NA,NA,Lord Florent,M,https://awoiaf.westeros.org/index.php/Lord_Florent,NA,NA
+444,1,NA,443,Alester Florent,M,https://awoiaf.westeros.org/index.php/Alester_Florent,NA,NA
+445,1,NA,443,Axell Florent,M,https://awoiaf.westeros.org/index.php/Axell_Florent,NA,NA
+446,1,NA,443,Rylene Florent,F,https://awoiaf.westeros.org/index.php/Rylene_Florent,NA,NA
+447,1,NA,443,Colin Florent,M,https://awoiaf.westeros.org/index.php/Colin_Florent,NA,NA
+448,1,NA,NA,Melara Crane,F,https://awoiaf.westeros.org/index.php/Melara_Crane,NA,NA
+449,1,448,444,Alekyne Florent,M,https://awoiaf.westeros.org/index.php/Alekyne_Florent,NA,NA
+450,1,448,444,Melessa Florent,F,https://awoiaf.westeros.org/index.php/Melessa_Florent,NA,NA
+451,22,NA,NA,Rycherd Crane,M,https://awoiaf.westeros.org/index.php/Rycherd_Crane,NA,NA
+452,1,NA,447,Merrell Florent,M,https://awoiaf.westeros.org/index.php/Merrell_Florent,NA,NA
+453,1,NA,447,Omer Florent,M,https://awoiaf.westeros.org/index.php/Omer_Florent,NA,NA
+454,1,NA,NA,Hosman Norcross,M,https://awoiaf.westeros.org/index.php/Hosman_Norcross,NA,NA
+455,1,189,454,Alester Norcross,M,https://awoiaf.westeros.org/index.php/Alester_Norcross,NA,NA
+456,1,189,454,Renly Norcross,M,https://awoiaf.westeros.org/index.php/Renly_Norcross,NA,NA
+457,1,NA,NA,Randyll Tarly,M,https://awoiaf.westeros.org/index.php/Randyll_Tarly,NA,NA
+458,1,450,457,Samwell Tarly,M,https://awoiaf.westeros.org/index.php/Samwell_Tarly,NA,NA
+459,1,450,457,Talla Tarly,F,https://awoiaf.westeros.org/index.php/Talla_Tarly,NA,NA
+460,1,450,457,Tarly,F,NA,NA,NA
+461,1,450,457,Tarly,F,NA,NA,NA
+462,1,450,457,Dickon Tarly,M,https://awoiaf.westeros.org/index.php/Dickon_Tarly,NA,NA
+463,12,410,411,Alyn Ambrose,M,https://awoiaf.westeros.org/index.php/Alyn_Ambrose,NA,NA
+464,1,467,465,Edwyle Stark,M,https://awoiaf.westeros.org/index.php/Edwyle_Stark,NA,NA
+465,1,576,575,Willam Stark,M,https://awoiaf.westeros.org/index.php/Willam_Stark,NA,NA
+466,1,574,465,Brandon Stark,M,https://awoiaf.westeros.org/index.php/Brandon_Stark,NA,NA
+467,1,NA,NA,Melantha Blackwood,F,https://awoiaf.westeros.org/index.php/Melantha_Blackwood,NA,NA
+468,1,572,573,Lyarra Stark,F,https://awoiaf.westeros.org/index.php/Lyarra_Stark,NA,NA
+469,1,467,465,Jocelyn Stark,F,https://awoiaf.westeros.org/index.php/Jocelyn_Stark,NA,NA
+470,1,NA,613,Benedict Royce,M,https://awoiaf.westeros.org/index.php/Benedict_Royce,NA,NA
+471,1,469,470,Royce,F,NA,NA,NA
+472,1,469,470,Royce,F,NA,NA,NA
+473,1,469,470,Royce,F,NA,NA,NA
+474,1,NA,NA,Arryn,M,NA,NA,NA
+475,1,471,474,Arryn,U,NA,NA,NA
+476,1,NA,NA,Eldon Estermont,M,https://awoiaf.westeros.org/index.php/Eldon_Estermont,NA,NA
+477,1,479,476,Aemon Estermont,M,https://awoiaf.westeros.org/index.php/Aemon_Estermont,NA,NA
+478,1,479,476,Lomas Estermont,M,https://awoiaf.westeros.org/index.php/Lomas_Estermont,NA,NA
+479,1,NA,480,Sylva 'Spotted Sylva' Santagar,F,https://awoiaf.westeros.org/index.php/Sylva_Santagar,NA,NA
+480,1,NA,NA,Symon Santagar,M,https://awoiaf.westeros.org/index.php/Symon_Santagar,NA,NA
+481,23,NA,482,Ashara Dayne,F,https://awoiaf.westeros.org/index.php/Ashara_Dayne,NA,NA
+482,23,NA,NA,Lord Dayne (father of Edric),M,https://awoiaf.westeros.org/index.php/Lord_Dayne_(father_of_Edric),NA,NA
+483,23,NA,482,Dayne,M,NA,NA,NA
+484,23,NA,482,Arthur Dayne,M,https://awoiaf.westeros.org/index.php/Arthur_Dayne,NA,NA
+485,23,NA,482,Allyria Dayne,F,https://awoiaf.westeros.org/index.php/Allyria_Dayne,NA,NA
+486,23,NA,483,Edric Dayne,M,https://awoiaf.westeros.org/index.php/Edric_Dayne,NA,NA
+487,24,NA,NA,Beric Dondarrion,M,https://awoiaf.westeros.org/index.php/Beric_Dondarrion,NA,NA
+488,19,615,429,Jeor Mormont,M,https://awoiaf.westeros.org/index.php/Jeor_Mormont,NA,NA
+489,1,NA,167,Bastard of Robert Baratheon,U,https://awoiaf.westeros.org/index.php/Robert_I_Baratheon#Family,NA,NA
+490,1,NA,167,Bastard of Robert Baratheon,U,https://awoiaf.westeros.org/index.php/Robert_I_Baratheon#Family,NA,NA
+491,1,NA,167,Bastard of Robert Baratheon,U,https://awoiaf.westeros.org/index.php/Robert_I_Baratheon#Family,NA,NA
+492,1,NA,167,Bastard of Robert Baratheon,U,https://awoiaf.westeros.org/index.php/Robert_I_Baratheon#Family,NA,NA
+493,1,NA,167,Bastard of Robert Baratheon,U,https://awoiaf.westeros.org/index.php/Robert_I_Baratheon#Family,NA,NA
+494,1,NA,167,Bastard of Robert Baratheon,U,https://awoiaf.westeros.org/index.php/Robert_I_Baratheon#Family,NA,NA
+495,1,NA,167,Bastard of Robert Baratheon,U,https://awoiaf.westeros.org/index.php/Robert_I_Baratheon#Family,NA,NA
+496,1,NA,167,Bastard of Robert Baratheon,U,https://awoiaf.westeros.org/index.php/Robert_I_Baratheon#Family,NA,NA
+497,1,NA,167,Bastard of Robert Baratheon,U,https://awoiaf.westeros.org/index.php/Robert_I_Baratheon#Family,NA,NA
+498,1,NA,167,Bastard of Robert Baratheon,U,https://awoiaf.westeros.org/index.php/Robert_I_Baratheon#Family,NA,NA
+499,1,NA,500,Ormund Baratheon,M,https://awoiaf.westeros.org/index.php/Ormund_Baratheon,NA,NA
+500,1,NA,NA,Unknown Baratheon,M,https://awoiaf.westeros.org/index.php/House_Baratheon,NA,NA
+501,1,NA,500,Harbert Baratheon,M,https://awoiaf.westeros.org/index.php/Harbert_Baratheon,NA,NA
+502,1,627,625,Larra Rogare,F,https://awoiaf.westeros.org/index.php/Larra_Rogare,NA,NA
+503,1,NA,519,Rodrik Arryn,M,https://awoiaf.westeros.org/index.php/Rodrik_Arryn,NA,NA
+504,1,NA,NA,Father of Princess of Dorne,M,NA,NA,NA
+505,1,NA,NA,Mother of Princess of Dorne,F,NA,NA,NA
+506,1,351,350,Alyssa Targaryen,F,https://awoiaf.westeros.org/index.php/Alyssa_Targaryen,NA,NA
+507,1,362,361,Davos Baratheon,M,https://awoiaf.westeros.org/index.php/Davos_Baratheon,NA,NA
+508,1,362,361,Unknown Baratheon,M,https://awoiaf.westeros.org/index.php/Davos_Baratheon#cite_note-4,NA,NA
+509,1,675,508,Rogar Baratheon,M,https://awoiaf.westeros.org/index.php/Rogar_Baratheon,NA,NA
+510,1,527,526,Alyssa Velaryon,F,https://awoiaf.westeros.org/index.php/Alyssa_Velaryon,NA,NA
+511,1,510,509,Boremund Baratheon,M,https://awoiaf.westeros.org/index.php/Boremund_Baratheon,NA,NA
+512,1,510,509,Jocelyn Baratheon,F,https://awoiaf.westeros.org/index.php/Jocelyn_Baratheon,NA,NA
+513,1,351,350,Aemon Targaryen (son of Jaehaerys I),M,https://awoiaf.westeros.org/index.php/Aemon_Targaryen_(son_of_Jaehaerys_I),NA,NA
+514,1,512,513,Rhaenys Targaryen (daughter of Aemon),F,https://awoiaf.westeros.org/index.php/Rhaenys_Targaryen_(daughter_of_Aemon),NA,NA
+515,1,351,350,Daella Targaryen (daughter of Jaehaerys I),F,https://awoiaf.westeros.org/index.php/Daella_Targaryen_(daughter_of_Jaehaerys_I),NA,NA
+516,1,NA,NA,Dyanna Dayne,F,https://awoiaf.westeros.org/index.php/Dyanna_Dayne,NA,NA
+517,1,NA,NA,Betha Blackwood,F,https://awoiaf.westeros.org/index.php/Betha_Blackwood,NA,NA
+518,1,517,200,Shaera Targaryen,F,https://awoiaf.westeros.org/index.php/Shaera_Targaryen,NA,NA
+519,1,NA,NA,Rymond Arryn,M,https://awoiaf.westeros.org/index.php/Rymond_Arryn,NA,NA
+520,1,NA,NA,Marilda of Hull,F,https://awoiaf.westeros.org/index.php/Marilda_of_Hull,NA,NA
+521,1,520,522,Addam Velaryon of Hull,M,https://awoiaf.westeros.org/index.php/Addam_Velaryon,NA,NA
+522,1,514,523,Laenor Velaryon,M,https://awoiaf.westeros.org/index.php/Laenor_Velaryon,NA,NA
+523,1,534,524,Corlys Velaryon,M,https://awoiaf.westeros.org/index.php/Corlys_Velaryon,NA,NA
+524,1,NA,525,Corwyn Velaryon,M,https://awoiaf.westeros.org/index.php/Corwyn_Velaryon,NA,NA
+525,1,527,526,Daemon Velaryon,M,https://awoiaf.westeros.org/index.php/Daemon_Velaryon_(son_of_Aethan),NA,NA
+526,1,617,616,Aethan Velaryon,M,https://awoiaf.westeros.org/index.php/Aethan_Velaryon,NA,NA
+527,1,NA,NA,Alarra Massey,F,https://awoiaf.westeros.org/index.php/Alarra_Massey,NA,NA
+528,1,NA,NA,Ossifer Plumm,M,https://awoiaf.westeros.org/index.php/Ossifer_Plumm,NA,NA
+529,1,531,532,Daeron Velaryon,M,https://awoiaf.westeros.org/index.php/Daeron_Velaryon,NA,NA
+530,1,531,532,Daemion Velaryon,M,https://awoiaf.westeros.org/index.php/Daemion_Velaryon,NA,NA
+531,1,NA,NA,Wife of Vaemond Velaryon,F,https://awoiaf.westeros.org/index.php/Vaemond_Velaryon#Family,NA,NA
+532,1,NA,533,Vaemond Velaryon,M,https://awoiaf.westeros.org/index.php/Vaemond_Velaryon,NA,NA
+533,1,534,524,Second-born son of Corwyn Velaryon,M,https://awoiaf.westeros.org/index.php/Corwyn_Velaryon#Family,NA,NA
+534,1,NA,NA,Unknown wife of Corwyn Velaryon,F,https://awoiaf.westeros.org/index.php/Corwyn_Velaryon#Family,NA,NA
+535,1,NA,NA,Hazel Harte,F,https://awoiaf.westeros.org/index.php/Hazel_Harte,NA,NA
+536,1,506,537,Daemon Targaryen,M,https://awoiaf.westeros.org/index.php/Daemon_Targaryen,NA,NA
+537,1,351,350,Baelon Targaryen (son of Jaehaerys I),M,https://awoiaf.westeros.org/index.php/Baelon_Targaryen_(son_of_Jaehaerys_I),NA,NA
+538,1,NA,NA,Wife of Jasper Arryn,F,https://awoiaf.westeros.org/index.php/Jasper_Arryn#Family,NA,NA
+539,1,543,542,Otto Hightower,M,https://awoiaf.westeros.org/index.php/Otto_Hightower,NA,NA
+540,1,541,539,Gwayne Hightower,M,https://awoiaf.westeros.org/index.php/Gwayne_Hightower,NA,NA
+541,1,NA,NA,Wife of Otto Hightower,F,NA,NA,NA
+542,1,NA,NA,Father of Otto Hightower,M,NA,NA,NA
+543,1,NA,NA,Mother of Otto Hightower,F,NA,NA,NA
+544,1,543,542,Lord Hightower,M,https://awoiaf.westeros.org/index.php/Lord_Hightower,NA,NA
+545,1,514,523,Laena Velaryon,F,https://awoiaf.westeros.org/index.php/Laena_Velaryon,NA,NA
+546,1,545,536,Baela	Targaryen,F,https://awoiaf.westeros.org/index.php/Baela_Targaryen,547,mz
+547,1,545,536,Rhaena Targaryen,F,https://awoiaf.westeros.org/index.php/Rhaena_Targaryen,546,mz
+548,1,339,536,Visenya Targaryen (daughter of Rhaenyra),F,https://awoiaf.westeros.org/index.php/Visenya_Targaryen_(daughter_of_Rhaenyra),NA,NA
+549,1,NA,553,Harwin Strong,M,https://awoiaf.westeros.org/index.php/Harwin_Strong,NA,NA
+550,1,339,549,Jacaerys Velaryon,M,https://awoiaf.westeros.org/index.php/Jacaerys_Velaryon,NA,NA
+551,1,339,549,Lucerys Velaryon,M,https://awoiaf.westeros.org/index.php/Lucerys_Velaryon,NA,NA
+552,1,339,549,Joffrey Velaryon,M,https://awoiaf.westeros.org/index.php/Joffrey_Velaryon,NA,NA
+553,1,NA,NA,Lyonel Strong,M,https://awoiaf.westeros.org/index.php/Lyonel_Strong,NA,NA
+554,1,NA,553,Alys Rivers,F,https://awoiaf.westeros.org/index.php/Alys_Rivers,NA,NA
+555,1,554,346,Son of Alys Rivers,M,https://awoiaf.westeros.org/index.php/Alys_Rivers#Family,NA,NA
+556,1,348,345,Jaehaera Targaryen,F,https://awoiaf.westeros.org/index.php/Jaehaera_Targaryen,557,dz
+557,1,348,345,Jaehaerys Targaryen (son of Aegon II),M,https://awoiaf.westeros.org/index.php/Jaehaerys_Targaryen_(son_of_Aegon_II),556,dz
+558,1,348,345,Maelor Targaryen (son of Aegon II),M,https://awoiaf.westeros.org/index.php/Maelor_Targaryen,NA,NA
+559,1,546,333,Laena Velaryon (daughter of Baela Targaryen),F,https://awoiaf.westeros.org/index.php/Laena_Velaryon,NA,NA
+560,1,NA,NA,Rohanne of Tyrosh,F,https://awoiaf.westeros.org/index.php/Rohanne_of_Tyrosh,NA,NA
+561,1,NA,316,Daemon III Blackfyre,M,https://awoiaf.westeros.org/index.php/Daemon_III_Blackfyre,NA,NA
+562,1,560,312,Calla Blackfyre,F,https://awoiaf.westeros.org/index.php/Calla_Blackfyre,NA,NA
+563,1,NA,NA,Barba Bracken,F,https://awoiaf.westeros.org/index.php/Barba_Bracken,NA,NA
+564,1,NA,NA,Lord Frey,M,https://awoiaf.westeros.org/index.php/Lord_Frey,NA,NA
+565,1,566,564,Lady Butterwell Frey,F,https://awoiaf.westeros.org/index.php/Lady_Butterwell,NA,NA
+566,1,NA,NA,Lady Frey,F,https://awoiaf.westeros.org/index.php/Lord_Frey#Family,NA,NA
+567,1,NA,NA,Mother of Maron Martell,F,https://awoiaf.westeros.org/index.php/Prince_of_Dorne_(father_of_Maron)#Family,NA,NA
+568,1,NA,NA,Prince of Dorne (father of Maron),M,https://awoiaf.westeros.org/index.php/Prince_of_Dorne_(father_of_Maron),NA,NA
+569,1,567,568,Maron Martell,M,https://awoiaf.westeros.org/index.php/Maron_Martell,NA,NA
+570,1,NA,NA,Mother of Hoster Tully,F,https://awoiaf.westeros.org/index.php/Hoster_Tully#Family,NA,NA
+571,1,NA,NA,Marna Locke,F,https://awoiaf.westeros.org/index.php/Marna_Locke,NA,NA
+572,1,NA,NA,Arya Flint,F,https://awoiaf.westeros.org/index.php/Arya_Flint,NA,NA
+573,1,576,575,Rodrik Stark,M,https://awoiaf.westeros.org/index.php/Rodrik_Stark,NA,NA
+574,1,NA,NA,Lyanne Glover,F,https://awoiaf.westeros.org/index.php/Lyanne_Glover,NA,NA
+575,1,608,607,Beron Stark,M,https://awoiaf.westeros.org/index.php/Beron_Stark,NA,NA
+576,1,NA,NA,Lorra Royce,F,https://awoiaf.westeros.org/index.php/Lorra_Royce,NA,NA
+577,1,576,575,Donnor Stark,M,https://awoiaf.westeros.org/index.php/Donnor_Stark,NA,NA
+578,1,576,575,Artos Stark,M,https://awoiaf.westeros.org/index.php/Artos_Stark,NA,NA
+579,1,576,575,Berena Stark,F,https://awoiaf.westeros.org/index.php/Berena_Stark,NA,NA
+580,1,576,575,Alysanne Stark,F,https://awoiaf.westeros.org/index.php/Alysanne_Stark,NA,NA
+581,1,576,575,Errold Stark,M,https://awoiaf.westeros.org/index.php/Errold_Stark,NA,NA
+582,1,572,573,Branda Stark,F,https://awoiaf.westeros.org/index.php/Branda_Stark,NA,NA
+583,1,NA,NA,Wife of Andros Brax,F,https://awoiaf.westeros.org/index.php/Andros_Brax#Family,NA,NA
+584,1,NA,NA,Jeyne Marbrand,F,https://awoiaf.westeros.org/index.php/Jeyne_Marbrand,NA,NA
+585,1,NA,NA,Rohanne Webber,F,https://awoiaf.westeros.org/index.php/Rohanne_Webber,NA,NA
+586,1,NA,NA,Marla Prester,F,https://awoiaf.westeros.org/index.php/Marla_Prester,NA,NA
+587,1,NA,NA,Alys Stackspear,F,https://awoiaf.westeros.org/index.php/Alys_Stackspear,NA,NA
+588,1,587,182,Damon Lannister,M,https://awoiaf.westeros.org/index.php/Damon_Lannister,NA,NA
+589,1,NA,NA,Jena Dondarrion,F,https://awoiaf.westeros.org/index.php/Jena_Dondarrion,NA,NA
+590,1,NA,NA,Wife of Aerys,F,NA,NA,NA
+591,1,NA,NA,Melissa Blackwood,F,https://awoiaf.westeros.org/index.php/Melissa_Blackwood,NA,NA
+592,1,591,302,Gwenys Rivers,F,https://awoiaf.westeros.org/index.php/Gwenys_Rivers,NA,NA
+593,1,591,302,Mya Rivers,F,https://awoiaf.westeros.org/index.php/Mya_Rivers,NA,NA
+594,1,303,302,Stillborn Twin Targaryen,M,https://awoiaf.westeros.org/index.php/Naerys_Targaryen#Family,304,dz
+595,1,NA,639,Benjicot Blackwood,M,https://awoiaf.westeros.org/index.php/Benjicot_Blackwood,NA,NA
+596,1,510,352,Rhaena Targaryen (daughter of Aenys I),F,https://awoiaf.westeros.org/index.php/Rhaena_Targaryen_(daughter_of_Aenys_I),NA,NA
+597,1,510,352,Aegon Targaryen (son of Aenys I),M,https://awoiaf.westeros.org/index.php/Aegon_Targaryen_(son_of_Aenys_I),NA,NA
+598,1,510,352,Viserys Targaryen (son of Aenys I),M,https://awoiaf.westeros.org/index.php/Viserys_Targaryen_(son_of_Aenys_I),NA,NA
+599,1,510,352,Vaella Targaryen,F,https://awoiaf.westeros.org/index.php/Vaella_Targaryen,NA,NA
+600,1,NA,NA,Kiera of Tyrosh,F,https://awoiaf.westeros.org/index.php/Kiera_of_Tyrosh,NA,NA
+601,1,596,597,Aerea Targaryen,F,https://awoiaf.westeros.org/index.php/Aerea_Targaryen,602,mz
+602,1,596,597,Rhaella Targaryen (daughter of Aegon),F,https://awoiaf.westeros.org/index.php/Rhaella_Targaryen_(daughter_of_Aegon),601,mz
+603,25,605,606,Erryk Cargyll,M,https://awoiaf.westeros.org/index.php/Erryk_Cargyll,604,mz
+604,25,605,606,Arryk Cargyll,M,https://awoiaf.westeros.org/index.php/Arryk_Cargyll,603,mz
+605,25,NA,NA,Mother Cargyll,F,https://awoiaf.westeros.org/index.php/House_Cargyll,NA,NA
+606,25,NA,NA,Father Cargyll,M,https://awoiaf.westeros.org/index.php/House_Cargyll,NA,NA
+607,1,609,610,Brandon Stark (son of Cregan),M,https://awoiaf.westeros.org/index.php/Brandon_Stark_(son_of_Cregan),NA,NA
+608,1,NA,NA,Alys Karstark (wife of Brandon),F,https://awoiaf.westeros.org/index.php/Alys_Karstark_(wife_of_Brandon),NA,NA
+609,1,NA,NA,Lynara Stark,F,https://awoiaf.westeros.org/index.php/Lynara_Stark,NA,NA
+610,1,612,611,Cregan Stark,M,https://awoiaf.westeros.org/index.php/Cregan_Stark,NA,NA
+611,1,648,647,Rickon Stark (son of Benjen),M,https://awoiaf.westeros.org/index.php/Rickon_Stark_(son_of_Benjen),NA,NA
+612,1,NA,NA,Gilliane Glover,F,https://awoiaf.westeros.org/index.php/Gilliane_Glover,NA,NA
+613,1,NA,NA,Raymar Royce,M,https://awoiaf.westeros.org/index.php/Raymar_Royce,NA,NA
+614,12,NA,NA,Mother of Luthor Tyrell,F,https://awoiaf.westeros.org/index.php/Luthor_Tyrell_(son_of_Moryn),NA,NA
+615,19,NA,NA,Mother of Jeor Mormont,F,https://awoiaf.westeros.org/index.php/House_Mormont#House_Mormont_at_the_end_of_the_third_century,NA,NA
+616,1,NA,NA,Daemon Velaryon,M,https://awoiaf.westeros.org/index.php/Daemon_Velaryon,NA,NA
+617,1,NA,NA,Wife of Daemon Velaryon,F,https://awoiaf.westeros.org/index.php/Daemon_Velaryon#Family,NA,NA
+618,1,617,616,Corlys Velaryon (son of Daemon),M,https://awoiaf.westeros.org/index.php/Corlys_Velaryon_(son_of_Daemon),NA,NA
+619,10,NA,NA,Qoren Nymeros Martell,M,https://awoiaf.westeros.org/index.php/Qoren_Martell,NA,NA
+620,10,NA,NA,Wife of Qoren Nymeros Martell,F,https://awoiaf.westeros.org/index.php/Qoren_Martell#Family,NA,NA
+621,10,620,619,Coryanne Martell,F,https://awoiaf.westeros.org/index.php/Coryanne_Martell,NA,NA
+622,10,620,619,Qyle Martell,M,https://awoiaf.westeros.org/index.php/Qyle_Martell,NA,NA
+623,1,NA,NA,Father of Lysandro Rogare,M,https://awoiaf.westeros.org/index.php/Lysandro_Rogare#Family,NA,NA
+624,1,NA,NA,Mother of Lysandro Rogare,F,https://awoiaf.westeros.org/index.php/Lysandro_Rogare#Family,NA,NA
+625,1,624,623,Lysandro Rogare,M,https://awoiaf.westeros.org/index.php/Lysandro_Rogare,NA,NA
+626,1,624,623,Drazenko Rogare,M,https://awoiaf.westeros.org/index.php/Drazenko_Rogare,NA,NA
+627,1,NA,NA,Wife of Lysandro Rogare,F,https://awoiaf.westeros.org/index.php/Lysandro_Rogare#Family,NA,NA
+628,1,627,625,Lysaro Rogare,M,https://awoiaf.westeros.org/index.php/Lysaro_Rogare,NA,NA
+629,1,627,625,Fredo Rogare,M,https://awoiaf.westeros.org/index.php/Fredo_Rogare,NA,NA
+630,1,627,625,Drako Rogare,M,https://awoiaf.westeros.org/index.php/Drako_Rogare,NA,NA
+631,1,627,625,Moredo Rogare,M,https://awoiaf.westeros.org/index.php/Moredo_Rogare,NA,NA
+632,1,627,625,Lotho Rogare,M,https://awoiaf.westeros.org/index.php/Lotho_Rogare,NA,NA
+633,1,627,625,Roggerio Rogare,M,https://awoiaf.westeros.org/index.php/Roggerio_Rogare,NA,NA
+634,1,627,625,Marra Rogare,F,https://awoiaf.westeros.org/index.php/Marra_Rogare,NA,NA
+635,1,627,625,Lysara Rogare,F,https://awoiaf.westeros.org/index.php/Lysara_Rogare,NA,NA
+636,1,NA,NA,Husband of Anya Waynwood,M,https://awoiaf.westeros.org/index.php/Anya_Waynwood,NA,NA
+637,1,228,226,Stillborn daughter of Jon Arryn,F,https://awoiaf.westeros.org/index.php/Jeyne_Royce,NA,NA
+638,1,131,225,Unborn Tully,U,https://awoiaf.westeros.org/index.php/Roslin_Frey,NA,NA
+639,1,641,640,Samwell Blackwood,M,https://awoiaf.westeros.org/index.php/Samwell_Blackwood,NA,NA
+640,1,NA,NA,Lord Blackwood,M,https://awoiaf.westeros.org/index.php/Samwell_Blackwood#Family,NA,NA
+641,1,NA,NA,Lady Blackwood,F,https://awoiaf.westeros.org/index.php/Samwell_Blackwood#Family,NA,NA
+642,1,641,640,Alysanne Blackwood,F,https://awoiaf.westeros.org/index.php/Alysanne_Blackwood,NA,NA
+643,1,642,610,Sarra Stark,F,https://awoiaf.westeros.org/index.php/Sarra_Stark,NA,NA
+644,1,642,610,Mariah Stark,F,https://awoiaf.westeros.org/index.php/Mariah_Stark,NA,NA
+645,1,642,610,Raya Stark,F,https://awoiaf.westeros.org/index.php/Raya_Stark,NA,NA
+646,1,642,610,Alys Stark,F,https://awoiaf.westeros.org/index.php/Alys_Stark,NA,NA
+647,1,NA,NA,Benjen Stark (lord),M,https://awoiaf.westeros.org/index.php/Benjen_Stark_(lord),NA,NA
+648,1,NA,NA,Lysa Locke,F,https://awoiaf.westeros.org/index.php/Lysa_Locke,NA,NA
+649,1,648,647,Bennard Stark,M,https://awoiaf.westeros.org/index.php/Bennard_Stark,NA,NA
+650,1,NA,NA,Margaret Karstark,F,https://awoiaf.westeros.org/index.php/Margaret_Karstark,NA,NA
+651,1,650,649,Benjen Stark (son of Bennard),M,https://awoiaf.westeros.org/index.php/Benjen_Stark_(son_of_Bennard),NA,NA
+652,1,650,649,Brandon Stark (son of Bennard),M,https://awoiaf.westeros.org/index.php/Brandon_Stark_(son_of_Bennard),NA,NA
+653,1,650,649,Elric Stark,M,https://awoiaf.westeros.org/index.php/Elric_Stark,NA,NA
+654,26,NA,NA,Selwyn Tarth,M,https://awoiaf.westeros.org/index.php/Selwyn_Tarth,NA,NA
+655,26,NA,NA,Unknown wife of Selwyn Tarth,F,https://awoiaf.westeros.org/index.php/Selwyn_Tarth#Family,NA,NA
+656,26,655,654,Galladon Tarth,M,https://awoiaf.westeros.org/index.php/Galladon_Tarth,NA,NA
+657,26,655,654,Arianne Tarth,F,https://awoiaf.westeros.org/index.php/Arianne_Tarth,NA,NA
+658,26,655,654,Alysanne Tarth,F,https://awoiaf.westeros.org/index.php/Alysanne_Tarth,NA,NA
+659,26,655,654,Brienne of Tarth,F,https://awoiaf.westeros.org/index.php/Brienne_of_Tarth,NA,NA
+660,27,674,673,Jonos Bracken,M,https://awoiaf.westeros.org/index.php/Jonos_Bracken,NA,NA
+661,27,NA,NA,Unknown first wife of Jonos Bracken,F,NA,NA,NA
+662,27,661,660,Barbara Bracken,F,https://awoiaf.westeros.org/index.php/Barbara_Bracken,NA,NA
+663,27,661,660,Jayne Bracken,F,https://awoiaf.westeros.org/index.php/Jayne_Bracken,NA,NA
+664,28,NA,NA,Unknown second wife of Jonos Bracken,F,https://awoiaf.westeros.org/index.php/Jonos_Bracken#Family,NA,NA
+665,27,NA,NA,Lady Bracken (third wife of Jonos),F,https://awoiaf.westeros.org/index.php/Lady_Bracken,NA,NA
+666,27,665,660,Catelyn Bracken,F,https://awoiaf.westeros.org/index.php/Catelyn_Bracken,NA,NA
+667,27,665,660,Bess Bracken,F,https://awoiaf.westeros.org/index.php/Bess_Bracken,NA,NA
+668,27,665,660,Alysanne Bracken,F,https://awoiaf.westeros.org/index.php/Alysanne_Bracken,NA,NA
+669,27,NA,670,Hendry Bracken,M,https://awoiaf.westeros.org/index.php/Hendry_Bracken,NA,NA
+670,27,674,673,Unknown sibling of Jonos Bracken,M,https://awoiaf.westeros.org/index.php/Jonos_Bracken#Family,NA,NA
+671,27,NA,NA,mother of Harry Rivers,F,https://awoiaf.westeros.org/index.php/Harry_Rivers,NA,NA
+672,27,671,660,Harry Rivers,M,https://awoiaf.westeros.org/index.php/Harry_Rivers,NA,NA
+673,27,NA,NA,Father of Jonas Bracken,M,https://awoiaf.westeros.org/index.php/Jonos_Bracken#Family,NA,NA
+674,27,NA,NA,Mother of Jonas Bracken,F,https://awoiaf.westeros.org/index.php/Jonos_Bracken#Family,NA,NA
+675,1,NA,NA,Mother of Rogar Baratheon,F,https://awoiaf.westeros.org/index.php/Rogar_Baratheon#Family,NA,NA
+676,1,675,508,Garon Baratheon,M,https://awoiaf.westeros.org/index.php/Garon_Baratheon,NA,NA
+677,1,675,508,Orryn Baratheon,M,https://awoiaf.westeros.org/index.php/Orryn_Baratheon,NA,NA
+678,1,675,508,Ronnal Baratheon,M,https://awoiaf.westeros.org/index.php/Ronnal_Baratheon,NA,NA
+679,1,NA,NA,Lord Darry (father of Raymun),M,https://awoiaf.westeros.org/index.php/Lord_Darry_(father_of_Raymun),NA,NA
