@@ -6,6 +6,7 @@
 * Expose linejoin in ggRelatednessMatrix
 * Expose outline_additive and outline_alpha to ggpedigree
 * Refactored the ggpedigree function to improve readability and maintainability.
+* Transferring ASOIAF data from BGmisc to ggpedigree
 
 # ggpedigree 0.7.1
 * Fixed focal_fill ID being indexed to row order, rather than the ID order.
