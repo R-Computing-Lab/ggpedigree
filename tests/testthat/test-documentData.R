@@ -14,8 +14,7 @@ test_that("test that data loads", {
 })
 
 test_that("ASOIAF data loads", {
-  library(ggpedigree)
-  library(BGmisc)
+
   expect_silent(data(ASOIAF))
   expect_true(nrow(ASOIAF) > 611)
   expect_true(nrow(ASOIAF) == max(ASOIAF$id, na.rm = TRUE))
