@@ -1,9 +1,9 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.6.29)  4 JUL 2025 17:10
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.4)  4 JUL 2025 18:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**C:/Users/smaso/AppData/Local/Temp/Rtmpo1xgr8/preview-176062067fab.dir/paper.tex
-(c:/Users/smaso/AppData/Local/Temp/Rtmpo1xgr8/preview-176062067fab.dir/paper.tex
+**C:/Users/smaso/AppData/Local/Temp/RtmpIpnLY7/preview-3e1028d4b5f.dir/paper.tex
+(c:/Users/smaso/AppData/Local/Temp/RtmpIpnLY7/preview-3e1028d4b5f.dir/paper.tex
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-06-09>
 (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/article.cls
@@ -566,7 +566,7 @@ Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
 \bibhang=\skip69
 \blx@bcfin=\read4
 \blx@bcfout=\write4
-\blx@langwohyphens=\language5
+\blx@langwohyphens=\language3
 \c@mincomprange=\count383
 \c@maxcomprange=\count384
 \c@mincompwidth=\count385
@@ -804,44 +804,17 @@ File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 \c@eu@=\count483
 \c@eu@i=\count484
 \c@mkern=\count485
-) (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/microtype.sty
-Package: microtype 2025/02/11 v3.2a Micro-typographical refinements (RS)
-\MT@toks=\toks44
-\MT@tempbox=\box77
-\MT@count=\count486
-LaTeX Info: Redefining \noprotrusionifhmode on input line 1087.
-LaTeX Info: Redefining \leftprotrusion on input line 1088.
-\MT@prot@toks=\toks45
-LaTeX Info: Redefining \rightprotrusion on input line 1107.
-LaTeX Info: Redefining \textls on input line 1449.
-\MT@outer@kern=\dimen297
-LaTeX Info: Redefining \microtypecontext on input line 2053.
-LaTeX Info: Redefining \textmicrotypecontext on input line 2070.
-\MT@listname@count=\count487
-(c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/microtype-xetex.def
-File: microtype-xetex.def 2025/02/11 v3.2a Definitions specific to xetex (RS)
-LaTeX Info: Redefining \lsstyle on input line 443.
-LaTeX Info: Redefining \lslig on input line 451.
-\MT@outer@space=\skip98
-)
-Package microtype Info: Loading configuration file microtype.cfg.
-(c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/microtype.cfg
-File: microtype.cfg 2025/02/11 v3.2a microtype main configuration file (RS)
-)
-LaTeX Info: Redefining \microtypesetup on input line 3065.
 )
 Package hyperref Info: Option `unicode' set `true' on input line 152.
 Package hyperref Info: Option `breaklinks' set `true' on input line 152.
 (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/grffile/grffile.sty
 Package: grffile 2019/11/11 v2.1 Extended file name support for graphics (legacy)
 Package grffile Info: This package is an empty stub for compatibility on input line 40.
-) (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/parskip/parskip.sty
-Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
 )
-\cslhangindent=\skip99
-\csllabelwidth=\skip100
-\@quotelevel=\count488
-\@quotereset=\count489
+\cslhangindent=\skip98
+\csllabelwidth=\skip99
+\@quotelevel=\count486
+\@quotereset=\count487
 (./paper.aux)
 \openout1 = `paper.aux'.
 
@@ -922,39 +895,13 @@ Package biblatex Info: Reference segment=0 on input line 233.
 * \@reversemargintrue
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \microtypecontext on input line 233.
-Package microtype Info: Applying patch `item' on input line 233.
-Package microtype Info: Applying patch `toc' on input line 233.
-Package microtype Info: Applying patch `eqnum' on input line 233.
-Package microtype Info: Applying patch `footnote' on input line 233.
-Package microtype Info: Applying patch `verbatim' on input line 233.
-LaTeX Info: Redefining \microtypesetup on input line 233.
-Package microtype Info: Character protrusion enabled (level 2).
-Package microtype Info: Using protrusion set `basicmath'.
-Package microtype Info: No adjustment of tracking.
-Package microtype Info: No adjustment of spacing.
-Package microtype Info: No adjustment of kerning.
-(c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/mt-LatinModernRoman.cfg
-File: mt-LatinModernRoman.cfg 2021/02/21 v1.1 microtype config. file: Latin Modern Roman (RS)
-)
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `lmss' (encoding: TU).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
-(c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/mt-cmr.cfg
-File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
-)
 LaTeX Font Info:    Trying to load font information for U+msa on input line 234.
 (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-) (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/mt-msa.cfg
-File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
 LaTeX Font Info:    Trying to load font information for U+msb on input line 234.
 (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/mt-msb.cfg
-File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 
 Package hyperref Warning: Suppressing link with empty target on input line 260.
@@ -992,18 +939,7 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [2]
-
-File: C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
-<C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
-
-Package fancyhdr Warning: \headheight is too small (62.59596pt): 
-(fancyhdr)                Make it at least 63.55022pt, for example:
-(fancyhdr)                \setlength{\headheight}{63.55022pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
-
-[3]
-Underfull \hbox (badness 3078) in paragraph at lines 466--471
+Underfull \hbox (badness 3078) in paragraph at lines 413--418
 []\TU/lmr/m/n/10 Relatedness Matrix Heatmaps: ggRelatednessMatrix() creates customizable
  []
 
@@ -1018,7 +954,7 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
-[4]
+[3]
 
 File: C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 <C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
@@ -1029,7 +965,7 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
-[5] (./paper.aux)
+[4] (./paper.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-06-09>
@@ -1041,12 +977,12 @@ Package logreq Info: Writing requests to 'paper.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 36356 strings out of 470502
- 749236 string characters out of 5490360
- 1629735 words of memory out of 5000000
- 64078 multiletter control sequences out of 15000+600000
+ 34468 strings out of 470545
+ 712891 string characters out of 5491702
+ 1571516 words of memory out of 5000000
+ 62220 multiletter control sequences out of 15000+600000
  633697 words of font info for 88 fonts, out of 8000000 for 9000
- 36 hyphenation exceptions out of 8191
- 84i,12n,87p,1264b,850s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 14 hyphenation exceptions out of 8191
+ 84i,12n,87p,763b,850s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on paper.pdf (5 pages).
+Output written on paper.pdf (4 pages).

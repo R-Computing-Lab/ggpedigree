@@ -1,10 +1,14 @@
 ---
 title: "ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'"
 output:
+  md_document:
+    variant: markdown
+    preserve_yaml: true
   rticles::joss_article:
     keep_md: TRUE
   rmarkdown::html_vignette:
     keep_md: TRUE
+
 tags:
   - R
   - pedigrees
