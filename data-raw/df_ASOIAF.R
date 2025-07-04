@@ -10,7 +10,7 @@ library(BGmisc)
 ASOIAF <- ged <- readGedcom("data-raw/ASOIAF.ged") %>%
   mutate(name = str_remove(name, "/"))
 
-# ASOIAF <- readGedcom("data-raw/ASOIAF_040725.ged")
+# ASOIAF <- readGedcom("data-raw/ASOIAF040725.ged")
 
 df <- ped2fam(ASOIAF, personID = "personID") %>%
   select(
@@ -1260,7 +1260,7 @@ df <- df %>%
 
 
 
-ASOIAF_ <- df %>%
+ASOIAF <- df %>%
   select(-famID) %>%
   ped2fam(personID = "personID", famID = "famID") %>%
   rename(
@@ -1280,7 +1280,7 @@ ASOIAF_ <- df %>%
 
 # checks
 
-df_repaired <- checkSex(ASOIAF_,
+df_repaired <- checkSex(ASOIAF,
   code_male = 1,
   code_female = 0,
   verbose = TRUE, repair = TRUE
@@ -1304,13 +1304,13 @@ checkis_acyclic <- checkPedigreeNetwork(df_repaired,
 checkis_acyclic
 if (checkis_acyclic$is_acyclic) {
   message("The pedigree is acyclic.")
-  write_csv(ASOIAF_, here("data-raw", "ASOIAF.csv"))
-  usethis::use_data(ASOIAF_, overwrite = TRUE, compress = "xz")
+  write_csv(ASOIAF, here("data-raw", "ASOIAF.csv"))
+  usethis::use_data(ASOIAF, overwrite = TRUE, compress = "xz")
 } else {
   message("The pedigree contains cyclic relationships.")
 }
 
-ASOIAF_ %>%
+ASOIAF %>%
   filter(is.na(momID) & is.na(dadID)) %>%
   select(id, name, famID, momID, dadID, sex) %>%
   mutate(

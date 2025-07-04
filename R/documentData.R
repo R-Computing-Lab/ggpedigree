@@ -59,7 +59,7 @@
 #'
 #' @docType data
 #' @keywords datasets
-#' @name ASOIAF_
-#' @usage data(ASOIAF_)
+#' @name ASOIAF
+#' @usage data(ASOIAF)
 #' @format A data frame with 679 observations
 NULL
