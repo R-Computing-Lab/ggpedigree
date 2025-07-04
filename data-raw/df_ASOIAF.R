@@ -1228,7 +1228,6 @@ df <- df %>%
       personID == 1 ~ 566, # Walder Frey's mother
       personID == 284 ~ 600,
       personID == 294 ~ NA,
-
       TRUE ~ momID
     ),
     dadID = case_when(

@@ -1,6 +1,6 @@
 # ggpedigree (dev version)
 
-# ggpedigree 0.7.2
+# ggpedigree 0.8.0
 * Makes ggrepel a suggested package instead of a required one.
 * Make connections included in the plot by default.
 * Expose linejoin in ggRelatednessMatrix
