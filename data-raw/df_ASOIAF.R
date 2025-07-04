@@ -10,7 +10,7 @@ library(BGmisc)
 ASOIAF <- ged <- readGedcom("data-raw/ASOIAF.ged") %>%
   mutate(name = str_remove(name, "/"))
 
-# ASOIAF <- readGedcom("data-raw/ASOIAF_040725.ged")
+# ASOIAF <- readGedcom("data-raw/ASOIAF040725.ged")
 
 df <- ped2fam(ASOIAF, personID = "personID") %>%
   select(

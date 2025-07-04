@@ -5,7 +5,7 @@
 \alias{ASOIAF}
 \title{A pedigree of ice and fire}
 \format{
-A data frame with 503 observations
+A data frame with 679 observations
 }
 \usage{
 data(ASOIAF)
