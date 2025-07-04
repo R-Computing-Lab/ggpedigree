@@ -44,20 +44,20 @@ library(tidyverse) # for data wrangling
 We begin by loading the required libraries and examining the structure of the built-in `ASOIAF` pedigree.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-data(ASOIAF)
+data(ASOIAF_)
 ```
 
 The ASOIAF dataset includes character IDs, names, family identifiers, and  parent identifiers for a subset of characters drawn from the *A Song of Ice and Fire* canon.
 
 ```{r}
-head(ASOIAF)
+head(ASOIAF_)
 ```
 
 
 # Data Cleaning
 
 ```{r}
-df_got <- checkSex(ASOIAF,
+df_got <- checkSex(ASOIAF_,
   code_male = "M",
   code_female = "F",
   repair = TRUE

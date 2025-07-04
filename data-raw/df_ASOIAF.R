@@ -1260,7 +1260,7 @@ df <- df %>%
 
 
 
-ASOIAF <- df %>%
+ASOIAF_ <- df %>%
   select(-famID) %>%
   ped2fam(personID = "personID", famID = "famID") %>%
   rename(
@@ -1280,7 +1280,7 @@ ASOIAF <- df %>%
 
 # checks
 
-df_repaired <- checkSex(ASOIAF,
+df_repaired <- checkSex(ASOIAF_,
   code_male = 1,
   code_female = 0,
   verbose = TRUE, repair = TRUE
@@ -1304,13 +1304,13 @@ checkis_acyclic <- checkPedigreeNetwork(df_repaired,
 checkis_acyclic
 if (checkis_acyclic$is_acyclic) {
   message("The pedigree is acyclic.")
-  write_csv(ASOIAF, here("data-raw", "ASOIAF.csv"))
-  usethis::use_data(ASOIAF, overwrite = TRUE, compress = "xz")
+  write_csv(ASOIAF_, here("data-raw", "ASOIAF.csv"))
+  usethis::use_data(ASOIAF_, overwrite = TRUE, compress = "xz")
 } else {
   message("The pedigree contains cyclic relationships.")
 }
 
-ASOIAF %>%
+ASOIAF_ %>%
   filter(is.na(momID) & is.na(dadID)) %>%
   select(id, name, famID, momID, dadID, sex) %>%
   mutate(
