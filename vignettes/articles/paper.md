@@ -164,13 +164,13 @@ organized into several main categories:
 
 -   Coordinate Calculation: `calculateCoordinates()` computes optimal
     positioning for individuals using algorithms adapted from
-    kinship2::align.pedigree, with enhancements for large
+    `kinship2::align.pedigree`, with enhancements for large
     multi-generational pedigrees and complex family structures. The
     function returns coordinate grids that optimize spacing and minimize
     visual overlap. These steps are vectorized as much as possible to
     ensure computational efficiency, especially for large pedigrees.
 
--   Relationship Connection Mapping: calculateConnections() generates
+-   Relationship Connection Mapping: `calculateConnections()` generates
     connection paths between family members, mapping parent-child,
     sibling, spousal, and twin relationships. The function determines
     midpoints for line intersections and handles overlapping connections
@@ -178,7 +178,7 @@ organized into several main categories:
     for large datasets by using vectorized operations rather than the
     loop-based approaches used in kinship2.
 
--   Layer-based Plot Construction: ggPedigree() constructs plots using
+-   Layer-based Plot Construction: `ggPedigree()` constructs plots using
     ggplot2 geometry functions, returning standard ggplot2 objects that
     integrate with existing R workflows. ggPedigreeInteractive() extends
     plots into interactive plotly widgets with hover tooltips and
@@ -196,19 +196,19 @@ organized into several main categories:
     and customizable aesthetics. It can handle large pedigrees with
     thousands of individuals while maintaining clarity and readability.
 
--   Interactive Pedigree Visualization: ggPedigreeInteractive()
+-   Interactive Pedigree Visualization: `ggPedigreeInteractive()`
     generates interactive pedigree plots using plotly, allowing users to
     explore large pedigrees dynamically. Users can configure tooltip
     content to display individual IDs, names, phenotypic information,
     and other relevant data. It supports tooltips, zooming, and panning
     for detailed exploration of family structures.
 
--   Relatedness Matrix Heatmaps: ggRelatednessMatrix() creates
+-   Relatedness Matrix Heatmaps: `ggRelatednessMatrix()` creates
     customizable heatmap visualizations for genetic relatedness matrices
     with support for hierarchical clustering, interactive exploration,
     and seamless integration with BGmisc relatedness calculations.
 
--   Phenotype-Relatedness Analysis: ggPhenotypeByDegree() produces
+-   Phenotype-Relatedness Analysis: `ggPhenotypeByDegree()` produces
     specialized plots for visualizing phenotypic correlations as a
     function of genetic relatedness, including confidence intervals and
     statistical summaries for quantitative genetic analysis.
