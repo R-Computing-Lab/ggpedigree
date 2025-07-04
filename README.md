@@ -83,7 +83,7 @@ cite the following:
     citation(package = "ggpedigree")
 
 Garrison S (2025). *ggpedigree: Visualizing Pedigrees with ‘ggplot2’ and
-‘plotly’*. R package version 0.7.1,
+‘plotly’*. R package version 0.8.0,
 <https://github.com/R-Computing-Lab/ggpedigree/>.
 
 A BibTeX entry for LaTeX users is
@@ -92,7 +92,7 @@ A BibTeX entry for LaTeX users is
       title = {ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'},
       author = {S. Mason Garrison},
       year = {2025},
-      note = {R package version 0.7.1},
+      note = {R package version 0.8.0},
       url = {https://github.com/R-Computing-Lab/ggpedigree/},
     }
 
@@ -112,16 +112,12 @@ strategy](https://tilburgsciencehub.com/topics/automation/version-control/advanc
 - **Feature Branches**: All major changes and new features should be
   developed on separate branches created from the dev branch. Name these
   branches according to the feature or change they are meant to address.
-- **Development Branch**: Our approach includes two development
-  branches, each serving distinct roles:
-  - **`dev`**: This branch is the final integration stage before changes
-    are merged into the `main` branch. It is considered stable, and only
-    well-tested features and updates that are ready for the next release
-    cycle are merged here.
+- **Development Branch**: The `dev` branch is the main development
+  branch where all feature branches are merged. This branch contains the
+  latest changes and is used for testing and development purposes.
 - **Main Branch** (`main`): The main branch mirrors the stable state of
   the project as seen on CRAN. Only fully tested and approved changes
-  from the dev_main branch are merged into main to prepare for a new
-  release.
+  from the dev branch are merged into main to prepare for a new release.
 
 ## License
 

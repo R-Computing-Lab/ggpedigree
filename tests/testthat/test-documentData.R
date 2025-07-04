@@ -14,15 +14,14 @@ test_that("test that data loads", {
 })
 
 test_that("ASOIAF data loads", {
-
   expect_silent(data(ASOIAF))
   expect_true(nrow(ASOIAF) > 600)
   expect_true(nrow(ASOIAF) == max(ASOIAF$id, na.rm = TRUE))
   checkis_acyclic <- BGmisc::checkPedigreeNetwork(ASOIAF,
-                                          personID = "id",
-                                          momID = "momID",
-                                          dadID = "dadID",
-                                          verbose = TRUE
+    personID = "id",
+    momID = "momID",
+    dadID = "dadID",
+    verbose = TRUE
   )
   expect_true(checkis_acyclic$is_acyclic)
 })

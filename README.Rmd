@@ -121,9 +121,8 @@ Contributions to the ggpedigree project are welcome. For guidelines on how to co
 The development of ggpedigree follows a [GitFlow branching strategy](https://tilburgsciencehub.com/topics/automation/version-control/advanced-git/git-branching-strategies/):
 
 - **Feature Branches**: All major changes and new features should be developed on separate branches created from the dev branch. Name these branches according to the feature or change they are meant to address.
-- **Development Branch**: Our approach includes two development branches, each serving distinct roles:
-  - **`dev`**: This branch is the final integration stage before changes are merged into the `main` branch. It is considered stable, and only well-tested features and updates that are ready for the next release cycle are merged here.
-- **Main Branch** (`main`): The main branch mirrors the stable state of the project as seen on CRAN. Only fully tested and approved changes from the dev_main branch are merged into main to prepare for a new release.
+- **Development Branch**: The `dev` branch is the main development branch where all feature branches are merged. This branch contains the latest changes and is used for testing and development purposes.
+- **Main Branch** (`main`): The main branch mirrors the stable state of the project as seen on CRAN. Only fully tested and approved changes from the dev branch are merged into main to prepare for a new release.
 
 
 ## License
