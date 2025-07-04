@@ -22,7 +22,7 @@ affiliations:
 citation_author: Garrison
 csl: apa.csl
 journal: JOSS
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+date: "04 July, 2025"
 bibliography: paper.bib
 vignette: >
   %\VignetteEncoding{UTF-8}
@@ -31,9 +31,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 ---
 
-```{r setup, echo=FALSE}
-options(rmarkdown.html_vignette.check_title = FALSE)
-```
+
 
 <!--Guidance 
 JOSS welcomes submissions from broadly diverse research areas. For this reason, we require that authors include in the paper some sentences that explain the software functionality and domain of use to a non-specialist reader. We also require that authors explain the research applications of the software. The paper should be between 250-1000 words. Authors submitting papers significantly longer than 1000 words may be asked to reduce the length of their paper.
@@ -81,14 +79,17 @@ Two widely-used R packages in genetic modeling are `OpenMx` [@Neale2016] and `ki
 
 Although not a staple in behavior genetics, the `kinship2` [@kinship2] package provides core features to the broader statistical genetics scientific community, such as plotting pedigrees and computing genetic relatedness matrices. It uses the Lange algorithm [@lange_genetic_2002] to compute relatedness coefficients. This recursive algorithm is discussed in great detail elsewhere, laying out several boundary conditions and recurrence rules. The `BGmisc` package extends the capabilities of `kinship2` by introducing an alternative algorithm to calculate the relatedness coefficient based on network models. By applying classic path-tracing rules to the entire network, this new method is computationally more efficient by eliminating the need for a multi-step recursive approach.
 
-## Software Architecture
-
-`ggpedigree` is built on a modular architecture that separates data processing, layout calculation, and visualization layers. The core workflow involves: (1) data standardization and family structure analysis using BGmisc functions, (2) coordinate calculation using algorithms adapted from kinship2, (3) relationship connection mapping, and (4) layer-based plot construction using ggplot2 geometry functions. This design allows users to customize any aspect of the visualization while maintaining computational efficiency for large pedigrees.
-The package integrates tightly with the broader R ecosystem, particularly the tidyverse [@wickham2019welcome] and BGmisc [@garrison2024bgmisc]. All functions return standard R objects (ggplot or plotly) that can be further customized using familiar syntax, ensuring accessibility for users already comfortable with modern R data science workflows.
-
 ## Features
 
 The `ggpedigree` package offers comprehensive visualization capabilities organized into several main categories:
+
+### Pedigree Visualization and Customization
+
+- Model Identification: `BGmisc` evaluates whether a variance components model is identified and fits the model's estimated variance components to observed covariance data. The technical aspects related to model identification have been described by @hunter_analytic_2021.
+
+- Relatedness Coefficient Calculation: Using path tracing rules first described by @Wright1922 and formalized by @mcardleRAM, `BGmisc` calculates the (sparse) relatedness coefficients between all pairs of individuals in extended pedigrees based solely on mother and father identifiers.
+
+- Relatedness Inference: `BGmisc` infers the relatedness between two groups based on their observed total correlation, given additive genetic and shared environmental parameters.
 
 ### Pedigree Visualization and Customization
 
@@ -103,9 +104,7 @@ The `ggpedigree` package offers comprehensive visualization capabilities organiz
 - Focal Individual Highlighting: Advanced functionality to highlight specific individuals and their relatives based on additive genetic, mitochondrial, or other relationship matrices.
 
 ### Specific Visualizations
-
 - Pedigree Plotting: ggPedigree() creates static pedigree plots using ggplot2, supporting complex family structures, multiple generations, and customizable aesthetics. It can handle large pedigrees with thousands of individuals while maintaining clarity and readability.
-
 - Interactive Pedigree Visualization: ggPedigreeInteractive() generates interactive pedigree plots using plotly, allowing users to explore large pedigrees dynamically.  Users can configure tooltip content to display individual IDs, names, phenotypic information, and other relevant data. It supports tooltips, zooming, and panning for detailed exploration of family structures.
 - Relatedness Matrix Heatmaps: ggRelatednessMatrix() creates customizable heatmap visualizations for genetic relatedness matrices with support for hierarchical clustering, interactive exploration, and seamless integration with BGmisc relatedness calculations.
 - Phenotype-Relatedness Analysis: ggPhenotypeByDegree() produces specialized plots for visualizing phenotypic correlations as a function of genetic relatedness, including confidence intervals and statistical summaries for quantitative genetic analysis.
@@ -114,7 +113,10 @@ The `ggpedigree` package offers comprehensive visualization capabilities organiz
 
 Collectively, these tools provide a valuable resource for behavior geneticists and others who work with extended family data. They were developed as part of a grant and have been used in several ongoing projects and forthcoming papers [@lyu_statistical_power_2023; @hunter_modeling_2023; @garrison_analyzing_2023; @burt_mom_genes_2023] and theses [@lyu_masters_thesis_2023].
 
+## Software Architecture
 
+ggpedigree is built on a modular architecture that separates data processing, layout calculation, and visualization layers. The core workflow involves: (1) data standardization and family structure analysis using BGmisc functions, (2) coordinate calculation using algorithms adapted from kinship2, (3) relationship connection mapping, and (4) layer-based plot construction using ggplot2 geometry functions. This design allows users to customize any aspect of the visualization while maintaining computational efficiency for large pedigrees.
+The package integrates tightly with the broader R ecosystem, particularly the tidyverse [@wickham2019welcome] and BGmisc [@garrison2024bgmisc]. All functions return standard R objects (ggplot or plotly) that can be further customized using familiar syntax, ensuring accessibility for users already comfortable with modern R data science workflows.
 
 
 # Availability
