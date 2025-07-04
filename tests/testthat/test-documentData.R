@@ -1,6 +1,6 @@
 test_that("data loads silently", {
   expect_silent(data(redsquirrels))
-  expect_silent(data(ASOIAF_))
+  expect_silent(data(ASOIAF))
 })
 
 
@@ -14,10 +14,10 @@ test_that("test that data loads", {
 })
 
 test_that("ASOIAF data loads", {
-  expect_silent(data(ASOIAF_))
-  expect_true(nrow(ASOIAF_) > 600)
-  expect_true(nrow(ASOIAF_) == max(ASOIAF_$id, na.rm = TRUE))
-  checkis_acyclic <- BGmisc::checkPedigreeNetwork(ASOIAF_,
+  expect_silent(data(ASOIAF))
+  expect_true(nrow(ASOIAF) > 600)
+  expect_true(nrow(ASOIAF) == max(ASOIAF$id, na.rm = TRUE))
+  checkis_acyclic <- BGmisc::checkPedigreeNetwork(ASOIAF,
     personID = "id",
     momID = "momID",
     dadID = "dadID",
