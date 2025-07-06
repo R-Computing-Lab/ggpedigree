@@ -254,7 +254,7 @@ m2 <- ggPedigree(df_potter,
   plot.title = element_blank(),
   plot.title.position = "plot",
   text = element_text(family = family_wfu, size = 14,face = "bold")
-) + coord_cartesian(ylim = c(4.25, 1), clip = "off") 
+) + coord_cartesian(ylim = c(4.25, .9), clip = "off") 
 
 showtext_auto()
 result <- m1 + m2 +
