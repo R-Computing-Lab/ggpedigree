@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.6.29)  6 JUL 2025 16:29
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.6.29)  6 JUL 2025 17:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -992,7 +992,7 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <8> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 363.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 355.
 [1
 
 ]
@@ -1032,7 +1032,7 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [4]
-Overfull \hbox (40.31009pt too wide) in paragraph at lines 605--607
+Overfull \hbox (40.31009pt too wide) in paragraph at lines 642--644
 []\TU/lmr/m/n/10 Pedersen, T. L. (2025). \TU/lmr/m/it/10 Patchwork: The composer of plots\TU/lmr/m/n/10 . doi:[][]10.32614/CRAN.package.patchwork[][] 
  []
 
@@ -1049,15 +1049,7 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 
 [5]
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 641.
-
-Underfull \vbox (badness 10000) detected at line 804
- []
-
-
-Underfull \vbox (badness 10000) detected at line 804
- []
-
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 690.
 
 
 File: C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
@@ -1070,11 +1062,11 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [6]
-Underfull \vbox (badness 10000) detected at line 804
+Underfull \vbox (badness 10000) detected at line 853
  []
 
 
-Overfull \vbox (0.18604pt too high) detected at line 804
+Underfull \vbox (badness 10000) detected at line 853
  []
 
 
@@ -1089,6 +1081,14 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [7]
+Underfull \vbox (badness 10000) detected at line 853
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 853
+ []
+
+
 
 File: C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 <C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
@@ -1099,7 +1099,18 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
-[8] (./paper.aux)
+[8]
+
+File: C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
+<C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
+
+Package fancyhdr Warning: \headheight is too small (62.59596pt): 
+(fancyhdr)                Make it at least 63.55022pt, for example:
+(fancyhdr)                \setlength{\headheight}{63.55022pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
+
+[9] (./paper.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-06-09>
@@ -1111,12 +1122,12 @@ Package logreq Info: Writing requests to 'paper.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 36881 strings out of 470502
- 757746 string characters out of 5490360
- 1643017 words of memory out of 5000000
- 64590 multiletter control sequences out of 15000+600000
- 633713 words of font info for 90 fonts, out of 8000000 for 9000
+ 36892 strings out of 470502
+ 757960 string characters out of 5490360
+ 1646309 words of memory out of 5000000
+ 64599 multiletter control sequences out of 15000+600000
+ 633721 words of font info for 91 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  84i,13n,87p,1262b,850s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on paper.pdf (8 pages).
+Output written on paper.pdf (9 pages).
