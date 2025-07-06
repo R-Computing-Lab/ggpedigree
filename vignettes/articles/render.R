@@ -1,5 +1,19 @@
 # Load required package
 library(rmarkdown)
+library(ggpedigree)
+library(BGmisc)
+library(ggpedigree)
+library(tidyverse)
+library(showtext)
+library(sysfonts)
+library(patchwork) # for combining plots
+# library(extrafont)
+# font_import()
+# loadfonts(device = "win")
+# required for font to actually render
+font_add_google(name = "Cormorant", family = "cormorant")
+showtext_auto()
+
 
 # Define file paths
 input_dir <- "vignettes/articles"
