@@ -8,7 +8,6 @@ output:
     keep_md: TRUE
   rmarkdown::html_vignette:
     keep_md: TRUE
-
 tags:
   - R
   - pedigrees
@@ -101,7 +100,7 @@ with tidyverse workflows and do not produce ggplot2-based objects that
 users can customize or extend [@wickham2016ggplot2].
 
 Recent advances in behavior genetics and genetic epidemiology
-[@garrison_analyzing_2023; @mcardle_ram_2005] have introduced new
+[@garrison_analyzing_2023; @mcardleRAM] have introduced new
 visualization demands, particularly for extended families and highly
 interconnected pedigrees. Modern pedigree datasets can include hundreds
 or thousands of individuals across multiple generations, with
@@ -150,10 +149,10 @@ and (4) layer-based plot construction using ggplot2 geometry functions.
 This design allows users to customize any aspect of the visualization
 while maintaining computational efficiency for large pedigrees. The
 package integrates tightly with the broader R ecosystem, particularly
-the tidyverse [@wickham2019welcome] and BGmisc [@garrison2024bgmisc].
-All functions return standard R objects (ggplot or plotly) that can be
-further customized using familiar syntax, ensuring accessibility for
-users already comfortable with modern R data science workflows.
+the tidyverse [@wickham2019welcome] and BGmisc [@bgmisc]. All functions
+return standard R objects (ggplot or plotly) that can be further
+customized using familiar syntax, ensuring accessibility for users
+already comfortable with modern R data science workflows.
 
 ## Features
 
@@ -202,23 +201,36 @@ organized into several main categories:
     ggplot2, supporting complex family structures, multiple generations,
     and customizable aesthetics. It can handle large pedigrees with
     thousands of individuals while maintaining clarity and readability.
-
 -   Interactive Pedigree Visualization: `ggPedigreeInteractive()`
     generates interactive pedigree plots using plotly, allowing users to
     explore large pedigrees dynamically. Users can configure tooltip
     content to display individual IDs, names, phenotypic information,
     and other relevant data. It supports tooltips, zooming, and panning
     for detailed exploration of family structures.
-
 -   Relatedness Matrix Heatmaps: `ggRelatednessMatrix()` creates
     customizable heatmap visualizations for genetic relatedness matrices
     with support for hierarchical clustering, interactive exploration,
     and seamless integration with BGmisc relatedness calculations.
-
 -   Phenotype-Relatedness Analysis: `ggPhenotypeByDegree()` produces
     specialized plots for visualizing phenotypic correlations as a
     function of genetic relatedness, including confidence intervals and
     statistical summaries for quantitative genetic analysis.
+
+### Illustrative Examples
+
+Here we illustrate some of the features by reproducing the figure from
+Hunter, Garrison, et al 2025 but restyled it to conform to the Wake
+Forest Style Guidelines. As you can see, the `ggpedigree` package allows
+for complex family structures to be visualized in a clear and
+aesthetically pleasing manner. The plot includes individuals' names,
+relationships, and phenotypic information, all while maintaining clarity
+even with overlapping relationships. Although pleasing, this level of
+customization is not required, as default settings produce clear and
+informative pedigree plots.
+
+<!-- ![Wake Forest Themed Potter Pedigree Plot](wfu_potter_pedigree.png) -->
+
+`\includegraphics[keepaspectratio]{wfu_potter_pedigree.png}`{=tex}
 
 <!-- Mention (if applicable) a representative set of past or ongoing research projects using the software and recent scholarly publications enabled by it.-->
 
