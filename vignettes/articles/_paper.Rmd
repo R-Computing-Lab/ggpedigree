@@ -73,10 +73,10 @@ Several R packages attempt to address these challenges with built-in pedigree pl
 
 <!-- in progress -->
 
-
+```{=html}
 <!-- The move towards analyzing complex family structures in behavior genetics introduces challenges in data structuring and modeling. The data structures inherent in these more complicated family designs are orders of magnitude larger than traditional designs.
 For example, in the classical twin study, a family will consist of a single pair of twins (i.e., two people), whereas in the MDAN design, a family consists of two mother-daughter pairs (i.e., four people). This problem quickly becomes intractable when applied to extended family pedigrees, which can encompass up to hundreds of thousands of individuals in a single family [e.g, @garrison_analyzing_2023]. -->
-
+```
 
 <!-- This shift towards extended family models underscores the limitations of existing genetic modeling software. Packages like `OpenMx` [@Neale2016], `EasyMx` [@easy], and `kinship2` [@kinship2; @kinship2R] were developed with smaller, classical family designs in mind. In contrast, the `BGmisc` R package was specifically developed to structure and model extended family pedigree data. -->
 
