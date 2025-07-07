@@ -567,6 +567,7 @@ Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
 \blx@bcfin=\read4
 \blx@bcfout=\write4
 \blx@langwohyphens=\language3
+\blx@langwohyphens=\language3
 \c@mincomprange=\count383
 \c@maxcomprange=\count384
 \c@mincompwidth=\count385
@@ -813,7 +814,11 @@ Package grffile Info: This package is an empty stub for compatibility on input l
 ) (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
 Package: fancyvrb 2024/01/20 4.5c verbatim text (tvz,hv)
 \FV@CodeLineNo=\count486
+\FV@CodeLineNo=\count486
 \FV@InFile=\read5
+\FV@TabBox=\box77
+\c@FancyVerbLine=\count487
+\FV@StepNumber=\count488
 \FV@TabBox=\box77
 \c@FancyVerbLine=\count487
 \FV@StepNumber=\count488
@@ -825,7 +830,16 @@ Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 \fb@frh=\dimen298
 \FrameRule=\dimen299
 \FrameSep=\dimen300
+\OuterFrameSep=\skip98
+\fb@frw=\dimen297
+\fb@frh=\dimen298
+\FrameRule=\dimen299
+\FrameSep=\dimen300
 )
+\cslhangindent=\skip99
+\csllabelwidth=\skip100
+\@quotelevel=\count489
+\@quotereset=\count490
 \cslhangindent=\skip99
 \csllabelwidth=\skip100
 \@quotelevel=\count489
@@ -940,6 +954,7 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <8> not available
 (Font)              Font shape `TU/lmss/m/sl' tried instead on input line 356.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 356.
 [1
 
 ]
@@ -965,6 +980,9 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [3]
+File: wfu_potter_pedigree.png Graphic file (type bmp)
+<wfu_potter_pedigree.png>
+
 File: wfu_potter_pedigree.png Graphic file (type bmp)
 <wfu_potter_pedigree.png>
 
@@ -1072,7 +1090,13 @@ Here is how much of TeX's memory you used:
  721681 string characters out of 5491702
  1596464 words of memory out of 5000000
  62749 multiletter control sequences out of 15000+600000
+ 35010 strings out of 470545
+ 721681 string characters out of 5491702
+ 1596464 words of memory out of 5000000
+ 62749 multiletter control sequences out of 15000+600000
  633713 words of font info for 90 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 84i,12n,87p,762b,850s stack positions out of 10000i,1000n,20000p,200000b,200000s
  14 hyphenation exceptions out of 8191
  84i,12n,87p,762b,850s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
