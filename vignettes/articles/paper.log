@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.6.29)  6 JUL 2025 22:23
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.4)  7 JUL 2025 19:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -566,7 +566,7 @@ Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
 \bibhang=\skip69
 \blx@bcfin=\read4
 \blx@bcfout=\write4
-\blx@langwohyphens=\language5
+\blx@langwohyphens=\language3
 \c@mincomprange=\count383
 \c@maxcomprange=\count384
 \c@mincompwidth=\count385
@@ -804,59 +804,32 @@ File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 \c@eu@=\count483
 \c@eu@i=\count484
 \c@mkern=\count485
-) (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/microtype.sty
-Package: microtype 2025/02/11 v3.2a Micro-typographical refinements (RS)
-\MT@toks=\toks44
-\MT@tempbox=\box77
-\MT@count=\count486
-LaTeX Info: Redefining \noprotrusionifhmode on input line 1087.
-LaTeX Info: Redefining \leftprotrusion on input line 1088.
-\MT@prot@toks=\toks45
-LaTeX Info: Redefining \rightprotrusion on input line 1107.
-LaTeX Info: Redefining \textls on input line 1449.
-\MT@outer@kern=\dimen297
-LaTeX Info: Redefining \microtypecontext on input line 2053.
-LaTeX Info: Redefining \textmicrotypecontext on input line 2070.
-\MT@listname@count=\count487
-(c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/microtype-xetex.def
-File: microtype-xetex.def 2025/02/11 v3.2a Definitions specific to xetex (RS)
-LaTeX Info: Redefining \lsstyle on input line 443.
-LaTeX Info: Redefining \lslig on input line 451.
-\MT@outer@space=\skip98
-)
-Package microtype Info: Loading configuration file microtype.cfg.
-(c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/microtype.cfg
-File: microtype.cfg 2025/02/11 v3.2a microtype main configuration file (RS)
-)
-LaTeX Info: Redefining \microtypesetup on input line 3065.
 )
 Package hyperref Info: Option `unicode' set `true' on input line 152.
 Package hyperref Info: Option `breaklinks' set `true' on input line 152.
 (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/grffile/grffile.sty
 Package: grffile 2019/11/11 v2.1 Extended file name support for graphics (legacy)
 Package grffile Info: This package is an empty stub for compatibility on input line 40.
-) (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/parskip/parskip.sty
-Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
 ) (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
 Package: fancyvrb 2024/01/20 4.5c verbatim text (tvz,hv)
-\FV@CodeLineNo=\count488
+\FV@CodeLineNo=\count486
 \FV@InFile=\read5
-\FV@TabBox=\box78
-\c@FancyVerbLine=\count489
-\FV@StepNumber=\count490
+\FV@TabBox=\box77
+\c@FancyVerbLine=\count487
+\FV@StepNumber=\count488
 \FV@OutFile=\write5
 ) (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/framed/framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip99
-\fb@frw=\dimen298
-\fb@frh=\dimen299
-\FrameRule=\dimen300
-\FrameSep=\dimen301
+\OuterFrameSep=\skip98
+\fb@frw=\dimen297
+\fb@frh=\dimen298
+\FrameRule=\dimen299
+\FrameSep=\dimen300
 )
-\cslhangindent=\skip100
-\csllabelwidth=\skip101
-\@quotelevel=\count491
-\@quotereset=\count492
+\cslhangindent=\skip99
+\csllabelwidth=\skip100
+\@quotelevel=\count489
+\@quotereset=\count490
 (./paper.aux)
 \openout1 = `paper.aux'.
 
@@ -937,39 +910,13 @@ Package biblatex Info: Reference segment=0 on input line 274.
 * \@reversemargintrue
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \microtypecontext on input line 274.
-Package microtype Info: Applying patch `item' on input line 274.
-Package microtype Info: Applying patch `toc' on input line 274.
-Package microtype Info: Applying patch `eqnum' on input line 274.
-Package microtype Info: Applying patch `footnote' on input line 274.
-Package microtype Info: Applying patch `verbatim' on input line 274.
-LaTeX Info: Redefining \microtypesetup on input line 274.
-Package microtype Info: Character protrusion enabled (level 2).
-Package microtype Info: Using protrusion set `basicmath'.
-Package microtype Info: No adjustment of tracking.
-Package microtype Info: No adjustment of spacing.
-Package microtype Info: No adjustment of kerning.
-(c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/mt-LatinModernRoman.cfg
-File: mt-LatinModernRoman.cfg 2021/02/21 v1.1 microtype config. file: Latin Modern Roman (RS)
-)
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `lmss' (encoding: TU).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
-(c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/mt-cmr.cfg
-File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
-)
 LaTeX Font Info:    Trying to load font information for U+msa on input line 275.
 (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-) (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/mt-msa.cfg
-File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
 LaTeX Font Info:    Trying to load font information for U+msb on input line 275.
 (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/mt-msb.cfg
-File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 
 Package hyperref Warning: Suppressing link with empty target on input line 301.
@@ -992,7 +939,7 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <8> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 371.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 356.
 [1
 
 ]
@@ -1007,6 +954,17 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [2]
+
+File: C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
+<C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
+
+Package fancyhdr Warning: \headheight is too small (62.59596pt): 
+(fancyhdr)                Make it at least 63.55022pt, for example:
+(fancyhdr)                \setlength{\headheight}{63.55022pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
+
+[3]
 File: wfu_potter_pedigree.png Graphic file (type bmp)
 <wfu_potter_pedigree.png>
 
@@ -1020,23 +978,7 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
-[3]
-
-File: C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
-<C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
-
-Package fancyhdr Warning: \headheight is too small (62.59596pt): 
-(fancyhdr)                Make it at least 63.55022pt, for example:
-(fancyhdr)                \setlength{\headheight}{63.55022pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
-
 [4]
-Overfull \hbox (40.31009pt too wide) in paragraph at lines 628--630
-[]\TU/lmr/m/n/10 Pedersen, T. L. (2025). \TU/lmr/m/it/10 Patchwork: The composer of plots\TU/lmr/m/n/10 . doi:[][]10.32614/CRAN.package.patchwork[][] 
- []
-
-
 
 File: C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 <C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
@@ -1048,8 +990,12 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [5]
+Overfull \hbox (40.31009pt too wide) in paragraph at lines 666--668
+[]\TU/lmr/m/n/10 Pedersen, T. L. (2025). \TU/lmr/m/it/10 Patchwork: The composer of plots\TU/lmr/m/n/10 . doi:[][]10.32614/CRAN.package.patchwork[][] 
+ []
+
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 676.
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 729.
 
 
 File: C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
@@ -1062,11 +1008,11 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [6]
-Underfull \vbox (badness 10000) detected at line 839
+Underfull \vbox (badness 10000) detected at line 892
  []
 
 
-Underfull \vbox (badness 10000) detected at line 839
+Underfull \vbox (badness 10000) detected at line 892
  []
 
 
@@ -1081,11 +1027,11 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [7]
-Underfull \vbox (badness 10000) detected at line 839
+Underfull \vbox (badness 10000) detected at line 892
  []
 
 
-Underfull \vbox (badness 10000) detected at line 839
+Underfull \vbox (badness 10000) detected at line 892
  []
 
 
@@ -1122,12 +1068,12 @@ Package logreq Info: Writing requests to 'paper.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 36888 strings out of 470502
- 757855 string characters out of 5490360
- 1646309 words of memory out of 5000000
- 64597 multiletter control sequences out of 15000+600000
+ 35010 strings out of 470545
+ 721681 string characters out of 5491702
+ 1596464 words of memory out of 5000000
+ 62749 multiletter control sequences out of 15000+600000
  633713 words of font info for 90 fonts, out of 8000000 for 9000
- 36 hyphenation exceptions out of 8191
- 84i,13n,87p,1262b,850s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 14 hyphenation exceptions out of 8191
+ 84i,12n,87p,762b,850s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 Output written on paper.pdf (9 pages).

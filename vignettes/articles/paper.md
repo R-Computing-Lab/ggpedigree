@@ -11,6 +11,7 @@ output:
 tags:
   - R
   - pedigrees
+  - family trees
   - behavior genetics
   - visualization
   - ggplot2
@@ -25,7 +26,7 @@ affiliations:
 citation_author: Garrison
 csl: apa.csl
 journal: JOSS
-date: "06 July, 2025"
+date: "07 July, 2025"
 bibliography: paper.bib
 vignette: >
   %\VignetteEncoding{UTF-8}
@@ -54,32 +55,27 @@ Acknowledgment of any financial support.
 
 <!--  A summary describing the high-level functionality and purpose of the software for a diverse, non-specialist audience. -->
 
-Pedigree diagrams underpin research and practice across genetics, animal breeding, genealogy, forensics, and counseling. They help medical geneticists trace Mendelian disease inheritance and identify at-risk relatives; enable dairy breeders to plan matings that improve milk yield; support genealogists in reconstructing ancestry; assist forensic scientists establish familial connections in criminal investigations; and facilitate family therapists and counselors in understanding their clients' relationships [@genograms_2020]. Early R tools such as kinship2 [@kinship2] plot simple nuclear families effectively, but they do not scale to today’s pedigrees that can exceed 1,000s of individuals. As datasets have grown, researchers now work with increasingly complex family structures, including large-scale plant breeding pedigrees [@shaw2014], web-based pedigree management systems [@Ranaweera2018open], interactive pedigree editors [@pedigreejs], and behavior genetic studies of extended family structures [@hunter_analytic_2021; @garrison_analyzing_2023]. Such complexity exposes limits in existing tools, which often struggle to handle large datasets and complex relationships. `ggpedigree` addresses this need by combining a vectorised layout algorithm, ggplot2 output, and optional plotly interactivity.
+Pedigree diagrams underpin research and practice across genetics, animal breeding, genealogy, forensics, and counseling. They help medical geneticists trace the inheritance of Mendelian diseases and identify at-risk relatives; enable dairy breeders to plan matings that improve milk yield; support genealogists in reconstructing ancestry; assist forensic scientists in establishing familial connections in criminal investigations; and facilitate family therapists and counselors in understanding their clients' relationships [@genograms_2020]. Early R tools such as kinship2 [@kinship2] plot simple nuclear families effectively, but they do not scale to today’s pedigrees that can exceed 1,000s of individuals. As datasets have grown, researchers now work with increasingly complex family structures, including large-scale plant breeding pedigrees [@shaw2014], web-based pedigree management systems [@Ranaweera2018open], interactive pedigree editors [@pedigreejs], and behavior genetic studies of extended family structures [@hunter_analytic_2021; @garrison_analyzing_2023]. Such complexity exposes the limitations of existing tools, which often struggle to handle large datasets and complex relationships. `ggpedigree` addresses this need by combining a vectorised layout algorithm, ggplot2 output, and optional plotly interactivity.
 
 # Statement of need
 
 <!-- A Statement of need section that clearly illustrates the research purpose of the software and places it in the context of related work. -->
 
-Pedigree visualization has traditionally relied on specialized proprietary software (e.g., Progeny, GenoPro) or R packages like kinship2 [@kinship2] or pedtricks [@pedtricks], which generate static plots using base graphics and minimal layout control. While these tools are functional for small, nuclear pedigrees, their limitations become pronounced when working with complex, modern pedigree datasets. First, base R graphics lack the modular design and extensibility needed for generating publication-quality pedigree figures. Second, most existing R-based tools offer no interactivity, making it difficult to explore large pedigrees dynamically. Third, current solutions are poorly integrated with tidyverse workflows and do not produce ggplot2-based objects that users can customize or extend [@wickham_ggplot2_2016].
+Pedigree visualization has traditionally relied on specialized proprietary software (e.g., Progeny, GenoPro, Pedigree Viewer) or R packages like kinship2 [@kinship2], pedtools[@pedtools], pedtricks [@pedtricks]. While these tools are functional for many use cases, their limitations become pronounced when working with complex, modern pedigree datasets or when more detailed customization is required. Most existing R packages focus on base graphics or simple ggplot2 implementations.
+
+First, base R graphics lack the modular design and extensibility needed for generating publication-quality pedigree figures. For example, kinship2 [@kinship2] uses base graphics and loop-based layout functions that do not scale well. pedtricks [@pedtricks], by contrast, returns ggplot2-based plots and is designed for large, multigenerational animal pedigrees, but offers minimal support for annotation layering, per-individual theming, or integration with phenotypic and model-based data
+
+Second, most existing R-based tools offer no interactivity. Static graphics are often sufficient for publication, but interactivity improves exploration and communication during model development or data cleaning. A notable exception is pedtools [@vigeland2021], which offers a sister shiny app, QuickPed [@vigeland2022] . While the R ecosystem includes libraries like plotly that support interactive plotting, these features have yet to be integrated into pedigree functions.
+
+Third, current solutions are often poorly integrated with tidyverse workflows and do not expose the full theming and layering capabilities familiar to users of ggplot2 [@wickham_ggplot2_2016]. In animal-focused workflows, rapid rendering often takes precedence over aesthetic flexibility, which can hinder interpretability in human-focused research.
 
 <!-- is it worth mentioning that both kinship and pedtricks have incomplete ggplot2 implementations? -->
 
-Recent advances in behavior genetics and genetic epidemiology [@garrison_analyzing_2023; @mcardleRAM] have introduced new visualization demands, particularly for extended families and highly interconnected pedigrees. Modern pedigree datasets can include hundreds or thousands of individuals across multiple generations, with overlapping relationships, consanguinity, remarriages, and twin sets that strain existing layout algorithms. Additionally, researchers increasingly need to overlay phenotypic information, genetic relatedness values, and model outputs onto pedigree plots to support interpretation and communication of their findings.
+Recent advances in behavior genetics and genetic epidemiology [@garrison_analyzing_2023; @lyu2025; @mcardleRAM] have introduced new visualization demands, particularly for extended families and highly interconnected pedigrees. Modern pedigree datasets can include hundreds or thousands of individuals across multiple generations, with overlapping relationships, consanguinity, remarriages, and twin sets that strain existing layout algorithms. Additionally, researchers increasingly need to overlay phenotypic information, genetic relatedness values, and model outputs onto pedigree plots to support interpretation and communication of their findings.
 
-Several R packages attempt to address these challenges with built-in pedigree plotting functions. kinship2 [@kinship2] remains widely used but produces static base graphics and relies on non-vectorized recursive layout functions that does not scale well to large families. A partial ggplot2 implementation exists but is incomplete, non-vectorized, and not actively maintained. The geneHapR [@Zhang2023] package focuses on haplotype visualization rather than general pedigree structure. The pedgene package provides some plotting functions but is primarily designed for association testing. None of these packages offers the combination of modern ggplot2 integration, interactive capabilities, and extensibility that ggpedigree provides. ggpedigree addresses these limitations by providing a comprehensive visualization framework built on modern R graphics infrastructure. It leverages the extensive customization capabilities of ggplot2 while adding specialized functionality for pedigree-specific visualization challenges.
+Several R packages attempt to address these challenges with built-in pedigree plotting functions. kinship2 [@kinship2] remains widely used but produces static base graphics and relies on non-vectorized recursive layout functions that do not scale well to large families. A partial ggplot2 implementation exists but is incomplete, non-vectorized, and not actively maintained. pedtricks, a revival of pedantics [@pedantics], provides a ggplot2-based implementation for large animal pedigrees but lacks extensibility and interactivity. The `geneHapR` [@Zhang2023] package focuses on haplotype visualization rather than general pedigree structure. The pedgene package [@pedgene] offers some plotting functions but is primarily designed for association testing rather than visualization. The `pedigreejs` package [@pedigreejs] provides an interactive pedigree editor but does not integrate with R or ggplot2, limiting its utility for R users.
 
-<!-- in progress -->
-
-
-<!-- The move towards analyzing complex family structures in behavior genetics introduces challenges in data structuring and modeling. The data structures inherent in these more complicated family designs are orders of magnitude larger than traditional designs.
-For example, in the classical twin study, a family will consist of a single pair of twins (i.e., two people), whereas in the MDAN design, a family consists of two mother-daughter pairs (i.e., four people). This problem quickly becomes intractable when applied to extended family pedigrees, which can encompass up to hundreds of thousands of individuals in a single family [e.g, @garrison_analyzing_2023]. -->
-
-
-<!-- This shift towards extended family models underscores the limitations of existing genetic modeling software. Packages like `OpenMx` [@Neale2016], `EasyMx` [@easy], and `kinship2` [@kinship2; @kinship2R] were developed with smaller, classical family designs in mind. In contrast, the `BGmisc` R package was specifically developed to structure and model extended family pedigree data. -->
-
-<!-- Two widely-used R packages in genetic modeling are `OpenMx` [@Neale2016] and `kinship2` [@kinship2; @kinship2R]. The `OpenMx` [@Neale2016] package is a general-purpose software for structural equation modeling that is popular among behavior geneticists [@Garrison2018] for its unique features, like the `mxCheckIdentification()` function. This function checks whether a model is identified, determining if there is a unique solution to estimate the model's parameters based on the observed data. In addition, `EasyMx` [@easy] is a more user-friendly package that streamlines the process of building and estimating structural equation models. It seamlessly integrates with `OpenMx`'s infrastructure. Its functionalities range from foundational matrix builders like `emxCholeskyVariance` and `emxGeneticFactorVariance` to more specialized functions like `emxTwinModel` designed for classical twin models. Despite their strengths, `EasyMx` and `OpenMx` have limitations when handling extended family data. Notably, they lack functions for handling modern molecular designs [@kirkpatrick_combining_2021], modeling complex genetic relationships, inferring relatedness, and simulating pedigrees. -->
-
-<!-- Although not a staple in behavior genetics, the `kinship2` [@kinship2] package provides core features to the broader statistical genetics scientific community, such as plotting pedigrees and computing genetic relatedness matrices. It uses the Lange algorithm [@lange_genetic_2002] to compute relatedness coefficients. This recursive algorithm is discussed in great detail elsewhere, laying out several boundary conditions and recurrence rules. The `BGmisc` package extends the capabilities of `kinship2` by introducing an alternative algorithm to calculate the relatedness coefficient based on network models. By applying classic path-tracing rules to the entire network, this new method is computationally more efficient by eliminating the need for a multi-step recursive approach. -->
+None of these packages offers the combination of modern ggplot2 integration, interactive capabilities, and extensibility that ggpedigree provides. ggpedigree addresses these limitations by providing a comprehensive visualization framework built on modern R graphics infrastructure. It leverages the extensive customization capabilities of ggplot2 while adding specialized functionality for pedigree-specific visualization challenges.
 
 ## Software Architecture
 
@@ -87,7 +83,7 @@ For example, in the classical twin study, a family will consist of a single pair
 
 ## Features
 
-We briefly describe the main features of the `ggpedigree` package below. A more detailed description of the package's features and usage is available from the [package vignettes](https://r-computing-lab.github.io/ggpedigree/articles/), including examples of how to create static and interactive pedigree plots, customize aesthetics, and visualize relatedness matrices. Additional example data include squirrel data from the Kluane Red Squirrel Project [@mcfarlane2015; @mcfarlane2014] and Targaryen family data from the Song of Ice and Fire universe[@martin1997; @martin2014; @martin2018]. These datasets demonstrate the package's capabilities for both empirical and fictional pedigrees.
+We briefly describe the main features of the `ggpedigree` package below. A more detailed description of the package's features and usage is available in the [package vignettes](https://r-computing-lab.github.io/ggpedigree/articles/), which include examples of how to create static and interactive pedigree plots, customize aesthetics, and visualize relatedness matrices. Additional example data include squirrel data from the Kluane Red Squirrel Project [@mcfarlane2015; @mcfarlane2014] and Targaryen family data from the Song of Ice and Fire universe [@martin1997; @martin2014; @martin2018]. These datasets demonstrate the package's capabilities for both empirical and fictional pedigrees.
 
 ### Core Functions
 
@@ -97,7 +93,7 @@ We briefly describe the main features of the `ggpedigree` package below. A more 
 
 -   Relationship Connection Mapping: `calculateConnections()` generates connection paths between family members, mapping parent-child, sibling, spousal, and twin relationships. The function determines midpoints for line intersections and handles overlapping connections with specialized curved segments. These calculations are optimized for large datasets by using vectorized operations rather than the loop-based approaches used in kinship2.
 
--   Layer-based Plot Construction: `ggPedigree()` constructs plots using ggplot2 geometry functions, returning standard ggplot2 objects that integrate with existing R workflows. ggPedigreeInteractive() extends plots into interactive plotly widgets with hover tooltips and dynamic exploration capabilities. A comprehensive config system allows customization of over 100 aesthetic and layout parameters.
+-   Layer-based Plot Construction: `ggPedigree()` constructs plots using ggplot2 geometry functions, returning standard ggplot2 objects that integrate with existing R workflows. `ggPedigreeInteractive()` extends plots into interactive plotly widgets with hover tooltips and dynamic exploration capabilities. A comprehensive config system allows customization of over 100 aesthetic and layout parameters.
 
 -   Focal Individual Highlighting: Advanced functionality to highlight specific individuals and their relatives based on additive genetic, mitochondrial, or other relationship matrices.
 
@@ -112,9 +108,9 @@ We briefly describe the main features of the `ggpedigree` package below. A more 
 
 Here, we illustrate some of the features by reproducing the figure from [@hunter2025tracing] but restyled to conform to the Wake Forest Style Guidelines. As you can see, the `ggpedigree` package allows for complex family structures to be visualized in a clear and aesthetically pleasing manner.
 
-\includegraphics[width=0.9\textwidth,keepaspectratio]{wfu_potter_pedigree.png}
+\includegraphics[width=0.95\textwidth,keepaspectratio]{wfu_potter_pedigree.png}
 
-We have combined two figures using `patchwork` [@patchwork] to show the pedigree of the Potter family from the Harry Potter series. The first plot (a) highlights the individual mtdna lines in the Dursley and Evans families, while the second plot (b) shows the entire family structure with mitochondrial relationships highlighted in a gradient color scale. Features such as focal individual highlighting, custom color scales, text labels, fonts, are easily implemented. The package supports both static and interactive plots, allowing users to explore large pedigrees dynamically.
+We have combined two figures using `patchwork` [@patchwork] to show the pedigree of the Potter family from the Harry Potter series. The first plot (a) highlights the individual mtDNA lines in the Dursley and Evans families, while the second plot (b) shows the entire family structure with mitochondrial relationships highlighted in a gradient color scale. Features such as focal individual highlighting, custom color scales, text labels, and fonts are easily implemented. The package supports both static and interactive plots, allowing users to explore large pedigrees dynamically.
 
 The plot includes individuals' names, relationships, and phenotypic information, all while maintaining clarity even with overlapping relationships. Although pleasing, this level of customization is not required, as default settings produce clear and informative pedigree plots.
 
@@ -128,7 +124,7 @@ The `ggpedigree` package is open-source and available on both GitHub at <https:/
 
 # Acknowledgments
 
-The current research is indirectly supported by the National Institute on Aging (NIA), RF1-AG073189. The authors would like to thank Michael Hunter for their support and enthusiasm to the development of this package.
+The current research is indirectly supported by the National Institute on Aging (NIA), RF1-AG073189. The author would like to thank Michael Hunter for his enthusiasm for the development of this package.
 
 # References
 
@@ -215,7 +211,7 @@ m1 <- ggPedigree(df_potter %>% filter(personID %in% c(1:7, 101:104)),
     focal_fill_personID = 8,
     outline_multiplier = 1.5,
     segment_linewidth = 0.5,
-    label_text_size = 11, # 3,
+    label_text_size = 12,
     label_text_color = text_color_wfu,
     axis_text_color = text_color_wfu,
     label_text_family = family_wfu,
