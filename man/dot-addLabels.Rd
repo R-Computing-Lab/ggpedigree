@@ -4,10 +4,10 @@
 \alias{.addLabels}
 \title{Add Labels to ggplot Pedigree Plot}
 \usage{
-.addLabels(p, config)
+.addLabels(plotObject, config)
 }
 \arguments{
-\item{p}{A ggplot object.}
+\item{plotObject}{A ggplot object.}
 
 \item{config}{A list of configuration options for customizing the plot.
       See getDefaultPlotConfig for details. The list can include:

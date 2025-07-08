@@ -10,8 +10,13 @@
 #' @param shift Scalar shift in degrees (default is 0)
 #' @return Numeric vector of midpoints (x or y)
 #' @keywords internal
-.computeCurvedMidpoint <- function(x0, y0, x1, y1,
-                                   curvature, angle, shift = 0,
+.computeCurvedMidpoint <- function(x0,
+                                   y0,
+                                   x1,
+                                   y1,
+                                   curvature,
+                                   angle,
+                                   shift = 0,
                                    t = 0.5) {
   # Ensure t is a numeric vector
   t <- as.numeric(t)
@@ -113,7 +118,8 @@
     # Rename dadID to the user-specified name
     names(connections)[names(connections) == "dadID"] <- dadID
   }
-  if ("spouseID" %in% names(connections) && spouseID != "spouseID") {
+  if ("spouseID" %in% names(connections) &&
+    spouseID != "spouseID") {
     # Rename spouseID to the user-specified name
     names(connections)[names(connections) == "spouseID"] <- spouseID
   }

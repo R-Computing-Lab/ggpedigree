@@ -4,7 +4,7 @@
 #' sibling, and spousal connections. Optionally processes duplicate appearances
 #' of individuals (marked as `extra`) to ensure relational accuracy.
 #'
-#' @inheritParams  ggpedigree
+#' @inheritParams  ggPedigree
 #' @param config List of configuration parameters. Currently unused but passed through to internal helpers.
 #' @return A `data.frame` containing connection points and midpoints for graphical rendering. Includes:
 #'   \itemize{

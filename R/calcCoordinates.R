@@ -16,7 +16,7 @@ utils::globalVariables(c(":="))
 #'     \item{ped_align}{Logical, default TRUE. Align generations.}
 #'     \item{ped_width}{Numeric, default 15. Controls spacing.}
 #'   }
-#' @inheritParams ggpedigree
+#' @inheritParams ggPedigree
 #'
 #' @return A data frame with one or more rows per person, each containing:
 #'   \itemize{
