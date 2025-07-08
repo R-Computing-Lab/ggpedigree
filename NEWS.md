@@ -1,4 +1,6 @@
 # ggpedigree (dev version)
+* Updated JOSS paper
+* Refactored step 2 of the ggpedigree function to .transformPed()
 
 # ggpedigree 0.8.0
 * Makes ggrepel a suggested package instead of a required one.

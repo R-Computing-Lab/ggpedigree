@@ -201,36 +201,17 @@ ggPedigree.core <- function(ped, famID = "famID",
   # STEP 2: Pedigree Data Transformation
   # -----
 
-  if (!all(c(famID, patID, matID) %in% names(ped)) && !famID %in% names(ped)) {
-    ds_ped <- BGmisc::ped2fam(ped,
-      famID = famID,
-      personID = personID,
-      momID = momID,
-      dadID = dadID
-    )
-  } else {
-    ds_ped <- ped
-  }
+  ds_ped <- .transformPed(
+    famID = famID,
+    patID = patID,
+    matID = matID,
+    ped = ped,
+    personID = personID, momID = momID, dadID = dadID,
+    config = config,
+    fill_group_paternal = fill_group_paternal,
+    fill_group_maternal = fill_group_maternal
+  )
 
-  if (config$focal_fill_include == TRUE) {
-    if (!patID %in% names(ds_ped) && config$focal_fill_component %in% fill_group_paternal) {
-      ds_ped <- BGmisc::ped2paternal(ds_ped,
-        patID = patID,
-        personID = personID,
-        momID = momID,
-        dadID = dadID
-      )
-    }
-
-    if (!matID %in% names(ds_ped) && config$focal_fill_component %in% fill_group_maternal) {
-      ds_ped <- BGmisc::ped2maternal(ds_ped,
-        matID = matID,
-        personID = personID,
-        momID = momID,
-        dadID = dadID
-      )
-    }
-  }
 
 
   # ----
@@ -1192,4 +1173,69 @@ createFillColumn <- function(ped,
     fill_df$focal_fill[fill_df$focal_fill == 0] <- NA_real_
   }
   fill_df
+}
+
+#' @title Process Pedigree Data
+#' @description
+#' This function processes the pedigree data frame to ensure it is in the correct format for ggPedigree.
+#' It checks for the presence of family, paternal, and maternal IDs, and fills in missing components based on the configuration.
+#' @inheritParams ggPedigree
+#' @param fill_group_paternal A character vector specifying which paternal components to fill.
+#' @param fill_group_maternal A character vector specifying which maternal components to fill.
+#' @return A data frame with the processed pedigree data.
+#' @keywords internal
+
+
+.transformPed <- function(ped,
+                          famID = "famID",
+                          personID = "personID",
+                          momID = "momID",
+                          dadID = "dadID",
+                          matID = "matID",
+                          patID = "patID",
+                          config = list(
+                            focal_fill_include = TRUE,
+                            focal_fill_component = "maternal"
+                          ),
+                          fill_group_paternal = c(
+                            "paternal", "patID",
+                            "paternal line", "paternal lineages",
+                            "paternal lines"
+                          ),
+                          fill_group_maternal = c(
+                            "maternal", "matID",
+                            "maternal line", "maternal lineages",
+                            "maternal lines"
+                          )) {
+  if (!all(c(famID, patID, matID) %in% names(ped)) && !famID %in% names(ped)) {
+    ds_ped <- BGmisc::ped2fam(ped,
+      famID = famID,
+      personID = personID,
+      momID = momID,
+      dadID = dadID
+    )
+  } else {
+    ds_ped <- ped
+  }
+
+  if (config$focal_fill_include == TRUE) {
+    if (!patID %in% names(ds_ped) && config$focal_fill_component %in% fill_group_paternal) {
+      ds_ped <- BGmisc::ped2paternal(ds_ped,
+        patID = patID,
+        personID = personID,
+        momID = momID,
+        dadID = dadID
+      )
+    }
+
+    if (!matID %in% names(ds_ped) && config$focal_fill_component %in% fill_group_maternal) {
+      ds_ped <- BGmisc::ped2maternal(ds_ped,
+        matID = matID,
+        personID = personID,
+        momID = momID,
+        dadID = dadID
+      )
+    }
+  }
+  return(ds_ped)
 }
