@@ -160,6 +160,8 @@ getDefaultPlotConfig(
   return_widget = FALSE,
   return_interactive = FALSE,
   return_midparent = FALSE,
+  hints = NULL,
+  relation = NULL,
   debug = FALSE,
   override_many2many = FALSE,
   ...
@@ -473,6 +475,10 @@ getDefaultPlotConfig(
 \item{return_interactive}{Whether to return an interactive plot.}
 
 \item{return_midparent}{Whether to return midparent values in the plot.}
+
+\item{hints}{Optional hints to pass along to kinship2::autohint}
+
+\item{relation}{Optional relation to pass along to kinship2::pedigree}
 
 \item{debug}{Whether to enable debugging mode.}
 

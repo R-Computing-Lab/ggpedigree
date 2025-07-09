@@ -6,6 +6,7 @@
 * Renamed p variable as plotObject in ggpedigree subfunctions
 * Smarter implementation of aliases
 * Updated hex to actually use ggpedigree
+* exposed relation and hints inputs to ggpedigree
 
 # ggpedigree 0.8.0
 * Makes ggrepel a suggested package instead of a required one.

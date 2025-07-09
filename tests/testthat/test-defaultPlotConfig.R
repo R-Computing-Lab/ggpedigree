@@ -16,7 +16,7 @@ test_that("getDefaultPlotConfig returns expected defaults", {
   config <- getDefaultPlotConfig()
 
   expect_true(is.list(config))
-  expect_equal(length(config), 149) # Check number of default parameters
+  expect_equal(length(config), 151) # Check number of default parameters
 
   expect_equal(config$apply_default_scales, TRUE)
   expect_equal(config$apply_default_theme, TRUE)
@@ -46,6 +46,8 @@ test_that("getDefaultPlotConfig returns expected defaults", {
   expect_equal(config$outline_additional_size, 0)
   expect_equal(config$outline_multiplier, 1.25)
   expect_equal(config$point_size, 4)
+  expect_true(is.null(config$hints))
+  expect_true(is.null(config$relation))
   expect_equal(config$outline_multiplier * config$point_size, 5)
   expect_equal(
     config$outline_multiplier * config$point_size + config$outline_additional_size,

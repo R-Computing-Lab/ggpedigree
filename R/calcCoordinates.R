@@ -64,15 +64,24 @@ calculateCoordinates <- function(ped,
   # Recode sex values in case non-standard codes are used (e.g., "M"/"F")
   ped_recode <- BGmisc::recodeSex(ped, code_male = code_male)
 
+  if("relation" %in% names(config) && !is.null(config$relation)) {
   # Construct a pedigree object to compute layout coordinates
   ped_ped <- kinship2::pedigree(
     id = ped[[personID]],
     dadid = ped[[dadID]],
     momid = ped[[momID]],
     sex = ped_recode[[sexVar]],
+    relation = config$relation
   )
-
-  if ("hints" %in% names(config)) {
+} else {
+    ped_ped <- kinship2::pedigree(
+    id = ped[[personID]],
+    dadid = ped[[dadID]],
+    momid = ped[[momID]],
+    sex = ped_recode[[sexVar]]
+  )
+}
+  if ("hints" %in% names(config) && !is.null(config$hints)) {
     # Check if hints are provided
     autohint <- tryCatch(
       kinship2::autohint(
