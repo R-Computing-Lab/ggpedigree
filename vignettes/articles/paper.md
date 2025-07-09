@@ -82,8 +82,6 @@ None of these packages offers the combination of modern ggplot2 integration, int
 
 I describe the main features of the `ggpedigree` package below. More detailed descriptions of features and usage is available in the [package vignettes](https://r-computing-lab.github.io/ggpedigree/articles/), including examples of how to create static and interactive pedigree plots, customize aesthetics, and visualize relatedness matrices. Additional example data include squirrel data from the Kluane Red Squirrel Project [@mcfarlane2015; @mcfarlane2014] and Targaryen family data from the Song of Ice and Fire universe [@martin1997; @martin2018].
 
-### Core Functions
-
 -   Data Standardization and Family Structure Analysis: `ggPedigree()` integrates with BGmisc functions like `ped2fam()` to organize individuals by family, `recodeSex()` to standardize sex coding, and `checkParentIDs()` to validate pedigree structures. The function handles consanguineous relationships and individuals appearing in multiple pedigree positions.
 
 -   Coordinate Calculation: `calculateCoordinates()` computes optimal positioning for individuals using algorithms adapted from `kinship2::align.pedigree`, with enhancements for large multi-generational pedigrees and complex family structures. These steps are vectorized as much as possible to ensure computational efficiency and compatibility with ggplot2.
@@ -94,20 +92,26 @@ I describe the main features of the `ggpedigree` package below. More detailed de
 
 -   Focal Individual Highlighting: Advanced functionality to highlight specific individuals and their relatives based on additive genetic, mitochondrial, or other relationship matrices.
 
-### Specific Visualization Functions
+-   Specific Visualization Functions: `ggPedigree()` creates static pedigree plots using ggplot2. `ggPedigreeInteractive()` generates interactive pedigree plots using plotly. `ggRelatednessMatrix()` creates customizable heatmaps for relatedness matrices with support for hierarchical clustering, interactive exploration, and seamless integration with BGmisc relatedness calculations. `ggPhenotypeByDegree()` supports visualizing phenotypic correlations as a function of genetic relatedness, including confidence intervals and statistical summaries for quantitative genetic analysis.
 
--   Pedigree Plotting: `ggPedigree()` creates static pedigree plots using ggplot2. It can handle large pedigrees with thousands of individuals.
--   Interactive Pedigree Visualization: `ggPedigreeInteractive()` generates interactive pedigree plots using plotly. Users can configure tooltip content to display individual IDs, names, phenotypic information, and other relevant data. It supports tooltips, zooming, and panning for detailed exploration of family structures.
--   Relatedness Matrix Heatmaps: `ggRelatednessMatrix()` creates customizable heatmap visualizations for relatedness matrices with support for hierarchical clustering, interactive exploration, and seamless integration with BGmisc relatedness calculations.
--   Phenotype-Relatedness Analysis: `ggPhenotypeByDegree()` produces specialized plots for visualizing phenotypic correlations as a function of genetic relatedness, including confidence intervals and statistical summaries for quantitative genetic analysis.
+### Code example
 
-#### Illustrative Example of ggPedigree
+Here is a basic example of how to use `ggpedigree` to visualize a pedigree structure. The `potter` dataset contains several wizarding families from the Harry Potter series.
 
-I illustrate some of the features by reproducing the figure from [@hunter2025tracing], restyled to conform with the Wake Forest Style Guidelines.
+```r
+ggPedigree(potter,
+  famID = "famID",
+  personID = "personID"
+)
+```
+
+\includegraphics[width=0.95\textwidth,keepaspectratio]{potter_pedigree.png}
+
+I illustrate some of the advanced features by reproducing the figure from [@hunter2025tracing], restyled to conform with the Wake Forest Style Guidelines. Source code is in the appendix below.
 
 \includegraphics[width=0.95\textwidth,keepaspectratio]{wfu_potter_pedigree.png}
 
-I have combined two figures using `patchwork` [@patchwork] to show the pedigree of the Potter family. The first plot (a) highlights the individual mitochondrial lines in the Dursley and Evans families, while the second plot (b) shows the entire pedigree with mitochondrial descendents of Molly Wealsey highlighted in gold. Features such as focal individual highlighting, custom color scales, text labels, and fonts are easily implemented.
+I have combined two figures using `patchwork` [@patchwork]. The first plot (a) highlights the individual mitochondrial lines in the Dursley and Evans families, while the second plot (b) shows the entire pedigree with mitochondrial descendants of Molly Wealsey highlighted in gold.
 
 <!-- Mention (if applicable) a representative set of past or ongoing research projects using the software and recent scholarly publications enabled by it. -->
 
@@ -128,7 +132,7 @@ The current research is supported by the National Institute on Aging (NIA), RF1-
 
 # Appendix
 
-Source code for the figures above is available in the `vignettes/articles/_paper.Rmd` file. The code below reproduces the figure using the `ggpedigree` package.
+Source code for the figures above is available in the `vignettes/articles/_paper.Rmd` file.
 
 
 ``` r
@@ -295,3 +299,6 @@ ggsave(
   width = 9.5, height = 6, dpi = 300, units = "in"
 )
 ```
+
+
+
