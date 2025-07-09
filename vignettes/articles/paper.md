@@ -26,7 +26,7 @@ affiliations:
 citation_author: Garrison
 csl: apa.csl
 journal: JOSS
-date: "07 July, 2025"
+date: "08 July, 2025"
 bibliography: paper.bib
 vignette: >
   %\VignetteEncoding{UTF-8}
@@ -61,11 +61,11 @@ Pedigree diagrams underpin research and practice across genetics, animal breedin
 
 <!-- A Statement of need section that clearly illustrates the research purpose of the software and places it in the context of related work. -->
 
-Pedigree visualization has traditionally relied on specialized proprietary software (e.g., Progeny, GenoPro, Pedigree Viewer) or R packages like kinship2 [@kinship2], pedtools[@pedtools], pedtricks [@pedtricks]. While these tools are functional for many use cases, their limitations become pronounced when working with complex, modern pedigree datasets or when more detailed customization is required. Most existing R packages focus on base graphics or simple ggplot2 implementations.
+Pedigree visualization has traditionally relied on specialized proprietary software (e.g., Progeny, GenoPro, Pedigree Viewer) or R packages like kinship2 [@kinship2], pedtools [@pedtools], pedtricks [@pedtricks]. While these tools are functional for many use cases, their limitations become pronounced when working with complex, modern pedigree datasets or when more detailed customization is required. Most existing R packages focus on base graphics or simple ggplot2 implementations.
 
 First, base R graphics lack the modular design and extensibility needed for generating publication-quality pedigree figures. For example, kinship2 [@kinship2] uses base graphics and loop-based layout functions that do not scale well. pedtricks [@pedtricks], by contrast, returns ggplot2-based plots and is designed for large, multigenerational animal pedigrees, but offers minimal support for annotation layering, per-individual theming, or integration with phenotypic and model-based data
 
-Second, most existing R-based tools offer no interactivity. Static graphics are often sufficient for publication, but interactivity improves exploration and communication during model development or data cleaning. A notable exception is pedtools [@vigeland2021], which offers a sister shiny app, QuickPed [@vigeland2022] . While the R ecosystem includes libraries like plotly that support interactive plotting, these features have yet to be integrated into pedigree functions.
+Second, most existing R-based tools offer no interactivity. Static graphics are often sufficient for publication, but interactivity improves exploration and communication during model development or data cleaning. A notable exception is pedtools [@vigeland2021], which offers a sister shiny app, QuickPed [@vigeland2022]. While the R ecosystem includes libraries like plotly that support interactive plotting, these features have yet to be integrated into pedigree functions.
 
 Third, current solutions are often poorly integrated with tidyverse workflows and do not expose the full theming and layering capabilities familiar to users of ggplot2 [@wickham_ggplot2_2016]. In animal-focused workflows, rapid rendering often takes precedence over aesthetic flexibility, which can hinder interpretability in human-focused research.
 
@@ -141,7 +141,7 @@ library(sysfonts)
 library(patchwork) # for combining plots
 
 # Load the potter pedigree data
-data("potter") 
+data("potter")
 # Removing Last names
 df_potter <- potter %>%
   mutate(
@@ -191,7 +191,8 @@ showtext_auto() # Load the showtext package to render Google fonts
 # Set the WFU style guidelines for the plot
 text_color_wfu <- "#222222" # dark grey for text labels
 focal_fill_color_values_wfu <- c(
-  "#9E7E38", "#000000", "#FDC314", "#CEB888", "#53565A")
+  "#9E7E38", "#000000", "#FDC314", "#CEB888", "#53565A"
+)
 family_wfu <- "cormorant"
 text_size_wfu <- 14
 
@@ -203,7 +204,6 @@ m1 <- ggPedigree(df_potter %>% filter(personID %in% c(1:7, 101:104)),
     label_include = TRUE,
     label_column = "name",
     point_size = 8,
-    # outline_include = TRUE,
     focal_fill_personID = 8,
     outline_multiplier = 1.5,
     segment_linewidth = 0.5,
@@ -223,14 +223,12 @@ m1 <- ggPedigree(df_potter %>% filter(personID %in% c(1:7, 101:104)),
     focal_fill_labels = NULL,
     sex_legend_show = FALSE,
     sex_color_include = FALSE
-  ) 
+  )
 ) + guides(shape = "none") + theme(
   plot.title = element_blank(),
   plot.title.position = "plot",
-  text = element_text(family = family_wfu,
-                      size = 14)
-) + coord_cartesian(ylim = c(3.25, 1),
-                    clip = "off")
+  text = element_text(family = family_wfu, size = 14)
+) + coord_cartesian(ylim = c(3.25, 1), clip = "off")
 # Create Panel B
 m2 <- ggPedigree(df_potter,
   famID = "famID",
@@ -266,8 +264,10 @@ m2 <- ggPedigree(df_potter,
   legend.position = "none",
   plot.title = element_blank(),
   plot.title.position = "plot",
-  text = element_text(family = family_wfu, 
-                      size = text_size_wfu, face = "bold")
+  text = element_text(
+    family = family_wfu,
+    size = text_size_wfu, face = "bold"
+  )
 ) + coord_cartesian(ylim = c(4.25, .9), clip = "off")
 
 # Combine the two plots using patchwork
@@ -285,8 +285,10 @@ result <- m1 + m2 +
   theme(
     legend.position = "none",
     plot.margin = unit(c(0, 0, 0.0, 0), "lines"),
-    plot.tag = element_text(family = family_wfu, 
-                            size = 2*text_size_wfu, face = "bold")
+    plot.tag = element_text(
+      family = family_wfu,
+      size = 2 * text_size_wfu, face = "bold"
+    )
   )
 
 # save as a png

@@ -23,3 +23,8 @@ Rplot03.pdf
 vignettes/articles/_paper.pdf
 
 *.log
+vignettes/articles/paper.bcf
+vignettes/articles/_paper.knit.md
+vignettes/articles/paper.aux
+vignettes/articles/paper.tex
+vignettes/articles/paper.log

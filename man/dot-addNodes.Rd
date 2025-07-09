@@ -4,10 +4,10 @@
 \alias{.addNodes}
 \title{Add Nodes to ggplot Pedigree Plot}
 \usage{
-.addNodes(p, config, focal_fill_column = NULL, status_column = NULL)
+.addNodes(plotObject, config, focal_fill_column = NULL, status_column = NULL)
 }
 \arguments{
-\item{p}{A ggplot object.}
+\item{plotObject}{A ggplot object.}
 
 \item{config}{A list of configuration options for customizing the plot.
       See getDefaultPlotConfig for details. The list can include:

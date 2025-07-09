@@ -169,7 +169,7 @@ getMidpoints <- function(data,
 #' (e.g., mom, dad, spouse) and join them into the main connection table. This supports
 #' relative-specific positioning in downstream layout functions like `calculateConnections()`.
 #'
-#' @inheritParams ggpedigree
+#' @inheritParams ggPedigree
 #' @param connections A `data.frame` containing the individuals and their associated relative IDs.
 #' @param relativeIDvar Character. Name of the column in `connections` for the relative ID variable.
 #' @param x_name Character. Name of the new column to store the x-coordinate of the relative.

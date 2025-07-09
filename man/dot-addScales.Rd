@@ -4,10 +4,10 @@
 \alias{.addScales}
 \title{Add Scales to ggplot Pedigree Plot}
 \usage{
-.addScales(p, config, status_column = NULL, focal_fill_column = NULL)
+.addScales(plotObject, config, status_column = NULL, focal_fill_column = NULL)
 }
 \arguments{
-\item{p}{A ggplot object.}
+\item{plotObject}{A ggplot object.}
 
 \item{config}{A list of configuration options for customizing the plot.
       See getDefaultPlotConfig for details. The list can include:

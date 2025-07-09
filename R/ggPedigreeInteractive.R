@@ -6,12 +6,15 @@
 #' zoom, and pan functionality.
 #'
 #' @inheritParams ggPedigree
-#' @return A plotly htmlwidget (or plotly object if `return_widget = FALSE`).
+#' @return A plotly htmlwidget (or plotly object if `return_widget = FALSE`)
+#' @aliases ggpedigreeinteractive ggPedigreeInteractive ggpedigreeInteractive  ggPedigreeinteractive
 #' @examples
 #' library(BGmisc)
 #' data("potter")
 #' ggPedigreeInteractive(potter, famID = "famID", personID = "personID")
 #' @export
+
+
 ggPedigreeInteractive <- function(ped,
                                   famID = "famID",
                                   personID = "personID",
@@ -117,7 +120,7 @@ ggPedigreeInteractive <- function(ped,
     if (length(point_layers) == 0L) {
       warnings("No GeomPoint layer found for tooltips.")
 
-      static_plot <- static_plot + ggplot2::aes(text = tooltip_fmt(
+      static_plot <- static_plot + ggplot2::aes(text = formatTooltip(
         df = static_plot$data,
         config$tooltip_columns
       ))
@@ -125,7 +128,7 @@ ggPedigreeInteractive <- function(ped,
       for (i in point_layers) {
         static_plot$layers[[i]]$mapping <- utils::modifyList(
           static_plot$layers[[i]]$mapping,
-          ggplot2::aes(text = tooltip_fmt(
+          ggplot2::aes(text = formatTooltip(
             df = static_plot$data,
             tooltip_columns = config$tooltip_columns
           ))
@@ -168,13 +171,7 @@ ggPedigreeInteractive <- function(ped,
     return(plt)
   }
 }
-#' @rdname ggPedigreeInteractive
-#' @export
-ggpedigreeinteractive <- ggPedigreeInteractive
 
-#' @rdname ggPedigreeInteractive
-#' @export
-ggpedigreeInteractive <- ggPedigreeInteractive
 
 #' @title Format tooltip text
 #' @description
@@ -187,8 +184,8 @@ ggpedigreeInteractive <- ggPedigreeInteractive
 #' @return A character vector of formatted tooltip text for each row in the data frame.
 #'
 #' @keywords internal
-
-tooltip_fmt <- function(df, tooltip_columns, sep = ": ") {
+#' @aliases tooltip_fmt
+formatTooltip <- function(df, tooltip_columns, sep = ": ") {
   apply(df[tooltip_columns], 1, function(row) {
     paste(paste(tooltip_columns, row, sep = sep), collapse = "<br>")
   })
