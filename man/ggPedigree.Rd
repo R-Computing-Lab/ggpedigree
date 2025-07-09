@@ -27,6 +27,29 @@ ggPedigree(
   phantoms = FALSE,
   ...
 )
+
+ggpedigree(
+  ped,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  spouseID = "spouseID",
+  matID = "matID",
+  patID = "patID",
+  twinID = "twinID",
+  status_column = NULL,
+  focal_fill_column = NULL,
+  tooltip_columns = NULL,
+  overlay_column = NULL,
+  return_widget = FALSE,
+  config = list(),
+  debug = FALSE,
+  hints = NULL,
+  interactive = FALSE,
+  phantoms = FALSE,
+  ...
+)
 }
 \arguments{
 \item{ped}{A data frame containing the pedigree data. Needs personID, momID, and dadID columns}

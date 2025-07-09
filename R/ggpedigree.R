@@ -149,6 +149,11 @@ ggPedigree <- function(ped,
   }
 }
 
+#' @rdname ggPedigree
+#' @export
+ggpedigree <- ggPedigree
+
+
 #' @title Core Function for ggPedigree
 #' @description
 #' This function is the core implementation of the ggPedigree function.

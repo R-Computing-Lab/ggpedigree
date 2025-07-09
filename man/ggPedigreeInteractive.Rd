@@ -26,6 +26,46 @@ ggPedigreeInteractive(
   phantoms = FALSE,
   ...
 )
+
+ggpedigreeInteractive(
+  ped,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  patID = "patID",
+  matID = "matID",
+  twinID = "twinID",
+  status_column = NULL,
+  tooltip_columns = NULL,
+  focal_fill_column = NULL,
+  overlay_column = NULL,
+  config = list(),
+  debug = FALSE,
+  return_widget = TRUE,
+  phantoms = FALSE,
+  ...
+)
+
+ggpedigreeinteractive(
+  ped,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  patID = "patID",
+  matID = "matID",
+  twinID = "twinID",
+  status_column = NULL,
+  tooltip_columns = NULL,
+  focal_fill_column = NULL,
+  overlay_column = NULL,
+  config = list(),
+  debug = FALSE,
+  return_widget = TRUE,
+  phantoms = FALSE,
+  ...
+)
 }
 \arguments{
 \item{ped}{A data frame containing the pedigree data. Needs personID, momID, and dadID columns}

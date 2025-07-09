@@ -190,3 +190,13 @@ formatTooltip <- function(df, tooltip_columns, sep = ": ") {
     paste(paste(tooltip_columns, row, sep = sep), collapse = "<br>")
   })
 }
+
+
+#' @rdname ggPedigreeInteractive
+#' @export
+ggpedigreeInteractive <- ggPedigreeInteractive
+
+#' @rdname ggPedigreeInteractive
+#' @export
+ggpedigreeinteractive <- ggPedigreeInteractive
+
