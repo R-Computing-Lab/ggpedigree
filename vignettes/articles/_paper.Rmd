@@ -12,6 +12,7 @@ tags:
   - R
   - pedigrees
   - family trees
+  - quantitative genetics
   - behavior genetics
   - visualization
   - ggplot2
@@ -205,14 +206,13 @@ m1 <- ggPedigree(df_potter %>% filter(personID %in% c(1:7, 101:104)),
     label_column = "name",
     point_size = 8,
     focal_fill_personID = 8,
-    outline_multiplier = 1.5,
     segment_linewidth = 0.5,
-    label_text_size = 12,
+    label_text_size = 17,
     label_text_color = text_color_wfu,
     axis_text_color = text_color_wfu,
     label_text_family = family_wfu,
     focal_fill_include = TRUE,
-    label_nudge_y = -0.30,
+    label_nudge_y = -0.32,
     focal_fill_method = "manual",
     focal_fill_color_values = focal_fill_color_values_wfu,
     focal_fill_force_zero = TRUE,
@@ -238,14 +238,13 @@ m2 <- ggPedigree(df_potter,
     label_column = "name",
     point_size = 8,
     focal_fill_personID = 8, # Molly Weasley
-    outline_multiplier = 1.5,
     segment_linewidth = 0.5,
-    label_text_size = 9,
+    label_text_size = 10,#9.75,
     label_text_family = family_wfu,
     label_text_color = text_color_wfu,
     axis_text_color = text_color_wfu,
-    label_nudge_y = -0.3,
-    label_nudge_x = .1,
+    label_nudge_y = -0.25,
+    label_nudge_x = .05,
     focal_fill_include = TRUE,
     focal_fill_method = "gradient2",
     focal_fill_high_color = "#9E7E38",
@@ -254,7 +253,7 @@ m2 <- ggPedigree(df_potter,
     focal_fill_scale_midpoint = 0.85,
     focal_fill_component = "mitochondrial",
     focal_fill_force_zero = TRUE,
-    label_method = "geom_text",
+    label_method = "ggrepel",
     focal_fill_na_value = text_color_wfu,
     label_text_angle = -30,
     sex_legend_show = FALSE,
@@ -287,7 +286,7 @@ result <- m1 + m2 +
     plot.margin = unit(c(0, 0, 0.0, 0), "lines"),
     plot.tag = element_text(
       family = family_wfu,
-      size = 2 * text_size_wfu, face = "bold"
+      size = 3 * text_size_wfu, face = "bold"
     )
   )
 
