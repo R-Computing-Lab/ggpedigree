@@ -87,7 +87,7 @@ potter <- potter %>%
 
 Here is a basic example of how to use `ggpedigree` to visualize a pedigree structure. The `potter` dataset contains simulated pedigree data for the Weasley family from the Harry Potter series.
 
-```{r basic-usage,out.width = "50%"}
+```{r basic-usage,out.width = "80%"}
 ggPedigree(potter,
   famID = "famID",
   personID = "personID"
