@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.8)  9 JUL 2025 11:52
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.8)  9 JUL 2025 12:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -389,7 +389,7 @@ Package caption Info: Standard document class detected.
 \c@continuedfloat=\count323
 Package caption Info: hyperref package is loaded.
 ) (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcolorbox.sty
-Package: tcolorbox 2025/06/04 version 6.6.0 text color boxes
+Package: tcolorbox 2025/07/08 version 6.7.1 text color boxes
 (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty
 Package: verbatim 2024-01-22 v1.5x LaTeX2e package for verbatim enhancements
 \every@verbatim=\toks31
@@ -1007,6 +1007,22 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [2]
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 479.
+File: potter_pedigree.png Graphic file (type bmp)
+<potter_pedigree.png>
+
+
+File: C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
+<C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
+
+Package fancyhdr Warning: \headheight is too small (62.59596pt): 
+(fancyhdr)                Make it at least 63.55022pt, for example:
+(fancyhdr)                \setlength{\headheight}{63.55022pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
+
+[3]
 File: wfu_potter_pedigree.png Graphic file (type bmp)
 <wfu_potter_pedigree.png>
 
@@ -1020,7 +1036,7 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
-[3]
+[4]
 
 File: C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 <C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
@@ -1031,8 +1047,8 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
-[4]
-Overfull \hbox (40.31009pt too wide) in paragraph at lines 638--640
+[5]
+Overfull \hbox (40.31009pt too wide) in paragraph at lines 632--634
 []\TU/lmr/m/n/10 Pedersen, T. L. (2025). \TU/lmr/m/it/10 Patchwork: The composer of plots\TU/lmr/m/n/10 . doi:[][]10.32614/CRAN.package.patchwork[][] 
  []
 
@@ -1047,26 +1063,12 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
-[5]
-LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 701.
-
-
-File: C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
-<C:/Users/smaso/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
-
-Package fancyhdr Warning: \headheight is too small (62.59596pt): 
-(fancyhdr)                Make it at least 63.55022pt, for example:
-(fancyhdr)                \setlength{\headheight}{63.55022pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
-
 [6]
-Underfull \vbox (badness 10000) detected at line 864
+Underfull \vbox (badness 10000) detected at line 857
  []
 
 
-Underfull \vbox (badness 10000) detected at line 864
+Underfull \vbox (badness 10000) detected at line 857
  []
 
 
@@ -1081,11 +1083,11 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [7]
-Underfull \vbox (badness 10000) detected at line 864
+Underfull \vbox (badness 10000) detected at line 857
  []
 
 
-Underfull \vbox (badness 10000) detected at line 864
+Underfull \vbox (badness 10000) detected at line 857
  []
 
 
@@ -1116,16 +1118,16 @@ LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-06-30>
  ***********
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: 810D5462E9714C69BF3243E1F6F41BDC;1245.
+(rerunfilecheck)             Checksum: 794210FD3700101C90ED0E0AE8BF326F;1004.
 Package logreq Info: Writing requests to 'paper.run.xml'.
 \openout1 = `paper.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 36896 strings out of 470436
- 758027 string characters out of 5488703
- 1649853 words of memory out of 5000000
- 64671 multiletter control sequences out of 15000+600000
+ 36901 strings out of 470436
+ 758140 string characters out of 5488703
+ 1656481 words of memory out of 5000000
+ 64675 multiletter control sequences out of 15000+600000
  633713 words of font info for 90 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  84i,13n,87p,1262b,850s stack positions out of 10000i,1000n,20000p,200000b,200000s
