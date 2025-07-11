@@ -45,7 +45,7 @@ processExtras <- function(ped, config = list()) {
     dplyr::pull() |>
     unique()
 
-
+# flags complicated relationships that require special handling
   ped <- ped |>
     dplyr::mutate(
       momSpouse = dplyr::if_else(!is.na(.data$spouseID) & !is.na(.data$momID) & (.data$spouseID == .data$momID), TRUE, FALSE),
@@ -86,7 +86,6 @@ processExtras <- function(ped, config = list()) {
         personID = gsub("NA", NA_character_, .data$personID)
       )
   }
-
 
   # ---- 4. Isolate duplicates for relationship resolution --------------------
   ped <- ped |> # flag anyone with extra appearances
@@ -268,7 +267,6 @@ processExtras <- function(ped, config = list()) {
     #   )
     #  ]
   }
-
 
   relink <- function(df, col) {
     df |>
