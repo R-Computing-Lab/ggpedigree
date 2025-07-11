@@ -10,8 +10,6 @@ library(BGmisc)
 ASOIAF <- ged <- readGedcom("data-raw/ASOIAF.ged") %>%
   mutate(name = str_remove(name, "/"))
 
-# ASOIAF <- readGedcom("data-raw/ASOIAF040725.ged")
-
 df <- ped2fam(ASOIAF, personID = "personID") %>%
   select(
     -name_npfx,
@@ -1163,10 +1161,6 @@ df <- df %>%
     url = "https://awoiaf.westeros.org/index.php/Lord_Darry_(father_of_Raymun)"
   )
 
-
-
-
-
 # modify existing people
 df <- df %>%
   mutate(
@@ -1259,7 +1253,6 @@ df <- df %>%
   )
 
 
-
 ASOIAF <- df %>%
   select(-famID) %>%
   ped2fam(personID = "personID", famID = "famID") %>%
@@ -1277,9 +1270,7 @@ ASOIAF <- df %>%
     )
   )
 
-
 # checks
-
 df_repaired <- checkSex(ASOIAF,
   code_male = 1,
   code_female = 0,
@@ -1291,7 +1282,6 @@ df_repaired <- checkSex(ASOIAF,
     parentswithoutrow = FALSE,
     repairsex = FALSE
   )
-
 
 checkIDs(df_repaired)
 

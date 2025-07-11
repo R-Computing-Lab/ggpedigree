@@ -96,7 +96,7 @@ I describe the main features of the `ggpedigree` package below. More detailed de
 
 ### Code example
 
-Here is a basic example of how to use `ggpedigree` to visualize a pedigree structure. The `potter` dataset contains several wizarding families from the Harry Potter series.
+This example shows how to use `ggpedigree` to visualize a pedigree. The `potter` dataset includes several wizarding families from the Harry Potter series.
 
 ```r
 ggPedigree(potter,
@@ -107,11 +107,12 @@ ggPedigree(potter,
 
 \includegraphics[width=0.95\textwidth,keepaspectratio]{potter_pedigree.png}
 
-I illustrate some of the advanced features by reproducing the figure from [@hunter2025tracing], restyled to conform with the Wake Forest Style Guidelines. Source code is in the appendix below.
+I demonstrate several advanced features by reproducing the figure from [@hunter2025tracing], restyled per Wake Forest Style Guidelines; source code is in the appendix.
 
 \includegraphics[width=0.95\textwidth,keepaspectratio]{wfu_potter_pedigree.png}
 
-I have combined two figures using `patchwork` [@patchwork]. The first plot (a) highlights the individual mitochondrial lines in the Dursley and Evans families, while the second plot (b) shows the entire pedigree with mitochondrial descendants of Molly Wealsey highlighted in gold.
+I have combined two figures using `patchwork` [@patchwork]: panel (a) highlights unique mitochondrial lines in the Dursley and Evans families, while panel (b) shows the full pedigree with Molly Weasley’s mitochondrial descendants in gold.
+
 
 <!-- Mention (if applicable) a representative set of past or ongoing research projects using the software and recent scholarly publications enabled by it. -->
 
