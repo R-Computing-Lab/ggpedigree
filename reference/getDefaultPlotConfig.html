@@ -217,6 +217,8 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  return_widget <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  return_interactive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  return_midparent <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  hints <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  relation <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  debug <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  override_many2many <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -841,6 +843,14 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 <dt id="arg-return-midparent">return_midparent<a class="anchor" aria-label="anchor" href="#arg-return-midparent"></a></dt>
 <dd><p>Whether to return midparent values in the plot.</p></dd>
+
+
+<dt id="arg-hints">hints<a class="anchor" aria-label="anchor" href="#arg-hints"></a></dt>
+<dd><p>Optional hints to pass along to kinship2::autohint</p></dd>
+
+
+<dt id="arg-relation">relation<a class="anchor" aria-label="anchor" href="#arg-relation"></a></dt>
+<dd><p>Optional relation to pass along to kinship2::pedigree</p></dd>
 
 
 <dt id="arg-debug">debug<a class="anchor" aria-label="anchor" href="#arg-debug"></a></dt>
