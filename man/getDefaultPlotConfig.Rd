@@ -23,29 +23,16 @@ getDefaultPlotConfig(
   plot_subtitle = NULL,
   value_rounding_digits = 5,
   code_male = 1,
-  filter_n_pairs = 500,
-  filter_degree_min = 0,
-  filter_degree_max = 7,
-  drop_classic_kin = FALSE,
-  drop_non_classic_sibs = TRUE,
-  use_only_classic_kin = TRUE,
-  use_relative_degree = TRUE,
-  group_by_kin = TRUE,
-  match_threshold_percent = 10,
-  max_degree_levels = 12,
-  grouping_column = "mtdna_factor",
-  annotate_include = TRUE,
-  annotate_x_shift = -0.1,
-  annotate_y_shift = 0.005,
   label_include = TRUE,
   label_column = "personID",
   label_method = "ggrepel",
   label_max_overlaps = 15,
   label_nudge_x = 0,
-  label_nudge_y = -0.1,
+  label_nudge_y = 0.1,
+  label_nudge_y_flip = TRUE,
   label_segment_color = NA,
   label_text_angle = 0,
-  label_text_size = 2,
+  label_text_size = 3,
   label_text_color = "black",
   label_text_family = "sans",
   point_size = 4,
@@ -78,11 +65,11 @@ getDefaultPlotConfig(
   segment_sibling_color = segment_default_color,
   segment_spouse_color = segment_default_color,
   segment_mz_color = segment_default_color,
-  segment_mz_linetype = 1,
+  segment_mz_linetype = segment_linetype,
   segment_mz_alpha = 1,
   segment_mz_t = 0.6,
   segment_self_linetype = "dotdash",
-  segment_self_linewidth = 0.25,
+  segment_self_linewidth = 0.5 * segment_linewidth,
   segment_self_alpha = 0.5,
   segment_self_angle = 90,
   segment_self_curvature = -0.2,
@@ -142,6 +129,20 @@ getDefaultPlotConfig(
   focal_fill_color_values = c("#052f60", "#e69f00", "#56b4e9", "#009e73", "#f0e442",
     "#0072b2", "#d55e00", "#cc79a7"),
   focal_fill_labels = c("Low", "Mid", "High"),
+  filter_n_pairs = 500,
+  filter_degree_min = 0,
+  filter_degree_max = 7,
+  drop_classic_kin = FALSE,
+  drop_non_classic_sibs = TRUE,
+  use_only_classic_kin = TRUE,
+  use_relative_degree = TRUE,
+  group_by_kin = TRUE,
+  match_threshold_percent = 10,
+  max_degree_levels = 12,
+  grouping_column = "mtdna_factor",
+  annotate_include = TRUE,
+  annotate_x_shift = -0.1,
+  annotate_y_shift = 0.005,
   ci_include = TRUE,
   ci_ribbon_alpha = 0.3,
   tile_color_palette = c("white", "gold", "red"),
@@ -204,34 +205,6 @@ getDefaultPlotConfig(
 
 \item{code_male}{Integer code for males in data.}
 
-\item{filter_n_pairs}{Threshold to filter maximum number of pairs.}
-
-\item{filter_degree_min}{Minimum degree value used in filtering.}
-
-\item{filter_degree_max}{Maximum degree value used in filtering.}
-
-\item{drop_classic_kin}{Whether to exclude classic kin categories.}
-
-\item{drop_non_classic_sibs}{Whether to exclude non-classic sibs.}
-
-\item{use_only_classic_kin}{Whether to restrict analysis to classic kinship.}
-
-\item{use_relative_degree}{Whether to use relative degrees instead of absolute.}
-
-\item{group_by_kin}{Whether to group output by kinship group.}
-
-\item{match_threshold_percent}{Kinbin matching threshold as a percentage.}
-
-\item{max_degree_levels}{Maximum number of degree levels to show.}
-
-\item{grouping_column}{Name of column used for grouping.}
-
-\item{annotate_include}{Whether to include annotations.}
-
-\item{annotate_x_shift}{Horizontal shift applied to annotation text.}
-
-\item{annotate_y_shift}{Vertical shift applied to annotation text.}
-
 \item{label_include}{Whether to display labels on plot points.}
 
 \item{label_column}{Column to use for text labels.}
@@ -243,6 +216,8 @@ getDefaultPlotConfig(
 \item{label_nudge_x}{Horizontal nudge for label text.}
 
 \item{label_nudge_y}{Vertical nudge for label text.}
+
+\item{label_nudge_y_flip}{TRUE. Whether to flip the nudge y value to be negative. The plot is reversed vertically, so this is needed to nudge labels up instead of down.}
 
 \item{label_segment_color}{Segment color for label connectors.}
 
@@ -439,6 +414,34 @@ getDefaultPlotConfig(
 \item{focal_fill_color_values}{A character vector of colors for focal fill.}
 
 \item{focal_fill_labels}{Labels for focal fill colors.}
+
+\item{filter_n_pairs}{Threshold to filter maximum number of pairs.}
+
+\item{filter_degree_min}{Minimum degree value used in filtering.}
+
+\item{filter_degree_max}{Maximum degree value used in filtering.}
+
+\item{drop_classic_kin}{Whether to exclude classic kin categories.}
+
+\item{drop_non_classic_sibs}{Whether to exclude non-classic sibs.}
+
+\item{use_only_classic_kin}{Whether to restrict analysis to classic kinship.}
+
+\item{use_relative_degree}{Whether to use relative degrees instead of absolute.}
+
+\item{group_by_kin}{Whether to group output by kinship group.}
+
+\item{match_threshold_percent}{Kinbin matching threshold as a percentage.}
+
+\item{max_degree_levels}{Maximum number of degree levels to show.}
+
+\item{grouping_column}{Name of column used for grouping.}
+
+\item{annotate_include}{Whether to include annotations.}
+
+\item{annotate_x_shift}{Horizontal shift applied to annotation text.}
+
+\item{annotate_y_shift}{Vertical shift applied to annotation text.}
 
 \item{ci_include}{Whether to show confidence intervals.}
 

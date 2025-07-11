@@ -40,7 +40,7 @@ plt <- ggPedigreeInteractive(
   momID = "momID",
   dadID = "dadID",
   config = list(
-    label_nudge_y = -.25,
+    label_nudge_y = .25,
     label_include = TRUE,
     label_method = "geom_text",
     sex_color_include = TRUE
@@ -117,7 +117,7 @@ static <- ggPedigreeInteractive(
   momID = "momID",
   dadID = "dadID",
   config = list(
-    label_nudge_y = -.25,
+    label_nudge_y = .25,
     label_include = TRUE,
     label_method = "geom_text",
     sex_color_include = TRUE,
@@ -200,7 +200,7 @@ ggPedigreeInteractive(
   config = list(
     code_male = 0,
     status_column = "affected",
-    label_nudge_y = -.25,
+    label_nudge_y = .25,
     label_include = TRUE,
     include_tooltip = TRUE,
     label_method = "geom_text",

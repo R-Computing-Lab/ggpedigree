@@ -47,9 +47,10 @@ ggPedigree(
   config = list(
     code_male = 1, # Here, 1 = male, 0 = female
     sex_color_include = FALSE,
+    segment_linewidth = .5,
     point_size = 5,
-    outline_multiplier = 1.15,
-    line_width = 2.5,
+    outline_multiplier = 1.5,
+   # outline_additional_size = -1,
     sex_shape_female = "💸",
     sex_shape_male = "🖤",
     segment_spouse_color = viridis_pal()(5)[1],
@@ -59,7 +60,7 @@ ggPedigree(
     segment_mz_color = viridis_pal()(5)[5],
     #   segment_linetype = 3,
     outline_include = TRUE,
-    outline_color = "grey" # viridis_pal()(5)[5]
+    outline_color = "grey"
   )
 )
 
@@ -79,7 +80,7 @@ ggPedigree(
     label_col = "name",
     sex_color_palette = c("pink", "blue"),
     label_text_angle = -45,
-    label_nudge_y = -.25,
+    label_nudge_y = .25,
     label_nudge_x = 0.45,
     label_method = "geom_text",
     #   sex_color_palette = c("black", "black"),

@@ -95,7 +95,7 @@ I describe the main features of the `ggpedigree` package below. More detailed de
 
 -   Focal Individual Highlighting: Advanced functionality to highlight specific individuals and their relatives based on additive genetic, mitochondrial, or other relationship matrices.
 
--   Specific Visualization Functions: `ggPedigree()` creates static pedigree plots using ggplot2. `ggPedigreeInteractive()` generates interactive pedigree plots using plotly. `ggRelatednessMatrix()` creates customizable heatmaps for relatedness matrices with support for hierarchical clustering, interactive exploration, and seamless integration with BGmisc relatedness calculations. `ggPhenotypeByDegree()` supports visualizing phenotypic correlations as a function of genetic relatedness, including confidence intervals and statistical summaries for quantitative genetic analysis.
+-   Specific Visualization Functions: `ggPedigree()` creates static pedigree plots using ggplot2. `ggPedigreeInteractive()` generates interactive pedigree plots using plotly. `ggRelatednessMatrix()` creates customizable heatmaps for relatedness matrices with support for hierarchical clustering, interactive exploration, and seamless integration with BGmisc relatedness calculations. `ggPhenotypeByDegree()` visualizes phenotypic correlations as a function of genetic relatedness, including confidence intervals and statistical summaries for quantitative genetic analysis.
 
 ### Code example
 
@@ -217,7 +217,7 @@ m1 <- ggPedigree(df_potter %>% filter(personID %in% c(1:7, 101:104)),
     axis_text_color = text_color_wfu,
     label_text_family = family_wfu,
     focal_fill_include = TRUE,
-    label_nudge_y = -0.32,
+    label_nudge_y = 0.32,
     focal_fill_method = "manual",
     focal_fill_color_values = focal_fill_color_values_wfu,
     focal_fill_force_zero = TRUE,
@@ -248,7 +248,7 @@ m2 <- ggPedigree(df_potter,
     label_text_family = family_wfu,
     label_text_color = text_color_wfu,
     axis_text_color = text_color_wfu,
-    label_nudge_y = -0.25,
+    label_nudge_y = 0.25,
     label_nudge_x = .05,
     focal_fill_include = TRUE,
     focal_fill_method = "gradient2",

@@ -74,7 +74,7 @@ ggPedigree(potter,
 )
 ```
 
-<img src="man/figures/README-basic-usage-1.png" width="50%" />
+<img src="man/figures/README-basic-usage-1.png" width="80%" />
 
 ## Citation
 
@@ -84,7 +84,7 @@ cite the following:
     citation(package = "ggpedigree")
 
 Garrison S (2025). *ggpedigree: Visualizing Pedigrees with ‘ggplot2’ and
-‘plotly’*. R package version 0.8.0,
+‘plotly’*. R package version 0.8.0.1,
 <https://github.com/R-Computing-Lab/ggpedigree/>.
 
 A BibTeX entry for LaTeX users is
@@ -93,7 +93,7 @@ A BibTeX entry for LaTeX users is
       title = {ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'},
       author = {S. Mason Garrison},
       year = {2025},
-      note = {R package version 0.8.0},
+      note = {R package version 0.8.0.1},
       url = {https://github.com/R-Computing-Lab/ggpedigree/},
     }
 
