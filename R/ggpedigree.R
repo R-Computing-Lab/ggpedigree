@@ -82,7 +82,16 @@ ggPedigree <- function(ped,
                        phantoms = FALSE,
                        ...) {
   if (!inherits(ped, "data.frame")) {
-    stop("ped should be a data.frame or inherit to a data.frame")
+    if (rlang::inherits_any(ped, c("ped","kinship2.pedigree"))) {
+      # Convert ped object to data.frame
+      ped <- as.data.frame(ped)
+    } else if (rlang::inherits_any(ped, "pedigreeList")) {
+      class(ped) <- "list"
+      ped <- as.data.frame(ped)
+     } else{
+      # If not a data.frame or compatible type, throw an error
+      stop("ped should be a data.frame or inherit to a data.frame")
+    }
   }
 
 
@@ -1109,7 +1118,12 @@ preparePedigreeData <- function(ped,
   }
 
   # Standardize sex variable using code_male convention
-  ds_ped <- BGmisc::recodeSex(ds_ped, recode_male = config$code_male)
+
+  ds_ped <- BGmisc::recodeSex(ds_ped,
+                              recode_male = config$code_male,
+                              recode_na = config$code_na,
+                              recode_female = config$code_female
+                             )
 
   if (phantoms == TRUE) {
     # If phantoms are requested, add phantom parents

@@ -23,6 +23,8 @@ getDefaultPlotConfig(
   plot_subtitle = NULL,
   value_rounding_digits = 5,
   code_male = 1,
+  code_na = NA,
+  code_female = 0,
   label_include = TRUE,
   label_column = "personID",
   label_method = "ggrepel",
@@ -203,7 +205,11 @@ getDefaultPlotConfig(
 
 \item{value_rounding_digits}{Number of digits to round displayed values.}
 
-\item{code_male}{Integer code for males in data.}
+\item{code_male}{Integer/string code for males in data.}
+
+\item{code_na}{optional Integer/string code for missing values in data.}
+
+\item{code_female}{optional Integer/string code for females in data.}
 
 \item{label_include}{Whether to display labels on plot points.}
 

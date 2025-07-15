@@ -22,7 +22,10 @@
 #' @param plot_title Main title of the plot.
 #' @param plot_subtitle Subtitle of the plot.
 #' @param value_rounding_digits Number of digits to round displayed values.
-#' @param code_male Integer code for males in data.
+#' @param code_male Integer/string code for males in data.
+#' @param code_na optional Integer/string code for missing values in data.
+#' @param code_female  optional Integer/string code for females in data.
+
 #' @param filter_n_pairs Threshold to filter maximum number of pairs.
 #' @param filter_degree_min Minimum degree value used in filtering.
 #' @param filter_degree_max Maximum degree value used in filtering.
@@ -190,6 +193,13 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  value_rounding_digits = 5,
                                  # --- SEX ------------------------------------------------------------
                                  code_male = 1,
+                                 code_na = NA,
+                                 code_female = 0,
+                               #  code_unknown = NULL,
+                             #    recode_male = code_male,#"M",
+                             #    recode_female = code_female,# "F",
+                             #    recode_na = code_na, # NA_character,
+                                # recode_unknown = "U",
                                  # ---- Label Aesthetics ----
                                  label_include = TRUE,
                                  label_column = "personID",
@@ -397,7 +407,13 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     value_rounding_digits = value_rounding_digits,
     # --- SEX ------------------------------------------------------------
     code_male = code_male,
-
+    code_na = code_na,
+    code_female = code_female,
+  #  code_unknown = code_unknown,
+   # recode_male = recode_male,
+ #   recode_na =  recode_na,
+  #  recode_female =  recode_female,
+   # recode_unknown =  recode_unknown,
     # ---- Filtering and Computation ----
     filter_n_pairs = filter_n_pairs,
     filter_degree_min = filter_degree_min,
