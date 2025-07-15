@@ -80,29 +80,18 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  plot_subtitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  value_rounding_digits <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  code_male <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  filter_n_pairs <span class="op">=</span> <span class="fl">500</span>,</span>
-<span>  filter_degree_min <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  filter_degree_max <span class="op">=</span> <span class="fl">7</span>,</span>
-<span>  drop_classic_kin <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  drop_non_classic_sibs <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  use_only_classic_kin <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  use_relative_degree <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  group_by_kin <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  match_threshold_percent <span class="op">=</span> <span class="fl">10</span>,</span>
-<span>  max_degree_levels <span class="op">=</span> <span class="fl">12</span>,</span>
-<span>  grouping_column <span class="op">=</span> <span class="st">"mtdna_factor"</span>,</span>
-<span>  annotate_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  annotate_x_shift <span class="op">=</span> <span class="op">-</span><span class="fl">0.1</span>,</span>
-<span>  annotate_y_shift <span class="op">=</span> <span class="fl">0.005</span>,</span>
+<span>  code_na <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  code_female <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  label_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  label_column <span class="op">=</span> <span class="st">"personID"</span>,</span>
 <span>  label_method <span class="op">=</span> <span class="st">"ggrepel"</span>,</span>
 <span>  label_max_overlaps <span class="op">=</span> <span class="fl">15</span>,</span>
 <span>  label_nudge_x <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  label_nudge_y <span class="op">=</span> <span class="op">-</span><span class="fl">0.1</span>,</span>
+<span>  label_nudge_y <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>  label_nudge_y_flip <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  label_segment_color <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  label_text_angle <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  label_text_size <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  label_text_size <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  label_text_color <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>  label_text_family <span class="op">=</span> <span class="st">"sans"</span>,</span>
 <span>  point_size <span class="op">=</span> <span class="fl">4</span>,</span>
@@ -135,11 +124,11 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  segment_sibling_color <span class="op">=</span> <span class="va">segment_default_color</span>,</span>
 <span>  segment_spouse_color <span class="op">=</span> <span class="va">segment_default_color</span>,</span>
 <span>  segment_mz_color <span class="op">=</span> <span class="va">segment_default_color</span>,</span>
-<span>  segment_mz_linetype <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  segment_mz_linetype <span class="op">=</span> <span class="va">segment_linetype</span>,</span>
 <span>  segment_mz_alpha <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  segment_mz_t <span class="op">=</span> <span class="fl">0.6</span>,</span>
 <span>  segment_self_linetype <span class="op">=</span> <span class="st">"dotdash"</span>,</span>
-<span>  segment_self_linewidth <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>  segment_self_linewidth <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="va">segment_linewidth</span>,</span>
 <span>  segment_self_alpha <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  segment_self_angle <span class="op">=</span> <span class="fl">90</span>,</span>
 <span>  segment_self_curvature <span class="op">=</span> <span class="op">-</span><span class="fl">0.2</span>,</span>
@@ -199,6 +188,20 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  focal_fill_color_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#052f60"</span>, <span class="st">"#e69f00"</span>, <span class="st">"#56b4e9"</span>, <span class="st">"#009e73"</span>, <span class="st">"#f0e442"</span>,</span>
 <span>    <span class="st">"#0072b2"</span>, <span class="st">"#d55e00"</span>, <span class="st">"#cc79a7"</span><span class="op">)</span>,</span>
 <span>  focal_fill_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Low"</span>, <span class="st">"Mid"</span>, <span class="st">"High"</span><span class="op">)</span>,</span>
+<span>  filter_n_pairs <span class="op">=</span> <span class="fl">500</span>,</span>
+<span>  filter_degree_min <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  filter_degree_max <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>  drop_classic_kin <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  drop_non_classic_sibs <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  use_only_classic_kin <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  use_relative_degree <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  group_by_kin <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  match_threshold_percent <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  max_degree_levels <span class="op">=</span> <span class="fl">12</span>,</span>
+<span>  grouping_column <span class="op">=</span> <span class="st">"mtdna_factor"</span>,</span>
+<span>  annotate_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  annotate_x_shift <span class="op">=</span> <span class="op">-</span><span class="fl">0.1</span>,</span>
+<span>  annotate_y_shift <span class="op">=</span> <span class="fl">0.005</span>,</span>
 <span>  ci_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  ci_ribbon_alpha <span class="op">=</span> <span class="fl">0.3</span>,</span>
 <span>  tile_color_palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"gold"</span>, <span class="st">"red"</span><span class="op">)</span>,</span>
@@ -298,63 +301,15 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 
 <dt id="arg-code-male">code_male<a class="anchor" aria-label="anchor" href="#arg-code-male"></a></dt>
-<dd><p>Integer code for males in data.</p></dd>
+<dd><p>Integer/string code for males in data.</p></dd>
 
 
-<dt id="arg-filter-n-pairs">filter_n_pairs<a class="anchor" aria-label="anchor" href="#arg-filter-n-pairs"></a></dt>
-<dd><p>Threshold to filter maximum number of pairs.</p></dd>
+<dt id="arg-code-na">code_na<a class="anchor" aria-label="anchor" href="#arg-code-na"></a></dt>
+<dd><p>optional Integer/string code for missing values in data.</p></dd>
 
 
-<dt id="arg-filter-degree-min">filter_degree_min<a class="anchor" aria-label="anchor" href="#arg-filter-degree-min"></a></dt>
-<dd><p>Minimum degree value used in filtering.</p></dd>
-
-
-<dt id="arg-filter-degree-max">filter_degree_max<a class="anchor" aria-label="anchor" href="#arg-filter-degree-max"></a></dt>
-<dd><p>Maximum degree value used in filtering.</p></dd>
-
-
-<dt id="arg-drop-classic-kin">drop_classic_kin<a class="anchor" aria-label="anchor" href="#arg-drop-classic-kin"></a></dt>
-<dd><p>Whether to exclude classic kin categories.</p></dd>
-
-
-<dt id="arg-drop-non-classic-sibs">drop_non_classic_sibs<a class="anchor" aria-label="anchor" href="#arg-drop-non-classic-sibs"></a></dt>
-<dd><p>Whether to exclude non-classic sibs.</p></dd>
-
-
-<dt id="arg-use-only-classic-kin">use_only_classic_kin<a class="anchor" aria-label="anchor" href="#arg-use-only-classic-kin"></a></dt>
-<dd><p>Whether to restrict analysis to classic kinship.</p></dd>
-
-
-<dt id="arg-use-relative-degree">use_relative_degree<a class="anchor" aria-label="anchor" href="#arg-use-relative-degree"></a></dt>
-<dd><p>Whether to use relative degrees instead of absolute.</p></dd>
-
-
-<dt id="arg-group-by-kin">group_by_kin<a class="anchor" aria-label="anchor" href="#arg-group-by-kin"></a></dt>
-<dd><p>Whether to group output by kinship group.</p></dd>
-
-
-<dt id="arg-match-threshold-percent">match_threshold_percent<a class="anchor" aria-label="anchor" href="#arg-match-threshold-percent"></a></dt>
-<dd><p>Kinbin matching threshold as a percentage.</p></dd>
-
-
-<dt id="arg-max-degree-levels">max_degree_levels<a class="anchor" aria-label="anchor" href="#arg-max-degree-levels"></a></dt>
-<dd><p>Maximum number of degree levels to show.</p></dd>
-
-
-<dt id="arg-grouping-column">grouping_column<a class="anchor" aria-label="anchor" href="#arg-grouping-column"></a></dt>
-<dd><p>Name of column used for grouping.</p></dd>
-
-
-<dt id="arg-annotate-include">annotate_include<a class="anchor" aria-label="anchor" href="#arg-annotate-include"></a></dt>
-<dd><p>Whether to include annotations.</p></dd>
-
-
-<dt id="arg-annotate-x-shift">annotate_x_shift<a class="anchor" aria-label="anchor" href="#arg-annotate-x-shift"></a></dt>
-<dd><p>Horizontal shift applied to annotation text.</p></dd>
-
-
-<dt id="arg-annotate-y-shift">annotate_y_shift<a class="anchor" aria-label="anchor" href="#arg-annotate-y-shift"></a></dt>
-<dd><p>Vertical shift applied to annotation text.</p></dd>
+<dt id="arg-code-female">code_female<a class="anchor" aria-label="anchor" href="#arg-code-female"></a></dt>
+<dd><p>optional Integer/string code for females in data.</p></dd>
 
 
 <dt id="arg-label-include">label_include<a class="anchor" aria-label="anchor" href="#arg-label-include"></a></dt>
@@ -379,6 +334,10 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 <dt id="arg-label-nudge-y">label_nudge_y<a class="anchor" aria-label="anchor" href="#arg-label-nudge-y"></a></dt>
 <dd><p>Vertical nudge for label text.</p></dd>
+
+
+<dt id="arg-label-nudge-y-flip">label_nudge_y_flip<a class="anchor" aria-label="anchor" href="#arg-label-nudge-y-flip"></a></dt>
+<dd><p>TRUE. Whether to flip the nudge y value to be negative. The plot is reversed vertically, so this is needed to nudge labels up instead of down.</p></dd>
 
 
 <dt id="arg-label-segment-color">label_segment_color<a class="anchor" aria-label="anchor" href="#arg-label-segment-color"></a></dt>
@@ -771,6 +730,62 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 <dt id="arg-focal-fill-labels">focal_fill_labels<a class="anchor" aria-label="anchor" href="#arg-focal-fill-labels"></a></dt>
 <dd><p>Labels for focal fill colors.</p></dd>
+
+
+<dt id="arg-filter-n-pairs">filter_n_pairs<a class="anchor" aria-label="anchor" href="#arg-filter-n-pairs"></a></dt>
+<dd><p>Threshold to filter maximum number of pairs.</p></dd>
+
+
+<dt id="arg-filter-degree-min">filter_degree_min<a class="anchor" aria-label="anchor" href="#arg-filter-degree-min"></a></dt>
+<dd><p>Minimum degree value used in filtering.</p></dd>
+
+
+<dt id="arg-filter-degree-max">filter_degree_max<a class="anchor" aria-label="anchor" href="#arg-filter-degree-max"></a></dt>
+<dd><p>Maximum degree value used in filtering.</p></dd>
+
+
+<dt id="arg-drop-classic-kin">drop_classic_kin<a class="anchor" aria-label="anchor" href="#arg-drop-classic-kin"></a></dt>
+<dd><p>Whether to exclude classic kin categories.</p></dd>
+
+
+<dt id="arg-drop-non-classic-sibs">drop_non_classic_sibs<a class="anchor" aria-label="anchor" href="#arg-drop-non-classic-sibs"></a></dt>
+<dd><p>Whether to exclude non-classic sibs.</p></dd>
+
+
+<dt id="arg-use-only-classic-kin">use_only_classic_kin<a class="anchor" aria-label="anchor" href="#arg-use-only-classic-kin"></a></dt>
+<dd><p>Whether to restrict analysis to classic kinship.</p></dd>
+
+
+<dt id="arg-use-relative-degree">use_relative_degree<a class="anchor" aria-label="anchor" href="#arg-use-relative-degree"></a></dt>
+<dd><p>Whether to use relative degrees instead of absolute.</p></dd>
+
+
+<dt id="arg-group-by-kin">group_by_kin<a class="anchor" aria-label="anchor" href="#arg-group-by-kin"></a></dt>
+<dd><p>Whether to group output by kinship group.</p></dd>
+
+
+<dt id="arg-match-threshold-percent">match_threshold_percent<a class="anchor" aria-label="anchor" href="#arg-match-threshold-percent"></a></dt>
+<dd><p>Kinbin matching threshold as a percentage.</p></dd>
+
+
+<dt id="arg-max-degree-levels">max_degree_levels<a class="anchor" aria-label="anchor" href="#arg-max-degree-levels"></a></dt>
+<dd><p>Maximum number of degree levels to show.</p></dd>
+
+
+<dt id="arg-grouping-column">grouping_column<a class="anchor" aria-label="anchor" href="#arg-grouping-column"></a></dt>
+<dd><p>Name of column used for grouping.</p></dd>
+
+
+<dt id="arg-annotate-include">annotate_include<a class="anchor" aria-label="anchor" href="#arg-annotate-include"></a></dt>
+<dd><p>Whether to include annotations.</p></dd>
+
+
+<dt id="arg-annotate-x-shift">annotate_x_shift<a class="anchor" aria-label="anchor" href="#arg-annotate-x-shift"></a></dt>
+<dd><p>Horizontal shift applied to annotation text.</p></dd>
+
+
+<dt id="arg-annotate-y-shift">annotate_y_shift<a class="anchor" aria-label="anchor" href="#arg-annotate-y-shift"></a></dt>
+<dd><p>Vertical shift applied to annotation text.</p></dd>
 
 
 <dt id="arg-ci-include">ci_include<a class="anchor" aria-label="anchor" href="#arg-ci-include"></a></dt>
