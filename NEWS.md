@@ -1,4 +1,7 @@
 # ggpedigree (dev version)
+* added compatibility with pedigree objects from kinship2
+* exposed code_female, code_na to config
+* added tests for kinship2 compatibility
 
 # ggpedigree 0.8.0.1
 * Updated JOSS paper
@@ -6,7 +9,8 @@
 * Renamed p variable as plotObject in ggpedigree subfunctions
 * Smarter implementation of aliases
 * Updated hex to actually use ggpedigree
-* exposed relation and hints inputs to ggpedigree
+* Exposed 'relations' and 'hints' inputs to ggpedigree
+* Added more intuitive defaults
 
 # ggpedigree 0.8.0
 * Makes ggrepel a suggested package instead of a required one.
