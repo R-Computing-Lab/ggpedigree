@@ -1,9 +1,7 @@
-# ggpedigree (dev version)
+# ggpedigree 0.8.1
 * added compatibility with pedigree objects from kinship2
 * exposed code_female, code_na to config
 * added tests for kinship2 compatibility
-
-# ggpedigree 0.8.0.1
 * Updated JOSS paper
 * Refactored step 2+3 of the ggpedigree function to .transformPed()
 * Renamed p variable as plotObject in ggpedigree subfunctions
