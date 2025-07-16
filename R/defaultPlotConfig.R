@@ -203,7 +203,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  # ---- Label Aesthetics ----
                                  label_include = TRUE,
                                  label_column = "personID",
-                                 label_method = "ggrepel",
+                                 label_method = "ggtext",# "ggrepel",
                                  label_max_overlaps = 15,
                                  label_nudge_x = 0,
                                  label_nudge_y = 0.10,
@@ -654,7 +654,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     "ggpedigree",
     "ggpedigreeinteractive"
   )) {
-    core_list$label_method <- "ggrepel"
+    core_list$label_method <- "geom_text" #"ggrepel"
     core_list$label_column <- personID
     core_list$label_nudge_y_flip <- TRUE
     # core_list$focal_fill_low_color <- core_list$color_palette_low
@@ -662,7 +662,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     # core_list$focal_fill_high_color <- core_list$color_palette_high
   }
   if (lc_function_name %in% c("ggpedigree")) {
-    core_list$label_method <- "ggrepel"
+   # core_list$label_method <- "ggrepel"
     core_list$return_static <- FALSE
     core_list$return_widget <- FALSE
     core_list$return_interactive <- FALSE
