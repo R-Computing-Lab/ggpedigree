@@ -1,11 +1,11 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.8)  9 JUL 2025 12:48
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.4)  16 JUL 2025 12:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **E:/Dropbox/Lab/Research/Projects/2024/ggpedigree/vignettes/articles/paper.tex
 (e:/Dropbox/Lab/Research/Projects/2024/ggpedigree/vignettes/articles/paper.tex
 LaTeX2e <2025-06-01> patch level 1
-L3 programming layer <2025-06-30>
+L3 programming layer <2025-06-09>
 (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
 (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size10.clo
@@ -389,7 +389,7 @@ Package caption Info: Standard document class detected.
 \c@continuedfloat=\count323
 Package caption Info: hyperref package is loaded.
 ) (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcolorbox.sty
-Package: tcolorbox 2025/07/08 version 6.7.1 text color boxes
+Package: tcolorbox 2025/06/04 version 6.6.0 text color boxes
 (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty
 Package: verbatim 2024-01-22 v1.5x LaTeX2e package for verbatim enhancements
 \every@verbatim=\toks31
@@ -566,7 +566,7 @@ Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
 \bibhang=\skip69
 \blx@bcfin=\read4
 \blx@bcfout=\write4
-\blx@langwohyphens=\language5
+\blx@langwohyphens=\language3
 \c@mincomprange=\count383
 \c@maxcomprange=\count384
 \c@mincompwidth=\count385
@@ -721,7 +721,7 @@ Package biblatex Info: XeTeX detected.
 (biblatex)             Assuming input encoding 'utf8'.
 Package biblatex Info: Document encoding is UTF8 ....
 (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2025-06-30 L3 programming layer (loader) 
+Package: expl3 2025-06-09 L3 programming layer (loader) 
 (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
 File: l3backend-xetex.def 2025-06-09 L3 backend support: XeTeX
 \g__graphics_track_int=\count465
@@ -729,7 +729,7 @@ File: l3backend-xetex.def 2025-06-09 L3 backend support: XeTeX
 \g__pdfannot_backend_link_int=\count467
 ))
 Package biblatex Info: ... and expl3
-(biblatex)             2025-06-30 L3 programming layer (loader) 
+(biblatex)             2025-06-09 L3 programming layer (loader) 
 (biblatex)             is new enough (at least 2020/04/06),
 (biblatex)             setting 'casechanger=expl3'.
 (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/biblatex/blx-case-expl3.sty (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
@@ -804,59 +804,32 @@ File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 \c@eu@=\count483
 \c@eu@i=\count484
 \c@mkern=\count485
-) (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/microtype.sty
-Package: microtype 2025/02/11 v3.2a Micro-typographical refinements (RS)
-\MT@toks=\toks44
-\MT@tempbox=\box77
-\MT@count=\count486
-LaTeX Info: Redefining \noprotrusionifhmode on input line 1087.
-LaTeX Info: Redefining \leftprotrusion on input line 1088.
-\MT@prot@toks=\toks45
-LaTeX Info: Redefining \rightprotrusion on input line 1107.
-LaTeX Info: Redefining \textls on input line 1449.
-\MT@outer@kern=\dimen297
-LaTeX Info: Redefining \microtypecontext on input line 2053.
-LaTeX Info: Redefining \textmicrotypecontext on input line 2070.
-\MT@listname@count=\count487
-(c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/microtype-xetex.def
-File: microtype-xetex.def 2025/02/11 v3.2a Definitions specific to xetex (RS)
-LaTeX Info: Redefining \lsstyle on input line 443.
-LaTeX Info: Redefining \lslig on input line 451.
-\MT@outer@space=\skip98
-)
-Package microtype Info: Loading configuration file microtype.cfg.
-(c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/microtype.cfg
-File: microtype.cfg 2025/02/11 v3.2a microtype main configuration file (RS)
-)
-LaTeX Info: Redefining \microtypesetup on input line 3065.
 )
 Package hyperref Info: Option `unicode' set `true' on input line 152.
 Package hyperref Info: Option `breaklinks' set `true' on input line 152.
 (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/grffile/grffile.sty
 Package: grffile 2019/11/11 v2.1 Extended file name support for graphics (legacy)
 Package grffile Info: This package is an empty stub for compatibility on input line 40.
-) (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/parskip/parskip.sty
-Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
 ) (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
 Package: fancyvrb 2024/01/20 4.5c verbatim text (tvz,hv)
-\FV@CodeLineNo=\count488
+\FV@CodeLineNo=\count486
 \FV@InFile=\read5
-\FV@TabBox=\box78
-\c@FancyVerbLine=\count489
-\FV@StepNumber=\count490
+\FV@TabBox=\box77
+\c@FancyVerbLine=\count487
+\FV@StepNumber=\count488
 \FV@OutFile=\write5
 ) (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/framed/framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip99
-\fb@frw=\dimen298
-\fb@frh=\dimen299
-\FrameRule=\dimen300
-\FrameSep=\dimen301
+\OuterFrameSep=\skip98
+\fb@frw=\dimen297
+\fb@frh=\dimen298
+\FrameRule=\dimen299
+\FrameSep=\dimen300
 )
-\cslhangindent=\skip100
-\csllabelwidth=\skip101
-\@quotelevel=\count491
-\@quotereset=\count492
+\cslhangindent=\skip99
+\csllabelwidth=\skip100
+\@quotelevel=\count489
+\@quotereset=\count490
 (./paper.aux)
 \openout1 = `paper.aux'.
 
@@ -937,39 +910,13 @@ Package biblatex Info: Reference segment=0 on input line 274.
 * \@reversemargintrue
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \microtypecontext on input line 274.
-Package microtype Info: Applying patch `item' on input line 274.
-Package microtype Info: Applying patch `toc' on input line 274.
-Package microtype Info: Applying patch `eqnum' on input line 274.
-Package microtype Info: Applying patch `footnote' on input line 274.
-Package microtype Info: Applying patch `verbatim' on input line 274.
-LaTeX Info: Redefining \microtypesetup on input line 274.
-Package microtype Info: Character protrusion enabled (level 2).
-Package microtype Info: Using protrusion set `basicmath'.
-Package microtype Info: No adjustment of tracking.
-Package microtype Info: No adjustment of spacing.
-Package microtype Info: No adjustment of kerning.
-(c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/mt-LatinModernRoman.cfg
-File: mt-LatinModernRoman.cfg 2021/02/21 v1.1 microtype config. file: Latin Modern Roman (RS)
-)
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `lmss' (encoding: TU).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
-(c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/mt-cmr.cfg
-File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
-)
 LaTeX Font Info:    Trying to load font information for U+msa on input line 275.
 (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-) (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/mt-msa.cfg
-File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
 LaTeX Font Info:    Trying to load font information for U+msb on input line 275.
 (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) (c:/Users/smaso/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/mt-msb.cfg
-File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 
 Package hyperref Warning: Suppressing link with empty target on input line 301.
@@ -992,7 +939,7 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <8> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 357.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 355.
 [1
 
 ]
@@ -1008,7 +955,7 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 
 [2]
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 479.
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 478.
 File: potter_pedigree.png Graphic file (type bmp)
 <potter_pedigree.png>
 
@@ -1048,7 +995,7 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [5]
-Overfull \hbox (40.31009pt too wide) in paragraph at lines 631--633
+Overfull \hbox (40.31009pt too wide) in paragraph at lines 625--627
 []\TU/lmr/m/n/10 Pedersen, T. L. (2025). \TU/lmr/m/it/10 Patchwork: The composer of plots\TU/lmr/m/n/10 . doi:[][]10.32614/CRAN.package.patchwork[][] 
  []
 
@@ -1064,11 +1011,11 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [6]
-Underfull \vbox (badness 10000) detected at line 856
+Underfull \vbox (badness 10000) detected at line 857
  []
 
 
-Underfull \vbox (badness 10000) detected at line 856
+Underfull \vbox (badness 10000) detected at line 857
  []
 
 
@@ -1083,11 +1030,11 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [7]
-Underfull \vbox (badness 10000) detected at line 856
+Underfull \vbox (badness 10000) detected at line 857
  []
 
 
-Underfull \vbox (badness 10000) detected at line 856
+Underfull \vbox (badness 10000) detected at line 857
  []
 
 
@@ -1115,7 +1062,7 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 [9] (./paper.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
-L3 programming layer <2025-06-30>
+L3 programming layer <2025-06-09>
  ***********
 Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 794210FD3700101C90ED0E0AE8BF326F;1004.
@@ -1124,12 +1071,12 @@ Package logreq Info: Writing requests to 'paper.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 36901 strings out of 470436
- 758140 string characters out of 5488703
- 1656481 words of memory out of 5000000
- 64675 multiletter control sequences out of 15000+600000
+ 35014 strings out of 470545
+ 721782 string characters out of 5491702
+ 1597060 words of memory out of 5000000
+ 62752 multiletter control sequences out of 15000+600000
  633713 words of font info for 90 fonts, out of 8000000 for 9000
- 36 hyphenation exceptions out of 8191
- 84i,13n,87p,1262b,850s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 14 hyphenation exceptions out of 8191
+ 84i,13n,87p,762b,850s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 Output written on paper.pdf (9 pages).
