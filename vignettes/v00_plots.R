@@ -59,7 +59,7 @@ ggPedigree(
     segment_offspring_color = viridis_pal()(5)[4],
     segment_mz_color = viridis_pal()(5)[5],
     #   segment_linetype = 3,
-    outline_include = TRUE,
+    outline_include = FALSE,
     outline_color = "grey"
   )
 )
@@ -77,7 +77,7 @@ ggPedigree(
   famID = "famID",
   personID = "personID",
   config = list(
-    label_column = "name",
+#    label_column = "name",
     sex_color_palette = c("pink", "blue"),
     label_text_angle = -45,
     label_nudge_y = .15,
