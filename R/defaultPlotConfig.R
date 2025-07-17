@@ -203,10 +203,10 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  # ---- Label Aesthetics ----
                                  label_include = TRUE,
                                  label_column = "personID",
-                                 label_method = "ggrepel",
-                                 label_max_overlaps = 15,
+                                 label_method = "geom_text",# "ggrepel",
+                                 label_max_overlaps = 25,
                                  label_nudge_x = 0,
-                                 label_nudge_y = 0.10,
+                                 label_nudge_y = 0.15,
                                  label_nudge_y_flip = TRUE, # flip the nudge y value to be negative
                                  label_segment_color = NA,
                                  label_text_angle = 0,
@@ -654,7 +654,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     "ggpedigree",
     "ggpedigreeinteractive"
   )) {
-    core_list$label_method <- "ggrepel"
+    core_list$label_method <- "geom_text" #"ggrepel"
     core_list$label_column <- personID
     core_list$label_nudge_y_flip <- TRUE
     # core_list$focal_fill_low_color <- core_list$color_palette_low
@@ -662,7 +662,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     # core_list$focal_fill_high_color <- core_list$color_palette_high
   }
   if (lc_function_name %in% c("ggpedigree")) {
-    core_list$label_method <- "ggrepel"
+   # core_list$label_method <- "ggrepel"
     core_list$return_static <- FALSE
     core_list$return_widget <- FALSE
     core_list$return_interactive <- FALSE
@@ -736,6 +736,8 @@ buildPlotConfig <- function(default_config,
         built_config$sex_shape_unknown
       )
     }
+
+
     if ("status_labs" %in% names(built_config) == FALSE) {
       built_config$status_labs <- c(
         built_config$status_label_affected,
@@ -771,6 +773,26 @@ buildPlotConfig <- function(default_config,
       ),
       built_config$status_labs
     )
+    if ("overlay_labs" %in% names(built_config) == FALSE) {
+      built_config$overlay_labs <- c(
+        built_config$overlay_label_affected,
+        built_config$overlay_label_unaffected
+      )
+    }
+    if ("overlay_codes" %in% names(built_config) == FALSE) {
+      built_config$overlay_codes <- c(
+        built_config$overlay_code_affected,
+        built_config$overlay_code_unaffected
+      )
+    }
+    built_config$overlay_alpha_values <- stats::setNames(
+      c(
+        built_config$overlay_alpha_affected,
+        built_config$overlay_alpha_unaffected
+      ),
+      built_config$overlay_labs
+    )
+
   } else if (stringr::str_to_lower(function_name) %in%
     c("ggphenotypebydegree", "phenotypebydegree")) {
 

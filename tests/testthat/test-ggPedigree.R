@@ -356,8 +356,8 @@ expect_no_error(
              sexVar="sex",
              config = list(code_male=1),
              dadID = "findex",
-             affected = "affected",
-             status = "status")
+             overlay_column = "affected",
+             status_column  = "status")
 )
 }
 )

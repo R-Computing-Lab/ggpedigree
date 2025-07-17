@@ -1,4 +1,5 @@
 # ggpedigree 0.8.1
+* added alpha settings
 * added compatibility with pedigree objects from kinship2
 * exposed code_female, code_na to config
 * added tests for kinship2 compatibility
