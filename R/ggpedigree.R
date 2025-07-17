@@ -478,10 +478,10 @@ ggPedigree.core <- function(ped,
   )
 
   # Add overlay points for affected status if applicable
-  if (config$sex_color_include == TRUE ||
-    config$focal_fill_include == TRUE ||
+  if (
+    config$focal_fill_include == TRUE && config$sex_color_include == FALSE ||
     config$overlay_include == TRUE && !is.null(overlay_column) ||
-    (!is.null(status_column) && config$status_include == TRUE)) {
+    !is.null(status_column) && config$status_include == TRUE && config$sex_color_include == TRUE) {
     # If overlay_column is specified, use it for alpha aesthetic
 
     p <- .addOverlay(
@@ -659,7 +659,7 @@ ggPedigree.core <- function(ped,
                         focal_fill_column = NULL,
                         status_column = NULL,
                         overlay_column = NULL) {
-  #  print("Adding overlay to the plot...")
+  # print("Adding overlay to the plot...")
   if (config$overlay_include == TRUE && !is.null(overlay_column)) {
     # If overlay_column is specified, use it for alpha aesthetic
     plotObject <- plotObject + ggplot2::geom_point(
@@ -670,8 +670,9 @@ ggPedigree.core <- function(ped,
       color = config$overlay_color,
       na.rm = TRUE
     )
+   # print("Overlay added using overlay_column.")
   } else if (config$status_include == TRUE &&
-    !is.null(status_column)) {
+    !is.null(status_column) && config$sex_color_include == TRUE ) {
     # If no overlay_column is specified, use status_column for alpha aesthetic
     #
     plotObject <- plotObject + ggplot2::geom_point(
@@ -682,8 +683,9 @@ ggPedigree.core <- function(ped,
       color = config$status_color_affected,
       na.rm = TRUE
     )
+   # print("Overlay added using status_column.")
   } else if (config$focal_fill_include == TRUE &&
-    !is.null(focal_fill_column)) {
+    !is.null(focal_fill_column)&& config$sex_color_include == FALSE) {
     # If focal_fill_column is specified, use it for alpha aesthetic
     plotObject <- plotObject + ggplot2::geom_point(
       ggplot2::aes(alpha = !!rlang::sym(focal_fill_column)),
@@ -692,6 +694,8 @@ ggPedigree.core <- function(ped,
       color = config$focal_fill_mid_color,
       na.rm = TRUE
     )
+
+   # print("Overlay added using focal_fill_column.")
   }
 
   return(plotObject)

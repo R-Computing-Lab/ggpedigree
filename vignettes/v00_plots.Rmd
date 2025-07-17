@@ -98,7 +98,7 @@ ggPedigree(
     code_male = 1, # Here, 1 = male, 0 = female
     sex_color_include = FALSE,
     segment_linewidth = .5,
-    point_size = 5,
+    point_size = 3,
     outline_multiplier = 1.5,
    # outline_additional_size = -1,
     sex_shape_female = "💸",
@@ -138,12 +138,12 @@ ggPedigree(
   famID = "famID",
   personID = "personID",
   config = list(
-    label_col = "name",
+    label_column = "name",
     sex_color_palette = c("pink", "blue"),
     label_text_angle = -45,
-    label_nudge_y = .25,
+    label_nudge_y = .15,
     label_nudge_x = 0.45,
-    label_method = "geom_text",
+    label_method = "ggrepel",#"geom_text",
     #   sex_color_palette = c("black", "black"),
     sex_color_include = TRUE
   )
@@ -191,16 +191,20 @@ ggPedigree(
   famID = "famID",
   personID = "ID",
   status_column = "affected",
+  overlay_column = NULL,
   config = list(
     code_male = 0,
-    sex_color_include = FALSE,
-    status_include = TRUE,
-    overlay_include = FALSE,
+    sex_color_include = T,
+    status_include = T,
+    overlay_include = F,
     status_code_affected = TRUE,
     status_code_unaffected = FALSE,
     status_label_affected = "Infected",
     status_label_unaffected = "Not infected",
-    status_legend_title = "Status"
+    status_legend_title = "Status",
+    focal_fill_include = FALSE,
+    status_shape_affected = 4, # "🦠"  # virus shape
+    status_legend_show = TRUE
   )
 )
 ```

@@ -121,7 +121,7 @@ test_that("buildPlotConfig merges valid subset overrides correctly", {
     result$segment_linewidth,
     default_config$segment_linewidth
   )
-  expect_equal(result$label_nudge_y, -0.10)
+  expect_equal(result$label_nudge_y, -0.15)
   expect_equal(result$label_nudge_y, -1*default_config$label_nudge_y)
 })
 test_that("buildPlotConfig returns a list", {
@@ -129,6 +129,6 @@ test_that("buildPlotConfig returns a list", {
   custom <- list(point_size = 2)
 
   result <- buildPlotConfig(default_config, custom)
-  expect_equal(result$label_nudge_y, 0.10)
+  expect_equal(result$label_nudge_y, 0.15)
   expect_true(is.list(result))
 })
