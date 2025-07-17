@@ -109,7 +109,7 @@ ggPedigree(
     segment_offspring_color = viridis_pal()(5)[4],
     segment_mz_color = viridis_pal()(5)[5],
     #   segment_linetype = 3,
-    outline_include = TRUE,
+    outline_include = FALSE,
     outline_color = "grey"
   )
 )
