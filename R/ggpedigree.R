@@ -480,7 +480,7 @@ ggPedigree.core <- function(ped,
   # Add overlay points for affected status if applicable
   if (config$sex_color_include == TRUE ||
     config$focal_fill_include == TRUE ||
-    config$overlay_include == TRUE ||
+    config$overlay_include == TRUE && !is.null(overlay_column) ||
     (!is.null(status_column) && config$status_include == TRUE)) {
     # If overlay_column is specified, use it for alpha aesthetic
 
@@ -664,6 +664,7 @@ ggPedigree.core <- function(ped,
     # If overlay_column is specified, use it for alpha aesthetic
     plotObject <- plotObject + ggplot2::geom_point(
       ggplot2::aes(alpha = !!rlang::sym(overlay_column)),
+                     #config$overlay_alpha_values), #
       shape = config$overlay_shape,
       size = config$point_size,
       color = config$overlay_color,
@@ -675,6 +676,7 @@ ggPedigree.core <- function(ped,
     #
     plotObject <- plotObject + ggplot2::geom_point(
       ggplot2::aes(alpha = !!rlang::sym(status_column)),
+      #config$status_alpha_values),
       shape = config$status_shape_affected,
       size = config$point_size,
       color = config$status_color_affected,

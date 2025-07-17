@@ -194,6 +194,8 @@ ggPedigree(
   config = list(
     code_male = 0,
     sex_color_include = FALSE,
+    status_include = TRUE,
+    overlay_include = FALSE,
     status_code_affected = TRUE,
     status_code_unaffected = FALSE,
     status_label_affected = "Infected",

@@ -31,7 +31,7 @@ test_that("getDefaultPlotConfig returns expected defaults", {
   expect_equal(config$segment_self_linetype, "dotdash")
   expect_equal(config$segment_self_angle, 90)
   expect_equal(config$segment_self_curvature, -0.2)
-  expect_equal(config$label_method, "ggrepel")
+  expect_equal(config$label_method, "geom_text")
   expect_equal(config$label_include, TRUE)
   expect_equal(config$tooltip_include, TRUE)
   expect_equal(config$tooltip_columns, c("ID1", "ID2", "value"))
@@ -66,7 +66,7 @@ test_that("handles function_name variations", {
   expect_equal(length(config1), length(config2))
   expect_equal(length(config1), length(config3))
 
-  expect_equal(config1$label_method, "ggrepel")
+  expect_equal(config1$label_method, "geom_text")
   expect_equal(config2$label_method, "geom_text")
   expect_equal(config2$label_nudge_y_flip, TRUE)
   expect_equal(config3$label_nudge_y_flip, FALSE)

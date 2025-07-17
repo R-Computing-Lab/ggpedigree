@@ -27,7 +27,7 @@ getDefaultPlotConfig(
   code_female = 0,
   label_include = TRUE,
   label_column = "personID",
-  label_method = "ggrepel",
+  label_method = "geom_text",
   label_max_overlaps = 15,
   label_nudge_x = 0,
   label_nudge_y = 0.1,

@@ -203,7 +203,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  # ---- Label Aesthetics ----
                                  label_include = TRUE,
                                  label_column = "personID",
-                                 label_method = "ggtext",# "ggrepel",
+                                 label_method = "geom_text",# "ggrepel",
                                  label_max_overlaps = 15,
                                  label_nudge_x = 0,
                                  label_nudge_y = 0.10,
@@ -736,6 +736,8 @@ buildPlotConfig <- function(default_config,
         built_config$sex_shape_unknown
       )
     }
+
+
     if ("status_labs" %in% names(built_config) == FALSE) {
       built_config$status_labs <- c(
         built_config$status_label_affected,
@@ -771,6 +773,26 @@ buildPlotConfig <- function(default_config,
       ),
       built_config$status_labs
     )
+    if ("overlay_labs" %in% names(built_config) == FALSE) {
+      built_config$overlay_labs <- c(
+        built_config$overlay_label_affected,
+        built_config$overlay_label_unaffected
+      )
+    }
+    if ("overlay_codes" %in% names(built_config) == FALSE) {
+      built_config$overlay_codes <- c(
+        built_config$overlay_code_affected,
+        built_config$overlay_code_unaffected
+      )
+    }
+    built_config$overlay_alpha_values <- stats::setNames(
+      c(
+        built_config$overlay_alpha_affected,
+        built_config$overlay_alpha_unaffected
+      ),
+      built_config$overlay_labs
+    )
+
   } else if (stringr::str_to_lower(function_name) %in%
     c("ggphenotypebydegree", "phenotypebydegree")) {
 
