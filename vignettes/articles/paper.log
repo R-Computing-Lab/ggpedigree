@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.4)  16 JUL 2025 12:34
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.4)  21 JUL 2025 09:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1011,11 +1011,11 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [6]
-Underfull \vbox (badness 10000) detected at line 857
+Underfull \vbox (badness 10000) detected at line 816
  []
 
 
-Underfull \vbox (badness 10000) detected at line 857
+Underfull \vbox (badness 10000) detected at line 816
  []
 
 
@@ -1030,11 +1030,11 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [7]
-Underfull \vbox (badness 10000) detected at line 857
+Underfull \vbox (badness 10000) detected at line 816
  []
 
 
-Underfull \vbox (badness 10000) detected at line 857
+Underfull \vbox (badness 10000) detected at line 816
  []
 
 
@@ -1073,7 +1073,7 @@ Package logreq Info: Writing requests to 'paper.run.xml'.
 Here is how much of TeX's memory you used:
  35014 strings out of 470545
  721782 string characters out of 5491702
- 1597060 words of memory out of 5000000
+ 1592060 words of memory out of 5000000
  62752 multiletter control sequences out of 15000+600000
  633713 words of font info for 90 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191

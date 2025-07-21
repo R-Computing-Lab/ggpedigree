@@ -148,48 +148,7 @@ library(patchwork) # for combining plots
 
 # Load the potter pedigree data
 data("potter")
-# Removing Last names
-df_potter <- potter %>%
-  mutate(
-    name = case_when(
-      personID == 1 ~ "Vernon",
-      personID == 2 ~ "Marjorie",
-      personID == 3 ~ "Petunia",
-      personID == 4 ~ "Lily",
-      personID == 5 ~ "James",
-      personID == 6 ~ "Dudley",
-      personID == 7 ~ "Harry",
-      personID == 8 ~ "Ginny",
-      personID == 9 ~ "Arthur",
-      personID == 10 ~ "Molly",
-      personID == 11 ~ "Ron",
-      personID == 12 ~ "Fred",
-      personID == 13 ~ "George",
-      personID == 14 ~ "Percy",
-      personID == 15 ~ "Charlie",
-      personID == 16 ~ "Bill",
-      personID == 17 ~ "Hermione",
-      personID == 18 ~ "Fleur",
-      personID == 19 ~ "Gabrielle",
-      personID == 20 ~ "Audrey",
-      personID == 21 ~ "James",
-      personID == 22 ~ "Albus",
-      personID == 23 ~ "Lily",
-      personID == 24 ~ "Rose",
-      personID == 25 ~ "Hugo",
-      personID == 26 ~ "Victoire",
-      personID == 27 ~ "Dominique",
-      personID == 28 ~ "Louis",
-      personID == 29 ~ "Molly",
-      personID == 30 ~ "Lucy",
-      personID == 101 ~ "Mother",
-      personID == 102 ~ "Father",
-      personID == 103 ~ "Mother",
-      personID == 104 ~ "Father",
-      personID == 105 ~ "Mother",
-      personID == 106 ~ "Father"
-    )
-  )
+
 # Load Google fonts for styling
 font_add_google(name = "Cormorant", family = "cormorant")
 showtext_auto() # Load the showtext package to render Google fonts
@@ -203,12 +162,12 @@ family_wfu <- "cormorant"
 text_size_wfu <- 14
 
 # Create Panel A
-m1 <- ggPedigree(df_potter %>% filter(personID %in% c(1:7, 101:104)),
+m1 <- ggPedigree(potter %>% filter(personID %in% c(1:7, 101:104)),
   famID = "famID",
   personID = "personID",
   config = list(
     label_include = TRUE,
-    label_column = "name",
+    label_column = "first_name",
     point_size = 8,
     focal_fill_personID = 8,
     segment_linewidth = 0.5,
@@ -236,12 +195,12 @@ m1 <- ggPedigree(df_potter %>% filter(personID %in% c(1:7, 101:104)),
   text = element_text(family = family_wfu, size = 14)
 ) + coord_cartesian(ylim = c(3.25, 1), clip = "off")
 # Create Panel B
-m2 <- ggPedigree(df_potter,
+m2 <- ggPedigree(potter,
   famID = "famID",
   personID = "personID",
   config = list(
     label_include = TRUE,
-    label_column = "name",
+    label_column = "first_name",
     point_size = 8,
     focal_fill_personID = 8, # Molly Weasley
     segment_linewidth = 0.5,
