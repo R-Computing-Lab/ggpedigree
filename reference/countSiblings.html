@@ -83,80 +83,80 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/R-Computing-Lab/BGmisc/" class="external-link">BGmisc</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"potter"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">countSiblings</span><span class="op">(</span><span class="va">potter</span>, personID <span class="op">=</span> <span class="st">"personID"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    personID famID               name gen momID dadID spouseID sex twinID</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1         1     1     Vernon Dursley   1   101   102        3   1     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         2     1   Marjorie Dursley   1   101   102       NA   0     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3         3     1      Petunia Evans   1   103   104        1   0     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4         4     1         Lily Evans   1   103   104        5   0     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5         5     1       James Potter   1    NA    NA        4   1     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6         6     1     Dudley Dursley   2     3     1       NA   1     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7         7     1       Harry Potter   2     4     5        8   1     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8         8     1      Ginny Weasley   2    10     9        7   0     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9         9     1     Arthur Weasley   1    NA    NA       10   1     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10       10     1      Molly Prewett   1    NA    NA        9   0     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11       11     1        Ron Weasley   2    10     9       17   1     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12       12     1       Fred Weasley   2    10     9       NA   1     13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13       13     1     George Weasley   2    10     9       NA   1     12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14       14     1      Percy Weasley   2    10     9       20   1     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15       15     1    Charlie Weasley   2    10     9       NA   1     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16       16     1       Bill Weasley   2    10     9       18   1     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17       17     1   Hermione Granger   2    NA    NA       11   0     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18       18     1     Fleur Delacour   2   105   106       16   0     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19       19     1 Gabrielle Delacour   2   105   106       NA   0     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20       20     1             Audrey   2    NA    NA       14   0     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21       21     1    James Potter II   3     8     7       NA   1     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22       22     1       Albus Potter   3     8     7       NA   1     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23       23     1        Lily Potter   3     8     7       NA   0     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24       24     1       Rose Weasley   3    17    11       NA   0     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25       25     1       Hugo Weasley   3    17    11       NA   1     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26       26     1   Victoire Weasley   3    18    16       NA   0     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27       27     1  Dominique Weasley   3    18    16       NA   0     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28       28     1      Louis Weasley   3    18    16       NA   1     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29       29     1      Molly Weasley   3    20    14       NA   0     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30       30     1       Lucy Weasley   3    20    14       NA   0     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31      101     1     Mother Dursley   0    NA    NA      102   0     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32      102     1     Father Dursley   0    NA    NA      101   1     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34      103     1       Mother Evans   0    NA    NA      104   0     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33      104     1       Father Evans   0    NA    NA      103   1     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36      105     1    Mother Delacour   0    NA    NA      106   0     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35      106     1    Father Delacour   0    NA    NA      105   1     NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    zygosity parentsID siborder siblings</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      &lt;NA&gt;   101.102        1        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      &lt;NA&gt;   101.102        2        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      &lt;NA&gt;   103.104        1        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      &lt;NA&gt;   103.104        2        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      &lt;NA&gt;      &lt;NA&gt;        1        0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      &lt;NA&gt;       3.1        1        0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      &lt;NA&gt;       4.5        1        0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      &lt;NA&gt;      10.9        1        6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      &lt;NA&gt;      &lt;NA&gt;        1        0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11     &lt;NA&gt;      10.9        2        6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12       mz      10.9        3        6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13       mz      10.9        4        6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14     &lt;NA&gt;      10.9        5        6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15     &lt;NA&gt;      10.9        6        6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16     &lt;NA&gt;      10.9        7        6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18     &lt;NA&gt;   105.106        1        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19     &lt;NA&gt;   105.106        2        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21     &lt;NA&gt;       8.7        1        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22     &lt;NA&gt;       8.7        2        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23     &lt;NA&gt;       8.7        3        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24     &lt;NA&gt;     17.11        1        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25     &lt;NA&gt;     17.11        2        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26     &lt;NA&gt;     18.16        1        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27     &lt;NA&gt;     18.16        2        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28     &lt;NA&gt;     18.16        3        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29     &lt;NA&gt;     20.14        1        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30     &lt;NA&gt;     20.14        2        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    personID famID               name first_name  surname gen momID dadID</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         1     1     Vernon Dursley     Vernon  Dursley   1   101   102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         2     1   Marjorie Dursley   Marjorie  Dursley   1   101   102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         3     1      Petunia Evans    Petunia    Evans   1   103   104</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4         4     1         Lily Evans       Lily    Evans   1   103   104</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5         5     1       James Potter      James   Potter   1    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6         6     1     Dudley Dursley     Dudley  Dursley   2     3     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7         7     1       Harry Potter      Harry   Potter   2     4     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8         8     1      Ginny Weasley      Ginny  Weasley   2    10     9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9         9     1     Arthur Weasley     Arthur  Weasley   1    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10       10     1      Molly Prewett      Molly  Prewett   1    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11       11     1        Ron Weasley        Ron  Weasley   2    10     9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12       12     1       Fred Weasley       Fred  Weasley   2    10     9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13       13     1     George Weasley     George  Weasley   2    10     9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14       14     1      Percy Weasley      Percy  Weasley   2    10     9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15       15     1    Charlie Weasley    Charlie  Weasley   2    10     9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16       16     1       Bill Weasley       Bill  Weasley   2    10     9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17       17     1   Hermione Granger   Hermione  Granger   2    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18       18     1     Fleur Delacour      Fleur Delacour   2   105   106</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19       19     1 Gabrielle Delacour  Gabrielle Delacour   2   105   106</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20       20     1             Audrey     Audrey  Unknown   2    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21       21     1    James Potter II      James   Potter   3     8     7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22       22     1       Albus Potter      Albus   Potter   3     8     7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23       23     1        Lily Potter       Lily   Potter   3     8     7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24       24     1       Rose Weasley       Rose  Weasley   3    17    11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25       25     1       Hugo Weasley       Hugo  Weasley   3    17    11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26       26     1   Victoire Weasley   Victoire  Weasley   3    18    16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27       27     1  Dominique Weasley  Dominique  Weasley   3    18    16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28       28     1      Louis Weasley      Louis  Weasley   3    18    16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29       29     1      Molly Weasley      Molly  Weasley   3    20    14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30       30     1       Lucy Weasley       Lucy  Weasley   3    20    14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31      101     1     Mother Dursley     Mother  Dursley   0    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32      102     1     Father Dursley     Father  Dursley   0    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34      103     1       Mother Evans     Mother    Evans   0    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33      104     1       Father Evans     Father    Evans   0    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36      105     1    Mother Delacour     Mother Delacour   0    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35      106     1    Father Delacour     Father Delacour   0    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    spouseID sex twinID zygosity parentsID siborder siblings</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         3   1     NA     &lt;NA&gt;   101.102        1        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        NA   0     NA     &lt;NA&gt;   101.102        2        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         1   0     NA     &lt;NA&gt;   103.104        1        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4         5   0     NA     &lt;NA&gt;   103.104        2        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5         4   1     NA     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6        NA   1     NA     &lt;NA&gt;       3.1        1        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7         8   1     NA     &lt;NA&gt;       4.5        1        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8         7   0     NA     &lt;NA&gt;      10.9        1        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9        10   1     NA     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10        9   0     NA     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11       17   1     NA     &lt;NA&gt;      10.9        2        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12       NA   1     13       mz      10.9        3        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13       NA   1     12       mz      10.9        4        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14       20   1     NA     &lt;NA&gt;      10.9        5        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15       NA   1     NA     &lt;NA&gt;      10.9        6        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16       18   1     NA     &lt;NA&gt;      10.9        7        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17       11   0     NA     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18       16   0     NA     &lt;NA&gt;   105.106        1        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19       NA   0     NA     &lt;NA&gt;   105.106        2        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20       14   0     NA     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21       NA   1     NA     &lt;NA&gt;       8.7        1        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22       NA   1     NA     &lt;NA&gt;       8.7        2        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23       NA   0     NA     &lt;NA&gt;       8.7        3        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24       NA   0     NA     &lt;NA&gt;     17.11        1        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25       NA   1     NA     &lt;NA&gt;     17.11        2        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26       NA   0     NA     &lt;NA&gt;     18.16        1        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27       NA   0     NA     &lt;NA&gt;     18.16        2        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28       NA   1     NA     &lt;NA&gt;     18.16        3        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29       NA   0     NA     &lt;NA&gt;     20.14        1        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30       NA   0     NA     &lt;NA&gt;     20.14        2        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31      102   0     NA     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32      101   1     NA     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34      104   0     NA     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33      103   1     NA     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36      106   0     NA     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35      105   1     NA     &lt;NA&gt;      &lt;NA&gt;        1        0</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
