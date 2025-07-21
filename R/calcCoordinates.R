@@ -81,45 +81,7 @@ calculateCoordinates <- function(ped,
     sex = ped_recode[[sexVar]]
   )
 }
-  if ("hints" %in% names(config) && !is.null(config$hints)) {
-    # Check if hints are provided
-    autohint <- tryCatch(
-      kinship2::autohint(
-        ped_ped,
-        config$hints,
-        align = config$ped_align,
-        packed = config$ped_packed
-      ),
-      error = function(e) {
-        warning("Your hints caused an error and were not used.
-                Using default hints instead.")
-        kinship2::autohint(ped_ped,
-          align = config$ped_align,
-          packed = config$ped_packed
-        )
-      }
-    )
-    # Align pedigree for plotting
-    pos <- kinship2::align.pedigree(
-      ped_ped,
-      packed = config$ped_packed,
-      align = config$ped_align,
-      width = config$ped_width,
-      hints = autohint
-    )
-  } else {
-    # -----
-    # Extract layout information
-    # -----
-    # Align pedigree for plotting
-    pos <- kinship2::align.pedigree(
-      ped_ped,
-      packed = config$ped_packed,
-      align = config$ped_align,
-      width = config$ped_width
-    )
-  }
-
+  pos <- alignPedigreeWithHints(ped_ped=ped_ped, config=config)
   #  assign("DEBUG_pos", pos, envir = .GlobalEnv)
 
   # Extract layout information
@@ -136,30 +98,58 @@ calculateCoordinates <- function(ped,
   nid_pos <- which(pos$nid != 0, arr.ind = TRUE)
 
   # Allocate coordinate vectors
-  x_pos <- y_coords <- x_coords <- rep(NA, length(nid_vector))
+  n_coords <- length(nid_vector)
+  initialize_vector <- function() rep(NA_real_, n_coords)
 
+  x_pos <- initialize_vector()
+  y_coords <- initialize_vector()
+  x_coords <- initialize_vector()
+  spouse_vector <- initialize_vector()
+  parent_fam <- initialize_vector()
+  parent_right_vector <- initialize_vector()
+  parent_left_vector <- initialize_vector()
+  y_fam <- initialize_vector()
 
-  # Initialize relatives  vector
-  spouse_vector <- x_pos
-  parent_fam <- x_pos
-  parent_right_vector <- parent_left_vector <- x_pos
-  y_fam <- x_pos
   # A matrix with values
   # 1 = subject plotted to the immediate right is a spouse
   # 2 = subject plotted to the immediate right is an inbred spouse
   # 0 = not a spouse
+  # Populate coordinates from nid positions
 
+  y_coords <- nid_pos[, "row"]
+  x_coords <- nid_pos[, "col"]
+  x_pos <- pos$pos[cbind(y_coords, x_coords)]
+  spouse_vector <- pos$spouse[cbind(y_coords, x_coords)]
+  parent_fam <- pos$fam[cbind(y_coords, x_coords)]
+  y_fam <- y_coords - 1
+  # Calculate parent positions explicitly
+  parent_row <- y_coords - 1
+  parent_col_left <- parent_fam
+  parent_col_right <- parent_fam + 1
+
+  # Explicit logical vector for indexing validity
+  valid <- parent_row >= 1 &
+    parent_col_left >= 1 &
+    parent_col_right <= ncol(pos$pos)
+
+  parent_left_vector[valid] <- pos$pos[cbind(parent_row[valid], parent_col_left[valid])]
+  parent_right_vector[valid] <- pos$pos[cbind(parent_row[valid], parent_col_right[valid])]
+
+
+if(FALSE){
   # Populate coordinates from nid positions
   for (i in seq_along(nid_vector)) {
     y_coords[i] <- nid_pos[i, "row"]
     x_coords[i] <- nid_pos[i, "col"]
     x_pos[i] <- pos$pos[nid_pos[i, "row"], nid_pos[i, "col"]]
-    spouse_vector[i] <- pos$spouse[nid_pos[i, "row"], nid_pos[i, "col"]]
+   spouse_vector[i] <- pos$spouse[nid_pos[i, "row"], nid_pos[i, "col"]]
     parent_fam[i] <- pos$fam[nid_pos[i, "row"], nid_pos[i, "col"]]
     y_fam[i] <- BGmisc:::tryNA(nid_pos[i, "row"] - 1)
     parent_left_vector[i] <- BGmisc:::tryNA(pos$pos[nid_pos[i, "row"] - 1, parent_fam[i] + 0])
     parent_right_vector[i] <- BGmisc:::tryNA(pos$pos[nid_pos[i, "row"] - 1, parent_fam[i] + 1])
   }
+}
+
 
   # -----
   # Fill in the data frame with coordinates
@@ -258,4 +248,54 @@ calculateCoordinates <- function(ped,
   ped$parent_right <- NULL
   #  assign("DEBUG_ped_withextras", ped, envir = .GlobalEnv)
   return(ped)
+}
+
+#' Align pedigree with hints for plotting
+#' This function aligns a pedigree object using hints if provided,
+#'  or defaults to  the default alignment settings.
+#' @param ped_ped A pedigree object created by `kinship2::pedigree()`.
+#' @param config A list of configuration options
+#' @return A data frame with the aligned positions of individuals in the pedigree.
+#' @keywords internal
+
+alignPedigreeWithHints <- function(ped_ped, config) {
+  if ("hints" %in% names(config) && !is.null(config$hints)) {
+    # Check if hints are provided
+    autohint <- tryCatch(
+      kinship2::autohint(
+        ped_ped,
+        config$hints,
+        align = config$ped_align,
+        packed = config$ped_packed
+      ),
+      error = function(e) {
+        warning("Your hints caused an error and were not used.
+                Using default hints instead.")
+        kinship2::autohint(ped_ped,
+                           align = config$ped_align,
+                           packed = config$ped_packed
+        )
+      }
+    )
+    # Align pedigree for plotting
+    pos <- kinship2::align.pedigree(
+      ped_ped,
+      packed = config$ped_packed,
+      align = config$ped_align,
+      width = config$ped_width,
+      hints = autohint
+    )
+  } else {
+    # -----
+    # Extract layout information
+    # -----
+    # Align pedigree for plotting
+    pos <- kinship2::align.pedigree(
+      ped_ped,
+      packed = config$ped_packed,
+      align = config$ped_align,
+      width = config$ped_width
+    )
+  }
+  return(pos)
 }

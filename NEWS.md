@@ -1,3 +1,5 @@
+# ggpedigree (development version)
+
 # ggpedigree 0.8.1
 * added alpha settings
 * added compatibility with pedigree objects from kinship2
@@ -10,6 +12,8 @@
 * Updated hex to actually use ggpedigree
 * Exposed 'relations' and 'hints' inputs to ggpedigree
 * Added more intuitive defaults
+* alignPedigreeWithHints created to refactor calcCoordinates
+* Vectorized part of calcCoordinates
 
 # ggpedigree 0.8.0
 * Makes ggrepel a suggested package instead of a required one.
