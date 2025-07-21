@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.4)  16 JUL 2025 12:34
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.4)  21 JUL 2025 09:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -955,7 +955,7 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 
 [2]
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 478.
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 477.
 File: potter_pedigree.png Graphic file (type bmp)
 <potter_pedigree.png>
 
@@ -995,7 +995,7 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [5]
-Overfull \hbox (40.31009pt too wide) in paragraph at lines 625--627
+Overfull \hbox (40.31009pt too wide) in paragraph at lines 624--626
 []\TU/lmr/m/n/10 Pedersen, T. L. (2025). \TU/lmr/m/it/10 Patchwork: The composer of plots\TU/lmr/m/n/10 . doi:[][]10.32614/CRAN.package.patchwork[][] 
  []
 
@@ -1011,11 +1011,11 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [6]
-Underfull \vbox (badness 10000) detected at line 857
+Underfull \vbox (badness 10000) detected at line 815
  []
 
 
-Underfull \vbox (badness 10000) detected at line 857
+Underfull \vbox (badness 10000) detected at line 815
  []
 
 
@@ -1030,11 +1030,11 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [7]
-Underfull \vbox (badness 10000) detected at line 857
+Underfull \vbox (badness 10000) detected at line 815
  []
 
 
-Underfull \vbox (badness 10000) detected at line 857
+Underfull \vbox (badness 10000) detected at line 815
  []
 
 
@@ -1073,7 +1073,7 @@ Package logreq Info: Writing requests to 'paper.run.xml'.
 Here is how much of TeX's memory you used:
  35014 strings out of 470545
  721782 string characters out of 5491702
- 1597060 words of memory out of 5000000
+ 1591060 words of memory out of 5000000
  62752 multiletter control sequences out of 15000+600000
  633713 words of font info for 90 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
