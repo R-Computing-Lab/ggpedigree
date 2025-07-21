@@ -99,35 +99,34 @@ calculateCoordinates <- function(ped,
 
   # Allocate coordinate vectors
   n_coords <- length(nid_vector)
-  initialize_vector <- function() rep(NA_real_, n_coords)
+  base_vector <- rep(NA_real_, n_coords)
 
-  x_pos <- initialize_vector()
-  y_coords <- initialize_vector()
-  x_coords <- initialize_vector()
-  spouse_vector <- initialize_vector()
-  parent_fam <- initialize_vector()
-  parent_right_vector <- initialize_vector()
-  parent_left_vector <- initialize_vector()
-  y_fam <- initialize_vector()
+  x_pos <- base_vector
+  y_coords <- base_vector
+  x_coords <- base_vector
+  spouse_vector <- base_vector
+  parent_fam <- base_vector
+  parent_right_vector <- base_vector
+  parent_left_vector <- base_vector
+  y_fam <- base_vector
 
   # A matrix with values
   # 1 = subject plotted to the immediate right is a spouse
   # 2 = subject plotted to the immediate right is an inbred spouse
   # 0 = not a spouse
+ 
   # Populate coordinates from nid positions
-
   y_coords <- nid_pos[, "row"]
   x_coords <- nid_pos[, "col"]
   x_pos <- pos$pos[cbind(y_coords, x_coords)]
   spouse_vector <- pos$spouse[cbind(y_coords, x_coords)]
   parent_fam <- pos$fam[cbind(y_coords, x_coords)]
   y_fam <- y_coords - 1
-  # Calculate parent positions explicitly
+
   parent_row <- y_coords - 1
   parent_col_left <- parent_fam
   parent_col_right <- parent_fam + 1
 
-  # Explicit logical vector for indexing validity
   valid <- parent_row >= 1 &
     parent_col_left >= 1 &
     parent_col_right <= ncol(pos$pos)
@@ -135,7 +134,7 @@ calculateCoordinates <- function(ped,
   parent_left_vector[valid] <- pos$pos[cbind(parent_row[valid], parent_col_left[valid])]
   parent_right_vector[valid] <- pos$pos[cbind(parent_row[valid], parent_col_right[valid])]
 
-
+# Vectorized above, maintained for now in case need to revert
 if(FALSE){
   # Populate coordinates from nid positions
   for (i in seq_along(nid_vector)) {
