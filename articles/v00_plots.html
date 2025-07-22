@@ -150,7 +150,7 @@ pedigree:</p>
 <span>    segment_linewidth <span class="op">=</span> <span class="fl">.5</span>,</span>
 <span>    point_size <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>    outline_multiplier <span class="op">=</span> <span class="fl">1.5</span>,</span>
-<span>   <span class="co"># outline_additional_size = -1,</span></span>
+<span>    <span class="co"># outline_additional_size = -1,</span></span>
 <span>    sex_shape_female <span class="op">=</span> <span class="st">"💸"</span>,</span>
 <span>    sex_shape_male <span class="op">=</span> <span class="st">"🖤"</span>,</span>
 <span>    segment_spouse_color <span class="op">=</span> <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span><span class="op">)</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
@@ -193,12 +193,12 @@ options include <code>label_column</code> for the label column,
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
 <span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span><span class="co">#    label_column = "name",</span></span>
+<span>    <span class="co">#    label_column = "name",</span></span>
 <span>    sex_color_palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pink"</span>, <span class="st">"blue"</span><span class="op">)</span>,</span>
 <span>    label_text_angle <span class="op">=</span> <span class="op">-</span><span class="fl">45</span>,</span>
 <span>    label_nudge_y <span class="op">=</span> <span class="fl">.15</span>,</span>
 <span>    label_nudge_x <span class="op">=</span> <span class="fl">0.45</span>,</span>
-<span>    label_method <span class="op">=</span> <span class="st">"ggrepel"</span>,<span class="co">#"geom_text",</span></span>
+<span>    label_method <span class="op">=</span> <span class="st">"ggrepel"</span>, <span class="co"># "geom_text",</span></span>
 <span>    <span class="co">#   sex_color_palette = c("black", "black"),</span></span>
 <span>    sex_color_include <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span></span>
