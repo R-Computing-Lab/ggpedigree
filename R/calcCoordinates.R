@@ -139,21 +139,6 @@ calculateCoordinates <- function(ped,
 
   parent_right_vector[valid_parent] <- pos$pos[cbind(parent_row[valid_parent], parent_col_right[valid_parent])]
 
-  # Vectorized above, maintained for now in case need to revert
-  if (FALSE) {
-    # Populate coordinates from nid positions
-    for (i in seq_along(nid_vector)) {
-      y_coords[i] <- nid_pos[i, "row"]
-      x_coords[i] <- nid_pos[i, "col"]
-      x_pos[i] <- pos$pos[nid_pos[i, "row"], nid_pos[i, "col"]]
-      spouse_vector[i] <- pos$spouse[nid_pos[i, "row"], nid_pos[i, "col"]]
-      parent_fam[i] <- pos$fam[nid_pos[i, "row"], nid_pos[i, "col"]]
-      y_fam[i] <- BGmisc:::tryNA(nid_pos[i, "row"] - 1)
-      parent_left_vector[i] <- BGmisc:::tryNA(pos$pos[nid_pos[i, "row"] - 1, parent_fam[i] + 0])
-      parent_right_vector[i] <- BGmisc:::tryNA(pos$pos[nid_pos[i, "row"] - 1, parent_fam[i] + 1])
-    }
-  }
-
 
   # -----
   # Fill in the data frame with coordinates
@@ -176,6 +161,7 @@ calculateCoordinates <- function(ped,
 
   # Detect multiple layout positions for the same individual
   # This can happen if the same individual appears multiple times in the pedigree
+
   # For each nid, count how many times it appears
   appearance_counts <- table(nid_vector)
 
@@ -186,66 +172,54 @@ calculateCoordinates <- function(ped,
   extra_info <- list()
 
   # Create duplicate rows for extra appearances
-  # For each duplicate nid
 
-  for (nid_val in duplicate_nids) {
-    # All appearance positions
-    appearance_indices <- which(nid_vector == nid_val)
+  # All appearance positions
+  appearance_indices <- which(nid_vector %in% duplicate_nids)
 
-    # Find which index was already used in tmp
-    # tmp is a mapping from person index to nid_vector position
-    used_index <- tmp[which(seq_along(ped_ped$id) == nid_val)]
+  # Find which index was already used in tmp
+  # tmp is a mapping from person index to nid_vector position
+  used_indices <- tmp[duplicate_nids]
 
-    # Extra indices are the appearances NOT used by match()
-    extra_indices <- setdiff(appearance_indices, used_index)
+  # Extra indices are the appearances NOT used by match()
+  extra_indices <- setdiff(appearance_indices, used_indices)
 
-    if (length(extra_indices) > 0) {
-      extra_info[[as.character(nid_val)]] <- data.frame(
-        nid = nid_val,
-        idx = extra_indices
-      )
-    }
-  }
+  # If there are extra indices, we need to create additional rows
+  if (length(extra_indices) > 0) {
 
-  if (length(extra_info) > 0) {
-    # Bind into single data.frame of all extras
-    extra_df <- do.call(rbind, extra_info)
-    # Initialize list to collect extra rows
-    extra_rows <- vector("list", nrow(extra_df))
-    # Single loop over the flat index/nid map
+    extra_df <- data.frame(
+      nid = nid_vector[extra_indices],
+      idx = extra_indices
+    )
 
-    for (i in seq_len(nrow(extra_df))) {
-      idx <- extra_df$idx[i]
-      nid_val <- extra_df$nid[i]
+    # directly matching each nid to ped_ped$id and then to ped
+    matched_personID <- ped_ped$id[extra_df$nid]
+    ped_rows_idx <- match(matched_personID, ped[[personID]])
 
-      new_row <- ped[ped[[personID]] == ped_ped$id[nid_val], , drop = FALSE]
-      new_row$nid <- nid_val
-      new_row$x_order <- x_coords[idx]
-      new_row$y_order <- y_coords[idx]
-      new_row$x_pos <- x_pos[idx]
-      new_row$y_pos <- y_coords[idx]
-      new_row$spousehint <- spouse_vector[idx]
-      new_row$parent_fam <- parent_fam[idx]
-      new_row$parent_left <- parent_left_vector[idx]
-      new_row$parent_right <- parent_right_vector[idx]
-      new_row$y_fam <- y_fam[idx]
-      extra_rows[[i]] <- new_row
-    }
-  } else {
-    extra_rows <- list()
-  }
-  # Combine original and extra rows, marking extras
-  if (length(extra_rows) > 0) {
-    ped_extra <- do.call(rbind, extra_rows)
+    extra_rows <- ped[ped_rows_idx, , drop = FALSE]
+
+    # Assign coordinates explicitly
+    extra_rows$nid <- extra_df$nid
+    extra_rows$x_order <- x_coords[extra_df$idx]
+    extra_rows$y_order <- y_coords[extra_df$idx]
+    extra_rows$x_pos <- x_pos[extra_df$idx]
+    extra_rows$y_pos <- y_coords[extra_df$idx]
+    extra_rows$spousehint <- spouse_vector[extra_df$idx]
+    extra_rows$parent_fam <- parent_fam[extra_df$idx]
+    extra_rows$parent_left <- parent_left_vector[extra_df$idx]
+    extra_rows$parent_right <- parent_right_vector[extra_df$idx]
+    extra_rows$y_fam <- y_fam[extra_df$idx]
+
     ped$extra <- FALSE
-    ped_extra$extra <- TRUE
-    ped <- rbind(ped, ped_extra)
-    ped_extra <- NULL
+    extra_rows$extra <- TRUE
+
+    ped <- rbind(ped, extra_rows)
+
   } else {
-    ped_extra <- NULL
     ped$extra <- FALSE
   }
+
   # clean up
+  ## assumes that there are two parents
   ped$x_fam <- base::rowMeans(cbind(ped$parent_left, ped$parent_right), na.rm = FALSE)
   ped$x_fam[ped$parent_fam == 0] <- NA
   ped[[momID]][ped$parent_fam == 0] <- NA
