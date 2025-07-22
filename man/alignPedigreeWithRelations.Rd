@@ -2,9 +2,7 @@
 % Please edit documentation in R/calcCoordinates.R
 \name{alignPedigreeWithRelations}
 \alias{alignPedigreeWithRelations}
-\title{Align pedigree with additional relations
-This function aligns a pedigree object using relations if provided,
- or defaults to  the default alignment settings.}
+\title{Align pedigree with additional relations}
 \usage{
 alignPedigreeWithRelations(
   ped,
@@ -41,8 +39,7 @@ alignPedigreeWithRelations(
 A data frame with the aligned positions of individuals in the pedigree.
 }
 \description{
-Align pedigree with additional relations
-This function aligns a pedigree object using relations if provided,
- or defaults to  the default alignment settings.
+This function aligns a pedigree object using relations if provided, or
+defaults to the default alignment settings.
 }
 \keyword{internal}

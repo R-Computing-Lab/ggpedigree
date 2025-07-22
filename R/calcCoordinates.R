@@ -258,8 +258,9 @@ calculateCoordinates <- function(ped,
 }
 
 #' Align pedigree with additional relations
-#' This function aligns a pedigree object using relations if provided,
-#'  or defaults to  the default alignment settings.
+#'
+#' This function aligns a pedigree object using relations if provided, or
+#' defaults to the default alignment settings.
 #' @inheritParams calculateCoordinates
 #' @return A data frame with the aligned positions of individuals in the pedigree.
 #' @keywords internal
