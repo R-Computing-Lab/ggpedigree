@@ -142,8 +142,6 @@ calculateConnections <- function(ped,
       )
   }
 
-
-
   # Get mom's coordinates
   mom_connections <- getRelativeCoordinates(
     ped = ped,

@@ -336,28 +336,31 @@ test_that("debug", {
 })
 
 
-test_that("behaves with kinship 2 pedigree object",{
-# follow how kinship sets up the pedigree object
+test_that("behaves with kinship 2 pedigree object", {
+  # follow how kinship sets up the pedigree object
   library(kinship2)
   data(minnbreast)
-  minnbreast_skinny <- minnbreast[minnbreast$famid %in% c( 4), ] # take only one family
-  breastped <- with(minnbreast_skinny,
-                    pedigree(id, fatherid, motherid, sex,
-                             status=(cancer& !is.na(cancer)),
-                             affected=proband,
-                             famid=famid))
+  minnbreast_skinny <- minnbreast[minnbreast$famid %in% c(4), ] # take only one family
+  breastped <- with(
+    minnbreast_skinny,
+    pedigree(id, fatherid, motherid, sex,
+      status = (cancer & !is.na(cancer)),
+      affected = proband,
+      famid = famid
+    )
+  )
   breastped$sex <- as.numeric(breastped$sex) # convert to numeric
 
-expect_no_error(
-  ggpedigree(breastped,
-             famID = "famid",
-             personID = "id",
-             momID = "mindex",
-             sexVar="sex",
-             config = list(code_male=1),
-             dadID = "findex",
-             overlay_column = "affected",
-             status_column  = "status")
-)
-}
-)
+  expect_no_error(
+    ggpedigree(breastped,
+      famID = "famid",
+      personID = "id",
+      momID = "mindex",
+      sexVar = "sex",
+      config = list(code_male = 1),
+      dadID = "findex",
+      overlay_column = "affected",
+      status_column = "status"
+    )
+  )
+})

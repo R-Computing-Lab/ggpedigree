@@ -45,7 +45,7 @@ processExtras <- function(ped, config = list()) {
     dplyr::pull() |>
     unique()
 
-# flags complicated relationships that require special handling
+  # flags complicated relationships that require special handling
   ped <- ped |>
     dplyr::mutate(
       momSpouse = dplyr::if_else(!is.na(.data$spouseID) & !is.na(.data$momID) & (.data$spouseID == .data$momID), TRUE, FALSE),

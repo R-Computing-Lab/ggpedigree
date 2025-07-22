@@ -199,4 +199,3 @@ ggpedigreeInteractive <- ggPedigreeInteractive
 #' @rdname ggPedigreeInteractive
 #' @export
 ggpedigreeinteractive <- ggPedigreeInteractive
-
