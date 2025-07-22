@@ -122,7 +122,7 @@ test_that("buildPlotConfig merges valid subset overrides correctly", {
     default_config$segment_linewidth
   )
   expect_equal(result$label_nudge_y, -0.15)
-  expect_equal(result$label_nudge_y, -1*default_config$label_nudge_y)
+  expect_equal(result$label_nudge_y, -1 * default_config$label_nudge_y)
 })
 test_that("buildPlotConfig returns a list", {
   default_config <- getDefaultPlotConfig(function_name = "ggrelatednessmatrix")

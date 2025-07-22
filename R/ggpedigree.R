@@ -82,13 +82,13 @@ ggPedigree <- function(ped,
                        phantoms = FALSE,
                        ...) {
   if (!inherits(ped, "data.frame")) {
-    if (rlang::inherits_any(ped, c("ped","kinship2.pedigree"))) {
+    if (rlang::inherits_any(ped, c("ped", "kinship2.pedigree"))) {
       # Convert ped object to data.frame
       ped <- as.data.frame(ped)
     } else if (rlang::inherits_any(ped, "pedigreeList")) {
       class(ped) <- "list"
       ped <- as.data.frame(ped)
-     } else{
+    } else {
       # If not a data.frame or compatible type, throw an error
       stop("ped should be a data.frame or inherit to a data.frame")
     }
@@ -480,8 +480,8 @@ ggPedigree.core <- function(ped,
   # Add overlay points for affected status if applicable
   if (
     config$focal_fill_include == TRUE && config$sex_color_include == FALSE ||
-    config$overlay_include == TRUE && !is.null(overlay_column) ||
-    !is.null(status_column) && config$status_include == TRUE && config$sex_color_include == TRUE) {
+      config$overlay_include == TRUE && !is.null(overlay_column) ||
+      !is.null(status_column) && config$status_include == TRUE && config$sex_color_include == TRUE) {
     # If overlay_column is specified, use it for alpha aesthetic
 
     p <- .addOverlay(
@@ -664,28 +664,28 @@ ggPedigree.core <- function(ped,
     # If overlay_column is specified, use it for alpha aesthetic
     plotObject <- plotObject + ggplot2::geom_point(
       ggplot2::aes(alpha = !!rlang::sym(overlay_column)),
-                     #config$overlay_alpha_values), #
+      # config$overlay_alpha_values), #
       shape = config$overlay_shape,
       size = config$point_size,
       color = config$overlay_color,
       na.rm = TRUE
     )
-   # print("Overlay added using overlay_column.")
+    # print("Overlay added using overlay_column.")
   } else if (config$status_include == TRUE &&
-    !is.null(status_column) && config$sex_color_include == TRUE ) {
+    !is.null(status_column) && config$sex_color_include == TRUE) {
     # If no overlay_column is specified, use status_column for alpha aesthetic
     #
     plotObject <- plotObject + ggplot2::geom_point(
       ggplot2::aes(alpha = !!rlang::sym(status_column)),
-      #config$status_alpha_values),
+      # config$status_alpha_values),
       shape = config$status_shape_affected,
       size = config$point_size,
       color = config$status_color_affected,
       na.rm = TRUE
     )
-   # print("Overlay added using status_column.")
+    # print("Overlay added using status_column.")
   } else if (config$focal_fill_include == TRUE &&
-    !is.null(focal_fill_column)&& config$sex_color_include == FALSE) {
+    !is.null(focal_fill_column) && config$sex_color_include == FALSE) {
     # If focal_fill_column is specified, use it for alpha aesthetic
     plotObject <- plotObject + ggplot2::geom_point(
       ggplot2::aes(alpha = !!rlang::sym(focal_fill_column)),
@@ -695,7 +695,7 @@ ggPedigree.core <- function(ped,
       na.rm = TRUE
     )
 
-   # print("Overlay added using focal_fill_column.")
+    # print("Overlay added using focal_fill_column.")
   }
 
   return(plotObject)
@@ -1126,10 +1126,10 @@ preparePedigreeData <- function(ped,
   # Standardize sex variable using code_male convention
 
   ds_ped <- BGmisc::recodeSex(ds_ped,
-                              recode_male = config$code_male,
-                              recode_na = config$code_na,
-                              recode_female = config$code_female
-                             )
+    recode_male = config$code_male,
+    recode_na = config$code_na,
+    recode_female = config$code_female
+  )
 
   if (phantoms == TRUE) {
     # If phantoms are requested, add phantom parents

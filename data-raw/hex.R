@@ -48,17 +48,22 @@ rsvg::rsvg_png("data-raw/recoloredcat.svg", "data-raw/recoloredcat.png", width =
 ## Step 2: Generate the background graph
 data(potter)
 p <- ggpedigree(potter,
-                config=
-                  list(label_include=FALSE,
-                       point_size=10,
-                       segment_linewidth=2)) +
+  config =
+    list(
+      label_include = FALSE,
+      point_size = 10,
+      segment_linewidth = 2
+    )
+) +
   theme_void() +
   theme(
     panel.background = element_rect(fill = "transparent", color = NA),
     plot.background = element_rect(fill = "transparent", color = NA)
-  )  + ggplot2::guides(shape = "none",
-                       color = "none",
-                       fill = "none")
+  ) + ggplot2::guides(
+    shape = "none",
+    color = "none",
+    fill = "none"
+  )
 
 ggsave("data-raw/bgplot.png", p, width = 8, height = 8.5, bg = "transparent", dpi = 300)
 
@@ -70,11 +75,11 @@ graph_img <- image_read("data-raw/bgplot.png")
 graph_img <- image_resize(graph_img, geometry_size_pixels(width = 800, height = 800))
 
 
-combined_img <- image_composite(graph_img,logo_img, operator = "Over",gravity = "South",offset="+10-20")
+combined_img <- image_composite(graph_img, logo_img, operator = "Over", gravity = "South", offset = "+10-20")
 
 # Save combined image
 image_write(combined_img, path = "data-raw/combined.png", format = "png")
 
 
 
-sticker("data-raw/combined.png", package = "ggpedigree", p_size = 20, s_x = 1-.05, s_y = .900, s_width = .6, h_fill = "#0fa1e0", h_color = "#333333", p_color = "white", filename = "man/figures/hex.png")
+sticker("data-raw/combined.png", package = "ggpedigree", p_size = 20, s_x = 1 - .05, s_y = .900, s_width = .6, h_fill = "#0fa1e0", h_color = "#333333", p_color = "white", filename = "man/figures/hex.png")

@@ -64,24 +64,24 @@ calculateCoordinates <- function(ped,
   # Recode sex values in case non-standard codes are used (e.g., "M"/"F")
   ped_recode <- BGmisc::recodeSex(ped, code_male = code_male)
 
-  if("relation" %in% names(config) && !is.null(config$relation)) {
-  # Construct a pedigree object to compute layout coordinates
-  ped_ped <- kinship2::pedigree(
-    id = ped[[personID]],
-    dadid = ped[[dadID]],
-    momid = ped[[momID]],
-    sex = ped_recode[[sexVar]],
-    relation = config$relation
-  )
-} else {
+  if ("relation" %in% names(config) && !is.null(config$relation)) {
+    # Construct a pedigree object to compute layout coordinates
     ped_ped <- kinship2::pedigree(
-    id = ped[[personID]],
-    dadid = ped[[dadID]],
-    momid = ped[[momID]],
-    sex = ped_recode[[sexVar]]
-  )
-}
-  pos <- alignPedigreeWithHints(ped_ped=ped_ped, config=config)
+      id = ped[[personID]],
+      dadid = ped[[dadID]],
+      momid = ped[[momID]],
+      sex = ped_recode[[sexVar]],
+      relation = config$relation
+    )
+  } else {
+    ped_ped <- kinship2::pedigree(
+      id = ped[[personID]],
+      dadid = ped[[dadID]],
+      momid = ped[[momID]],
+      sex = ped_recode[[sexVar]]
+    )
+  }
+  pos <- alignPedigreeWithHints(ped_ped = ped_ped, config = config)
   #  assign("DEBUG_pos", pos, envir = .GlobalEnv)
 
   # Extract layout information
@@ -114,7 +114,7 @@ calculateCoordinates <- function(ped,
   # 1 = subject plotted to the immediate right is a spouse
   # 2 = subject plotted to the immediate right is an inbred spouse
   # 0 = not a spouse
- 
+
   # Populate coordinates from nid positions
   y_coords <- nid_pos[, "row"]
   x_coords <- nid_pos[, "col"]
@@ -134,20 +134,20 @@ calculateCoordinates <- function(ped,
   parent_left_vector[valid] <- pos$pos[cbind(parent_row[valid], parent_col_left[valid])]
   parent_right_vector[valid] <- pos$pos[cbind(parent_row[valid], parent_col_right[valid])]
 
-# Vectorized above, maintained for now in case need to revert
-if(FALSE){
-  # Populate coordinates from nid positions
-  for (i in seq_along(nid_vector)) {
-    y_coords[i] <- nid_pos[i, "row"]
-    x_coords[i] <- nid_pos[i, "col"]
-    x_pos[i] <- pos$pos[nid_pos[i, "row"], nid_pos[i, "col"]]
-   spouse_vector[i] <- pos$spouse[nid_pos[i, "row"], nid_pos[i, "col"]]
-    parent_fam[i] <- pos$fam[nid_pos[i, "row"], nid_pos[i, "col"]]
-    y_fam[i] <- BGmisc:::tryNA(nid_pos[i, "row"] - 1)
-    parent_left_vector[i] <- BGmisc:::tryNA(pos$pos[nid_pos[i, "row"] - 1, parent_fam[i] + 0])
-    parent_right_vector[i] <- BGmisc:::tryNA(pos$pos[nid_pos[i, "row"] - 1, parent_fam[i] + 1])
+  # Vectorized above, maintained for now in case need to revert
+  if (FALSE) {
+    # Populate coordinates from nid positions
+    for (i in seq_along(nid_vector)) {
+      y_coords[i] <- nid_pos[i, "row"]
+      x_coords[i] <- nid_pos[i, "col"]
+      x_pos[i] <- pos$pos[nid_pos[i, "row"], nid_pos[i, "col"]]
+      spouse_vector[i] <- pos$spouse[nid_pos[i, "row"], nid_pos[i, "col"]]
+      parent_fam[i] <- pos$fam[nid_pos[i, "row"], nid_pos[i, "col"]]
+      y_fam[i] <- BGmisc:::tryNA(nid_pos[i, "row"] - 1)
+      parent_left_vector[i] <- BGmisc:::tryNA(pos$pos[nid_pos[i, "row"] - 1, parent_fam[i] + 0])
+      parent_right_vector[i] <- BGmisc:::tryNA(pos$pos[nid_pos[i, "row"] - 1, parent_fam[i] + 1])
+    }
   }
-}
 
 
   # -----
@@ -271,8 +271,8 @@ alignPedigreeWithHints <- function(ped_ped, config) {
         warning("Your hints caused an error and were not used.
                 Using default hints instead.")
         kinship2::autohint(ped_ped,
-                           align = config$ped_align,
-                           packed = config$ped_packed
+          align = config$ped_align,
+          packed = config$ped_packed
         )
       }
     )

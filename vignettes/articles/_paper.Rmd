@@ -124,7 +124,7 @@ Source code for the figures above is available in the `vignettes/articles/_paper
 ```{r ggpedigree_plot, echo=TRUE, message=FALSE, warning=FALSE}
 library(ggpedigree)
 library(BGmisc) # helper utilities & example data
-library(tidyverse) 
+library(tidyverse)
 library(showtext)
 library(sysfonts)
 library(patchwork) # combining plots
@@ -249,8 +249,8 @@ ggsave(
 
 
 ```{r basic-usage, echo=FALSE, message=FALSE, warning=FALSE}
-library(ggpedigree) 
-library(BGmisc) 
+library(ggpedigree)
+library(BGmisc)
 # Load data
 data("potter")
 simple <- ggPedigree(potter,
@@ -261,8 +261,8 @@ simple <- ggPedigree(potter,
 # save png
 ggsave(
   filename = "potter_pedigree.png",
-  plot = simple,  
-  height =  5.7,
+  plot = simple,
+  height = 5.7,
   dpi = 96,
   units = "in"
 )

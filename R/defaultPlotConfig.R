@@ -195,15 +195,15 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  code_male = 1,
                                  code_na = NA,
                                  code_female = 0,
-                               #  code_unknown = NULL,
-                             #    recode_male = code_male,#"M",
-                             #    recode_female = code_female,# "F",
-                             #    recode_na = code_na, # NA_character,
-                                # recode_unknown = "U",
+                                 #  code_unknown = NULL,
+                                 #    recode_male = code_male,#"M",
+                                 #    recode_female = code_female,# "F",
+                                 #    recode_na = code_na, # NA_character,
+                                 # recode_unknown = "U",
                                  # ---- Label Aesthetics ----
                                  label_include = TRUE,
                                  label_column = "personID",
-                                 label_method = "geom_text",# "ggrepel",
+                                 label_method = "geom_text", # "ggrepel",
                                  label_max_overlaps = 25,
                                  label_nudge_x = 0,
                                  label_nudge_y = 0.15,
@@ -252,7 +252,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  segment_mz_alpha = 1,
                                  segment_mz_t = .6,
                                  segment_self_linetype = "dotdash",
-                                 segment_self_linewidth = .5*segment_linewidth,
+                                 segment_self_linewidth = .5 * segment_linewidth,
                                  segment_self_alpha = 0.5,
                                  segment_self_angle = 90,
                                  segment_self_curvature = -0.2,
@@ -320,7 +320,6 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  ),
                                  focal_fill_labels = c("Low", "Mid", "High"),
                                  # Use first color for affected,
-
                                  # ---- correlation by bin ----
                                  ## ---- Filtering and Computation ----
                                  filter_n_pairs = 500,
@@ -409,11 +408,11 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     code_male = code_male,
     code_na = code_na,
     code_female = code_female,
-  #  code_unknown = code_unknown,
-   # recode_male = recode_male,
- #   recode_na =  recode_na,
-  #  recode_female =  recode_female,
-   # recode_unknown =  recode_unknown,
+    #  code_unknown = code_unknown,
+    # recode_male = recode_male,
+    #   recode_na =  recode_na,
+    #  recode_female =  recode_female,
+    # recode_unknown =  recode_unknown,
     # ---- Filtering and Computation ----
     filter_n_pairs = filter_n_pairs,
     filter_degree_min = filter_degree_min,
@@ -654,7 +653,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     "ggpedigree",
     "ggpedigreeinteractive"
   )) {
-    core_list$label_method <- "geom_text" #"ggrepel"
+    core_list$label_method <- "geom_text" # "ggrepel"
     core_list$label_column <- personID
     core_list$label_nudge_y_flip <- TRUE
     # core_list$focal_fill_low_color <- core_list$color_palette_low
@@ -662,7 +661,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     # core_list$focal_fill_high_color <- core_list$color_palette_high
   }
   if (lc_function_name %in% c("ggpedigree")) {
-   # core_list$label_method <- "ggrepel"
+    # core_list$label_method <- "ggrepel"
     core_list$return_static <- FALSE
     core_list$return_widget <- FALSE
     core_list$return_interactive <- FALSE
@@ -672,14 +671,13 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     core_list$label_method <- "geom_text"
     core_list$label_include <- FALSE # default to FALSE
     core_list$segment_linewidth <- 0.5 # too think
-    core_list$segment_self_linewidth <- .5*core_list$segment_linewidth
+    core_list$segment_self_linewidth <- .5 * core_list$segment_linewidth
     core_list$tooltip_include <- TRUE
     core_list$return_static <- FALSE
     core_list$return_widget <- TRUE
     core_list$return_interactive <- TRUE
     core_list$segment_self_angle <- -75
     core_list$segment_self_curvature <- -0.15
-
   }
 
   return(core_list)
@@ -724,7 +722,8 @@ buildPlotConfig <- function(default_config,
   built_config <- utils::modifyList(default_config, config)
 
   built_config$label_nudge_y <- ifelse(built_config$label_nudge_y_flip,
-    built_config$label_nudge_y*-1,built_config$label_nudge_y)
+    built_config$label_nudge_y * -1, built_config$label_nudge_y
+  )
 
   if (stringr::str_to_lower(function_name) %in%
     c("ggpedigree", "ggpedigreeinteractive")) {
@@ -792,10 +791,8 @@ buildPlotConfig <- function(default_config,
       ),
       built_config$overlay_labs
     )
-
   } else if (stringr::str_to_lower(function_name) %in%
     c("ggphenotypebydegree", "phenotypebydegree")) {
-
     built_config$label_nudge_y_flip <- FALSE # default to TRUE for ggphenotypebydegree
   }
 
