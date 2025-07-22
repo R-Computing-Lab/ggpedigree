@@ -61,27 +61,25 @@ calculateCoordinates <- function(ped,
   )
   config <- utils::modifyList(default_config, config)
 
-  # Recode sex values in case non-standard codes are used (e.g., "M"/"F")
-  ped_recode <- BGmisc::recodeSex(ped, code_male = code_male)
+  # Construct a pedigree object to compute layout coordinates
 
-  if ("relation" %in% names(config) && !is.null(config$relation)) {
-    # Construct a pedigree object to compute layout coordinates
-    ped_ped <- kinship2::pedigree(
-      id = ped[[personID]],
-      dadid = ped[[dadID]],
-      momid = ped[[momID]],
-      sex = ped_recode[[sexVar]],
-      relation = config$relation
-    )
-  } else {
-    ped_ped <- kinship2::pedigree(
-      id = ped[[personID]],
-      dadid = ped[[dadID]],
-      momid = ped[[momID]],
-      sex = ped_recode[[sexVar]]
-    )
-  }
-  pos <- alignPedigreeWithHints(ped_ped = ped_ped, config = config)
+  # use relations if provided, otherwise use default settings
+  ped_ped <- alignPedigreeWithRelations(
+    ped = ped,
+    personID = personID,
+    dadID = dadID,
+    momID = momID,
+    code_male = code_male,
+    sexVar = sexVar,
+    config = config
+  )
+
+  # use hints if provided
+  pos <- alignPedigreeWithHints(
+    ped_ped = ped_ped,
+    config = config
+  )
+
   #  assign("DEBUG_pos", pos, envir = .GlobalEnv)
 
   # Extract layout information
@@ -119,7 +117,12 @@ calculateCoordinates <- function(ped,
   y_coords <- nid_pos[, "row"]
   x_coords <- nid_pos[, "col"]
   x_pos <- pos$pos[cbind(y_coords, x_coords)]
+
+
+  # Spouse information
   spouse_vector <- pos$spouse[cbind(y_coords, x_coords)]
+
+  # Parent information
   parent_fam <- pos$fam[cbind(y_coords, x_coords)]
   y_fam <- y_coords - 1
 
@@ -127,12 +130,14 @@ calculateCoordinates <- function(ped,
   parent_col_left <- parent_fam
   parent_col_right <- parent_fam + 1
 
-  valid <- parent_row >= 1 &
+  # Ensure parent columns are within bounds
+  valid_parent <- parent_row >= 1 &
     parent_col_left >= 1 &
     parent_col_right <= ncol(pos$pos)
 
-  parent_left_vector[valid] <- pos$pos[cbind(parent_row[valid], parent_col_left[valid])]
-  parent_right_vector[valid] <- pos$pos[cbind(parent_row[valid], parent_col_right[valid])]
+  parent_left_vector[valid_parent] <- pos$pos[cbind(parent_row[valid_parent], parent_col_left[valid_parent])]
+
+  parent_right_vector[valid_parent] <- pos$pos[cbind(parent_row[valid_parent], parent_col_right[valid_parent])]
 
   # Vectorized above, maintained for now in case need to revert
   if (FALSE) {
@@ -182,6 +187,7 @@ calculateCoordinates <- function(ped,
 
   # Create duplicate rows for extra appearances
   # For each duplicate nid
+
   for (nid_val in duplicate_nids) {
     # All appearance positions
     appearance_indices <- which(nid_vector == nid_val)
@@ -200,6 +206,7 @@ calculateCoordinates <- function(ped,
       )
     }
   }
+
   if (length(extra_info) > 0) {
     # Bind into single data.frame of all extras
     extra_df <- do.call(rbind, extra_info)
@@ -238,6 +245,7 @@ calculateCoordinates <- function(ped,
     ped_extra <- NULL
     ped$extra <- FALSE
   }
+  # clean up
   ped$x_fam <- base::rowMeans(cbind(ped$parent_left, ped$parent_right), na.rm = FALSE)
   ped$x_fam[ped$parent_fam == 0] <- NA
   ped[[momID]][ped$parent_fam == 0] <- NA
@@ -247,6 +255,44 @@ calculateCoordinates <- function(ped,
   ped$parent_right <- NULL
   #  assign("DEBUG_ped_withextras", ped, envir = .GlobalEnv)
   return(ped)
+}
+
+#' Align pedigree with additional relations
+#'
+#' This function aligns a pedigree object using relations if provided, or
+#' defaults to the default alignment settings.
+#' @inheritParams calculateCoordinates
+#' @return A data frame with the aligned positions of individuals in the pedigree.
+#' @keywords internal
+
+alignPedigreeWithRelations <- function(ped,
+                                       personID,
+                                       dadID,
+                                       momID,
+                                       code_male,
+                                       sexVar,
+                                       config) {
+  # Recode sex values in case non-standard codes are used (e.g., "M"/"F")
+  ped_recode <- BGmisc::recodeSex(ped, code_male = code_male)
+  if ("relation" %in% names(config) && !is.null(config$relation)) {
+    # Construct a pedigree object to compute layout coordinates
+    ped_ped <- kinship2::pedigree(
+      id = ped[[personID]],
+      dadid = ped[[dadID]],
+      momid = ped[[momID]],
+      sex = ped_recode[[sexVar]],
+      relation = config$relation
+    )
+  } else {
+    ped_ped <- kinship2::pedigree(
+      id = ped[[personID]],
+      dadid = ped[[dadID]],
+      momid = ped[[momID]],
+      sex = ped_recode[[sexVar]]
+    )
+  }
+
+  return(ped_ped)
 }
 
 #' Align pedigree with hints for plotting
