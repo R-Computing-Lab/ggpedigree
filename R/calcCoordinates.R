@@ -64,17 +64,21 @@ calculateCoordinates <- function(ped,
   # Construct a pedigree object to compute layout coordinates
 
   # use relations if provided, otherwise use default settings
-  ped_ped <-  alignPedigreeWithRelations(ped = ped,
-                                         personID=personID,
-                                         dadID=dadID,
-                                         momID=momID,
-                                         code_male=code_male,
-                                         sexVar=sexVar,
-                                         config=config)
+  ped_ped <- alignPedigreeWithRelations(
+    ped = ped,
+    personID = personID,
+    dadID = dadID,
+    momID = momID,
+    code_male = code_male,
+    sexVar = sexVar,
+    config = config
+  )
 
   # use hints if provided
-  pos <- alignPedigreeWithHints(ped_ped = ped_ped,
-                                config = config)
+  pos <- alignPedigreeWithHints(
+    ped_ped = ped_ped,
+    config = config
+  )
 
   #  assign("DEBUG_pos", pos, envir = .GlobalEnv)
 
@@ -184,7 +188,7 @@ calculateCoordinates <- function(ped,
   # Create duplicate rows for extra appearances
   # For each duplicate nid
 
-    for (nid_val in duplicate_nids) {
+  for (nid_val in duplicate_nids) {
     # All appearance positions
     appearance_indices <- which(nid_vector == nid_val)
 
@@ -287,7 +291,7 @@ alignPedigreeWithRelations <- function(ped,
     )
   }
 
-return(ped_ped)
+  return(ped_ped)
 }
 
 #' Align pedigree with hints for plotting
