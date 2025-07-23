@@ -26,7 +26,7 @@ This vignette demonstrates pedigree visualization with `ggPedigree()` from `ggpe
 
 Unlike base R pedigree tools, this package returns a `ggplot2` object, meaning users can customize their output using familiar `ggplot2` syntax, themes, scales, and layering. Throughout this vignette, we walk through basic usage, layout control, status overlays, aesthetic customization, and faceting for multifamily visualization.
 
-We use two bundled example datasets (from `BGmisc`) to illustrate the package's capabilities. The first dataset, `potter`, contains a fictional wizarding family tree, while the second dataset, `hazard`, includes a multigenerational historical pedigree with affected/unaffected status. 
+We use two bundled example datasets (from `BGmisc`) to illustrate the package's capabilities. The first dataset, `potter`, contains a fictional wizarding family tree, while the second dataset, `hazard`, includes a multi-generational historical pedigree with affected/unaffected status. 
 
 
 # Basic usage
@@ -130,7 +130,7 @@ This can be particularly useful for matching house styles in academic publicatio
 
 ## Labeling Individuals
 
-You can also label individuals in the pedigree using the `label_method` argument. The default is `geom_label_repel()`, which uses the `ggrepel` package to avoid overlapping labels. You can also use `geom_text()` for simpler labeling. Other configurable options include `label_column` for the label column, `label_text_angle` for text rotation, `label_nudge_y` for vertical adjustment, and `label_nudge_x` for horizontal adjustment.
+You can also label individuals in the pedigree using the `label_method` argument. The default is `geom_text()` for simpler labeling. You can also use `geom_label_repel()`, which uses the `ggrepel` package to avoid overlapping labels.  Other configurable options include `label_column` for the label column, `label_text_angle` for text rotation, `label_nudge_y` for vertical adjustment, and `label_nudge_x` for horizontal adjustment.
 
 ```{r}
 ggPedigree(
@@ -138,12 +138,12 @@ ggPedigree(
   famID = "famID",
   personID = "personID",
   config = list(
-    #    label_column = "name",
+    # label_column = "first_name",
     sex_color_palette = c("pink", "blue"),
-    label_text_angle = -45,
-    label_nudge_y = .15,
+    label_text_angle = -35,
+    label_nudge_y = .215,
     label_nudge_x = 0.45,
-    label_method = "ggrepel", # "geom_text",
+    label_method = "geom_text", # "ggrepel", #
     #   sex_color_palette = c("black", "black"),
     sex_color_include = TRUE
   )
@@ -194,9 +194,9 @@ ggPedigree(
   overlay_column = NULL,
   config = list(
     code_male = 0,
-    sex_color_include = T,
-    status_include = T,
-    overlay_include = F,
+    sex_color_include = TRUE,
+    status_include = TRUE,
+    overlay_include = FALSE,
     status_code_affected = TRUE,
     status_code_unaffected = FALSE,
     status_label_affected = "Infected",

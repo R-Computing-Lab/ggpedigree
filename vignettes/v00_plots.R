@@ -77,12 +77,12 @@ ggPedigree(
   famID = "famID",
   personID = "personID",
   config = list(
-    #    label_column = "name",
+    # label_column = "first_name",
     sex_color_palette = c("pink", "blue"),
-    label_text_angle = -45,
-    label_nudge_y = .15,
+    label_text_angle = -35,
+    label_nudge_y = .215,
     label_nudge_x = 0.45,
-    label_method = "ggrepel", # "geom_text",
+    label_method = "geom_text", # "ggrepel", #
     #   sex_color_palette = c("black", "black"),
     sex_color_include = TRUE
   )
@@ -116,9 +116,9 @@ ggPedigree(
   overlay_column = NULL,
   config = list(
     code_male = 0,
-    sex_color_include = T,
-    status_include = T,
-    overlay_include = F,
+    sex_color_include = TRUE,
+    status_include = TRUE,
+    overlay_include = FALSE,
     status_code_affected = TRUE,
     status_code_unaffected = FALSE,
     status_label_affected = "Infected",
