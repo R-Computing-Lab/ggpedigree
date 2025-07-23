@@ -92,7 +92,7 @@ multifamily visualization.</p>
 <p>We use two bundled example datasets (from <code>BGmisc</code>) to
 illustrate the package’s capabilities. The first dataset,
 <code>potter</code>, contains a fictional wizarding family tree, while
-the second dataset, <code>hazard</code>, includes a multigenerational
+the second dataset, <code>hazard</code>, includes a multi-generational
 historical pedigree with affected/unaffected status.</p>
 </div>
 <div class="section level2">
@@ -180,10 +180,10 @@ publications or removing clutter for presentations.</p>
 </h3>
 <p>You can also label individuals in the pedigree using the
 <code>label_method</code> argument. The default is
+<code><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text()</a></code> for simpler labeling. You can also use
 <code>geom_label_repel()</code>, which uses the <code>ggrepel</code>
-package to avoid overlapping labels. You can also use
-<code><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text()</a></code> for simpler labeling. Other configurable
-options include <code>label_column</code> for the label column,
+package to avoid overlapping labels. Other configurable options include
+<code>label_column</code> for the label column,
 <code>label_text_angle</code> for text rotation,
 <code>label_nudge_y</code> for vertical adjustment, and
 <code>label_nudge_x</code> for horizontal adjustment.</p>
@@ -193,18 +193,16 @@ options include <code>label_column</code> for the label column,
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
 <span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    <span class="co">#    label_column = "name",</span></span>
+<span>    <span class="co"># label_column = "first_name",</span></span>
 <span>    sex_color_palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pink"</span>, <span class="st">"blue"</span><span class="op">)</span>,</span>
-<span>    label_text_angle <span class="op">=</span> <span class="op">-</span><span class="fl">45</span>,</span>
-<span>    label_nudge_y <span class="op">=</span> <span class="fl">.15</span>,</span>
+<span>    label_text_angle <span class="op">=</span> <span class="op">-</span><span class="fl">35</span>,</span>
+<span>    label_nudge_y <span class="op">=</span> <span class="fl">.215</span>,</span>
 <span>    label_nudge_x <span class="op">=</span> <span class="fl">0.45</span>,</span>
-<span>    label_method <span class="op">=</span> <span class="st">"ggrepel"</span>, <span class="co"># "geom_text",</span></span>
+<span>    label_method <span class="op">=</span> <span class="st">"geom_text"</span>, <span class="co"># "ggrepel", #</span></span>
 <span>    <span class="co">#   sex_color_palette = c("black", "black"),</span></span>
 <span>    sex_color_include <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: ggrepel: Repulsion works correctly only for rotation angles multiple</span></span>
-<span><span class="co">#&gt; of 90 degrees</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="v00_plots_files/figure-html/unnamed-chunk-2-1.png" width="537.6"></p>
 </div>
 </div>
@@ -262,9 +260,9 @@ affected and <code>FALSE</code> unaffected.</p>
 <span>  overlay_column <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    code_male <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>    sex_color_include <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>    status_include <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>    overlay_include <span class="op">=</span> <span class="cn">F</span>,</span>
+<span>    sex_color_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    status_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    overlay_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    status_code_affected <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    status_code_unaffected <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    status_label_affected <span class="op">=</span> <span class="st">"Infected"</span>,</span>
