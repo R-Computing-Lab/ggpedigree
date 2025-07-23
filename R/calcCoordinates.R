@@ -185,7 +185,6 @@ calculateCoordinates <- function(ped,
 
   # If there are extra indices, we need to create additional rows
   if (length(extra_indices) > 0) {
-
     extra_df <- data.frame(
       nid = nid_vector[extra_indices],
       idx = extra_indices
@@ -213,7 +212,6 @@ calculateCoordinates <- function(ped,
     extra_rows$extra <- TRUE
 
     ped <- rbind(ped, extra_rows)
-
   } else {
     ped$extra <- FALSE
   }
