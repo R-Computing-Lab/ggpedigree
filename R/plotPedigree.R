@@ -87,7 +87,7 @@ plotPedigree <- function(ped,
       affected = p$affected
     )
     p3 <- p2["1"]
-    if (verbose) {
+    if (verbose == TRUE) {
       message(p3)
       return(kinship2::plot.pedigree(p3,
         cex = cex,
@@ -102,35 +102,6 @@ plotPedigree <- function(ped,
         mar = mar
       ))
     } else { # TODO: consistently suppress the printing of the pedigree comments
-      # Determine the null device based on the OS
-      #     null_device <- ifelse(.Platform$OS.type == "windows", "nul", "/dev/null")
-
-      # Start redirecting the standard output to suppress messages
-      #     sink(file = null_device, type = "output")
-
-      # Ensure the output is reverted back to console when function exits
-      #     on.exit(if (sink.number() > 0) sink(), add = TRUE)
-      if (verbose == TRUE) {
-        plot_picture <- kinship2::plot.pedigree(p3,
-          cex = cex,
-          col = col,
-          symbolsize = symbolsize,
-          branch = branch,
-          packed = packed, align = align,
-          width = width,
-          density = density,
-          angle = angle, keep.par = keep.par,
-          pconnect = pconnect,
-          mar = mar,
-          ...
-        )
-
-        # Explicitly revert the standard output back to the console
-        #      if (sink.number() > 0) {
-        #        sink()
-        #      }
-        return(plot_picture)
-      } else {
         plot_picture <- suppressMessages(kinship2::plot.pedigree(p3,
           cex = cex,
           col = col,
@@ -149,7 +120,6 @@ plotPedigree <- function(ped,
         class(plot_picture) <- NULL
         return(plot_picture)
       }
-    }
   } else {
     stop("The structure of the provided pedigree data does not match the expected structure.")
   }

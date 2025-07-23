@@ -14,6 +14,7 @@
 * Added more intuitive defaults
 * refactor calcCoordinates with alignPedigreeWithHints and alignPedigreeWithRelations
 * Vectorized part of calcCoordinates
+* removed redundant plotPedigree  verbose section
 
 # ggpedigree 0.8.0
 ## cran release

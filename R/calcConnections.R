@@ -101,7 +101,7 @@ calculateConnections <- function(ped,
   if (sum(ped$extra) > 0) {
     full_extra <- processExtras(ped, config = config)
 
-    ped <- full_extra$ped |> unique()
+    ped <- unique(full_extra$ped)
   } else {
     ped <- ped |>
       dplyr::mutate(
