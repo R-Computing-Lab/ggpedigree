@@ -1,4 +1,5 @@
 # ggpedigree (development version)
+* avoided sapply() in ggPedigreeInteractive
 
 # ggpedigree 0.8.1
 * added alpha settings
