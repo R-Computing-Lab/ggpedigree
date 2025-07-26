@@ -320,7 +320,12 @@ ggPedigree.core <- function(ped,
   config$gap_hoff <- 0.5 * config$generation_height # single constant for all “stub” offsets
   config$gap_woff <- 0.5 * config$generation_width # single constant for all “stub” offsets
 
-  p <- ggplot2::ggplot(ds, ggplot2::aes(x = .data$x_pos, y = .data$y_pos))
+
+    p <- ggplot2::ggplot(ds,
+                         ggplot2::aes(
+                           x = .data$x_pos,
+                           y = .data$y_pos
+                         ))
 
   # -----
   # STEP 7: Add Segments
@@ -378,75 +383,31 @@ ggPedigree.core <- function(ped,
       color = config$segment_offspring_color,
       na.rm = TRUE
     )
-  # Sibling vertical drop line
-  # special handling for twin siblings
-  if (inherits(plot_connections$twin_coords, "data.frame")) {
-    plot_connections$twin_coords <- plot_connections$twin_coords |>
-      dplyr::mutate(
-        x_start = .data$x_pos + config$segment_mz_t * (.data$x_mid_twin - .data$x_pos),
-        y_start = .data$y_pos + config$segment_mz_t * ((.data$y_mid_twin - config$gap_hoff) - .data$y_pos),
-        x_end   = .data$x_twin + config$segment_mz_t * (.data$x_mid_twin - .data$x_twin),
-        y_end   = .data$y_twin + config$segment_mz_t * ((.data$y_mid_twin - config$gap_hoff) - .data$y_twin)
-      ) |>
-      left_join(
-        connections |>
-          dplyr::select(!!rlang::sym(personID), "x_mid_sib", "y_mid_sib"),
-        # the twin_coords file didn't have its variables restored
-        by = join_by(personID == !!rlang::sym(personID))
-      )
-    p <- p + ggplot2::geom_segment(
-      data = plot_connections$twin_coords,
-      ggplot2::aes(
-        x = .data$x_mid_twin,
-        xend = .data$x_mid_sib,
-        y = .data$y_mid_twin - config$gap_hoff,
-        yend = .data$y_mid_sib - config$gap_hoff
-      ),
-      linewidth = config$segment_linewidth,
-      lineend = config$segment_lineend,
-      linejoin = config$segment_linejoin,
-      linetype = config$segment_linetype,
-      color = config$segment_offspring_color,
-      na.rm = TRUE
-    ) +
-      ggplot2::geom_segment(
-        data = plot_connections$twin_coords,
-        ggplot2::aes(
-          x = .data$x_pos,
-          xend = .data$x_mid_twin,
-          y = .data$y_pos,
-          yend = .data$y_mid_twin - config$gap_hoff
-        ),
-        linewidth = config$segment_linewidth,
-        lineend = config$segment_lineend,
-        linejoin = config$segment_linejoin,
-        linetype = config$segment_linetype,
-        color = config$segment_sibling_color,
-        na.rm = TRUE
-      )
 
-    if ("mz" %in% names(plot_connections$twin_coords) &&
-      any(plot_connections$twin_coords$mz == TRUE)) {
-      p <- p + # horizontal line to twin midpoint for MZ twins
-        ggplot2::geom_segment(
-          data = plot_connections$twin_coords |>
-            dplyr::filter(.data$mz == TRUE),
-          ggplot2::aes(
-            x = .data$x_start,
-            xend = .data$x_end,
-            y = .data$y_start,
-            yend = .data$y_end
-          ),
-          linewidth = config$segment_linewidth,
-          lineend = config$segment_lineend,
-          linejoin = config$segment_linejoin,
-          linetype = config$segment_mz_linetype,
-          color = config$segment_mz_color,
-          alpha = config$segment_mz_alpha,
-          na.rm = TRUE
+  # if twins
+ if (inherits(plot_connections$twin_coords, "data.frame")) {
+      plot_connections$twin_coords <- plot_connections$twin_coords |>
+        dplyr::mutate(
+          x_start = .data$x_pos + config$segment_mz_t * (.data$x_mid_twin - .data$x_pos),
+          y_start = .data$y_pos + config$segment_mz_t * ((.data$y_mid_twin - config$gap_hoff) - .data$y_pos),
+          x_end   = .data$x_twin + config$segment_mz_t * (.data$x_mid_twin - .data$x_twin),
+          y_end   = .data$y_twin + config$segment_mz_t * ((.data$y_mid_twin - config$gap_hoff) - .data$y_twin)
+        ) |>
+        left_join(
+          connections |>
+            dplyr::select(!!rlang::sym(personID), "x_mid_sib", "y_mid_sib"),
+          # the twin_coords file didn't have its variables restored
+          by = join_by(personID == !!rlang::sym(personID))
         )
-    }
+
+      p <- addTwins(plotObject=p,
+                    connections=connections,
+                    config=config,
+                    plot_connections=plot_connections,
+                    personID = personID)
+
   }
+
   p <- p +
     ggplot2::geom_segment(
       data = connections |>
@@ -710,7 +671,7 @@ ggPedigree.core <- function(ped,
 .addSelfSegment <- function(plotObject, config, plot_connections) {
   otherself <- plot_connections$self_coords |>
     dplyr::filter(!is.na(.data$x_otherself)) |>
-    dplyr::mutate(otherself_xkey = makeSymmetricKey(.data$x_otherself, .data$x_pos)) |>
+    dplyr::mutate(otherself_xkey = .makeSymmetricKey(.data$x_otherself, .data$x_pos)) |>
     # unique combinations of x_otherself and x_pos and y_otherself and y_pos
     dplyr::distinct(.data$otherself_xkey, .keep_all = TRUE) |>
     unique()
@@ -1416,4 +1377,79 @@ addFocalFillColumn <- function(ds_ped,
   # STEP 3: Return modified data frame with focal_fill (if applicable)
   # -----
   return(ds_ped)
+}
+#' @title Add Twins to ggplot Pedigree Plot
+#' @description
+#' Adds twin connections to the ggplot pedigree plot.
+#' This function modifies the `plotObject` by adding segments
+#' to represent twin relationships.
+#' @inheritParams ggPedigree
+#' @param plotObject A ggplot object to which twin segments will be added.
+#' @param connections A data frame containing twin connection coordinates.
+#' @param plot_connections A data frame containing the coordinates for twin segments.
+#' @keywords internal
+#' @return A ggplot object with twin segments added.
+
+addTwins <-  function(plotObject,
+                      connections,
+                      config,
+                      plot_connections,
+                      personID = "personID") {
+  # Sibling vertical drop line
+  # special handling for twin sibling
+
+    plotObject <- plotObject + ggplot2::geom_segment(
+      data = plot_connections$twin_coords,
+      ggplot2::aes(
+        x = .data$x_mid_twin,
+        xend = .data$x_mid_sib,
+        y = .data$y_mid_twin - config$gap_hoff,
+        yend = .data$y_mid_sib - config$gap_hoff
+      ),
+      linewidth = config$segment_linewidth,
+      lineend = config$segment_lineend,
+      linejoin = config$segment_linejoin,
+      linetype = config$segment_linetype,
+      color = config$segment_offspring_color,
+      na.rm = TRUE
+    ) +
+      ggplot2::geom_segment(
+        data = plot_connections$twin_coords,
+        ggplot2::aes(
+          x = .data$x_pos,
+          xend = .data$x_mid_twin,
+          y = .data$y_pos,
+          yend = .data$y_mid_twin - config$gap_hoff
+        ),
+        linewidth = config$segment_linewidth,
+        lineend = config$segment_lineend,
+        linejoin = config$segment_linejoin,
+        linetype = config$segment_linetype,
+        color = config$segment_sibling_color,
+        na.rm = TRUE
+      )
+
+    if ("mz" %in% names(plot_connections$twin_coords) &&
+        any(plot_connections$twin_coords$mz == TRUE)) {
+      plotObject <- plotObject + # horizontal line to twin midpoint for MZ twins
+        ggplot2::geom_segment(
+          data = plot_connections$twin_coords |>
+            dplyr::filter(.data$mz == TRUE),
+          ggplot2::aes(
+            x = .data$x_start,
+            xend = .data$x_end,
+            y = .data$y_start,
+            yend = .data$y_end
+          ),
+          linewidth = config$segment_linewidth,
+          lineend = config$segment_lineend,
+          linejoin = config$segment_linejoin,
+          linetype = config$segment_mz_linetype,
+          color = config$segment_mz_color,
+          alpha = config$segment_mz_alpha,
+          na.rm = TRUE
+        )
+    }
+
+  return(plotObject)
 }

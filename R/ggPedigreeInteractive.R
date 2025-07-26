@@ -113,9 +113,10 @@ ggPedigreeInteractive <- function(ped,
   #   Add the tooltip text to the data frame
   if (config$tooltip_include == TRUE) {
     # add tooltips to geom_point layers
-    point_layers <- which(sapply(static_plot$layers, function(l) {
+    point_layers <- which(vapply(static_plot$layers, FUN= function(l) {
       inherits(l$geom, "GeomPoint")
-    }))
+    }, FUN.VALUE = logical(1)
+    ))
 
     if (length(point_layers) == 0L) {
       warnings("No GeomPoint layer found for tooltips.")

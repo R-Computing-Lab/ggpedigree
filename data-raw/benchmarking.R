@@ -1,5 +1,10 @@
 library(profvis)
+pak::pak("ropensci-review-tools/goodpractice")
+library(goodpractice)
 
+gp <- goodpractice::gp()
+
+if(F){
 profvis({
   library(dplyr)
   library(ggplot2)
@@ -28,3 +33,4 @@ profvis({
 
   plt
 })
+}

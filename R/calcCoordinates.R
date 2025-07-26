@@ -135,9 +135,11 @@ calculateCoordinates <- function(ped,
     parent_col_left >= 1 &
     parent_col_right <= ncol(pos$pos)
 
-  parent_left_vector[valid_parent] <- pos$pos[cbind(parent_row[valid_parent], parent_col_left[valid_parent])]
+  parent_left_vector[valid_parent] <- pos$pos[cbind(parent_row[valid_parent],
+                                                    parent_col_left[valid_parent])]
 
-  parent_right_vector[valid_parent] <- pos$pos[cbind(parent_row[valid_parent], parent_col_right[valid_parent])]
+  parent_right_vector[valid_parent] <- pos$pos[cbind(parent_row[valid_parent],
+                                                     parent_col_right[valid_parent])]
 
 
   # -----
@@ -218,7 +220,8 @@ calculateCoordinates <- function(ped,
 
   # clean up
   ## assumes that there are two parents
-  ped$x_fam <- base::rowMeans(cbind(ped$parent_left, ped$parent_right), na.rm = FALSE)
+  ped$x_fam <- base::rowMeans(cbind(ped$parent_left,
+                                    ped$parent_right), na.rm = FALSE)
   ped$x_fam[ped$parent_fam == 0] <- NA
   ped[[momID]][ped$parent_fam == 0] <- NA
   ped[[dadID]][ped$parent_fam == 0] <- NA
