@@ -18,6 +18,7 @@
 <url><loc>https://r-computing-lab.github.io/ggpedigree/news/index.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/ASOIAF.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/addFocalFillColumn.html</loc></url>
+<url><loc>https://r-computing-lab.github.io/ggpedigree/reference/addTwins.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/alignPedigreeWithHints.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/alignPedigreeWithRelations.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/buildPlotConfig.html</loc></url>
@@ -36,6 +37,7 @@
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-addSelfSegment.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-adjustSpacing.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-computeCurvedMidpoint.html</loc></url>
+<url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-makeSymmetricKey.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-preparePhenotypeByDegreeData.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-restoreNames.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/formatTooltip.html</loc></url>
@@ -52,7 +54,6 @@
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/ggRelatednessMatrix.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/ggpedigree-package.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/index.html</loc></url>
-<url><loc>https://r-computing-lab.github.io/ggpedigree/reference/makeSymmetricKey.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/plotPedigree.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/preparePedigreeData.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/processExtras.html</loc></url>
