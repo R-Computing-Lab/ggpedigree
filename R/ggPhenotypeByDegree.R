@@ -159,13 +159,20 @@ ggPhenotypeByDegree.core <- function(df,
     config$annotation_coords$y_sib <- y_val_coord(".data$cnu == 1 & .data$addRel_center == 0.5")
     config$annotation_coords$y_mom <- y_val_coord(".data$cnu == 0 & .data$mtdna == 1 & .data$addRel_center == 0.5")
     config$annotation_coords$y_dad <- y_val_coord(".data$cnu == 0 & .data$mtdna == 0 & .data$addRel_center == 0.5")
-    config$annotation_coords$annotation_mom_x <- config$annotation_coords$x_mom + config$annotate_x_shift * config$annotation_coords$x_mom
-    config$annotation_coords$annotation_sib_x <- config$annotation_coords$x_sib + config$annotate_x_shift * config$annotation_coords$x_sib
-    config$annotation_coords$annotation_dad_x <- config$annotation_coords$x_dad + config$annotate_x_shift * config$annotation_coords$x_dad
-    config$annotation_coords$annotation_sib_y <- config$annotation_coords$y_sib + config$annotate_y_shift * config$annotation_coords$y_sib
-    config$annotation_coords$annotation_mom_y <- config$annotation_coords$y_mom + config$annotate_y_shift * config$annotation_coords$y_mom
-    config$annotation_coords$annotation_dad_y <- config$annotation_coords$y_dad + config$annotate_y_shift * config$annotation_coords$y_dad
-    config$annotation_coords$df_point <- df |> dplyr::filter(.data$cnu == 1, .data$addRel_center == .5)
+    config$annotation_coords$annotation_mom_x <- config$annotation_coords$x_mom +
+      config$annotate_x_shift * config$annotation_coords$x_mom
+    config$annotation_coords$annotation_sib_x <- config$annotation_coords$x_sib +
+      config$annotate_x_shift * config$annotation_coords$x_sib
+    config$annotation_coords$annotation_dad_x <- config$annotation_coords$x_dad +
+      config$annotate_x_shift * config$annotation_coords$x_dad
+    config$annotation_coords$annotation_sib_y <- config$annotation_coords$y_sib +
+      config$annotate_y_shift * config$annotation_coords$y_sib
+    config$annotation_coords$annotation_mom_y <- config$annotation_coords$y_mom +
+      config$annotate_y_shift * config$annotation_coords$y_mom
+    config$annotation_coords$annotation_dad_y <- config$annotation_coords$y_dad +
+      config$annotate_y_shift * config$annotation_coords$y_dad
+    config$annotation_coords$df_point <- df |>
+      dplyr::filter(.data$cnu == 1, .data$addRel_center == .5)
   } else {
     config$annotation_coords <- NULL
   }
@@ -250,8 +257,6 @@ ggPhenotypeByDegree.core <- function(df,
     )
   }
   # naming
-
-
 
   if (config$apply_default_theme == TRUE) {
     core_plot <- core_plot +
