@@ -618,6 +618,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     core_list$return_widget <- FALSE
     core_list$return_interactive <- FALSE
     core_list$label_nudge_y_flip <- FALSE
+    core_list$axis_y_label  <- "Phenotypic Correlation"
     #  default_config <- list(
     #    apply_default_scales = TRUE,
     #    apply_default_theme = TRUE,
