@@ -1,4 +1,6 @@
 # ggpedigree (development version)
+* avoided sapply() in ggPedigreeInteractive
+* added subfunction for adding twins
 
 # ggpedigree 0.8.1
 * added alpha settings
