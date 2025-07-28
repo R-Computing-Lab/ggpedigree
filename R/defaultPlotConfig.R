@@ -210,7 +210,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  label_nudge_y_flip = TRUE, # flip the nudge y value to be negative
                                  label_segment_color = NA,
                                  label_text_angle = 0,
-                                 label_text_size = 3,
+                                 label_text_size = 4,
                                  label_text_color = "black",
                                  label_text_family = "sans",
                                  # --- POINT / OUTLINE AESTHETICS ---------------------------------------
@@ -228,7 +228,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  axis_y_label = NULL,
                                  axis_text_angle_x = 90,
                                  axis_text_angle_y = 0,
-                                 axis_text_size = 8,
+                                 axis_text_size = 9,
                                  axis_text_color = "black",
                                  axis_text_family = "sans",
                                  # ---- Generation Scale Settings ----

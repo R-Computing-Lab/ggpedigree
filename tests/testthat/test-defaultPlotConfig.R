@@ -37,7 +37,7 @@ test_that("getDefaultPlotConfig returns expected defaults", {
   expect_equal(config$tooltip_columns, c("ID1", "ID2", "value"))
   expect_equal(config$axis_text_angle_x, 90)
   expect_equal(config$axis_text_angle_y, 0)
-  expect_equal(config$axis_text_size, 8)
+  expect_equal(config$axis_text_size, 9)
   expect_equal(config$axis_text_color, "black")
   expect_equal(config$generation_height, 1)
   expect_equal(config$generation_width, 1)
