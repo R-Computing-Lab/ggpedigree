@@ -2,9 +2,12 @@
 % Please edit documentation in R/ggpedigree.R
 \name{.addNodes}
 \alias{.addNodes}
+\alias{addNodes}
 \title{Add Nodes to ggplot Pedigree Plot}
 \usage{
 .addNodes(plotObject, config, focal_fill_column = NULL, status_column = NULL)
+
+addNodes(plotObject, config, focal_fill_column = NULL, status_column = NULL)
 }
 \arguments{
 \item{plotObject}{A ggplot object.}

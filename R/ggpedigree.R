@@ -526,6 +526,9 @@ ggPedigree.core <- function(ped,
   }
 }
 
+
+
+
 #' @title Add Nodes to ggplot Pedigree Plot
 #' @inheritParams ggPedigree
 #' @param plotObject A ggplot object.
@@ -609,6 +612,11 @@ ggPedigree.core <- function(ped,
   return(plotObject)
 }
 
+#' @rdname dot-addNodes
+addNodes <- .addNodes
+
+
+
 #' @title Add Overlay to ggplot Pedigree Plot
 #' @inheritParams ggPedigree
 #' @param plotObject A ggplot object.
@@ -661,6 +669,10 @@ ggPedigree.core <- function(ped,
 
   return(plotObject)
 }
+
+#' @rdname dot-addOverlay
+addOverlay <- .addOverlay
+
 
 #' @title Add Self Segments to ggplot Pedigree Plot
 #' @inheritParams ggPedigree
@@ -806,6 +818,8 @@ ggPedigree.core <- function(ped,
   plotObject
 }
 
+#' @rdname dot-addSelfSegment
+addSelfSegment <- .addSelfSegment
 
 #' @title Add Scales to ggplot Pedigree Plot
 #' @inheritParams ggPedigree
@@ -942,6 +956,9 @@ ggPedigree.core <- function(ped,
   return(plotObject)
 }
 
+#' @rdname dot-addScales
+addScales <- .addScales
+
 #' @title Add Labels to ggplot Pedigree Plot
 #' @inheritParams ggPedigree
 #' @inheritParams .addScales
@@ -1005,7 +1022,8 @@ ggPedigree.core <- function(ped,
   plotObject
 }
 
-
+#' @rdname dot-addLabels
+addLabels <- .addLabels
 
 #' @title Prepare Pedigree Data
 #' @description

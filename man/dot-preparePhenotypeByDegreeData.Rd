@@ -2,10 +2,21 @@
 % Please edit documentation in R/ggPhenotypeByDegree.R
 \name{.preparePhenotypeByDegreeData}
 \alias{.preparePhenotypeByDegreeData}
+\alias{preparePhenotypeByDegreeData}
 \title{Prepare data for ggPhenotypeByDegree
 This function prepares the data frame for plotting by calculating necessary columns and ensuring required columns are present.}
 \usage{
 .preparePhenotypeByDegreeData(
+  df,
+  y_var,
+  y_se = NULL,
+  y_stem_se = NULL,
+  y_ci_lb = NULL,
+  y_ci_ub = NULL,
+  config = list()
+)
+
+preparePhenotypeByDegreeData(
   df,
   y_var,
   y_se = NULL,

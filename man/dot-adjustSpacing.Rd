@@ -2,9 +2,12 @@
 % Please edit documentation in R/ggpedigreeHelpers.R
 \name{.adjustSpacing}
 \alias{.adjustSpacing}
+\alias{adjustSpacing}
 \title{Adjust Spacing in ggPedigree Data}
 \usage{
 .adjustSpacing(ds, config)
+
+adjustSpacing(ds, config)
 }
 \arguments{
 \item{ds}{A data frame containing the ggPedigree data.}

@@ -383,6 +383,11 @@ ggPhenotypeByDegree.core <- function(df,
   return(df)
 }
 
+#' @rdname dot-preparePhenotypeByDegreeData
+preparePhenotypeByDegreeData <- .preparePhenotypeByDegreeData
+
+
+
 #' @title Add annotates to ggplot Pedigree Plot
 #' @inheritParams ggPhenotypeByDegree
 #'
@@ -438,3 +443,6 @@ ggPhenotypeByDegree.core <- function(df,
   }
   return(p)
 }
+
+#' @rdname dot-addAnnotate
+addAnnotate <- .addAnnotate

@@ -2,9 +2,12 @@
 % Please edit documentation in R/ggpedigreeHelpers.R
 \name{.computeCurvedMidpoint}
 \alias{.computeCurvedMidpoint}
+\alias{computeCurvedMidpoint}
 \title{Compute midpoint coordinate for curved segment}
 \usage{
 .computeCurvedMidpoint(x0, y0, x1, y1, curvature, angle, shift = 0, t = 0.5)
+
+computeCurvedMidpoint(x0, y0, x1, y1, curvature, angle, shift = 0, t = 0.5)
 }
 \arguments{
 \item{x0}{Numeric vector of x coordinates for start points}
