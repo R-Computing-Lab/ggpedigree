@@ -1,8 +1,9 @@
 # ggpedigree (development version)
+
+# ggpedigree 0.9.0
 * avoided sapply() in ggPedigreeInteractive
 * added subfunction for adding twins
-
-# ggpedigree 0.8.1
+* add non-dot versions of internal functions for evaluating complexity
 * added alpha settings
 * added compatibility with pedigree objects from kinship2
 * exposed code_female, code_na to config

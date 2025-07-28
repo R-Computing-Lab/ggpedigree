@@ -55,6 +55,10 @@
   # Return as a data frame with x and y coordinates
   data.frame(x = x_vals, y = y_vals, t = t)
 }
+#' @rdname dot-computeCurvedMidpoint
+computeCurvedMidpoint <- .computeCurvedMidpoint
+
+
 #' @title Adjust Spacing in ggPedigree Data
 #' @description
 #' This function adjusts the vertical and horizontal spacing of the ggPedigree data
@@ -77,6 +81,9 @@
   }
   ds
 }
+
+#' @rdname dot-adjustSpacing
+adjustSpacing <- .adjustSpacing
 
 #' @title Restore Names in Connections Data Frame
 #' @description
@@ -132,3 +139,6 @@
   # Return the modified connections data frame
   connections
 }
+
+#' @rdname dot-restoreNames
+restoreNames <- .restoreNames

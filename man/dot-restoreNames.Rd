@@ -2,9 +2,20 @@
 % Please edit documentation in R/ggpedigreeHelpers.R
 \name{.restoreNames}
 \alias{.restoreNames}
+\alias{restoreNames}
 \title{Restore Names in Connections Data Frame}
 \usage{
 .restoreNames(
+  connections,
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  spouseID = "spouseID",
+  twinID = "twinID",
+  famID = "famID"
+)
+
+restoreNames(
   connections,
   personID = "personID",
   momID = "momID",

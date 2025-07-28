@@ -77,7 +77,7 @@ ggPedigree(
   famID = "famID",
   personID = "personID",
   config = list(
-    # label_column = "first_name",
+    label_column = "first_name",
     sex_color_palette = c("pink", "blue"),
     label_text_angle = -35,
     label_nudge_y = .215,

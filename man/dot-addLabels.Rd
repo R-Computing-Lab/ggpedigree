@@ -2,9 +2,12 @@
 % Please edit documentation in R/ggpedigree.R
 \name{.addLabels}
 \alias{.addLabels}
+\alias{addLabels}
 \title{Add Labels to ggplot Pedigree Plot}
 \usage{
 .addLabels(plotObject, config)
+
+addLabels(plotObject, config)
 }
 \arguments{
 \item{plotObject}{A ggplot object.}

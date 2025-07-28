@@ -2,9 +2,18 @@
 % Please edit documentation in R/ggpedigree.R
 \name{.addOverlay}
 \alias{.addOverlay}
+\alias{addOverlay}
 \title{Add Overlay to ggplot Pedigree Plot}
 \usage{
 .addOverlay(
+  plotObject,
+  config,
+  focal_fill_column = NULL,
+  status_column = NULL,
+  overlay_column = NULL
+)
+
+addOverlay(
   plotObject,
   config,
   focal_fill_column = NULL,

@@ -2,9 +2,12 @@
 % Please edit documentation in R/ggPhenotypeByDegree.R
 \name{.addAnnotate}
 \alias{.addAnnotate}
+\alias{addAnnotate}
 \title{Add annotates to ggplot Pedigree Plot}
 \usage{
 .addAnnotate(p, config, y_var_sym)
+
+addAnnotate(p, config, y_var_sym)
 }
 \arguments{
 \item{config}{A list of configuration overrides. Valid entries include:

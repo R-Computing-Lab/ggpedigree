@@ -2,9 +2,12 @@
 % Please edit documentation in R/ggpedigree.R
 \name{.addScales}
 \alias{.addScales}
+\alias{addScales}
 \title{Add Scales to ggplot Pedigree Plot}
 \usage{
 .addScales(plotObject, config, status_column = NULL, focal_fill_column = NULL)
+
+addScales(plotObject, config, status_column = NULL, focal_fill_column = NULL)
 }
 \arguments{
 \item{plotObject}{A ggplot object.}

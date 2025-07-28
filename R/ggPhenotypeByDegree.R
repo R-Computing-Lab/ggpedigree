@@ -272,7 +272,8 @@ ggPhenotypeByDegree.core <- function(df,
       labels = scales::trans_format("log2", scales::label_math(.5^.x, format = abs))
     ) +
       labs(
-        x = "Degree of Relatedness", y = "Correlation",
+        x = "Degree of Relatedness",
+        y = config$axis_y_label,
         title = config$plot_title,
         subtitle = config$plot_subtitle,
         color = config$grouping_name,
@@ -289,7 +290,8 @@ ggPhenotypeByDegree.core <- function(df,
     ) +
       labs(
         x = "Coefficient of Genetic Variation",
-        y = "Correlation", title = config$plot_title,
+        y = config$axis_y_label,
+        title = config$plot_title,
         subtitle = config$plot_subtitle,
         color = config$grouping_name,
         shape = config$grouping_name,
@@ -381,6 +383,11 @@ ggPhenotypeByDegree.core <- function(df,
   return(df)
 }
 
+#' @rdname dot-preparePhenotypeByDegreeData
+preparePhenotypeByDegreeData <- .preparePhenotypeByDegreeData
+
+
+
 #' @title Add annotates to ggplot Pedigree Plot
 #' @inheritParams ggPhenotypeByDegree
 #'
@@ -436,3 +443,6 @@ ggPhenotypeByDegree.core <- function(df,
   }
   return(p)
 }
+
+#' @rdname dot-addAnnotate
+addAnnotate <- .addAnnotate
