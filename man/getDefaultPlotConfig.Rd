@@ -34,7 +34,7 @@ getDefaultPlotConfig(
   label_nudge_y_flip = TRUE,
   label_segment_color = NA,
   label_text_angle = 0,
-  label_text_size = 4,
+  label_text_size = 3,
   label_text_color = "black",
   label_text_family = "sans",
   point_size = 4,
@@ -120,6 +120,7 @@ getDefaultPlotConfig(
   focal_fill_na_value = "black",
   focal_fill_shape = 21,
   focal_fill_force_zero = FALSE,
+  focal_fill_use_log = FALSE,
   focal_fill_hue_range = c(0, 360),
   focal_fill_chroma = 50,
   focal_fill_lightness = 50,
@@ -389,7 +390,7 @@ getDefaultPlotConfig(
 
 \item{focal_fill_scale_midpoint}{Midpoint for focal fill scale.}
 
-\item{focal_fill_method}{Method used for focal fill gradient.}
+\item{focal_fill_method}{Method used for focal fill gradient. Options are 'steps', 'steps2', 'step', 'step2', 'viridis_c', 'viridis_d', 'viridis_b', 'manual', 'hue', 'gradient2', 'gradient'.}
 
 \item{focal_fill_component}{Component type for focal fill.}
 
@@ -400,6 +401,8 @@ getDefaultPlotConfig(
 \item{focal_fill_shape}{Shape used for focal fill points.}
 
 \item{focal_fill_force_zero}{Whether to force zero to NA in focal fill.}
+
+\item{focal_fill_use_log}{Whether to use log scale for focal fill.}
 
 \item{focal_fill_hue_range}{Hue range for focal fill colors.}
 

@@ -274,6 +274,58 @@ test_that("focal fill works with ID", {
   expect_true(all(p3$data$focal_fill[p3$data$personID == 8] == 1)) # focal_fill for personID 8 should be 1
 })
 
+test_that("focal fill works with ID and different methods", {
+  library(BGmisc)
+  data("potter") # load example data from BGmisc
+
+  p <- ggPedigree(potter,
+                  famID = "famID",
+                  personID = "personID",
+                  config = list(
+                    focal_fill_include = TRUE,
+                    sex_color_include = FALSE,
+                    focal_fill_personID = 1,
+                    focal_fill_method = "steps"
+                  )
+  )
+  expect_s3_class(p, "gg") # Should return a ggplot object
+  expect_true("focal_fill" %in% names(p$data)) # focal_fill column should be present
+  expect_true(all(p$data$focal_fill >= 0 & p$data$focal_fill <= 1)) # focal_fill values should be between 0 and 1
+
+  p2 <- ggPedigree(potter,
+                   famID = "famID",
+                   personID = "personID",
+                   config = list(
+                     focal_fill_include = TRUE,
+                     sex_color_include = FALSE,
+                     focal_fill_force_zero = TRUE,
+                     focal_fill_personID = 1,
+                     focal_fill_method = "gradient2"
+                   )
+  )
+  expect_s3_class(p2, "gg") # Should return a ggplot object
+  expect_true("focal_fill" %in% names(p2$data)) # focal_fill column should be present
+  expect_true(any(is.na(p2$data$focal_fill))) # focal_fill values should be ge 0 and 1
+  expect_true(all(p2$data$focal_fill[!is.na(p2$data$focal_fill)] > 0 & p2$data$focal_fill[!is.na(p2$data$focal_fill)] <= 1)) # focal_fill values should be greater than 0 and less than or equal to 1
+
+  # test focal_fill with a different personID
+
+  p3 <- ggPedigree(potter,
+                   famID = "famID",
+                   personID = "personID",
+                   config = list(
+                     focal_fill_include = TRUE,
+                     sex_color_include = FALSE,
+                     focal_fill_personID = 8,
+                     focal_fill_method = "viridis_b"
+                   )
+  )
+  expect_s3_class(p3, "gg") # Should return a ggplot object
+  expect_true("focal_fill" %in% names(p3$data)) # focal_fill column should be present
+  expect_true(all(p3$data$focal_fill >= 0 & p3$data$focal_fill <= 1)) # focal_fill values should be between 0 and 1
+  expect_true(all(p3$data$focal_fill[p3$data$personID == 8] == 1)) # focal_fill for personID 8 should be 1
+})
+
 test_that("fill works with fill_column", {
   library(BGmisc)
   data("potter")
@@ -283,7 +335,7 @@ test_that("fill works with fill_column", {
     personID = "personID",
     focal_fill_column = "sex",
     config = list(
-      focal_fill_method = "steps",
+      focal_fill_method = "viridis_c",
       focal_fill_include = TRUE,
       sex_color_include = FALSE
     )
@@ -306,9 +358,10 @@ test_that("debug", {
     personID = "personID",
     focal_fill_column = "sex",
     config = list(
-      focal_fill_method = "steps",
+      focal_fill_method = "hue",
       focal_fill_include = TRUE,
       sex_color_include = FALSE,
+      focal_fill_use_log = TRUE,
       debug = TRUE
     )
   ))
@@ -321,7 +374,8 @@ test_that("debug", {
       focal_fill_method = "steps",
       focal_fill_include = TRUE,
       sex_color_include = FALSE,
-      debug = TRUE
+      debug = TRUE,
+      focal_fill_use_log = FALSE
     )
   )
 
@@ -361,6 +415,21 @@ test_that("behaves with kinship 2 pedigree object", {
       dadID = "findex",
       overlay_column = "affected",
       status_column = "status"
+    )
+  )
+
+  expect_error(
+    ggpedigree(breastped,
+               famID = "famid",
+               personID = "id",
+               momID = "mindex",
+               sexVar = "sex",
+               config = list(code_male = 1,
+                             focal_fill_include = TRUE,
+                             focal_fill_method = "zhue"),
+               dadID = "findex",
+               overlay_column = "affected",
+               status_column = "status"
     )
   )
 })

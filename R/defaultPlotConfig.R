@@ -25,7 +25,6 @@
 #' @param code_male Integer/string code for males in data.
 #' @param code_na optional Integer/string code for missing values in data.
 #' @param code_female  optional Integer/string code for females in data.
-
 #' @param filter_n_pairs Threshold to filter maximum number of pairs.
 #' @param filter_degree_min Minimum degree value used in filtering.
 #' @param filter_degree_max Maximum degree value used in filtering.
@@ -129,11 +128,12 @@
 #' @param focal_fill_mid_color Midpoint color for focal gradient.
 #' @param focal_fill_low_color Low-end color for focal gradient.
 #' @param focal_fill_scale_midpoint Midpoint for focal fill scale.
-#' @param focal_fill_method Method used for focal fill gradient.
+#' @param focal_fill_method Method used for focal fill gradient. Options are 'steps', 'steps2', 'step', 'step2', 'viridis_c', 'viridis_d', 'viridis_b', 'manual', 'hue', 'gradient2', 'gradient'.
 #' @param focal_fill_component Component type for focal fill.
 #' @param focal_fill_shape Shape used for focal fill points.
 #' @param focal_fill_n_breaks Number of breaks in focal fill scale.
 #' @param focal_fill_na_value Color for NA values in focal fill.
+#' @param focal_fill_use_log Whether to use log scale for focal fill.
 #' @param focal_fill_force_zero Whether to force zero to NA in focal fill.
 #' @param focal_fill_hue_range Hue range for focal fill colors.
 #' @param focal_fill_color_values A character vector of colors for focal fill.
@@ -210,7 +210,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  label_nudge_y_flip = TRUE, # flip the nudge y value to be negative
                                  label_segment_color = NA,
                                  label_text_angle = 0,
-                                 label_text_size = 4,
+                                 label_text_size = 3,
                                  label_text_color = "black",
                                  label_text_family = "sans",
                                  # --- POINT / OUTLINE AESTHETICS ---------------------------------------
@@ -306,6 +306,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  focal_fill_na_value = "black",
                                  focal_fill_shape = 21, # shape for focal fill points
                                  focal_fill_force_zero = FALSE, # work around that sets zero to NA so you can distinguish from low values
+                                 focal_fill_use_log = FALSE,
                                  focal_fill_hue_range = c(0, 360),
                                  focal_fill_chroma = 50,
                                  focal_fill_lightness = 50,
@@ -546,6 +547,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     focal_fill_n_breaks = focal_fill_n_breaks,
     focal_fill_shape = focal_fill_shape, # shape for focal fill points
     focal_fill_na_value = focal_fill_na_value,
+    focal_fill_use_log = focal_fill_use_log, # use log scale for focal fill
     focal_fill_force_zero = focal_fill_force_zero, # work around that sets zero to NA so you can distinguish from low values
     focal_fill_hue_range = focal_fill_hue_range, # hue range for focal fill
     focal_fill_chroma = focal_fill_chroma, # chroma for focal fill

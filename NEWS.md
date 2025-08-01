@@ -18,6 +18,7 @@
 * refactor calcCoordinates with alignPedigreeWithHints and alignPedigreeWithRelations
 * Vectorized part of calcCoordinates
 * removed redundant plotPedigree  verbose section
+* add log2 option for relatedness
 
 # ggpedigree 0.8.0
 ## cran release
