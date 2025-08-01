@@ -129,7 +129,7 @@
 #' @param focal_fill_mid_color Midpoint color for focal gradient.
 #' @param focal_fill_low_color Low-end color for focal gradient.
 #' @param focal_fill_scale_midpoint Midpoint for focal fill scale.
-#' @param focal_fill_method Method used for focal fill gradient. Options are steps steps2 step step2 viridis_c viridis_d","viridis_b","manual","hue","gradient2 gradient"
+#' @param focal_fill_method Method used for focal fill gradient. Options are 'steps', 'steps2', 'step', 'step2', 'viridis_c', 'viridis_d', 'viridis_b', 'manual', 'hue', 'gradient2', 'gradient'.
 #' @param focal_fill_component Component type for focal fill.
 #' @param focal_fill_shape Shape used for focal fill points.
 #' @param focal_fill_n_breaks Number of breaks in focal fill scale.
