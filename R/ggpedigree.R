@@ -940,7 +940,7 @@ addSelfSegment <- .addSelfSegment
                               "manual",
                               "hue",
                               "gradient2", "gradient")
-      stop(paste("focal_fill_method must be one of ",focal_fill_methods))
+      stop(paste("focal_fill_method must be one of", paste(focal_fill_methods, collapse = ', ')))
     }
     plotObject <- plotObject +
       ggplot2::labs(

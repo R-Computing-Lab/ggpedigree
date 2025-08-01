@@ -417,4 +417,19 @@ test_that("behaves with kinship 2 pedigree object", {
       status_column = "status"
     )
   )
+
+  expect_error(
+    ggpedigree(breastped,
+               famID = "famid",
+               personID = "id",
+               momID = "mindex",
+               sexVar = "sex",
+               config = list(code_male = 1,
+                             focal_fill_include = TRUE,
+                             focal_fill_method = "zhue"),
+               dadID = "findex",
+               overlay_column = "affected",
+               status_column = "status"
+    )
+  )
 })
