@@ -25,7 +25,6 @@
 #' @param code_male Integer/string code for males in data.
 #' @param code_na optional Integer/string code for missing values in data.
 #' @param code_female  optional Integer/string code for females in data.
-
 #' @param filter_n_pairs Threshold to filter maximum number of pairs.
 #' @param filter_degree_min Minimum degree value used in filtering.
 #' @param filter_degree_max Maximum degree value used in filtering.

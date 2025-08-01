@@ -390,7 +390,7 @@ getDefaultPlotConfig(
 
 \item{focal_fill_scale_midpoint}{Midpoint for focal fill scale.}
 
-\item{focal_fill_method}{Method used for focal fill gradient. Options are steps steps2 step step2 viridis_c viridis_d","viridis_b","manual","hue","gradient2 gradient"}
+\item{focal_fill_method}{Method used for focal fill gradient. Options are 'steps', 'steps2', 'step', 'step2', 'viridis_c', 'viridis_d', 'viridis_b', 'manual', 'hue', 'gradient2', 'gradient'.}
 
 \item{focal_fill_component}{Component type for focal fill.}
 
