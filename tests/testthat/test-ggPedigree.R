@@ -15,9 +15,9 @@ test_that("broken hints doesn't cause a fatal error", {
   # Test with hints
   expect_warning(
     ggPedigree(potter,
-      famID = "famID",
-      personID = "personID",
-      config = list(hints = TRUE)
+               famID = "famID",
+               personID = "personID",
+               config = list(hints = TRUE)
     )
   ) %>% suppressWarnings()
 
@@ -43,18 +43,18 @@ test_that("broken hints doesn't cause a fatal error", {
     )
   expect_warning(
     ggPedigree(potter,
-      famID = "famID",
-      #  phantoms = TRUE, # not  in CRAN version
-      personID = "personID",
-      config = list(
-        hints = TRUE,
-        generation_width = 2,
-        generation_height = 2,
-        status_code_affected = "deceased",
-        status_code_unaffected = "alive",
-        status_include = TRUE
-      ),
-      status_column = "status"
+               famID = "famID",
+               #  phantoms = TRUE, # not  in CRAN version
+               personID = "personID",
+               config = list(
+                 hints = TRUE,
+                 generation_width = 2,
+                 generation_height = 2,
+                 status_code_affected = "deceased",
+                 status_code_unaffected = "alive",
+                 status_include = TRUE
+               ),
+               status_column = "status"
     )
   ) %>% suppressWarnings()
 })
@@ -74,8 +74,8 @@ test_that("ggPedigree returns a ggplot object", {
 
   # Test with hints
   p <- ggPedigree(potter,
-    famID = "famID",
-    personID = "personID"
+                  famID = "famID",
+                  personID = "personID"
   )
   expect_s3_class(p, "gg")
 
@@ -155,11 +155,11 @@ test_that("ggPedigree handles non-standard names", {
     )
 
   p <- ggPedigree(potter,
-    famID = "family_id",
-    personID = "individual_id",
-    momID = "mother_id",
-    dadID = "father_id",
-    spouseID = "spouse_id"
+                  famID = "family_id",
+                  personID = "individual_id",
+                  momID = "mother_id",
+                  dadID = "father_id",
+                  spouseID = "spouse_id"
   )
   expect_s3_class(p, "gg")
   expect_true(all(p$data$individual_id %in% potter$individual_id)) # ID retention
@@ -230,27 +230,27 @@ test_that("focal fill works with ID", {
   data("potter") # load example data from BGmisc
 
   p <- ggPedigree(potter,
-    famID = "famID",
-    personID = "personID",
-    config = list(
-      focal_fill_include = TRUE,
-      sex_color_include = FALSE,
-      focal_fill_personID = 1
-    )
+                  famID = "famID",
+                  personID = "personID",
+                  config = list(
+                    focal_fill_include = TRUE,
+                    sex_color_include = FALSE,
+                    focal_fill_personID = 1
+                  )
   )
   expect_s3_class(p, "gg") # Should return a ggplot object
   expect_true("focal_fill" %in% names(p$data)) # focal_fill column should be present
   expect_true(all(p$data$focal_fill >= 0 & p$data$focal_fill <= 1)) # focal_fill values should be between 0 and 1
 
   p2 <- ggPedigree(potter,
-    famID = "famID",
-    personID = "personID",
-    config = list(
-      focal_fill_include = TRUE,
-      sex_color_include = FALSE,
-      focal_fill_force_zero = TRUE,
-      focal_fill_personID = 1
-    )
+                   famID = "famID",
+                   personID = "personID",
+                   config = list(
+                     focal_fill_include = TRUE,
+                     sex_color_include = FALSE,
+                     focal_fill_force_zero = TRUE,
+                     focal_fill_personID = 1
+                   )
   )
   expect_s3_class(p2, "gg") # Should return a ggplot object
   expect_true("focal_fill" %in% names(p2$data)) # focal_fill column should be present
@@ -260,13 +260,13 @@ test_that("focal fill works with ID", {
   # test focal_fill with a different personID
 
   p3 <- ggPedigree(potter,
-    famID = "famID",
-    personID = "personID",
-    config = list(
-      focal_fill_include = TRUE,
-      sex_color_include = FALSE,
-      focal_fill_personID = 8
-    )
+                   famID = "famID",
+                   personID = "personID",
+                   config = list(
+                     focal_fill_include = TRUE,
+                     sex_color_include = FALSE,
+                     focal_fill_personID = 8
+                   )
   )
   expect_s3_class(p3, "gg") # Should return a ggplot object
   expect_true("focal_fill" %in% names(p3$data)) # focal_fill column should be present
@@ -331,14 +331,14 @@ test_that("fill works with fill_column", {
   data("potter")
 
   p <- ggPedigree(potter,
-    famID = "famID",
-    personID = "personID",
-    focal_fill_column = "sex",
-    config = list(
-      focal_fill_method = "viridis_c",
-      focal_fill_include = TRUE,
-      sex_color_include = FALSE
-    )
+                  famID = "famID",
+                  personID = "personID",
+                  focal_fill_column = "sex",
+                  config = list(
+                    focal_fill_method = "viridis_c",
+                    focal_fill_include = TRUE,
+                    sex_color_include = FALSE
+                  )
   )
   expect_s3_class(p, "gg") # Should return a ggplot object
   expect_true("focal_fill" %in% names(p$data)) # focal_fill column should be present
@@ -354,29 +354,29 @@ test_that("debug", {
   data("potter")
 
   expect_message(ggPedigree(potter,
-    famID = "famID",
-    personID = "personID",
-    focal_fill_column = "sex",
-    config = list(
-      focal_fill_method = "hue",
-      focal_fill_include = TRUE,
-      sex_color_include = FALSE,
-      focal_fill_use_log = TRUE,
-      debug = TRUE
-    )
+                            famID = "famID",
+                            personID = "personID",
+                            focal_fill_column = "sex",
+                            config = list(
+                              focal_fill_method = "hue",
+                              focal_fill_include = TRUE,
+                              sex_color_include = FALSE,
+                              focal_fill_use_log = TRUE,
+                              debug = TRUE
+                            )
   ))
 
   p_debug <- ggPedigree(potter,
-    famID = "famID",
-    personID = "personID",
-    focal_fill_column = "sex",
-    config = list(
-      focal_fill_method = "steps",
-      focal_fill_include = TRUE,
-      sex_color_include = FALSE,
-      debug = TRUE,
-      focal_fill_use_log = FALSE
-    )
+                        famID = "famID",
+                        personID = "personID",
+                        focal_fill_column = "sex",
+                        config = list(
+                          focal_fill_method = "steps",
+                          focal_fill_include = TRUE,
+                          sex_color_include = FALSE,
+                          debug = TRUE,
+                          focal_fill_use_log = FALSE
+                        )
   )
 
   expect_type(p_debug, "list") # Should return a list with plot and data
@@ -398,23 +398,23 @@ test_that("behaves with kinship 2 pedigree object", {
   breastped <- with(
     minnbreast_skinny,
     pedigree(id, fatherid, motherid, sex,
-      status = (cancer & !is.na(cancer)),
-      affected = proband,
-      famid = famid
+             status = (cancer & !is.na(cancer)),
+             affected = proband,
+             famid = famid
     )
   )
   breastped$sex <- as.numeric(breastped$sex) # convert to numeric
 
   expect_no_error(
     ggpedigree(breastped,
-      famID = "famid",
-      personID = "id",
-      momID = "mindex",
-      sexVar = "sex",
-      config = list(code_male = 1),
-      dadID = "findex",
-      overlay_column = "affected",
-      status_column = "status"
+               famID = "famid",
+               personID = "id",
+               momID = "mindex",
+               sexVar = "sex",
+               config = list(code_male = 1),
+               dadID = "findex",
+               overlay_column = "affected",
+               status_column = "status"
     )
   )
 
@@ -432,4 +432,13 @@ test_that("behaves with kinship 2 pedigree object", {
                status_column = "status"
     )
   )
+})
+test_that("ggproto works", {
+          library(BGmisc)
+          data("potter")
+
+          p <- ggPedigree(potter,
+                          famID = "famID",
+                          personID = "personID",
+ggproto=TRUE)
 })

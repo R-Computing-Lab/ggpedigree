@@ -80,6 +80,7 @@ ggPedigree <- function(ped,
                        hints = NULL,
                        interactive = FALSE,
                        phantoms = FALSE,
+                       ggproto = FALSE,
                        ...) {
   if (!inherits(ped, "data.frame")) {
     if (rlang::inherits_any(ped, c("ped", "kinship2.pedigree"))) {
@@ -118,6 +119,7 @@ ggPedigree <- function(ped,
       return_widget = return_widget,
       tooltip_columns = tooltip_columns,
       phantoms = phantoms,
+      ggproto = ggproto,
       ...
     )
   } else {
@@ -153,6 +155,7 @@ ggPedigree <- function(ped,
       debug = debug,
       hints = hints,
       phantoms = phantoms,
+      ggproto = ggproto,
       ...
     )
   }
@@ -192,6 +195,7 @@ ggPedigree.core <- function(ped,
                             hints = NULL,
                             function_name = "ggPedigree",
                             phantoms = FALSE,
+                            ggproto=FALSE,
                             ...) {
   # -----
   # STEP 1: Configuration and Preparation
@@ -320,7 +324,26 @@ ggPedigree.core <- function(ped,
   config$gap_hoff <- 0.5 * config$generation_height # single constant for all “stub” offsets
   config$gap_woff <- 0.5 * config$generation_width # single constant for all “stub” offsets
 
-
+if(ggproto==TRUE){
+  p <- ggplot(ds, aes(x = x_pos, y = y_pos)) +
+    layer(
+      geom = GeomPedigree,
+      stat = "identity",
+      position = "identity",
+      mapping = aes(x = x_pos, y = y_pos),
+      data = ds,
+      inherit.aes = FALSE,
+      params = list(
+        config = config,
+        connections = connections,
+        focal_fill_column = focal_fill_column,
+        status_column = status_column,
+        overlay_column = overlay_column,
+        plot_connections = plot_connections
+      )
+    )
+  return(p)
+  }else{
     p <- ggplot2::ggplot(ds,
                          ggplot2::aes(
                            x = .data$x_pos,
@@ -523,6 +546,7 @@ ggPedigree.core <- function(ped,
     # If debug is FALSE, return only the plot
 
     return(p)
+  }
   }
 }
 
@@ -973,6 +997,7 @@ addSelfSegment <- .addSelfSegment
   } else {
     plotObject <- plotObject + ggplot2::labs(shape = config$sex_legend_title)
   }
+
   return(plotObject)
 }
 
