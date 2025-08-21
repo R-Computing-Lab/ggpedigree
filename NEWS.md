@@ -1,5 +1,6 @@
 # ggpedigree (development version)
-
+* smarter segment coloring
+* added setting to hide legend for sex
 # ggpedigree 0.9.0
 * avoided sapply() in ggPedigreeInteractive
 * added subfunction for adding twins
