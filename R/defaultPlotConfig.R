@@ -96,6 +96,8 @@
 #' @param sex_shape_female Shape for female nodes.
 #' @param sex_shape_male Shape for male nodes.
 #' @param sex_shape_unknown Shape for unknown sex nodes.
+#' @param sex_shape_include Whether to display the shape for sex variables
+#' @param sex_legend_show Whether to display sex in the legend
 #' @param status_include Whether to display affected status.
 #' @param status_code_affected Value that encodes affected status.
 #' @param status_code_unaffected Value that encodes unaffected status.
@@ -264,6 +266,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  sex_shape_female = 16,
                                  sex_shape_male = 15,
                                  sex_shape_unknown = 18,
+                                 sex_shape_include = TRUE,
+                                 sex_legend_show = TRUE,
                                  # ---- Affected Status Controls ----
                                  status_include = TRUE,
                                  status_code_affected = 1,
@@ -394,6 +398,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
   core_list <- list(
     # ---- General Appearance ----
     apply_default_scales = apply_default_scales,
+    segment_default_color = segment_default_color,
     apply_default_theme = apply_default_theme,
     color_palette_default = color_palette_default,
     color_palette_low = color_palette_low,
@@ -480,12 +485,12 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     segment_linetype = segment_linetype,
     segment_lineend = segment_lineend,
     segment_linejoin = segment_linejoin,
-    segment_offspring_color = segment_offspring_color,
-    segment_parent_color = segment_parent_color,
-    segment_self_color = segment_self_color,
-    segment_sibling_color = segment_sibling_color,
-    segment_spouse_color = segment_spouse_color,
-    segment_mz_color = segment_mz_color,
+    segment_offspring_color = ifelse(segment_default_color=="black", segment_offspring_color, segment_default_color),
+    segment_parent_color =  ifelse(segment_default_color=="black", segment_parent_color, segment_default_color),
+    segment_self_color =  ifelse(segment_default_color=="black", segment_self_color, segment_default_color),
+    segment_sibling_color =  ifelse(segment_default_color=="black", segment_sibling_color, segment_default_color),
+    segment_spouse_color =  ifelse(segment_default_color=="black", segment_spouse_color, segment_default_color),
+    segment_mz_color =  ifelse(segment_default_color=="black", segment_mz_color, segment_default_color),
     segment_mz_linetype = segment_mz_linetype,
     segment_mz_alpha = segment_mz_alpha,
     segment_mz_t = segment_mz_t,
@@ -503,7 +508,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     sex_shape_female = sex_shape_female,
     sex_shape_male = sex_shape_male,
     sex_shape_unknown = sex_shape_unknown,
-
+    sex_legend_show = sex_legend_show,
+    sex_shape_include = sex_shape_include,
     # ---- Affected Status Controls ----
     status_include = status_include,
     status_code_affected = status_code_affected,

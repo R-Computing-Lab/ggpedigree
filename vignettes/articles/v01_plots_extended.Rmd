@@ -153,7 +153,7 @@ fig1 <- ggPedigree(
     sex_color_include = FALSE,
     apply_default_scales = FALSE,
     label_method = "geom_text",
-    label_col = "personID",
+    label_column = "personID",
     point_size = 5,
     outline_include = TRUE,
     status_code_affected = TRUE,
