@@ -220,7 +220,7 @@ Click to expand pedigree setup
 <span>    sex_color_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    apply_default_scales <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    label_method <span class="op">=</span> <span class="st">"geom_text"</span>,</span>
-<span>    label_col <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>    label_column <span class="op">=</span> <span class="st">"personID"</span>,</span>
 <span>    point_size <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>    outline_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    status_code_affected <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -236,9 +236,6 @@ Click to expand pedigree setup
 <span>    segment_linewidth <span class="op">=</span> <span class="fl">.5</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in buildPlotConfig(default_config = default_config, config = config, :</span></span>
-<span><span class="co">#&gt; The following config values are not recognized by getDefaultPlotConfig():</span></span>
-<span><span class="co">#&gt; label_col</span></span>
 <span><span class="co">#&gt; Debug mode is ON. Debugging information will be printed.</span></span>
 <span><span class="co">#&gt; Coordinates calculated. Number of individuals: 14</span></span>
 <span><span class="co">#&gt; Connections calculated. Number of connections: 14</span></span>
@@ -460,9 +457,6 @@ relationships.</p>
 <span>  plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  plot.title.position <span class="op">=</span> <span class="st">"plot"</span></span>
 <span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3.25</span>, <span class="fl">1</span><span class="op">)</span>, clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in buildPlotConfig(default_config = default_config, config = config, :</span></span>
-<span><span class="co">#&gt; The following config values are not recognized by getDefaultPlotConfig():</span></span>
-<span><span class="co">#&gt; sex_legend_show</span></span>
 <span></span>
 <span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span><span class="va">df_potter</span>,</span>
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
@@ -500,10 +494,7 @@ relationships.</p>
 <span>  legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>  plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  plot.title.position <span class="op">=</span> <span class="st">"plot"</span></span>
-<span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4.25</span>, <span class="fl">1</span><span class="op">)</span>, clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in buildPlotConfig(default_config = default_config, config = config, :</span></span>
-<span><span class="co">#&gt; The following config values are not recognized by getDefaultPlotConfig():</span></span>
-<span><span class="co">#&gt; sex_legend_show</span></span></code></pre></div>
+<span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4.25</span>, <span class="fl">1</span><span class="op">)</span>, clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m1</span> <span class="op">+</span> <span class="va">m2</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span></span>
