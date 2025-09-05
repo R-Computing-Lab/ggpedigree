@@ -89,8 +89,7 @@ computeCurvedMidpoint <- .computeCurvedMidpoint
 #' @title Adjust spacing in ggPedigree coordinate columns
 #' @description
 #' Uniformly expands or contracts the horizontal (`x_*`) and vertical (`y_*`)
-#' coordinate columns used by *ggPedigree*-style layouts according to
-#' configuration  settings for generation height and width.
+#' configuration settings for generation height and width.
 #' @param ds A data frame containing the ggPedigree data.
 #' @inheritParams ggPedigree
 #' @return A data frame with adjusted x and y positions.
