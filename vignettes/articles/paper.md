@@ -27,7 +27,7 @@ affiliations:
 citation_author: Garrison
 csl: apa.csl
 journal: JOSS
-date: "21 July, 2025"
+date: "05 September, 2025"
 bibliography: paper.bib
 vignette: >
   %\VignetteEncoding{UTF-8}
@@ -92,7 +92,7 @@ ggPedigree(potter,
 
 \includegraphics[width=0.95\textwidth,keepaspectratio]{potter_pedigree.png}
 
-I demonstrate several advanced features by reproducing the figure from [@hunter2025tracing], restyled per Wake Forest Style Guidelines; source code is in the appendix.
+I demonstrate several advanced features by restyling the figure from [@hunter2025tracing],  to follow the Wake Forest brand identity guidelines; source code is in the appendix.
 
 \includegraphics[width=0.95\textwidth,keepaspectratio]{wfu_potter_pedigree.png}
 
@@ -122,7 +122,7 @@ Source code for the figures above is available in the `vignettes/articles/_paper
 ``` r
 library(ggpedigree)
 library(BGmisc) # helper utilities & example data
-library(tidyverse) 
+library(tidyverse)
 library(showtext)
 library(sysfonts)
 library(patchwork) # combining plots
@@ -140,7 +140,7 @@ focal_fill_color_values_wfu <- c(
   "#9E7E38", "#000000", "#FDC314", "#CEB888", "#53565A"
 )
 family_wfu <- "cormorant"
-text_size_wfu <- 14
+text_size_wfu <- 5.5
 
 # Panel A
 m1 <- ggPedigree(potter %>% filter(personID %in% c(1:7, 101:104)),
@@ -157,7 +157,7 @@ m1 <- ggPedigree(potter %>% filter(personID %in% c(1:7, 101:104)),
     axis_text_color = text_color_wfu,
     label_text_family = family_wfu,
     focal_fill_include = TRUE,
-    label_nudge_y = -0.32,
+    label_nudge_y = -0.3,
     label_nudge_y_flip = FALSE,
     focal_fill_method = "manual",
     focal_fill_color_values = focal_fill_color_values_wfu,
@@ -212,9 +212,9 @@ m2 <- ggPedigree(potter,
   plot.title.position = "plot",
   text = element_text(
     family = family_wfu,
-    size = text_size_wfu, face = "bold"
+    size = 14, face = "bold"
   )
-) + coord_cartesian(ylim = c(4.25, .9), clip = "off")
+) + coord_cartesian(ylim = c(4.5, 1), clip = "off")
 
 # Combine
 showtext_auto()

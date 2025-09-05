@@ -3,7 +3,7 @@
 \name{.restoreNames}
 \alias{.restoreNames}
 \alias{restoreNames}
-\title{Restore Names in Connections Data Frame}
+\title{Restore user-specified column names in a connections data frame}
 \usage{
 .restoreNames(
   connections,
@@ -26,7 +26,9 @@ restoreNames(
 )
 }
 \arguments{
-\item{connections}{A data frame containing the connections data.}
+\item{connections}{A data frame containing connection identifiers whose
+columns may currently be named with internal defaults such as
+`personID`, `momID`, `dadID`, `spouseID`, `twinID`, `famID`.}
 
 \item{personID}{Character string specifying the column name for individual IDs. Defaults to "personID".}
 
@@ -41,7 +43,7 @@ restoreNames(
 \item{famID}{Character string specifying the column name for family IDs. Defaults to "famID".}
 }
 \description{
-This function restores the names of the columns in the connections data frame
-to the user-specified names.
+Rename standard internal columns in a pedigree connections data frame
+back to user-specified names.
 }
 \keyword{internal}

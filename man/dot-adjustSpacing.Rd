@@ -3,7 +3,7 @@
 \name{.adjustSpacing}
 \alias{.adjustSpacing}
 \alias{adjustSpacing}
-\title{Adjust Spacing in ggPedigree Data}
+\title{Adjust spacing in ggPedigree coordinate columns}
 \usage{
 .adjustSpacing(ds, config)
 
@@ -32,7 +32,8 @@ adjustSpacing(ds, config)
 A data frame with adjusted x and y positions.
 }
 \description{
-This function adjusts the vertical and horizontal spacing of the ggPedigree data
-based on the configuration settings for generation height and width.
+Uniformly expands or contracts the horizontal (`x_*`) and vertical (`y_*`)
+coordinate columns used by *ggPedigree*-style layouts according to
+configuration  settings for generation height and width.
 }
 \keyword{internal}
