@@ -1,15 +1,41 @@
-#' @title Compute midpoint coordinate for curved segment
-#' @description Returns x and y midpoint using vectorized curved offset
-#' @param x0 Numeric vector of x coordinates for start points
-#' @param y0 Numeric vector of y coordinates for start points
-#' @param x1 Numeric vector of x coordinates for end points
-#' @param y1 Numeric vector of y coordinates for end points
-#' @param t Scalar value between 0 and 1 for interpolation (default is 0.5) setting the midpoint
-#' @param curvature Scalar curvature (geom_curve style)
-#' @param angle Scalar angle in degrees
-#' @param shift Scalar shift in degrees (default is 0)
-#' @return Numeric vector of midpoints (x or y)
+#' @title Compute point along a curved segment (quadratic Bézier)
+#' @description
+#' Computes the x–y coordinates of a point along a curved segment connecting
+#' (x0, y0) to (x1, y1) using a quadratic Bézier construction. The control
+#' point is defined by an orthogonal offset from the straight-line midpoint,
+#' scaled by curvature * len and rotated by angle + shift (degrees).
+#' Vectorized over input coordinates and t.
+#'
+#'
+#' @param x0 Numeric vector. X-coordinates of start points.
+#' @param y0 Numeric vector. Y-coordinates of start points.
+#' @param x1 Numeric vector. X-coordinates of end points.
+#' @param y1 Numeric vector. Y-coordinates of end points.
+#' @param t  Numeric scalar or vector in [0, 1]. Bézier parameter where 0 is the start point,
+#' 1 is the end point; default 0.5.
+#' @param curvature Curvature scale factor (as in
+#'   *geom\_curve*-style helpers): the control point is placed at a distance
+#'   `curvature * len` from the segment midpoint in the rotated-perpendicular
+#'   direction. Changing the sign flips the bend to the opposite side (after
+#'   rotation).
+#' @param angle Scalar numeric. Base rotation in degrees applied to the perpendicular before offsetting.
+#' @param shift Scalar numeric. Additional rotation in degrees (default 0). Effective rotation is angle + shift.
 #' @keywords internal
+#'
+#' @return A data frame with columns x, y, and t representing the coordinates along the curved segment.
+#'
+#' @details
+#' * The unit perpendicular is constructed from the segment direction
+#'   `(dx, dy)` as `(-uy, ux)` where `(ux, uy) = (dx, dy) / len`.
+#' * If an input pair yields `len = 0` (identical endpoints), the unit
+#'   direction is undefined and the resulting coordinates will be `NA`
+#'   due to division by zero; inputs should avoid zero-length segments.
+#' * Inputs of unequal length are recycled by base R. Prefer supplying
+#'   conformable vectors to avoid unintended recycling.
+#'
+#' @seealso
+#' Related drawing helpers such as `ggplot2::geom_curve()` for visual
+#' reference on curvature semantics.
 .computeCurvedMidpoint <- function(x0,
                                    y0,
                                    x1,
@@ -56,13 +82,14 @@
   data.frame(x = x_vals, y = y_vals, t = t)
 }
 #' @rdname dot-computeCurvedMidpoint
+
 computeCurvedMidpoint <- .computeCurvedMidpoint
 
 
-#' @title Adjust Spacing in ggPedigree Data
+#' @title Adjust spacing in ggPedigree coordinate columns
 #' @description
-#' This function adjusts the vertical and horizontal spacing of the ggPedigree data
-#' based on the configuration settings for generation height and width.
+#' Uniformly expands or contracts the horizontal (`x_*`) and vertical (`y_*`)
+#' configuration settings for generation height and width.
 #' @param ds A data frame containing the ggPedigree data.
 #' @inheritParams ggPedigree
 #' @return A data frame with adjusted x and y positions.
@@ -72,12 +99,12 @@ computeCurvedMidpoint <- .computeCurvedMidpoint
   # Adjust vertical spacing factor if generation_height ≠ 1
   if (!isTRUE(all.equal(config$generation_height, 1))) {
     ds$y_pos <- ds$y_pos * config$generation_height # expand/contract generations
-    ds$y_fam <- ds$y_fam * config$generation_height # expand/contract generations
+    ds$y_fam <- ds$y_fam * config$generation_height
   }
   # Adjust horizontal spacing factor if generation_width ≠ 1
   if (!isTRUE(all.equal(config$generation_width, 1))) {
     ds$x_pos <- ds$x_pos * config$generation_width # expand/contract generations
-    ds$x_fam <- ds$x_fam * config$generation_width # expand/contract generations
+    ds$x_fam <- ds$x_fam * config$generation_width
   }
   ds
 }
@@ -85,12 +112,14 @@ computeCurvedMidpoint <- .computeCurvedMidpoint
 #' @rdname dot-adjustSpacing
 adjustSpacing <- .adjustSpacing
 
-#' @title Restore Names in Connections Data Frame
+#' @title Restore user-specified column names in a connections data frame
 #' @description
 #'
-#' This function restores the names of the columns in the connections data frame
-#' to the user-specified names.
-#' @param connections A data frame containing the connections data.
+#' Rename standard internal columns in a pedigree connections data frame
+#' back to user-specified names.
+#' @param connections A data frame containing connection identifiers whose
+#'   columns may currently be named with internal defaults such as
+#'   `personID`, `momID`, `dadID`, `spouseID`, `twinID`, `famID`.
 #' @inheritParams ggPedigree
 #' @keywords internal
 

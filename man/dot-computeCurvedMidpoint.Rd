@@ -3,33 +3,55 @@
 \name{.computeCurvedMidpoint}
 \alias{.computeCurvedMidpoint}
 \alias{computeCurvedMidpoint}
-\title{Compute midpoint coordinate for curved segment}
+\title{Compute point along a curved segment (quadratic Bézier)}
 \usage{
 .computeCurvedMidpoint(x0, y0, x1, y1, curvature, angle, shift = 0, t = 0.5)
 
 computeCurvedMidpoint(x0, y0, x1, y1, curvature, angle, shift = 0, t = 0.5)
 }
 \arguments{
-\item{x0}{Numeric vector of x coordinates for start points}
+\item{x0}{Numeric vector. X-coordinates of start points.}
 
-\item{y0}{Numeric vector of y coordinates for start points}
+\item{y0}{Numeric vector. Y-coordinates of start points.}
 
-\item{x1}{Numeric vector of x coordinates for end points}
+\item{x1}{Numeric vector. X-coordinates of end points.}
 
-\item{y1}{Numeric vector of y coordinates for end points}
+\item{y1}{Numeric vector. Y-coordinates of end points.}
 
-\item{curvature}{Scalar curvature (geom_curve style)}
+\item{curvature}{Curvature scale factor (as in
+*geom\_curve*-style helpers): the control point is placed at a distance
+`curvature * len` from the segment midpoint in the rotated-perpendicular
+direction. Changing the sign flips the bend to the opposite side (after
+rotation).}
 
-\item{angle}{Scalar angle in degrees}
+\item{angle}{Scalar numeric. Base rotation in degrees applied to the perpendicular before offsetting.}
 
-\item{shift}{Scalar shift in degrees (default is 0)}
+\item{shift}{Scalar numeric. Additional rotation in degrees (default 0). Effective rotation is angle + shift.}
 
-\item{t}{Scalar value between 0 and 1 for interpolation (default is 0.5) setting the midpoint}
+\item{t}{Numeric scalar or vector in [0, 1]. Bézier parameter where 0 is the start point,
+1 is the end point; default 0.5.}
 }
 \value{
-Numeric vector of midpoints (x or y)
+A data frame with columns x, y, and t representing the coordinates along the curved segment.
 }
 \description{
-Returns x and y midpoint using vectorized curved offset
+Computes the x–y coordinates of a point along a curved segment connecting
+(x0, y0) to (x1, y1) using a quadratic Bézier construction. The control
+point is defined by an orthogonal offset from the straight-line midpoint,
+scaled by curvature * len and rotated by angle + shift (degrees).
+Vectorized over input coordinates and t.
+}
+\details{
+* The unit perpendicular is constructed from the segment direction
+  `(dx, dy)` as `(-uy, ux)` where `(ux, uy) = (dx, dy) / len`.
+* If an input pair yields `len = 0` (identical endpoints), the unit
+  direction is undefined and the resulting coordinates will be `NA`
+  due to division by zero; inputs should avoid zero-length segments.
+* Inputs of unequal length are recycled by base R. Prefer supplying
+  conformable vectors to avoid unintended recycling.
+}
+\seealso{
+Related drawing helpers such as `ggplot2::geom_curve()` for visual
+reference on curvature semantics.
 }
 \keyword{internal}
