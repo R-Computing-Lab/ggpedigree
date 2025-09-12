@@ -122,7 +122,7 @@ ggPedigreeInteractive <- function(ped,
     }, FUN.VALUE = logical(1)))
 
     if (length(point_layers) == 0L) {
-      warnings("No GeomPoint layer found for tooltips.")
+      warning("No GeomPoint layer found for tooltips.")
       static_plot <- static_plot + ggplot2::aes(text = formatTooltip(
         df = static_plot$data,
         config$tooltip_columns
