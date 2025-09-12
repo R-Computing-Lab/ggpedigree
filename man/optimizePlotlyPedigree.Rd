@@ -6,6 +6,14 @@
 \usage{
 optimizePlotlyPedigree(p, config = list())
 }
+\arguments{
+\item{p}{A plotly object representing the pedigree plot.}
+
+\item{config}{A list of configuration parameters, including `value_rounding_digits`.}
+}
+\value{
+The optimized plotly object with rounded coordinates.
+}
 \description{
 Optimize a Plotly pedigree plot by rounding coordinates to reduce file size.
 }

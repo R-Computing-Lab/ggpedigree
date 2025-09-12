@@ -238,7 +238,9 @@ formatTooltip <- function(df, tooltip_columns, sep = ": ") {
 #' @title Optimize Plotly Pedigree Plot
 #' @description
 #' Optimize a Plotly pedigree plot by rounding coordinates to reduce file size.
-
+#' @param p A plotly object representing the pedigree plot.
+#' @param config A list of configuration parameters, including `value_rounding_digits`.
+#' @return The optimized plotly object with rounded coordinates.
 optimizePlotlyPedigree <- function(p, config = list()
  ) {
   # round coordinates to reduce file size
@@ -257,6 +259,20 @@ optimizePlotlyPedigree <- function(p, config = list()
 
   p
 }
+#' @title Optimize Static Pedigree Plot
+#' @description
+#' Optimize a static pedigree plot by rounding coordinates to reduce file size
+#' and removing unnecessary variables from the data frame.
+#' @param p A ggplot object representing the pedigree plot.
+#' @param config A list of configuration parameters, including `value_rounding_digits`.
+#' @param variable_drop A character vector of variable names to be removed from the data frame.
+#' Default variables to drop include "parent_hash", "couple_hash", "gen",
+#' "spousehint", "parent_fam", "nid", "x_order",
+#' "y_order", "y_fam", "zygosity", "extra", and "x_fam".
+#' @return The optimized ggplot object with rounded coordinates and reduced data frame.
+#' @keywords internal
+#' @aliases optimiseStaticPedigree
+
 
 optimizeStaticPedigree <- function(p, config = list(),  variable_drop = c("parent_hash",
                                                                           "couple_hash",
