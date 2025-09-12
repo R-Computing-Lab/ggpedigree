@@ -441,4 +441,5 @@ test_that("ggproto works", {
                           famID = "famID",
                           personID = "personID",
 ggproto=TRUE)
+          expect_s3_class(p, "gg")
 })
