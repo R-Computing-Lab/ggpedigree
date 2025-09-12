@@ -279,29 +279,29 @@ test_that("focal fill works with ID and different methods", {
   data("potter") # load example data from BGmisc
 
   p <- ggPedigree(potter,
-                  famID = "famID",
-                  personID = "personID",
-                  config = list(
-                    focal_fill_include = TRUE,
-                    sex_color_include = FALSE,
-                    focal_fill_personID = 1,
-                    focal_fill_method = "steps"
-                  )
+    famID = "famID",
+    personID = "personID",
+    config = list(
+      focal_fill_include = TRUE,
+      sex_color_include = FALSE,
+      focal_fill_personID = 1,
+      focal_fill_method = "steps"
+    )
   )
   expect_s3_class(p, "gg") # Should return a ggplot object
   expect_true("focal_fill" %in% names(p$data)) # focal_fill column should be present
   expect_true(all(p$data$focal_fill >= 0 & p$data$focal_fill <= 1)) # focal_fill values should be between 0 and 1
 
   p2 <- ggPedigree(potter,
-                   famID = "famID",
-                   personID = "personID",
-                   config = list(
-                     focal_fill_include = TRUE,
-                     sex_color_include = FALSE,
-                     focal_fill_force_zero = TRUE,
-                     focal_fill_personID = 1,
-                     focal_fill_method = "gradient2"
-                   )
+    famID = "famID",
+    personID = "personID",
+    config = list(
+      focal_fill_include = TRUE,
+      sex_color_include = FALSE,
+      focal_fill_force_zero = TRUE,
+      focal_fill_personID = 1,
+      focal_fill_method = "gradient2"
+    )
   )
   expect_s3_class(p2, "gg") # Should return a ggplot object
   expect_true("focal_fill" %in% names(p2$data)) # focal_fill column should be present
@@ -311,14 +311,14 @@ test_that("focal fill works with ID and different methods", {
   # test focal_fill with a different personID
 
   p3 <- ggPedigree(potter,
-                   famID = "famID",
-                   personID = "personID",
-                   config = list(
-                     focal_fill_include = TRUE,
-                     sex_color_include = FALSE,
-                     focal_fill_personID = 8,
-                     focal_fill_method = "viridis_b"
-                   )
+    famID = "famID",
+    personID = "personID",
+    config = list(
+      focal_fill_include = TRUE,
+      sex_color_include = FALSE,
+      focal_fill_personID = 8,
+      focal_fill_method = "viridis_b"
+    )
   )
   expect_s3_class(p3, "gg") # Should return a ggplot object
   expect_true("focal_fill" %in% names(p3$data)) # focal_fill column should be present
@@ -420,16 +420,18 @@ test_that("behaves with kinship 2 pedigree object", {
 
   expect_error(
     ggpedigree(breastped,
-               famID = "famid",
-               personID = "id",
-               momID = "mindex",
-               sexVar = "sex",
-               config = list(code_male = 1,
-                             focal_fill_include = TRUE,
-                             focal_fill_method = "zhue"),
-               dadID = "findex",
-               overlay_column = "affected",
-               status_column = "status"
+      famID = "famid",
+      personID = "id",
+      momID = "mindex",
+      sexVar = "sex",
+      config = list(
+        code_male = 1,
+        focal_fill_include = TRUE,
+        focal_fill_method = "zhue"
+      ),
+      dadID = "findex",
+      overlay_column = "affected",
+      status_column = "status"
     )
   )
 })

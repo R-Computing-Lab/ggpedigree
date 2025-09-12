@@ -488,12 +488,12 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     segment_linetype = segment_linetype,
     segment_lineend = segment_lineend,
     segment_linejoin = segment_linejoin,
-    segment_offspring_color = ifelse(segment_default_color=="black", segment_offspring_color, segment_default_color),
-    segment_parent_color =  ifelse(segment_default_color=="black", segment_parent_color, segment_default_color),
-    segment_self_color =  ifelse(segment_default_color=="black", segment_self_color, segment_default_color),
-    segment_sibling_color =  ifelse(segment_default_color=="black", segment_sibling_color, segment_default_color),
-    segment_spouse_color =  ifelse(segment_default_color=="black", segment_spouse_color, segment_default_color),
-    segment_mz_color =  ifelse(segment_default_color=="black", segment_mz_color, segment_default_color),
+    segment_offspring_color = ifelse(segment_default_color == "black", segment_offspring_color, segment_default_color),
+    segment_parent_color = ifelse(segment_default_color == "black", segment_parent_color, segment_default_color),
+    segment_self_color = ifelse(segment_default_color == "black", segment_self_color, segment_default_color),
+    segment_sibling_color = ifelse(segment_default_color == "black", segment_sibling_color, segment_default_color),
+    segment_spouse_color = ifelse(segment_default_color == "black", segment_spouse_color, segment_default_color),
+    segment_mz_color = ifelse(segment_default_color == "black", segment_mz_color, segment_default_color),
     segment_mz_linetype = segment_mz_linetype,
     segment_mz_alpha = segment_mz_alpha,
     segment_mz_t = segment_mz_t,
@@ -630,8 +630,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     core_list$return_widget <- FALSE
     core_list$return_interactive <- FALSE
     core_list$label_nudge_y_flip <- FALSE
-    core_list$axis_y_label  <- "Phenotypic Correlation"
-    core_list$axis_x_label  <- "Coefficient of Genetic Variation"
+    core_list$axis_y_label <- "Phenotypic Correlation"
+    core_list$axis_x_label <- "Coefficient of Genetic Variation"
     #  default_config <- list(
     #    apply_default_scales = TRUE,
     #    apply_default_theme = TRUE,

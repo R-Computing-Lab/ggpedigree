@@ -314,23 +314,21 @@ test_that("ggPedigreeInteractive optimize_plotly reduces object size", {
   library(BGmisc)
   data("potter") # load example data from BGmisc
 
-plotly_og <- ggPedigreeInteractive(
-  potter,
-  famID    = "famID",
-  personID = "personID",
-  momID    = "momID",
-  dadID    = "dadID",config = list(optimize_plotly=FALSE, tooltip_include = FALSE)
-) |> plotly::hide_legend()
+  plotly_og <- ggPedigreeInteractive(
+    potter,
+    famID = "famID",
+    personID = "personID",
+    momID = "momID",
+    dadID = "dadID", config = list(optimize_plotly = FALSE, tooltip_include = FALSE)
+  ) |> plotly::hide_legend()
 
-plotly_optimized <- ggPedigreeInteractive(
-  potter,
-  famID    = "famID",
-  personID = "personID",
-  momID    = "momID",
-  dadID    = "dadID", config = list(optimize_plotly=TRUE, tooltip_include = FALSE)
-) |> plotly::hide_legend()
+  plotly_optimized <- ggPedigreeInteractive(
+    potter,
+    famID = "famID",
+    personID = "personID",
+    momID = "momID",
+    dadID = "dadID", config = list(optimize_plotly = TRUE, tooltip_include = FALSE)
+  ) |> plotly::hide_legend()
 
   expect_lt(object.size(plotly_optimized), object.size(plotly_og))
 })
-
-

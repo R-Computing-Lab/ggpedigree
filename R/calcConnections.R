@@ -202,7 +202,7 @@ calculateConnections <- function(ped,
     parent_midpoints <- connections |>
       dplyr::filter(.data$link_as_sibling &
         !is.na(.data$dadID) & !is.na(.data$momID)) |>
-    #  unique() |>
+      #  unique() |>
       dplyr::group_by(.data$parent_hash) |>
       dplyr::summarize(
         x_midparent = mean(c(
@@ -222,7 +222,7 @@ calculateConnections <- function(ped,
       .data$link_as_spouse,
       !is.na(.data$spouseID)
     ) |>
-  #  unique() |>
+    #  unique() |>
     dplyr::group_by(.data$spouseID, .data$couple_hash) |>
     dplyr::summarize(
       x_mid_spouse = mean(c(
@@ -234,7 +234,7 @@ calculateConnections <- function(ped,
         dplyr::first(.data$y_spouse, na_rm = TRUE)
       )),
       .groups = "drop"
-    )# |> unique()
+    ) # |> unique()
 
   # Calculate sibling group midpoints
   sibling_midpoints <- connections |>
@@ -245,7 +245,7 @@ calculateConnections <- function(ped,
         !is.na(.data$x_dad) & !is.na(.data$y_dad) & # dad’s coordinates linked
         !is.na(.data$x_fam)
     ) |>
- #   unique() |>
+    #   unique() |>
     dplyr::group_by(
       .data$parent_hash,
       .data$x_mom, .data$y_mom,
@@ -389,7 +389,7 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
         suffix = c("", "_spouse"),
         multiple = "any"
       ) |>
-       unique() |>
+      unique() |>
       dplyr::rename(
         x_spouse = "x_pos_spouse",
         y_spouse = "y_pos_spouse"

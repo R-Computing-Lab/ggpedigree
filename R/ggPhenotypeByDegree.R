@@ -272,7 +272,7 @@ ggPhenotypeByDegree.core <- function(df,
       labels = scales::trans_format("log2", scales::label_math(.5^.x, format = abs))
     ) +
       labs(
-        x = config$axis_x_label, #"Degree of Relatedness",
+        x = config$axis_x_label, # "Degree of Relatedness",
         y = config$axis_y_label,
         title = config$plot_title,
         subtitle = config$plot_subtitle,
@@ -289,7 +289,7 @@ ggPhenotypeByDegree.core <- function(df,
       labels = scales::label_parse()
     ) +
       labs(
-        x = config$axis_x_label, #"Coefficient of Genetic Variation",
+        x = config$axis_x_label, # "Coefficient of Genetic Variation",
         y = config$axis_y_label,
         title = config$plot_title,
         subtitle = config$plot_subtitle,
