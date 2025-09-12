@@ -20,6 +20,7 @@
 * Vectorized part of calcCoordinates
 * removed redundant plotPedigree  verbose section
 * add log2 option for relatedness
+* Improve plotly conversion
 
 # ggpedigree 0.8.0
 ## cran release
