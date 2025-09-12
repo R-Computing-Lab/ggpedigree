@@ -1,3 +1,5 @@
+# ggpedigree (development version)
+
 # ggpedigree 0.9.0
 * smarter segment coloring
 * added setting to hide legend for sex
