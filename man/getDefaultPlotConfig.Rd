@@ -82,6 +82,8 @@ getDefaultPlotConfig(
   sex_shape_female = 16,
   sex_shape_male = 15,
   sex_shape_unknown = 18,
+  sex_shape_include = TRUE,
+  sex_legend_show = TRUE,
   status_include = TRUE,
   status_code_affected = 1,
   status_code_unaffected = 0,
@@ -325,6 +327,10 @@ getDefaultPlotConfig(
 \item{sex_shape_male}{Shape for male nodes.}
 
 \item{sex_shape_unknown}{Shape for unknown sex nodes.}
+
+\item{sex_shape_include}{Whether to display the shape for sex variables}
+
+\item{sex_legend_show}{Whether to display sex in the legend}
 
 \item{status_include}{Whether to display affected status.}
 

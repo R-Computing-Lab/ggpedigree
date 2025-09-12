@@ -879,7 +879,8 @@ addSelfSegment <- .addSelfSegment
   }
 
   # Add color scale for sex or affected status if applicable
-  if (config$sex_color_include == TRUE) {
+  if (config$sex_color_include == TRUE
+      ) {
     if (!is.null(config$sex_color_palette)) {
       plotObject <- plotObject + ggplot2::scale_color_manual(
         values = config$sex_color_palette,
@@ -895,6 +896,9 @@ addSelfSegment <- .addSelfSegment
         color = config$sex_legend_title,
         shape = config$sex_legend_title
       )
+    if (config$sex_legend_show == FALSE) {
+      plotObject <- plotObject + ggplot2::guides(color = "none")
+    }
   } else if (config$focal_fill_include == TRUE) {
     if (config$focal_fill_method %in% c("steps", "steps2", "step", "step2")) {
       plotObject <- plotObject + ggplot2::scale_colour_steps2(
