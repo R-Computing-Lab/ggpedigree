@@ -19,7 +19,7 @@ computeCurvedMidpoint(x0, y0, x1, y1, curvature, angle, shift = 0, t = 0.5)
 \item{y1}{Numeric vector. Y-coordinates of end points.}
 
 \item{curvature}{Curvature scale factor (as in
-*geom\_curve*-style helpers): the control point is placed at a distance
+*geom_curve*-style helpers): the control point is placed at a distance
 `curvature * len` from the segment midpoint in the rotated-perpendicular
 direction. Changing the sign flips the bend to the opposite side (after
 rotation).}

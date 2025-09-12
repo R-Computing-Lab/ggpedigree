@@ -14,7 +14,7 @@
 #' @param t  Numeric scalar or vector in [0, 1]. Bézier parameter where 0 is the start point,
 #' 1 is the end point; default 0.5.
 #' @param curvature Curvature scale factor (as in
-#'   *geom\_curve*-style helpers): the control point is placed at a distance
+#'   *geom_curve*-style helpers): the control point is placed at a distance
 #'   `curvature * len` from the segment midpoint in the rotated-perpendicular
 #'   direction. Changing the sign flips the bend to the opposite side (after
 #'   rotation).

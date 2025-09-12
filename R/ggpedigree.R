@@ -321,11 +321,13 @@ ggPedigree.core <- function(ped,
   config$gap_woff <- 0.5 * config$generation_width # single constant for all “stub” offsets
 
 
-    p <- ggplot2::ggplot(ds,
-                         ggplot2::aes(
-                           x = .data$x_pos,
-                           y = .data$y_pos
-                         ))
+  p <- ggplot2::ggplot(
+    ds,
+    ggplot2::aes(
+      x = .data$x_pos,
+      y = .data$y_pos
+    )
+  )
 
   # -----
   # STEP 7: Add Segments
@@ -385,27 +387,28 @@ ggPedigree.core <- function(ped,
     )
 
   # if twins
- if (inherits(plot_connections$twin_coords, "data.frame")) {
-      plot_connections$twin_coords <- plot_connections$twin_coords |>
-        dplyr::mutate(
-          x_start = .data$x_pos + config$segment_mz_t * (.data$x_mid_twin - .data$x_pos),
-          y_start = .data$y_pos + config$segment_mz_t * ((.data$y_mid_twin - config$gap_hoff) - .data$y_pos),
-          x_end   = .data$x_twin + config$segment_mz_t * (.data$x_mid_twin - .data$x_twin),
-          y_end   = .data$y_twin + config$segment_mz_t * ((.data$y_mid_twin - config$gap_hoff) - .data$y_twin)
-        ) |>
-        left_join(
-          connections |>
-            dplyr::select(!!rlang::sym(personID), "x_mid_sib", "y_mid_sib"),
-          # the twin_coords file didn't have its variables restored
-          by = join_by(personID == !!rlang::sym(personID))
-        )
+  if (inherits(plot_connections$twin_coords, "data.frame")) {
+    plot_connections$twin_coords <- plot_connections$twin_coords |>
+      dplyr::mutate(
+        x_start = .data$x_pos + config$segment_mz_t * (.data$x_mid_twin - .data$x_pos),
+        y_start = .data$y_pos + config$segment_mz_t * ((.data$y_mid_twin - config$gap_hoff) - .data$y_pos),
+        x_end   = .data$x_twin + config$segment_mz_t * (.data$x_mid_twin - .data$x_twin),
+        y_end   = .data$y_twin + config$segment_mz_t * ((.data$y_mid_twin - config$gap_hoff) - .data$y_twin)
+      ) |>
+      left_join(
+        connections |>
+          dplyr::select(!!rlang::sym(personID), "x_mid_sib", "y_mid_sib"),
+        # the twin_coords file didn't have its variables restored
+        by = join_by(personID == !!rlang::sym(personID))
+      )
 
-      p <- addTwins(plotObject=p,
-                    connections=connections,
-                    config=config,
-                    plot_connections=plot_connections,
-                    personID = personID)
-
+    p <- addTwins(
+      plotObject = p,
+      connections = connections,
+      config = config,
+      plot_connections = plot_connections,
+      personID = personID
+    )
   }
 
   p <- p +
@@ -856,7 +859,7 @@ addSelfSegment <- .addSelfSegment
 
   # Add color scale for sex or affected status if applicable
   if (config$sex_color_include == TRUE
-      ) {
+  ) {
     if (!is.null(config$sex_color_palette)) {
       plotObject <- plotObject + ggplot2::scale_color_manual(
         values = config$sex_color_palette,
@@ -884,8 +887,7 @@ addSelfSegment <- .addSelfSegment
         midpoint = config$focal_fill_scale_midpoint,
         n.breaks = config$focal_fill_n_breaks,
         na.value = config$focal_fill_na_value,
-        transform = ifelse(config$focal_fill_use_log,"log2","identity")
-
+        transform = ifelse(config$focal_fill_use_log, "log2", "identity")
       )
     } else if (config$focal_fill_method %in% c("gradient2", "gradient")) {
       plotObject <- plotObject + ggplot2::scale_colour_gradient2(
@@ -895,7 +897,7 @@ addSelfSegment <- .addSelfSegment
         midpoint = config$focal_fill_scale_midpoint,
         n.breaks = config$focal_fill_n_breaks,
         na.value = config$focal_fill_na_value,
-        transform = ifelse(config$focal_fill_use_log,"log2","identity")
+        transform = ifelse(config$focal_fill_use_log, "log2", "identity")
       )
     } else if (config$focal_fill_method %in% c("hue")) {
       plotObject <- plotObject + ggplot2::scale_color_hue(
@@ -903,8 +905,8 @@ addSelfSegment <- .addSelfSegment
         c = config$focal_fill_chroma,
         l = config$focal_fill_lightness,
         direction = config$focal_fill_hue_direction,
-        na.value = config$focal_fill_na_value#,
-      #  transform = ifelse(config$focal_fill_use_log,"log2","identity")
+        na.value = config$focal_fill_na_value # ,
+        #  transform = ifelse(config$focal_fill_use_log,"log2","identity")
       )
     } else if (config$focal_fill_method %in% c("viridis_c")) {
       plotObject <- plotObject + ggplot2::scale_colour_viridis_c(
@@ -913,7 +915,7 @@ addSelfSegment <- .addSelfSegment
         end = config$focal_fill_viridis_end,
         direction = config$focal_fill_viridis_direction,
         na.value = config$focal_fill_na_value,
-        transform = ifelse(config$focal_fill_use_log,"log2","identity")
+        transform = ifelse(config$focal_fill_use_log, "log2", "identity")
       )
     } else if (config$focal_fill_method %in% c("viridis_d")) {
       plotObject <- plotObject + ggplot2::scale_colour_viridis_d(
@@ -921,8 +923,8 @@ addSelfSegment <- .addSelfSegment
         begin = config$focal_fill_viridis_begin,
         end = config$focal_fill_viridis_end,
         direction = config$focal_fill_viridis_direction,
-        na.value = config$focal_fill_na_value#,
-     #   transform = ifelse(config$focal_fill_use_log,"log2","identity")
+        na.value = config$focal_fill_na_value # ,
+        #   transform = ifelse(config$focal_fill_use_log,"log2","identity")
       )
     } else if (config$focal_fill_method %in% c("viridis_b")) {
       plotObject <- plotObject + ggplot2::scale_colour_viridis_b(
@@ -931,7 +933,7 @@ addSelfSegment <- .addSelfSegment
         end = config$focal_fill_viridis_end,
         direction = config$focal_fill_viridis_direction,
         na.value = config$focal_fill_na_value,
-        transform = ifelse(config$focal_fill_use_log,"log2","identity")
+        transform = ifelse(config$focal_fill_use_log, "log2", "identity")
       )
     } else if (config$focal_fill_method %in% c("manual")) {
       plotObject <- plotObject + ggplot2::scale_color_manual(
@@ -939,12 +941,14 @@ addSelfSegment <- .addSelfSegment
         labels = config$focal_fill_labels
       )
     } else {
-      focal_fill_methods <- c("steps", "steps2", "step", "step2",
-                              "viridis_c", "viridis_d","viridis_b",
-                              "manual",
-                              "hue",
-                              "gradient2", "gradient")
-      stop(paste("focal_fill_method must be one of", paste(focal_fill_methods, collapse = ', ')))
+      focal_fill_methods <- c(
+        "steps", "steps2", "step", "step2",
+        "viridis_c", "viridis_d", "viridis_b",
+        "manual",
+        "hue",
+        "gradient2", "gradient"
+      )
+      stop(paste("focal_fill_method must be one of", paste(focal_fill_methods, collapse = ", ")))
     }
     plotObject <- plotObject +
       ggplot2::labs(
@@ -1432,66 +1436,66 @@ addFocalFillColumn <- function(ds_ped,
 #' @keywords internal
 #' @return A ggplot object with twin segments added.
 
-addTwins <-  function(plotObject,
-                      connections,
-                      config,
-                      plot_connections,
-                      personID = "personID") {
+addTwins <- function(plotObject,
+                     connections,
+                     config,
+                     plot_connections,
+                     personID = "personID") {
   # Sibling vertical drop line
   # special handling for twin sibling
 
-    plotObject <- plotObject + ggplot2::geom_segment(
+  plotObject <- plotObject + ggplot2::geom_segment(
+    data = plot_connections$twin_coords,
+    ggplot2::aes(
+      x = .data$x_mid_twin,
+      xend = .data$x_mid_sib,
+      y = .data$y_mid_twin - config$gap_hoff,
+      yend = .data$y_mid_sib - config$gap_hoff
+    ),
+    linewidth = config$segment_linewidth,
+    lineend = config$segment_lineend,
+    linejoin = config$segment_linejoin,
+    linetype = config$segment_linetype,
+    color = config$segment_offspring_color,
+    na.rm = TRUE
+  ) +
+    ggplot2::geom_segment(
       data = plot_connections$twin_coords,
       ggplot2::aes(
-        x = .data$x_mid_twin,
-        xend = .data$x_mid_sib,
-        y = .data$y_mid_twin - config$gap_hoff,
-        yend = .data$y_mid_sib - config$gap_hoff
+        x = .data$x_pos,
+        xend = .data$x_mid_twin,
+        y = .data$y_pos,
+        yend = .data$y_mid_twin - config$gap_hoff
       ),
       linewidth = config$segment_linewidth,
       lineend = config$segment_lineend,
       linejoin = config$segment_linejoin,
       linetype = config$segment_linetype,
-      color = config$segment_offspring_color,
+      color = config$segment_sibling_color,
       na.rm = TRUE
-    ) +
+    )
+
+  if ("mz" %in% names(plot_connections$twin_coords) &&
+    any(plot_connections$twin_coords$mz == TRUE)) {
+    plotObject <- plotObject + # horizontal line to twin midpoint for MZ twins
       ggplot2::geom_segment(
-        data = plot_connections$twin_coords,
+        data = plot_connections$twin_coords |>
+          dplyr::filter(.data$mz == TRUE),
         ggplot2::aes(
-          x = .data$x_pos,
-          xend = .data$x_mid_twin,
-          y = .data$y_pos,
-          yend = .data$y_mid_twin - config$gap_hoff
+          x = .data$x_start,
+          xend = .data$x_end,
+          y = .data$y_start,
+          yend = .data$y_end
         ),
         linewidth = config$segment_linewidth,
         lineend = config$segment_lineend,
         linejoin = config$segment_linejoin,
-        linetype = config$segment_linetype,
-        color = config$segment_sibling_color,
+        linetype = config$segment_mz_linetype,
+        color = config$segment_mz_color,
+        alpha = config$segment_mz_alpha,
         na.rm = TRUE
       )
-
-    if ("mz" %in% names(plot_connections$twin_coords) &&
-        any(plot_connections$twin_coords$mz == TRUE)) {
-      plotObject <- plotObject + # horizontal line to twin midpoint for MZ twins
-        ggplot2::geom_segment(
-          data = plot_connections$twin_coords |>
-            dplyr::filter(.data$mz == TRUE),
-          ggplot2::aes(
-            x = .data$x_start,
-            xend = .data$x_end,
-            y = .data$y_start,
-            yend = .data$y_end
-          ),
-          linewidth = config$segment_linewidth,
-          lineend = config$segment_lineend,
-          linejoin = config$segment_linejoin,
-          linetype = config$segment_mz_linetype,
-          color = config$segment_mz_color,
-          alpha = config$segment_mz_alpha,
-          na.rm = TRUE
-        )
-    }
+  }
 
   return(plotObject)
 }

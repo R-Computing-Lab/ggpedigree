@@ -165,6 +165,7 @@
 #' @param return_widget Whether to return a widget object.
 #' @param return_interactive Whether to return an interactive plot.
 #' @param return_midparent Whether to return midparent values in the plot.
+#' @param optimize_plotly Whether to optimize the plotly output for speed.
 #' @param override_many2many Whether to override many-to-many link logic.
 #' @param hints Optional hints to pass along to kinship2::autohint
 #' @param relation Optional relation to pass along to kinship2::pedigree
@@ -371,6 +372,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  # ---- Debugging Options ----
                                  debug = FALSE,
                                  override_many2many = FALSE,
+                                 optimize_plotly = TRUE,
+                                 # ---- Future Extensibility ----
                                  ...) {
   # Ensure the color palette is a character vector
   if (!is.character(color_palette_default) ||
@@ -485,12 +488,12 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     segment_linetype = segment_linetype,
     segment_lineend = segment_lineend,
     segment_linejoin = segment_linejoin,
-    segment_offspring_color = ifelse(segment_default_color=="black", segment_offspring_color, segment_default_color),
-    segment_parent_color =  ifelse(segment_default_color=="black", segment_parent_color, segment_default_color),
-    segment_self_color =  ifelse(segment_default_color=="black", segment_self_color, segment_default_color),
-    segment_sibling_color =  ifelse(segment_default_color=="black", segment_sibling_color, segment_default_color),
-    segment_spouse_color =  ifelse(segment_default_color=="black", segment_spouse_color, segment_default_color),
-    segment_mz_color =  ifelse(segment_default_color=="black", segment_mz_color, segment_default_color),
+    segment_offspring_color = ifelse(segment_default_color == "black", segment_offspring_color, segment_default_color),
+    segment_parent_color = ifelse(segment_default_color == "black", segment_parent_color, segment_default_color),
+    segment_self_color = ifelse(segment_default_color == "black", segment_self_color, segment_default_color),
+    segment_sibling_color = ifelse(segment_default_color == "black", segment_sibling_color, segment_default_color),
+    segment_spouse_color = ifelse(segment_default_color == "black", segment_spouse_color, segment_default_color),
+    segment_mz_color = ifelse(segment_default_color == "black", segment_mz_color, segment_default_color),
     segment_mz_linetype = segment_mz_linetype,
     segment_mz_alpha = segment_mz_alpha,
     segment_mz_t = segment_mz_t,
@@ -597,6 +600,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     relation = relation,
     # ---- Debugging Options ----
     override_many2many = override_many2many,
+    optimize_plotly = optimize_plotly,
     debug = debug
   )
   lc_function_name <- stringr::str_to_lower(function_name)
@@ -626,7 +630,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     core_list$return_widget <- FALSE
     core_list$return_interactive <- FALSE
     core_list$label_nudge_y_flip <- FALSE
-    core_list$axis_y_label  <- "Phenotypic Correlation"
+    core_list$axis_y_label <- "Phenotypic Correlation"
+    core_list$axis_x_label <- "Coefficient of Genetic Variation"
     #  default_config <- list(
     #    apply_default_scales = TRUE,
     #    apply_default_theme = TRUE,
@@ -665,6 +670,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     core_list$label_method <- "geom_text" # "ggrepel"
     core_list$label_column <- personID
     core_list$label_nudge_y_flip <- TRUE
+    core_list$value_rounding_digits <- 3
     # core_list$focal_fill_low_color <- core_list$color_palette_low
     # core_list$focal_fill_mid_color <- core_list$color_palette_mid
     # core_list$focal_fill_high_color <- core_list$color_palette_high

@@ -202,7 +202,7 @@ calculateConnections <- function(ped,
     parent_midpoints <- connections |>
       dplyr::filter(.data$link_as_sibling &
         !is.na(.data$dadID) & !is.na(.data$momID)) |>
-      unique() |>
+      #  unique() |>
       dplyr::group_by(.data$parent_hash) |>
       dplyr::summarize(
         x_midparent = mean(c(
@@ -222,7 +222,7 @@ calculateConnections <- function(ped,
       .data$link_as_spouse,
       !is.na(.data$spouseID)
     ) |>
-    unique() |>
+    #  unique() |>
     dplyr::group_by(.data$spouseID, .data$couple_hash) |>
     dplyr::summarize(
       x_mid_spouse = mean(c(
@@ -234,8 +234,7 @@ calculateConnections <- function(ped,
         dplyr::first(.data$y_spouse, na_rm = TRUE)
       )),
       .groups = "drop"
-    ) |>
-    unique()
+    ) # |> unique()
 
   # Calculate sibling group midpoints
   sibling_midpoints <- connections |>
@@ -246,7 +245,7 @@ calculateConnections <- function(ped,
         !is.na(.data$x_dad) & !is.na(.data$y_dad) & # dad’s coordinates linked
         !is.na(.data$x_fam)
     ) |>
-    unique() |>
+    #   unique() |>
     dplyr::group_by(
       .data$parent_hash,
       .data$x_mom, .data$y_mom,
@@ -256,8 +255,7 @@ calculateConnections <- function(ped,
       x_mid_sib = mean(.data$x_pos),
       y_mid_sib = dplyr::first(.data$y_pos, na_rm = TRUE),
       .groups = "drop"
-    ) |>
-    unique()
+    ) #|> unique()
 
 
   if (config$return_midparent == TRUE) {
@@ -280,7 +278,7 @@ calculateConnections <- function(ped,
         "x_dad", "y_dad"
       )
     ) |>
-    unique() |>
+    unique() |> # should reduce filesize
     dplyr::mutate(
       x_mid_sib = dplyr::case_when(
         is.na(.data$x_dad) & is.na(.data$x_mom) ~ NA_real_,
@@ -299,7 +297,6 @@ calculateConnections <- function(ped,
       x_mid_sib = dplyr::if_else(.data$link_as_sibling, .data$x_mid_sib, NA_real_),
       y_mid_sib = dplyr::if_else(.data$link_as_sibling, .data$y_mid_sib, NA_real_)
     )
-
 
   if (exists("full_extra") && !is.null(full_extra$self_coords)) {
     plot_connections <- list(
@@ -392,11 +389,11 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
         suffix = c("", "_spouse"),
         multiple = "any"
       ) |>
+      unique() |>
       dplyr::rename(
         x_spouse = "x_pos_spouse",
         y_spouse = "y_pos_spouse"
       ) |>
-      unique() |>
       dplyr::mutate(
         x_start = .data$x_spouse,
         x_end = .data$x_pos,
