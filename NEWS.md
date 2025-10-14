@@ -1,6 +1,8 @@
 # ggpedigree 0.9.0
 ## cran release
 * smarter segment coloring
+* smarter scaling for ggRelatednessMatrix with sqrt transformation by default
+* added color_scale_trans parameter to control scale transformation (identity, sqrt, log)
 * added setting to hide legend for sex
 * avoided sapply() in ggPedigreeInteractive
 * added subfunction for adding twins
