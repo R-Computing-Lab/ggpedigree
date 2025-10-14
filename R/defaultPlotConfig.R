@@ -156,6 +156,7 @@
 #' @param tile_cluster Whether to sort by clusters the matrix.
 #' @param tile_na_rm Whether to remove NA values in matrix tiles.
 #' @param tile_linejoin Line join type for matrix tiles.
+#' @param color_scale_trans Transformation to apply to color scale. Options are "identity" (linear, default for most plots), "sqrt" (square root, good for genetic relatedness), "log" (logarithmic), or any scales transformation. For genetic relatedness matrices, "sqrt" provides better visual distinction of typical relatedness levels.
 #' @param matrix_diagonal_include Whether to include diagonal in matrix plots.
 #' @param matrix_upper_triangle_include Whether to include upper triangle in matrix plots.
 #' @param matrix_lower_triangle_include Whether to include lower triangle in matrix plots.
@@ -355,6 +356,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  tile_geom = "geom_tile",
                                  tile_na_rm = FALSE,
                                  tile_linejoin = "mitre",
+                                 color_scale_trans = "identity",
                                  # ---- matrix settings ----
                                  matrix_diagonal_include = TRUE,
                                  matrix_upper_triangle_include = FALSE,
@@ -579,6 +581,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     tile_geom = tile_geom,
     tile_na_rm = tile_na_rm,
     tile_linejoin = tile_linejoin,
+    color_scale_trans = color_scale_trans,
 
     # ---- matrix settings ----
     matrix_sparse = matrix_sparse,
@@ -615,6 +618,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     # )
 
     core_list$color_scale_midpoint <- 0.25
+    core_list$color_scale_trans <- "sqrt"  # Use sqrt transformation for better distinction of genetic relatedness levels
     core_list$plot_title <- "Relatedness Matrix"
     core_list$axis_x_label <- "Individual"
     core_list$axis_y_label <- core_list$axis_x_label

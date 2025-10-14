@@ -222,7 +222,8 @@ ggRelatednessMatrix.core <- function(
       low = config$tile_color_palette[1],
       mid = config$tile_color_palette[2],
       high = config$tile_color_palette[3],
-      midpoint = config$color_scale_midpoint
+      midpoint = config$color_scale_midpoint,
+      trans = config$color_scale_trans
     ) +
     ggplot2::theme_minimal() +
     ggplot2::theme(

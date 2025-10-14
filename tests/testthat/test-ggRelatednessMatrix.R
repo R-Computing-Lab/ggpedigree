@@ -157,3 +157,64 @@ test_that("ggRelatednessMatrix stops on incorrect input", {
     ggRelatednessMatrix(data.frame(ID = 1:3))
   )
 })
+
+test_that("ggRelatednessMatrix supports scale transformations", {
+  library(BGmisc)
+  data("redsquirrels")
+
+  # Set target family for visualization
+  fam_filter <- 160
+
+  # Filter for reasonably sized family, recode sex if needed
+  ped_filtered <- redsquirrels %>%
+    BGmisc::recodeSex(code_female = "F") %>%
+    dplyr::filter(famID == fam_filter)
+
+  # Calculate relatedness matrices
+  add_mat <- BGmisc::ped2add(ped_filtered, isChild_method = "partialparent", sparse = FALSE)
+
+  # Test with sqrt transformation (default for relatedness matrix)
+  p_sqrt <- ggRelatednessMatrix(
+    add_mat,
+    config = list(
+      tile_color_palette = c("white", "orange", "red"),
+      color_scale_midpoint = 0.25,
+      tile_cluster = FALSE,
+      plot_title = "Sqrt Transform"
+    )
+  )
+  expect_s3_class(p_sqrt, "gg")
+  # Check that the scale has sqrt transformation
+  expect_equal(p_sqrt$scales$scales[[1]]$trans$name, "sqrt")
+
+  # Test with identity (linear) transformation
+  p_identity <- ggRelatednessMatrix(
+    add_mat,
+    config = list(
+      tile_color_palette = c("white", "orange", "red"),
+      color_scale_midpoint = 0.25,
+      tile_cluster = FALSE,
+      color_scale_trans = "identity",
+      plot_title = "Linear Transform"
+    )
+  )
+  expect_s3_class(p_identity, "gg")
+  # Check that the scale has identity transformation
+  expect_equal(p_identity$scales$scales[[1]]$trans$name, "identity")
+
+  # Test with log transformation
+  p_log <- ggRelatednessMatrix(
+    add_mat,
+    config = list(
+      tile_color_palette = c("white", "orange", "red"),
+      color_scale_midpoint = 0.25,
+      tile_cluster = FALSE,
+      color_scale_trans = "log",
+      plot_title = "Log Transform"
+    )
+  )
+  expect_s3_class(p_log, "gg")
+  # Check that the scale has log transformation
+  expect_equal(p_log$scales$scales[[1]]$trans$name, "log-10")
+})
+
