@@ -135,7 +135,8 @@
 #' @param focal_fill_shape Shape used for focal fill points.
 #' @param focal_fill_n_breaks Number of breaks in focal fill scale.
 #' @param focal_fill_na_value Color for NA values in focal fill.
-#' @param focal_fill_use_log Whether to use log scale for focal fill.
+#' @param focal_fill_use_log Deprecated. Use focal_fill_trans instead.
+#' @param focal_fill_trans Transformation to apply to focal fill scale. Options: "identity" (linear, default), "sqrt" (square root, good for genetic relatedness), "log", "log10", "log2". This provides better visual distinction for typical genetic relatedness levels.
 #' @param focal_fill_force_zero Whether to force zero to NA in focal fill.
 #' @param focal_fill_hue_range Hue range for focal fill colors.
 #' @param focal_fill_color_values A character vector of colors for focal fill.
@@ -151,12 +152,12 @@
 #' @param ci_ribbon_alpha Alpha level for CI ribbons.
 #' @param tile_color_palette Color palette for matrix plots.
 #' @param tile_color_border Color border for matrix tiles.
+#' @param tile_color_scale_trans Transformation to apply to tile color scale. Options: "identity" (linear), "sqrt" (square root, default for genetic relatedness), "log", "log10", "log2". For genetic relatedness matrices, "sqrt" provides better visual distinction of typical relatedness levels.
 #' @param tile_interpolate Whether to interpolate colors in matrix tiles.
 #' @param tile_geom Geometry type for matrix tiles (e.g., "geom_tile", "geom_raster").
 #' @param tile_cluster Whether to sort by clusters the matrix.
 #' @param tile_na_rm Whether to remove NA values in matrix tiles.
 #' @param tile_linejoin Line join type for matrix tiles.
-#' @param color_scale_trans Transformation to apply to color scale. Options are "identity" (linear, default for most plots), "sqrt" (square root, good for genetic relatedness), "log" (logarithmic), or any scales transformation. For genetic relatedness matrices, "sqrt" provides better visual distinction of typical relatedness levels.
 #' @param matrix_diagonal_include Whether to include diagonal in matrix plots.
 #' @param matrix_upper_triangle_include Whether to include upper triangle in matrix plots.
 #' @param matrix_lower_triangle_include Whether to include lower triangle in matrix plots.
@@ -312,7 +313,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  focal_fill_na_value = "black",
                                  focal_fill_shape = 21, # shape for focal fill points
                                  focal_fill_force_zero = FALSE, # work around that sets zero to NA so you can distinguish from low values
-                                 focal_fill_use_log = FALSE,
+                                 focal_fill_use_log = FALSE, # deprecated, use focal_fill_trans instead
+                                 focal_fill_trans = "identity", # transformation for focal fill scale: identity, sqrt, log, log10, log2
                                  focal_fill_hue_range = c(0, 360),
                                  focal_fill_chroma = 50,
                                  focal_fill_lightness = 50,
@@ -352,11 +354,11 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  tile_color_palette = c("white", "gold", "red"),
                                  tile_interpolate = TRUE,
                                  tile_color_border = NA,
+                                 tile_color_scale_trans = "identity", # transformation for tile color scale
                                  tile_cluster = TRUE,
                                  tile_geom = "geom_tile",
                                  tile_na_rm = FALSE,
                                  tile_linejoin = "mitre",
-                                 color_scale_trans = "identity",
                                  # ---- matrix settings ----
                                  matrix_diagonal_include = TRUE,
                                  matrix_upper_triangle_include = FALSE,
@@ -558,7 +560,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     focal_fill_n_breaks = focal_fill_n_breaks,
     focal_fill_shape = focal_fill_shape, # shape for focal fill points
     focal_fill_na_value = focal_fill_na_value,
-    focal_fill_use_log = focal_fill_use_log, # use log scale for focal fill
+    focal_fill_use_log = focal_fill_use_log, # deprecated, use focal_fill_trans instead
+    focal_fill_trans = focal_fill_trans, # transformation for focal fill scale
     focal_fill_force_zero = focal_fill_force_zero, # work around that sets zero to NA so you can distinguish from low values
     focal_fill_hue_range = focal_fill_hue_range, # hue range for focal fill
     focal_fill_chroma = focal_fill_chroma, # chroma for focal fill
@@ -576,12 +579,12 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     # ---- tile settings ----
     tile_color_palette = tile_color_palette,
     tile_color_border = tile_color_border,
+    tile_color_scale_trans = tile_color_scale_trans,
     tile_cluster = tile_cluster,
     tile_interpolate = tile_interpolate,
     tile_geom = tile_geom,
     tile_na_rm = tile_na_rm,
     tile_linejoin = tile_linejoin,
-    color_scale_trans = color_scale_trans,
 
     # ---- matrix settings ----
     matrix_sparse = matrix_sparse,
@@ -618,7 +621,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     # )
 
     core_list$color_scale_midpoint <- 0.25
-    core_list$color_scale_trans <- "sqrt"  # Use sqrt transformation for better distinction of genetic relatedness levels
+    core_list$tile_color_scale_trans <- "sqrt"  # Use sqrt for better distinction of genetic relatedness
     core_list$plot_title <- "Relatedness Matrix"
     core_list$axis_x_label <- "Individual"
     core_list$axis_y_label <- core_list$axis_x_label
@@ -681,6 +684,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
   }
   if (lc_function_name %in% c("ggpedigree")) {
     # core_list$label_method <- "ggrepel"
+    core_list$focal_fill_trans <- "sqrt"  # Use sqrt for better distinction of genetic relatedness
     core_list$return_static <- FALSE
     core_list$return_widget <- FALSE
     core_list$return_interactive <- FALSE

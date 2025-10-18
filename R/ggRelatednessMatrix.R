@@ -15,7 +15,7 @@
 #'  \describe{
 #'   \item{matrix_color_palette}{A vector of colors for the heatmap (default: Reds scale)}
 #'   \item{color_scale_midpoint}{Numeric midpoint for diverging color scale (default: 0.25)}
-#'   \item{color_scale_trans}{Transformation applied to color scale. Default is "sqrt" for better visual distinction of genetic relatedness levels. Use "identity" for linear scale, or "log" for logarithmic.}
+#'   \item{tile_color_scale_trans}{Transformation for color scale: "identity" (linear), "sqrt" (default for relatedness), "log", "log10", "log2"}
 #'   \item{plot_title}{Plot title}
 #'   \item{matrix_cluster}{Logical; should rows/cols be clustered (default: TRUE)}
 #'   \item{axis_x_label, axis_y_label}{Axis labels}
@@ -43,19 +43,10 @@
 #'   )
 #' )
 #'
-#' # Plot with different scale transformations
-#' # Sqrt (default) - better for genetic relatedness
+#' # Use linear scale instead of sqrt (default)
 #' ggRelatednessMatrix(mat,
 #'   config = list(
-#'     color_scale_trans = "sqrt",
-#'     plot_title = "Relatedness Matrix (sqrt scale)"
-#'   )
-#' )
-#'
-#' # Linear scale
-#' ggRelatednessMatrix(mat,
-#'   config = list(
-#'     color_scale_trans = "identity",
+#'     tile_color_scale_trans = "identity",
 #'     plot_title = "Relatedness Matrix (linear scale)"
 #'   )
 #' )
@@ -241,7 +232,7 @@ ggRelatednessMatrix.core <- function(
       mid = config$tile_color_palette[2],
       high = config$tile_color_palette[3],
       midpoint = config$color_scale_midpoint,
-      trans = config$color_scale_trans
+      trans = config$tile_color_scale_trans
     ) +
     ggplot2::theme_minimal() +
     ggplot2::theme(

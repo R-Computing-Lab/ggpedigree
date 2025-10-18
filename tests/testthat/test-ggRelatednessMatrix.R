@@ -194,7 +194,7 @@ test_that("ggRelatednessMatrix supports scale transformations", {
       tile_color_palette = c("white", "orange", "red"),
       color_scale_midpoint = 0.25,
       tile_cluster = FALSE,
-      color_scale_trans = "identity",
+      tile_color_scale_trans = "identity",
       plot_title = "Linear Transform"
     )
   )
@@ -209,7 +209,7 @@ test_that("ggRelatednessMatrix supports scale transformations", {
       tile_color_palette = c("white", "orange", "red"),
       color_scale_midpoint = 0.25,
       tile_cluster = FALSE,
-      color_scale_trans = "log",
+      tile_color_scale_trans = "log10",
       plot_title = "Log Transform"
     )
   )
