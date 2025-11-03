@@ -487,3 +487,60 @@ test_that("buildSpouseSegments with use_hash=TRUE removes intermediate columns",
   expect_false("x_pos_parent2" %in% names(result))
   expect_false("y_pos_parent2" %in% names(result))
 })
+
+test_that("buildSpouseSegments with use_hash=FALSE handles unmatched spouseID", {
+  # Test case where spouse is not in connections_for_FOO
+  ped <- data.frame(
+    personID = c("A", "B"),
+    spouseID = c("Z", "A"), # Z doesn't exist in connections
+    x_pos = c(1, 3),
+    y_pos = c(1, 1),
+    stringsAsFactors = FALSE
+  )
+  
+  connections_for_FOO <- data.frame(
+    personID = c("A", "B"), # No Z
+    x_pos = c(1, 3),
+    y_pos = c(1, 1),
+    stringsAsFactors = FALSE
+  )
+  
+  result <- ggpedigree:::buildSpouseSegments(ped, connections_for_FOO, use_hash = FALSE)
+  
+  # A's spouse (Z) doesn't exist, so coordinates should be NA
+  A_row <- result[result$personID == "A", ]
+  expect_true(is.na(A_row$x_start))
+  expect_true(is.na(A_row$y_start))
+  
+  # B's spouse (A) exists, so coordinates should be present
+  B_row <- result[result$personID == "B", ]
+  expect_false(is.na(B_row$x_start))
+  expect_false(is.na(B_row$y_start))
+})
+
+test_that("buildSpouseSegments with use_hash=TRUE handles unmatched parent IDs", {
+  # Test case where parent IDs extracted from hash don't exist in connections
+  ped <- data.frame(
+    personID = c("C1", "C2"),
+    parent_hash = c("UnknownMom.UnknownDad", "Mom.Dad"),
+    stringsAsFactors = FALSE
+  )
+  
+  connections_for_FOO <- data.frame(
+    personID = c("Mom", "Dad", "C1", "C2"), # No UnknownMom or UnknownDad
+    x_pos = c(1, 2, 1.5, 1.8),
+    y_pos = c(1, 1, 2, 2),
+    stringsAsFactors = FALSE
+  )
+  
+  result <- ggpedigree:::buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
+  
+  expect_true(is.data.frame(result))
+  expect_equal(nrow(result), 2)
+  
+  # C1's parents don't exist, so some coordinates might be NA
+  C1_row <- result[1, ]
+  # The function should still return a row even if coordinates are NA
+  expect_true("x_start" %in% names(result))
+  expect_true("x_end" %in% names(result))
+})
