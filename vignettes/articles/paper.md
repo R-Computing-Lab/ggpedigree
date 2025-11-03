@@ -85,10 +85,10 @@ phenotypes across data sources. In other words, the needs are different.
 Second, most R-based tools offer no interactivity. Static graphics are
 often sufficient for publication, but interactivity improves exploration
 and communication during model development or data cleaning. A notable
-exception is pedtools [@vigeland2021], which offers a sister shiny app,
-QuickPed [@vigeland2022]. While the R ecosystem includes libraries, like
-plotly, that support interactive plotting, these features have yet to be
-integrated into pedigree functions.
+exception is `pedtools` [@vigeland2021], which offers a sister shiny
+app, `QuickPed` [@vigeland2022]. While the R ecosystem includes
+libraries, like `plotly`, that support interactive plotting, these
+features have yet to be integrated into pedigree functions.
 
 Third, scalability and extensibility remain limited across existing
 tools. Several R packages attempt to address these challenges with
@@ -107,13 +107,13 @@ designed for association testing. The `pedigreejs` package [@pedigreejs]
 provides an interactive pedigree editor but does not integrate with R or
 ggplot2, limiting its utility for R users.
 
-None of these packages offers the combination of modern ggplot2
-integration, interactive capabilities, and extensibility that ggpedigree
-provides. ggpedigree addresses these limitations by providing a
-comprehensive visualization framework built on modern R graphics
-infrastructure. It leverages the extensive customization capabilities of
-ggplot2 while adding specialized functionality for pedigree-specific
-visualization challenges.
+None of these packages offers the combination of modern `ggplot2`
+integration, interactive capabilities, and extensibility that
+`ggpedigree` provides. `ggpedigree` addresses these limitations by
+providing a comprehensive visualization framework built on modern R
+graphics infrastructure. It leverages the extensive customization
+capabilities of `ggplot2` while adding specialized functionality for
+pedigree-specific visualization challenges.
 
 ## Software Architecture
 
