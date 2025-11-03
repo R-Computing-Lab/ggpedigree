@@ -195,7 +195,7 @@ ggPedigree(potter,
 )
 ```
 
-`\includegraphics[width=0.95\textwidth,keepaspectratio]{potter_pedigree.png}`{=tex}
+`\includegraphics[width=0.55\textwidth,keepaspectratio]{potter_pedigree.png}`{=tex}
 
 I demonstrate several advanced features by restyling the figure from
 [@hunter2025tracing], to follow the Wake Forest brand identity
