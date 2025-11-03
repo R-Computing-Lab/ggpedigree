@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -328,9 +328,6 @@ purple.</p>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">inbreeding</span> <span class="co"># multigenerational pedigree with consanguinity</span></span>
 <span></span>
 <span></span>
-<span><span class="co"># df  &lt;- dplyr::filter(df, famID %in% c(5, 7))</span></span>
-<span></span>
-<span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
 <span>  <span class="va">df</span>,</span>
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
@@ -360,157 +357,141 @@ purple.</p>
 <div class="section level3">
 <h3 id="potter-pedigree-plots">Potter Pedigree Plots<a class="anchor" aria-label="anchor" href="#potter-pedigree-plots"></a>
 </h3>
-<p>These figures are used in the manuscript to illustrate the use of the
-<code>ggpedigree</code> package for plotting complex pedigrees. The
-first figure shows a simplified version of the Potter family pedigree,
-while the second figure includes additional family members and
-relationships.</p>
+<p>The package supports extensive customization of visual aesthetics.
+The following example is a figure from Hunter et al that used the Potter
+pedigree data. The figure has been restyled according to Wake Forest
+University brand identity guidelines to demonstrate ggpedigree’s
+customization capabilities. The figure combines two panels: panel (a)
+highlights unique mitochondrial lines in the Dursley and Evans families,
+while panel (b) shows the full pedigree with Molly Weasley’s
+mitochondrial descendants in gold.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/R-Computing-Lab/BGmisc/" class="external-link">BGmisc</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/R-Computing-Lab/ggpedigree/" class="external-link">ggpedigree</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/R-Computing-Lab/ggpedigree/" class="external-link">ggpedigree</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/R-Computing-Lab/BGmisc/" class="external-link">BGmisc</a></span><span class="op">)</span> <span class="co"># helper utilities &amp; example data</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span> <span class="co"># for combining plots</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yixuan/showtext" class="external-link">showtext</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: sysfonts</span></span>
+<span><span class="co">#&gt; Loading required package: showtextdb</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yixuan/sysfonts" class="external-link">sysfonts</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span> <span class="co"># combining plots</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"potter"</span><span class="op">)</span> <span class="co"># load the potter pedigree data</span></span>
 <span></span>
-<span><span class="va">df_potter</span> <span class="op">&lt;-</span> <span class="va">potter</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    name <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">~</span> <span class="st">"Vernon"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">2</span> <span class="op">~</span> <span class="st">"Marjorie"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">3</span> <span class="op">~</span> <span class="st">"Petunia"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">4</span> <span class="op">~</span> <span class="st">"Lily"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">5</span> <span class="op">~</span> <span class="st">"James"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">6</span> <span class="op">~</span> <span class="st">"Dudley"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">7</span> <span class="op">~</span> <span class="st">"Harry"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">8</span> <span class="op">~</span> <span class="st">"Ginny"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">9</span> <span class="op">~</span> <span class="st">"Arthur"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">10</span> <span class="op">~</span> <span class="st">"Molly"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">11</span> <span class="op">~</span> <span class="st">"Ron"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">12</span> <span class="op">~</span> <span class="st">"Fred"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">13</span> <span class="op">~</span> <span class="st">"George"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">14</span> <span class="op">~</span> <span class="st">"Percy"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">15</span> <span class="op">~</span> <span class="st">"Charlie"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">16</span> <span class="op">~</span> <span class="st">"Bill"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">17</span> <span class="op">~</span> <span class="st">"Hermione"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">18</span> <span class="op">~</span> <span class="st">"Fleur"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">19</span> <span class="op">~</span> <span class="st">"Gabrielle"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">20</span> <span class="op">~</span> <span class="st">"Audrey"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">21</span> <span class="op">~</span> <span class="st">"James"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">22</span> <span class="op">~</span> <span class="st">"Albus"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">23</span> <span class="op">~</span> <span class="st">"Lily"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">24</span> <span class="op">~</span> <span class="st">"Rose"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">25</span> <span class="op">~</span> <span class="st">"Hugo"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">26</span> <span class="op">~</span> <span class="st">"Victoire"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">27</span> <span class="op">~</span> <span class="st">"Dominique"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">28</span> <span class="op">~</span> <span class="st">"Louis"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">29</span> <span class="op">~</span> <span class="st">"Molly"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">30</span> <span class="op">~</span> <span class="st">"Lucy"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">101</span> <span class="op">~</span> <span class="st">"Mother"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">102</span> <span class="op">~</span> <span class="st">"Father"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">103</span> <span class="op">~</span> <span class="st">"Mother"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">104</span> <span class="op">~</span> <span class="st">"Father"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">105</span> <span class="op">~</span> <span class="st">"Mother"</span>,</span>
-<span>      <span class="va">personID</span> <span class="op">==</span> <span class="fl">106</span> <span class="op">~</span> <span class="st">"Father"</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
+<span><span class="co"># Load Google fonts for styling</span></span>
+<span><span class="co"># Load Google fonts for styling</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add_google.html" class="external-link">font_add_google</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Cormorant"</span>, family <span class="op">=</span> <span class="st">"cormorant"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_auto.html" class="external-link">showtext_auto</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># render Google fonts</span></span>
 <span></span>
-<span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span><span class="va">df_potter</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">personID</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">7</span>, <span class="fl">101</span><span class="op">:</span><span class="fl">104</span><span class="op">)</span><span class="op">)</span>,</span>
+<span><span class="co"># Set WFU style guidelines</span></span>
+<span><span class="va">text_color_wfu</span> <span class="op">&lt;-</span> <span class="st">"#222222"</span></span>
+<span><span class="va">focal_fill_color_values_wfu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"#9E7E38"</span>, <span class="st">"#000000"</span>, <span class="st">"#FDC314"</span>, <span class="st">"#CEB888"</span>, <span class="st">"#53565A"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">family_wfu</span> <span class="op">&lt;-</span> <span class="st">"cormorant"</span></span>
+<span><span class="va">text_size_wfu</span> <span class="op">&lt;-</span> <span class="fl">5.5</span></span>
+<span></span>
+<span><span class="co"># Panel A</span></span>
+<span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span><span class="va">potter</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">personID</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">7</span>, <span class="fl">101</span><span class="op">:</span><span class="fl">104</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
 <span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    label_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    label_column <span class="op">=</span> <span class="st">"name"</span>,</span>
+<span>    label_column <span class="op">=</span> <span class="st">"first_name"</span>,</span>
 <span>    point_size <span class="op">=</span> <span class="fl">8</span>,</span>
-<span>    <span class="co"># outline_include = TRUE,</span></span>
 <span>    focal_fill_personID <span class="op">=</span> <span class="fl">8</span>,</span>
-<span>    outline_multiplier <span class="op">=</span> <span class="fl">1.5</span>,</span>
 <span>    segment_linewidth <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>    label_text_size <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>    label_text_size <span class="op">=</span> <span class="fl">17</span>,</span>
+<span>    label_text_color <span class="op">=</span> <span class="va">text_color_wfu</span>,</span>
+<span>    axis_text_color <span class="op">=</span> <span class="va">text_color_wfu</span>,</span>
+<span>    label_text_family <span class="op">=</span> <span class="va">family_wfu</span>,</span>
 <span>    focal_fill_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    label_nudge_y <span class="op">=</span> <span class="fl">0.30</span>,</span>
-<span>    <span class="co">#   focal_fill_method = "viridis_d",</span></span>
-<span>    <span class="co">#   focal_fill_viridis_option = "inferno",</span></span>
+<span>    label_nudge_y <span class="op">=</span> <span class="op">-</span><span class="fl">0.3</span>,</span>
+<span>    label_nudge_y_flip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    focal_fill_method <span class="op">=</span> <span class="st">"manual"</span>,</span>
+<span>    focal_fill_color_values <span class="op">=</span> <span class="va">focal_fill_color_values_wfu</span>,</span>
 <span>    focal_fill_force_zero <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    label_method <span class="op">=</span> <span class="st">"geom_text"</span>,</span>
-<span>    focal_fill_na_value <span class="op">=</span> <span class="st">"grey10"</span>,</span>
+<span>    focal_fill_na_value <span class="op">=</span> <span class="va">text_color_wfu</span>,</span>
 <span>    focal_fill_scale_midpoint <span class="op">=</span> <span class="fl">0.40</span>,</span>
-<span>    <span class="co">#   focal_fill_n_breaks = 15,</span></span>
 <span>    focal_fill_component <span class="op">=</span> <span class="st">"matID"</span>,</span>
-<span>    focal_fill_method <span class="op">=</span> <span class="st">"manual"</span>,</span>
-<span>    focal_fill_color_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span> <span class="co"># okabe and ito</span></span>
-<span>      <span class="co">#   "#052f60",</span></span>
-<span>      <span class="st">"#e69f00"</span>, <span class="co"># "#56b4e9",</span></span>
-<span>      <span class="st">"#009e73"</span>,</span>
-<span>      <span class="st">"#f0e442"</span>, <span class="st">"#0072b2"</span>,</span>
-<span>      <span class="co"># "#d55e00",</span></span>
-<span>      <span class="st">"#cc79a7"</span></span>
-<span>    <span class="op">)</span>,</span>
 <span>    focal_fill_labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    focal_fill_legend_title <span class="op">=</span> <span class="st">"Additive\nGenetic\nRelatives \nof Harry"</span>,</span>
 <span>    sex_legend_show <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    <span class="co"># "additive",\</span></span>
-<span>    <span class="co"># label_text_angle = -35,</span></span>
 <span>    sex_color_include <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>  <span class="op">)</span> <span class="co"># highlight Harry Potter</span></span>
-<span>  <span class="co"># config  = list(segment_mz_color = NA) # color for monozygotic twins</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
 <span>  plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  plot.title.position <span class="op">=</span> <span class="st">"plot"</span></span>
+<span>  plot.title.position <span class="op">=</span> <span class="st">"plot"</span>,</span>
+<span>  text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="va">family_wfu</span>, size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span>
 <span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3.25</span>, <span class="fl">1</span><span class="op">)</span>, clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span><span class="va">df_potter</span>,</span>
+<span><span class="co"># Panel B</span></span>
+<span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span><span class="va">potter</span>,</span>
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
 <span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    label_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    label_column <span class="op">=</span> <span class="st">"name"</span>,</span>
+<span>    label_column <span class="op">=</span> <span class="st">"first_name"</span>,</span>
 <span>    point_size <span class="op">=</span> <span class="fl">8</span>,</span>
-<span>    <span class="co"># outline_include = TRUE,</span></span>
-<span>    focal_fill_personID <span class="op">=</span> <span class="fl">8</span>,</span>
-<span>    outline_multiplier <span class="op">=</span> <span class="fl">1.5</span>,</span>
+<span>    focal_fill_personID <span class="op">=</span> <span class="fl">8</span>, <span class="co"># Molly Weasley</span></span>
 <span>    segment_linewidth <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>    label_text_size <span class="op">=</span> <span class="fl">4.5</span>,</span>
-<span>    label_nudge_y <span class="op">=</span> <span class="fl">0.25</span>,</span>
-<span>    label_nudge_x <span class="op">=</span> <span class="fl">.1</span>,</span>
+<span>    label_text_size <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>    label_text_family <span class="op">=</span> <span class="va">family_wfu</span>,</span>
+<span>    label_text_color <span class="op">=</span> <span class="va">text_color_wfu</span>,</span>
+<span>    axis_text_color <span class="op">=</span> <span class="va">text_color_wfu</span>,</span>
+<span>    label_nudge_y <span class="op">=</span> <span class="op">-</span><span class="fl">0.25</span>,</span>
+<span>    label_nudge_y_flip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    label_nudge_x <span class="op">=</span> <span class="fl">.05</span>,</span>
 <span>    focal_fill_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    focal_fill_high_color <span class="op">=</span> <span class="st">"#d55e00"</span>,</span>
-<span>    focal_fill_mid_color <span class="op">=</span> <span class="st">"#d55e00"</span>,</span>
-<span>    focal_fill_low_color <span class="op">=</span> <span class="st">"grey10"</span>,</span>
+<span>    focal_fill_method <span class="op">=</span> <span class="st">"gradient2"</span>,</span>
+<span>    focal_fill_high_color <span class="op">=</span> <span class="st">"#9E7E38"</span>,</span>
+<span>    focal_fill_mid_color <span class="op">=</span> <span class="st">"#9E7E38"</span>,</span>
+<span>    focal_fill_low_color <span class="op">=</span> <span class="va">text_color_wfu</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span>
 <span>    focal_fill_scale_midpoint <span class="op">=</span> <span class="fl">0.85</span>,</span>
 <span>    focal_fill_component <span class="op">=</span> <span class="st">"mitochondrial"</span>,</span>
-<span>    <span class="co"># focal_fill_method = "steps",</span></span>
 <span>    focal_fill_force_zero <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    label_method <span class="op">=</span> <span class="st">"geom_text"</span>,</span>
-<span>    focal_fill_na_value <span class="op">=</span> <span class="st">"grey10"</span>,</span>
-<span>    <span class="co">#   focal_fill_n_breaks = 15,</span></span>
+<span>    label_method <span class="op">=</span> <span class="st">"ggrepel"</span>,</span>
+<span>    focal_fill_na_value <span class="op">=</span> <span class="va">text_color_wfu</span>,</span>
 <span>    label_text_angle <span class="op">=</span> <span class="op">-</span><span class="fl">30</span>,</span>
-<span>    <span class="co"># focal_fill_legend_title = "Additive\nGenetic\nRelatives \nof Harry",</span></span>
 <span>    sex_legend_show <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    <span class="co"># "additive",</span></span>
 <span>    sex_color_include <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>  <span class="op">)</span> <span class="co"># highlight Harry Potter</span></span>
-<span>  <span class="co"># config  = list(segment_mz_color = NA) # color for monozygotic twins</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
 <span>  legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>  plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  plot.title.position <span class="op">=</span> <span class="st">"plot"</span></span>
-<span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4.25</span>, <span class="fl">1</span><span class="op">)</span>, clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span></span></code></pre></div>
+<span>  plot.title.position <span class="op">=</span> <span class="st">"plot"</span>,</span>
+<span>  text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span></span>
+<span>    family <span class="op">=</span> <span class="va">family_wfu</span>,</span>
+<span>    size <span class="op">=</span> <span class="fl">14</span>, face <span class="op">=</span> <span class="st">"bold"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4.5</span>, <span class="fl">1</span><span class="op">)</span>, clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">m1</span> <span class="op">+</span> <span class="va">m2</span> <span class="op">+</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_auto.html" class="external-link">showtext_auto</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">m1</span> <span class="op">+</span> <span class="va">m2</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span></span>
 <span>    ncol <span class="op">=</span> <span class="fl">1</span>, heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.1</span>, <span class="fl">2.5</span><span class="op">)</span>,</span>
 <span>    guides <span class="op">=</span> <span class="st">"collect"</span>, tag_level <span class="op">=</span> <span class="st">"new"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html" class="external-link">plot_annotation</a></span><span class="op">(</span></span>
 <span>    tag_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"(a)"</span>, <span class="st">"(b)"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    theme <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">margin</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span>    theme <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">margin</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, <span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">&amp;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
 <span>    legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
-<span>    plot.margin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0.0</span>, <span class="fl">0</span><span class="op">)</span>, <span class="st">"lines"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<span>    plot.margin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0.0</span>, <span class="fl">0</span><span class="op">)</span>, <span class="st">"lines"</span><span class="op">)</span>,</span>
+<span>    plot.tag <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span></span>
+<span>      family <span class="op">=</span> <span class="va">family_wfu</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">4</span> <span class="op">*</span> <span class="va">text_size_wfu</span>, face <span class="op">=</span> <span class="st">"bold"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">result</span></span></code></pre></div>
 <p><img src="v01_plots_extended_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># save</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggsave</a></span><span class="op">(</span></span>
+<span>  filename <span class="op">=</span> <span class="st">"wfu_potter_pedigree.png"</span>,</span>
+<span>  plot <span class="op">=</span> <span class="va">result</span>,</span>
+<span>  width <span class="op">=</span> <span class="fl">9.5</span>, height <span class="op">=</span> <span class="fl">6</span>, dpi <span class="op">=</span> <span class="fl">300</span>, units <span class="op">=</span> <span class="st">"in"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
