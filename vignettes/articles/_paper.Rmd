@@ -66,7 +66,7 @@ None of these packages offers the combination of modern `ggplot2` integration, i
 
 ## Features
 
-I describe the main features of the `ggpedigree` package below. More detailed descriptions of features and usage is available in the [package vignettes](https://r-computing-lab.github.io/ggpedigree/articles/), including examples of how to create static and interactive pedigree plots, customize aesthetics, and visualize relatedness matrices. Additional example data include squirrel data from the Kluane Red Squirrel Project [@mcfarlane2015; @mcfarlane2014] and Targaryen family data from the Song of Ice and Fire universe [@martin1997; @martin2018].
+I describe the main features of the `ggpedigree` package below. More detailed descriptions of features and usage are available in the [package vignettes](https://r-computing-lab.github.io/ggpedigree/articles/), including examples of how to create static and interactive pedigree plots, customize aesthetics, and visualize relatedness matrices. Additional example data include squirrel data from the Kluane Red Squirrel Project [@mcfarlane2015; @mcfarlane2014] and Targaryen family data from the Song of Ice and Fire universe [@martin1997; @martin2018].
 
 -   Data Standardization and Family Structure Analysis: `ggPedigree()` integrates with BGmisc functions like `ped2fam()` to organize individuals by family, `recodeSex()` to standardize sex coding, and `checkParentIDs()` to validate pedigree structures. The function handles consanguineous relationships and individuals appearing in multiple pedigree positions.
 
@@ -90,15 +90,22 @@ ggPedigree(potter,
   personID = "personID"
 )
 ```
+
 This code produces the following pedigree plot:
+
 \includegraphics[width=0.65\textwidth,keepaspectratio]{potter_pedigree.png}
 
+The package supports extensive customization of visual aesthetics. The following 
+example applies the family lineage tracing algorithms from Hunter et al. 
+[@hunter2025tracing] and BGmisc to the Potter pedigree data. The figure has been restyled according to Wake Forest 
+University brand identity guidelines to demonstrate ggpedigree's customization 
+capabilities. The figure combines two panels:  panel (a) highlights unique mitochondrial lines in the Dursley and Evans families, while panel (b) shows the full pedigree with Molly Weasley’s mitochondrial descendants in gold. 
 
-I demonstrate several advanced features by restyling a figure from [@hunter2025tracing], to follow the Wake Forest brand identity guidelines. The source code for transforming these potter data is available in the package documentation on . The resulting figure appears below:
 
 \includegraphics[width=0.95\textwidth,keepaspectratio]{wfu_potter_pedigree.png}
 
-I have combined two figures using `patchwork` [@patchwork]: panel (a) highlights unique mitochondrial lines in the Dursley and Evans families, while panel (b) shows the full pedigree with Molly Weasley’s mitochondrial descendants in gold.
+The complete source code for this example is available in the package documentation at 
+<https://r-computing-lab.github.io/ggpedigree/articles/>.
 
 Collectively, these tools provide a valuable resource for behavior geneticists and others who work with extended family data. They were developed as part of a grant and have been used in several ongoing projects, presentations [@garrison2024; @hunter2024], and forthcoming papers [@lyu2025; @hunter2025tracing; @burt2025mtDNA].
 

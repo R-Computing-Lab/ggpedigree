@@ -132,7 +132,8 @@ standard R objects (ggplot or plotly) that can be further customized.
 ## Features
 
 I describe the main features of the `ggpedigree` package below. More
-detailed descriptions of features and usage is available in the [package
+detailed descriptions of features and usage are available in the
+[package
 vignettes](https://r-computing-lab.github.io/ggpedigree/articles/),
 including examples of how to create static and interactive pedigree
 plots, customize aesthetics, and visualize relatedness matrices.
@@ -196,20 +197,24 @@ ggPedigree(potter,
 ```
 
 This code produces the following pedigree plot:
+
 `\includegraphics[width=0.65\textwidth,keepaspectratio]{potter_pedigree.png}`{=tex}
 
-I demonstrate several advanced features by restyling a figure from
-[@hunter2025tracing], to follow the Wake Forest brand identity
-guidelines. The source code for transforming these potter data is
-available in the package documentation on . The resulting figure appears
-below:
+The package supports extensive customization of visual aesthetics. The
+following example applies the family lineage tracing algorithms from
+Hunter et al.  [@hunter2025tracing] and BGmisc to the Potter pedigree
+data. The figure has been restyled according to Wake Forest University
+brand identity guidelines to demonstrate ggpedigree's customization
+capabilities. The figure combines two panels: panel (a) highlights
+unique mitochondrial lines in the Dursley and Evans families, while
+panel (b) shows the full pedigree with Molly Weasley's mitochondrial
+descendants in gold.
 
 `\includegraphics[width=0.95\textwidth,keepaspectratio]{wfu_potter_pedigree.png}`{=tex}
 
-I have combined two figures using `patchwork` [@patchwork]: panel (a)
-highlights unique mitochondrial lines in the Dursley and Evans families,
-while panel (b) shows the full pedigree with Molly Weasley's
-mitochondrial descendants in gold.
+The complete source code for this example is available in the package
+documentation at
+<https://r-computing-lab.github.io/ggpedigree/articles/>.
 
 Collectively, these tools provide a valuable resource for behavior
 geneticists and others who work with extended family data. They were
