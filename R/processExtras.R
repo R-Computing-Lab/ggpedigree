@@ -39,7 +39,6 @@ processExtras <- function(ped, config = list()) {
   # ---- 2. Assign unique IDs and initial relationship flags ------------------
   ped$newID <- seq_len(nrow(ped))
 
-
   idsextras <- dplyr::filter(ped, .data$extra == TRUE) |>
     dplyr::select("personID") |>
     dplyr::pull() |>
