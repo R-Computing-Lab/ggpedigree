@@ -1,3 +1,6 @@
+# ggpedigree 0.9.1
+* Minor documentation revisions to complement JOSS paper update
+
 # ggpedigree 0.9.0
 ## cran release
 * smarter segment coloring

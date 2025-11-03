@@ -213,7 +213,7 @@ mitochondrial descendants in gold.
 
 The complete source code for this example is available in the package
 documentation at
-<https://r-computing-lab.github.io/ggpedigree/articles/>.
+<https://r-computing-lab.github.io/ggpedigree/articles/v01_plots_extended.html>.
 
 Collectively, these tools provide a valuable resource for behavior
 geneticists and others who work with extended family data. They were
