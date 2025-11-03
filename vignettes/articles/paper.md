@@ -85,10 +85,10 @@ phenotypes across data sources. In other words, the needs are different.
 Second, most R-based tools offer no interactivity. Static graphics are
 often sufficient for publication, but interactivity improves exploration
 and communication during model development or data cleaning. A notable
-exception is pedtools [@vigeland2021], which offers a sister shiny app,
-QuickPed [@vigeland2022]. While the R ecosystem includes libraries, like
-plotly, that support interactive plotting, these features have yet to be
-integrated into pedigree functions.
+exception is `pedtools` [@vigeland2021], which offers a sister shiny
+app, `QuickPed` [@vigeland2022]. While the R ecosystem includes
+libraries, like `plotly`, that support interactive plotting, these
+features have yet to be integrated into pedigree functions.
 
 Third, scalability and extensibility remain limited across existing
 tools. Several R packages attempt to address these challenges with
@@ -107,13 +107,13 @@ designed for association testing. The `pedigreejs` package [@pedigreejs]
 provides an interactive pedigree editor but does not integrate with R or
 ggplot2, limiting its utility for R users.
 
-None of these packages offers the combination of modern ggplot2
-integration, interactive capabilities, and extensibility that ggpedigree
-provides. ggpedigree addresses these limitations by providing a
-comprehensive visualization framework built on modern R graphics
-infrastructure. It leverages the extensive customization capabilities of
-ggplot2 while adding specialized functionality for pedigree-specific
-visualization challenges.
+None of these packages offers the combination of modern `ggplot2`
+integration, interactive capabilities, and extensibility that
+`ggpedigree` provides. `ggpedigree` addresses these limitations by
+providing a comprehensive visualization framework built on modern R
+graphics infrastructure. It leverages the extensive customization
+capabilities of `ggplot2` while adding specialized functionality for
+pedigree-specific visualization challenges.
 
 ## Software Architecture
 
@@ -132,7 +132,8 @@ standard R objects (ggplot or plotly) that can be further customized.
 ## Features
 
 I describe the main features of the `ggpedigree` package below. More
-detailed descriptions of features and usage is available in the [package
+detailed descriptions of features and usage are available in the
+[package
 vignettes](https://r-computing-lab.github.io/ggpedigree/articles/),
 including examples of how to create static and interactive pedigree
 plots, customize aesthetics, and visualize relatedness matrices.
@@ -176,7 +177,7 @@ data from the Song of Ice and Fire universe [@martin1997; @martin2018].
     pedigree plots using ggplot2. `ggPedigreeInteractive()` generates
     interactive pedigree plots using plotly. `ggRelatednessMatrix()`
     creates customizable heatmaps for relatedness matrices with support
-    for hierarchical clustering, and seamless integration with BGmisc
+    for hierarchical clustering, and seamless integration with `BGmisc`
     relatedness calculations. `ggPhenotypeByDegree()` visualizes
     phenotypic correlations as a function of genetic relatedness,
     including confidence intervals and statistical summaries for
@@ -195,18 +196,24 @@ ggPedigree(potter,
 )
 ```
 
-`\includegraphics[width=0.95\textwidth,keepaspectratio]{potter_pedigree.png}`{=tex}
+This code produces the following pedigree plot:
 
-I demonstrate several advanced features by restyling the figure from
-[@hunter2025tracing], to follow the Wake Forest brand identity
-guidelines; source code is in the appendix.
+`\includegraphics[width=0.65\textwidth,keepaspectratio]{potter_pedigree.png}`{=tex}
 
-`\includegraphics[width=0.95\textwidth,keepaspectratio]{wfu_potter_pedigree.png}`{=tex}
-
-I have combined two figures using `patchwork` [@patchwork]: panel (a)
+The package supports extensive customization of visual aesthetics. The
+following example is a figure from @hunter2025tracing that used the
+Potter pedigree data. The figure has been restyled according to Wake
+Forest University brand identity guidelines to demonstrate ggpedigree's
+customization capabilities. The figure combines two panels: panel (a)
 highlights unique mitochondrial lines in the Dursley and Evans families,
 while panel (b) shows the full pedigree with Molly Weasley's
 mitochondrial descendants in gold.
+
+`\includegraphics[width=0.95\textwidth,keepaspectratio]{wfu_potter_pedigree.png}`{=tex}
+
+The complete source code for this example is available in the package
+documentation at
+<https://r-computing-lab.github.io/ggpedigree/articles/v01_plots_extended.html>.
 
 Collectively, these tools provide a valuable resource for behavior
 geneticists and others who work with extended family data. They were

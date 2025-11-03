@@ -1,5 +1,8 @@
 # ggpedigree (development version)
 
+# ggpedigree 0.9.1
+* Minor documentation revisions to complement JOSS paper update
+
 # ggpedigree 0.9.0
 ## cran release
 * smarter segment coloring
@@ -25,7 +28,6 @@
 * Improve plotly conversion
 
 # ggpedigree 0.8.0
-## cran release
 ## joss paper submitted
 * Makes ggrepel a suggested package instead of a required one.
 * Make connections included in the plot by default.
