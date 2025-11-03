@@ -1,6 +1,7 @@
 # ggpedigree (development version)
 
 # ggpedigree 0.9.0
+## cran release
 * smarter segment coloring
 * added setting to hide legend for sex
 * avoided sapply() in ggPedigreeInteractive
