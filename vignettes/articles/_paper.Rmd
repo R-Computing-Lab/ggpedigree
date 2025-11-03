@@ -78,7 +78,7 @@ I describe the main features of the `ggpedigree` package below. More detailed de
 
 -   Individual Highlighting: Advanced functionality to highlight specific individuals and their relatives based on additive genetic, mitochondrial, or other relationship matrices.
 
--   Specific Visualization Functions: `ggPedigree()` creates static pedigree plots using ggplot2. `ggPedigreeInteractive()` generates interactive pedigree plots using plotly. `ggRelatednessMatrix()` creates customizable heatmaps for relatedness matrices with support for hierarchical clustering, and seamless integration with BGmisc relatedness calculations. `ggPhenotypeByDegree()` visualizes phenotypic correlations as a function of genetic relatedness, including confidence intervals and statistical summaries for quantitative genetic analysis.
+-   Specific Visualization Functions: `ggPedigree()` creates static pedigree plots using ggplot2. `ggPedigreeInteractive()` generates interactive pedigree plots using plotly. `ggRelatednessMatrix()` creates customizable heatmaps for relatedness matrices with support for hierarchical clustering, and seamless integration with `BGmisc` relatedness calculations. `ggPhenotypeByDegree()` visualizes phenotypic correlations as a function of genetic relatedness, including confidence intervals and statistical summaries for quantitative genetic analysis.
 
 ### Code example
 
@@ -90,15 +90,15 @@ ggPedigree(potter,
   personID = "personID"
 )
 ```
+This code produces the following pedigree plot:
+\includegraphics[width=0.65\textwidth,keepaspectratio]{potter_pedigree.png}
 
-\includegraphics[width=0.55\textwidth,keepaspectratio]{potter_pedigree.png}
 
-I demonstrate several advanced features by restyling the figure from [@hunter2025tracing], to follow the Wake Forest brand identity guidelines; source code is in the appendix.
+I demonstrate several advanced features by restyling a figure from [@hunter2025tracing], to follow the Wake Forest brand identity guidelines. The source code for transforming these potter data is available in the package documentation on . The resulting figure appears below:
 
 \includegraphics[width=0.95\textwidth,keepaspectratio]{wfu_potter_pedigree.png}
 
 I have combined two figures using `patchwork` [@patchwork]: panel (a) highlights unique mitochondrial lines in the Dursley and Evans families, while panel (b) shows the full pedigree with Molly Weasley’s mitochondrial descendants in gold.
-
 
 Collectively, these tools provide a valuable resource for behavior geneticists and others who work with extended family data. They were developed as part of a grant and have been used in several ongoing projects, presentations [@garrison2024; @hunter2024], and forthcoming papers [@lyu2025; @hunter2025tracing; @burt2025mtDNA].
 

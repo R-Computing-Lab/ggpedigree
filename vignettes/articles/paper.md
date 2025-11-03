@@ -176,7 +176,7 @@ data from the Song of Ice and Fire universe [@martin1997; @martin2018].
     pedigree plots using ggplot2. `ggPedigreeInteractive()` generates
     interactive pedigree plots using plotly. `ggRelatednessMatrix()`
     creates customizable heatmaps for relatedness matrices with support
-    for hierarchical clustering, and seamless integration with BGmisc
+    for hierarchical clustering, and seamless integration with `BGmisc`
     relatedness calculations. `ggPhenotypeByDegree()` visualizes
     phenotypic correlations as a function of genetic relatedness,
     including confidence intervals and statistical summaries for
@@ -195,11 +195,14 @@ ggPedigree(potter,
 )
 ```
 
-`\includegraphics[width=0.55\textwidth,keepaspectratio]{potter_pedigree.png}`{=tex}
+This code produces the following pedigree plot:
+`\includegraphics[width=0.65\textwidth,keepaspectratio]{potter_pedigree.png}`{=tex}
 
-I demonstrate several advanced features by restyling the figure from
+I demonstrate several advanced features by restyling a figure from
 [@hunter2025tracing], to follow the Wake Forest brand identity
-guidelines; source code is in the appendix.
+guidelines. The source code for transforming these potter data is
+available in the package documentation on . The resulting figure appears
+below:
 
 `\includegraphics[width=0.95\textwidth,keepaspectratio]{wfu_potter_pedigree.png}`{=tex}
 
