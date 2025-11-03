@@ -21,12 +21,12 @@ input_file <- file.path(input_dir, "_paper.Rmd")  # Update filename if needed
 output_dir <- input_dir  # Same as input location
 
 # Render md_document
-#render(
-#  input = input_file,
-#  output_format = "md_document",
-#  output_file = "paper.md",
-#  output_dir = output_dir
-#)
+render(
+  input = input_file,
+  output_format = "md_document",
+  output_file = "paper.md",
+  output_dir = output_dir
+)
 
 # Render rticles::joss_article
 render(
