@@ -96,10 +96,7 @@ This code produces the following pedigree plot:
 \includegraphics[width=0.65\textwidth,keepaspectratio]{potter_pedigree.png}
 
 The package supports extensive customization of visual aesthetics. The following 
-example applies the family lineage tracing algorithms from Hunter et al. 
-[@hunter2025tracing] and BGmisc to the Potter pedigree data. The figure has been restyled according to Wake Forest 
-University brand identity guidelines to demonstrate ggpedigree's customization 
-capabilities. The figure combines two panels:  panel (a) highlights unique mitochondrial lines in the Dursley and Evans families, while panel (b) shows the full pedigree with Molly Weasley’s mitochondrial descendants in gold. 
+example is a figure from @hunter2025tracing that used the Potter pedigree data. The figure has been restyled according to Wake Forest  University brand identity guidelines to demonstrate ggpedigree's customization capabilities. The figure combines two panels:  panel (a) highlights unique mitochondrial lines in the Dursley and Evans families, while panel (b) shows the full pedigree with Molly Weasley’s mitochondrial descendants in gold. 
 
 
 \includegraphics[width=0.95\textwidth,keepaspectratio]{wfu_potter_pedigree.png}
