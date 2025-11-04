@@ -399,12 +399,12 @@ with Molly Weasley’s mitochondrial descendants in gold.</p>
 <span>    point_size <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>    focal_fill_personID <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>    segment_linewidth <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>    label_text_size <span class="op">=</span> <span class="fl">14.5</span>,</span>
+<span>    label_text_size <span class="op">=</span> <span class="fl">17</span>,</span>
 <span>    label_text_color <span class="op">=</span> <span class="va">text_color_wfu</span>,</span>
 <span>    axis_text_color <span class="op">=</span> <span class="va">text_color_wfu</span>,</span>
 <span>    label_text_family <span class="op">=</span> <span class="va">family_wfu</span>,</span>
 <span>    focal_fill_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    label_nudge_y <span class="op">=</span> <span class="fl">0.15</span>,</span>
+<span>    label_nudge_y <span class="op">=</span> <span class="fl">0.3</span>,</span>
 <span>    focal_fill_method <span class="op">=</span> <span class="st">"manual"</span>,</span>
 <span>    focal_fill_color_values <span class="op">=</span> <span class="va">focal_fill_color_values_wfu</span>,</span>
 <span>    focal_fill_force_zero <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -428,14 +428,14 @@ with Molly Weasley’s mitochondrial descendants in gold.</p>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    label_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    label_column <span class="op">=</span> <span class="st">"first_name"</span>,</span>
-<span>    point_size <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>    point_size <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>    focal_fill_personID <span class="op">=</span> <span class="fl">8</span>, <span class="co"># Molly Weasley</span></span>
 <span>    segment_linewidth <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>    label_text_size <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>    label_text_size <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>    label_text_family <span class="op">=</span> <span class="va">family_wfu</span>,</span>
 <span>    label_text_color <span class="op">=</span> <span class="va">text_color_wfu</span>,</span>
 <span>    axis_text_color <span class="op">=</span> <span class="va">text_color_wfu</span>,</span>
-<span>    label_nudge_y <span class="op">=</span> <span class="fl">0.20</span>,</span>
+<span>    label_nudge_y <span class="op">=</span> <span class="fl">0.25</span>,</span>
 <span>    label_nudge_x <span class="op">=</span> <span class="fl">.05</span>,</span>
 <span>    focal_fill_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    focal_fill_method <span class="op">=</span> <span class="st">"gradient2"</span>,</span>
@@ -481,15 +481,14 @@ with Molly Weasley’s mitochondrial descendants in gold.</p>
 <span>      size <span class="op">=</span> <span class="fl">4</span> <span class="op">*</span> <span class="va">text_size_wfu</span>, face <span class="op">=</span> <span class="st">"bold"</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="va">result</span></span></code></pre></div>
-<p><img src="v01_plots_extended_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># save</span></span>
+<span></span>
+<span><span class="co"># save</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggsave</a></span><span class="op">(</span></span>
 <span>  filename <span class="op">=</span> <span class="st">"wfu_potter_pedigree.png"</span>,</span>
 <span>  plot <span class="op">=</span> <span class="va">result</span>,</span>
 <span>  width <span class="op">=</span> <span class="fl">9.5</span>, height <span class="op">=</span> <span class="fl">6</span>, dpi <span class="op">=</span> <span class="fl">300</span>, units <span class="op">=</span> <span class="st">"in"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<p><img src="wfu_potter_pedigree.png" width="100%"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
