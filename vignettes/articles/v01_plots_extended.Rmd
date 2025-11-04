@@ -275,17 +275,14 @@ p <- ggPedigree(
   )
 )
 
-p + facet_wrap(~famID, scales = "free") #+ scale_color_viridis(
-#   discrete = TRUE,
-#   labels = c("TRUE", "FALSE")
-#  )  + theme_bw(base_size = 14)  +  guides(colour="none", shape="none")
+p + facet_wrap(~famID, scales = "free")  +  
+  guides(colour="none", shape="none")
 ```
 
-## Potter Pedigree Plots
+## Advanced Styling Example
 
-
-The package supports extensive customization of visual aesthetics. The following 
-example is a figure from Hunter et al that used the Potter pedigree data. The figure has been restyled according to Wake Forest  University brand identity guidelines to demonstrate ggpedigree's customization capabilities. The figure combines two panels:  panel (a) highlights unique mitochondrial lines in the Dursley and Evans families, while panel (b) shows the full pedigree with Molly Weasley’s mitochondrial descendants in gold. 
+The package supports extensive customization of visual aesthetics. The following example is a figure from Hunter et al that used the Potter pedigree data. The figure has been restyled according to Wake Forest  University brand identity guidelines to demonstrate ggpedigree's customization capabilities, including fonts, labeling, and 
+ The figure combines two panels:  panel (a) highlights unique mitochondrial lines in the Dursley and Evans families, while panel (b) shows the full pedigree with Molly Weasley’s mitochondrial descendants in gold. 
 
 
 ```{r}
@@ -297,7 +294,6 @@ library(sysfonts)
 library(patchwork) # combining plots
 data("potter") # load the potter pedigree data
 
-# Load Google fonts for styling
 # Load Google fonts for styling
 font_add_google(name = "Cormorant", family = "cormorant")
 showtext_auto() # render Google fonts
@@ -325,8 +321,7 @@ m1 <- ggPedigree(potter %>% filter(personID %in% c(1:7, 101:104)),
     axis_text_color = text_color_wfu,
     label_text_family = family_wfu,
     focal_fill_include = TRUE,
-    label_nudge_y = -0.3,
-    label_nudge_y_flip = FALSE,
+    label_nudge_y = 0.3,
     focal_fill_method = "manual",
     focal_fill_color_values = focal_fill_color_values_wfu,
     focal_fill_force_zero = TRUE,
@@ -357,8 +352,7 @@ m2 <- ggPedigree(potter,
     label_text_family = family_wfu,
     label_text_color = text_color_wfu,
     axis_text_color = text_color_wfu,
-    label_nudge_y = -0.25,
-    label_nudge_y_flip = FALSE,
+    label_nudge_y = 0.25,
     label_nudge_x = .05,
     focal_fill_include = TRUE,
     focal_fill_method = "gradient2",
@@ -407,11 +401,15 @@ result <- m1 + m2 +
       size = 4 * text_size_wfu, face = "bold"
     )
   )
-result
+
 # save
 ggsave(
   filename = "wfu_potter_pedigree.png",
   plot = result,
   width = 9.5, height = 6, dpi = 300, units = "in"
 )
+```
+
+```{r, echo=FALSE, out.width="100%"}
+knitr::include_graphics("wfu_potter_pedigree.png")
 ```

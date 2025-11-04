@@ -125,7 +125,7 @@ calculateConnections <- function(ped,
   connections <- dplyr::select(ped, dplyr::all_of(select_vars)) |> unique()
 
 
-  # no duplications, so just use the same connections
+  # no duplication, so just use the same connections
   connections_skinny <- connections
 
   connections <- connections |>

@@ -6,7 +6,6 @@
 #' scaled by curvature * len and rotated by angle + shift (degrees).
 #' Vectorized over input coordinates and t.
 #'
-#'
 #' @param x0 Numeric vector. X-coordinates of start points.
 #' @param y0 Numeric vector. Y-coordinates of start points.
 #' @param x1 Numeric vector. X-coordinates of end points.
