@@ -280,22 +280,22 @@ test_that("buildSpouseSegments with use_hash=TRUE creates correct segments", {
     parent_hash = c("A.B", "A.B", NA),
     stringsAsFactors = FALSE
   )
-  
+
   connections_for_FOO <- data.frame(
     personID = c("A", "B", "C"),
     x_pos = c(1, 3, 2),
     y_pos = c(1, 1, 2),
     stringsAsFactors = FALSE
   )
-  
-  result <- ggpedigree:::buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
-  
+
+  result <- buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
+
   expect_true(is.data.frame(result))
   expect_true("x_start" %in% names(result))
   expect_true("y_start" %in% names(result))
   expect_true("x_end" %in% names(result))
   expect_true("y_end" %in% names(result))
-  
+
   # Check that segments were created for parent_hash entries
   result_with_coords <- result[!is.na(result$x_start) & !is.na(result$x_end), ]
   expect_true(nrow(result_with_coords) > 0)
@@ -310,7 +310,7 @@ test_that("buildSpouseSegments with use_hash=FALSE creates correct segments", {
     y_pos = c(1, 1, 2),
     stringsAsFactors = FALSE
   )
-  
+
   connections_for_FOO <- data.frame(
     personID = c("A", "B", "C"),
     spouseID = c("B", "A", NA),
@@ -318,15 +318,15 @@ test_that("buildSpouseSegments with use_hash=FALSE creates correct segments", {
     y_pos = c(1, 1, 2),
     stringsAsFactors = FALSE
   )
-  
-  result <- ggpedigree:::buildSpouseSegments(ped, connections_for_FOO, use_hash = FALSE)
-  
+
+  result <- buildSpouseSegments(ped, connections_for_FOO, use_hash = FALSE)
+
   expect_true(is.data.frame(result))
   expect_true("x_start" %in% names(result))
   expect_true("y_start" %in% names(result))
   expect_true("x_end" %in% names(result))
   expect_true("y_end" %in% names(result))
-  
+
   # Check that segments were created for spouses
   expect_equal(nrow(result), 2) # Only A and B have spouses
 })
@@ -340,7 +340,7 @@ test_that("buildSpouseSegments with use_hash=FALSE filters out NA spouseID", {
     y_pos = c(1, 1, 2, 2),
     stringsAsFactors = FALSE
   )
-  
+
   connections_for_FOO <- data.frame(
     personID = c("A", "B", "C", "D"),
     spouseID = c("B", "A", NA, NA),
@@ -348,9 +348,9 @@ test_that("buildSpouseSegments with use_hash=FALSE filters out NA spouseID", {
     y_pos = c(1, 1, 2, 2),
     stringsAsFactors = FALSE
   )
-  
-  result <- ggpedigree:::buildSpouseSegments(ped, connections_for_FOO, use_hash = FALSE)
-  
+
+  result <- buildSpouseSegments(ped, connections_for_FOO, use_hash = FALSE)
+
   # Only A and B should have segments (they're each other's spouses)
   expect_equal(nrow(result), 2)
   expect_true(all(result$personID %in% c("A", "B")))
@@ -363,16 +363,16 @@ test_that("buildSpouseSegments with use_hash=TRUE handles NA parent_hash", {
     parent_hash = c("A.B", "A.B", NA, NA),
     stringsAsFactors = FALSE
   )
-  
+
   connections_for_FOO <- data.frame(
     personID = c("A", "B", "C", "D"),
     x_pos = c(1, 3, 2, 4),
     y_pos = c(1, 1, 2, 2),
     stringsAsFactors = FALSE
   )
-  
-  result <- ggpedigree:::buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
-  
+
+  result <- buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
+
   expect_true(is.data.frame(result))
   # Should still process all rows but some will have NA coordinates
   expect_equal(nrow(result), 4)
@@ -387,7 +387,7 @@ test_that("buildSpouseSegments with use_hash=FALSE correctly maps spouse coordin
     y_pos = c(2, 3),
     stringsAsFactors = FALSE
   )
-  
+
   connections_for_FOO <- data.frame(
     personID = c("A", "B"),
     spouseID = c("B", "A"),
@@ -395,22 +395,22 @@ test_that("buildSpouseSegments with use_hash=FALSE correctly maps spouse coordin
     y_pos = c(2, 3),
     stringsAsFactors = FALSE
   )
-  
-  result <- ggpedigree:::buildSpouseSegments(ped, connections_for_FOO, use_hash = FALSE)
-  
+
+  result <- buildSpouseSegments(ped, connections_for_FOO, use_hash = FALSE)
+
   # Check A's row: should connect from B (spouse) to A
   A_row <- result[result$personID == "A", ]
   expect_equal(A_row$x_start, 5) # B's x position
   expect_equal(A_row$y_start, 3) # B's y position
-  expect_equal(A_row$x_end, 1)   # A's x position
-  expect_equal(A_row$y_end, 2)   # A's y position
-  
+  expect_equal(A_row$x_end, 1) # A's x position
+  expect_equal(A_row$y_end, 2) # A's y position
+
   # Check B's row: should connect from A (spouse) to B
   B_row <- result[result$personID == "B", ]
   expect_equal(B_row$x_start, 1) # A's x position
   expect_equal(B_row$y_start, 2) # A's y position
-  expect_equal(B_row$x_end, 5)   # B's x position
-  expect_equal(B_row$y_end, 3)   # B's y position
+  expect_equal(B_row$x_end, 5) # B's x position
+  expect_equal(B_row$y_end, 3) # B's y position
 })
 
 test_that("buildSpouseSegments with use_hash=TRUE extracts parent IDs correctly", {
@@ -420,19 +420,19 @@ test_that("buildSpouseSegments with use_hash=TRUE extracts parent IDs correctly"
     parent_hash = c("Mom1.Dad1", "Mom1.Dad1", "Mom2.Dad2", "Mom2.Dad2"),
     stringsAsFactors = FALSE
   )
-  
+
   connections_for_FOO <- data.frame(
     personID = c("Mom1", "Dad1", "Mom2", "Dad2", "C1", "C2", "C3", "C4"),
     x_pos = c(1, 2, 4, 5, 1.5, 1.8, 4.5, 4.8),
     y_pos = c(1, 1, 1, 1, 2, 2, 2, 2),
     stringsAsFactors = FALSE
   )
-  
-  result <- ggpedigree:::buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
-  
+
+  result <- buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
+
   expect_true(is.data.frame(result))
   expect_equal(nrow(result), 4)
-  
+
   # Check that coordinates were extracted from parent hash
   # For children with same parent_hash, they should have same start/end coords
   C1_row <- result[1, ]
@@ -450,7 +450,7 @@ test_that("buildSpouseSegments removes intermediate columns correctly", {
     y_pos = c(1, 1),
     stringsAsFactors = FALSE
   )
-  
+
   connections_for_FOO <- data.frame(
     personID = c("A", "B"),
     spouseID = c("B", "A"),
@@ -458,9 +458,9 @@ test_that("buildSpouseSegments removes intermediate columns correctly", {
     y_pos = c(1, 1),
     stringsAsFactors = FALSE
   )
-  
-  result <- ggpedigree:::buildSpouseSegments(ped, connections_for_FOO, use_hash = FALSE)
-  
+
+  result <- buildSpouseSegments(ped, connections_for_FOO, use_hash = FALSE)
+
   # Check that spouseID_spouse was removed
   expect_false("spouseID_spouse" %in% names(result))
 })
@@ -472,16 +472,16 @@ test_that("buildSpouseSegments with use_hash=TRUE removes intermediate columns",
     parent_hash = c("Mom.Dad", "Mom.Dad"),
     stringsAsFactors = FALSE
   )
-  
+
   connections_for_FOO <- data.frame(
     personID = c("Mom", "Dad", "C1", "C2"),
     x_pos = c(1, 2, 1.3, 1.7),
     y_pos = c(1, 1, 2, 2),
     stringsAsFactors = FALSE
   )
-  
-  result <- ggpedigree:::buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
-  
+
+  result <- buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
+
   # Check that intermediate columns were removed
   expect_false("parent_hash" %in% names(result))
   expect_false("parent1" %in% names(result))
@@ -501,7 +501,7 @@ test_that("buildSpouseSegments with use_hash=FALSE handles unmatched spouseID", 
     y_pos = c(1, 1),
     stringsAsFactors = FALSE
   )
-  
+
   connections_for_FOO <- data.frame(
     personID = c("A", "B"), # No Z
     spouseID = c("B", "A"),
@@ -509,14 +509,14 @@ test_that("buildSpouseSegments with use_hash=FALSE handles unmatched spouseID", 
     y_pos = c(1, 1),
     stringsAsFactors = FALSE
   )
-  
-  result <- ggpedigree:::buildSpouseSegments(ped, connections_for_FOO, use_hash = FALSE)
-  
+
+  result <- buildSpouseSegments(ped, connections_for_FOO, use_hash = FALSE)
+
   # A's spouse (Z) doesn't exist, so coordinates should be NA
   A_row <- result[result$personID == "A", ]
   expect_true(is.na(A_row$x_start))
   expect_true(is.na(A_row$y_start))
-  
+
   # B's spouse (A) exists, so coordinates should be present
   B_row <- result[result$personID == "B", ]
   expect_false(is.na(B_row$x_start))
@@ -530,19 +530,19 @@ test_that("buildSpouseSegments with use_hash=TRUE handles unmatched parent IDs",
     parent_hash = c("UnknownMom.UnknownDad", "Mom.Dad"),
     stringsAsFactors = FALSE
   )
-  
+
   connections_for_FOO <- data.frame(
     personID = c("Mom", "Dad", "C1", "C2"), # No UnknownMom or UnknownDad
     x_pos = c(1, 2, 1.5, 1.8),
     y_pos = c(1, 1, 2, 2),
     stringsAsFactors = FALSE
   )
-  
-  result <- ggpedigree:::buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
-  
+
+  result <- buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
+
   expect_true(is.data.frame(result))
   expect_equal(nrow(result), 2)
-  
+
   # C1's parents don't exist, so some coordinates might be NA
   C1_row <- result[1, ]
   # The function should still return a row even if coordinates are NA

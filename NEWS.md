@@ -1,4 +1,5 @@
 # ggpedigree (development version)
+* Added test coverage for buildSpouseSegments
 
 # ggpedigree 0.9.1
 * Minor documentation revisions to complement JOSS paper update
