@@ -275,11 +275,8 @@ p <- ggPedigree(
   )
 )
 
-p + facet_wrap(~famID, scales = "free") 
-#+ scale_color_viridis(
-#   discrete = TRUE,
-#   labels = c("TRUE", "FALSE")
-#  )  + theme_bw(base_size = 14)  +  guides(colour="none", shape="none")
+p + facet_wrap(~famID, scales = "free")  +  
+  guides(colour="none", shape="none")
 ```
 
 ## Advanced Styling Example
