@@ -313,6 +313,7 @@ test_that("buildSpouseSegments with use_hash=FALSE creates correct segments", {
   
   connections_for_FOO <- data.frame(
     personID = c("A", "B", "C"),
+    spouseID = c("B", "A", NA),
     x_pos = c(1, 3, 2),
     y_pos = c(1, 1, 2),
     stringsAsFactors = FALSE
@@ -342,6 +343,7 @@ test_that("buildSpouseSegments with use_hash=FALSE filters out NA spouseID", {
   
   connections_for_FOO <- data.frame(
     personID = c("A", "B", "C", "D"),
+    spouseID = c("B", "A", NA, NA),
     x_pos = c(1, 3, 2, 4),
     y_pos = c(1, 1, 2, 2),
     stringsAsFactors = FALSE
@@ -388,6 +390,7 @@ test_that("buildSpouseSegments with use_hash=FALSE correctly maps spouse coordin
   
   connections_for_FOO <- data.frame(
     personID = c("A", "B"),
+    spouseID = c("B", "A"),
     x_pos = c(1, 5),
     y_pos = c(2, 3),
     stringsAsFactors = FALSE
@@ -450,6 +453,7 @@ test_that("buildSpouseSegments removes intermediate columns correctly", {
   
   connections_for_FOO <- data.frame(
     personID = c("A", "B"),
+    spouseID = c("B", "A"),
     x_pos = c(1, 3),
     y_pos = c(1, 1),
     stringsAsFactors = FALSE
@@ -500,6 +504,7 @@ test_that("buildSpouseSegments with use_hash=FALSE handles unmatched spouseID", 
   
   connections_for_FOO <- data.frame(
     personID = c("A", "B"), # No Z
+    spouseID = c("B", "A"),
     x_pos = c(1, 3),
     y_pos = c(1, 1),
     stringsAsFactors = FALSE
