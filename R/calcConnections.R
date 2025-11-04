@@ -326,7 +326,7 @@ calculateConnections <- function(ped,
 #' Build spouse segments
 #'
 #' @inheritParams calculateConnections
-#' @param connections_for_FOO A data frame containing the connections for the spouse segments
+#' @param connections_for_FOO A data frame containing the connections for the spouse segments from parent connections
 #' @param use_hash Logical. If TRUE, use the parent_hash to build segments. If FALSE, use the spouseID.
 #' @return A data frame with the spouse segments
 #' @keywords internal

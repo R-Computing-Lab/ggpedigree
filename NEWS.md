@@ -1,3 +1,6 @@
+# ggpedigree (development version)
+* Added test coverage for buildSpouseSegments
+
 # ggpedigree 0.9.1
 * Minor documentation revisions to complement JOSS paper update
 
@@ -26,7 +29,6 @@
 * Improve plotly conversion
 
 # ggpedigree 0.8.0
-## cran release
 ## joss paper submitted
 * Makes ggrepel a suggested package instead of a required one.
 * Make connections included in the plot by default.
