@@ -15,6 +15,7 @@
 #'  \describe{
 #'   \item{matrix_color_palette}{A vector of colors for the heatmap (default: Reds scale)}
 #'   \item{color_scale_midpoint}{Numeric midpoint for diverging color scale (default: 0.25)}
+#'   \item{tile_color_scale_trans}{Transformation for color scale: "identity" (linear), "sqrt" (default for relatedness), "log", "log10", "log2"}
 #'   \item{plot_title}{Plot title}
 #'   \item{matrix_cluster}{Logical; should rows/cols be clustered (default: TRUE)}
 #'   \item{axis_x_label, axis_y_label}{Axis labels}
@@ -39,6 +40,14 @@
 #'     axis_x_label = "Individuals",
 #'     axis_y_label = "Individuals",
 #'     axis_text_size = 8
+#'   )
+#' )
+#'
+#' # Use linear scale instead of sqrt (default)
+#' ggRelatednessMatrix(mat,
+#'   config = list(
+#'     tile_color_scale_trans = "identity",
+#'     plot_title = "Relatedness Matrix (linear scale)"
 #'   )
 #' )
 ggRelatednessMatrix <- function(
@@ -222,7 +231,8 @@ ggRelatednessMatrix.core <- function(
       low = config$tile_color_palette[1],
       mid = config$tile_color_palette[2],
       high = config$tile_color_palette[3],
-      midpoint = config$color_scale_midpoint
+      midpoint = config$color_scale_midpoint,
+      trans = config$tile_color_scale_trans
     ) +
     ggplot2::theme_minimal() +
     ggplot2::theme(

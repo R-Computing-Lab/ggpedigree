@@ -7,6 +7,9 @@
 # ggpedigree 0.9.0
 ## cran release
 * smarter segment coloring
+* smarter scaling for gradient fills with new focal_fill_trans and tile_color_scale_trans parameters
+* added sqrt transformation as default for genetic relatedness visualization (ggpedigree and ggRelatednessMatrix)
+* deprecated focal_fill_use_log in favor of focal_fill_trans for more flexible transformations
 * added setting to hide legend for sex
 * avoided sapply() in ggPedigreeInteractive
 * added subfunction for adding twins
