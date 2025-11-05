@@ -2,13 +2,13 @@
 
 # From autohint.R file
 # Automatically generated from all.nw using noweb
-.autohint <- function(ped, hints, packed=TRUE, align=FALSE) {
+kinship2_autohint <- function(ped, hints, packed=TRUE, align=FALSE) {
     ## full documentation now in vignette: align_code_details.Rmd
     ## REferences to those sections appear here as:
     ## Doc: AutoHint
     if (!is.null(ped$hints)) return(ped$hints)  #nothing to do
     n <- length(ped$id)
-    depth <- .kindepth(ped, align=TRUE)
+    depth <- kinship2_kindepth(ped, align=TRUE)
 
     if (is.null(ped$relation)) relation <- NULL
     else  relation <- cbind(as.matrix(ped$relation[,1:2]),
@@ -109,7 +109,7 @@
 
     if (!missing(hints)) sptemp <- hints$spouse
     else sptemp <- NULL
-    plist <- .align.pedigree(ped, packed=packed, align=align,
+    plist <- kinship2_align.pedigree(ped, packed=packed, align=align,
                             hints=list(order=horder, spouse=sptemp))
     ## end doc init
     ## Doc: fixup, and findspouse/findsibs
@@ -230,23 +230,23 @@
         #
         # Recompute, since this shifts things on levels below
         #
-        plist <- .align.pedigree(ped, packed=packed, align=align,
+        plist <- kinship2_align.pedigree(ped, packed=packed, align=align,
                                 hints=list(order=horder, spouse=sptemp))
         }
     list(order=horder, spouse=sptemp)
     }
 
 
-# from align.pedigree.R
+# from kinship2_align.pedigree.R
 ## Automatically generated from all.nw using noweb
 
-.align.pedigree <- function(ped, packed=TRUE, width=10, align=TRUE, hints=ped$hints) {
+kinship2_align.pedigree <- function(ped, packed=TRUE, width=10, align=TRUE, hints=ped$hints) {
 
     if ('pedigreeList' %in% class(ped)) {
         nped <- length(unique(ped$famid))
         alignment <- vector('list', nped)
         for (i in 1:nped) {
-            temp <- .align.pedigree(ped[i], packed, width, align)
+            temp <- kinship2_align.pedigree(ped[i], packed, width, align)
             alignment[[i]] <- temp$alignment
             }
         ped$alignment <- alignment
@@ -255,7 +255,7 @@
         }
 
     if (is.null(hints)) {
-      hints <- try({.autohint(ped)}, silent=TRUE)
+      hints <- try({kinship2_autohint(ped)}, silent=TRUE)
       ## sometimes appears dim(ped) is empty (ped is NULL), so try fix here: (JPS 6/6/17
       if("try-error" %in% class(hints)) hints <- list(order=seq_len(max(1, dim(ped)))) ## 1:dim(ped))
     } else {
@@ -266,7 +266,7 @@
     dad <- ped$findex; mom <- ped$mindex  #save typing
     if (any(dad==0 & mom>0) || any(dad>0 & mom==0))
             stop("Everyone must have 0 parents or 2 parents, not just one")
-    level <- 1 + .kindepth(ped, align=TRUE)
+    level <- 1 + kinship2_kindepth(ped, align=TRUE)
 
     horder <- hints$order   # relative order of siblings within a family
 
@@ -311,16 +311,16 @@
     foundmom <- spouselist[noparents&!(spouselist[,1] %in% c(dupmom,dupdad)),2] # founding mothers
     founders <-  unique(c(dupmom, dupdad, foundmom))
     founders <-  founders[order(horder[founders])]  #use the hints to order them
-    rval <- alignped1(founders[1], dad, mom, level, horder,
+    rval <- kinship2_alignped1(founders[1], dad, mom, level, horder,
                               packed=packed, spouselist=spouselist)
 
     if (length(founders)>1) {
         spouselist <- rval$spouselist
         for (i in 2:length(founders)) {
-            rval2 <- alignped1(founders[i], dad, mom,
+            rval2 <- kinship2_alignped1(founders[i], dad, mom,
                                level, horder, packed, spouselist)
             spouselist <- rval2$spouselist
-            rval <- alignped3(rval, rval2, packed)
+            rval <- kinship2_alignped3(rval, rval2, packed)
             }
         }
     ## Doc: finish-align (1)
@@ -332,7 +332,7 @@
 
     # For each spouse pair, find out if it should be connected with
     #  a double line.  This is the case if they have a common ancestor
-    .ancestor <- function(me, momid, dadid) {
+    kinship2_ancestor <- function(me, momid, dadid) {
         alist <- me
         repeat {
             newlist <- c(alist, momid[alist], dadid[alist])
@@ -343,8 +343,8 @@
         alist[alist!=me]
         }
     for (i in (1:length(spouse))[spouse>0]) {
-        a1 <- .ancestor(nid[i], mom, dad)
-        a2 <- .ancestor(nid[i+maxdepth],mom, dad)  #matrices are in column order
+        a1 <- kinship2_ancestor(nid[i], mom, dad)
+        a2 <- kinship2_ancestor(nid[i+maxdepth],mom, dad)  #matrices are in column order
         if (any(duplicated(c(a1, a2)))) spouse[i] <- 2
         }
     ## Doc: finish align(2)
@@ -384,7 +384,7 @@
 # This can be called with a pedigree object, or with the
 # full argument list.  In the former case we can simply skip a step
 
-.kindepth <- function(id, dad.id, mom.id, align=FALSE) {
+kinship2_kindepth <- function(id, dad.id, mom.id, align=FALSE) {
     if ("pedigree" %in% class(id) || "pedigreeList" %in% class(id)) {
         didx <- id$findex
         midx <- id$mindex
@@ -448,7 +448,7 @@
     ##It may be possible to do better alignment when the pedigree has loops,
     ##but it is definitely beyond this program, perhaps in autohint one day.
 
-    chaseup <- function(x, midx, didx) {
+    kinship2_chaseup <- function(x, midx, didx) {
         new <- c(midx[x], didx[x])  # mother and father
         new <- new[new>0]
         while (length(new) >1) {
@@ -457,7 +457,7 @@
             new <- new[new>0]
         }
         x
-    } ## chaseup()
+    } ## kinship2_chaseup()
 
     ## First deal with any parents who are founders
     ##  They all start with depth 0
@@ -500,13 +500,13 @@
         if (depth[dads[who]] > depth[moms[who]]) {
             good <- dads[who]; bad <- moms[who]
         }
-        abad  <- chaseup(bad,  midx, didx)
+        abad  <- kinship2_chaseup(bad,  midx, didx)
         if (length(abad) ==1 && sum(c(dads,moms)==bad)==1) {
                                         # simple case, a solitary marry-in
             depth[bad] <- depth[good]
         }
         else {
-            agood <- chaseup(good, midx, didx)  #ancestors of the "good" side
+            agood <- kinship2_chaseup(good, midx, didx)  #ancestors of the "good" side
             ## For spouse chasing, I need to exclude the given pair
             tdad <- dads[-who]
             tmom <- moms[-who]
@@ -515,7 +515,7 @@
                 spouse <- c(tmom[!is.na(match(tdad, agood))],
                             tdad[!is.na(match(tmom, agood))])
                 temp <- unique(c(agood, spouse))
-                temp <- unique(chaseup(temp, midx, didx)) #parents
+                temp <- unique(kinship2_chaseup(temp, midx, didx)) #parents
                 kids <- (!is.na(match(midx, temp)) | !is.na(match(didx, temp)))
                 temp <- unique(c(temp, (1:n)[kids & depth <= depth[good]]))
                 if (length(temp) == length(agood)) break

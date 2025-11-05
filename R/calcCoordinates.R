@@ -257,7 +257,7 @@ alignPedigreeWithRelations <- function(ped,
   ped_recode <- BGmisc::recodeSex(ped, code_male = code_male)
   if ("relation" %in% names(config) && !is.null(config$relation)) {
     # Construct a pedigree object to compute layout coordinates
-    ped_ped <- kinship2::pedigree(
+    ped_ped <- kinship2_pedigree(
       id = ped[[personID]],
       dadid = ped[[dadID]],
       momid = ped[[momID]],
@@ -265,7 +265,7 @@ alignPedigreeWithRelations <- function(ped,
       relation = config$relation
     )
   } else {
-    ped_ped <- kinship2::pedigree(
+    ped_ped <- kinship2_pedigree(
       id = ped[[personID]],
       dadid = ped[[dadID]],
       momid = ped[[momID]],
