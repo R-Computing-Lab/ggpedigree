@@ -65,7 +65,7 @@ kinship2_alignped1 <- function(x, dad, mom, level, horder, packed, spouselist){
         ispouse <- spouse[i]
         children <- which((dad==x & mom==ispouse) | (dad==ispouse & mom==x))
         if (length(children) > 0) {
-            rval1 <- alignped2(children, dad, mom, level, horder,
+            rval1 <- kinship2_alignped2(children, dad, mom, level, horder,
                               packed, spouselist)
             spouselist <- rval1$spouselist
             # set the parentage for any kids
@@ -101,7 +101,7 @@ kinship2_alignped1 <- function(x, dad, mom, level, horder, packed, spouselist){
                 nokids <- FALSE
                 }
             else {
-                rval <- alignped3(rval, rval1, packed)
+                rval <- kinship2_alignped3(rval, rval1, packed)
                 }
             }
         }

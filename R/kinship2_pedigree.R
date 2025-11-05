@@ -392,7 +392,7 @@ print.pedigree <- function(x, ...) {
     cat("Pedigree object with", length(x$id), "subjects")
     if (!is.null(x$famid)) cat(", family id=", x$famid[1], "\n")
     else cat("\n")
-    cat("Bit size=", bitSize(x)$bitSize, "\n")
+    cat("Bit size=", kinship2_bitSize(x)$bitSize, "\n")
 }
 
 #' @rdname pedigree

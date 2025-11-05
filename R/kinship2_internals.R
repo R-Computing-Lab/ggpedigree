@@ -259,7 +259,7 @@ kinship2_align.pedigree <- function(ped, packed=TRUE, width=10, align=TRUE, hint
       ## sometimes appears dim(ped) is empty (ped is NULL), so try fix here: (JPS 6/6/17
       if("try-error" %in% class(hints)) hints <- list(order=seq_len(max(1, dim(ped)))) ## 1:dim(ped))
     } else {
-      hints <- check.hint(hints, ped$sex)
+      hints <- kinship2_check.hint(hints, ped$sex)
     }
     ## Doc: Setup-align
     n <- length(ped$id)
@@ -365,7 +365,7 @@ kinship2_align.pedigree <- function(ped, packed=TRUE, width=10, align=TRUE, hint
     else twins <- NULL
     ## Doc: finish align(3)
     if ((is.numeric(align) || align) && max(level) >1)
-        pos <- alignped4(rval, spouse>0, level, width, align)
+        pos <- kinship2_alignped4(rval, spouse>0, level, width, align)
     else pos <- rval$pos
 
     if (is.null(twins))
