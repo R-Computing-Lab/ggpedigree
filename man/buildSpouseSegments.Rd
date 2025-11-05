@@ -9,7 +9,7 @@ buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
 \arguments{
 \item{ped}{A data frame containing the pedigree data. Needs personID, momID, and dadID columns}
 
-\item{connections_for_FOO}{A data frame containing the connections for the spouse segments}
+\item{connections_for_FOO}{A data frame containing the connections for the spouse segments from parent connections}
 
 \item{use_hash}{Logical. If TRUE, use the parent_hash to build segments. If FALSE, use the spouseID.}
 }

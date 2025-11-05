@@ -27,8 +27,7 @@ ggPedigreeInteractive <- function(ped,
                                   tooltip_columns = NULL,
                                   focal_fill_column = NULL,
                                   overlay_column = NULL,
-                                  config = list(optimize_plotly = TRUE
-                                    ),
+                                  config = list(optimize_plotly = TRUE),
                                   debug = FALSE,
                                   return_widget = TRUE,
                                   phantoms = FALSE,
@@ -109,22 +108,21 @@ ggPedigreeInteractive <- function(ped,
     stop("None of the specified tooltip_columns found in `ped`.")
   }
 
-#  if (config$optimize_static == TRUE) {
-#    static_plot <- optimizeStaticPedigree(static_plot, config=config)
-#  }
-   # assign("DEBUG_static_plot", static_plot, envir = .GlobalEnv)
+  #  if (config$optimize_static == TRUE) {
+  #    static_plot <- optimizeStaticPedigree(static_plot, config=config)
+  #  }
+  # assign("DEBUG_static_plot", static_plot, envir = .GlobalEnv)
 
   ## 3. Convert ggplot → plotly ---------------------------------------------
   #   Add the tooltip text to the data frame
   if (config$tooltip_include == TRUE) {
     # add tooltips to geom_point layers
-    point_layers <- which(vapply(static_plot$layers, FUN= function(l) {
+    point_layers <- which(vapply(static_plot$layers, FUN = function(l) {
       inherits(l$geom, "GeomPoint")
-    }, FUN.VALUE = logical(1)
-    ))
+    }, FUN.VALUE = logical(1)))
 
     if (length(point_layers) == 0L) {
-      warnings("No GeomPoint layer found for tooltips.")
+      warning("No GeomPoint layer found for tooltips.")
       static_plot <- static_plot + ggplot2::aes(text = formatTooltip(
         df = static_plot$data,
         config$tooltip_columns
@@ -141,14 +139,14 @@ ggPedigreeInteractive <- function(ped,
       }
     }
 
-  if (config$optimize_plotly == TRUE) {
-    static_plot <- optimizePedigree(static_plot, config=config, plot_type = "static")
-  }
+    if (config$optimize_plotly == TRUE) {
+      static_plot <- optimizePedigree(static_plot, config = config, plot_type = "static")
+    }
     plt <- tryCatch(
       plotly::ggplotly(static_plot,
         tooltip = "text",
         width   = NULL,
-        height  = NULL #, originalData = !config$optimize_plotly # retain original data for hover if not optimizing
+        height  = NULL # , originalData = !config$optimize_plotly # retain original data for hover if not optimizing
       ),
       error = function(e) {
         warning("Error in ggplotly conversion: ", e$message)
@@ -157,14 +155,14 @@ ggPedigreeInteractive <- function(ped,
       }
     )
   } else {
-      if (config$optimize_plotly == TRUE) {
-    static_plot <- optimizePedigree(static_plot, config=config, plot_type = "static")
-  }
+    if (config$optimize_plotly == TRUE) {
+      static_plot <- optimizePedigree(static_plot, config = config, plot_type = "static")
+    }
     plt <- tryCatch(
       plotly::ggplotly(static_plot,
         tooltip = NULL,
         width = NULL,
-        height = NULL ,
+        height = NULL,
         originalData = !config$optimize_plotly # retain original data for hover if not optimizing
       ),
       error = function(e) {
@@ -175,9 +173,9 @@ ggPedigreeInteractive <- function(ped,
     )
   }
 
- #     assign("DEBUG_static_plot", static_plot, envir = .GlobalEnv)
+  #     assign("DEBUG_static_plot", static_plot, envir = .GlobalEnv)
   if (config$optimize_plotly == TRUE) {
-    plt <- optimizePedigree(plt, config=config, plot_type = "plotly")
+    plt <- optimizePedigree(plt, config = config, plot_type = "plotly")
   }
 
   if (config$return_static == TRUE) {
@@ -188,7 +186,6 @@ ggPedigreeInteractive <- function(ped,
     class(plt) <- c("plotly", class(plt)) # ensure proper S3 dispatch
     return(plt)
   }
-
 }
 
 
@@ -222,7 +219,7 @@ formatTooltip <- function(df, tooltip_columns, sep = ": ") {
 #'  @keywords internal
 #'  @aliases optimisePedigree
 
- optimizePedigree <- function(p, config = list(), plot_type = c("plotly", "static")) {
+optimizePedigree <- function(p, config = list(), plot_type = c("plotly", "static")) {
   plot_type <- match.arg(plot_type)
   if (plot_type == "plotly") {
     p <- optimizePlotlyPedigree(p, config = config)
@@ -238,9 +235,10 @@ formatTooltip <- function(df, tooltip_columns, sep = ": ") {
 #' @title Optimize Plotly Pedigree Plot
 #' @description
 #' Optimize a Plotly pedigree plot by rounding coordinates to reduce file size.
-
-optimizePlotlyPedigree <- function(p, config = list()
- ) {
+#' @param p A plotly object representing the pedigree plot.
+#' @param config A list of configuration parameters, including `value_rounding_digits`.
+#' @return The optimized plotly object with rounded coordinates.
+optimizePlotlyPedigree <- function(p, config = list()) {
   # round coordinates to reduce file size
   if (!inherits(p, "plotly")) {
     stop("Input must be a plotly object.")
@@ -257,28 +255,41 @@ optimizePlotlyPedigree <- function(p, config = list()
 
   p
 }
+#' @title Optimize Static Pedigree Plot
+#' @description
+#' Optimize a static pedigree plot by rounding coordinates to reduce file size
+#' and removing unnecessary variables from the data frame.
+#' @param p A ggplot object representing the pedigree plot.
+#' @param config A list of configuration parameters, including `value_rounding_digits`.
+#' @param variable_drop A character vector of variable names to be removed from the data frame.
+#' Default variables to drop include "parent_hash", "couple_hash", "gen",
+#' "spousehint", "parent_fam", "nid", "x_order",
+#' "y_order", "y_fam", "zygosity", "extra", and "x_fam".
+#' @return The optimized ggplot object with rounded coordinates and reduced data frame.
+#' @keywords internal
+#' @aliases optimiseStaticPedigree
 
-optimizeStaticPedigree <- function(p, config = list(),  variable_drop = c("parent_hash",
-                                                                          "couple_hash",
-                                                                          "gen",
-                                                                          "spousehint",
-                                                                          "parent_fam",
-                                                                          "nid",
-                                                                          "x_order",
-                                                                          "y_order",
-                                                                          "y_fam",
-                                                                          "zygosity",
-                                                                          "extra","x_fam"
-                                                                          )
 
-) {
+optimizeStaticPedigree <- function(p, config = list(), variable_drop = c(
+                                     "parent_hash",
+                                     "couple_hash",
+                                     "gen",
+                                     "spousehint",
+                                     "parent_fam",
+                                     "nid",
+                                     "x_order",
+                                     "y_order",
+                                     "y_fam",
+                                     "zygosity",
+                                     "extra", "x_fam"
+                                   )) {
   # round coordinates to reduce file size
   if (!inherits(p, "ggplot")) {
     stop("Input must be a ggplot object.")
   }
   if (!is.null(p$data$x_pos)) {
     p$data$x_pos <- round(p$data$x_pos, config$value_rounding_digits)
-     p[["plot_env"]][["ds"]]$x_pos <- round(p[["plot_env"]][["ds"]][["x_pos"]], config$value_rounding_digits)
+    p[["plot_env"]][["ds"]]$x_pos <- round(p[["plot_env"]][["ds"]][["x_pos"]], config$value_rounding_digits)
   }
   if (!is.null(p$data$y_pos)) {
     p$data$y_pos <- round(p$data$y_pos, config$value_rounding_digits)
@@ -286,16 +297,16 @@ optimizeStaticPedigree <- function(p, config = list(),  variable_drop = c("paren
   }
 
   if (!is.null(variable_drop)) {
-    p$data <- p$data[ , !(names(p$data) %in% variable_drop)]
-    p[["plot_env"]][["ds"]] <- p[["plot_env"]][["ds"]][ , !(names(p[["plot_env"]][["ds"]]) %in% variable_drop)]
+    p$data <- p$data[, !(names(p$data) %in% variable_drop)]
+    p[["plot_env"]][["ds"]] <- p[["plot_env"]][["ds"]][, !(names(p[["plot_env"]][["ds"]]) %in% variable_drop)]
 
     # Also drop from layer data if present
-   # for (i in seq_along(p$layers)) {
-  #    layer_data <- p[["layers"]][[i]][["data"]]
+    # for (i in seq_along(p$layers)) {
+    #    layer_data <- p[["layers"]][[i]][["data"]]
     #  if (!is.null(layer_data)) {
-   #     p[["layers"]][[i]][["data"]] <- layer_data[ , !(names(layer_data) %in% variable_drop)]
-   #   }
-    }
+    #     p[["layers"]][[i]][["data"]] <- layer_data[ , !(names(layer_data) %in% variable_drop)]
+    #   }
+  }
 
 
   p
