@@ -48,8 +48,3 @@ jobs:
         with:
           name: coverage-test-failures
           path: ${{ runner.temp }}/package
-          
-      - name: Upload coverage to Codecov
-          uses: codecov/codecov-action@v4 # Or the version you are using
-          with:
-            token: ${{ secrets.CODECOV_TOKEN }}
