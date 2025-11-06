@@ -62,9 +62,9 @@ kinship2_alignped4 <- function(rval, spouse, level, width, align) {
         coff <- coff + nn+ 1
     }
 
-    if (exists('solve.QP')) {
+    if (requireNamespace("quadprog", quietly=TRUE)) {
          pp <- t(pmat) %*% pmat + 1e-8 * diag(ncol(pmat))
-         fit <- solve.QP(pp, rep(0., n), t(cmat), dvec)
+         fit <- quadprog::solve.QP(pp, rep(0., n), t(cmat), dvec)
     }
     else stop("Need the quadprog package")
 

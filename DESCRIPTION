@@ -25,7 +25,8 @@ Imports:
     reshape2,
     scales,
     tidyr
-Suggests: 
+Suggests:
+    quadprog,
     ggrepel,
     paletteer,
     mockery,

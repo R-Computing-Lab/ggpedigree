@@ -288,7 +288,7 @@ alignPedigreeWithHints <- function(ped_ped, config) {
   if ("hints" %in% names(config) && !is.null(config$hints)) {
     # Check if hints are provided
     autohint <- tryCatch(
-      kinship2::autohint(
+      kinship2_autohint(
         ped_ped,
         config$hints,
         align = config$ped_align,
@@ -297,14 +297,14 @@ alignPedigreeWithHints <- function(ped_ped, config) {
       error = function(e) {
         warning("Your hints caused an error and were not used.
                 Using default hints instead.")
-        kinship2::autohint(ped_ped,
+        kinship2_autohint(ped_ped,
           align = config$ped_align,
           packed = config$ped_packed
         )
       }
     )
     # Align pedigree for plotting
-    pos <- kinship2::align.pedigree(
+    pos <- kinship2_align.pedigree(
       ped_ped,
       packed = config$ped_packed,
       align = config$ped_align,
@@ -316,7 +316,7 @@ alignPedigreeWithHints <- function(ped_ped, config) {
     # Extract layout information
     # -----
     # Align pedigree for plotting
-    pos <- kinship2::align.pedigree(
+    pos <- kinship2_align.pedigree(
       ped_ped,
       packed = config$ped_packed,
       align = config$ped_align,
