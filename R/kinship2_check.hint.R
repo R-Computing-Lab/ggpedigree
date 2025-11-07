@@ -18,6 +18,7 @@
 #' @param sex A character vector indicating the sex of each individual
 #' ('male' or 'female').
 #' @return The original `hints` list if all checks pass; otherwise, an error is raised.
+#' @keywords internal
 
 
 kinship2_check.hint <- function(hints, sex) {

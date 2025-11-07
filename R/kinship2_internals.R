@@ -2,6 +2,29 @@
 
 # From autohint.R file
 # Automatically generated from all.nw using noweb
+
+#' Automatically generate alignment hints for pedigree plotting
+#'
+#' This function automatically generates alignment hints for pedigree plotting.
+#' Hints control the relative horizontal positioning of subjects within their
+#' generation and the placement of spouse pairs. The function handles twins,
+#' multiple marriages, and complex pedigree structures.
+#'
+#' @param ped A pedigree object
+#' @param hints Optional existing hints (list with `order` and optionally `spouse` components)
+#' @param packed Logical, if TRUE uses compact packing algorithm (default TRUE)
+#' @param align Logical, if TRUE attempts to align spouses on the same level (default FALSE)
+#' @return A list containing:
+#'   \item{order}{Numeric vector of relative ordering hints for subjects}
+#'   \item{spouse}{Matrix of spouse pair information}
+#' @keywords internal
+#' @details
+#' The function is called automatically by kinship2_align.pedigree if no hints
+#' are provided. It analyzes the pedigree structure, identifies twins, handles
+#' multiple marriages, and determines optimal subject ordering to minimize
+#' crossing lines and produce aesthetically pleasing plots.
+#'
+#' Full documentation is available in the align_code_details vignette.
 kinship2_autohint <- function(ped, hints, packed=TRUE, align=FALSE) {
     ## full documentation now in vignette: align_code_details.Rmd
     ## REferences to those sections appear here as:
@@ -240,6 +263,39 @@ kinship2_autohint <- function(ped, hints, packed=TRUE, align=FALSE) {
 # from kinship2_align.pedigree.R
 ## Automatically generated from all.nw using noweb
 
+#' Align a pedigree for plotting
+#'
+#' This is the main function for aligning a pedigree structure for plotting.
+#' It arranges subjects by generation, positions them horizontally to minimize
+#' line crossings, handles spouse relationships, and produces the coordinate
+#' system needed for drawing the pedigree.
+#'
+#' @param ped A pedigree object or pedigreeList object
+#' @param packed Logical, if TRUE uses compact packing algorithm (default TRUE)
+#' @param width Numeric, maximum width of the pedigree plot (default 10)
+#' @param align Logical or numeric. If TRUE, attempts to align spouses on same level.
+#'   If numeric, a vector c(a1, a2) controlling alignment penalties (default TRUE)
+#' @param hints Optional list with `order` and `spouse` components to guide alignment.
+#'   If NULL, kinship2_autohint is called to generate hints
+#' @return For a single pedigree, a list containing:
+#'   \item{n}{Vector of counts per generation level}
+#'   \item{nid}{Matrix of subject IDs at each position}
+#'   \item{pos}{Matrix of horizontal positions}
+#'   \item{fam}{Matrix of family indices indicating parent connections}
+#'   \item{spouse}{Matrix indicating spouse connections}
+#'   \item{twins}{Optional matrix indicating twin relationships}
+#'   For a pedigreeList, returns the input with alignment information added.
+#' @keywords internal
+#' @details
+#' This function handles the complete pedigree alignment process:
+#' \itemize{
+#'   \item Determines generation levels using kinship2_kindepth
+#'   \item Generates or validates alignment hints using kinship2_autohint or kinship2_check.hint
+#'   \item Builds spouse relationships list
+#'   \item Processes founders and their descendants using kinship2_alignped1, kinship2_alignped2, kinship2_alignped3
+#'   \item Optimizes horizontal spacing using kinship2_alignped4
+#'   \item Identifies inbreeding loops and twin relationships
+#' }
 kinship2_align.pedigree <- function(ped, packed=TRUE, width=10, align=TRUE, hints=ped$hints) {
 
     if ('pedigreeList' %in% class(ped)) {
@@ -384,6 +440,25 @@ kinship2_align.pedigree <- function(ped, packed=TRUE, width=10, align=TRUE, hint
 # This can be called with a pedigree object, or with the
 # full argument list.  In the former case we can simply skip a step
 
+#' Calculate the depth (generation level) of subjects in a pedigree
+#'
+#' This function computes the depth of each subject in a pedigree, defined as
+#' the maximal number of generations of ancestors (distance to the farthest founder).
+#' Optionally aligns spouses to plot on the same generation level.
+#'
+#' @param id Either a pedigree/pedigreeList object, or a vector of subject IDs
+#' @param dad.id Vector of father IDs (required if `id` is not a pedigree object)
+#' @param mom.id Vector of mother IDs (required if `id` is not a pedigree object)
+#' @param align Logical, if TRUE attempts to align married couples at the same
+#'   depth level for better visualization (default FALSE)
+#' @return Integer vector of depth values for each subject, where 0 = founder,
+#'   1 = child of founder, etc.
+#' @keywords internal
+#' @details
+#' When `align=TRUE`, the function adjusts depths so that married couples appear
+#' on the same generation level when possible. This produces more aesthetically
+#' pleasing pedigree plots. The alignment algorithm handles marry-ins, multiple
+#' marriages, and inbreeding loops.
 kinship2_kindepth <- function(id, dad.id, mom.id, align=FALSE) {
     if ("pedigree" %in% class(id) || "pedigreeList" %in% class(id)) {
         didx <- id$findex
