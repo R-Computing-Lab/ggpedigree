@@ -24,7 +24,7 @@ kinship2_bitSize <- function(ped) {
   ## calculate bit size of a pedigree
 
   if(!("pedigree" %in% class(ped)))
-    stop("Must be a pegigree object.\n")
+    stop("Must be a pedigree object.\n")
 
   father = ped$findex
   mother = ped$mindex
