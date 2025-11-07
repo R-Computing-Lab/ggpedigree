@@ -8,6 +8,8 @@
 \alias{print.pedigreeList}
 \title{Create a pedigree or pedigreeList object}
 \usage{
+pedigree(id, dadid, momid, sex, affected, status, relation, famid, missid)
+
 \method{[}{pedigreeList}(x, ..., drop = FALSE)
 
 \method{[}{pedigree}(x, ..., drop = FALSE)
@@ -17,12 +19,6 @@
 \method{print}{pedigreeList}(x, ...)
 }
 \arguments{
-\item{x}{pedigree object in print and subset methods}
-
-\item{...}{optional arguments passed to internal functions}
-
-\item{drop}{logical, used in subset function for dropping dimensionanlity}
-
 \item{id}{Identification variable for individual}
 
 \item{dadid}{Identification variable for father. Founders' parents should be coded
@@ -58,27 +54,19 @@ subscripts. Individuals need to have a unique id \emph{within} family.}
 \item{missid}{The founders are those with no father or mother in the pedigree. The dadid
 and momid values for these subjects will either be NA or the value of this variable. The
 default for missid is 0 if the id variable is numeric, and "" (empty string) otherwise.}
+
+\item{x}{pedigree object in print and subset methods}
+
+\item{...}{optional arguments passed to internal functions}
+
+\item{drop}{logical, used in subset function for dropping dimensionanlity}
 }
 \value{
 An object of class \code{pedigree} or \code{pedigreeList} Containing the following items:
  famid id findex mindex sex  affected status relation
- @examples
-   data(minnbreast)
-   bpeds <- with(minnbreast,
-   pedigree(id, fatherid, motherid, sex, affected=proband, famid=famid))
-   bped.id8 <- bpeds['8']
-   print(bped.id8)
-   ## show this pedigree with mixed zygosity quadruplets
-   rel8 <- data.frame(id1=c(137,138,139), id2=c(138,139,140), code=c(1,2,2))
-   bped.id8 <- with(minnbreast[minnbreast$famid==8,],
-        pedigree(id, fatherid, motherid, sex, affected=proband, relation=rel8))
-   print(bped.id8)
 }
 \description{
 Create a pedigree or pedigreeList object
-}
-\seealso{
-\code{\link{kinship}}, \code{\link{plot.pedigree}}, \code{\link{autohint}}
 }
 \author{
 Terry Therneau

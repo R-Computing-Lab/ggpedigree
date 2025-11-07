@@ -34,23 +34,11 @@
 #' @param drop logical, used in subset function for dropping dimensionanlity
 #' @return An object of class \code{pedigree} or \code{pedigreeList} Containing the following items:
 #'  famid id findex mindex sex  affected status relation
-#'  @examples
-#'    data(minnbreast)
-#'    bpeds <- with(minnbreast,
-#'    pedigree(id, fatherid, motherid, sex, affected=proband, famid=famid))
-#'    bped.id8 <- bpeds['8']
-#'    print(bped.id8)
-#'    ## show this pedigree with mixed zygosity quadruplets
-#'    rel8 <- data.frame(id1=c(137,138,139), id2=c(138,139,140), code=c(1,2,2))
-#'    bped.id8 <- with(minnbreast[minnbreast$famid==8,],
-#'         pedigree(id, fatherid, motherid, sex, affected=proband, relation=rel8))
-#'    print(bped.id8)
 #' @author Terry Therneau
-#' @seealso \code{\link{kinship}}, \code{\link{plot.pedigree}}, \code{\link{autohint}}
 #' @name pedigree
-NULL
 
-kinship2_pedigree <- function(id, dadid, momid, sex, affected, status, relation,
+
+pedigree <- function(id, dadid, momid, sex, affected, status, relation,
                      famid, missid) {
     n <- length(id)
     ## Code transferred from noweb to markdown vignette.

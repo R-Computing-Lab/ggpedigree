@@ -6,7 +6,21 @@
 #' @param verbose logical  If TRUE, prints additional information. Default is FALSE.
 #' @param code_male This optional input allows you to indicate what value in the sex variable codes for male. Will be recoded as "M" (Male). If \code{NULL}, no recoding is performed.
 #' @param affected This optional parameter can either be a string specifying the column name that indicates affected status or a numeric/logical vector of the same length as the number of rows in 'ped'. If \code{NULL}, no affected status is assigned.
-#' @inheritParams kinship2::plot.pedigree
+#' @param id The individual IDs.
+#' @param status The status of each individual.
+#' @param col The color of the symbols in the plot.
+#' @param symbolsize The size of the symbols in the plot.
+#' @param branch The length of the branches in the plot.
+#' @param packed logical. If TRUE, the pedigree is drawn in a more compact form.
+#' @param align A numeric vector of length 2 indicating the alignment penalties for parents and spouses.
+#' @param width The width of the plot.
+#' @param density A numeric vector indicating the shading density for different affected statuses.
+#' @param angle A numeric vector indicating the shading angles for different affected statuses.
+#' @param keep.par logical. If TRUE, the current graphical parameters are preserved.
+#' @param mar A numeric vector of length 4 indicating the margins of the plot.
+#' @param subregion An optional parameter to specify a subregion of the pedigree to plot.
+#' @param pconnect A numeric value indicating the proportion of the pedigree to connect.
+#' @param ... Additional arguments passed to \code{kinship2::plot.pedigree}
 #' @return A plot of the provided pedigree
 #' @export
 
@@ -24,6 +38,9 @@ plotPedigree <- function(ped,
                          angle = c(90, 65, 40, 0), keep.par = FALSE,
                          pconnect = .5,
                          ...) {
+     if(!requireNamespace("kinship2", quietly = TRUE)) {
+       stop("The 'kinship2' package is required for this function. Please install it using install.packages('kinship2').")
+     }
   # Standardize column names in the input dataframe
   ped <- BGmisc:::standardizeColnames(ped, verbose = verbose)
 
@@ -78,7 +95,7 @@ plotPedigree <- function(ped,
       named_families <- seq_along(unique_families)
       p$ped <- named_families[match(p$ped, unique_families)]
     }
-    p2 <- kinship2::pedigree(
+    p2 <- pedigree(
       id = p$id,
       dadid = p$father,
       momid = p$mother,
@@ -89,7 +106,7 @@ plotPedigree <- function(ped,
     p3 <- p2["1"]
     if (verbose == TRUE) {
       message(p3)
-      return(kinship2::plot.pedigree(p3,
+      return(plot.pedigree(p3,
         cex = cex,
         col = col,
         symbolsize = symbolsize,
@@ -102,7 +119,7 @@ plotPedigree <- function(ped,
         mar = mar
       ))
     } else { # TODO: consistently suppress the printing of the pedigree comments
-      plot_picture <- suppressMessages(kinship2::plot.pedigree(p3,
+      plot_picture <- suppressMessages(plot.pedigree(p3,
         cex = cex,
         col = col,
         symbolsize = symbolsize,

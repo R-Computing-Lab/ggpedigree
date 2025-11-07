@@ -15,7 +15,6 @@ Depends:
    R (>= 4.1.0)
 Imports: 
     BGmisc (>= 1.4.1),
-    kinship2,
     ggplot2,
     rlang,
     dplyr,
@@ -26,6 +25,7 @@ Imports:
     scales,
     tidyr
 Suggests:
+    kinship2,
     quadprog,
     ggrepel,
     paletteer,

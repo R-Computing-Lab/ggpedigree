@@ -36,57 +36,35 @@ plotPedigree(
 
 \item{cex}{The font size of the IDs for each individual in the plot.}
 
-\item{col}{
-color for each id.  Default assigns the same color to everyone.
-}
+\item{col}{The color of the symbols in the plot.}
 
-\item{symbolsize}{
-controls symbolsize. Default=1.
-}
+\item{symbolsize}{The size of the symbols in the plot.}
 
-\item{branch}{
-defines how much angle is used to connect various levels of nuclear families.
-}
+\item{branch}{The length of the branches in the plot.}
 
-\item{packed}{
-default=T.  If T, uniform distance between all individuals at a given level.
-}
+\item{packed}{logical. If TRUE, the pedigree is drawn in a more compact form.}
 
-\item{align}{ these parameters control the extra effort spent trying to
-  align children underneath parents, but without making the pedigree too
-  wide.  Set to F to speed up plotting.
-}
+\item{align}{A numeric vector of length 2 indicating the alignment penalties for parents and spouses.}
 
-\item{width}{
-default=8.  For a packed pedigree, the minimum width allowed in the
-realignment of pedigrees.
-}
+\item{width}{The width of the plot.}
 
-\item{density}{
-defines density used in the symbols.  Takes up to 4 different values.
-}
+\item{density}{A numeric vector indicating the shading density for different affected statuses.}
 
-\item{mar}{margin parmeters, as in the \code{par} function}
+\item{mar}{A numeric vector of length 4 indicating the margins of the plot.}
 
-\item{angle}{
-defines angle used in the symbols.  Takes up to 4 different values.
-}
+\item{angle}{A numeric vector indicating the shading angles for different affected statuses.}
 
-\item{keep.par}{
-Default = F, allows user to keep the parameter settings the same as they
-were for plotting (useful for adding extras to the plot)
-}
+\item{keep.par}{logical. If TRUE, the current graphical parameters are preserved.}
 
-\item{pconnect}{when connecting parent to children the program will try
-  to make the connecting line as close to vertical as possible, subject
-  to it lying inside the endpoints of the line that connects the
-  children by at least \code{pconnect} people.  Setting this option
-  to a large number will force the line to connect at the midpoint of
-  the children.}
+\item{pconnect}{A numeric value indicating the proportion of the pedigree to connect.}
 
-\item{...}{
-Extra options that feed into the plot function.
-}
+\item{...}{Additional arguments passed to \code{kinship2::plot.pedigree}}
+
+\item{id}{The individual IDs.}
+
+\item{status}{The status of each individual.}
+
+\item{subregion}{An optional parameter to specify a subregion of the pedigree to plot.}
 }
 \value{
 A plot of the provided pedigree

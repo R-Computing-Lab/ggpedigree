@@ -82,7 +82,7 @@ ggPedigree <- function(ped,
                        phantoms = FALSE,
                        ...) {
   if (!inherits(ped, "data.frame")) {
-    if (rlang::inherits_any(ped, c("ped", "kinship2.pedigree"))) {
+    if (rlang::inherits_any(ped, c("ped","pedigree","kinship2.pedigree"))) {
       # Convert ped object to data.frame
       ped <- as.data.frame(ped)
     } else if (rlang::inherits_any(ped, "pedigreeList")) {

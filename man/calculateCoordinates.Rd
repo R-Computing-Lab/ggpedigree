@@ -36,7 +36,7 @@ calculateCoordinates(
 \item{config}{List of configuration options:
 \describe{
   \item{code_male}{Default is 1. Used by BGmisc::recodeSex().}
-  \item{ped_packed}{Logical, default TRUE. Passed to `kinship2::align.pedigree`.}
+  \item{ped_packed}{Logical, default TRUE. Passed to `kinship2_align.pedigree`.}
   \item{ped_align}{Logical, default TRUE. Align generations.}
   \item{ped_width}{Numeric, default 15. Controls spacing.}
 }}

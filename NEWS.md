@@ -1,9 +1,10 @@
 # ggpedigree (development version)
-* Added test coverage for buildSpouseSegments
+
+* Folding in kinship2 functions 
 
 # ggpedigree 0.9.1
 * Minor documentation revisions to complement JOSS paper update
-
+* Added test coverage for buildSpouseSegments
 # ggpedigree 0.9.0
 ## cran release
 * smarter segment coloring
