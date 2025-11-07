@@ -1,3 +1,5 @@
+utils::globalVariables(c("plot.pedigree")) # to avoid R CMD check NOTE
+
 #' plotPedigree
 #' A wrapped function to plot simulated pedigree from function \code{simulatePedigree}. This function require the installation of package \code{kinship2}.
 
@@ -6,8 +8,6 @@
 #' @param verbose logical  If TRUE, prints additional information. Default is FALSE.
 #' @param code_male This optional input allows you to indicate what value in the sex variable codes for male. Will be recoded as "M" (Male). If \code{NULL}, no recoding is performed.
 #' @param affected This optional parameter can either be a string specifying the column name that indicates affected status or a numeric/logical vector of the same length as the number of rows in 'ped'. If \code{NULL}, no affected status is assigned.
-#' @param id The individual IDs.
-#' @param status The status of each individual.
 #' @param col The color of the symbols in the plot.
 #' @param symbolsize The size of the symbols in the plot.
 #' @param branch The length of the branches in the plot.
@@ -18,7 +18,6 @@
 #' @param angle A numeric vector indicating the shading angles for different affected statuses.
 #' @param keep.par logical. If TRUE, the current graphical parameters are preserved.
 #' @param mar A numeric vector of length 4 indicating the margins of the plot.
-#' @param subregion An optional parameter to specify a subregion of the pedigree to plot.
 #' @param pconnect A numeric value indicating the proportion of the pedigree to connect.
 #' @param ... Additional arguments passed to \code{kinship2::plot.pedigree}
 #' @return A plot of the provided pedigree

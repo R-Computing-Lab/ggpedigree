@@ -1,10 +1,11 @@
 # ggpedigree (development version)
-
 * Folding in kinship2 functions 
+* Making kinship2 package optional, and only needed for plotPedigree (a kinship2 wrapper)
 
 # ggpedigree 0.9.1
 * Minor documentation revisions to complement JOSS paper update
 * Added test coverage for buildSpouseSegments
+
 # ggpedigree 0.9.0
 ## cran release
 * smarter segment coloring

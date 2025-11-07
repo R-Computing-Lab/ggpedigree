@@ -59,12 +59,6 @@ plotPedigree(
 \item{pconnect}{A numeric value indicating the proportion of the pedigree to connect.}
 
 \item{...}{Additional arguments passed to \code{kinship2::plot.pedigree}}
-
-\item{id}{The individual IDs.}
-
-\item{status}{The status of each individual.}
-
-\item{subregion}{An optional parameter to specify a subregion of the pedigree to plot.}
 }
 \value{
 A plot of the provided pedigree
