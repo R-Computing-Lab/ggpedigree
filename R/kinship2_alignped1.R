@@ -1,4 +1,26 @@
 # Automatically generated from all.nw using noweb
+
+#' Align pedigree - Process a single subject and their spouses
+#'
+#' This is an internal helper function for pedigree alignment. It processes a single
+#' subject (founder or not) along with their spouse(s), building up the alignment
+#' structure. This function is called recursively by kinship2_align.pedigree to
+#' construct the entire pedigree layout.
+#'
+#' @param x Integer vector of subject ID(s) to process
+#' @param dad Integer vector of father indices
+#' @param mom Integer vector of mother indices
+#' @param level Integer vector indicating the generation level of each subject
+#' @param horder Numeric vector of hint order for positioning subjects
+#' @param packed Logical, if TRUE uses compact packing algorithm
+#' @param spouselist Matrix defining spouse relationships
+#' @return A list containing:
+#'   \item{nid}{Matrix of subject IDs at each level and position}
+#'   \item{pos}{Matrix of horizontal positions}
+#'   \item{fam}{Matrix of family indices}
+#'   \item{n}{Vector of counts per level}
+#'   \item{spouselist}{Updated spouse list}
+#' @keywords internal
 kinship2_alignped1 <- function(x, dad, mom, level, horder, packed, spouselist){
     # Set a few constants
     maxlev <- max(level)
