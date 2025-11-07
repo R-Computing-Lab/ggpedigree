@@ -1,4 +1,4 @@
-# ggpedigree (development version)
+# ggpedigree (development version 1.00)
 * Folding in kinship2 functions 
 * Making kinship2 package optional, and only needed for plotPedigree (a kinship2 wrapper)
 
