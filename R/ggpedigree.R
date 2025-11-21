@@ -879,6 +879,11 @@ addSelfSegment <- .addSelfSegment
       plotObject <- plotObject + ggplot2::guides(color = "none")
     }
   } else if (config$focal_fill_include == TRUE) {
+    # Handle backward compatibility: if focal_fill_use_log is TRUE, override focal_fill_trans
+    if (config$focal_fill_use_log == TRUE && config$focal_fill_trans == "identity") {
+      config$focal_fill_trans <- "log2"
+    }
+    
     if (config$focal_fill_method %in% c("steps", "steps2", "step", "step2")) {
       plotObject <- plotObject + ggplot2::scale_colour_steps2(
         low = config$focal_fill_low_color,
@@ -887,7 +892,7 @@ addSelfSegment <- .addSelfSegment
         midpoint = config$focal_fill_scale_midpoint,
         n.breaks = config$focal_fill_n_breaks,
         na.value = config$focal_fill_na_value,
-        transform = ifelse(config$focal_fill_use_log, "log2", "identity")
+        transform = config$focal_fill_trans
       )
     } else if (config$focal_fill_method %in% c("gradient2", "gradient")) {
       plotObject <- plotObject + ggplot2::scale_colour_gradient2(
@@ -897,7 +902,7 @@ addSelfSegment <- .addSelfSegment
         midpoint = config$focal_fill_scale_midpoint,
         n.breaks = config$focal_fill_n_breaks,
         na.value = config$focal_fill_na_value,
-        transform = ifelse(config$focal_fill_use_log, "log2", "identity")
+        transform = config$focal_fill_trans
       )
     } else if (config$focal_fill_method %in% c("hue")) {
       plotObject <- plotObject + ggplot2::scale_color_hue(
@@ -915,7 +920,7 @@ addSelfSegment <- .addSelfSegment
         end = config$focal_fill_viridis_end,
         direction = config$focal_fill_viridis_direction,
         na.value = config$focal_fill_na_value,
-        transform = ifelse(config$focal_fill_use_log, "log2", "identity")
+        transform = config$focal_fill_trans
       )
     } else if (config$focal_fill_method %in% c("viridis_d")) {
       plotObject <- plotObject + ggplot2::scale_colour_viridis_d(
@@ -933,7 +938,7 @@ addSelfSegment <- .addSelfSegment
         end = config$focal_fill_viridis_end,
         direction = config$focal_fill_viridis_direction,
         na.value = config$focal_fill_na_value,
-        transform = ifelse(config$focal_fill_use_log, "log2", "identity")
+        transform = config$focal_fill_trans
       )
     } else if (config$focal_fill_method %in% c("manual")) {
       plotObject <- plotObject + ggplot2::scale_color_manual(
