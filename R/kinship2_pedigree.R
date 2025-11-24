@@ -1,7 +1,5 @@
 #' Create a pedigree or pedigreeList object
 #'
-#' Create a pedigree or pedigreeList object
-#'
 #' @param id Identification variable for individual
 #' @param dadid Identification variable for father. Founders' parents should be coded
 #' to NA, or another value specified by missid.
@@ -46,7 +44,7 @@ pedigree <- function(id, dadid, momid, sex, affected, status, relation,
     ## Doc: Error and Data Checks
     ## Doc: Errors1
     if (length(momid) != n) stop("Mismatched lengths, id and momid")
-    if (length(dadid) != n) stop("Mismatched lengths, id and momid")
+    if (length(dadid) != n) stop("Mismatched lengths, id and dadid")
     if (length(sex  ) != n) stop("Mismatched lengths, id and sex")
 
     # Don't allow missing id values
@@ -375,7 +373,6 @@ pedigree <- function(id, dadid, momid, sex, affected, status, relation,
 
 #' @rdname pedigree
 #' @method print pedigree
-#' @export
 print.pedigree <- function(x, ...) {
     cat("Pedigree object with", length(x$id), "subjects")
     if (!is.null(x$famid)) cat(", family id=", x$famid[1], "\n")
@@ -385,7 +382,6 @@ print.pedigree <- function(x, ...) {
 
 #' @rdname pedigree
 #' @method print pedigreeList
-#' @export
 print.pedigreeList <- function(x, ...) {
     cat("Pedigree list with", length(x$id), "total subjects in",
         length(unique(x$famid)), "families\n")
