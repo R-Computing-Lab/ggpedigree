@@ -261,7 +261,7 @@ pedigree <- function(id, dadid, momid, sex, affected, status, relation,
         if (any(code=="MZ twin")) {
             mztwins <- (code=="MZ twin")
             if (any(sex[temp1[mztwins]] != sex[temp2[mztwins]]))
-                stop("MZ Twins with different genders")
+                stop("MZ twins with different sexes")
             }
 
         ##Use id index as indx1 and indx2
