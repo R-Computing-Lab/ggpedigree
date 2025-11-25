@@ -41,14 +41,14 @@
 #'     axis_text_size = 8
 #'   )
 #' )
-
 ggRelatednessMatrix <- function(
-    mat,
-    config = list(),
-    interactive = FALSE,
-    tooltip_columns = NULL,
-    personID = "personID",
-    ...) {
+  mat,
+  config = list(),
+  interactive = FALSE,
+  tooltip_columns = NULL,
+  personID = "personID",
+  ...
+) {
   # Check if the input is a matrix
   if (!is.matrix(mat)) {
     stop("Input 'mat' must be a matrix.")
@@ -137,9 +137,10 @@ ggRelatednessMatrix <- function(
 #' @keywords internal
 
 ggRelatednessMatrix.core <- function(
-    mat,
-    config = list(),
-    ...) {
+  mat,
+  config = list(),
+  ...
+) {
   stopifnot(is.matrix(mat))
 
   mat_plot <- mat

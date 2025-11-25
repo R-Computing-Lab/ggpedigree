@@ -37,9 +37,9 @@ plotPedigree <- function(ped,
                          angle = c(90, 65, 40, 0), keep.par = FALSE,
                          pconnect = .5,
                          ...) {
-     if(!requireNamespace("kinship2", quietly = TRUE)) {
-       stop("The 'kinship2' package is required for this function. Please install it using install.packages('kinship2').")
-     }
+  if (!requireNamespace("kinship2", quietly = TRUE)) {
+    stop("The 'kinship2' package is required for this function. Please install it using install.packages('kinship2').")
+  }
   # Standardize column names in the input dataframe
   ped <- BGmisc:::standardizeColnames(ped, verbose = verbose)
 

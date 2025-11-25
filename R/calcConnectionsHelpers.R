@@ -243,7 +243,6 @@ getRelativeCoordinates <- function(ped,
 }
 
 
-
 #' Generate a symmetric key for two IDs
 #'
 #' This function generates a symmetric key for two IDs, ensuring that the order of the IDs does not matter.

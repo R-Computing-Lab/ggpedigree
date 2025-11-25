@@ -12,8 +12,10 @@ test_that("test autohint works", {
   library(kinship2)
   data("sample.ped")
   ped <- with(sample.ped, kinship2::pedigree(id, father, mother, sex))
-  newhint <- kinship2_autohint(ped)  #this fixes up marriages and such
-  plist <- kinship2_align.pedigree(ped, packed=TRUE, align=TRUE,
-                          width=8, hints=newhint)
+  newhint <- kinship2_autohint(ped) # this fixes up marriages and such
+  plist <- kinship2_align.pedigree(ped,
+    packed = TRUE, align = TRUE,
+    width = 8, hints = newhint
+  )
   expect_snapshot(plist)
 })

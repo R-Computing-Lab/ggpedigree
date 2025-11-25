@@ -27,8 +27,10 @@ test_that("pedigree plots correctly with affected variables", {
   marR <- .7
 
   results <- BGmisc::simulatePedigree(kpc = kpc, Ngen = Ngen, sexR = sexR, marR = marR)
-  affected <- rbinom(n = nrow(results),
-                     size = 1, prob = .1)
+  affected <- rbinom(
+    n = nrow(results),
+    size = 1, prob = .1
+  )
   expect_error(plotPedigree(results, verbose = TRUE, affected = affected[1:10]))
   results$affected <- affected
   expect_output(plotPedigree(results, verbose = TRUE, affected = "affected"))
