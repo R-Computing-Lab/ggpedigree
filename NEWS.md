@@ -1,6 +1,7 @@
 # ggpedigree (development version 1.00)
 * Folded in kinship2 functions to eliminate the depedency optional
 * Made kinship2 package optional, and only needed for plotPedigree (a kinship2 wrapper)
+* Importing relevant tests from kinship2 package
 
 # ggpedigree 0.9.1
 * Minor documentation revisions to complement JOSS paper update

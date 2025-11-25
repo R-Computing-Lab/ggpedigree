@@ -397,7 +397,7 @@ test_that("behaves with kinship 2 pedigree object", {
   minnbreast_skinny <- minnbreast[minnbreast$famid %in% c(4), ] # take only one family
   breastped <- with(
     minnbreast_skinny,
-    pedigree(id, fatherid, motherid, sex,
+    kinship2::pedigree(id, fatherid, motherid, sex,
       status = (cancer & !is.na(cancer)),
       affected = proband,
       famid = famid
