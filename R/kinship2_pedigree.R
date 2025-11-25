@@ -29,7 +29,7 @@
 #' default for missid is 0 if the id variable is numeric, and "" (empty string) otherwise.
 #' @param x pedigree object in print and subset methods
 #' @param ... optional arguments passed to internal functions
-#' @param drop logical, used in subset function for dropping dimensionanlity
+#' @param drop logical, used in subset function for dropping dimensionality
 #' @return An object of class \code{pedigree} or \code{pedigreeList} Containing the following items:
 #'  famid id findex mindex sex  affected status relation
 #' @author Terry Therneau
@@ -42,43 +42,17 @@ pedigree <- function(id, dadid, momid, sex, affected, status, relation,
   ## Code transferred from noweb to markdown vignette.
   ## Sections from the noweb/vignettes are noted here with
   ## Doc: Error and Data Checks
-  ## Doc: Errors1
-  if (length(momid) != n) stop("Mismatched lengths, id and momid")
-  if (length(dadid) != n) stop("Mismatched lengths, id and dadid")
-  if (length(sex) != n) stop("Mismatched lengths, id and sex")
 
-  # Don't allow missing id values
-  if (any(is.na(id))) stop("Missing value for the id variable")
-  if (!is.numeric(id)) {
-    id <- as.character(id)
-    if (length(grep("^ *$", id)) > 0) {
-      stop("A blank or empty string is not allowed as the id variable")
-    }
-  }
+  pedigree.idcheck(id=id,
+                   momid = momid,
+                   dadid = dadid,
+                   sex=sex
+                 )
 
-  # Allow for character/numeric/factor in the sex variable
-  if (is.factor(sex)) {
-    sex <- as.character(sex)
-  }
-  codes <- c("male", "female", "unknown", "terminated")
-  if (is.character(sex)) {
-    sex <- charmatch(casefold(sex, upper = FALSE), codes,
-      nomatch = 3
-    )
-  }
 
-  # assume either 0/1/2/4 =  female/male/unknown/term, or 1/2/3/4
-  #  if only 1/2 assume no unknowns
-  if (min(sex) == 0) {
-    sex <- sex + 1
-  }
-  sex <- ifelse(sex < 1 | sex > 4, 3, sex)
-  if (all(sex > 2)) {
-    stop("Invalid values for 'sex'")
-  } else if (mean(sex == 3) > 0.25) {
-    warning("More than 25% of the gender values are 'unknown'")
-  }
-  sex <- factor(sex, 1:4, labels = codes)
+id <- pedigree.idrepair(id=id)
+
+sex <- pedigree.sexrepair(sex=sex)
 
   ## Doc:  Errors2
   if (missing(missid)) {
@@ -185,36 +159,16 @@ pedigree <- function(id, dadid, momid, sex, affected, status, relation,
       sex = sex
     )
   }
-  if (!missing(affected)) {
-    if (is.matrix(affected)) {
-      if (nrow(affected) != n) stop("Wrong number of rows in affected")
-      if (is.logical(affected)) affected <- 1 * affected
-    } else {
-      if (length(affected) != n) {
-        stop("Wrong length for affected")
-      }
 
-      if (is.logical(affected)) affected <- as.numeric(affected)
-      if (is.factor(affected)) affected <- as.numeric(affected) - 1
-    }
-    if (max(affected, na.rm = TRUE) > min(affected, na.rm = TRUE)) {
-      affected <- affected - min(affected, na.rm = TRUE)
-    }
-    if (!all(affected == 0 | affected == 1 | is.na(affected))) {
-      stop("Invalid code for affected status")
-    }
-    temp$affected <- affected
+  if (!missing(affected)) {
+    temp$affected <- pedigree.process_affected(affected, n)
   }
 
+
+
+
   if (!missing(status)) {
-    if (length(status) != n) {
-      stop("Wrong length for affected")
-    }
-    if (is.logical(status)) status <- as.integer(status)
-    if (any(status != 0 & status != 1)) {
-      stop("Invalid status code")
-    }
-    temp$status <- status
+    temp$status <- pedigree.process_status(status, n)
   }
 
   if (!missing(relation)) {
@@ -328,6 +282,105 @@ pedigree <- function(id, dadid, momid, sex, affected, status, relation,
   temp
 }
 
+
+#'
+#' @keywords internal
+#' @noRd
+#' @inheritParams pedigree
+
+pedigree.idcheck <- function(id, momid, dadid, sex){
+  n <- length(id)
+  if (length(momid) != n) stop("Mismatched lengths, id and momid")
+  if (length(dadid) != n) stop("Mismatched lengths, id and dadid")
+  if (length(sex) != n) stop("Mismatched lengths, id and sex")
+  if (any(is.na(id))) stop("Missing value for the id variable")
+}
+
+#' @keywords internal
+#' @noRd
+#' @inheritParams pedigree
+
+pedigree.idrepair  <- function(id){
+  if (!is.numeric(id)) {
+    id <- as.character(id)
+    if (length(grep("^ *$", id)) > 0) {
+      stop("A blank or empty string is not allowed as the id variable")
+    }
+  }
+  id
+}
+
+#' @keywords internal
+#' @noRd
+#' @inheritParams pedigree
+
+pedigree.sexrepair <- function(sex){
+  # Allow for character/numeric
+  # Allow for character/numeric/factor in the sex variable
+  if (is.factor(sex)) {
+    sex <- as.character(sex)
+  }
+  codes <- c("male", "female", "unknown", "terminated")
+  if (is.character(sex)) {
+    sex <- charmatch(casefold(sex, upper = FALSE), codes,
+      nomatch = 3
+    )
+  }
+
+  # assume either 0/1/2/4 =  female/male/unknown/term, or 1/2/3/4
+  #  if only 1/2 assume no unknowns
+  if (min(sex) == 0) {
+    sex <- sex + 1
+  }
+  sex <- ifelse(sex < 1 | sex > 4, 3, sex)
+  if (all(sex > 2)) {
+    stop("Invalid values for 'sex'")
+  } else if (mean(sex == 3) > 0.25) {
+    warning("More than 25% of the sex values are 'unknown'")
+  }
+  sex <- factor(sex, 1:4, labels = codes)
+
+  sex
+}
+
+
+#' @keywords internal
+#' @noRd
+pedigree.process_status <- function(status, n) {
+  if (length(status) != n) {
+    stop("Wrong length for affected")
+  }
+  if (is.logical(status)) status <- as.integer(status)
+  if (any(status != 0L & status != 1L)) {
+    stop("Invalid status code")
+  }
+  status
+}
+
+#' @keywords internal
+#' @noRd
+pedigree.process_affected <- function(affected, n) {
+  if (is.matrix(affected)) {
+    if (nrow(affected) != n) stop("Wrong number of rows in affected")
+    if (is.logical(affected)) affected <- 1L * affected
+  } else {
+    if (length(affected) != n) {
+      stop("Wrong length for affected")
+    }
+
+    if (is.logical(affected)) affected <- as.numeric(affected)
+    if (is.factor(affected)) affected <- as.numeric(affected) - 1
+  }
+  if (max(affected, na.rm = TRUE) > min(affected, na.rm = TRUE)) {
+    affected <- affected - min(affected, na.rm = TRUE)
+  }
+  if (!all(affected == 0 | affected == 1 | is.na(affected))) {
+    stop("Invalid code for affected status")
+  }
+  affected
+}
+
+
 ## Doc: Subscripting a pedigree
 #' @rdname pedigree
 #' @export
@@ -341,7 +394,7 @@ pedigree <- function(id, dadid, momid, sex, affected, status, relation,
   }
 
   if (any(is.na(indx))) {
-    stop(paste("Familiy", (..1[is.na(indx)])[1], "not found"))
+    stop(paste("Family", (..1[is.na(indx)])[1], "not found"))
   }
 
   keep <- which(x$famid %in% indx) # which rows to keep
@@ -447,7 +500,6 @@ pedigree <- function(id, dadid, momid, sex, affected, status, relation,
   class(z) <- "pedigree"
   z
 }
-
 
 #' @rdname pedigree
 #' @method print pedigree
