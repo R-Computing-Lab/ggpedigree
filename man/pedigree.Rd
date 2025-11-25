@@ -59,7 +59,7 @@ default for missid is 0 if the id variable is numeric, and "" (empty string) oth
 
 \item{...}{optional arguments passed to internal functions}
 
-\item{drop}{logical, used in subset function for dropping dimensionanlity}
+\item{drop}{logical, used in subset function for dropping dimensionality}
 }
 \value{
 An object of class \code{pedigree} or \code{pedigreeList} Containing the following items:

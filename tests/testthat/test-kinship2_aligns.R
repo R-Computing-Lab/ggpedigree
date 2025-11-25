@@ -1,7 +1,7 @@
 test_that("align.pedigree works", {
   library(kinship2)
   data("sample.ped")
-  ped <- with(sample.ped, kinship2::pedigree(id, father, mother, sex))
+  ped <- with(sample.ped, ggpedigree:::pedigree(id, father, mother, sex))
   withr::local_options(width = 50)
   expect_snapshot(kinship2_align.pedigree(ped))
   align <- kinship2_align.pedigree(ped)
@@ -11,7 +11,7 @@ test_that("align.pedigree works", {
 test_that("test autohint works", {
   library(kinship2)
   data("sample.ped")
-  ped <- with(sample.ped, kinship2::pedigree(id, father, mother, sex))
+  ped <- with(sample.ped, ggpedigree:::pedigree(id, father, mother, sex))
   newhint <- kinship2_autohint(ped) # this fixes up marriages and such
   plist <- kinship2_align.pedigree(ped,
     packed = TRUE, align = TRUE,

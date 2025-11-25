@@ -171,107 +171,16 @@ sex <- pedigree.sexrepair(sex=sex)
     temp$status <- pedigree.process_status(status, n)
   }
 
-  if (!missing(relation)) {
-    if (!missing(famid)) {
-      if (is.matrix(relation)) {
-        if (ncol(relation) != 4) {
-          stop("Relation matrix must have 3 columns + famid")
-        }
-        id1 <- relation[, 1]
-        id2 <- relation[, 2]
-        code <- relation[, 3]
-        famid <- relation[, 4]
-      } else if (is.data.frame(relation)) {
-        id1 <- relation$id1
-        id2 <- relation$id2
-        code <- relation$code
-        famid <- relation$famid
-        if (is.null(id1) || is.null(id2) || is.null(code) || is.null(famid)) {
-          stop("Relation data must have id1, id2, code, and family id")
-        }
-      } else {
-        stop("Relation argument must be a matrix or a dataframe")
-      }
-    } else {
-      if (is.matrix(relation)) {
-        if (ncol(relation) != 3) {
-          stop("Relation matrix must have 3 columns: id1, id2, code")
-        }
-        id1 <- relation[, 1]
-        id2 <- relation[, 2]
-        code <- relation[, 3]
-      } else if (is.data.frame(relation)) {
-        id1 <- relation$id1
-        id2 <- relation$id2
-        code <- relation$code
-        if (is.null(id1) || is.null(id2) || is.null(code)) {
-          stop("Relation data frame must have id1, id2, and code")
-        }
-      } else {
-        stop("Relation argument must be a matrix or a list")
-      }
-    }
-
-    if (!is.numeric(code)) {
-      code <- match(code, c("MZ twin", "DZ twin", "UZ twin", "spouse"))
-    } else {
-      code <- factor(code,
-        levels = 1:4,
-        labels = c("MZ twin", "DZ twin", "UZ twin", "spouse")
-      )
-    }
-    if (any(is.na(code))) {
-      stop("Invalid relationship code")
-    }
-
-    # Is everyone in this relationship in the pedigree?
-    if (!missing(famid)) {
-      temp1 <- match(paste(as.character(famid), as.character(id1), sep = "/"),
-        id,
-        nomatch = 0
-      )
-      temp2 <- match(paste(as.character(famid), as.character(id2), sep = "/"),
-        id,
-        nomatch = 0
-      )
-    } else {
-      temp1 <- match(id1, id, nomatch = 0)
-      temp2 <- match(id2, id, nomatch = 0)
-    }
-
-    if (any(temp1 == 0 | temp2 == 0)) {
-      stop("Subjects in relationships that are not in the pedigree")
-    }
-    if (any(temp1 == temp2)) {
-      who <- temp1[temp1 == temp2]
-      stop(paste("Subject", id[who], "is their own spouse or twin"))
-    }
-
-    # Check, are the twins really twins?
-    ncode <- as.numeric(code)
-    if (any(ncode < 3)) {
-      twins <- (ncode < 3)
-      if (any(momid[temp1[twins]] != momid[temp2[twins]])) {
-        stop("Twins found with different mothers")
-      }
-      if (any(dadid[temp1[twins]] != dadid[temp2[twins]])) {
-        stop("Twins found with different fathers")
-      }
-    }
-    # Check, are the monozygote twins the same gender?
-    if (any(code == "MZ twin")) {
-      mztwins <- (code == "MZ twin")
-      if (any(sex[temp1[mztwins]] != sex[temp2[mztwins]])) {
-        stop("MZ twins with different sexes")
-      }
-    }
-
-    ## Use id index as indx1 and indx2
-    if (!missing(famid)) {
-      temp$relation <- data.frame(famid = famid, indx1 = temp1, indx2 = temp2, code = code)
-    } else {
-      temp$relation <- data.frame(indx1 = temp1, indx2 = temp2, code = code)
-    }
+if (!missing(relation)) {
+    temp$relation <- pedigree.process_relation(
+      relation = relation,
+      has_famid = has_famid,
+      famid     = if (has_famid) famid else NULL,
+      id        = id,
+      momid     = momid,
+      dadid     = dadid,
+      sex       = sex
+    )
   }
   ## Doc: Finish
   if (missing(famid)) {
@@ -282,6 +191,120 @@ sex <- pedigree.sexrepair(sex=sex)
   temp
 }
 
+#' @keywords internal
+#' @noRd
+pedigree.process_relation <- function(relation,
+                                      has_famid,
+                                      famid,
+                                      id,
+                                      momid,
+                                      dadid,
+                                      sex) {
+  rel_parsed <- pedigree.parse_relation(relation, has_famid = has_famid)
+  id1       <- rel_parsed$id1
+  id2       <- rel_parsed$id2
+  rel_code  <- pedigree.coerce_relation_code(rel_parsed$code)
+  rel_famid <- rel_parsed$famid
+
+  # Ensure everyone in the relationship is in the pedigree
+  if (has_famid) {
+    key1 <- paste(as.character(rel_famid), as.character(id1), sep = "/")
+    key2 <- paste(as.character(rel_famid), as.character(id2), sep = "/")
+  } else {
+    key1 <- id1
+    key2 <- id2
+  }
+
+  indx1 <- match(key1, id, nomatch = 0L)
+  indx2 <- match(key2, id, nomatch = 0L)
+
+  if (any(indx1 == 0L | indx2 == 0L)) {
+    stop("Subjects in relationships that are not in the pedigree")
+  }
+  if (any(indx1 == indx2)) {
+    who <- indx1[indx1 == indx2]
+    stop(paste("Subject", id[who], "is their own spouse or twin"))
+  }
+
+  # Twin consistency checks
+  numeric_code <- as.numeric(rel_code)
+  if (any(numeric_code < 3L)) {
+    twins <- numeric_code < 3L
+    if (any(momid[indx1[twins]] != momid[indx2[twins]])) {
+      stop("Twins found with different mothers")
+    }
+    if (any(dadid[indx1[twins]] != dadid[indx2[twins]])) {
+      stop("Twins found with different fathers")
+    }
+  }
+
+  # MZ twin sex check
+  if (any(rel_code == "MZ twin")) {
+    mztwins <- rel_code == "MZ twin"
+    if (any(sex[indx1[mztwins]] != sex[indx2[mztwins]])) {
+      stop("MZ twins with different sexes")
+    }
+  }
+
+  if (has_famid) {
+    data.frame(
+      famid = rel_famid,
+      indx1 = indx1,
+      indx2 = indx2,
+      code  = rel_code
+    )
+  } else {
+    data.frame(
+      indx1 = indx1,
+      indx2 = indx2,
+      code  = rel_code
+    )
+  }
+}
+
+pedigree.parse_relation <- function(relation, has_famid) {
+  if (is.matrix(relation)) {
+    expected_cols <- if (has_famid) 4L else 3L
+    if (ncol(relation) != expected_cols) {
+      if (has_famid) {
+        stop("Relation matrix must have 3 columns + famid")
+      } else {
+        stop("Relation matrix must have 3 columns: id1, id2, code")
+      }
+    }
+    id1  <- relation[, 1]
+    id2  <- relation[, 2]
+    code <- relation[, 3]
+    fam  <- if (has_famid) relation[, 4] else NULL
+  } else if (is.data.frame(relation)) {
+    id1  <- relation$id1
+    id2  <- relation$id2
+    code <- relation$code
+    fam  <- if (has_famid) relation$famid else NULL
+
+    if (is.null(id1) || is.null(id2) || is.null(code) ||
+        (has_famid && is.null(fam))) {
+      if (has_famid) {
+        stop("Relation data must have id1, id2, code, and family id")
+      } else {
+        stop("Relation data frame must have id1, id2, and code")
+      }
+    }
+  } else {
+    if (has_famid) {
+      stop("Relation argument must be a matrix or a dataframe")
+    } else {
+      stop("Relation argument must be a matrix or a list")
+    }
+  }
+
+  list(
+    id1  = id1,
+    id2  = id2,
+    code = code,
+    famid = fam
+  )
+}
 
 #'
 #' @keywords internal
