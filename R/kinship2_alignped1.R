@@ -114,7 +114,7 @@ kinship2_alignped1 <- function(x, dad, mom, level, horder, packed, spouselist){
                     for (j in (lev+1):maxlev) {
                         jn <- rval1$n[j]
                         if (jn>0)
-                            rval1$pos[j, 1:jn] <- rval1$pos[j, 1:jn] +shift
+                            rval1$pos[j, 1:jn] <- rval1$pos[j, 1:jn] + shift
                         }
                     }
                 }

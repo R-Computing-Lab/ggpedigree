@@ -39,7 +39,7 @@ kinship2_autohint <- function(ped, hints, packed=TRUE, align=FALSE) {
     if (!is.null(relation) && any(relation[,3] <4)) {
         temp <- (relation[,3] < 4)
         twinlist <- unique(c(relation[temp,1:2]))  #list of twin id's
-        twinrel  <- relation[temp,,drop=F]
+        twinrel  <- relation[temp,,drop=FALSE]
 
         twinset <- rep(0,n)
         twinord <- rep(1,n)
@@ -81,7 +81,7 @@ kinship2_autohint <- function(ped, hints, packed=TRUE, align=FALSE) {
                 #  take (#twins -1) iterations to get us all
                 #
                 monoset <- id
-                rel2 <- twinrel[twinrel[,3]==1, 1:2, drop=F]
+                rel2 <- twinrel[twinrel[,3]==1, 1:2, drop=FALSE]
                 for (i in 2:length(twins)) {
                     newid1 <- rel2[match(monoset, rel2[,1], nomatch=0),2]
                     newid2 <- rel2[match(monoset, rel2[,2], nomatch=0),1]
@@ -162,7 +162,8 @@ kinship2_autohint <- function(ped, hints, packed=TRUE, align=FALSE) {
         # if someone appears 4 times they get 3 rows
         npair <- sum(temp-1)
         dmat <- matrix(0L, nrow=npair, ncol=3)
-        dmat[,3] <- 2; dmat[1:(npair/2),3] <- 1
+        dmat[,3] <- 2
+        dmat[1:(npair/2),3] <- 1
         i <- 0
         for (id in unique(idlist[duplicated(idlist)])) {
             j <- which(idlist==id)
@@ -181,7 +182,10 @@ kinship2_autohint <- function(ped, hints, packed=TRUE, align=FALSE) {
             else {
                 spouse <- findspouse(dmat[i,1], plist, lev, ped)
                 ##If spouse is marry-in then move on without looking for sibs
-                    if (plist$fam[lev,spouse]==0) {famtouch[i] <- F; next}
+                    if (plist$fam[lev,spouse]==0) {
+                      famtouch[i] <- FALSE
+                    next
+                      }
                 sib1 <- max(findsibs(spouse, plist, lev))
                 }
 
@@ -190,7 +194,10 @@ kinship2_autohint <- function(ped, hints, packed=TRUE, align=FALSE) {
             else {
                 spouse <- findspouse(dmat[i,2], plist, lev, ped)
                 ##If spouse is marry-in then move on without looking for sibs
-                    if (plist$fam[lev,spouse]==0) {famtouch[i] <- F; next}
+                    if (plist$fam[lev,spouse]==0) {
+                      famtouch[i] <- FALSE
+                      next
+                      }
                 sib2 <- min(findsibs(spouse, plist, lev))
                 }
             famtouch[i] <- (sib2-sib1 ==1)
@@ -341,7 +348,7 @@ kinship2_align.pedigree <- function(ped, packed=TRUE, width=10, align=TRUE, hint
 
     if (!is.null(relation) && any(relation[,3]==4)) {
         # Add spouses from the relationship matrix
-        trel <- relation[relation[,3]==4,,drop=F]
+        trel <- relation[relation[,3]==4,,drop=FALSE]
         tsex <- ped$sex[trel[,1]]
         trel[tsex!='male',1:2] <- trel[tsex!='male',2:1]
         spouselist <- rbind(spouselist, cbind(trel[,1],
@@ -355,7 +362,7 @@ kinship2_align.pedigree <- function(ped, packed=TRUE, width=10, align=TRUE, hint
         }
 
     hash <- spouselist[,1]*n + spouselist[,2]
-    spouselist <- spouselist[!duplicated(hash),, drop=F]
+    spouselist <- spouselist[!duplicated(hash),, drop=FALSE]
 
     ## Doc: Founders -align
     noparents <- (dad[spouselist[,1]]==0 & dad[spouselist[,2]]==0)

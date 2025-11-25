@@ -334,7 +334,7 @@ pedigree <- function(id, dadid, momid, sex, affected, status, relation,
               mindex=match(x$mindex[i], i, nomatch=0),
              sex=x$sex[i])
     if (!is.null(x$affected)) {
-        if (is.matrix(x$affected)) z$affected <- x$affected[i,, drop=F]
+        if (is.matrix(x$affected)) z$affected <- x$affected[i,, drop=FALSE]
         else z$affected <- x$affected[i]
     }
     if (!is.null(x$famid)) z$famid <- x$famid[i]
