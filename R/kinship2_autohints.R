@@ -160,66 +160,12 @@ kinship2_autohint <- function(ped, hints, packed = TRUE, align = FALSE) {
   )
   ## end doc init
 
-  ## Doc: duporder
-  duporder <- function(idlist, plist, lev, ped) {
-    temp <- table(idlist)
-    if (all(temp == 1)) {
-      return(matrix(0L, nrow = 0, ncol = 3))
-    }
-
-    # make an intial list of all pairs's positions
-    # if someone appears 4 times they get 3 rows
-    npair <- sum(temp - 1)
-    dmat <- matrix(0L, nrow = npair, ncol = 3)
-    dmat[, 3] <- 2
-    dmat[1:(npair / 2), 3] <- 1
-    i <- 0
-    for (id in unique(idlist[duplicated(idlist)])) {
-      j <- which(idlist == id)
-      for (k in 2:length(j)) {
-        i <- i + 1
-        dmat[i, 1:2] <- j[k + -1:0]
-      }
-    }
-    if (nrow(dmat) == 1) {
-      return(dmat)
-    } # no need to sort it
-
-    # families touch?
-    famtouch <- logical(npair)
-    for (i in 1:npair) {
-      if (plist$fam[lev, dmat[i, 1]] > 0) {
-        sib1 <- max(kinship2_findsibs(dmat[i, 1], plist, lev))
-      } else {
-        spouse <- kinship2_findspouse(dmat[i, 1], plist, lev, ped)
-        ## If spouse is marry-in then move on without looking for sibs
-        if (plist$fam[lev, spouse] == 0) {
-          famtouch[i] <- FALSE
-          next
-        }
-        sib1 <- max(kinship2_findsibs(spouse, plist, lev))
-      }
-
-      if (plist$fam[lev, dmat[i, 2]] > 0) {
-        sib2 <- min(kinship2_findsibs(dmat[i, 2], plist, lev))
-      } else {
-        spouse <- kinship2_findspouse(dmat[i, 2], plist, lev, ped)
-        ## If spouse is marry-in then move on without looking for sibs
-        if (plist$fam[lev, spouse] == 0) {
-          famtouch[i] <- FALSE
-          next
-        }
-        sib2 <- min(kinship2_findsibs(spouse, plist, lev))
-      }
-      famtouch[i] <- (sib2 - sib1 == 1)
-    }
-    dmat[order(famtouch, dmat[, 1] - dmat[, 2]), , drop = FALSE]
-  } ## duporder()
+  ## duporder()
   ## Doc: fixup-2
   maxlev <- nrow(plist$nid)
   for (lev in 1:maxlev) {
     idlist <- plist$nid[lev, 1:plist$n[lev]] # subjects on this level
-    dpairs <- duporder(idlist, plist, lev, ped) # duplicates to be dealt with
+    dpairs <- kinship2_duporder(idlist, plist, lev, ped) # duplicates to be dealt with
     if (nrow(dpairs) == 0) next
     for (i in 1:nrow(dpairs)) {
       anchor <- spouse <- rep(0, 2)
@@ -286,3 +232,64 @@ kinship2_autohint <- function(ped, hints, packed = TRUE, align = FALSE) {
   list(order = horder, spouse = sptemp)
 }
 
+## Doc: duporder
+#' Find all duplicated IDs on a level, and return
+#' @keywords internal
+#' @return A matrix with one row per duplicated ID, columns 1 and 2
+kinship2_duporder <- function(idlist,
+                              plist,
+                              lev,
+                              ped) {
+  temp <- table(idlist)
+  if (all(temp == 1)) {
+    return(matrix(0L, nrow = 0, ncol = 3))
+  }
+
+  # make an initial list of all pairs's positions
+  # if someone appears 4 times they get 3 rows
+  npair <- sum(temp - 1)
+  dmat <- matrix(0L, nrow = npair, ncol = 3)
+  dmat[, 3] <- 2
+  dmat[1:(npair / 2), 3] <- 1
+  i <- 0
+  for (id in unique(idlist[duplicated(idlist)])) {
+    j <- which(idlist == id)
+    for (k in 2:length(j)) {
+      i <- i + 1
+      dmat[i, 1:2] <- j[k + -1:0]
+    }
+  }
+  if (nrow(dmat) == 1) {
+    return(dmat)
+  } # no need to sort it
+
+  # families touch?
+  famtouch <- logical(npair)
+  for (i in 1:npair) {
+    if (plist$fam[lev, dmat[i, 1]] > 0) {
+      sib1 <- max(kinship2_findsibs(dmat[i, 1], plist, lev))
+    } else {
+      spouse <- kinship2_findspouse(dmat[i, 1], plist, lev, ped)
+      ## If spouse is marry-in then move on without looking for sibs
+      if (plist$fam[lev, spouse] == 0) {
+        famtouch[i] <- FALSE
+        next
+      }
+      sib1 <- max(kinship2_findsibs(spouse, plist, lev))
+    }
+
+    if (plist$fam[lev, dmat[i, 2]] > 0) {
+      sib2 <- min(kinship2_findsibs(dmat[i, 2], plist, lev))
+    } else {
+      spouse <- kinship2_findspouse(dmat[i, 2], plist, lev, ped)
+      ## If spouse is marry-in then move on without looking for sibs
+      if (plist$fam[lev, spouse] == 0) {
+        famtouch[i] <- FALSE
+        next
+      }
+      sib2 <- min(kinship2_findsibs(spouse, plist, lev))
+    }
+    famtouch[i] <- (sib2 - sib1 == 1)
+  }
+  dmat[order(famtouch, dmat[, 1] - dmat[, 2]), , drop = FALSE]
+}

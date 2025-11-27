@@ -1,3 +1,5 @@
+# Sourced from kinship2 package tests
+
 test_that("pedigree fails to line up", {
   # Here is a case where the levels fail to line up properly
   library(kinship2)
@@ -74,7 +76,10 @@ test_that("pedigree other test", {
   ped2df$availstatus <- c(0, 0, 1, 1, 0, 1, 1, 1, 1, 1)
   ped2df$vitalstatus <- c(1, 1, 1, 0, 1, 0, 0, 0, 0, 0)
 
-  ped2 <- with(ped2df, ggpedigree:::pedigree(id, dad, mom, sex,
+  ped2 <- with(ped2df, ggpedigree:::pedigree(id,
+    dad,
+    mom,
+    sex,
     status = vitalstatus,
     affected = cbind(disease, smoker, availstatus),
     relation = matrix(c(8, 9, 1), ncol = 3),

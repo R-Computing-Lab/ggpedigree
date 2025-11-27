@@ -45,8 +45,10 @@ Suggests:
     showtext,
     sysfonts,
     readxl,
+    withr,
     htmlwidgets,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    vdiffr
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3
