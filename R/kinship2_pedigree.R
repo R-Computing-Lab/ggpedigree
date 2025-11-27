@@ -36,23 +36,26 @@
 #' @name pedigree
 
 
-pedigree <- function(id, dadid, momid, sex, affected, status, relation,
+pedigree <- function(id, dadid, momid,
+                     sex, affected,
+                     status, relation,
                      famid, missid) {
   n <- length(id)
   ## Code transferred from noweb to markdown vignette.
   ## Sections from the noweb/vignettes are noted here with
   ## Doc: Error and Data Checks
 
-  pedigree.idcheck(id=id,
-                   momid = momid,
-                   dadid = dadid,
-                   sex=sex
-                 )
+  pedigree.idcheck(
+    id = id,
+    momid = momid,
+    dadid = dadid,
+    sex = sex
+  )
 
 
-id <- pedigree.idrepair(id=id)
+  id <- pedigree.idrepair(id = id)
 
-sex <- pedigree.sexrepair(sex=sex)
+  sex <- pedigree.sexrepair(sex = sex)
 
   ## Doc:  Errors2
   if (missing(missid)) {
@@ -79,6 +82,7 @@ sex <- pedigree.sexrepair(sex=sex)
     dadid <- paste(as.character(famid), as.character(dadid), sep = "/")
     momid <- paste(as.character(famid), as.character(momid), sep = "/")
   }
+  has_famid <- !missing(famid)
 
   if (any(duplicated(id))) {
     duplist <- id[duplicated(id)]
@@ -165,21 +169,19 @@ sex <- pedigree.sexrepair(sex=sex)
   }
 
 
-
-
   if (!missing(status)) {
     temp$status <- pedigree.process_status(status, n)
   }
 
-if (!missing(relation)) {
+  if (!missing(relation)) {
     temp$relation <- pedigree.process_relation(
       relation = relation,
       has_famid = has_famid,
-      famid     = if (has_famid) famid else NULL,
-      id        = id,
-      momid     = momid,
-      dadid     = dadid,
-      sex       = sex
+      famid = if (has_famid) famid else NULL,
+      id = id,
+      momid = momid,
+      dadid = dadid,
+      sex = sex
     )
   }
   ## Doc: Finish
@@ -200,10 +202,12 @@ pedigree.process_relation <- function(relation,
                                       momid,
                                       dadid,
                                       sex) {
-  rel_parsed <- pedigree.parse_relation(relation, has_famid = has_famid)
-  id1       <- rel_parsed$id1
-  id2       <- rel_parsed$id2
-  rel_code  <- pedigree.coerce_relation_code(rel_parsed$code)
+  rel_parsed <- pedigree.parse_relation(relation,
+    has_famid = has_famid
+  )
+  id1 <- rel_parsed$id1
+  id2 <- rel_parsed$id2
+  rel_code <- pedigree.coerce_relation_code(rel_parsed$code)
   rel_famid <- rel_parsed$famid
 
   # Ensure everyone in the relationship is in the pedigree
@@ -272,18 +276,18 @@ pedigree.parse_relation <- function(relation, has_famid) {
         stop("Relation matrix must have 3 columns: id1, id2, code")
       }
     }
-    id1  <- relation[, 1]
-    id2  <- relation[, 2]
+    id1 <- relation[, 1]
+    id2 <- relation[, 2]
     code <- relation[, 3]
-    fam  <- if (has_famid) relation[, 4] else NULL
+    fam <- if (has_famid) relation[, 4] else NULL
   } else if (is.data.frame(relation)) {
-    id1  <- relation$id1
-    id2  <- relation$id2
+    id1 <- relation$id1
+    id2 <- relation$id2
     code <- relation$code
-    fam  <- if (has_famid) relation$famid else NULL
+    fam <- if (has_famid) relation$famid else NULL
 
     if (is.null(id1) || is.null(id2) || is.null(code) ||
-        (has_famid && is.null(fam))) {
+      (has_famid && is.null(fam))) {
       if (has_famid) {
         stop("Relation data must have id1, id2, code, and family id")
       } else {
@@ -299,8 +303,8 @@ pedigree.parse_relation <- function(relation, has_famid) {
   }
 
   list(
-    id1  = id1,
-    id2  = id2,
+    id1 = id1,
+    id2 = id2,
     code = code,
     famid = fam
   )
@@ -311,7 +315,7 @@ pedigree.parse_relation <- function(relation, has_famid) {
 #' @noRd
 #' @inheritParams pedigree
 
-pedigree.idcheck <- function(id, momid, dadid, sex){
+pedigree.idcheck <- function(id, momid, dadid, sex) {
   n <- length(id)
   if (length(momid) != n) stop("Mismatched lengths, id and momid")
   if (length(dadid) != n) stop("Mismatched lengths, id and dadid")
@@ -323,7 +327,7 @@ pedigree.idcheck <- function(id, momid, dadid, sex){
 #' @noRd
 #' @inheritParams pedigree
 
-pedigree.idrepair  <- function(id){
+pedigree.idrepair <- function(id) {
   if (!is.numeric(id)) {
     id <- as.character(id)
     if (length(grep("^ *$", id)) > 0) {
@@ -337,7 +341,7 @@ pedigree.idrepair  <- function(id){
 #' @noRd
 #' @inheritParams pedigree
 
-pedigree.sexrepair <- function(sex){
+pedigree.sexrepair <- function(sex) {
   # Allow for character/numeric
   # Allow for character/numeric/factor in the sex variable
   if (is.factor(sex)) {
@@ -523,7 +527,28 @@ pedigree.process_affected <- function(affected, n) {
   class(z) <- "pedigree"
   z
 }
+#' @keywords internal
+#' @noRd
+pedigree.coerce_relation_code <- function(code) {
+  levels <- c("MZ twin", "DZ twin", "UZ twin", "spouse")
 
+  if (is.factor(code)) {
+    code <- as.character(code)
+  }
+
+  if (is.numeric(code)) {
+    if (any(code < 1L | code > 4L | is.na(code))) {
+      stop("Invalid relationship code")
+    }
+    factor(code, levels = 1:4, labels = levels)
+  } else {
+    idx <- match(code, levels)
+    if (any(is.na(idx))) {
+      stop("Invalid relationship code")
+    }
+    factor(idx, levels = 1:4, labels = levels)
+  }
+}
 #' @rdname pedigree
 #' @method print pedigree
 print.pedigree <- function(x, ...) {

@@ -19,3 +19,26 @@ test_that("test autohint works", {
   )
   expect_snapshot(plist)
 })
+
+
+test_that("align.pedigree works when packed false ", {
+  library(kinship2)
+  data("sample.ped")
+  ped <- with(sample.ped, ggpedigree:::pedigree(id, father, mother, sex))
+  withr::local_options(width = 50)
+  expect_snapshot(kinship2_align.pedigree(ped, packed = FALSE))
+  align <- kinship2_align.pedigree(ped, packed = FALSE)
+  expect_equal(align$n, c(8, 19, 22, 8))
+})
+
+test_that("test autohint works when packed false", {
+  library(kinship2)
+  data("sample.ped")
+  ped <- with(sample.ped, ggpedigree:::pedigree(id, father, mother, sex))
+  newhint <- kinship2_autohint(ped,packed = FALSE) # this fixes up marriages and such
+  plist <- kinship2_align.pedigree(ped,
+                                   packed = FALSE, align = TRUE,
+                                   width = 8, hints = newhint
+  )
+  expect_snapshot(plist)
+})
