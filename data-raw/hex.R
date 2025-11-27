@@ -81,5 +81,4 @@ combined_img <- image_composite(graph_img, logo_img, operator = "Over", gravity 
 image_write(combined_img, path = "data-raw/combined.png", format = "png")
 
 
-
 sticker("data-raw/combined.png", package = "ggpedigree", p_size = 20, s_x = 1 - .05, s_y = .900, s_width = .6, h_fill = "#0fa1e0", h_color = "#333333", p_color = "white", filename = "man/figures/hex.png")

@@ -82,7 +82,7 @@ ggPedigree <- function(ped,
                        phantoms = FALSE,
                        ...) {
   if (!inherits(ped, "data.frame")) {
-    if (rlang::inherits_any(ped, c("ped", "kinship2.pedigree"))) {
+    if (rlang::inherits_any(ped, c("ped", "pedigree", "kinship2.pedigree"))) {
       # Convert ped object to data.frame
       ped <- as.data.frame(ped)
     } else if (rlang::inherits_any(ped, "pedigreeList")) {
@@ -312,7 +312,6 @@ ggPedigree.core <- function(ped,
   )
 
 
-
   # -----
   # STEP 6: Initialize Plot
   # -----
@@ -530,8 +529,6 @@ ggPedigree.core <- function(ped,
 }
 
 
-
-
 #' @title Add Nodes to ggplot Pedigree Plot
 #' @inheritParams ggPedigree
 #' @param plotObject A ggplot object.
@@ -617,7 +614,6 @@ ggPedigree.core <- function(ped,
 
 #' @rdname dot-addNodes
 addNodes <- .addNodes
-
 
 
 #' @title Add Overlay to ggplot Pedigree Plot

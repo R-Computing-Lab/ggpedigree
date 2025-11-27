@@ -275,8 +275,8 @@ p <- ggPedigree(
   )
 )
 
-p + facet_wrap(~famID, scales = "free")  +  
-  guides(colour="none", shape="none")
+p + facet_wrap(~famID, scales = "free") +
+  guides(colour = "none", shape = "none")
 ```
 
 ## Advanced Styling Example
@@ -377,7 +377,6 @@ m2 <- ggPedigree(potter,
     size = 14, face = "bold"
   )
 ) + coord_cartesian(ylim = c(4.5, 1), clip = "off")
-
 ```
 
 ```{r, message=FALSE, warning=FALSE, dimensions = c(9.5, 6)}

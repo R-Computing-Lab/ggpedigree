@@ -2,7 +2,7 @@
 title: "Extended More Complex Pedigree Plots with ggPedigreeInteractive"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Extended More Complex Pedigree Plots with ggPedigree Interactive}
+  %\VignetteIndexEntry{Extended More Complex Pedigree Plots with ggPedigreeInteractive}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

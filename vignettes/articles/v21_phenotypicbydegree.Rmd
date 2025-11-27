@@ -103,7 +103,6 @@ assign_addRel_bin <- function(rel) {
 }
 
 
-
 dataRelatedPair_merge <- data.table::rbindlist(
   list(
     dataRelatedPair_merge,
@@ -114,10 +113,6 @@ dataRelatedPair_merge <- data.table::rbindlist(
   mutate(addRel_bin = vapply(addRel, assign_addRel_bin, character(1))) %>%
   mutate(addRel_factor = factor(addRel_bin, levels = c("addRel_1+", rel_bins, paste0("addRel_+", rel_vals), "addRel_+0", "addRel_0"))) %>%
   select(-addRel_bin)
-
-
-
-
 
 
 result <- dataRelatedPair_merge %>%

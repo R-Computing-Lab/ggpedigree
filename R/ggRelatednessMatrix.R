@@ -42,12 +42,13 @@
 #'   )
 #' )
 ggRelatednessMatrix <- function(
-    mat,
-    config = list(),
-    interactive = FALSE,
-    tooltip_columns = NULL,
-    personID = "personID",
-    ...) {
+  mat,
+  config = list(),
+  interactive = FALSE,
+  tooltip_columns = NULL,
+  personID = "personID",
+  ...
+) {
   # Check if the input is a matrix
   if (!is.matrix(mat)) {
     stop("Input 'mat' must be a matrix.")
@@ -102,8 +103,8 @@ ggRelatednessMatrix <- function(
           paste(paste(tooltip_columns, row, sep = ": "), collapse = "<br>")
         })
       }
-      # add tooltips to geom_point layers
 
+      # add tooltips to geom_point layers
 
       static_plot <- static_plot + ggplot2::aes(text = tooltip_fmt(
         df = ped,
@@ -136,9 +137,10 @@ ggRelatednessMatrix <- function(
 #' @keywords internal
 
 ggRelatednessMatrix.core <- function(
-    mat,
-    config = list(),
-    ...) {
+  mat,
+  config = list(),
+  ...
+) {
   stopifnot(is.matrix(mat))
 
   mat_plot <- mat
@@ -164,7 +166,7 @@ ggRelatednessMatrix.core <- function(
     # note that this gets rotated, so upper triangle is actually lower triangle in the plot
     mat_plot[upper.tri(mat_plot)] <- NA
   }
-
+  # Melt the matrix into long format for ggplot2
   df_melted <- reshape2::melt(mat_plot)
 
   colnames(df_melted) <- c("ID1", "ID2", "value")

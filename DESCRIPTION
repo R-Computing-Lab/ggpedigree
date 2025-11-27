@@ -15,7 +15,6 @@ Depends:
    R (>= 4.1.0)
 Imports: 
     BGmisc (>= 1.4.1),
-    kinship2,
     ggplot2,
     rlang,
     dplyr,
@@ -25,7 +24,9 @@ Imports:
     reshape2,
     scales,
     tidyr
-Suggests: 
+Suggests:
+    kinship2,
+    quadprog,
     ggrepel,
     paletteer,
     mockery,
@@ -44,8 +45,10 @@ Suggests:
     showtext,
     sysfonts,
     readxl,
+    withr,
     htmlwidgets,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    vdiffr
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3

@@ -26,8 +26,11 @@ test_that("pedigree plots correctly with affected variables", {
   sexR <- .50
   marR <- .7
 
-  results <- simulatePedigree(kpc = kpc, Ngen = Ngen, sexR = sexR, marR = marR)
-  affected <- rbinom(n = nrow(results), size = 1, prob = .1)
+  results <- BGmisc::simulatePedigree(kpc = kpc, Ngen = Ngen, sexR = sexR, marR = marR)
+  affected <- rbinom(
+    n = nrow(results),
+    size = 1, prob = .1
+  )
   expect_error(plotPedigree(results, verbose = TRUE, affected = affected[1:10]))
   results$affected <- affected
   expect_output(plotPedigree(results, verbose = TRUE, affected = "affected"))
@@ -46,6 +49,7 @@ test_that("pedigree errs when affected variables named", {
 
 
 test_that("pedigree plots multiple families", {
+  library(BGmisc)
   data(inbreeding)
   plotPedigree(inbreeding, verbose = TRUE)
   expect_message(plotPedigree(inbreeding, verbose = TRUE))

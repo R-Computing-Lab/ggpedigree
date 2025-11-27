@@ -175,7 +175,6 @@
 #' @export
 
 
-
 getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  personID = "personID",
                                  status_column = NULL,
