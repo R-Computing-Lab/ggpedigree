@@ -212,6 +212,7 @@ kinship2_align.pedigree <- function(ped, packed = TRUE, width = 10, align = TRUE
 #' on the same generation level when possible. This produces more aesthetically
 #' pleasing pedigree plots. The alignment algorithm handles marry-ins, multiple
 #' marriages, and inbreeding loops.
+#'
 kinship2_kindepth <- function(id, dad.id, mom.id, align = FALSE) {
   if ("pedigree" %in% class(id) || "pedigreeList" %in% class(id)) {
     didx <- id$findex
@@ -219,12 +220,11 @@ kinship2_kindepth <- function(id, dad.id, mom.id, align = FALSE) {
     n <- length(didx)
   } else {
     n <- length(id)
-    if (missing(dad.id) || length(dad.id) != n) {
-      stop("Invalid father id")
-    }
-    if (missing(mom.id) || length(mom.id) != n) {
-      stop("Invalid mother id")
-    }
+
+    kinship2_kindepth.checkmiss(dad.id, n)
+
+    kinship2_kindepth.checkmiss(mom.id, n)
+
     midx <- match(mom.id, id, nomatch = 0) # row number of my mom
     didx <- match(dad.id, id, nomatch = 0) # row number of my dad
   }
@@ -282,16 +282,7 @@ kinship2_kindepth <- function(id, dad.id, mom.id, align = FALSE) {
   ## It may be possible to do better alignment when the pedigree has loops,
   ## but it is definitely beyond this program, perhaps in autohint one day.
 
-  kinship2_chaseup <- function(x, midx, didx) {
-    new <- c(midx[x], didx[x]) # mother and father
-    new <- new[new > 0]
-    while (length(new) > 1) {
-      x <- unique(c(x, new))
-      new <- c(midx[new], didx[new])
-      new <- new[new > 0]
-    }
-    x
-  } ## kinship2_chaseup()
+  ## kinship2_chaseup()
 
   ## First deal with any parents who are founders
   ##  They all start with depth 0
@@ -420,8 +411,31 @@ kinship2_ancestor <- function(me, momid, dadid) {
 }
 
 
+
 kinship2_findsibs <- function(mypos, plist, lev) {
   family <- plist$fam[lev, mypos]
   if (family == 0) stop("autohint bug 6")
   which(plist$fam[lev, ] == family)
+}
+
+# Given a subject x, find all ancestors connected to x
+#  including spouses and sibs at or above the level of x
+#' @keywords internal
+
+kinship2_chaseup <- function(x, midx, didx) {
+  new <- c(midx[x], didx[x]) # mother and father
+  new <- new[new > 0]
+  while (length(new) > 1) {
+    x <- unique(c(x, new))
+    new <- c(midx[new], didx[new])
+    new <- new[new > 0]
+  }
+  x
+}
+
+
+kinship2_kindepth.checkmiss <- function(parent.id, n) {
+  if (missing(parent.id) || length(parent.id) != n) {
+    stop(paste0("Invalid ",parent.id))
+  }
 }
