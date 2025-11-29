@@ -1,3 +1,5 @@
+# ggpedigree (development version)
+
 # ggpedigree (development version 1.00)
 * Folded in kinship2 functions to eliminate the dependency
 * Made kinship2 package optional, and only needed for plotPedigree (a kinship2 wrapper)
