@@ -59,61 +59,55 @@ plotPedigree(
 
 - col:
 
-  color for each id. Default assigns the same color to everyone.
+  The color of the symbols in the plot.
 
 - symbolsize:
 
-  controls symbolsize. Default=1.
+  The size of the symbols in the plot.
 
 - branch:
 
-  defines how much angle is used to connect various levels of nuclear
-  families.
+  The length of the branches in the plot.
 
 - packed:
 
-  default=T. If T, uniform distance between all individuals at a given
-  level.
+  logical. If TRUE, the pedigree is drawn in a more compact form.
 
 - align:
 
-  these parameters control the extra effort spent trying to align
-  children underneath parents, but without making the pedigree too wide.
-  Set to F to speed up plotting.
+  A numeric vector of length 2 indicating the alignment penalties for
+  parents and spouses.
 
 - width:
 
-  default=8. For a packed pedigree, the minimum width allowed in the
-  realignment of pedigrees.
+  The width of the plot.
 
 - density:
 
-  defines density used in the symbols. Takes up to 4 different values.
+  A numeric vector indicating the shading density for different affected
+  statuses.
 
 - mar:
 
-  margin parmeters, as in the `par` function
+  A numeric vector of length 4 indicating the margins of the plot.
 
 - angle:
 
-  defines angle used in the symbols. Takes up to 4 different values.
+  A numeric vector indicating the shading angles for different affected
+  statuses.
 
 - keep.par:
 
-  Default = F, allows user to keep the parameter settings the same as
-  they were for plotting (useful for adding extras to the plot)
+  logical. If TRUE, the current graphical parameters are preserved.
 
 - pconnect:
 
-  when connecting parent to children the program will try to make the
-  connecting line as close to vertical as possible, subject to it lying
-  inside the endpoints of the line that connects the children by at
-  least `pconnect` people. Setting this option to a large number will
-  force the line to connect at the midpoint of the children.
+  A numeric value indicating the proportion of the pedigree to connect.
 
 - ...:
 
-  Extra options that feed into the plot function.
+  Additional arguments passed to
+  [`kinship2::plot.pedigree`](https://rdrr.io/pkg/kinship2/man/plot.pedigree.html)
 
 ## Value
 

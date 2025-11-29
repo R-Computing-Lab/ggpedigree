@@ -284,8 +284,8 @@ p <- ggPedigree(
   )
 )
 
-p + facet_wrap(~famID, scales = "free")  +  
-  guides(colour="none", shape="none")
+p + facet_wrap(~famID, scales = "free") +
+  guides(colour = "none", shape = "none")
 ```
 
 ![](v01_plots_extended_files/figure-html/self-loops-1.png)

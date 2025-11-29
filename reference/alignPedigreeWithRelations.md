@@ -57,7 +57,7 @@ alignPedigreeWithRelations(
 
   ped_packed
 
-  :   Logical, default TRUE. Passed to \`kinship2::align.pedigree\`.
+  :   Logical, default TRUE. Passed to \`kinship2_align.pedigree\`.
 
   ped_align
 

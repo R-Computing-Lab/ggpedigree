@@ -14,7 +14,7 @@ alignPedigreeWithHints(ped_ped, config)
 
 - ped_ped:
 
-  A pedigree object created by \`kinship2::pedigree()\`.
+  A pedigree object created by \`pedigree()\`.
 
 - config:
 

@@ -105,6 +105,7 @@ serves as a wrapper function from {kinship2} and is useful for quickly
 checking the pedigree structure.
 
 ``` r
+library(kinship2)
 plotPedigree(df_repaired,
   affected = df_repaired$affected,
   verbose = FALSE

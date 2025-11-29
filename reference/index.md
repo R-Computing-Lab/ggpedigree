@@ -51,6 +51,13 @@
 - [`optimizePlotlyPedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/optimizePlotlyPedigree.md)
   : Optimize Plotly Pedigree Plot
 
+- [`pedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/pedigree.md)
+  [`` `[`( ``*`<pedigreeList>`*`)`](https://r-computing-lab.github.io/ggpedigree/reference/pedigree.md)
+  [`` `[`( ``*`<pedigree>`*`)`](https://r-computing-lab.github.io/ggpedigree/reference/pedigree.md)
+  [`print(`*`<pedigree>`*`)`](https://r-computing-lab.github.io/ggpedigree/reference/pedigree.md)
+  [`print(`*`<pedigreeList>`*`)`](https://r-computing-lab.github.io/ggpedigree/reference/pedigree.md)
+  : Create a pedigree or pedigreeList object
+
 - [`plotPedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/plotPedigree.md)
   :
 

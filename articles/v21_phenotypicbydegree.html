@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +66,7 @@
                         <h4 data-toc-skip class="author">S. Mason
 Garrison</h4>
             
-            <h4 data-toc-skip class="date">2025-11-27</h4>
+            <h4 data-toc-skip class="date">2025-11-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/main/vignettes/articles/v21_phenotypicbydegree.Rmd" class="external-link"><code>vignettes/articles/v21_phenotypicbydegree.Rmd</code></a></small>
       <div class="d-none name"><code>v21_phenotypicbydegree.Rmd</code></div>
@@ -164,7 +164,6 @@ Click to expand pedigree setup
 <span><span class="op">}</span></span>
 <span></span>
 <span></span>
-<span></span>
 <span><span class="va">dataRelatedPair_merge</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/rbindlist.html" class="external-link">rbindlist</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="va">dataRelatedPair_merge</span>,</span>
@@ -175,10 +174,6 @@ Click to expand pedigree setup
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>addRel_bin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">addRel</span>, <span class="va">assign_addRel_bin</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>addRel_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">addRel_bin</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"addRel_1+"</span>, <span class="va">rel_bins</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"addRel_+"</span>, <span class="va">rel_vals</span><span class="op">)</span>, <span class="st">"addRel_+0"</span>, <span class="st">"addRel_0"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">addRel_bin</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
 <span></span>
 <span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">dataRelatedPair_merge</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
