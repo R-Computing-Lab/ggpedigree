@@ -209,6 +209,7 @@ ggPedigree.core <- function(ped,
   fill_group_maternal <- c(
     "maternal",
     "matID",
+    "mat ID",
     "maternal line",
     "maternal lineages",
     "maternal lines"
@@ -216,12 +217,14 @@ ggPedigree.core <- function(ped,
   fill_group_paternal <- c(
     "paternal",
     "patID",
+    "pat ID",
     "paternal line",
     "paternal lineages",
     "paternal lines"
   )
   fill_group_family <- c(
     "famID",
+    "fam ID",
     "family",
     "family lineages",
     "family lines",
@@ -398,7 +401,7 @@ ggPedigree.core <- function(ped,
         connections |>
           dplyr::select(!!rlang::sym(personID), "x_mid_sib", "y_mid_sib"),
         # the twin_coords file didn't have its variables restored
-        by = join_by(personID == !!rlang::sym(personID))
+        by = dplyr::join_by(personID == !!rlang::sym(personID))
       )
 
     p <- addTwins(
@@ -991,8 +994,9 @@ addScales <- .addScales
 #' @keywords internal
 #'
 .addLabels <- function(plotObject, config) {
+  ggrepel_label_methods <- c("geom_text_repel", "ggrepel", "geom_label_repel")
   if (!requireNamespace("ggrepel", quietly = TRUE) &&
-    config$label_method %in% c("geom_text_repel", "ggrepel", "geom_label_repel")) {
+    config$label_method %in% ggrepel_label_methods) {
     warning(
       "The 'ggrepel' package is required for label methods 'geom_text_repel', 'ggrepel', and 'geom_label_repel'. Please install it using install.packages('ggrepel')."
     )
@@ -1000,7 +1004,7 @@ addScales <- .addScales
     config$label_method <- "geom_text" # fallback to geom_text if ggrepel is not available
   }
 
-  if (config$label_method %in% c("geom_text_repel", "ggrepel", "geom_label_repel") &&
+  if (config$label_method %in% ggrepel_label_methods &&
     requireNamespace("ggrepel", quietly = TRUE)) {
     # If ggrepel is available, use geom_text_repel or geom_label_repel
     # for better label placement and avoidance of overlaps
@@ -1042,6 +1046,10 @@ addScales <- .addScales
         angle = config$label_text_angle,
         na.rm = TRUE
       )
+  } else {
+    warning(
+      "Invalid label_method specified in config. Must be one of 'geom_text_repel', 'ggrepel', 'geom_label_repel', 'geom_label', or 'geom_text'."
+    )
   }
   plotObject
 }

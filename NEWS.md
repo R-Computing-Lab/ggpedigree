@@ -5,6 +5,7 @@
 * Updated documentation to reflect changes
 * Refactored code to improve maintainability
 * Added more unit tests for the new functions
+* Add  max_message_n to pedigree function to allow users to get more messages about pedigree complexity
 
 # ggpedigree 0.9.1
 * Minor documentation revisions to complement JOSS paper update

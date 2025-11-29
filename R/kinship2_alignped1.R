@@ -21,7 +21,13 @@
 #'   \item{n}{Vector of counts per level}
 #'   \item{spouselist}{Updated spouse list}
 #' @keywords internal
-kinship2_alignped1 <- function(x, dad, mom, level, horder, packed, spouselist) {
+#'
+kinship2_alignped1 <- function(x,
+                               dad,
+                               mom, level,
+                               horder,
+                               packed,
+                               spouselist) {
   # Set a few constants
   maxlev <- max(level)
   lev <- level[x]
@@ -73,7 +79,9 @@ kinship2_alignped1 <- function(x, dad, mom, level, horder, packed, spouselist) {
       lspouse <- c(lspouse, spouse[indx[seq_len(min(nleft, length(indx)))]])
       indx <- indx[-(seq_len(min(nleft, length(indx))))]
     }
-    if (length(indx)) rspouse <- c(spouse[indx], rspouse)
+    if (length(indx)) {
+      rspouse <- c(spouse[indx], rspouse)
+    }
   }
 
   nid[lev, ] <- c(lspouse, x, rspouse)
@@ -103,7 +111,7 @@ kinship2_alignped1 <- function(x, dad, mom, level, horder, packed, spouselist) {
       #  indx <-  which(temp %in% children)
 
       rval1$fam[lev + 1, indx] <- i # set the kids parentage
-      if (!packed) {
+      if (packed == FALSE) {
         # line the kids up below the parents
         # The advantage at this point: we know that there is
         #   nothing to the right that has to be cared for
@@ -124,7 +132,7 @@ kinship2_alignped1 <- function(x, dad, mom, level, horder, packed, spouselist) {
           }
         }
       }
-      if (nokids) {
+      if (nokids == TRUE) {
         rval <- rval1
         nokids <- FALSE
       } else {
@@ -134,7 +142,13 @@ kinship2_alignped1 <- function(x, dad, mom, level, horder, packed, spouselist) {
   }
   ## Doc: alignped1 -part5
   if (nokids == TRUE) {
-    return(list(nid = nid, pos = pos, fam = fam, n = n, spouselist = spouselist))
+    return(list(
+      nid = nid,
+      pos = pos,
+      fam = fam,
+      n = n,
+      spouselist = spouselist
+    ))
   }
 
   if (ncol(rval$nid) >= 1 + nspouse) {

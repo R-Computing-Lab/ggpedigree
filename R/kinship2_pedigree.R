@@ -28,6 +28,7 @@
 #' and momid values for these subjects will either be NA or the value of this variable. The
 #' default for missid is 0 if the id variable is numeric, and "" (empty string) otherwise.
 #' @param x pedigree object in print and subset methods
+#' @param max_message_n max number of individuals to list in error messages
 #' @param ... optional arguments passed to internal functions
 #' @param drop logical, used in subset function for dropping dimensionality
 #' @return An object of class \code{pedigree} or \code{pedigreeList} Containing the following items:
@@ -39,7 +40,7 @@
 pedigree <- function(id, dadid, momid,
                      sex, affected,
                      status, relation,
-                     famid, missid) {
+                     famid, missid, max_message_n = 5) {
   n <- length(id)
   ## Code transferred from noweb to markdown vignette.
   ## Sections from the noweb/vignettes are noted here with
@@ -86,13 +87,13 @@ pedigree <- function(id, dadid, momid,
 
   if (any(duplicated(id))) {
     duplist <- id[duplicated(id)]
-    msg.n <- min(length(duplist), 6)
+    msg.n <- min(length(duplist), max_message_n)
     stop(paste("Duplicate subject id:", duplist[1:msg.n]))
   }
   findex <- match(dadid, id, nomatch = 0)
   if (any(sex[findex] != "male")) {
     who <- unique((id[findex])[sex[findex] != "male"])
-    msg.n <- 1:min(5, length(who)) # Don't list a zillion
+    msg.n <- 1:min(max_message_n, length(who)) # Don't list a zillion
     stop(paste(
       "Id not male, but is a father:",
       paste(who[msg.n], collapse = " ")
@@ -101,7 +102,7 @@ pedigree <- function(id, dadid, momid,
 
   if (any(findex == 0 & !nofather)) {
     who <- dadid[which(findex == 0 & !nofather)]
-    msg.n <- 1:min(5, length(who)) # Don't list a zillion
+    msg.n <- 1:min(max_message_n, length(who)) # Don't list a zillion
     stop(paste(
       "Value of 'dadid' not found in the id list",
       paste(who[msg.n], collapse = " ")
@@ -109,9 +110,10 @@ pedigree <- function(id, dadid, momid,
   }
 
   mindex <- match(momid, id, nomatch = 0)
+
   if (any(sex[mindex] != "female")) {
     who <- unique((id[mindex])[sex[mindex] != "female"])
-    msg.n <- 1:min(5, length(who))
+    msg.n <- 1:min(max_message_n, length(who))
     stop(paste(
       "Id not female, but is a mother:",
       paste(who[msg.n], collapse = " ")
@@ -120,7 +122,7 @@ pedigree <- function(id, dadid, momid,
 
   if (any(mindex == 0 & !nomother)) {
     who <- momid[which(mindex == 0 & !nomother)]
-    msg.n <- 1:min(5, length(who)) # Don't list a zillion
+    msg.n <- 1:min(max_message_n, length(who)) # Don't list a zillion
     stop(paste(
       "Value of 'momid' not found in the id list",
       paste(who[msg.n], collapse = " ")
@@ -129,7 +131,7 @@ pedigree <- function(id, dadid, momid,
 
   if (any(mindex == 0 & findex != 0) || any(mindex != 0 & findex == 0)) {
     who <- id[which((mindex == 0 & findex != 0) | (mindex != 0 & findex == 0))]
-    msg.n <- 1:min(5, length(who)) # Don't list a zillion
+    msg.n <- 1:min(max_message_n, length(who)) # Don't list a zillion
     stop(paste(
       "Subjects must have both a father and mother, or have neither",
       paste(who[msg.n], collapse = " ")
@@ -139,7 +141,7 @@ pedigree <- function(id, dadid, momid,
   if (!missing(famid)) {
     if (any(famid[mindex] != famid[mindex > 0])) {
       who <- (id[mindex > 0])[famid[mindex] != famid[mindex > 0]]
-      msg.n <- 1:min(5, length(who))
+      msg.n <- 1:min(max_message_n, length(who))
       stop(paste(
         "Mother's family != subject's family",
         paste(who[msg.n], collapse = " ")
@@ -147,7 +149,7 @@ pedigree <- function(id, dadid, momid,
     }
     if (any(famid[findex] != famid[findex > 0])) {
       who <- (id[findex > 0])[famid[findex] != famid[findex > 0]]
-      msg.n <- 1:min(5, length(who))
+      msg.n <- 1:min(max_message_n, length(who))
       stop(paste(
         "Father's family != subject's family",
         paste(who[msg.n], collapse = " ")

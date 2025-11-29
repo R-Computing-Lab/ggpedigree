@@ -1,12 +1,3 @@
-## Extracted from checks.Rnw
-# This routine tries to remove inconsistencies in spousal hints.
-# These and arise in autohint with complex pedigrees.
-# One can have ABA (subject A is on both the
-# left and the right of B), cycles, etc.
-# Actually, these used to arise in autohint, I don't know if it's so
-# after the recent rewrite.
-# Users can introduce problems as well if they modify the hints.
-
 #' @title Check kinship2 hints for consistency
 #'
 #' @description
@@ -19,14 +10,22 @@
 #' ('male' or 'female').
 #' @return The original `hints` list if all checks pass; otherwise, an error is raised.
 #' @keywords internal
+#' @details Extracted from checks.Rnw
+#' This routine tries to remove inconsistencies in spousal hints.
+#' These and arise in autohint with complex pedigrees.
+#' One can have ABA (subject A is on both the
+#' left and the right of B), cycles, etc.
+#' Actually, these used to arise in autohint, I don't know if it's so after the recent rewrite.
+#' Users can introduce problems as well if they modify the hints.
 
 
 kinship2_check.hint <- function(hints, sex) {
   if (is.null(hints$order)) stop("Missing order component")
   if (!is.numeric(hints$order)) stop("Invalid order component")
   n <- length(sex)
-  if (length(hints$order) != n) stop("Wrong length for order component")
-
+  if (length(hints$order) != n) {
+    stop("Wrong length for order component")
+  }
   spouse <- hints$spouse
   if (is.null(spouse)) {
     hints
@@ -40,7 +39,7 @@ kinship2_check.hint <- function(hints, sex) {
     temp1 <- (sex[lspouse] == "female" & sex[rspouse] == "male")
     temp2 <- (sex[rspouse] == "female" & sex[lspouse] == "male")
     if (!all(temp1 | temp2)) {
-      warning("A marriage is not male/female")
+      warning("A marriage is not opposite sex")
     }
 
     hash <- n * pmax(lspouse, rspouse) + pmin(lspouse, rspouse)

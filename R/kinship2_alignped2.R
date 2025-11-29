@@ -1,7 +1,3 @@
-# Automatically generated from all.nw using noweb
-
-## Documentation with comments in align_code_details vignette: alignped2 section
-
 #' Align pedigree - Process a set of siblings
 #'
 #' This is an internal helper function for pedigree alignment. It processes a set

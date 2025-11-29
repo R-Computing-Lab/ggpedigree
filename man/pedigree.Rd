@@ -8,7 +8,18 @@
 \alias{print.pedigreeList}
 \title{Create a pedigree or pedigreeList object}
 \usage{
-pedigree(id, dadid, momid, sex, affected, status, relation, famid, missid)
+pedigree(
+  id,
+  dadid,
+  momid,
+  sex,
+  affected,
+  status,
+  relation,
+  famid,
+  missid,
+  max_message_n = 5
+)
 
 \method{[}{pedigreeList}(x, ..., drop = FALSE)
 
@@ -54,6 +65,8 @@ subscripts. Individuals need to have a unique id \emph{within} family.}
 \item{missid}{The founders are those with no father or mother in the pedigree. The dadid
 and momid values for these subjects will either be NA or the value of this variable. The
 default for missid is 0 if the id variable is numeric, and "" (empty string) otherwise.}
+
+\item{max_message_n}{max number of individuals to list in error messages}
 
 \item{x}{pedigree object in print and subset methods}
 

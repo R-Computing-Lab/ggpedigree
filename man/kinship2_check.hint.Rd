@@ -21,4 +21,13 @@ focusing on the `order` and `spouse` components. It ensures that the
 order is numeric and matches the length of the `sex` vector, and that
 marriages are valid male/female pairs without duplicates.
 }
+\details{
+Extracted from checks.Rnw
+This routine tries to remove inconsistencies in spousal hints.
+These and arise in autohint with complex pedigrees.
+One can have ABA (subject A is on both the
+left and the right of B), cycles, etc.
+Actually, these used to arise in autohint, I don't know if it's so after the recent rewrite.
+Users can introduce problems as well if they modify the hints.
+}
 \keyword{internal}
