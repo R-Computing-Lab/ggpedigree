@@ -138,7 +138,6 @@ test_that("calculateCoordinates fails on incorrect ped input", {
 })
 
 
-
 test_that("calculateCoordinates uses default code_male = 1", {
   ped <- data.frame(
     ID = c("A", "B", "C", "D", "X"),

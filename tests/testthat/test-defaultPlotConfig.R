@@ -84,7 +84,6 @@ test_that("buildPlotConfig warns on unrecognized keys", {
 })
 
 
-
 test_that("buildPlotConfig accepts valid keys without warning", {
   default_config <- getDefaultPlotConfig(function_name = "ggPedigree")
 

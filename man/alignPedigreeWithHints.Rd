@@ -9,7 +9,7 @@ This function aligns a pedigree object using hints if provided,
 alignPedigreeWithHints(ped_ped, config)
 }
 \arguments{
-\item{ped_ped}{A pedigree object created by `kinship2::pedigree()`.}
+\item{ped_ped}{A pedigree object created by `pedigree()`.}
 
 \item{config}{A list of configuration options}
 }

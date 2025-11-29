@@ -12,7 +12,7 @@ utils::globalVariables(c(":="))
 #' @param config List of configuration options:
 #'   \describe{
 #'     \item{code_male}{Default is 1. Used by BGmisc::recodeSex().}
-#'     \item{ped_packed}{Logical, default TRUE. Passed to `kinship2::align.pedigree`.}
+#'     \item{ped_packed}{Logical, default TRUE. Passed to `kinship2_align.pedigree`.}
 #'     \item{ped_align}{Logical, default TRUE. Align generations.}
 #'     \item{ped_width}{Numeric, default 15. Controls spacing.}
 #'   }
@@ -257,7 +257,7 @@ alignPedigreeWithRelations <- function(ped,
   ped_recode <- BGmisc::recodeSex(ped, code_male = code_male)
   if ("relation" %in% names(config) && !is.null(config$relation)) {
     # Construct a pedigree object to compute layout coordinates
-    ped_ped <- kinship2::pedigree(
+    ped_ped <- pedigree(
       id = ped[[personID]],
       dadid = ped[[dadID]],
       momid = ped[[momID]],
@@ -265,7 +265,7 @@ alignPedigreeWithRelations <- function(ped,
       relation = config$relation
     )
   } else {
-    ped_ped <- kinship2::pedigree(
+    ped_ped <- pedigree(
       id = ped[[personID]],
       dadid = ped[[dadID]],
       momid = ped[[momID]],
@@ -279,7 +279,7 @@ alignPedigreeWithRelations <- function(ped,
 #' Align pedigree with hints for plotting
 #' This function aligns a pedigree object using hints if provided,
 #'  or defaults to  the default alignment settings.
-#' @param ped_ped A pedigree object created by `kinship2::pedigree()`.
+#' @param ped_ped A pedigree object created by `pedigree()`.
 #' @param config A list of configuration options
 #' @return A data frame with the aligned positions of individuals in the pedigree.
 #' @keywords internal
@@ -288,7 +288,7 @@ alignPedigreeWithHints <- function(ped_ped, config) {
   if ("hints" %in% names(config) && !is.null(config$hints)) {
     # Check if hints are provided
     autohint <- tryCatch(
-      kinship2::autohint(
+      kinship2_autohint(
         ped_ped,
         config$hints,
         align = config$ped_align,
@@ -297,14 +297,14 @@ alignPedigreeWithHints <- function(ped_ped, config) {
       error = function(e) {
         warning("Your hints caused an error and were not used.
                 Using default hints instead.")
-        kinship2::autohint(ped_ped,
+        kinship2_autohint(ped_ped,
           align = config$ped_align,
           packed = config$ped_packed
         )
       }
     )
     # Align pedigree for plotting
-    pos <- kinship2::align.pedigree(
+    pos <- kinship2_align.pedigree(
       ped_ped,
       packed = config$ped_packed,
       align = config$ped_align,
@@ -316,7 +316,7 @@ alignPedigreeWithHints <- function(ped_ped, config) {
     # Extract layout information
     # -----
     # Align pedigree for plotting
-    pos <- kinship2::align.pedigree(
+    pos <- kinship2_align.pedigree(
       ped_ped,
       packed = config$ped_packed,
       align = config$ped_align,

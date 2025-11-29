@@ -199,8 +199,6 @@ test_that("computeDistances behaves in small data", {
 })
 
 
-
-
 # test_that("computeDistances behaves in big data", {
 #   data("redsquirrels")
 #   ped <- redsquirrels %>%
