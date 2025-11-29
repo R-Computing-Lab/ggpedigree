@@ -1,6 +1,10 @@
 # Changelog
 
-## ggpedigree (development version 1.00)
+## ggpedigree (development version)
+
+## ggpedigree 1.0.0
+
+### cran submission
 
 - Folded in kinship2 functions to eliminate the dependency
 - Made kinship2 package optional, and only needed for plotPedigree (a
