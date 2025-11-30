@@ -1,15 +1,19 @@
-
 # Description
-This version eliminates the dependency on the `kinship2` package by folding in its relevant functions directly into `ggpedigree`. The `kinship2` package is now optional and only required for the `plotPedigree` function, which serves as a wrapper around `kinship2` functionality. This change enhances the maintainability of `ggpedigree` and reduces the number of dependencies users need to install.
 
- 
+This is a resubmitted version due to an expired url certificate. This version eliminates the dependency on the `kinship2` package by folding in its relevant functions directly into `ggpedigree`. The `kinship2` package is now optional and only required for the `plotPedigree` function, which serves as a wrapper around `kinship2` functionality. This change enhances the maintainability of `ggpedigree` and reduces the number of dependencies users need to install. 
+
+## Note Comment
+
+There was one note about how a suggested package (openMX) wasn't available for r-oldrel-windows-x86_64. This is expected behavior due to changes in openmx dependencies. It does not impact the functionality of `ggpedigree`, as `openMX` is not a required dependency.
+
+
 # Test Environments
 
 1. Local OS: Windows 11 x64 (build 26220), R version 4.5.2 (2025-10-31 ucrt)
     - RStudio version 37.6.1, 2025.09.2+418 (desktop)
     - All package dependencies up to date as of 2025-11-29.
 2. **GitHub Actions**:  
-    - [Link](https://github.com/R-Computing-Lab/ggpedigree/actions/runs/19786727931)
+    - [Link](https://github.com/R-Computing-Lab/ggpedigree/actions/runs/19802521294)
     - macOS (latest version) with the latest R release.
     - Windows (latest version) with the latest R release.
     - Ubuntu (latest version) with:
@@ -19,8 +23,8 @@ This version eliminates the dependency on the `kinship2` package by folding in i
 
 ## R CMD check results
 
-── R CMD check results ──────────────── ggpedigree 1.0.0 ────
-Duration: 1m 36.4s
+── R CMD check results ───────── ggpedigree 1.0.0.1 ────
+Duration: 1m 38.4s
 
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
@@ -41,3 +45,7 @@ OK: 2
 
 BROKEN: 0
 Total time: 6 min
+
+## urlchecker results
+> urlchecker::url_check()
+✔ All URLs are correct!

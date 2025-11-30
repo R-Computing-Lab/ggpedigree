@@ -433,11 +433,11 @@ buildTwinSegments <- function(ped, connections_for_FOO) {
       suffix = c("", "_twin"),
       multiple = "all"
     ) |>
+    unique() |>
     dplyr::rename(
       x_twin = "x_pos_twin",
       y_twin = "y_pos_twin"
     ) |>
-    unique() |>
     dplyr::mutate(
       x_mid_twin = (.data$x_pos + .data$x_twin) / 2,
       y_mid_twin = (.data$y_pos + .data$y_twin) / 2
