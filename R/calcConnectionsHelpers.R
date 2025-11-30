@@ -212,6 +212,7 @@ getRelativeCoordinates <- function(ped,
       #    relationship = relationship,
       multiple = multiple
     ) |>
+    unique() |>
     # Rename the joined coordinate columns to the specified x/y output names
     dplyr::rename(
       !!x_name := "x_pos_rel",
