@@ -1,5 +1,9 @@
 # ggpedigree (development version)
 
+# ggpedigree 1.0.0.1
+## cran resubmission
+* Fixed a minor documentation issue with a url whose certificate had expired.
+
 # ggpedigree 1.0.0
 ## cran submission
 * Folded in kinship2 functions to eliminate the dependency
