@@ -11,13 +11,13 @@ Source:
 [`DESCRIPTION`](https://github.com/R-Computing-Lab/ggpedigree/blob/main/DESCRIPTION)
 
 Garrison S (2025). *ggpedigree: Visualizing Pedigrees with 'ggplot2' and
-'plotly'*. R package version 1.0.0,
+'plotly'*. R package version 1.0.0.9000,
 <https://github.com/R-Computing-Lab/ggpedigree/>.
 
     @Manual{,
       title = {ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'},
       author = {S. Mason Garrison},
       year = {2025},
-      note = {R package version 1.0.0},
+      note = {R package version 1.0.0.9000},
       url = {https://github.com/R-Computing-Lab/ggpedigree/},
     }
