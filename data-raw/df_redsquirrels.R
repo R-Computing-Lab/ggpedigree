@@ -17,6 +17,8 @@ Ped <- read_excel("data-raw/Pedigree_dryadcopy.xlsx",
     "text"
   )
 )
+write_csv(Ped, here("data-raw", "Pedigree_dryadcopy.csv"), na = "")
+
 Ped <- Ped %>% rename(
   momID = dam,
   personID = id,
@@ -29,7 +31,11 @@ LRS <- read_excel("data-raw/LRS_fordryad.xlsx", col_types = c(
   "text", "numeric", "numeric", "text",
   "numeric"
 )) %>%
-  suppressWarnings() %>%
+  suppressWarnings()
+
+write_csv(LRS, here("data-raw", "LRS_fordryad.csv"), na = "")
+
+LRS <- LRS %>%
   rename(
     momID = dam,
     personID = animal,
@@ -42,7 +48,6 @@ LRS <- read_excel("data-raw/LRS_fordryad.xlsx", col_types = c(
   ) %>%
   select(-c("cod", "byear", "dyear"))
 
-
 ARS <- read_excel("data-raw/ARS_dryadcopy.xlsx",
   col_types = c(
     "numeric", "numeric", "numeric",
@@ -50,7 +55,13 @@ ARS <- read_excel("data-raw/ARS_dryadcopy.xlsx",
     "numeric", "numeric"
   )
 ) %>%
-  suppressWarnings() %>%
+  suppressWarnings()
+
+
+write_csv(ARS, here("data-raw", "ARS_dryadcopy.csv"), na = "")
+
+
+ARS <- ARS %>%
   rename(
     momID = dam,
     personID = animal,
@@ -148,4 +159,5 @@ ds_grouped <- ds %>%
 redsquirrels <- ds_grouped
 
 write_csv(redsquirrels, here("data-raw", "redsquirrels.csv"), na = "")
+
 usethis::use_data(redsquirrels, overwrite = TRUE, compress = "xz")

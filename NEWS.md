@@ -1,5 +1,7 @@
 # ggpedigree (development version)
 
+* Saved raw excel data as csv to have a non-proprietary format for data storage
+
 # ggpedigree 1.0.0.1
 ## cran resubmission
 * Fixed a minor documentation issue with a url whose certificate had expired.
