@@ -6,7 +6,7 @@
 #' This function automatically generates alignment hints for pedigree plotting.
 #' Hints control the relative horizontal positioning of subjects within their
 #' generation and the placement of spouse pairs. The function handles twins,
-#' multiple marriages, and complex pedigree structures.
+#' multiple marriages, and complex pedigree structures. It is a somewhat optimized version of kinship2's autohint.
 #'
 #' @param ped A pedigree object
 #' @param hints Optional existing hints (list with `order` and optionally `spouse` components)
@@ -15,7 +15,7 @@
 #' @return A list containing:
 #'   \item{order}{Numeric vector of relative ordering hints for subjects}
 #'   \item{spouse}{Matrix of spouse pair information}
-#' @keywords internal
+#' @export
 #' @details
 #' The function is called automatically by kinship2_align.pedigree if no hints
 #' are provided. It analyzes the pedigree structure, identifies twins, handles
@@ -25,12 +25,13 @@
 #' Full documentation is available in the align_code_details vignette.
 kinship2_autohint <- function(ped, hints, packed = TRUE, align = FALSE) {
   ## full documentation now in vignette: align_code_details.Rmd
-  ## REferences to those sections appear here as:
+  ## References to those sections appear here as:
   ## Doc: AutoHint
   if (!is.null(ped$hints)) {
     return(ped$hints)
   } # nothing to do
   n <- length(ped$id)
+
   depth <- kinship2_kindepth(ped, align = TRUE)
 
   if (is.null(ped$relation)) {
@@ -66,55 +67,7 @@ kinship2_autohint <- function(ped, hints, packed = TRUE, align = FALSE) {
     twinset <- rep(0, n)
     twinrel <- NULL
   }
-  ## Doc: Shift
-  shift <- function(id, sibs, goleft, hint, twinrel, twinset) {
-    if (twinset[id] > 0) {
-      shift.amt <- 1 + diff(range(hint[sibs])) # enough to avoid overlap
-      twins <- sibs[twinset[sibs] == twinset[id]]
-      if (goleft) {
-        hint[twins] <- hint[twins] - shift.amt
-      } else {
-        hint[twins] <- hint[twins] + shift.amt
-      }
 
-      mono <- any(twinrel[c(
-        match(id, twinrel[, 1], nomatch = 0),
-        match(id, twinrel[, 2], nomatch = 0)
-      ), 3] == 1)
-      if (mono) {
-        #
-        # ok, we have to worry about keeping the monozygotics
-        #  together within the set of twins.
-        # first, decide who they are, by finding those monozygotic
-        #  with me, then those monozygotic with the results of that
-        #  iteration, then ....  If I were the leftmost, this could
-        #  take (#twins -1) iterations to get us all
-        #
-        monoset <- id
-        rel2 <- twinrel[twinrel[, 3] == 1, 1:2, drop = FALSE]
-        for (i in 2:length(twins)) {
-          newid1 <- rel2[match(monoset, rel2[, 1], nomatch = 0), 2]
-          newid2 <- rel2[match(monoset, rel2[, 2], nomatch = 0), 1]
-          monoset <- unique(c(monoset, newid1, newid2))
-        }
-        if (goleft) {
-          hint[monoset] <- hint[monoset] - shift.amt
-        } else {
-          hint[monoset] <- hint[monoset] + shift.amt
-        }
-      }
-    }
-
-    # finally, move the subject himself
-    if (goleft) {
-      hint[id] <- min(hint[sibs]) - 1
-    } else {
-      hint[id] <- max(hint[sibs]) + 1
-    }
-
-    hint[sibs] <- rank(hint[sibs]) # aesthetics -- no negative hints
-    hint
-  }
   ## Doc: init-autohint
   if (!missing(hints)) {
     if (is.vector(hints)) hints <- list(order = hints)
@@ -177,7 +130,7 @@ kinship2_autohint <- function(ped, hints, packed = TRUE, align = FALSE) {
           anchor[j] <- 1 # familial anchor
           sibs <- idlist[kinship2_findsibs(mypos, plist, lev)]
           if (length(sibs) > 1) {
-            horder <- shift(
+            horder <- kinship2_shift(
               idlist[mypos], sibs, direction,
               horder, twinrel, twinset
             )
@@ -189,7 +142,7 @@ kinship2_autohint <- function(ped, hints, packed = TRUE, align = FALSE) {
             anchor[j] <- 2 # spousal anchor
             sibs <- idlist[kinship2_findsibs(spouse[j], plist, lev)]
             if (length(sibs) > 1) {
-              horder <- shift(
+              horder <- kinship2_shift(
                 idlist[spouse[j]], sibs, direction,
                 horder, twinrel, twinset
               )
@@ -292,4 +245,59 @@ kinship2_duporder <- function(idlist,
     famtouch[i] <- (sib2 - sib1 == 1)
   }
   dmat[order(famtouch, dmat[, 1] - dmat[, 2]), , drop = FALSE]
+}
+
+
+## Doc: Shift
+#' Shift a subject and his twins left or right among siblings
+#' used in autohint to resolve duplicate positions
+#' @keywords internal
+#' @return Updated hint vector
+kinship2_shift <- function(id, sibs, goleft, hint, twinrel, twinset) {
+  if (twinset[id] > 0) {
+    shift.amt <- 1 + diff(range(hint[sibs])) # enough to avoid overlap
+    twins <- sibs[twinset[sibs] == twinset[id]]
+    if (goleft) {
+      hint[twins] <- hint[twins] - shift.amt
+    } else {
+      hint[twins] <- hint[twins] + shift.amt
+    }
+
+    mono <- any(twinrel[c(
+      match(id, twinrel[, 1], nomatch = 0),
+      match(id, twinrel[, 2], nomatch = 0)
+    ), 3] == 1)
+    if (mono) {
+      #
+      # ok, we have to worry about keeping the monozygotics
+      #  together within the set of twins.
+      # first, decide who they are, by finding those monozygotic
+      #  with me, then those monozygotic with the results of that
+      #  iteration, then ....  If I were the leftmost, this could
+      #  take (#twins -1) iterations to get us all
+      #
+      monoset <- id
+      rel2 <- twinrel[twinrel[, 3] == 1, 1:2, drop = FALSE]
+      for (i in 2:length(twins)) {
+        newid1 <- rel2[match(monoset, rel2[, 1], nomatch = 0), 2]
+        newid2 <- rel2[match(monoset, rel2[, 2], nomatch = 0), 1]
+        monoset <- unique(c(monoset, newid1, newid2))
+      }
+      if (goleft) {
+        hint[monoset] <- hint[monoset] - shift.amt
+      } else {
+        hint[monoset] <- hint[monoset] + shift.amt
+      }
+    }
+  }
+
+  # finally, move the subject himself
+  if (goleft) {
+    hint[id] <- min(hint[sibs]) - 1
+  } else {
+    hint[id] <- max(hint[sibs]) + 1
+  }
+
+  hint[sibs] <- rank(hint[sibs]) # aesthetics -- no negative hints
+  hint
 }

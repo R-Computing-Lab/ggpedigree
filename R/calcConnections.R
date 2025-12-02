@@ -336,6 +336,7 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
   if (use_hash == TRUE) {
     # I want to make segments for each hash, because some people have multiple spouses
     # this is to add those missing segments
+    # do not filter for uniques because that seems to break things 😭
     parent_connections <- ped |>
       dplyr::select("parent_hash") |>
       dplyr::mutate(
@@ -351,7 +352,7 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
         suffix = c("", "_parent1"),
         multiple = "any"
       ) |>
-     # unique()|>
+     # unique()|> NOPE
       dplyr::left_join(
         connections_for_FOO |>
           dplyr::mutate(personID = paste0(.data$personID)),
@@ -359,7 +360,7 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
         suffix = c("", "_parent2"),
         multiple = "any"
       )  |>
-   #   unique()|>
+   #   unique()|> NOPE
       dplyr::mutate(
         x_start = .data$x_pos,
         x_end = .data$x_pos_parent2,
@@ -376,7 +377,6 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
         -"y_pos_parent2"
       )
 
-    # Get spouse coordinates
   } else {
     # spouses
     # Get spouse coordinates
@@ -391,7 +391,7 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
         suffix = c("", "_spouse"),
         multiple = "any"
       ) |>
-   #   unique() |>
+   #   unique() |> NOPE
       dplyr::rename(
         x_spouse = "x_pos_spouse",
         y_spouse = "y_pos_spouse"
@@ -435,7 +435,7 @@ buildTwinSegments <- function(ped, connections_for_FOO) {
       suffix = c("", "_twin"),
       multiple = "all"
     ) |>
-    unique() |>
+#    unique() |> NOPE
     dplyr::rename(
       x_twin = "x_pos_twin",
       y_twin = "y_pos_twin"
