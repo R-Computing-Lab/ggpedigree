@@ -35,6 +35,7 @@
 #'  famid id findex mindex sex  affected status relation
 #' @author Terry Therneau
 #' @name pedigree
+#' @export
 
 
 pedigree <- function(id, dadid, momid,
@@ -58,13 +59,8 @@ pedigree <- function(id, dadid, momid,
 
   sex <- pedigree.sexrepair(sex = sex)
 
-  ## Doc:  Errors2
   if (missing(missid)) {
-    if (is.numeric(id)) {
-      missid <- 0
-    } else {
-      missid <- ""
-    }
+  missid <-   pedigree.makemissingid(id = id)
   }
 
   nofather <- (is.na(dadid) | dadid == missid)
@@ -570,4 +566,16 @@ print.pedigreeList <- function(x, ...) {
     "Pedigree list with", length(x$id), "total subjects in",
     length(unique(x$famid)), "families\n"
   )
+}
+
+
+pedigree.makemissingid <- function(id) {
+
+  ## Doc:  Errors2
+
+  if (is.numeric(id)) {
+    0
+  } else {
+    ""
+  }
 }

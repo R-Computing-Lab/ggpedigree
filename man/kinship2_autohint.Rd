@@ -24,7 +24,7 @@ A list containing:
 This function automatically generates alignment hints for pedigree plotting.
 Hints control the relative horizontal positioning of subjects within their
 generation and the placement of spouse pairs. The function handles twins,
-multiple marriages, and complex pedigree structures.
+multiple marriages, and complex pedigree structures. It is a somewhat optimized version of kinship2's autohint.
 }
 \details{
 The function is called automatically by kinship2_align.pedigree if no hints
@@ -34,4 +34,3 @@ crossing lines and produce aesthetically pleasing plots.
 
 Full documentation is available in the align_code_details vignette.
 }
-\keyword{internal}

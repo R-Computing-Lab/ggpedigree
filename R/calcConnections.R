@@ -187,7 +187,7 @@ calculateConnections <- function(ped,
     dplyr::left_join(mom_connections,
       by = c("personID", "momID")
     ) |>
-    unique() |> 
+    unique() |>
     dplyr::left_join(dad_connections,
       by = c("personID", "dadID")
     ) |>
@@ -351,7 +351,7 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
         suffix = c("", "_parent1"),
         multiple = "any"
       ) |>
-      unique()|> 
+     # unique()|>
       dplyr::left_join(
         connections_for_FOO |>
           dplyr::mutate(personID = paste0(.data$personID)),
@@ -359,7 +359,7 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
         suffix = c("", "_parent2"),
         multiple = "any"
       )  |>
-      unique()|> 
+   #   unique()|>
       dplyr::mutate(
         x_start = .data$x_pos,
         x_end = .data$x_pos_parent2,
@@ -391,7 +391,7 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
         suffix = c("", "_spouse"),
         multiple = "any"
       ) |>
-      unique() |>
+   #   unique() |>
       dplyr::rename(
         x_spouse = "x_pos_spouse",
         y_spouse = "y_pos_spouse"
