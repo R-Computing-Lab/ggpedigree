@@ -57,7 +57,7 @@ calculateCoordinates <- function(ped,
     ped_packed = TRUE,
     ped_align = TRUE,
     ped_width = 15,
-    return_midparent = FALSE
+    return_mid_parent = FALSE
   )
   config <- utils::modifyList(default_config, config)
 

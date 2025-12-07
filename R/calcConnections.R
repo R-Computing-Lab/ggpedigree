@@ -11,7 +11,7 @@
 #'     \item `x_pos`, `y_pos`: positions of focal individual
 #'     \item `x_dad`, `y_dad`, `x_mom`, `y_mom`: parental positions (if available)
 #'     \item `x_spouse`, `y_spouse`: spousal positions (if available)
-#'     \item `x_midparent`, `y_midparent`: midpoint between parents
+#'     \item `x_mid_parent`, `y_mid_parent`: midpoint between parents
 #'     \item `x_mid_sib`, `y_mid_sib`: sibling group midpoint
 #'     \item `x_mid_spouse`, `y_mid_spouse`: midpoint between spouses
 #'   }
@@ -36,7 +36,7 @@ calculateConnections <- function(ped,
   # Default configuration placeholder
   default_config <- list(
     debug = FALSE,
-    return_midparent = FALSE
+    return_mid_parent = FALSE
   )
   config <- utils::modifyList(default_config, config)
 
@@ -198,18 +198,18 @@ calculateConnections <- function(ped,
     unique()
 
   # Calculate midpoints between mom and dad in child row
-  if (config$return_midparent == TRUE) {
+  if (config$return_mid_parent == TRUE) {
     parent_midpoints <- connections |>
       dplyr::filter(.data$link_as_sibling &
         !is.na(.data$dadID) & !is.na(.data$momID)) |>
       #  unique() |>
       dplyr::group_by(.data$parent_hash) |>
       dplyr::summarize(
-        x_midparent = mean(c(
+        x_mid_parent = mean(c(
           dplyr::first(.data$x_dad, na_rm = TRUE),
           dplyr::first(.data$x_mom, na_rm = TRUE)
         )),
-        y_midparent = mean(c(
+        y_mid_parent = mean(c(
           dplyr::first(.data$y_dad, na_rm = TRUE),
           dplyr::first(.data$y_mom, na_rm = TRUE)
         )),
@@ -258,7 +258,7 @@ calculateConnections <- function(ped,
     ) #|> unique()
 
 
-  if (config$return_midparent == TRUE) {
+  if (config$return_mid_parent == TRUE) {
     # print(parent_midpoints)
     # Merge midpoints into connections
     connections <- connections |>

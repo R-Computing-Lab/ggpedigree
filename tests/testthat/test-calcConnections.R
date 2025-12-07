@@ -16,18 +16,18 @@ test_that("calculateConnections returns expected columns and structure", {
     config = list(
       ped_align = TRUE,
       ped_packed = TRUE,
-      return_midparent = TRUE
+      return_mid_parent = TRUE
     )
   )
 
-  conn_out <- calculateConnections(ped, config = list(return_midparent = TRUE))
+  conn_out <- calculateConnections(ped, config = list(return_mid_parent = TRUE))
   conns <- conn_out$connections
 
   expect_true(is.data.frame(conns))
   expect_true(all(c(
     "personID", "x_pos", "y_pos", "momID", "dadID", "spouseID",
     "x_mom", "y_mom", "x_dad", "y_dad", "x_spouse", "y_spouse",
-    "x_fam", "y_fam", "x_midparent", "y_midparent", "x_mid_spouse", "y_mid_spouse",
+    "x_fam", "y_fam", "x_mid_parent", "y_mid_parent", "x_mid_spouse", "y_mid_spouse",
     "x_mid_sib", "y_mid_sib"
   ) %in% names(conns)))
 })
@@ -64,7 +64,7 @@ test_that("calculateConnections returns correct parent coordinates", {
   expect_equal(C_row$y_dad, X_coords$y_pos)
 })
 
-test_that("midparent coordinates are correct", {
+test_that("mid_parent coordinates are correct", {
   ped <- data.frame(
     personID = c("A", "B", "C"),
     momID = c(NA, NA, "A"),
@@ -183,7 +183,7 @@ test_that("calculateConnections computes parental coordinates correctly", {
   expect_equal(C$y_dad, 1)
 })
 
-test_that("calculateConnections computes midparent as average of mom/dad", {
+test_that("calculateConnections computes mid_parent as average of mom/dad", {
   ped <- data.frame(
     personID = c("A", "B", "C"),
     momID = c(NA, NA, "A"),

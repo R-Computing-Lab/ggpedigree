@@ -38,7 +38,7 @@ A `data.frame` containing connection points and midpoints for graphical renderin
     \item `x_pos`, `y_pos`: positions of focal individual
     \item `x_dad`, `y_dad`, `x_mom`, `y_mom`: parental positions (if available)
     \item `x_spouse`, `y_spouse`: spousal positions (if available)
-    \item `x_midparent`, `y_midparent`: midpoint between parents
+    \item `x_mid_parent`, `y_mid_parent`: midpoint between parents
     \item `x_mid_sib`, `y_mid_sib`: sibling group midpoint
     \item `x_mid_spouse`, `y_mid_spouse`: midpoint between spouses
   }

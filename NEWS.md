@@ -1,7 +1,8 @@
 # ggpedigree (development version)
-
+# ==============================
 * Saved raw excel data as csv to have a non-proprietary format for data storage
 * Added more refactorings of kinship2 internals for maintainability
+* Harmonize names by changing midparent to mid_parent throughout the codebase
 
 # ggpedigree 1.0.0.1
 ## cran resubmission
@@ -62,7 +63,7 @@
 * Make palleter suggested instead of required
 
 # ggpedigree 0.7.0
-* Changed the default behavior of `ggPedigree` to use x_fam and y_fam for positioning families, rather than x_midparent and y_midparent. This change allows for better visualization of pedigrees with multiple families.
+* Changed the default behavior of `ggPedigree` to use x_fam and y_fam for positioning families, rather than x_mid_parent and y_mid_parent. This change allows for better visualization of pedigrees with multiple families.
 * Changed the get midpoint of curvature to better approximate geom_curv behavior.
 * reduced redundancy in code base by not calculating the parent midpoints when not needed.
 * Added default_config support for ggRelatednessMatrix functions.

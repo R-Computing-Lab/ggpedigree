@@ -165,7 +165,7 @@ getDefaultPlotConfig(
   return_static = TRUE,
   return_widget = FALSE,
   return_interactive = FALSE,
-  return_midparent = FALSE,
+  return_mid_parent = FALSE,
   hints = NULL,
   relation = NULL,
   debug = FALSE,
@@ -493,7 +493,7 @@ getDefaultPlotConfig(
 
 \item{return_interactive}{Whether to return an interactive plot.}
 
-\item{return_midparent}{Whether to return midparent values in the plot.}
+\item{return_mid_parent}{Whether to return mid_parent values in the plot.}
 
 \item{hints}{Optional hints to pass along to kinship2::autohint}
 

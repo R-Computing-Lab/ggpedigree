@@ -164,7 +164,7 @@
 #' @param return_static Whether to return a static plot.
 #' @param return_widget Whether to return a widget object.
 #' @param return_interactive Whether to return an interactive plot.
-#' @param return_midparent Whether to return midparent values in the plot.
+#' @param return_mid_parent Whether to return mid_parent values in the plot.
 #' @param optimize_plotly Whether to optimize the plotly output for speed.
 #' @param override_many2many Whether to override many-to-many link logic.
 #' @param hints Optional hints to pass along to kinship2::autohint
@@ -364,7 +364,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  return_static = TRUE,
                                  return_widget = FALSE,
                                  return_interactive = FALSE,
-                                 return_midparent = FALSE,
+                                 return_mid_parent = FALSE,
                                  # ---- Kinship2 Options ----
                                  hints = NULL,
                                  relation = NULL,
@@ -590,7 +590,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     return_static = return_static,
     return_widget = return_widget,
     return_interactive = return_interactive,
-    return_midparent = return_midparent,
+    return_mid_parent = return_mid_parent,
     # ---- Kinship2 Options ----
     ped_packed = ped_packed,
     ped_align = ped_align,
