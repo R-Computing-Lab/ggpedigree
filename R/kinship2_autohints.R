@@ -68,22 +68,19 @@ kinship2_autohint <- function(ped, hints, packed = TRUE, align = FALSE) {
     twinrel <- NULL
   }
 
-  ## Doc: init-autohint
   if (!missing(hints)) {
-    if (is.vector(hints)) hints <- list(order = hints)
-    if (is.matrix(hints)) hints <- list(spouse = hints)
-    if (is.null(hints$order)) {
-      horder <- integer(n)
-    } else {
-      horder <- hints$order
-    }
+    hints <- kinship2_autohint.cleanhints(hints = hints)
+    horder <- kinship2_autohint.sethorder(hints = hints, n = n)
   } else {
     horder <- integer(n)
   }
 
+
   for (i in unique(depth)) {
     who <- (depth == i & horder == 0)
-    if (any(who)) horder[who] <- 1:sum(who) # screwy input - overwrite it
+    if (any(who)) {
+      horder[who] <- 1:sum(who) # screwy input - overwrite it
+    }
   }
 
   if (any(twinset > 0)) {
@@ -267,7 +264,7 @@ kinship2_shift <- function(id, sibs, goleft, hint, twinrel, twinset) {
       match(id, twinrel[, 1], nomatch = 0),
       match(id, twinrel[, 2], nomatch = 0)
     ), 3] == 1)
-    if (mono) {
+    if (mono == TRUE) {
       #
       # ok, we have to worry about keeping the monozygotics
       #  together within the set of twins.
@@ -283,7 +280,7 @@ kinship2_shift <- function(id, sibs, goleft, hint, twinrel, twinset) {
         newid2 <- rel2[match(monoset, rel2[, 2], nomatch = 0), 1]
         monoset <- unique(c(monoset, newid1, newid2))
       }
-      if (goleft) {
+      if (goleft == TRUE) {
         hint[monoset] <- hint[monoset] - shift.amt
       } else {
         hint[monoset] <- hint[monoset] + shift.amt
@@ -292,7 +289,7 @@ kinship2_shift <- function(id, sibs, goleft, hint, twinrel, twinset) {
   }
 
   # finally, move the subject himself
-  if (goleft) {
+  if (goleft == TRUE) {
     hint[id] <- min(hint[sibs]) - 1
   } else {
     hint[id] <- max(hint[sibs]) + 1
@@ -300,4 +297,25 @@ kinship2_shift <- function(id, sibs, goleft, hint, twinrel, twinset) {
 
   hint[sibs] <- rank(hint[sibs]) # aesthetics -- no negative hints
   hint
+}
+
+kinship2_autohint.sethorder <- function(hints, n) {
+  ## Doc: init-autohint
+  if (is.null(hints$order)) {
+    horder <- integer(n)
+  } else {
+    horder <- hints$order
+  }
+  horder
+}
+
+kinship2_autohint.cleanhints <- function(hints) {
+  ## Doc: init-autohint
+  if (is.vector(hints)) {
+    hints <- list(order = hints)
+  }
+  if (is.matrix(hints)) {
+    hints <- list(spouse = hints)
+  }
+  hints
 }

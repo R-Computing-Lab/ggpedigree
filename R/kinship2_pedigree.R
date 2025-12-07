@@ -60,7 +60,7 @@ pedigree <- function(id, dadid, momid,
   sex <- pedigree.sexrepair(sex = sex)
 
   if (missing(missid)) {
-  missid <-   pedigree.makemissingid(id = id)
+    missid <- pedigree.makemissingid(id = id)
   }
 
   nofather <- (is.na(dadid) | dadid == missid)
@@ -570,7 +570,6 @@ print.pedigreeList <- function(x, ...) {
 
 
 pedigree.makemissingid <- function(id) {
-
   ## Doc:  Errors2
 
   if (is.numeric(id)) {
