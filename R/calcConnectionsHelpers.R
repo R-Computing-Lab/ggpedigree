@@ -262,7 +262,7 @@ getRelativeCoordinates <- function(ped,
   }
   # Require same type
   if (mode(id1) != mode(id2)) {
-    # if they're both a n
+    # if they're both a number type, allow it
     if (mode(id1) %in% c("integer", "double") &&
       mode(id2) %in% c("integer", "double")) {
       # Numeric comparison

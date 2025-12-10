@@ -1077,7 +1077,8 @@ preparePedigreeData <- function(ped,
                                 patID = "patID",
                                 config = list(
                                   focal_fill_include = TRUE,
-                                  focal_fill_component = "maternal"
+                                  focal_fill_component = "maternal",
+                                  recode_missing_ids = TRUE,
                                 ),
                                 fill_group_paternal = c(
                                   "paternal",
@@ -1254,7 +1255,8 @@ transformPed <- function(ped,
                          patID = "patID",
                          config = list(
                            focal_fill_include = TRUE,
-                           focal_fill_component = "maternal"
+                           focal_fill_component = "maternal",
+                           recode_missing_ids = TRUE
                          ),
                          fill_group_paternal = c(
                            "paternal",
@@ -1270,6 +1272,21 @@ transformPed <- function(ped,
                            "maternal lineages",
                            "maternal lines"
                          )) {
+
+  if(config$recode_missing_ids == TRUE){
+    # handle 0 as missing IDs
+ ped <-    recodeMissingIDs(
+      ped = ped,
+      personID = personID,
+      momID = momID,
+      dadID = dadID,
+      famID = famID,
+      matID = matID,
+      patID = patID,
+      config = config
+    )
+
+}
   if (!all(c(famID, patID, matID) %in% names(ped)) &&
     !famID %in% names(ped)) {
     ds_ped <- BGmisc::ped2fam(
@@ -1282,6 +1299,9 @@ transformPed <- function(ped,
   } else {
     ds_ped <- ped
   }
+
+
+
 
   if (config$focal_fill_include == TRUE) {
     if (!patID %in% names(ds_ped) &&
@@ -1480,7 +1500,7 @@ addTwins <- function(plotObject,
     )
 
   if ("mz" %in% names(plot_connections$twin_coords) &&
-    any(plot_connections$twin_coords$mz == TRUE)) {
+    any(plot_connections$twin_coords$mz == TRUE, na.rm = TRUE)) {
     plotObject <- plotObject + # horizontal line to twin midpoint for MZ twins
       ggplot2::geom_segment(
         data = plot_connections$twin_coords |>
@@ -1502,4 +1522,88 @@ addTwins <- function(plotObject,
   }
 
   return(plotObject)
+}
+
+
+# doesn't work@
+recodeMissingIDs <- function(ped, momID = "momID", dadID="dadID",
+                           personID = "personID",
+                           famID="famID", matID="matID", patID="patID",
+                           missing_code_numeric = 0,
+                           missing_code_character ="0",
+                           config = list()
+                           ) {
+  if (momID %in% names(ped)){
+
+    if (any(ped[[momID]] == missing_code_numeric, na.rm = TRUE)) {
+
+      ped[[momID]][ped[[momID]] == missing_code_numeric] <- NA
+
+    }
+
+    if (any(ped[[momID]] == missing_code_character, na.rm = TRUE)) {
+      ped[[momID]][ped[[momID]] == missing_code_character] <- NA
+    }
+
+  }
+
+  if (dadID %in% names(ped)){
+
+    if (any(ped[[dadID]] == missing_code_numeric, na.rm = TRUE)) {
+      ped[[dadID]][ped[[dadID]] == missing_code_numeric] <- NA
+    }
+    if (any(ped[[dadID]] == missing_code_character, na.rm = TRUE)) {
+      ped[[dadID]][ped[[dadID]] == missing_code_character] <- NA
+    }
+  }
+  if (personID %in% names(ped)){
+
+    if (any(ped[[personID]] == missing_code_numeric, na.rm = TRUE)) {
+      ped[[personID]][ped[[personID]] == missing_code_numeric] <- NA
+    }
+    if (any(ped[[personID]] == missing_code_character, na.rm = TRUE)) {
+      ped[[personID]][ped[[personID]] == missing_code_character] <- NA
+    }
+  }
+
+  if (famID %in% names(ped)){
+
+    if (any(ped[[famID]] == missing_code_numeric, na.rm = TRUE)) {
+      ped[[famID]][ped[[famID]] == missing_code_numeric] <- NA
+    }
+    if (any(ped[[famID]] == missing_code_character, na.rm = TRUE)) {
+      ped[[famID]][ped[[famID]] == missing_code_character] <- NA
+    }
+  }
+  if (matID %in% names(ped)){
+
+    if (any(ped[[matID]] == missing_code_numeric, na.rm = TRUE)) {
+      ped[[matID]][ped[[matID]] == missing_code_numeric] <- NA
+    }
+    if (any(ped[[matID]] == missing_code_character, na.rm = TRUE)) {
+      ped[[matID]][ped[[matID]] == missing_code_character] <- NA
+    }
+  }
+  if (patID %in% names(ped)){
+
+    if (any(ped[[patID]] == missing_code_numeric, na.rm = TRUE)) {
+      ped[[patID]][ped[[patID]] == missing_code_numeric] <- NA
+    }
+    if (any(ped[[patID]] == missing_code_character, na.rm = TRUE)) {
+      ped[[patID]][ped[[patID]] == missing_code_character] <- NA
+    }
+  }
+
+  # handle twinID as missing IDs
+  if ("twinID" %in% names(ped)){
+
+    if (any(ped[["twinID"]] == missing_code_numeric, na.rm = TRUE)) {
+      ped[["twinID"]][ped[["twinID"]] == missing_code_numeric] <- NA
+    }
+    if (any(ped[["twinID"]] == missing_code_character, na.rm = TRUE)) {
+      ped[["twinID"]][ped[["twinID"]] == missing_code_character] <- NA
+    }
+  }
+
+  ped
 }

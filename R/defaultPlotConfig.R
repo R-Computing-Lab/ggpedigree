@@ -169,6 +169,7 @@
 #' @param override_many2many Whether to override many-to-many link logic.
 #' @param hints Optional hints to pass along to kinship2::autohint
 #' @param relation Optional relation to pass along to kinship2::pedigree
+#' @param recode_missing_ids Whether to recode 0s as missing IDs in the pedigree.
 #' @param debug Whether to enable debugging mode.
 #' @param ... Additional arguments for future extensibility.
 #' @return A named list of default plotting and layout parameters.
@@ -372,6 +373,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  debug = FALSE,
                                  override_many2many = FALSE,
                                  optimize_plotly = TRUE,
+                                 recode_missing_ids = TRUE,
                                  # ---- Future Extensibility ----
                                  ...) {
   # Ensure the color palette is a character vector
@@ -600,6 +602,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     # ---- Debugging Options ----
     override_many2many = override_many2many,
     optimize_plotly = optimize_plotly,
+    recode_missing_ids = recode_missing_ids,
     debug = debug
   )
   lc_function_name <- stringr::str_to_lower(function_name)
@@ -771,6 +774,7 @@ buildPlotConfig <- function(default_config,
       ),
       built_config$status_labs
     )
+    # Set color values for affected status
     built_config$status_color_values <- stats::setNames(
       c(
         built_config$status_color_palette[1],
