@@ -1,0 +1,72 @@
+id,famID,momID,dadID,name,sex,url,twinID,zygosity
+1,1,NA,NA,Edward III,M,https://en.wikipedia.org/wiki/Edward_III_of_England,NA,NA
+2,1,NA,NA,Phillipa of Hainault,F,https://en.wikipedia.org/wiki/Philippa_of_Hainault,NA,NA
+3,1,2,1,Edward The Black Prince,M,https://en.wikipedia.org/wiki/Edward_the_Black_Prince,NA,NA
+4,1,NA,NA,Joan of Kent,F,https://en.wikipedia.org/wiki/Joan_of_Kent,NA,NA
+5,1,2,1,Isabella of England,Countess of Bedford,F,NA,"_Countess_of_Bedford,NA,NA"
+6,2,NA,NA,Enguerrand VII Lord of Coucy,M,https://en.wikipedia.org/wiki/Enguerrand_VII_de_Coucy,NA,NA
+7,1,NA,NA,Elizabeth de Burgh,F,https://en.wikipedia.org/wiki/Elizabeth_de_Burgh,NA,"NA,NA"
+8,1,2,1,Lionel of Antwerp Duke of Clarence,M,https://en.wikipedia.org/wiki/Lionel_of_Antwerp,NA,"NA,NA"
+9,1,NA,NA,Blanche of Lancaster,F,https://en.wikipedia.org/wiki/Blanche_of_Lancaster,NA,NA
+10,1,2,1,John of Gaunt Duke of Lancaster,M,https://en.wikipedia.org/wiki/John_of_Gaunt,NA,NA
+11,3,NA,NA,Constance of Castile,F,https://en.wikipedia.org/wiki/Constance_of_Castile,NA,"NA,NA"
+12,1,NA,NA,Katherine Swynford,F,https://en.wikipedia.org/wiki/Katherine_Swynford,NA,NA
+13,1,2,1,Edmund of Langley Duke of York,M,https://en.wikipedia.org/wiki/Edmund_of_Langley,NA,"NA,NA"
+14,1,NA,NA,Isabella of Castile,F,https://en.wikipedia.org/wiki/Isabella_of_Castile,NA,"NA,NA"
+15,1,2,1,Thomas of Woodstock Duke of Gloucester,M,https://en.wikipedia.org/wiki/Thomas_of_Woodstock,NA,"NA,NA"
+16,1,69,68,Eleanor de Bohun,F,https://en.wikipedia.org/wiki/Eleanor_de_Bohun,NA,NA
+17,1,4,3,Edward (son of the Black Prince),M,https://en.wikipedia.org/wiki/Edward_of_Angoul%C3%AAme,NA,NA
+18,4,NA,NA,Anne of Bohemia,F,https://en.wikipedia.org/wiki/Anne_of_Bohemia,NA,NA
+19,5,NA,NA,Isabella of Valois,F,https://en.wikipedia.org/wiki/Isabella_of_Valois,NA,NA
+20,1,4,3,Richard II,M,https://en.wikipedia.org/wiki/Richard_II_of_England,NA,NA
+21,1,7,8,Philippa of Ulster,F,https://en.wikipedia.org/wiki/Philippa,NA,"NA,NA"
+22,6,NA,NA,Edmund Mortimer Earl of March,M,NA,NA,NA
+23,1,14,13,Edward of Norwich,M,NA,NA,NA
+24,1,14,13,Constance (daughter of Edmund of Langley),F,NA,NA,NA
+25,1,NA,NA,Anne Mortimer,F,NA,NA,NA
+26,1,14,13,Richard of Conisburgh,M,NA,NA,NA
+27,7,NA,NA,John I of Portugal,M,NA,NA,NA
+28,1,9,10,Philippa (of Lancaster),F,NA,NA,NA
+29,1,4,NA,John Holland 1st Duke of Exeter,M,https://en.wikipedia.org/wiki/John_Holland,NA,"NA,NA"
+30,1,9,10,Elizabeth Plantagenet,F,NA,NA,NA
+31,1,69,68,Mary de Bohun,F,https://en.wikipedia.org/wiki/Mary_de_Bohun,NA,NA
+32,1,9,10,Henry IV Bolingbroke,M,NA,NA,NA
+33,8,NA,NA,Joan of Navarre,F,NA,NA,NA
+34,1,31,32,Henry V,M,NA,NA,NA
+35,1,NA,NA,Catherine of Valois,F,NA,NA,NA
+36,1,31,32,Thomas Duke of Clarence,M,NA,NA,NA
+37,1,31,32,John Duke of Bedford,M,NA,NA,NA
+38,1,31,32,Humphrey Duke of Gloucester,M,NA,NA,NA
+39,1,31,32,Blanche (daughter of Henry IV),F,NA,NA,NA
+40,1,31,32,Philippa (daughter of Henry IV),F,NA,NA,NA
+41,1,35,34,Henry VI,M,NA,NA,NA
+42,1,NA,NA,Margaret of Anjou,F,NA,NA,NA
+43,1,42,41,Edward of Westminster,M,NA,NA,NA
+44,1,NA,NA,Anne Neville,F,NA,NA,NA
+45,1,12,10,John Beaufort,M,NA,NA,NA
+46,1,NA,70,Margaret Holland Duchess of Clarence,F,https://en.wikipedia.org/wiki/Margaret_Holland,NA,"NA,NA"
+47,1,12,10,Henry Beaufort,M,NA,NA,NA
+48,1,12,10,Thomas Beaufort,M,NA,NA,NA
+49,1,12,10,Joan Beaufort,F,NA,NA,NA
+50,1,NA,NA,Ralph Neville,M,NA,NA,NA
+51,1,25,26,Isabel Plantagenet,F,NA,NA,NA
+52,1,49,50,Cecily Neville,F,NA,NA,NA
+53,1,25,26,Richard Duke of York,M,NA,NA,NA
+54,1,52,53,Anne (daughter of Richard,Duke of York),F,NA,"NA,NA"
+55,1,52,53,Edward IV,M,NA,NA,NA
+56,1,NA,NA,Elizabeth Woodville,F,NA,NA,NA
+57,1,52,53,Edmund (son of Richard,Duke of York),M,NA,"NA,NA"
+58,1,52,53,Elizabeth (daughter of Richard,Duke of York),F,NA,"NA,NA"
+59,1,52,53,Margaret (daughter of Richard,Duke of York),F,NA,"NA,NA"
+60,9,NA,NA,Isabella Neville,F,NA,NA,NA
+61,1,52,53,George Duke of Clarence,M,NA,NA,NA
+62,1,52,53,Richard III,M,NA,NA,NA
+63,1,44,62,Edward of Middleham,M,NA,NA,NA
+64,10,NA,NA,Henry VII Tudor,M,NA,NA,NA
+65,1,56,55,Elizabeth (daughter of Edward IV),F,NA,NA,NA
+66,1,56,55,Edward V,M,NA,NA,NA
+67,1,56,55,Richard (Prince in the Tower),M,NA,NA,NA
+68,1,NA,NA,Humphrey de Bohun 7th Earl of Hereford,M,https://en.wikipedia.org/wiki/Humphrey_de_Bohun,NA,"NA,NA"
+69,1,NA,NA,Joan Fitzalan Countess of Hereford,F,https://en.wikipedia.org/wiki/Joan_Fitzalan,NA,"NA,NA"
+70,1,4,NA,Thomas Holland 2nd Earl of Kent,M,https://en.wikipedia.org/wiki/Thomas_Holland,NA,"NA, NA"
+247,11,NA,NA,Lady Belmore,F,,NA,NA
