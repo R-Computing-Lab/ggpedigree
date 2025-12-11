@@ -268,7 +268,7 @@ getRelativeCoordinates <- function(ped,
       # Numeric comparison
     } else {
       stop(paste0(
-        "id1 and id2 must be of the same type.",
+        "id1 and id2 must be of the same variable class. Please check if you have a mixture of strings and numerics in your ID variables. ",
         " id1 is ", mode(id1), " and id2 is ", mode(id2)
       ))
     }

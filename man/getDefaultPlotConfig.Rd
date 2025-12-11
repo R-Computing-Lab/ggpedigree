@@ -171,6 +171,7 @@ getDefaultPlotConfig(
   debug = FALSE,
   override_many2many = FALSE,
   optimize_plotly = TRUE,
+  recode_missing_ids = TRUE,
   ...
 )
 }
@@ -504,6 +505,8 @@ getDefaultPlotConfig(
 \item{override_many2many}{Whether to override many-to-many link logic.}
 
 \item{optimize_plotly}{Whether to optimize the plotly output for speed.}
+
+\item{recode_missing_ids}{Whether to recode 0s as missing IDs in the pedigree.}
 
 \item{...}{Additional arguments for future extensibility.}
 }

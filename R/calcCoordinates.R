@@ -63,6 +63,7 @@ calculateCoordinates <- function(ped,
 
   # Construct a pedigree object to compute layout coordinates
 
+
   # use relations if provided, otherwise use default settings
   ped_ped <- alignPedigreeWithRelations(
     ped = ped,
@@ -73,6 +74,7 @@ calculateCoordinates <- function(ped,
     sexVar = sexVar,
     config = config
   )
+
 
   # use hints if provided
   pos <- alignPedigreeWithHints(

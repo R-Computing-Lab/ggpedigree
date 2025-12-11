@@ -41,6 +41,10 @@ calculateConnections <- function(ped,
   )
   config <- utils::modifyList(default_config, config)
 
+  print(class(ped$spouseID))
+  print(class(ped$personID))
+  print(class(ped$momID))
+  print(class(ped$dadID))
 
   # rename columns to match expected names
   names(ped)[names(ped) == personID] <- "personID"
@@ -51,19 +55,17 @@ calculateConnections <- function(ped,
   }
   # Capture type-safe NAs for each ID column
   na_person <- ped$personID[NA_integer_]
-  na_mom <- ped$momID[NA_integer_]
-  na_dad <- ped$dadID[NA_integer_]
-
-  if(config$debug==TRUE) {
-    message("NA types - personID: ", class(na_person),
-            ", momID: ", class(na_mom),
-            ", dadID: ", class(na_dad))
+  if (is.factor(na_person)) {
+    na_person <- factor(NA, levels = levels(ped$personID))
+  } else if (is.character(na_person)) {
+    na_person <- as.character(NA)
+  } else if (is.integer(na_person)) {
+    na_person <- as.integer(NA)
+  } else if (is.numeric(na_person)) {
+    na_person <- as.numeric(NA)
+  } else {
+    na_person <- NA
   }
-  if(class(na_person) != class(na_mom) ||
-     class(na_person) != class(na_dad)) {
-    stop("personID, momID, and dadID must be of the same type (e.g., all character or all numeric).")
-  }
-
   # Add spouseID if missing
   if (!all(spouseID %in% names(ped))) {
     # make it match the personID type
@@ -82,7 +84,9 @@ calculateConnections <- function(ped,
     )
 
     # Ensure class matches personID exactly (in case factor, character, etc.)
-   # attributes(ped$spouseID) <- attributes(ped$personID)
+    # class(ped$spouseID) <- class(ped$personID)
+
+    #  assign("DEBUG_ped", ped, envir = .GlobalEnv)
   } else {
     # rename spouseID to match
     names(ped)[names(ped) == spouseID] <- "spouseID"

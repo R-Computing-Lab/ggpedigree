@@ -57,6 +57,9 @@ pedigree <- function(id, dadid, momid,
 
   id <- pedigree.idrepair(id = id)
 
+  # momid <- pedigree.idrepair(id = momid)
+  # dadid <- pedigree.idrepair(id = dadid)
+
   sex <- pedigree.sexrepair(sex = sex)
 
   if (missing(missid)) {
@@ -248,7 +251,7 @@ pedigree.process_relation <- function(relation,
     }
   }
 
-  if (has_famid) {
+  if (has_famid == TRUE) {
     data.frame(
       famid = rel_famid,
       indx1 = indx1,

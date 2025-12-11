@@ -235,7 +235,7 @@ ggPedigree.core <- function(ped,
   # -----
   # STEP 2+3: Pedigree Data Transformation and Data Cleaning and Recoding
   # -----
-
+  # id type changer in this function
   ds_ped <- preparePedigreeData(
     famID = famID,
     patID = patID,
@@ -252,6 +252,16 @@ ggPedigree.core <- function(ped,
     phantoms = phantoms,
     focal_fill_column = focal_fill_column
   )
+
+  if (config$debug == TRUE) {
+    message("Pedigree data prepared. Number of individuals: ", nrow(ds_ped))
+
+    # assign("DEBUG_ds_ped", ds_ped, envir = .GlobalEnv)
+  }
+  #  print(class(ped$spouseID))
+  #  print(class(ped$personID))
+  #  print(class(ped$momID))
+  # print(class(ped$dadID))
 
 
   # -----
@@ -292,7 +302,10 @@ ggPedigree.core <- function(ped,
     dadID = dadID,
     twinID = twinID
   )
-
+  #  print(class(ped$spouseID))
+  #  print(class(ped$personID))
+  #  print(class(ped$momID))
+  #  print(class(ped$dadID))
   connections <- plot_connections$connections
 
   if (config$debug == TRUE) {
@@ -1172,6 +1185,7 @@ preparePedigreeData <- function(ped,
     fill_group_maternal = fill_group_maternal,
     fill_group_paternal = fill_group_paternal
   )
+
   return(ds_ped)
 }
 
@@ -1196,6 +1210,7 @@ createFillColumn <- function(ped,
 
   config <- utils::modifyList(default_config, config)
 
+  # Generate the coefficient of relationship matrix
   com_mat <- BGmisc::ped2com(
     ped = ped,
     component = component,
@@ -1223,6 +1238,7 @@ createFillColumn <- function(ped,
     focal_fill = round(com_mat[row_index, ], digits = config$value_rounding_digits),
     personID = rownames(com_mat)
   ) # needs to match the same data type
+
   remove(com_mat) # remove the focal_fill_personID column
   # Ensure fill_df$personID is of the same type as ped$personID
   if (is.numeric(ped$personID)) {
@@ -1272,10 +1288,9 @@ transformPed <- function(ped,
                            "maternal lineages",
                            "maternal lines"
                          )) {
-
-  if(config$recode_missing_ids == TRUE){
+  if (config$recode_missing_ids == TRUE) {
     # handle 0 as missing IDs
- ped <-    recodeMissingIDs(
+    ped <- recodeMissingIDs(
       ped = ped,
       personID = personID,
       momID = momID,
@@ -1285,8 +1300,8 @@ transformPed <- function(ped,
       patID = patID,
       config = config
     )
+  }
 
-}
   if (!all(c(famID, patID, matID) %in% names(ped)) &&
     !famID %in% names(ped)) {
     ds_ped <- BGmisc::ped2fam(
@@ -1296,11 +1311,15 @@ transformPed <- function(ped,
       momID = momID,
       dadID = dadID
     )
+    if (!class(ped[[personID]]) %in% c("numeric", "integer") &&
+      class(ds_ped[[personID]]) %in% c("numeric", "integer")
+    ) {
+      # fix strange converse of cases
+      ds_ped[[personID]] <- as.character(ds_ped[[personID]])
+    }
   } else {
     ds_ped <- ped
   }
-
-
 
 
   if (config$focal_fill_include == TRUE) {
@@ -1313,6 +1332,12 @@ transformPed <- function(ped,
         momID = momID,
         dadID = dadID
       )
+      if (!class(ped[[personID]]) %in% c("numeric", "integer") &&
+        class(ds_ped[[personID]]) %in% c("numeric", "integer")
+      ) {
+        # fix strange converse of cases
+        ds_ped[[personID]] <- as.character(ds_ped[[personID]])
+      }
     }
 
     if (!matID %in% names(ds_ped) &&
@@ -1324,6 +1349,12 @@ transformPed <- function(ped,
         momID = momID,
         dadID = dadID
       )
+      if (!class(ped[[personID]]) %in% c("numeric", "integer") &&
+        class(ds_ped[[personID]]) %in% c("numeric", "integer")
+      ) {
+        # fix strange converse of cases
+        ds_ped[[personID]] <- as.character(ds_ped[[personID]])
+      }
     }
   }
   return(ds_ped)
@@ -1526,29 +1557,23 @@ addTwins <- function(plotObject,
 
 
 # doesn't work@
-recodeMissingIDs <- function(ped, momID = "momID", dadID="dadID",
-                           personID = "personID",
-                           famID="famID", matID="matID", patID="patID",
-                           missing_code_numeric = 0,
-                           missing_code_character ="0",
-                           config = list()
-                           ) {
-  if (momID %in% names(ped)){
-
+recodeMissingIDs <- function(ped, momID = "momID", dadID = "dadID",
+                             personID = "personID",
+                             famID = "famID", matID = "matID", patID = "patID",
+                             missing_code_numeric = 0,
+                             missing_code_character = "0",
+                             config = list()) {
+  if (momID %in% names(ped)) {
     if (any(ped[[momID]] == missing_code_numeric, na.rm = TRUE)) {
-
       ped[[momID]][ped[[momID]] == missing_code_numeric] <- NA
-
     }
 
     if (any(ped[[momID]] == missing_code_character, na.rm = TRUE)) {
       ped[[momID]][ped[[momID]] == missing_code_character] <- NA
     }
-
   }
 
-  if (dadID %in% names(ped)){
-
+  if (dadID %in% names(ped)) {
     if (any(ped[[dadID]] == missing_code_numeric, na.rm = TRUE)) {
       ped[[dadID]][ped[[dadID]] == missing_code_numeric] <- NA
     }
@@ -1556,8 +1581,7 @@ recodeMissingIDs <- function(ped, momID = "momID", dadID="dadID",
       ped[[dadID]][ped[[dadID]] == missing_code_character] <- NA
     }
   }
-  if (personID %in% names(ped)){
-
+  if (personID %in% names(ped)) {
     if (any(ped[[personID]] == missing_code_numeric, na.rm = TRUE)) {
       ped[[personID]][ped[[personID]] == missing_code_numeric] <- NA
     }
@@ -1566,8 +1590,7 @@ recodeMissingIDs <- function(ped, momID = "momID", dadID="dadID",
     }
   }
 
-  if (famID %in% names(ped)){
-
+  if (famID %in% names(ped)) {
     if (any(ped[[famID]] == missing_code_numeric, na.rm = TRUE)) {
       ped[[famID]][ped[[famID]] == missing_code_numeric] <- NA
     }
@@ -1575,8 +1598,7 @@ recodeMissingIDs <- function(ped, momID = "momID", dadID="dadID",
       ped[[famID]][ped[[famID]] == missing_code_character] <- NA
     }
   }
-  if (matID %in% names(ped)){
-
+  if (matID %in% names(ped)) {
     if (any(ped[[matID]] == missing_code_numeric, na.rm = TRUE)) {
       ped[[matID]][ped[[matID]] == missing_code_numeric] <- NA
     }
@@ -1584,8 +1606,7 @@ recodeMissingIDs <- function(ped, momID = "momID", dadID="dadID",
       ped[[matID]][ped[[matID]] == missing_code_character] <- NA
     }
   }
-  if (patID %in% names(ped)){
-
+  if (patID %in% names(ped)) {
     if (any(ped[[patID]] == missing_code_numeric, na.rm = TRUE)) {
       ped[[patID]][ped[[patID]] == missing_code_numeric] <- NA
     }
@@ -1595,8 +1616,7 @@ recodeMissingIDs <- function(ped, momID = "momID", dadID="dadID",
   }
 
   # handle twinID as missing IDs
-  if ("twinID" %in% names(ped)){
-
+  if ("twinID" %in% names(ped)) {
     if (any(ped[["twinID"]] == missing_code_numeric, na.rm = TRUE)) {
       ped[["twinID"]][ped[["twinID"]] == missing_code_numeric] <- NA
     }

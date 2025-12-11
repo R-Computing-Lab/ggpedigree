@@ -30,7 +30,53 @@ test_that("calculateConnections returns expected columns and structure", {
     "x_fam", "y_fam", "x_mid_parent", "y_mid_parent", "x_mid_spouse", "y_mid_spouse",
     "x_mid_sib", "y_mid_sib"
   ) %in% names(conns)))
+
+  expect_equal(class(conns$personID), "character")
+  expect_equal(class(conns$momID), "character")
+  expect_equal(class(conns$dadID), "character")
+  expect_equal(class(conns$spouseID), "character")
 })
+
+test_that("calculateConnections returns expected columns and structure with no spouses", {
+  ped <- data.frame(
+    personID = c("A", "B", "C", "D", "X"),
+    momID = c(NA, "A", "A", "C", NA),
+    dadID = c(NA, "X", "X", "B", NA),
+    #   spouseID = c("X", "C", "B", NA, "A"),
+    sex = c("F", "M", "F", "F", "M")
+  )
+
+  ped <- calculateCoordinates(ped,
+    code_male = "M",
+    personID = "personID",
+    momID = "momID",
+    dadID = "dadID",
+    #  spouseID = "spouseID",
+    config = list(
+      ped_align = TRUE,
+      ped_packed = TRUE,
+      return_mid_parent = TRUE
+    )
+  )
+
+  conn_out <- calculateConnections(ped, config = list(return_mid_parent = TRUE))
+  conns <- conn_out$connections
+
+  expect_true(is.data.frame(conns))
+  expect_true(all(c(
+    "personID", "x_pos", "y_pos", "momID", "dadID", "spouseID",
+    "x_mom", "y_mom", "x_dad", "y_dad", "x_spouse", "y_spouse",
+    "x_fam", "y_fam", "x_mid_parent", "y_mid_parent", "x_mid_spouse", "y_mid_spouse",
+    "x_mid_sib", "y_mid_sib"
+  ) %in% names(conns)))
+
+  expect_equal(class(conns$personID), "character")
+  expect_equal(class(conns$momID), "character")
+  expect_equal(class(conns$dadID), "character")
+  expect_equal(class(conns$spouseID), "character")
+})
+
+
 
 test_that("calculateConnections returns correct parent coordinates", {
   # A is mother of C and D; X is father of C and D
