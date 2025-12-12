@@ -41,10 +41,6 @@ calculateConnections <- function(ped,
   )
   config <- utils::modifyList(default_config, config)
 
-  print(class(ped$spouseID))
-  print(class(ped$personID))
-  print(class(ped$momID))
-  print(class(ped$dadID))
 
   # rename columns to match expected names
   names(ped)[names(ped) == personID] <- "personID"
