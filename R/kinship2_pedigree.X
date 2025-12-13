@@ -342,24 +342,37 @@ pedigree.idrepair <- function(id) {
 #' @noRd
 #' @inheritParams pedigree
 
-pedigree.sexrepair <- function(sex) {
+pedigree.sexrepair <- function(sex, codes = c("male", "female", "unknown", "terminated")
+                               ) {
   # Allow for character/numeric
   # Allow for character/numeric/factor in the sex variable
   if (is.factor(sex)) {
     sex <- as.character(sex)
   }
-  codes <- c("male", "female", "unknown", "terminated")
+
   if (is.character(sex)) {
 
-    if (length(unique(suppressWarnings(as.numeric(sex))))>1 &&
-      all(is.numeric(unique(suppressWarnings(as.numeric(sex)))), na.rm = TRUE )) {
-      sex <- as.numeric(sex)
-    } else{
+    if(all(unique(sex) %in% codes, na.rm = TRUE)){
     sex <- charmatch(casefold(sex, upper = FALSE), codes,
       nomatch = 3
     )
+    } else if(all(unique(sex) %in% c("M","F","U", "T", NA), na.rm = TRUE)){
+
+      sex <- charmatch(casefold(sex, upper = FALSE), c("M", "F", "U", "T"),
+                       nomatch = 3
+      )
+
+    } else if (all(unique(suppressWarnings(as.numeric(sex))
+                          ) %in% c(0:4), na.rm = TRUE)) {
+      sex <- as.numeric(sex)
+  } else {
+    print(unique(sex))
+    #  stop("Invalid values for 'sex'")
+    sex <- charmatch(casefold(sex, upper = FALSE), codes,
+                     nomatch = 3
+    )
   }
-}
+  }
   # assume either 0/1/2/4 =  female/male/unknown/term, or 1/2/3/4
   #  if only 1/2 assume no unknowns
   if (min(sex) == 0) {
@@ -367,7 +380,7 @@ pedigree.sexrepair <- function(sex) {
   }
   sex <- ifelse(sex < 1 | sex > 4, 3, sex)
   if (all(sex > 2)) {
-    stop("Invalid values for 'sex'")
+    stop("Invalid values for 'sex'. All values coded as Unknown")
   } else if (mean(sex == 3) > 0.25) {
     warning("More than 25% of the sex values are 'unknown'")
   }
