@@ -1091,7 +1091,7 @@ preparePedigreeData <- function(ped,
                                 config = list(
                                   focal_fill_include = TRUE,
                                   focal_fill_component = "maternal",
-                                  recode_missing_ids = TRUE,
+                                  recode_missing_ids = TRUE
                                 ),
                                 fill_group_paternal = c(
                                   "paternal",

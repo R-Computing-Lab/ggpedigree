@@ -13,7 +13,7 @@ preparePedigreeData(
   matID = "matID",
   patID = "patID",
   config = list(focal_fill_include = TRUE, focal_fill_component = "maternal",
-    recode_missing_ids = TRUE, ),
+    recode_missing_ids = TRUE),
   fill_group_paternal = c("paternal", "patID", "paternal line", "paternal lineages",
     "paternal lines"),
   fill_group_maternal = c("maternal", "matID", "maternal line", "maternal lineages",
