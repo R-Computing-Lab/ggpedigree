@@ -34,6 +34,7 @@ The variables are as follows:
   \item \code{sex}: Biological sex
   \item \code{twinID}:  ID of the twin, if applicable
   \item \code{zygosity}: Zygosity of the twin, if applicable. mz is monozygotic; dz is dizygotic
+  \item \code{url}:  URL to a wiki page about the character
   }
 }
 \keyword{datasets}

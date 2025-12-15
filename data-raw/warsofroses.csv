@@ -3,7 +3,7 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 2,1,NA,NA,Phillipa of Hainault,F,https://en.wikipedia.org/wiki/Philippa_of_Hainault,NA,NA
 3,1,2,1,Edward The Black Prince,M,https://en.wikipedia.org/wiki/Edward_the_Black_Prince,NA,NA
 4,1,NA,NA,Joan of Kent,F,https://en.wikipedia.org/wiki/Joan_of_Kent,NA,NA
-5,1,2,1,Isabella of England,Countess of Bedford,F,NA,"_Countess_of_Bedford,NA,NA"
+5,1,2,1,Isabella of England Countess of Bedford,F,https://en.wikipedia.org/wiki/Isabella_of_England,NA,"NA,NA"
 6,2,NA,NA,Enguerrand VII Lord of Coucy,M,https://en.wikipedia.org/wiki/Enguerrand_VII_de_Coucy,NA,NA
 7,1,NA,NA,Elizabeth de Burgh,F,https://en.wikipedia.org/wiki/Elizabeth_de_Burgh,NA,"NA,NA"
 8,1,2,1,Lionel of Antwerp Duke of Clarence,M,https://en.wikipedia.org/wiki/Lionel_of_Antwerp,NA,"NA,NA"
@@ -27,7 +27,7 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 26,1,14,13,Richard of Conisburgh,M,NA,NA,NA
 27,7,NA,NA,John I of Portugal,M,NA,NA,NA
 28,1,9,10,Philippa (of Lancaster),F,NA,NA,NA
-29,1,4,NA,John Holland 1st Duke of Exeter,M,https://en.wikipedia.org/wiki/John_Holland,NA,"NA,NA"
+29,1,4,71,John Holland 1st Duke of Exeter,M,https://en.wikipedia.org/wiki/John_Holland,NA,"NA,NA"
 30,1,9,10,Elizabeth Plantagenet,F,NA,NA,NA
 31,1,69,68,Mary de Bohun,F,https://en.wikipedia.org/wiki/Mary_de_Bohun,NA,NA
 32,1,9,10,Henry IV Bolingbroke,M,NA,NA,NA
@@ -52,12 +52,12 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 51,1,25,26,Isabel Plantagenet,F,NA,NA,NA
 52,1,49,50,Cecily Neville,F,NA,NA,NA
 53,1,25,26,Richard Duke of York,M,NA,NA,NA
-54,1,52,53,Anne (daughter of Richard,Duke of York),F,NA,"NA,NA"
+54,1,52,53,Anne (daughter of Richard Duke of York),F,NA,NA,NA
 55,1,52,53,Edward IV,M,NA,NA,NA
 56,1,NA,NA,Elizabeth Woodville,F,NA,NA,NA
-57,1,52,53,Edmund (son of Richard,Duke of York),M,NA,"NA,NA"
-58,1,52,53,Elizabeth (daughter of Richard,Duke of York),F,NA,"NA,NA"
-59,1,52,53,Margaret (daughter of Richard,Duke of York),F,NA,"NA,NA"
+57,1,52,53,Edmund (son of Richard Duke of York),M,NA,NA,NA
+58,1,52,53,Elizabeth (daughter of Richard Duke of York),F,NA,NA,NA
+59,1,52,53,Margaret (daughter of Richard Duke of York),F,NA,NA,NA
 60,9,NA,NA,Isabella Neville,F,NA,NA,NA
 61,1,52,53,George Duke of Clarence,M,NA,NA,NA
 62,1,52,53,Richard III,M,NA,NA,NA
@@ -68,5 +68,5 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 67,1,56,55,Richard (Prince in the Tower),M,NA,NA,NA
 68,1,NA,NA,Humphrey de Bohun 7th Earl of Hereford,M,https://en.wikipedia.org/wiki/Humphrey_de_Bohun,NA,"NA,NA"
 69,1,NA,NA,Joan Fitzalan Countess of Hereford,F,https://en.wikipedia.org/wiki/Joan_Fitzalan,NA,"NA,NA"
-70,1,4,NA,Thomas Holland 2nd Earl of Kent,M,https://en.wikipedia.org/wiki/Thomas_Holland,NA,"NA, NA"
-247,11,NA,NA,Lady Belmore,F,,NA,NA
+70,1,4,71,Thomas Holland 2nd Earl of Kent,M,https://en.wikipedia.org/wiki/Thomas_Holland,NA,"NA, NA"
+71,1,NA,NA,Thomas Holland 1st Earl of Kent,M,https://en.wikipedia.org/wiki/Thomas_Holland,NA,"NA, NA"

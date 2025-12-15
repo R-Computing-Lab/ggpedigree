@@ -60,6 +60,7 @@
 #'   \item \code{sex}: Biological sex
 #'   \item \code{twinID}:  ID of the twin, if applicable
 #'   \item \code{zygosity}: Zygosity of the twin, if applicable. mz is monozygotic; dz is dizygotic
+#'   \item \code{url}:  URL to a wiki page about the character
 #'   }
 #'
 #' @docType data
@@ -67,4 +68,33 @@
 #' @name ASOIAF
 #' @usage data(ASOIAF)
 #' @format A data frame with 679 observations on 9 variables.
+NULL
+
+
+
+#' Wars of the Roses Pedigree Data
+#'
+#' A pedigree dataset representing the familial relationships among key figures
+#' in the historical War of the Roses, a series of English civil wars for control
+#' of the throne of England fought between the houses of Lancaster and York during
+#' the 15th century. This dataset includes information on individuals' parentage,
+#' birth and death years, and titles, allowing for the exploration of lineage,
+#' alliances, and succession during this tumultuous period in English history.
+#'
+#' The variables are as follows:
+#' \itemize{
+#'  \item \code{id}:  Person identification variable
+#'  \item \code{momID}:  ID of the mother
+#'  \item \code{dadID}:  ID of the father
+#'  \item \code{name}:  Name of the person
+#'  \item \code{sex}: Biological sex
+#'   \item \code{url}:  URL to a wiki page about the character
+#'   }
+
+#' @docType data
+#' @keywords datasets
+#' @name warsofroses
+#' @usage data(warsofroses)
+#' @source <https://en.wikipedia.org/wiki/Wars_of_the_Roses#Family_tree>
+#' @format A data frame with many  observations on 6 variables.
 NULL
