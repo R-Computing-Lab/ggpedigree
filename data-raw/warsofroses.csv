@@ -4,20 +4,20 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 3,1,2,1,Edward The Black Prince,M,https://en.wikipedia.org/wiki/Edward_the_Black_Prince,NA,NA
 4,1,95,94,Joan of Kent,F,https://en.wikipedia.org/wiki/Joan_of_Kent,NA,NA
 5,1,2,1,Isabella of England Countess of Bedford,F,https://en.wikipedia.org/wiki/Isabella_of_England%2C_Countess_of_Bedford,NA,NA
-6,1,NA,NA,Enguerrand VII Lord of Coucy,M,https://en.wikipedia.org/wiki/Enguerrand_VII_de_Coucy,NA,NA
+6,2,NA,NA,Enguerrand VII Lord of Coucy,M,https://en.wikipedia.org/wiki/Enguerrand_VII_de_Coucy,NA,NA
 7,1,NA,NA,Elizabeth de Burgh,F,https://en.wikipedia.org/wiki/Elizabeth_de_Burgh%2C_4th_Countess_of_Ulster,NA,NA
 8,1,2,1,Lionel of Antwerp Duke of Clarence,M,https://en.wikipedia.org/wiki/Lionel_of_Antwerp%2C_Duke_of_Clarence,NA,NA
 9,1,NA,NA,Blanche of Lancaster,F,https://en.wikipedia.org/wiki/Blanche_of_Lancaster,NA,NA
 10,1,2,1,John of Gaunt Duke of Lancaster,M,https://en.wikipedia.org/wiki/John_of_Gaunt,NA,NA
-11,1,NA,NA,Constance of Castile,F,https://en.wikipedia.org/wiki/Constance_of_Castile%2C_Duchess_of_Lancaster,NA,NA
+11,3,NA,NA,Constance of Castile,F,https://en.wikipedia.org/wiki/Constance_of_Castile%2C_Duchess_of_Lancaster,NA,NA
 12,1,NA,NA,Katherine Swynford,F,https://en.wikipedia.org/wiki/Katherine_Swynford,NA,NA
 13,1,2,1,Edmund of Langley Duke of York,M,https://en.wikipedia.org/wiki/Edmund_of_Langley%2C_1st_Duke_of_York,NA,NA
 14,1,NA,NA,Isabella of Castile,F,https://en.wikipedia.org/wiki/Isabella_of_Castile%2C_Duchess_of_York,NA,NA
 15,1,2,1,Thomas of Woodstock Duke of Gloucester,M,https://en.wikipedia.org/wiki/Thomas_of_Woodstock%2C_Duke_of_Gloucester,NA,NA
 16,1,69,68,Eleanor de Bohun,F,https://en.wikipedia.org/wiki/Eleanor_de_Bohun,NA,NA
 17,1,4,3,Edward (son of the Black Prince),M,https://en.wikipedia.org/wiki/Edward_of_Angoul%C3%AAme,NA,NA
-18,1,NA,NA,Anne of Bohemia,F,https://en.wikipedia.org/wiki/Anne_of_Bohemia,NA,NA
-19,1,NA,NA,Isabella of Valois,F,https://en.wikipedia.org/wiki/Isabella_of_Valois,NA,NA
+18,4,NA,NA,Anne of Bohemia,F,https://en.wikipedia.org/wiki/Anne_of_Bohemia,NA,NA
+19,5,NA,NA,Isabella of Valois,F,https://en.wikipedia.org/wiki/Isabella_of_Valois,NA,NA
 20,1,4,3,Richard II,M,https://en.wikipedia.org/wiki/Richard_II_of_England,NA,NA
 21,1,7,8,Philippa of Ulster,F,https://en.wikipedia.org/wiki/Philippa%2C_5th_Countess_of_Ulster,NA,NA
 22,1,74,73,Edmund Mortimer Earl of March,M,https://en.wikipedia.org/wiki/Edmund_Mortimer%2C_5th_Earl_of_March,NA,NA
@@ -25,13 +25,13 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 24,1,14,13,Constance (daughter of Edmund of Langley),F,https://en.wikipedia.org/wiki/Constance_of_York%2C_Countess_of_Gloucester,NA,NA
 25,1,74,73,Anne Mortimer,F,https://en.wikipedia.org/wiki/Anne_de_Mortimer,NA,NA
 26,1,14,13,Richard of Conisburgh,M,https://en.wikipedia.org/wiki/Richard_of_Conisburgh%2C_3rd_Earl_of_Cambridge,NA,NA
-27,1,NA,NA,John I of Portugal,M,https://en.wikipedia.org/wiki/John_I_of_Portugal,NA,NA
+27,6,NA,NA,John I of Portugal,M,https://en.wikipedia.org/wiki/John_I_of_Portugal,NA,NA
 28,1,9,10,Philippa (of Lancaster),F,https://en.wikipedia.org/wiki/Philippa_of_Lancaster,NA,NA
 29,1,4,71,John Holland 1st Duke of Exeter,M,https://en.wikipedia.org/wiki/John_Holland%2C_1st_Duke_of_Exeter,NA,NA
 30,1,9,10,Elizabeth Plantagenet,F,https://en.wikipedia.org/wiki/Elizabeth_of_Lancaster%2C_Duchess_of_Exeter,NA,NA
 31,1,69,68,Mary de Bohun,F,https://en.wikipedia.org/wiki/Mary_de_Bohun,NA,NA
 32,1,9,10,Henry IV Bolingbroke,M,https://en.wikipedia.org/wiki/Henry_IV_of_England,NA,NA
-33,1,NA,NA,Joan of Navarre,F,https://en.wikipedia.org/wiki/Joan_of_Navarre%2C_Queen_of_England,NA,NA
+33,7,NA,NA,Joan of Navarre,F,https://en.wikipedia.org/wiki/Joan_of_Navarre%2C_Queen_of_England,NA,NA
 34,1,31,32,Henry V,M,https://en.wikipedia.org/wiki/Henry_V_of_England,NA,NA
 35,1,NA,NA,Catherine of Valois,F,https://en.wikipedia.org/wiki/Catherine_of_Valois,NA,NA
 36,1,31,32,Thomas Duke of Clarence,M,https://en.wikipedia.org/wiki/Thomas_of_Lancaster%2C_Duke_of_Clarence,NA,NA
