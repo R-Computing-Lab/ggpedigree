@@ -4,7 +4,7 @@
 * Added more refactorings of kinship2 internals for maintainability
 * Harmonize names by changing midparent to mid_parent throughout the codebase
 * Repair inconsistent handling of string IDs vs numeric IDs
-* Add Wars of the Roses Pedigree Data Set
+* Added rough cut of Wars of the Roses Pedigree Data Set
 
 # ggpedigree 1.0.0.1
 ## cran resubmission
