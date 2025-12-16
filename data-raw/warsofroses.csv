@@ -2,71 +2,95 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 1,1,NA,NA,Edward III,M,https://en.wikipedia.org/wiki/Edward_III_of_England,NA,NA
 2,1,NA,NA,Phillipa of Hainault,F,https://en.wikipedia.org/wiki/Philippa_of_Hainault,NA,NA
 3,1,2,1,Edward The Black Prince,M,https://en.wikipedia.org/wiki/Edward_the_Black_Prince,NA,NA
-4,1,NA,NA,Joan of Kent,F,https://en.wikipedia.org/wiki/Joan_of_Kent,NA,NA
-5,1,2,1,Isabella of England Countess of Bedford,F,https://en.wikipedia.org/wiki/Isabella_of_England,NA,"NA,NA"
+4,1,95,94,Joan of Kent,F,https://en.wikipedia.org/wiki/Joan_of_Kent,NA,NA
+5,1,2,1,Isabella of England Countess of Bedford,F,https://en.wikipedia.org/wiki/Isabella_of_England%2C_Countess_of_Bedford,NA,NA
 6,2,NA,NA,Enguerrand VII Lord of Coucy,M,https://en.wikipedia.org/wiki/Enguerrand_VII_de_Coucy,NA,NA
-7,1,NA,NA,Elizabeth de Burgh,F,https://en.wikipedia.org/wiki/Elizabeth_de_Burgh,NA,"NA,NA"
-8,1,2,1,Lionel of Antwerp Duke of Clarence,M,https://en.wikipedia.org/wiki/Lionel_of_Antwerp,NA,"NA,NA"
+7,1,NA,NA,Elizabeth de Burgh,F,https://en.wikipedia.org/wiki/Elizabeth_de_Burgh%2C_4th_Countess_of_Ulster,NA,NA
+8,1,2,1,Lionel of Antwerp Duke of Clarence,M,https://en.wikipedia.org/wiki/Lionel_of_Antwerp%2C_Duke_of_Clarence,NA,NA
 9,1,NA,NA,Blanche of Lancaster,F,https://en.wikipedia.org/wiki/Blanche_of_Lancaster,NA,NA
 10,1,2,1,John of Gaunt Duke of Lancaster,M,https://en.wikipedia.org/wiki/John_of_Gaunt,NA,NA
-11,3,NA,NA,Constance of Castile,F,https://en.wikipedia.org/wiki/Constance_of_Castile,NA,"NA,NA"
+11,3,NA,NA,Constance of Castile,F,https://en.wikipedia.org/wiki/Constance_of_Castile%2C_Duchess_of_Lancaster,NA,NA
 12,1,NA,NA,Katherine Swynford,F,https://en.wikipedia.org/wiki/Katherine_Swynford,NA,NA
-13,1,2,1,Edmund of Langley Duke of York,M,https://en.wikipedia.org/wiki/Edmund_of_Langley,NA,"NA,NA"
-14,1,NA,NA,Isabella of Castile,F,https://en.wikipedia.org/wiki/Isabella_of_Castile,NA,"NA,NA"
-15,1,2,1,Thomas of Woodstock Duke of Gloucester,M,https://en.wikipedia.org/wiki/Thomas_of_Woodstock,NA,"NA,NA"
+13,1,2,1,Edmund of Langley Duke of York,M,https://en.wikipedia.org/wiki/Edmund_of_Langley%2C_1st_Duke_of_York,NA,NA
+14,1,NA,NA,Isabella of Castile,F,https://en.wikipedia.org/wiki/Isabella_of_Castile%2C_Duchess_of_York,NA,NA
+15,1,2,1,Thomas of Woodstock Duke of Gloucester,M,https://en.wikipedia.org/wiki/Thomas_of_Woodstock%2C_Duke_of_Gloucester,NA,NA
 16,1,69,68,Eleanor de Bohun,F,https://en.wikipedia.org/wiki/Eleanor_de_Bohun,NA,NA
 17,1,4,3,Edward (son of the Black Prince),M,https://en.wikipedia.org/wiki/Edward_of_Angoul%C3%AAme,NA,NA
 18,4,NA,NA,Anne of Bohemia,F,https://en.wikipedia.org/wiki/Anne_of_Bohemia,NA,NA
 19,5,NA,NA,Isabella of Valois,F,https://en.wikipedia.org/wiki/Isabella_of_Valois,NA,NA
 20,1,4,3,Richard II,M,https://en.wikipedia.org/wiki/Richard_II_of_England,NA,NA
-21,1,7,8,Philippa of Ulster,F,https://en.wikipedia.org/wiki/Philippa,NA,"NA,NA"
-22,6,NA,NA,Edmund Mortimer Earl of March,M,NA,NA,NA
-23,1,14,13,Edward of Norwich,M,NA,NA,NA
-24,1,14,13,Constance (daughter of Edmund of Langley),F,NA,NA,NA
-25,1,NA,NA,Anne Mortimer,F,NA,NA,NA
-26,1,14,13,Richard of Conisburgh,M,NA,NA,NA
-27,7,NA,NA,John I of Portugal,M,NA,NA,NA
-28,1,9,10,Philippa (of Lancaster),F,NA,NA,NA
-29,1,4,71,John Holland 1st Duke of Exeter,M,https://en.wikipedia.org/wiki/John_Holland,NA,"NA,NA"
-30,1,9,10,Elizabeth Plantagenet,F,NA,NA,NA
+21,1,7,8,Philippa of Ulster,F,https://en.wikipedia.org/wiki/Philippa%2C_5th_Countess_of_Ulster,NA,NA
+22,1,74,73,Edmund Mortimer Earl of March,M,https://en.wikipedia.org/wiki/Edmund_Mortimer%2C_5th_Earl_of_March,NA,NA
+23,1,14,13,Edward of Norwich,M,https://en.wikipedia.org/wiki/Edward%2C_2nd_Duke_of_York,NA,NA
+24,1,14,13,Constance (daughter of Edmund of Langley),F,https://en.wikipedia.org/wiki/Constance_of_York%2C_Countess_of_Gloucester,NA,NA
+25,1,74,73,Anne Mortimer,F,https://en.wikipedia.org/wiki/Anne_de_Mortimer,NA,NA
+26,1,14,13,Richard of Conisburgh,M,https://en.wikipedia.org/wiki/Richard_of_Conisburgh%2C_3rd_Earl_of_Cambridge,NA,NA
+27,6,NA,NA,John I of Portugal,M,https://en.wikipedia.org/wiki/John_I_of_Portugal,NA,NA
+28,1,9,10,Philippa (of Lancaster),F,https://en.wikipedia.org/wiki/Philippa_of_Lancaster,NA,NA
+29,1,4,71,John Holland 1st Duke of Exeter,M,https://en.wikipedia.org/wiki/John_Holland%2C_1st_Duke_of_Exeter,NA,NA
+30,1,9,10,Elizabeth Plantagenet,F,https://en.wikipedia.org/wiki/Elizabeth_of_Lancaster%2C_Duchess_of_Exeter,NA,NA
 31,1,69,68,Mary de Bohun,F,https://en.wikipedia.org/wiki/Mary_de_Bohun,NA,NA
-32,1,9,10,Henry IV Bolingbroke,M,NA,NA,NA
-33,8,NA,NA,Joan of Navarre,F,NA,NA,NA
-34,1,31,32,Henry V,M,NA,NA,NA
-35,1,NA,NA,Catherine of Valois,F,NA,NA,NA
-36,1,31,32,Thomas Duke of Clarence,M,NA,NA,NA
-37,1,31,32,John Duke of Bedford,M,NA,NA,NA
-38,1,31,32,Humphrey Duke of Gloucester,M,NA,NA,NA
-39,1,31,32,Blanche (daughter of Henry IV),F,NA,NA,NA
-40,1,31,32,Philippa (daughter of Henry IV),F,NA,NA,NA
-41,1,35,34,Henry VI,M,NA,NA,NA
-42,1,NA,NA,Margaret of Anjou,F,NA,NA,NA
-43,1,42,41,Edward of Westminster,M,NA,NA,NA
-44,1,NA,NA,Anne Neville,F,NA,NA,NA
-45,1,12,10,John Beaufort,M,NA,NA,NA
-46,1,NA,70,Margaret Holland Duchess of Clarence,F,https://en.wikipedia.org/wiki/Margaret_Holland,NA,"NA,NA"
-47,1,12,10,Henry Beaufort,M,NA,NA,NA
-48,1,12,10,Thomas Beaufort,M,NA,NA,NA
-49,1,12,10,Joan Beaufort,F,NA,NA,NA
-50,1,NA,NA,Ralph Neville,M,NA,NA,NA
-51,1,25,26,Isabel Plantagenet,F,NA,NA,NA
-52,1,49,50,Cecily Neville,F,NA,NA,NA
-53,1,25,26,Richard Duke of York,M,NA,NA,NA
-54,1,52,53,Anne (daughter of Richard Duke of York),F,NA,NA,NA
-55,1,52,53,Edward IV,M,NA,NA,NA
-56,1,NA,NA,Elizabeth Woodville,F,NA,NA,NA
-57,1,52,53,Edmund (son of Richard Duke of York),M,NA,NA,NA
-58,1,52,53,Elizabeth (daughter of Richard Duke of York),F,NA,NA,NA
-59,1,52,53,Margaret (daughter of Richard Duke of York),F,NA,NA,NA
-60,9,NA,NA,Isabella Neville,F,NA,NA,NA
-61,1,52,53,George Duke of Clarence,M,NA,NA,NA
-62,1,52,53,Richard III,M,NA,NA,NA
-63,1,44,62,Edward of Middleham,M,NA,NA,NA
-64,10,NA,NA,Henry VII Tudor,M,NA,NA,NA
-65,1,56,55,Elizabeth (daughter of Edward IV),F,NA,NA,NA
-66,1,56,55,Edward V,M,NA,NA,NA
-67,1,56,55,Richard (Prince in the Tower),M,NA,NA,NA
-68,1,NA,NA,Humphrey de Bohun 7th Earl of Hereford,M,https://en.wikipedia.org/wiki/Humphrey_de_Bohun,NA,"NA,NA"
-69,1,NA,NA,Joan Fitzalan Countess of Hereford,F,https://en.wikipedia.org/wiki/Joan_Fitzalan,NA,"NA,NA"
-70,1,4,71,Thomas Holland 2nd Earl of Kent,M,https://en.wikipedia.org/wiki/Thomas_Holland,NA,"NA, NA"
-71,1,NA,NA,Thomas Holland 1st Earl of Kent,M,https://en.wikipedia.org/wiki/Thomas_Holland,NA,"NA, NA"
+32,1,9,10,Henry IV Bolingbroke,M,https://en.wikipedia.org/wiki/Henry_IV_of_England,NA,NA
+33,7,NA,NA,Joan of Navarre,F,https://en.wikipedia.org/wiki/Joan_of_Navarre%2C_Queen_of_England,NA,NA
+34,1,31,32,Henry V,M,https://en.wikipedia.org/wiki/Henry_V_of_England,NA,NA
+35,1,NA,NA,Catherine of Valois,F,https://en.wikipedia.org/wiki/Catherine_of_Valois,NA,NA
+36,1,31,32,Thomas Duke of Clarence,M,https://en.wikipedia.org/wiki/Thomas_of_Lancaster%2C_Duke_of_Clarence,NA,NA
+37,1,31,32,John Duke of Bedford,M,https://en.wikipedia.org/wiki/John_of_Lancaster%2C_Duke_of_Bedford,NA,NA
+38,1,31,32,Humphrey Duke of Gloucester,M,https://en.wikipedia.org/wiki/Humphrey%2C_Duke_of_Gloucester,NA,NA
+39,1,31,32,Blanche (daughter of Henry IV),F,https://en.wikipedia.org/wiki/Blanche_of_England,NA,NA
+40,1,31,32,Philippa (daughter of Henry IV),F,https://en.wikipedia.org/wiki/Philippa_of_England,NA,NA
+41,1,35,34,Henry VI,M,https://en.wikipedia.org/wiki/Henry_VI_of_England,NA,NA
+42,1,93,92,Margaret of Anjou,F,https://en.wikipedia.org/wiki/Margaret_of_Anjou,NA,NA
+43,1,42,41,Edward of Westminster,M,https://en.wikipedia.org/wiki/Edward_of_Westminster%2C_Prince_of_Wales,NA,NA
+44,1,89,85,Anne Neville,F,https://en.wikipedia.org/wiki/Anne_Neville,NA,NA
+45,1,12,10,John Beaufort,M,https://en.wikipedia.org/wiki/John_Beaufort%2C_1st_Earl_of_Somerset,NA,NA
+46,1,75,70,Margaret Holland Duchess of Clarence,F,https://en.wikipedia.org/wiki/Margaret_Holland%2C_Duchess_of_Clarence,NA,NA
+47,1,12,10,Henry Beaufort,M,https://en.wikipedia.org/wiki/Henry_Beaufort,NA,NA
+48,1,12,10,Thomas Beaufort,M,https://en.wikipedia.org/wiki/Thomas_Beaufort%2C_Duke_of_Exeter,NA,NA
+49,1,12,10,Joan Beaufort,F,https://en.wikipedia.org/wiki/Joan_Beaufort%2C_Countess_of_Westmorland,NA,NA
+50,1,NA,NA,Ralph Neville,M,https://en.wikipedia.org/wiki/Ralph_Neville%2C_1st_Earl_of_Westmorland,NA,NA
+51,1,25,26,Isabel Plantagenet,F,https://en.wikipedia.org/wiki/Isabel_of_Cambridge%2C_Countess_of_Essex,NA,NA
+52,1,49,50,Cecily Neville,F,https://en.wikipedia.org/wiki/Cecily_Neville%2C_Duchess_of_York,NA,NA
+53,1,25,26,Richard Duke of York,M,https://en.wikipedia.org/wiki/Richard_of_York%2C_3rd_Duke_of_York,NA,NA
+54,1,52,53,Anne (daughter of Richard Duke of York),F,https://en.wikipedia.org/wiki/Anne_of_York%2C_Duchess_of_Exeter,NA,NA
+55,1,52,53,Edward IV,M,https://en.wikipedia.org/wiki/Edward_IV,NA,NA
+56,1,90,91,Elizabeth Woodville,F,https://en.wikipedia.org/wiki/Elizabeth_Woodville,NA,NA
+57,1,52,53,Edmund (son of Richard Duke of York),M,https://en.wikipedia.org/wiki/Edmund%2C_Earl_of_Rutland,NA,NA
+58,1,52,53,Elizabeth (daughter of Richard Duke of York),F,https://en.wikipedia.org/wiki/Elizabeth_of_York%2C_Duchess_of_Suffolk,NA,NA
+59,1,52,53,Margaret (daughter of Richard Duke of York),F,https://en.wikipedia.org/wiki/Margaret_of_York,NA,NA
+60,1,89,85,Isabella Neville,F,https://en.wikipedia.org/wiki/Isabel_Neville%2C_Duchess_of_Clarence,NA,NA
+61,1,52,53,George Duke of Clarence,M,https://en.wikipedia.org/wiki/George_Plantagenet%2C_Duke_of_Clarence,NA,NA
+62,1,52,53,Richard III,M,https://en.wikipedia.org/wiki/Richard_III_of_England,NA,NA
+63,1,44,62,Edward of Middleham,M,https://en.wikipedia.org/wiki/Edward_of_Middleham%2C_Prince_of_Wales,NA,NA
+64,1,80,77,Henry VII Tudor,M,https://en.wikipedia.org/wiki/Henry_VII_of_England,NA,NA
+65,1,56,55,Elizabeth (daughter of Edward IV),F,https://en.wikipedia.org/wiki/Elizabeth_of_York,NA,NA
+66,1,56,55,Edward V,M,https://en.wikipedia.org/wiki/Edward_V,NA,NA
+67,1,56,55,Richard (Prince in the Tower),M,https://en.wikipedia.org/wiki/Richard_of_Shrewsbury%2C_Duke_of_York,NA,NA
+68,1,NA,NA,Humphrey de Bohun 7th Earl of Hereford,M,https://en.wikipedia.org/wiki/Humphrey_de_Bohun%2C_7th_Earl_of_Hereford,NA,NA
+69,1,NA,NA,Joan Fitzalan Countess of Hereford,F,https://en.wikipedia.org/wiki/Joan_Fitzalan%2C_Countess_of_Hereford,NA,NA
+70,1,4,71,Thomas Holland 2nd Earl of Kent,M,https://en.wikipedia.org/wiki/Thomas_Holland%2C_2nd_Earl_of_Kent,NA,NA
+71,1,NA,NA,Thomas Holland 1st Earl of Kent,M,https://en.wikipedia.org/wiki/Thomas_Holland%2C_1st_Earl_of_Kent,NA,NA
+72,1,NA,NA,Edmund Mortimer 3rd Earl of March,M,https://en.wikipedia.org/wiki/Edmund_Mortimer%2C_3rd_Earl_of_March,NA,NA
+73,1,21,72,Roger Mortimer 4th Earl of March,M,https://en.wikipedia.org/wiki/Roger_Mortimer%2C_4th_Earl_of_March,NA,NA
+74,1,75,70,Alianore Holland Countess of March,F,https://en.wikipedia.org/wiki/Alianore_Holland%2C_Countess_of_March,NA,NA
+75,1,NA,NA,Alice FitzAlan Countess of Kent,F,https://en.wikipedia.org/wiki/Alice_Holland%2C_Countess_of_Kent,NA,NA
+76,1,NA,NA,Owen Tudor,M,https://en.wikipedia.org/wiki/Owen_Tudor,NA,NA
+77,1,35,76,Edmund Tudor 1st Earl of Richmond,M,https://en.wikipedia.org/wiki/Edmund_Tudor%2C_1st_Earl_of_Richmond,NA,NA
+78,1,46,45,John Beaufort 1st Duke of Somerset,M,https://en.wikipedia.org/wiki/John_Beaufort%2C_1st_Duke_of_Somerset,NA,NA
+79,1,NA,NA,Margaret Beauchamp of Bletso,F,https://en.wikipedia.org/wiki/Margaret_Beauchamp_of_Bletso,NA,NA
+80,1,79,78,Lady Margaret Beaufort,F,https://en.wikipedia.org/wiki/Lady_Margaret_Beaufort,NA,NA
+81,1,NA,NA,Thomas Montagu 4th Earl of Salisbury,M,https://en.wikipedia.org/wiki/Thomas_Montagu%2C_4th_Earl_of_Salisbury,NA,NA
+82,1,75,70,Eleanor Holland Countess of Salisbury,F,https://en.wikipedia.org/wiki/Eleanor_Holland%2C_Countess_of_Salisbury,NA,NA
+83,1,82,81,Alice Montacute 5th Countess of Salisbury,F,https://en.wikipedia.org/wiki/Alice_Montacute%2C_5th_Countess_of_Salisbury,NA,NA
+84,1,49,50,Richard Neville 5th Earl of Salisbury,M,https://en.wikipedia.org/wiki/Richard_Neville%2C_5th_Earl_of_Salisbury,NA,NA
+85,1,83,84,Richard Neville 16th Earl of Warwick,M,https://en.wikipedia.org/wiki/Richard_Neville%2C_16th_Earl_of_Warwick,NA,NA
+86,1,NA,NA,Richard Beauchamp 13th Earl of Warwick,M,https://en.wikipedia.org/wiki/Richard_Beauchamp%2C_13th_Earl_of_Warwick,NA,NA
+87,1,NA,NA,Thomas Despenser 1st Earl of Gloucester,M,https://en.wikipedia.org/wiki/Thomas_Despenser%2C_1st_Earl_of_Gloucester,NA,NA
+88,1,24,87,Isabel Despenser Countess of Warwick,F,https://en.wikipedia.org/wiki/Isabel_Despenser%2C_Countess_of_Warwick,NA,NA
+89,1,88,86,Anne Beauchamp 16th Countess of Warwick,F,https://en.wikipedia.org/wiki/Anne_Beauchamp%2C_16th_Countess_of_Warwick,NA,NA
+90,1,NA,NA,Jacquetta of Luxembourg,F,https://en.wikipedia.org/wiki/Jacquetta_of_Luxembourg,NA,NA
+91,1,NA,NA,Richard Woodville 1st Earl Rivers,M,https://en.wikipedia.org/wiki/Richard_Woodville%2C_1st_Earl_Rivers,NA,NA
+92,1,NA,NA,René of Anjou,M,https://en.wikipedia.org/wiki/Ren%C3%A9_of_Anjou,NA,NA
+93,1,NA,NA,Isabella Duchess of Lorraine,F,https://en.wikipedia.org/wiki/Isabella%2C_Duchess_of_Lorraine,NA,NA
+94,1,NA,NA,Edmund of Woodstock 1st Earl of Kent,M,https://en.wikipedia.org/wiki/Edmund_of_Woodstock%2C_1st_Earl_of_Kent,NA,NA
+95,1,NA,NA,Margaret Wake 3rd Baroness Wake of Liddell,F,https://en.wikipedia.org/wiki/Margaret_Wake%2C_3rd_Baroness_Wake_of_Liddell,NA,NA

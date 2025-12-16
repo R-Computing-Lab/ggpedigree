@@ -7,13 +7,13 @@ library(BGmisc)
 
 
 ## Create dataframe
- ged <- read_csv("data-raw/df_raw_wor.csv",
-                 col_types = cols(twinID = col_double(),
-                                  zygosity = col_character())) %>%
-   select(-famID)
-
-
-
+ged <- read_csv("data-raw/df_raw_wor.csv",
+  col_types = cols(
+    twinID = col_double(),
+    zygosity = col_character()
+  )
+) %>%
+  select(-famID)
 
 
 df <- ped2fam(ged, personID = "id") %>%
@@ -21,16 +21,16 @@ df <- ped2fam(ged, personID = "id") %>%
     personID = id
   )
 
-#df <- df %>%
+# df <- df %>%
 #  addPersonToPed(
 #    personID = 247,
 #    url ="",
-  #  name = "Lady Belmore",
- #   sex = "F",
+#  name = "Lady Belmore",
+#   sex = "F",
 
-  #  momID = NA, dadID = NA,
- #   overwrite = FALSE
- # )
+#  momID = NA, dadID = NA,
+#   overwrite = FALSE
+# )
 
 
 warsofroses <- df %>%
@@ -69,20 +69,21 @@ ggpedigree::ggpedigree(df_repaired,
     focal_fill_include = TRUE,
     focal_fill_force_zero = TRUE,
     focal_fill_personID = 1, # Edward III
-   # apply_default_scales = FALSE,
+    # apply_default_scales = FALSE,
     label_column = "name",
-   label_method = "ggrepel",
-   sex_legend_show = FALSE,
-   sex_color_include = FALSE,
- #  focal_fill_high_color = "#4A7023",
-  # focal_fill_mid_color =  "#C1E1A6",
- #  focal_fill_low_color =  "#F0F8FF",
-   focal_fill_na_color = "lightgrey",
+    label_method = "ggrepel",
+    sex_legend_show = FALSE,
+    sex_color_include = FALSE,
+    #  focal_fill_high_color = "#4A7023",
+    # focal_fill_mid_color =  "#C1E1A6",
+    #  focal_fill_low_color =  "#F0F8FF",
+    #  focal_fill_na_color = "lightgrey",
     label_include = TRUE,
-   label_text_angle = -90,
-# label_nudge_y = -0.05#,
- label_nudge_x = -.05
-)
+    label_text_angle = -90,
+    label_text_size = 2,
+    # label_nudge_y = -0.05#,
+    label_nudge_x = -.05
+  )
 )
 checkIDs(df_repaired)
 
