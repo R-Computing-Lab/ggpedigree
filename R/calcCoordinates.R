@@ -57,11 +57,12 @@ calculateCoordinates <- function(ped,
     ped_packed = TRUE,
     ped_align = TRUE,
     ped_width = 15,
-    return_midparent = FALSE
+    return_mid_parent = FALSE
   )
   config <- utils::modifyList(default_config, config)
 
   # Construct a pedigree object to compute layout coordinates
+
 
   # use relations if provided, otherwise use default settings
   ped_ped <- alignPedigreeWithRelations(
@@ -73,6 +74,7 @@ calculateCoordinates <- function(ped,
     sexVar = sexVar,
     config = config
   )
+
 
   # use hints if provided
   pos <- alignPedigreeWithHints(

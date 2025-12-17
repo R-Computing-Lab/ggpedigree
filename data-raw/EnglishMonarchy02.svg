@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg x="0" y="0" width="700" height="940" viewBox="0 0 700 940" version="1.1"
+	xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Plantagenet, Lancaster and York Monarchs Family Tree</title>
+    <defs>
+        <g id="main">
+            <text x="220" y="15" style="font-family: 'DejaVu Sans', sans-serif; font-size: 14px; text-anchor: middle;">English Monarchs Family Tree:</text>
+            <text x="220" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 14px; text-anchor: middle;">Plantagenets, Houses of Lancaster and York</text>
+            <text x="220" y="48" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-style: italic; text-anchor: middle;">Note: Dates are birth and death; intermediate dates are accession to throne.</text>
+            <text x="220" y="60" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-style: italic; text-anchor: middle;">Some children and marriages have been omitted and also</text>
+            <text x="220" y="72" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-style: italic; text-anchor: middle;">birth order has not been followed to improve readability.</text>
+        </g>
+        <g id="legend">
+            <text x="5" y="15" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: start; font-weight: bold;">Monarch</text>
+            <text x="5" y="27" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: start;">Legitimate child</text>
+            <text x="5" y="39" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: start;">Illegitimate child</text>
+            <text x="25" y="51" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: start;">Marriage</text>
+            <text x="25" y="63" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: start;">Liaison</text>
+            <line x1="0" y1="16" x2="0" y2="28" style="stroke: navy;"/>
+            <line x1="0" y1="31" x2="0" y2="43" style="stroke: navy; stroke-dasharray: 4, 2;"/>
+            <line x1="0" y1="48" x2="20" y2="48" style="stroke: navy;"/>
+            <line x1="0" y1="60" x2="20" y2="60" style="stroke: navy; stroke-dasharray: 4, 2;"/>
+            <text x="5" y="75" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: start;">b. - born</text>
+            <text x="5" y="87" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: start;">d. - died</text>
+            <text x="5" y="99" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: start; font-style: italic;">(Ancestor)</text>
+            <text x="115" y="15" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: start;">e. - executed</text>
+            <text x="115" y="27" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: start;">k. - killed</text>
+            <text x="115" y="39" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: start;">kb. - killed in battle</text>
+            <text x="115" y="51" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: start;">a. - accident</text>
+            <text x="115" y="63" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: start;">p. - died in childbirth</text>
+            <text x="115" y="75" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: start;">~ - about</text>
+            <text x="115" y="87" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: start;">1,2 - number of marriage</text>
+            <text x="115" y="99" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: start;">X - no surviving children</text>
+        </g>
+        <line id="ml" x1="0" y1="0" x2="50" y2="0" style="stroke: navy;"/>
+        <line id="cl" x1="0" y1="0" x2="0" y2="24" style="stroke: navy;"/>
+        <line id="clx" x1="0" y1="0" x2="0" y2="30" style="stroke: navy;"/>
+        <line id="sd" x1="0" y1="0" x2="0" y2="14" style="stroke: navy;"/>
+        <line id="sdx" x1="0" y1="0" x2="0" y2="20" style="stroke: navy;"/>
+        <line id="mdr" x1="0" y1="0" x2="0" y2="56" style="stroke: navy;"/>
+        <line id="md" x1="0" y1="0" x2="0" y2="62" style="stroke: navy;"/>
+        <line id="mdx" x1="0" y1="0" x2="0" y2="68" style="stroke: navy;"/>
+        <line id="ldr" x1="0" y1="0" x2="0" y2="98" style="stroke: navy;"/>
+        <line id="ld" x1="0" y1="0" x2="0" y2="110" style="stroke: navy;"/>
+        <line id="ldx" x1="0" y1="0" x2="0" y2="116" style="stroke: navy;"/>
+        <text id="o" x="0" y="0" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">others</text>
+        <!-- Edward III -->
+        <g id="p00">
+            <text x="0" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-weight: bold; text-anchor: middle;">Edward III</text>
+            <text x="0" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1312-1327-1377</text>
+            <use xlink:href="#ml" x="40" y="12"/>
+            <text x="65" y="10" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1328</text>
+            <use xlink:href="#cl" x="65" y="12"/>
+            <text x="140" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Phillipa of Hainault</text>
+            <text x="140" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1314-1369</text>
+        </g>
+        <!-- Edward the Black Prince -->
+        <g id="p01">
+            <text x="0" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Edward,</text>
+            <text x="0" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-style: italic; text-anchor: middle;">The Black Prince</text>
+            <text x="0" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1330-1376</text>
+            <use xlink:href="#ml" x="45" y="18"/>
+            <text x="70" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1361</text>
+            <text x="93" y="28" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">3</text>
+            <use xlink:href="#clx" x="70" y="18"/>
+            <text x="130" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Joan of Kent</text>
+            <text x="130" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1328-1385</text>
+            <text x="130" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-style: italic; text-anchor: middle;">(Edward I)</text>
+        </g>
+        <!-- Isabella Plantaganet -->
+        <g id="p02">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Isabella</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1332-~1382</text>
+            <use xlink:href="#ml" x="35" y="18"/>
+            <text x="60" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1365</text>
+            <text x="83" y="28" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1</text>
+            <text x="130" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Enguerrand VII,</text>
+            <text x="130" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Lord of Coucy</text>
+            <text x="130" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1340-1397</text>
+        </g>
+        <!-- Lionel of Antwerp -->
+        <g id="p03">
+            <text x="0" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Elizabeth de Burgh</text>
+            <text x="0" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1332-1363</text>
+            <text x="0" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-style: italic; text-anchor: middle;">(Edward I)</text>
+            <use xlink:href="#ml" x="50" y="18"/>
+            <text x="75" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1352</text>
+            <text x="52" y="28" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1</text>
+            <use xlink:href="#clx" x="75" y="18"/>
+            <text x="150" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Lionel of Antwerp,</text>
+            <text x="150" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Duke of Clarence</text>
+            <text x="150" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1338-1368</text>
+        </g>
+        <!-- John of Gaunt -->
+        <g id="p04">
+            <text x="0" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Blanche of Lancaster</text>
+            <text x="0" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1345-1369</text>
+            <text x="0" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-style: italic; text-anchor: middle;">(Henry III)</text>
+            <use xlink:href="#ml" x="50" y="18"/>
+            <text x="75" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1359</text>
+            <text x="98" y="28" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1</text>
+            <use xlink:href="#clx" x="75" y="18"/>
+            <text x="150" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">John of Gaunt,</text>
+            <text x="150" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Duke of Lancaster</text>
+            <text x="150" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1340-1399</text>
+            <use xlink:href="#ml" x="200" y="6"/>
+            <use xlink:href="#ml" x="200" y="30"/>
+            <text x="225" y="4" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1371</text>
+            <text x="202" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">2</text>
+            <text x="225" y="28" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1396</text>
+            <text x="202" y="40" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">3</text>
+            <text x="248" y="40" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">2</text>
+            <text x="300" y="6" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Constance of Castile</text>
+            <text x="300" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1354-1394</text>
+            <use xlink:href="#clx" x="225" y="30"/>
+            <text x="300" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Katherine Swynford</text>
+            <text x="300" y="42" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1350-1403</text>
+        </g>
+        <!-- Edmund of Langley -->
+        <g id="p05">
+            <text x="0" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Edmund of Langley,</text>
+            <text x="0" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Duke of York</text>
+            <text x="0" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1341-1402</text>
+            <use xlink:href="#ml" x="50" y="18"/>
+            <text x="75" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1372</text>
+            <text x="52" y="28" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1</text>
+            <use xlink:href="#clx" x="75" y="18"/>
+            <text x="150" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Isabella of Castile</text>
+            <text x="150" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">~1355-1392</text>
+        </g>
+        <!-- Thomas of Woodstock -->
+        <g id="p06">
+            <text x="0" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Thomas of Woodstock,</text>
+            <text x="0" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Duke of Gloucester</text>
+            <text x="0" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1355-k.1397</text>
+            <use xlink:href="#ml" x="60" y="18"/>
+            <text x="85" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1376</text>
+            <text x="160" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Eleanor de Bohun</text>
+            <text x="160" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">~1366-1399</text>
+            <text x="160" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-style: italic; text-anchor: middle;">(Edward I)</text>
+        </g>
+        <!-- Edward Plantaganet -->
+        <g id="p07">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Edward</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1365-1372</text>
+        </g>
+        <!-- Richard II -->
+        <g id="p08">
+            <text x="0" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Anne of Bohemia</text>
+            <text x="0" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1366-1394</text>
+            <use xlink:href="#ml" x="45" y="12"/>
+            <text x="0" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Isabella of Valois</text>
+            <text x="0" y="48" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1389-1409</text>
+            <use xlink:href="#ml" x="45" y="36"/>
+            <text x="70" y="10" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1382</text>
+            <text x="70" y="22" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">X</text>
+            <text x="93" y="22" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1</text>
+            <text x="70" y="34" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1396</text>
+            <text x="70" y="46" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">X</text>
+            <text x="93" y="46" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">2</text>
+            <text x="150" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-weight: bold; text-anchor: middle;">Richard II</text>
+            <text x="150" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1367-1377-99-~1400</text>
+        </g>
+        <!-- Philippa of Ulster -->
+        <g id="c01">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Philippa of Ulster</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1355-1382</text>
+            <use xlink:href="#ml" x="50" y="18"/>
+            <text x="75" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">~1368</text>
+            <text x="150" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Edmund Mortimer</text>
+            <text x="150" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Earl of March</text>
+            <text x="150" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">~1351-1381</text>
+        </g>
+        <!-- Edward of Norwich -->
+        <g id="y01">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Edward of Norwich</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1373-kb.1415</text>
+        </g>
+        <!-- Constance -->
+        <g id="y02">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Constance</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">~1374-1416</text>
+        </g>
+        <!-- Richard of Conisburgh -->
+        <g id="y03">
+            <text x="0" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Anne Mortimer</text>
+            <text x="0" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1390-p.1411</text>
+            <text x="0" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-style: italic; text-anchor: middle;">(Lionel of Antwerp)</text>
+            <use xlink:href="#ml" x="45" y="18"/>
+            <text x="70" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">~1406</text>
+            <use xlink:href="#clx" x="70" y="18"/>
+            <text x="150" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Richard of Conisburgh</text>
+            <text x="150" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">~1375-e.1415</text>
+        </g>
+        <!-- Philippa Plantaganet -->
+        <g id="l01">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">John I of Portugal</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1357-1433</text>
+            <use xlink:href="#ml" x="50" y="18"/>
+            <text x="75" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1387</text>
+            <text x="130" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Philippa</text>
+            <text x="130" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1360-1415</text>
+        </g>
+        <!-- Elizabeth Plantaganet -->
+        <g id="l02">
+            <text x="0" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">John Holland</text>
+            <text x="0" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">~1352-e.1400</text>
+            <text x="0" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-style: italic; text-anchor: middle;">(Joan of Kent)</text>
+            <use xlink:href="#ml" x="40" y="18"/>
+            <text x="65" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1385</text>
+            <text x="88" y="28" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">2</text>
+            <text x="150" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Elizabeth Plantaganet</text>
+            <text x="150" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">~1364-1426</text>
+        </g>
+        <!-- Henry IV -->
+        <g id="l03">
+            <text x="0" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Mary de Bohun</text>
+            <text x="0" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">~1368-1394</text>
+            <text x="0" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-style: italic; text-anchor: middle;">(Edward I)</text>
+            <use xlink:href="#ml" x="40" y="18"/>
+            <text x="65" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1381</text>
+            <text x="88" y="28" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1</text>
+            <use xlink:href="#clx" x="65" y="18"/>
+            <text x="140" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-weight: bold; text-anchor: middle;">Henry IV,</text>
+            <text x="140" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-style: italic; text-anchor: middle;">Bolingbroke</text>
+            <text x="140" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">~1366-1399-1413</text>
+            <use xlink:href="#ml" x="190" y="18"/>
+            <text x="215" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1403</text>
+            <text x="192" y="28" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">2</text>
+            <text x="215" y="28" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">X</text>
+            <text x="238" y="28" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">2</text>
+            <text x="284" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Joan of Navarre</text>
+            <text x="284" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">~1370-1437</text>
+        </g>
+        <!-- Henry V -->
+        <g id="l04">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-weight: bold; text-anchor: middle;">Henry V</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1386-1413-1422</text>
+            <use xlink:href="#ml" x="40" y="18"/>
+            <text x="65" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1420</text>
+            <text x="88" y="28" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1</text>
+            <use xlink:href="#cl" x="65" y="18"/>
+            <text x="140" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Catherine of Valois</text>
+            <text x="140" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1401-1437</text>
+        </g>
+        <!-- Thomas of Lancaster -->
+        <g id="l05">
+            <text x="0" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Thomas, Duke</text>
+            <text x="0" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">of Clarence</text>
+            <text x="0" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1387-kb.1421</text>
+        </g>
+        <!-- John of Lancaster -->
+        <g id="l06">
+            <text x="0" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">John, Duke</text>
+            <text x="0" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">of Bedford</text>
+            <text x="0" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1389-1435</text>
+        </g>
+        <!-- Humphrey of Lancaster -->
+        <g id="l07">
+            <text x="0" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Humphrey, Duke</text>
+            <text x="0" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">of Gloucester</text>
+            <text x="0" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1390-1447</text>
+        </g>
+        <!-- Blanche of Lancaster -->
+        <g id="l08">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Blanche</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1392-1409</text>
+        </g>
+        <!-- Phillipa of Lancaster -->
+        <g id="l09">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Philippa</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1394-1430</text>
+        </g>
+        <!-- Henry VI -->
+        <g id="l10">
+            <text x="0" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-weight: bold; text-anchor: middle;">Henry VI</text>
+            <text x="0" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1421-1422-1461</text>
+            <text x="0" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1470-1471-k.1471</text>
+            <use xlink:href="#ml" x="50" y="18"/>
+            <text x="75" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1445</text>
+            <use xlink:href="#clx" x="75" y="18"/>
+            <text x="150" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Margaret of Anjou</text>
+            <text x="150" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1430-1482</text>
+            <line x1="0" y1="48" x2="75" y2="48" style="stroke: navy;"/>
+        </g>
+        <!-- Edward of Westminster -->
+        <g id="l11">
+            <text x="0" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Edward of</text>
+            <text x="0" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Westminster</text>
+            <text x="0" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1453-kb.1471</text>
+            <use xlink:href="#ml" x="40" y="18"/>
+            <text x="65" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1470</text>
+            <text x="65" y="28" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">X</text>
+            <text x="88" y="28" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1</text>
+            <text x="136" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Anne Neville</text>
+            <text x="136" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1456-1485</text>
+            <text x="136" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-style: italic; text-anchor: middle;">(Joan Beaufort)</text>
+        </g>
+        <!-- John Beaufort -->
+        <g id="b01">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">John</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1373-1410</text>
+            <use xlink:href="#ml" x="30" y="18"/>
+            <text x="55" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">~1399</text>
+            <text x="78" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1</text>
+            <text x="130" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Margaret Holland</text>
+            <text x="130" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1385-1439</text>
+            <text x="130" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-style: italic; text-anchor: middle;">(Edward I)</text>
+        </g>
+        <!-- Henry Beaufort -->
+        <g id="b02">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Henry</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1375-1447</text>
+        </g>
+        <!-- Thomas Beaufort -->
+        <g id="b03">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Thomas</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1377-1426</text>
+        </g>
+        <!-- Joan Beaufort -->
+        <g id="b04">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Joan</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1379-1440</text>
+            <use xlink:href="#ml" x="30" y="18"/>
+            <text x="55" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1396</text>
+            <text x="78" y="28" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">2</text>
+            <use xlink:href="#cl" x="55" y="18"/>
+            <text x="120" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Ralph Neville</text>
+            <text x="120" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">~1364-1425</text>
+        </g>
+        <!-- Isabel Plantagenet -->
+        <g id="y04">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Isabel Plantagenet</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1409-1484</text>
+        </g>
+        <!-- Richard Plantaganet -->
+        <g id="y05">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Cecily Neville</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1415-1495</text>
+            <use xlink:href="#ml" x="40" y="18"/>
+            <text x="65" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1429</text>
+            <use xlink:href="#clx" x="65" y="18"/>
+            <text x="130" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Richard, Duke</text>
+            <text x="130" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">of York</text>
+            <text x="130" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1411-kb.1460</text>
+        </g>
+        <!-- Anne of Lancaster -->
+        <g id="y06">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Anne</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1439-1476</text>
+        </g>
+        <!-- Edward IV -->
+        <g id="y07">
+            <text x="0" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-weight: bold; text-anchor: middle;">Edward IV</text>
+            <text x="0" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1442-1461-1470</text>
+            <text x="0" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1471-1483</text>
+            <use xlink:href="#ml" x="50" y="18"/>
+            <text x="75" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1464</text>
+            <text x="98" y="28" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">2</text>
+            <use xlink:href="#clx" x="75" y="18"/>
+            <text x="150" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Elizabeth Woodville</text>
+            <text x="150" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">~1437-1492</text>
+        </g>
+        <!-- Edmund of York -->
+        <g id="y08">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Edmund</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1443-k.1460</text>
+        </g>
+        <!-- Elizabeth of York -->
+        <g id="y09">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Elizabeth</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1444-~1503</text>
+        </g>
+        <!-- Margaret of York -->
+        <g id="y10">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Margaret</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1446-1503</text>
+        </g>
+        <!-- George of York -->
+        <g id="y11">
+            <text x="0" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Isabella Neville</text>
+            <text x="0" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1451-1476</text>
+            <text x="0" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-style: italic; text-anchor: middle;">(Joan Beaufort)</text>
+            <use xlink:href="#ml" x="40" y="18"/>
+            <text x="65" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1469</text>
+            <text x="130" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">George, Duke</text>
+            <text x="130" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">of Clarence</text>
+            <text x="130" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1449-e.1478</text>
+        </g>
+        <!-- Richard III -->
+        <g id="y12">
+            <use xlink:href="#ml" x="0" y="18"/>
+            <text x="25" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1472</text>
+            <text x="2" y="28" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">2</text>
+            <use xlink:href="#cl" x="25" y="18"/>
+            <text x="100" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-weight: bold; text-anchor: middle;">Richard III</text>
+            <text x="100" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1452-1483-kb.1485</text>
+        </g>
+        <!-- Edward of Middleham -->
+        <g id="y13">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Edward of Middleham</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">~1473-1484</text>
+        </g>
+        <!-- Henry Tudor -->
+        <g id="y14">
+            <text x="0" y="12" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-weight: bold; text-anchor: middle;">Henry VII Tudor</text>
+            <text x="0" y="24" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1457-1485-1509</text>
+            <text x="0" y="36" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-style: italic; text-anchor: middle;">(John Beaufort)</text>
+            <use xlink:href="#ml" x="50" y="18"/>
+            <text x="75" y="16" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">1486</text>
+            <text x="135" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Elizabeth</text>
+            <text x="135" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1466-p.1503</text>
+        </g>
+        <!-- Edward V -->
+        <g id="y15">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; font-weight: bold; text-anchor: middle;">Edward V</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1470-1483-k.~1483</text>
+        </g>
+        <!-- Richard of York -->
+        <g id="y16">
+            <text x="0" y="18" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Richard</text>
+            <text x="0" y="30" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">1473-k.~1483</text>
+        </g>
+    </defs>
+    <rect x="0" y="0" width="700" height="940" stroke="black" fill="none"/>
+    <polygon stroke="none" fill="#EE0000" fill-opacity="0.15" points="120,450 295,450
+        295,560 380,560 380,705 200,705 200,850 10,850 10,600 120,600" />
+    <text x="95" y="845" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">HOUSE OF LANCASTER</text>
+    <polygon stroke="none" fill="#FFFF00" fill-opacity="0.2" points="370,250 698,250
+        698,910 350,910 350,870 200,870 200,770 330,770 330,706 381,706 381,600
+        530,600 530,565 625,565 625,400 370,400"/>
+    <text x="530" y="905" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">HOUSE OF YORK</text>
+    <use xlink:href="#main" x="0" y="0"/>
+    <use xlink:href="#legend" x="445" y="0"/>
+    <use xlink:href="#p00" x="200" y="100"/>
+    <line x1="50" y1="136" x2="486" y2="136" style="stroke: navy;"/>
+    <!-- Children of Edward III - 8*Great grandchildren of William I -->
+    <line x1="50" y1="136" x2="50" y2="282" style="stroke: navy;"/>
+    <use xlink:href="#p01" x="50" y="284"/>
+    <line x1="40" y1="332" x2="280" y2="332" style="stroke: navy;"/>
+    <use xlink:href="#sdx" x="90" y="136"/>
+    <use xlink:href="#p02" x="90" y="152"/>
+    <use xlink:href="#mdr" x="270" y="136"/>
+    <use xlink:href="#p03" x="120" y="194"/>
+    <line x1="120" y1="242" x2="195" y2="242" style="stroke: navy;"/>
+    <use xlink:href="#sd" x="315" y="136"/>
+    <use xlink:href="#o" x="315" y="164"/>
+    <line x1="350" y1="136" x2="350" y2="410" style="stroke: navy;"/>
+    <use xlink:href="#p04" x="200" y="412"/>
+    <line x1="180" y1="460" x2="290" y2="460" style="stroke: navy;"/>
+    <text x="380" y="468" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">The Beauforts</text>
+    <text x="490" y="468" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">Legitimised on marriage</text>
+    <line x1="325" y1="472" x2="470" y2="472" style="stroke: navy;"/>
+    <use xlink:href="#mdx" x="420" y="136"/>
+    <use xlink:href="#p05" x="420" y="206"/>
+    <line x1="420" y1="254" x2="640" y2="254" style="stroke: navy;"/>
+    <use xlink:href="#sd" x="485" y="136"/>
+    <use xlink:href="#p06" x="485" y="152"/>
+    <!-- Children of Edward the Black Prince - 9*Great grandchildren of William I -->
+    <use xlink:href="#sd" x="40" y="332"/>
+    <use xlink:href="#p07" x="40" y="342"/>
+    <line x1="280" y1="332" x2="280" y2="358" style="stroke: navy;"/>
+    <use xlink:href="#p08" x="130" y="348"/>
+    <!-- Children of Lionel of Antwerp - 9*Great grandchildren of William I -->
+    <use xlink:href="#sd" x="120" y="242"/>
+    <use xlink:href="#c01" x="120" y="252"/>
+    <!-- Children of Edmund of Langley, Duke of York - 9*Great grandchildren of William I -->
+    <use xlink:href="#sd" x="420" y="254"/>
+    <use xlink:href="#y01" x="420" y="264"/>
+    <use xlink:href="#sd" x="510" y="254"/>
+    <use xlink:href="#y02" x="510" y="264"/>
+    <use xlink:href="#mdr" x="640" y="254"/>
+    <use xlink:href="#y03" x="490" y="306"/>
+    <line x1="490" y1="354" x2="660" y2="354" style="stroke: navy;"/>
+    <!-- Children of John of Gaunt, Duke of Lancaster - 9*Great grandchildren of William I -->
+    <use xlink:href="#sd" x="180" y="460"/>
+    <use xlink:href="#l01" x="50" y="470"/>
+    <use xlink:href="#mdr" x="215" y="460"/>
+    <use xlink:href="#l02" x="65" y="512"/>
+    <use xlink:href="#sd" x="250" y="460"/>
+    <use xlink:href="#o" x="250" y="488"/>
+    <use xlink:href="#ldr" x="290" y="460"/>
+    <use xlink:href="#l03" x="150" y="560"/>
+    <line x1="60" y1="608" x2="350" y2="608" style="stroke: navy;"/>
+    <line x1="325" y1="472" x2="325" y2="525" style="stroke: navy;"/>
+    <use xlink:href="#b01" x="325" y="521"/>
+    <use xlink:href="#sd" x="355" y="472"/>
+    <use xlink:href="#b02" x="355" y="482"/>
+    <use xlink:href="#sdx" x="410" y="472"/>
+    <use xlink:href="#b03" x="410" y="486"/>
+    <use xlink:href="#sd" x="470" y="472"/>
+    <use xlink:href="#b04" x="470" y="482"/>
+    <line x1="525" y1="524" x2="580" y2="524" style="stroke: navy;"/>
+    <!-- Children of Henry IV - 10*Great grandchildren of William I -->
+    <use xlink:href="#md" x="60" y="608"/>
+    <use xlink:href="#l04" x="60" y="666"/>
+    <line x1="60" y1="708" x2="125" y2="708" style="stroke: navy;"/>
+    <use xlink:href="#sd" x="105" y="608"/>
+    <use xlink:href="#l05" x="105" y="624"/>
+    <use xlink:href="#sd" x="180" y="608"/>
+    <use xlink:href="#l06" x="180" y="624"/>
+    <use xlink:href="#sd" x="260" y="608"/>
+    <use xlink:href="#l07" x="260" y="624"/>
+    <use xlink:href="#md" x="310" y="608"/>
+    <use xlink:href="#l08" x="310" y="666"/>
+    <use xlink:href="#sdx" x="350" y="608"/>
+    <use xlink:href="#l09" x="350" y="624"/>
+    <!-- Children of Joan Baufort - 10*Great grandchildren of William I -->
+    <use xlink:href="#sd" x="580" y="524"/>
+    <use xlink:href="#o" x="580" y="552"/>
+    <!-- Cecily Neville married Richard Duke of York -->
+    <line x1="530" y1="524" x2="530" y2="564" style="stroke: navy;"/>
+    <!-- Children of Richard of Conisburgh - 10*Great grandchildren of William I -->
+    <use xlink:href="#sd" x="490" y="354"/>
+    <use xlink:href="#y04" x="490" y="364"/>
+    <line x1="660" y1="354" x2="660" y2="558" style="stroke: navy;"/>
+    <use xlink:href="#y05" x="530" y="560"/>
+    <line x1="385" y1="608" x2="660" y2="608" style="stroke: navy;"/>
+    <!-- Children of Henry V - 11*Great grandchildren of William I -->
+    <use xlink:href="#sd" x="60" y="708"/>
+    <use xlink:href="#l10" x="60" y="724"/>
+    <!-- Children of Richard, Duke of York - 11*Great grandchildren of William I -->
+    <use xlink:href="#sd" x="490" y="608"/>
+    <use xlink:href="#o" x="490" y="636"/>
+    <use xlink:href="#sdx" x="416" y="608"/>
+    <use xlink:href="#y06" x="416" y="624"/>
+    <use xlink:href="#sdx" x="385" y="708"/>
+    <use xlink:href="#y07" x="385" y="730"/>
+    <line x1="400" y1="778" x2="615" y2="778" style="stroke: navy;"/>
+    <use xlink:href="#sd" x="615" y="778"/>
+    <use xlink:href="#o" x="615" y="806"/>
+    <use xlink:href="#mdr" x="450" y="608"/>
+    <use xlink:href="#y08" x="450" y="660"/>
+    <use xlink:href="#sdx" x="550" y="608"/>
+    <use xlink:href="#y09" x="550" y="624"/>
+    <use xlink:href="#sdx" x="620" y="608"/>
+    <use xlink:href="#y10" x="620" y="624"/>
+    <use xlink:href="#mdx" x="660" y="608"/>
+    <use xlink:href="#y11" x="530" y="678"/>
+    <line x1="385" y1="608" x2="385" y2="708" style="stroke: navy;"/>
+    <line x1="340" y1="708" x2="385" y2="708" style="stroke: navy;"/>
+    <line x1="340" y1="708" x2="340" y2="792" style="stroke: navy;"/>
+    <use xlink:href="#y12" x="240" y="788"/>
+    <!-- Children of Henry VI - 12*Great grandchildren of William I -->
+    <use xlink:href="#sd" x="60" y="772"/>
+    <use xlink:href="#l11" x="60" y="788"/>
+    <!-- Children of Richard III - 12*Great grandchildren of William I -->
+    <use xlink:href="#y13" x="265" y="828"/>
+    <!-- Children of Edward IV - 12*Great grandchildren of William I -->
+    <use xlink:href="#ldr" x="400" y="778"/>
+    <use xlink:href="#y14" x="265" y="872"/>
+    <use xlink:href="#sdx" x="460" y="778"/>
+    <use xlink:href="#y15" x="460" y="794"/>
+    <text x="460" y="836" transform="rotate(90,460,834)" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">}</text>
+    <use xlink:href="#sdx" x="550" y="778"/>
+    <use xlink:href="#y16" x="550" y="794"/>
+    <text x="550" y="836" transform="rotate(90,550,834)" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">}</text>
+    <text x="505" y="848" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle; fill: navy;">Princes in the Tower</text>
+    <text x="350" y="930" style="font-family: 'DejaVu Sans', sans-serif; font-size: 10px; text-anchor: middle;">Continues with House of Tudor</text>
+</svg>

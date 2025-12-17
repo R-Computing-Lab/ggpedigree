@@ -212,6 +212,7 @@ getRelativeCoordinates <- function(ped,
       #    relationship = relationship,
       multiple = multiple
     ) |>
+    unique() |>
     # Rename the joined coordinate columns to the specified x/y output names
     dplyr::rename(
       !!x_name := "x_pos_rel",
@@ -261,13 +262,13 @@ getRelativeCoordinates <- function(ped,
   }
   # Require same type
   if (mode(id1) != mode(id2)) {
-    # if they're both a n
+    # if they're both a number type, allow it
     if (mode(id1) %in% c("integer", "double") &&
       mode(id2) %in% c("integer", "double")) {
       # Numeric comparison
     } else {
       stop(paste0(
-        "id1 and id2 must be of the same type.",
+        "id1 and id2 must be of the same variable class. Please check if you have a mixture of strings and numerics in your ID variables. ",
         " id1 is ", mode(id1), " and id2 is ", mode(id2)
       ))
     }

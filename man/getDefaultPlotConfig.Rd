@@ -165,12 +165,13 @@ getDefaultPlotConfig(
   return_static = TRUE,
   return_widget = FALSE,
   return_interactive = FALSE,
-  return_midparent = FALSE,
+  return_mid_parent = FALSE,
   hints = NULL,
   relation = NULL,
   debug = FALSE,
   override_many2many = FALSE,
   optimize_plotly = TRUE,
+  recode_missing_ids = TRUE,
   ...
 )
 }
@@ -493,7 +494,7 @@ getDefaultPlotConfig(
 
 \item{return_interactive}{Whether to return an interactive plot.}
 
-\item{return_midparent}{Whether to return midparent values in the plot.}
+\item{return_mid_parent}{Whether to return mid_parent values in the plot.}
 
 \item{hints}{Optional hints to pass along to kinship2::autohint}
 
@@ -504,6 +505,8 @@ getDefaultPlotConfig(
 \item{override_many2many}{Whether to override many-to-many link logic.}
 
 \item{optimize_plotly}{Whether to optimize the plotly output for speed.}
+
+\item{recode_missing_ids}{Whether to recode 0s as missing IDs in the pedigree.}
 
 \item{...}{Additional arguments for future extensibility.}
 }

@@ -77,7 +77,6 @@ test_that("test autohint works with ASOIAF", {
 })
 
 
-
 test_that("align.pedigree works when packed false ", {
   library(kinship2)
   data("sample.ped")

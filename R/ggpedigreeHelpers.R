@@ -170,3 +170,51 @@ adjustSpacing <- .adjustSpacing
 
 #' @rdname dot-restoreNames
 restoreNames <- .restoreNames
+
+
+#' @title Recode Missing IDs in Pedigree Data
+#' @description
+#' This function recodes missing IDs in the pedigree data frame to NA.
+#' It checks for specified missing codes (both numeric and character) in their respective columns.
+#' @inheritParams ggPedigree
+#' @param missing_code_numeric Numeric code representing missing IDs (default is 0).
+#' @param missing_code_character Character vector representing missing IDs (default is c("0", "NA", "na", "")).
+#' @return A data frame with missing IDs recoded to NA.
+#' @keywords internal
+recodeMissingIDs <- function(ped, momID = "momID", dadID = "dadID",
+                             personID = "personID",
+                             famID = "famID", matID = "matID", patID = "patID",
+                             missing_code_numeric = 0,
+                             missing_code_character = c("0", "NA", "na", ""),
+                             config = list()) {
+  # Which columns are treated as ID fields
+  ids_to_check <- c(momID, dadID, personID, famID, matID, patID)
+  if ("twinID" %in% names(ped)) {
+    ids_to_check <- c(ids_to_check, "twinID")
+  }
+  ids_to_check <- unique(ids_to_check)
+
+  # Loop through each ID column and recode missing codes to NA
+  for (col_name in ids_to_check) {
+    # Skip if the column is not present in the data
+    if (!col_name %in% names(ped)) next
+
+    # Work on a local copy of the column, then write it back once
+    column_values <- ped[[col_name]]
+
+    if (is.numeric(column_values) || is.integer(column_values)) {
+      # Numeric column: replace missing_code_numeric with NA
+      column_values[column_values == missing_code_numeric] <- NA
+    } else {
+      # Character or factor column: replace missing_code_character with NA
+      column_values[column_values %in% missing_code_character] <- NA
+    }
+    # Write back the modified column
+    ped[[col_name]] <- column_values
+  }
+
+
+  # Return the modified pedigree data frame
+
+  ped
+}

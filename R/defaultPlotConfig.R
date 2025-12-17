@@ -164,11 +164,12 @@
 #' @param return_static Whether to return a static plot.
 #' @param return_widget Whether to return a widget object.
 #' @param return_interactive Whether to return an interactive plot.
-#' @param return_midparent Whether to return midparent values in the plot.
+#' @param return_mid_parent Whether to return mid_parent values in the plot.
 #' @param optimize_plotly Whether to optimize the plotly output for speed.
 #' @param override_many2many Whether to override many-to-many link logic.
 #' @param hints Optional hints to pass along to kinship2::autohint
 #' @param relation Optional relation to pass along to kinship2::pedigree
+#' @param recode_missing_ids Whether to recode 0s as missing IDs in the pedigree.
 #' @param debug Whether to enable debugging mode.
 #' @param ... Additional arguments for future extensibility.
 #' @return A named list of default plotting and layout parameters.
@@ -364,7 +365,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  return_static = TRUE,
                                  return_widget = FALSE,
                                  return_interactive = FALSE,
-                                 return_midparent = FALSE,
+                                 return_mid_parent = FALSE,
                                  # ---- Kinship2 Options ----
                                  hints = NULL,
                                  relation = NULL,
@@ -372,6 +373,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  debug = FALSE,
                                  override_many2many = FALSE,
                                  optimize_plotly = TRUE,
+                                 recode_missing_ids = TRUE,
                                  # ---- Future Extensibility ----
                                  ...) {
   # Ensure the color palette is a character vector
@@ -590,7 +592,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     return_static = return_static,
     return_widget = return_widget,
     return_interactive = return_interactive,
-    return_midparent = return_midparent,
+    return_mid_parent = return_mid_parent,
     # ---- Kinship2 Options ----
     ped_packed = ped_packed,
     ped_align = ped_align,
@@ -600,6 +602,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     # ---- Debugging Options ----
     override_many2many = override_many2many,
     optimize_plotly = optimize_plotly,
+    recode_missing_ids = recode_missing_ids,
     debug = debug
   )
   lc_function_name <- stringr::str_to_lower(function_name)
@@ -771,6 +774,7 @@ buildPlotConfig <- function(default_config,
       ),
       built_config$status_labs
     )
+    # Set color values for affected status
     built_config$status_color_values <- stats::setNames(
       c(
         built_config$status_color_palette[1],

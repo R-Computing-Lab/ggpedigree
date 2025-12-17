@@ -411,7 +411,6 @@ kinship2_ancestor <- function(me, momid, dadid) {
 }
 
 
-
 kinship2_findsibs <- function(mypos, plist, lev) {
   family <- plist$fam[lev, mypos]
   if (family == 0) stop("autohint bug 6")
@@ -436,6 +435,6 @@ kinship2_chaseup <- function(x, midx, didx) {
 
 kinship2_kindepth.checkmiss <- function(parent.id, n) {
   if (missing(parent.id) || length(parent.id) != n) {
-    stop(paste0("Invalid ",parent.id))
+    stop(paste0("Invalid ", parent.id))
   }
 }

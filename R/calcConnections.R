@@ -11,7 +11,7 @@
 #'     \item `x_pos`, `y_pos`: positions of focal individual
 #'     \item `x_dad`, `y_dad`, `x_mom`, `y_mom`: parental positions (if available)
 #'     \item `x_spouse`, `y_spouse`: spousal positions (if available)
-#'     \item `x_midparent`, `y_midparent`: midpoint between parents
+#'     \item `x_mid_parent`, `y_mid_parent`: midpoint between parents
 #'     \item `x_mid_sib`, `y_mid_sib`: sibling group midpoint
 #'     \item `x_mid_spouse`, `y_mid_spouse`: midpoint between spouses
 #'   }
@@ -22,7 +22,8 @@ calculateConnections <- function(ped,
                                  config = list(),
                                  spouseID = "spouseID",
                                  personID = "personID",
-                                 momID = "momID", famID = "famID",
+                                 momID = "momID",
+                                 famID = "famID",
                                  twinID = "twinID",
                                  dadID = "dadID") {
   # Check inputs -----------------------------------------------------------
@@ -36,7 +37,7 @@ calculateConnections <- function(ped,
   # Default configuration placeholder
   default_config <- list(
     debug = FALSE,
-    return_midparent = FALSE
+    return_mid_parent = FALSE
   )
   config <- utils::modifyList(default_config, config)
 
@@ -50,7 +51,17 @@ calculateConnections <- function(ped,
   }
   # Capture type-safe NAs for each ID column
   na_person <- ped$personID[NA_integer_]
-
+  if (is.factor(na_person)) {
+    na_person <- factor(NA, levels = levels(ped$personID))
+  } else if (is.character(na_person)) {
+    na_person <- as.character(NA)
+  } else if (is.integer(na_person)) {
+    na_person <- as.integer(NA)
+  } else if (is.numeric(na_person)) {
+    na_person <- as.numeric(NA)
+  } else {
+    na_person <- NA
+  }
   # Add spouseID if missing
   if (!all(spouseID %in% names(ped))) {
     # make it match the personID type
@@ -69,7 +80,9 @@ calculateConnections <- function(ped,
     )
 
     # Ensure class matches personID exactly (in case factor, character, etc.)
-    attributes(ped$spouseID) <- attributes(ped$personID)
+    # class(ped$spouseID) <- class(ped$personID)
+
+    #  assign("DEBUG_ped", ped, envir = .GlobalEnv)
   } else {
     # rename spouseID to match
     names(ped)[names(ped) == spouseID] <- "spouseID"
@@ -198,18 +211,18 @@ calculateConnections <- function(ped,
     unique()
 
   # Calculate midpoints between mom and dad in child row
-  if (config$return_midparent == TRUE) {
+  if (config$return_mid_parent == TRUE) {
     parent_midpoints <- connections |>
       dplyr::filter(.data$link_as_sibling &
         !is.na(.data$dadID) & !is.na(.data$momID)) |>
       #  unique() |>
       dplyr::group_by(.data$parent_hash) |>
       dplyr::summarize(
-        x_midparent = mean(c(
+        x_mid_parent = mean(c(
           dplyr::first(.data$x_dad, na_rm = TRUE),
           dplyr::first(.data$x_mom, na_rm = TRUE)
         )),
-        y_midparent = mean(c(
+        y_mid_parent = mean(c(
           dplyr::first(.data$y_dad, na_rm = TRUE),
           dplyr::first(.data$y_mom, na_rm = TRUE)
         )),
@@ -258,7 +271,7 @@ calculateConnections <- function(ped,
     ) #|> unique()
 
 
-  if (config$return_midparent == TRUE) {
+  if (config$return_mid_parent == TRUE) {
     # print(parent_midpoints)
     # Merge midpoints into connections
     connections <- connections |>
@@ -336,6 +349,7 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
   if (use_hash == TRUE) {
     # I want to make segments for each hash, because some people have multiple spouses
     # this is to add those missing segments
+    # do not filter for uniques because that seems to break things 😭
     parent_connections <- ped |>
       dplyr::select("parent_hash") |>
       dplyr::mutate(
@@ -351,6 +365,7 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
         suffix = c("", "_parent1"),
         multiple = "any"
       ) |>
+      # unique()|> NOPE
       dplyr::left_join(
         connections_for_FOO |>
           dplyr::mutate(personID = paste0(.data$personID)),
@@ -358,6 +373,7 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
         suffix = c("", "_parent2"),
         multiple = "any"
       ) |>
+      #   unique()|> NOPE
       dplyr::mutate(
         x_start = .data$x_pos,
         x_end = .data$x_pos_parent2,
@@ -373,8 +389,6 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
         -"x_pos_parent2",
         -"y_pos_parent2"
       )
-
-    # Get spouse coordinates
   } else {
     # spouses
     # Get spouse coordinates
@@ -389,7 +403,7 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE) {
         suffix = c("", "_spouse"),
         multiple = "any"
       ) |>
-      unique() |>
+      #   unique() |> NOPE
       dplyr::rename(
         x_spouse = "x_pos_spouse",
         y_spouse = "y_pos_spouse"
@@ -433,7 +447,7 @@ buildTwinSegments <- function(ped, connections_for_FOO) {
       suffix = c("", "_twin"),
       multiple = "all"
     ) |>
-    unique() |>
+    #    unique() |> NOPE
     dplyr::rename(
       x_twin = "x_pos_twin",
       y_twin = "y_pos_twin"

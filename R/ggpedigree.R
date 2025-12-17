@@ -93,7 +93,9 @@ ggPedigree <- function(ped,
       stop("ped should be a data.frame or inherit to a data.frame")
     }
   }
-
+  if (!all(c(personID,dadID, momID, "sex") %in% names(ped))) {
+    stop("ped must contain personID, sex, dadID, and momID columns")
+  }
 
   if (interactive == TRUE &&
     requireNamespace("plotly", quietly = TRUE)) {
@@ -235,7 +237,7 @@ ggPedigree.core <- function(ped,
   # -----
   # STEP 2+3: Pedigree Data Transformation and Data Cleaning and Recoding
   # -----
-
+  # id type changer in this function
   ds_ped <- preparePedigreeData(
     famID = famID,
     patID = patID,
@@ -252,6 +254,16 @@ ggPedigree.core <- function(ped,
     phantoms = phantoms,
     focal_fill_column = focal_fill_column
   )
+
+  if (config$debug == TRUE) {
+    message("Pedigree data prepared. Number of individuals: ", nrow(ds_ped))
+
+    # assign("DEBUG_ds_ped", ds_ped, envir = .GlobalEnv)
+  }
+  #  print(class(ped$spouseID))
+  #  print(class(ped$personID))
+  #  print(class(ped$momID))
+  # print(class(ped$dadID))
 
 
   # -----
@@ -292,7 +304,10 @@ ggPedigree.core <- function(ped,
     dadID = dadID,
     twinID = twinID
   )
-
+  #  print(class(ped$spouseID))
+  #  print(class(ped$personID))
+  #  print(class(ped$momID))
+  #  print(class(ped$dadID))
   connections <- plot_connections$connections
 
   if (config$debug == TRUE) {
@@ -1077,7 +1092,8 @@ preparePedigreeData <- function(ped,
                                 patID = "patID",
                                 config = list(
                                   focal_fill_include = TRUE,
-                                  focal_fill_component = "maternal"
+                                  focal_fill_component = "maternal",
+                                  recode_missing_ids = TRUE
                                 ),
                                 fill_group_paternal = c(
                                   "paternal",
@@ -1171,6 +1187,7 @@ preparePedigreeData <- function(ped,
     fill_group_maternal = fill_group_maternal,
     fill_group_paternal = fill_group_paternal
   )
+
   return(ds_ped)
 }
 
@@ -1195,6 +1212,7 @@ createFillColumn <- function(ped,
 
   config <- utils::modifyList(default_config, config)
 
+  # Generate the coefficient of relationship matrix
   com_mat <- BGmisc::ped2com(
     ped = ped,
     component = component,
@@ -1222,6 +1240,7 @@ createFillColumn <- function(ped,
     focal_fill = round(com_mat[row_index, ], digits = config$value_rounding_digits),
     personID = rownames(com_mat)
   ) # needs to match the same data type
+
   remove(com_mat) # remove the focal_fill_personID column
   # Ensure fill_df$personID is of the same type as ped$personID
   if (is.numeric(ped$personID)) {
@@ -1254,7 +1273,8 @@ transformPed <- function(ped,
                          patID = "patID",
                          config = list(
                            focal_fill_include = TRUE,
-                           focal_fill_component = "maternal"
+                           focal_fill_component = "maternal",
+                           recode_missing_ids = TRUE
                          ),
                          fill_group_paternal = c(
                            "paternal",
@@ -1270,6 +1290,20 @@ transformPed <- function(ped,
                            "maternal lineages",
                            "maternal lines"
                          )) {
+  if (config$recode_missing_ids == TRUE) {
+    # handle 0 as missing IDs
+    ped <- recodeMissingIDs(
+      ped = ped,
+      personID = personID,
+      momID = momID,
+      dadID = dadID,
+      famID = famID,
+      matID = matID,
+      patID = patID,
+      config = config
+    )
+  }
+
   if (!all(c(famID, patID, matID) %in% names(ped)) &&
     !famID %in% names(ped)) {
     ds_ped <- BGmisc::ped2fam(
@@ -1279,9 +1313,16 @@ transformPed <- function(ped,
       momID = momID,
       dadID = dadID
     )
+    if (!class(ped[[personID]]) %in% c("numeric", "integer") &&
+      class(ds_ped[[personID]]) %in% c("numeric", "integer")
+    ) {
+      # fix strange converse of cases
+      ds_ped[[personID]] <- as.character(ds_ped[[personID]])
+    }
   } else {
     ds_ped <- ped
   }
+
 
   if (config$focal_fill_include == TRUE) {
     if (!patID %in% names(ds_ped) &&
@@ -1293,6 +1334,12 @@ transformPed <- function(ped,
         momID = momID,
         dadID = dadID
       )
+      if (!class(ped[[personID]]) %in% c("numeric", "integer") &&
+        class(ds_ped[[personID]]) %in% c("numeric", "integer")
+      ) {
+        # fix strange converse of cases
+        ds_ped[[personID]] <- as.character(ds_ped[[personID]])
+      }
     }
 
     if (!matID %in% names(ds_ped) &&
@@ -1304,6 +1351,12 @@ transformPed <- function(ped,
         momID = momID,
         dadID = dadID
       )
+      if (!class(ped[[personID]]) %in% c("numeric", "integer") &&
+        class(ds_ped[[personID]]) %in% c("numeric", "integer")
+      ) {
+        # fix strange converse of cases
+        ds_ped[[personID]] <- as.character(ds_ped[[personID]])
+      }
     }
   }
   return(ds_ped)
@@ -1480,7 +1533,7 @@ addTwins <- function(plotObject,
     )
 
   if ("mz" %in% names(plot_connections$twin_coords) &&
-    any(plot_connections$twin_coords$mz == TRUE)) {
+    any(plot_connections$twin_coords$mz == TRUE, na.rm = TRUE)) {
     plotObject <- plotObject + # horizontal line to twin midpoint for MZ twins
       ggplot2::geom_segment(
         data = plot_connections$twin_coords |>
@@ -1503,3 +1556,5 @@ addTwins <- function(plotObject,
 
   return(plotObject)
 }
+
+
