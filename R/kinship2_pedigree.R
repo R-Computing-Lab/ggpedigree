@@ -350,16 +350,16 @@ pedigree.sexrepair <- function(sex) {
   }
   codes <- c("male", "female", "unknown", "terminated")
   if (is.character(sex)) {
-
-    if (length(unique(suppressWarnings(as.numeric(sex))))>1 &&
-      all(is.numeric(unique(suppressWarnings(as.numeric(sex)))), na.rm = TRUE )) {
+    # if all numeric strings, convert to numeric
+    if (length(unique(suppressWarnings(as.numeric(sex)))) > 1 &&
+      all(is.numeric(unique(suppressWarnings(as.numeric(sex)))), na.rm = TRUE)) {
       sex <- as.numeric(sex)
-    } else{
-    sex <- charmatch(casefold(sex, upper = FALSE), codes,
-      nomatch = 3
-    )
+    } else {
+      sex <- charmatch(casefold(sex, upper = FALSE), codes,
+        nomatch = 3
+      )
+    }
   }
-}
   # assume either 0/1/2/4 =  female/male/unknown/term, or 1/2/3/4
   #  if only 1/2 assume no unknowns
   if (min(sex) == 0) {
@@ -367,9 +367,9 @@ pedigree.sexrepair <- function(sex) {
   }
   sex <- ifelse(sex < 1 | sex > 4, 3, sex)
   if (all(sex > 2)) {
-    stop("Invalid values for 'sex'")
+    stop("All sex values are labeled as unknown. Please try using config options to specify male and female labels (code_male, code_female, code_unknown)")
   } else if (mean(sex == 3) > 0.25) {
-    warning("More than 25% of the sex values are 'unknown'")
+    warning("More than 25% of the sex values are 'unknown'. Please try using config options to specify male and female labels.")
   }
   sex <- factor(sex, 1:4, labels = codes)
 

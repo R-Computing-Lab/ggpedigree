@@ -25,6 +25,7 @@
 #' @param code_male Integer/string code for males in data.
 #' @param code_na optional Integer/string code for missing values in data.
 #' @param code_female  optional Integer/string code for females in data.
+#' @param code_unknown  optional Integer/string code for unknown
 #' @param filter_n_pairs Threshold to filter maximum number of pairs.
 #' @param filter_degree_min Minimum degree value used in filtering.
 #' @param filter_degree_max Maximum degree value used in filtering.
@@ -197,6 +198,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  # --- SEX ------------------------------------------------------------
                                  code_male = 1,
                                  code_na = NA,
+                                 code_unknown = NULL,
                                  code_female = 0,
                                  #  code_unknown = NULL,
                                  #    recode_male = code_male,#"M",
@@ -418,7 +420,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     code_male = code_male,
     code_na = code_na,
     code_female = code_female,
-    #  code_unknown = code_unknown,
+    code_unknown = ifelse(is.null(code_unknown), code_na, code_unknown),
     # recode_male = recode_male,
     #   recode_na =  recode_na,
     #  recode_female =  recode_female,
