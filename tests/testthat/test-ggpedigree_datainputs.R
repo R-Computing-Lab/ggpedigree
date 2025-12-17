@@ -1,14 +1,18 @@
 expect_roundtrip <- function(df,
                              cols = c("personID", "momID", "dadID", "sex"),
                              NA_id_value = NA,
-                             expect_warnings = FALSE) {
-  if (expect_warnings == TRUE) {
-    expect_warning(ggPedigree(df), NA)
+                             expect_warnings = FALSE,
+                             expect_errors = FALSE) {
+  if (expect_warnings == TRUE && expect_errors == FALSE) {
+    expect_warning(ggPedigree(df))
     ped_df <- suppressWarnings(ggPedigree(df, config = list(debug = TRUE)))
     ped_df <- ped_df[["data"]]
-  } else {
+  } else if (expect_warnings == FALSE && expect_errors == FALSE) {
     expect_silent(ggPedigree(df))
     ped_df <- ggPedigree(df, config = list(debug = TRUE))[["data"]]
+  } else if (expect_errors == TRUE) {
+    expect_error(ggPedigree(df))
+    return(invisible(NULL))
   }
 
 
@@ -53,16 +57,17 @@ case_num <- function(sex = c(0, 1, 0),
 
 test_that("char ids; 0 missingid; 1/2", {
   expect_roundtrip(case_char(c(2, 1, 2), "0"), NA_id_value = "0")
-  #  Error in `pedigree(id = ped[[personID]], dadid = ped[[dadID]], momid = ped[[momID]], sex = ped_recode[[sexVar]])`: Id not male, but is a father: 2
+  # note that this is miscoded so that males are 2 and women are 1.
 })
 test_that("char ids; 0 missingid; 1/2 + NA", {
   expect_roundtrip(case_char(c(2, 1, NA), "0"), NA_id_value = "0", expect_warnings = TRUE)
 })
-test_that("char ids; 0 missingid; 0/1", {
-  expect_roundtrip(case_char(c(1, 0, 1), "0"), NA_id_value = "0")
+test_that("char ids; '' missingid; 0/1", {
+  expect_roundtrip(case_char(c(1, 0, 1), ""), NA_id_value = "")
+  # e
 })
 test_that("char ids; 0 missingid; 0/1 + NA", {
-  expect_roundtrip(case_char(c(1, 0, NA), "0"), NA_id_value = "0")
+  expect_roundtrip(case_char(c(1, 0, NA), "0"), NA_id_value = "0", expect_warnings = TRUE)
 })
 
 test_that("char ids; NA missingid; 0/1", {
