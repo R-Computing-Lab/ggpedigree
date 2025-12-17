@@ -168,6 +168,7 @@ fig1 <- ggPedigree(
   )
 )
 #> Debug mode is ON. Debugging information will be printed.
+#> Pedigree data prepared. Number of individuals: 14
 #> Coordinates calculated. Number of individuals: 14
 #> Connections calculated. Number of connections: 14
 # fig1

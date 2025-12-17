@@ -23,7 +23,7 @@ data(ASOIAF)
 
 ## Format
 
-A data frame with 679 observations
+A data frame with 679 observations on 9 variables.
 
 ## Details
 
@@ -43,3 +43,5 @@ The variables are as follows:
 
 - `zygosity`: Zygosity of the twin, if applicable. mz is monozygotic; dz
   is dizygotic
+
+- `url`: URL to a wiki page about the character

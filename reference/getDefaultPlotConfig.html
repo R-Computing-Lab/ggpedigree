@@ -15,7 +15,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior."></h
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.9</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -222,12 +222,13 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  return_static <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  return_widget <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  return_interactive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  return_midparent <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  return_mid_parent <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  hints <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  relation <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  debug <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  override_many2many <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  optimize_plotly <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  recode_missing_ids <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -872,8 +873,8 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <dd><p>Whether to return an interactive plot.</p></dd>
 
 
-<dt id="arg-return-midparent">return_midparent<a class="anchor" aria-label="anchor" href="#arg-return-midparent"></a></dt>
-<dd><p>Whether to return midparent values in the plot.</p></dd>
+<dt id="arg-return-mid-parent">return_mid_parent<a class="anchor" aria-label="anchor" href="#arg-return-mid-parent"></a></dt>
+<dd><p>Whether to return mid_parent values in the plot.</p></dd>
 
 
 <dt id="arg-hints">hints<a class="anchor" aria-label="anchor" href="#arg-hints"></a></dt>
@@ -894,6 +895,10 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 <dt id="arg-optimize-plotly">optimize_plotly<a class="anchor" aria-label="anchor" href="#arg-optimize-plotly"></a></dt>
 <dd><p>Whether to optimize the plotly output for speed.</p></dd>
+
+
+<dt id="arg-recode-missing-ids">recode_missing_ids<a class="anchor" aria-label="anchor" href="#arg-recode-missing-ids"></a></dt>
+<dd><p>Whether to recode 0s as missing IDs in the pedigree.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

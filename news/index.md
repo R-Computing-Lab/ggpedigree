@@ -4,6 +4,8 @@
 
 ## ggpedigree 1.0.0.1
 
+CRAN release: 2025-11-30
+
 ### cran resubmission
 
 - Fixed a minor documentation issue with a url whose certificate had
@@ -13,9 +15,9 @@
 
 ### cran submission
 
-- Folded in kinship2 functions to eliminate the dependency
-- Made kinship2 package optional, and only needed for plotPedigree (a
-  kinship2 wrapper)
+- Integrated kinship2 functions to remove the dependency
+- Made kinship2 package optional, required for plotPedigree (a kinship2
+  wrapper)
 - Importing relevant tests from kinship2 package
 - Updated documentation to reflect changes
 - Refactored code to improve maintainability
@@ -73,11 +75,10 @@ CRAN release: 2025-07-04
 
 ## ggpedigree 0.7.1
 
-- Fixed focal_fill ID being indexed to row order, rather than the ID
-  order.
+- Fixed focal_fill ID indexing to row order instead of ID order.
 - Fixed bug in using fam_x and fam_y in with generation_height
 - Add option to add phantom parents to the pedigree plot.
-- Alerts when duplicate or bad configs are used
+- Alerts when duplicate or bad configs appear
 - Make palleter suggested instead of required
 
 ## ggpedigree 0.7.0
@@ -85,9 +86,8 @@ CRAN release: 2025-07-04
 CRAN release: 2025-06-09
 
 - Changed the default behavior of `ggPedigree` to use x_fam and y_fam
-  for positioning families, rather than x_midparent and y_midparent.
-  This change allows for better visualization of pedigrees with multiple
-  families.
+  for positioning families, rather than x_mid_parent and y_mid_parent.
+  This change improves visualization of pedigrees with many families.
 - Changed the get midpoint of curvature to better approximate geom_curv
   behavior.
 - reduced redundancy in code base by not calculating the parent
@@ -102,7 +102,7 @@ CRAN release: 2025-06-09
 
 ## ggpedigree 0.6.0
 
-- Implemented fill by matID, patID using several scales, such as hue,
+- Implemented fill by matID, patID using various scales, such as hue,
   viridis, and others.
 - Added support for emojis in the `ggpedigree` function.
 - Solved the bug that created excessive branches
@@ -112,7 +112,7 @@ CRAN release: 2025-06-09
 ## ggpedigree 0.5.1
 
 - Fix tooltip appearing in `ggPedigreeInteractive` when tooltip_include
-  is set to FALSE.
+  is FALSE.
 
 ## ggpedigree 0.5.0
 
@@ -128,7 +128,7 @@ CRAN release: 2025-06-09
 - Added new tests for the `ggRelatednessMatrix` function.
 - Added new phenotype plotting function `ggPhenotypebyDegree` to
   visualize phenotypes by degree of relatedness.
-- Added new vignette to demonstrate `ggPhenotypebyDegree`.
+- Added new vignette to explain `ggPhenotypebyDegree`.
 - Added a new function `getDefaultPlotConfig` to set default
   configuration options for the package.
 - Harmonized the configuration options across the package to use
@@ -150,8 +150,7 @@ CRAN release: 2025-05-26
 ### Status: Submitted to CRAN
 
 - Fixed a bug in the `ggpedigree` function that caused an error when
-  using a custom ID name and requesting the plot to be returned as a
-  ggplot object.
+  using a custom ID name and requesting the plot as a ggplot object.
 
 ## ggpedigree 0.4.0
 
@@ -160,24 +159,22 @@ CRAN release: 2025-05-23
 - Allows support for character-based IDs
 - Added linejoin, lineend, segment_self_linetype, option to the
   `ggpedigree` functions.
-- Added unit tests for calculateConnections, calculateConnections, and
-  ggpedigree functions.
+- Added unit tests for calculateConnections and ggpedigree functions.
 - Refactored ggpedigree function into ggpedigree.core and .addScales and
   .addLabels functions to improve readability and maintainability.
 - Renamed symKey to makeSymmetricKey, extended it to support
   character-based IDs, and added unit tests.
 - Added a new function `ggPedigreeInteractive` to create interactive
-  pedigree plots using `plotly`. Added a vignette to demonstrate its
-  usage.
+  pedigree plots using `plotly`. Added a vignette to show its usage.
 - Added redsquirrels dataset to the package for testing and examples.
 - Added a new function `ggRelatednessMatrix` and subfunction
   `ggRelatednessMatrix.core` to create heatmaps of relatedness matrices.
-- Added new vignette to demonstrate ggRelatednessMatrix
+- Added new vignette to explain ggRelatednessMatrix
 - Added graphic tests for `ggpedigree`, `ggPedigreeInteractive`, and
   `ggRelatednessMatrix` functions.
 - Updated the README and vignettes to reflect the new features and
   improvements.
-- Updated description to comply with CRAN policies.
+- Updated description to meet CRAN policies.
 
 ## ggpedigree 0.3.0
 
@@ -186,26 +183,25 @@ CRAN release: 2025-05-23
   variable used.
 - Added option to add an outline to the pedigree plot.
 - Made the config options more consistent and user-friendly.
-- Enhance the narrative of the plotting vignette to demonstrate the new
+- Enhance the narrative of the plotting vignette to explain the new
   features and provide clearer examples.
 - Added missing examples to the `ggpedigree` function documentation.
 
 ## ggpedigree 0.2.0
 
 - Extended functionality to include new plotting features, like handling
-  multiple instances of the same individual in a pedigree.
+  repeated instances of the same individual in a pedigree.
 - Improved documentation and examples for better user guidance.
 - Added unit tests for describeHelpers
 
 ## ggpedigree 0.1.0
 
 - Implemented pedigree plotting functions for `ggplot2`.
-- Added vignette to demonstrate the use of the package in basic
-  plotting.
+- Added vignette to explain the use of the package in basic plotting.
 - Created a `DESCRIPTION` file to define the package and its
   dependencies.
 - Added a `LICENSE` file to specify the terms under which the package
-  can be used.
+  applies.
 - Created a `CODE_OF_CONDUCT.md` file to outline the expected behavior
   of contributors and maintainers.
 - Added a `NEWS.md` file to track changes to the package.

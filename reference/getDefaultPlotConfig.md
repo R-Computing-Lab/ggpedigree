@@ -171,12 +171,13 @@ getDefaultPlotConfig(
   return_static = TRUE,
   return_widget = FALSE,
   return_interactive = FALSE,
-  return_midparent = FALSE,
+  return_mid_parent = FALSE,
   hints = NULL,
   relation = NULL,
   debug = FALSE,
   override_many2many = FALSE,
   optimize_plotly = TRUE,
+  recode_missing_ids = TRUE,
   ...
 )
 ```
@@ -824,9 +825,9 @@ getDefaultPlotConfig(
 
   Whether to return an interactive plot.
 
-- return_midparent:
+- return_mid_parent:
 
-  Whether to return midparent values in the plot.
+  Whether to return mid_parent values in the plot.
 
 - hints:
 
@@ -847,6 +848,10 @@ getDefaultPlotConfig(
 - optimize_plotly:
 
   Whether to optimize the plotly output for speed.
+
+- recode_missing_ids:
+
+  Whether to recode 0s as missing IDs in the pedigree.
 
 - ...:
 

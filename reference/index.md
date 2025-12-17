@@ -45,6 +45,9 @@
   [`ggrelatednessmatrix()`](https://r-computing-lab.github.io/ggpedigree/reference/ggRelatednessMatrix.md)
   : Plot a relatedness matrix as a heatmap (ggpedigree style)
 
+- [`kinship2_autohint()`](https://r-computing-lab.github.io/ggpedigree/reference/kinship2_autohint.md)
+  : Automatically generate alignment hints for pedigree plotting
+
 - [`optimizePedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/optimizePedigree.md)
   : Optimize Pedigree Plot
 
@@ -67,3 +70,6 @@
 
 - [`redsquirrels`](https://r-computing-lab.github.io/ggpedigree/reference/redsquirrels.md)
   : Kluane Red Squirrel Data
+
+- [`warsofroses`](https://r-computing-lab.github.io/ggpedigree/reference/warsofroses.md)
+  : Wars of the Roses Pedigree Data
