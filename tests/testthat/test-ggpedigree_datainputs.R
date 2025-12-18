@@ -210,13 +210,13 @@ test_that("full cross: strict expectations + roundtrip invariant", {
 
 
 # Tests for various error conditions
-test_that("errors for missing required columns", {
+test_that("errors for character ids", {
   df <- data.frame(
     personID = c("a", "b", "c"), dadID = c(NA, NA, "a"),
     momID = c(NA, NA, "b"), sex = c(1, 0, 1)
   )
   expect_silent(ggPedigree(df))
-  # Warning message:
+  # Warning message: from bgmisc
   # In data.frame(V1 = as.numeric(names(wcc$membership)), V2 = wcc$membership) :
   #   NAs introduced by coercion
 
