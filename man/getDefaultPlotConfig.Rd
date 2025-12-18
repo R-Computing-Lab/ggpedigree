@@ -24,6 +24,7 @@ getDefaultPlotConfig(
   value_rounding_digits = 5,
   code_male = 1,
   code_na = NA,
+  code_unknown = NULL,
   code_female = 0,
   label_include = TRUE,
   label_column = "personID",
@@ -213,6 +214,8 @@ getDefaultPlotConfig(
 \item{code_male}{Integer/string code for males in data.}
 
 \item{code_na}{optional Integer/string code for missing values in data.}
+
+\item{code_unknown}{optional Integer/string code for unknown}
 
 \item{code_female}{optional Integer/string code for females in data.}
 

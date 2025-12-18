@@ -93,7 +93,7 @@ ggPedigree <- function(ped,
       stop("ped should be a data.frame or inherit to a data.frame")
     }
   }
-  if (!all(c(personID,dadID, momID, "sex") %in% names(ped))) {
+  if (!all(c(personID, dadID, momID, "sex") %in% names(ped))) {
     stop("ped must contain personID, sex, dadID, and momID columns")
   }
 
@@ -1303,7 +1303,7 @@ transformPed <- function(ped,
       config = config
     )
   }
-
+  # Check if famID, patID, matID are present; if not, create them
   if (!all(c(famID, patID, matID) %in% names(ped)) &&
     !famID %in% names(ped)) {
     ds_ped <- BGmisc::ped2fam(
@@ -1318,6 +1318,18 @@ transformPed <- function(ped,
     ) {
       # fix strange converse of cases
       ds_ped[[personID]] <- as.character(ds_ped[[personID]])
+    }
+    if (!class(ped[[momID]]) %in% c("numeric", "integer") &&
+      class(ds_ped[[momID]]) %in% c("numeric", "integer")
+    ) {
+      # fix strange converse of cases
+      ds_ped[[momID]] <- as.character(ds_ped[[momID]])
+    }
+    if (!class(ped[[dadID]]) %in% c("numeric", "integer") &&
+      class(ds_ped[[dadID]]) %in% c("numeric", "integer")
+    ) {
+      # fix strange converse of cases
+      ds_ped[[dadID]] <- as.character(ds_ped[[dadID]])
     }
   } else {
     ds_ped <- ped
@@ -1556,5 +1568,3 @@ addTwins <- function(plotObject,
 
   return(plotObject)
 }
-
-

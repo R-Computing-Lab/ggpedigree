@@ -255,31 +255,41 @@ alignPedigreeWithRelations <- function(ped,
                                        code_male,
                                        sexVar,
                                        config) {
-
-
   # recodeSex <- function(
   #  ped, verbose = FALSE, code_male = NULL, code_na = NULL, code_female = NULL,
- #   recode_male = "M", recode_female = "F", recode_na = NA_character_)
+  #   recode_male = "M", recode_female = "F", recode_na = NA_character_)
   # Recode sex values in case non-standard codes are used (e.g., "M"/"F")
-  ped_recode <- BGmisc::recodeSex(ped, code_male = code_male
-                                 # code_female = config$code_female,
-                                  #code_na = config$code_na
-                                 )
+  ped_recode <- BGmisc::recodeSex(ped,
+    code_male = code_male
+  )
   if ("relation" %in% names(config) && !is.null(config$relation)) {
     # Construct a pedigree object to compute layout coordinates
-    ped_ped <- pedigree(
-      id = ped[[personID]],
-      dadid = ped[[dadID]],
-      momid = ped[[momID]],
-      sex = ped_recode[[sexVar]],
-      relation = config$relation
+
+    ped_ped <- tryCatch(
+      pedigree(
+        id = ped[[personID]],
+        dadid = ped[[dadID]],
+        momid = ped[[momID]],
+        sex = ped_recode[[sexVar]],
+        relation = config$relation
+      ),
+      error = function(e) {
+        stop("Error in constructing pedigree object. Please check that the you've
+           correctly specificed the sex of individuals. Setting code_male may help if non-standard codes are used (e.g., 'M'/'F'; '1,2').")
+      }
     )
   } else {
-    ped_ped <- pedigree(
-      id = ped[[personID]],
-      dadid = ped[[dadID]],
-      momid = ped[[momID]],
-      sex = ped_recode[[sexVar]]
+    ped_ped <- tryCatch(
+      pedigree(
+        id = ped[[personID]],
+        dadid = ped[[dadID]],
+        momid = ped[[momID]],
+        sex = ped_recode[[sexVar]]
+      ),
+      error = function(e) {
+        stop("Error in constructing pedigree object. Please check that the you've
+           correctly specificed the sex of individuals. Setting code_male may help if non-standard codes are used (e.g., 'M'/'F'; '1,2').")
+      }
     )
   }
 
