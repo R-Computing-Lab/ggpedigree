@@ -209,16 +209,21 @@ test_that("full cross: strict expectations + roundtrip invariant", {
 
 
 
-# Tests for various error conditions
-test_that("errors for character ids", {
+# resolving error message mystery
+test_that("better warning for string ids", {
   df <- data.frame(
     personID = c("a", "b", "c"), dadID = c(NA, NA, "a"),
-    momID = c(NA, NA, "b"), sex = c(1, 0, 1)
+    momID = c(NA, NA, "b"), sex = c(0, 1, 0)
   )
-  expect_silent(ggPedigree(df))
-  # Warning message: from bgmisc
+  expect_warning(ggPedigree(df, config = list(code_male = 0)))
+
+  # Warning message:
   # In data.frame(V1 = as.numeric(names(wcc$membership)), V2 = wcc$membership) :
   #   NAs introduced by coercion
 
   # in bgmisc from non-numeric ID strings
+
+  df$sex <- c(1, 0, 1)
+
+  expect_warning(expect_error(ggPedigree(df, config = list(code_male = 0))))
 })
