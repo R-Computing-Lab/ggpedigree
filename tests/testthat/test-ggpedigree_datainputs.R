@@ -210,12 +210,12 @@ test_that("full cross: strict expectations + roundtrip invariant", {
 
 
 # resolving error message mystery
-test_that("errors for missing required columns", {
+test_that("better warning for string ids", {
   df <- data.frame(
     personID = c("a", "b", "c"), dadID = c(NA, NA, "a"),
     momID = c(NA, NA, "b"), sex = c(0, 1, 0)
   )
-  # expect_silent(ggPedigree(df, config = list(code_male = 0)))
+  expect_warning(ggPedigree(df, config = list(code_male = 0)))
 
   # Warning message:
   # In data.frame(V1 = as.numeric(names(wcc$membership)), V2 = wcc$membership) :
@@ -225,5 +225,5 @@ test_that("errors for missing required columns", {
 
   df$sex <- c(1, 0, 1)
 
-  expect_error(ggPedigree(df, config = list(code_male = 0)))
+  expect_warning(expect_error(ggPedigree(df, config = list(code_male = 0))))
 })
