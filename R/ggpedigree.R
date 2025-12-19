@@ -127,6 +127,7 @@ ggPedigree <- function(ped,
       !requireNamespace("plotly", quietly = TRUE)) {
       message("The 'plotly' package is required for interactive plots.")
     }
+
     # Set default styling and layout parameters
     default_config <- getDefaultPlotConfig(function_name = "ggpedigree", personID = personID)
 
@@ -135,7 +136,8 @@ ggPedigree <- function(ped,
     config <- buildPlotConfig(
       default_config = default_config,
       config = config,
-      function_name = "ggpedigree"
+      function_name = "ggpedigree",
+      pedigree_size = nrow(ped)
     )
     # Call the core function with the provided arguments
     ggPedigree.core(
@@ -337,7 +339,14 @@ ggPedigree.core <- function(ped,
   config$gap_hoff <- 0.5 * config$generation_height # single constant for all “stub” offsets
   config$gap_woff <- 0.5 * config$generation_width # single constant for all “stub” offsets
 
-
+  # recode missing sex to "unknown"
+  if (any(is.na(ds$sex)) && is.character(ds$sex)) {
+    ds <- ds |>
+      dplyr::mutate(sex = dplyr::case_when(
+        is.na(.data$sex) ~ "unknown",
+        TRUE ~ as.character(.data$sex)
+      ))
+  }
   p <- ggplot2::ggplot(
     ds,
     ggplot2::aes(
@@ -555,10 +564,19 @@ ggPedigree.core <- function(ped,
 #' @param plotObject A ggplot object.
 #' @keywords internal
 #'
+#'
 .addNodes <- function(plotObject,
                       config,
                       focal_fill_column = NULL,
                       status_column = NULL) {
+  # recode NA sex to "unknown"
+  # plot points with appropriate aesthetics
+  if (config$debug == TRUE) {
+    message("Adding nodes to the plot...")
+    message("Focal fill column: ", focal_fill_column)
+    message("Status column: ", status_column)
+  }
+
   if (config$outline_include == TRUE) {
     plotObject <- plotObject +
       ggplot2::geom_point(

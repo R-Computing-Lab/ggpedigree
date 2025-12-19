@@ -39,6 +39,7 @@ getDefaultPlotConfig(
   label_text_color = "black",
   label_text_family = "sans",
   point_size = 4,
+  point_scale_by_ped = TRUE,
   outline_include = FALSE,
   outline_multiplier = 1.25,
   outline_additional_size = 0,
@@ -83,6 +84,7 @@ getDefaultPlotConfig(
   sex_shape_female = 16,
   sex_shape_male = 15,
   sex_shape_unknown = 18,
+  sex_shape_values = NULL,
   sex_shape_include = TRUE,
   sex_legend_show = TRUE,
   status_include = TRUE,
@@ -245,6 +247,8 @@ getDefaultPlotConfig(
 
 \item{point_size}{Size of points drawn in plot.}
 
+\item{point_scale_by_ped}{Whether to scale point sizes by pedigree size.}
+
 \item{outline_include}{Whether to include outlines around points.}
 
 \item{outline_multiplier}{Multiplier to compute outline size from point size.}
@@ -332,6 +336,8 @@ getDefaultPlotConfig(
 \item{sex_shape_male}{Shape for male nodes.}
 
 \item{sex_shape_unknown}{Shape for unknown sex nodes.}
+
+\item{sex_shape_values}{A named vector mapping sex codes to shapes.}
 
 \item{sex_shape_include}{Whether to display the shape for sex variables}
 

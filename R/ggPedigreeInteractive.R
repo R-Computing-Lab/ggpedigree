@@ -73,7 +73,8 @@ ggPedigreeInteractive <- function(ped,
   config <- buildPlotConfig(
     default_config = default_config,
     config = config,
-    function_name = "ggpedigreeinteractive"
+    function_name = "ggpedigreeinteractive",
+    pedigree_size = nrow(ped)
   )
   ## 1. Build the static ggplot using the existing engine
   static_plot <- ggPedigree.core(ped,

@@ -4,7 +4,12 @@
 \alias{buildPlotConfig}
 \title{build Config}
 \usage{
-buildPlotConfig(default_config, config, function_name = "ggPedigree")
+buildPlotConfig(
+  default_config,
+  config,
+  function_name = "ggPedigree",
+  pedigree_size = NULL
+)
 }
 \arguments{
 \item{default_config}{A list of default configuration parameters.}

@@ -53,6 +53,7 @@
 #' @param label_text_color Color of the label text.
 #' @param label_text_family Font family for label text.
 #' @param point_size Size of points drawn in plot.
+#' @param point_scale_by_pedigree Whether to scale point sizes by pedigree size.
 #' @param outline_include Whether to include outlines around points.
 #' @param outline_multiplier Multiplier to compute outline size from point size.
 #' @param outline_additional_size Additional size added to outlines.
@@ -97,6 +98,7 @@
 #' @param sex_shape_female Shape for female nodes.
 #' @param sex_shape_male Shape for male nodes.
 #' @param sex_shape_unknown Shape for unknown sex nodes.
+#' @param sex_shape_values A named vector mapping sex codes to shapes.
 #' @param sex_shape_include Whether to display the shape for sex variables
 #' @param sex_legend_show Whether to display sex in the legend
 #' @param status_include Whether to display affected status.
@@ -185,7 +187,11 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  apply_default_scales = TRUE,
                                  apply_default_theme = TRUE,
                                  segment_default_color = "black",
-                                 color_palette_default = c("#440154FF", "#FDE725FF", "#21908CFF"),
+                                 color_palette_default = c(
+                                   "#440154FF",
+                                   "#FDE725FF",
+                                   "#21908CFF"
+                                 ),
                                  color_palette_low = "#000004FF",
                                  color_palette_mid = "#56106EFF",
                                  color_palette_high = "#FCFDBFFF",
@@ -220,6 +226,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  label_text_family = "sans",
                                  # --- POINT / OUTLINE AESTHETICS ---------------------------------------
                                  point_size = 4,
+                                 point_scale_by_pedigree = TRUE,
                                  outline_include = FALSE,
                                  outline_multiplier = 1.25,
                                  outline_additional_size = 0,
@@ -269,6 +276,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  sex_shape_female = 16,
                                  sex_shape_male = 15,
                                  sex_shape_unknown = 18,
+                                 sex_shape_values = NULL, # will be set later
                                  sex_shape_include = TRUE,
                                  sex_legend_show = TRUE,
                                  # ---- Affected Status Controls ----
@@ -461,6 +469,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
 
     # --- POINT / OUTLINE AESTHETICS ---------------------------------------
     point_size = point_size,
+    point_scale_by_pedigree = point_scale_by_pedigree,
     outline_include = outline_include,
     outline_multiplier = outline_multiplier,
     outline_color = outline_color,
@@ -689,7 +698,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     core_list$tooltip_columns <- c(personID, "sex", status_column)
     core_list$label_method <- "geom_text"
     core_list$label_include <- FALSE # default to FALSE
-    core_list$segment_linewidth <- 0.5 # too think
+    core_list$segment_linewidth <- 0.5 # too thick
     core_list$segment_self_linewidth <- .5 * core_list$segment_linewidth
     core_list$tooltip_include <- TRUE
     core_list$return_static <- FALSE
@@ -714,7 +723,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
 #'
 buildPlotConfig <- function(default_config,
                             config,
-                            function_name = "ggPedigree") {
+                            function_name = "ggPedigree",
+                            pedigree_size = NULL) {
   # -- Detect duplicate configuration entries --
   config_names <- names(config)
   duplicated_keys <- config_names[duplicated(config_names)]
@@ -754,7 +764,13 @@ buildPlotConfig <- function(default_config,
         built_config$sex_shape_unknown
       )
     }
-
+    if (built_config$point_scale_by_pedigree == TRUE) {
+      if (is.null(pedigree_size)) {
+        warning("pedigree_size must be provided in config when point_scale_by_pedigree is TRUE. Defaulting to 1.")
+        pedigree_size <- 1
+      }
+      built_config$point_size <- built_config$point_size / sqrt(pedigree_size)
+    }
 
     if ("status_labs" %in% names(built_config) == FALSE) {
       built_config$status_labs <- c(

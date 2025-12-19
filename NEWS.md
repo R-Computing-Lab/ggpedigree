@@ -8,6 +8,7 @@
 * Required columns check much earlier in ggpedigree function, including sex
 * Added more informative error messages when constructing pedigree objects fails due to incorrect or non-standard sex coding. 
 * Expanded and refactored tests for various sex code and ID input scenarios, including comprehensive testing of input types, missing values, and configuration options. 
+* Add default point scaling as a function of pedigree size
 
 # ggpedigree 1.0.0.1
 ## cran resubmission
