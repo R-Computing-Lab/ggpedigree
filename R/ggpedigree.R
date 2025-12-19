@@ -500,7 +500,10 @@ ggPedigree.core <- function(ped,
   # -----
 
   p <- p +
-    ggplot2::scale_y_reverse()
+    ggplot2::scale_y_reverse(limits = c(
+      NA,
+      min(ds$y_pos)
+    ))
 
   if (config$apply_default_theme == TRUE) {
     p <- p +
