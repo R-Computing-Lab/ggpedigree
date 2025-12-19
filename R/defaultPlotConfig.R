@@ -719,6 +719,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
 #' @param default_config A list of default configuration parameters.
 #' @param config A list of user-specified configuration parameters.
 #' @param function_name The name of the function for which the configuration is being built.
+#' @param pedigree_size Size of the pedigree, used for point scaling.
 #' @return A complete configuration list with all necessary parameters.
 #'
 buildPlotConfig <- function(default_config,

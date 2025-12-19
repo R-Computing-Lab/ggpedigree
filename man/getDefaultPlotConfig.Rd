@@ -39,7 +39,7 @@ getDefaultPlotConfig(
   label_text_color = "black",
   label_text_family = "sans",
   point_size = 4,
-  point_scale_by_ped = TRUE,
+  point_scale_by_pedigree = TRUE,
   outline_include = FALSE,
   outline_multiplier = 1.25,
   outline_additional_size = 0,
@@ -247,7 +247,7 @@ getDefaultPlotConfig(
 
 \item{point_size}{Size of points drawn in plot.}
 
-\item{point_scale_by_ped}{Whether to scale point sizes by pedigree size.}
+\item{point_scale_by_pedigree}{Whether to scale point sizes by pedigree size.}
 
 \item{outline_include}{Whether to include outlines around points.}
 

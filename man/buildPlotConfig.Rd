@@ -17,6 +17,8 @@ buildPlotConfig(
 \item{config}{A list of user-specified configuration parameters.}
 
 \item{function_name}{The name of the function for which the configuration is being built.}
+
+\item{pedigree_size}{Size of the pedigree, used for point scaling.}
 }
 \value{
 A complete configuration list with all necessary parameters.

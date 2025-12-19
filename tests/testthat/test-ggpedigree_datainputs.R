@@ -215,6 +215,8 @@ test_that("better warning for string ids", {
     personID = c("a", "b", "c"), dadID = c(NA, NA, "a"),
     momID = c(NA, NA, "b"), sex = c(0, 1, 0)
   )
+  # bgmisc package version 1.5.2
+
   expect_warning(ggPedigree(df, config = list(code_male = 0)))
 
   # Warning message:
@@ -222,8 +224,11 @@ test_that("better warning for string ids", {
   #   NAs introduced by coercion
 
   # in bgmisc from non-numeric ID strings
+  if (packageVersion("BGmisc") < "1.5.2") {
+    skip("BGmisc version < 1.5.2; skipping test")
+  } else {
+    df$sex <- c(1, 0, 1)
 
-  df$sex <- c(1, 0, 1)
-
-  expect_warning(expect_error(ggPedigree(df, config = list(code_male = 0))))
+    expect_warning(expect_error(ggPedigree(df, config = list(code_male = 0))))
+  }
 })
