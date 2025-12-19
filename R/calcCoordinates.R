@@ -274,8 +274,8 @@ alignPedigreeWithRelations <- function(ped,
         relation = config$relation
       ),
       error = function(e) {
-        stop("Error in constructing pedigree object. Please check that the you've
-           correctly specificed the sex of individuals. Setting code_male may help if non-standard codes are used (e.g., 'M'/'F'; '1,2').")
+        stop("Error in constructing pedigree object. Please check that you've
+           correctly specified the sex of individuals. Setting code_male may help if non-standard codes are used (e.g., 'M'/'F'; '1,2').")
       }
     )
   } else {
@@ -287,8 +287,8 @@ alignPedigreeWithRelations <- function(ped,
         sex = ped_recode[[sexVar]]
       ),
       error = function(e) {
-        stop("Error in constructing pedigree object. Please check that the you've
-           correctly specificed the sex of individuals. Setting code_male may help if non-standard codes are used (e.g., 'M'/'F'; '1,2').")
+        stop("Error in constructing pedigree object. Please check that you've
+           correctly specified the sex of individuals. Setting code_male may help if non-standard codes are used (e.g., 'M'/'F'; '1,2').")
       }
     )
   }
