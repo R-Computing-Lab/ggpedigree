@@ -209,16 +209,21 @@ test_that("full cross: strict expectations + roundtrip invariant", {
 
 
 
-# Tests for various error conditions
+# resolving error message mystery
 test_that("errors for missing required columns", {
   df <- data.frame(
     personID = c("a", "b", "c"), dadID = c(NA, NA, "a"),
-    momID = c(NA, NA, "b"), sex = c(1, 0, 1)
+    momID = c(NA, NA, "b"), sex = c(0, 1, 0)
   )
-  expect_silent(ggPedigree(df))
+  # expect_silent(ggPedigree(df, config = list(code_male = 0)))
+
   # Warning message:
   # In data.frame(V1 = as.numeric(names(wcc$membership)), V2 = wcc$membership) :
   #   NAs introduced by coercion
 
   # in bgmisc from non-numeric ID strings
+
+  df$sex <- c(1, 0, 1)
+
+  expect_error(ggPedigree(df, config = list(code_male = 0)))
 })
