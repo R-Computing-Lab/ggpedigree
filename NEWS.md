@@ -1,5 +1,7 @@
 # ggpedigree (development version)
 # ==============================
+
+# ggpedigree 1.1.0.0
 * Saved raw excel data as csv to have a non-proprietary format for data storage
 * Added more refactorings of kinship2 internals for maintainability
 * Harmonize names by changing midparent to mid_parent throughout the codebase
