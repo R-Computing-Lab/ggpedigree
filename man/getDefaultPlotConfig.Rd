@@ -86,7 +86,7 @@ getDefaultPlotConfig(
   sex_shape_unknown = 18,
   sex_shape_values = NULL,
   sex_shape_include = TRUE,
-  sex_legend_show = TRUE,
+  sex_legend_show = FALSE,
   status_include = TRUE,
   status_code_affected = 1,
   status_code_unaffected = 0,
