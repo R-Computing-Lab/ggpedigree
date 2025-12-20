@@ -93,7 +93,7 @@ ggPedigree <- function(ped,
       stop("ped should be a data.frame or inherit to a data.frame")
     }
   }
-  if (!all(c(personID,dadID, momID, "sex") %in% names(ped))) {
+  if (!all(c(personID, dadID, momID, "sex") %in% names(ped))) {
     stop("ped must contain personID, sex, dadID, and momID columns")
   }
 
@@ -127,6 +127,7 @@ ggPedigree <- function(ped,
       !requireNamespace("plotly", quietly = TRUE)) {
       message("The 'plotly' package is required for interactive plots.")
     }
+
     # Set default styling and layout parameters
     default_config <- getDefaultPlotConfig(function_name = "ggpedigree", personID = personID)
 
@@ -135,7 +136,8 @@ ggPedigree <- function(ped,
     config <- buildPlotConfig(
       default_config = default_config,
       config = config,
-      function_name = "ggpedigree"
+      function_name = "ggpedigree",
+      pedigree_size = nrow(ped)
     )
     # Call the core function with the provided arguments
     ggPedigree.core(
@@ -337,7 +339,14 @@ ggPedigree.core <- function(ped,
   config$gap_hoff <- 0.5 * config$generation_height # single constant for all “stub” offsets
   config$gap_woff <- 0.5 * config$generation_width # single constant for all “stub” offsets
 
-
+  # recode missing sex to "unknown"
+  if (any(is.na(ds$sex)) && is.character(ds$sex)) {
+    ds <- ds |>
+      dplyr::mutate(sex = dplyr::case_when(
+        is.na(.data$sex) ~ "unknown",
+        TRUE ~ as.character(.data$sex)
+      ))
+  }
   p <- ggplot2::ggplot(
     ds,
     ggplot2::aes(
@@ -500,7 +509,10 @@ ggPedigree.core <- function(ped,
   # -----
 
   p <- p +
-    ggplot2::scale_y_reverse()
+    ggplot2::scale_y_reverse(limits = c(
+      NA,
+      min(ds$y_pos)
+    ))
 
   if (config$apply_default_theme == TRUE) {
     p <- p +
@@ -552,10 +564,19 @@ ggPedigree.core <- function(ped,
 #' @param plotObject A ggplot object.
 #' @keywords internal
 #'
+#'
 .addNodes <- function(plotObject,
                       config,
                       focal_fill_column = NULL,
                       status_column = NULL) {
+  # recode NA sex to "unknown"
+  # plot points with appropriate aesthetics
+  if (config$debug == TRUE) {
+    message("Adding nodes to the plot...")
+    message("Focal fill column: ", focal_fill_column)
+    message("Status column: ", status_column)
+  }
+
   if (config$outline_include == TRUE) {
     plotObject <- plotObject +
       ggplot2::geom_point(
@@ -1303,7 +1324,7 @@ transformPed <- function(ped,
       config = config
     )
   }
-
+  # Check if famID, patID, matID are present; if not, create them
   if (!all(c(famID, patID, matID) %in% names(ped)) &&
     !famID %in% names(ped)) {
     ds_ped <- BGmisc::ped2fam(
@@ -1318,6 +1339,18 @@ transformPed <- function(ped,
     ) {
       # fix strange converse of cases
       ds_ped[[personID]] <- as.character(ds_ped[[personID]])
+    }
+    if (!class(ped[[momID]]) %in% c("numeric", "integer") &&
+      class(ds_ped[[momID]]) %in% c("numeric", "integer")
+    ) {
+      # fix strange converse of cases
+      ds_ped[[momID]] <- as.character(ds_ped[[momID]])
+    }
+    if (!class(ped[[dadID]]) %in% c("numeric", "integer") &&
+      class(ds_ped[[dadID]]) %in% c("numeric", "integer")
+    ) {
+      # fix strange converse of cases
+      ds_ped[[dadID]] <- as.character(ds_ped[[dadID]])
     }
   } else {
     ds_ped <- ped
@@ -1556,5 +1589,3 @@ addTwins <- function(plotObject,
 
   return(plotObject)
 }
-
-

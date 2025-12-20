@@ -4,7 +4,12 @@
 \alias{buildPlotConfig}
 \title{build Config}
 \usage{
-buildPlotConfig(default_config, config, function_name = "ggPedigree")
+buildPlotConfig(
+  default_config,
+  config,
+  function_name = "ggPedigree",
+  pedigree_size = NULL
+)
 }
 \arguments{
 \item{default_config}{A list of default configuration parameters.}
@@ -12,6 +17,8 @@ buildPlotConfig(default_config, config, function_name = "ggPedigree")
 \item{config}{A list of user-specified configuration parameters.}
 
 \item{function_name}{The name of the function for which the configuration is being built.}
+
+\item{pedigree_size}{Size of the pedigree, used for point scaling.}
 }
 \value{
 A complete configuration list with all necessary parameters.
