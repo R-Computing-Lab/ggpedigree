@@ -278,7 +278,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  sex_shape_unknown = 18,
                                  sex_shape_values = NULL, # will be set later
                                  sex_shape_include = TRUE,
-                                 sex_legend_show = TRUE,
+                                 sex_legend_show = FALSE,
                                  # ---- Affected Status Controls ----
                                  status_include = TRUE,
                                  status_code_affected = 1,
@@ -766,11 +766,20 @@ buildPlotConfig <- function(default_config,
       )
     }
     if (built_config$point_scale_by_pedigree == TRUE) {
-      if (is.null(pedigree_size)) {
+      if (is.null(pedigree_size) || pedigree_size <= 0) {
         warning("pedigree_size must be provided in config when point_scale_by_pedigree is TRUE. Defaulting to 1.")
         pedigree_size <- 1
       }
-      built_config$point_size <- built_config$point_size / sqrt(pedigree_size)
+      if (pedigree_size <= 10) {
+        built_config$point_size <- built_config$point_size
+      } else if (pedigree_size <= 100) {
+        built_config$point_size <- built_config$point_size / sqrt(pedigree_size)
+      } else if (pedigree_size <= 500) {
+        built_config$point_size <- built_config$point_size / sqrt(pedigree_size) * 1.5
+      } else {
+        built_config$point_size <- built_config$point_size / sqrt(pedigree_size) * 2.5
+      }
+
     }
 
     if ("status_labs" %in% names(built_config) == FALSE) {

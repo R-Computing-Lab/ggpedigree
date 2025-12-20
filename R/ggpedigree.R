@@ -900,7 +900,7 @@ addSelfSegment <- .addSelfSegment
         values = config$sex_color_palette,
         labels = config$sex_shape_labels
       )
-    } else {
+    }   else {
       plotObject <- plotObject +
         ggplot2::scale_color_discrete(labels = config$sex_shape_labels)
     }
@@ -911,7 +911,7 @@ addSelfSegment <- .addSelfSegment
         shape = config$sex_legend_title
       )
     if (config$sex_legend_show == FALSE) {
-      plotObject <- plotObject + ggplot2::guides(color = "none")
+      plotObject <- plotObject + ggplot2::guides(color = "none", shape = "none")
     }
   } else if (config$focal_fill_include == TRUE) {
     if (config$focal_fill_method %in% c("steps", "steps2", "step", "step2")) {
@@ -992,7 +992,12 @@ addSelfSegment <- .addSelfSegment
         } else {
           NULL
         },
-        shape = config$sex_legend_title
+        shape = if (config$sex_legend_show == TRUE) {
+          config$sex_legend_title
+        } else {
+          NULL
+        }
+
       )
     if (config$focal_fill_legend_show == FALSE) {
       plotObject <- plotObject + ggplot2::guides(color = "none")
@@ -1011,10 +1016,18 @@ addSelfSegment <- .addSelfSegment
     plotObject <- plotObject +
       ggplot2::labs(
         color = config$status_legend_title,
-        shape = config$sex_legend_title
+        shape = if (config$sex_legend_show == TRUE) {
+          config$sex_legend_title
+        } else {
+          NULL
+        }
       )
   } else {
-    plotObject <- plotObject + ggplot2::labs(shape = config$sex_legend_title)
+    plotObject <- plotObject + ggplot2::labs(shape = if (config$sex_legend_show == TRUE) {
+      config$sex_legend_title
+    } else {
+      NULL
+    })
   }
   return(plotObject)
 }

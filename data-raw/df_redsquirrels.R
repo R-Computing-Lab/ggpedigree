@@ -17,7 +17,7 @@ Ped <- read_excel("data-raw/Pedigree_dryadcopy.xlsx",
     "text"
   )
 )
-write_csv(Ped, here("data-raw", "Pedigree_dryadcopy.csv"), na = "")
+#write_csv(Ped, here("data-raw", "Pedigree_dryadcopy.csv"), na = "")
 
 Ped <- Ped %>% rename(
   momID = dam,
@@ -33,7 +33,7 @@ LRS <- read_excel("data-raw/LRS_fordryad.xlsx", col_types = c(
 )) %>%
   suppressWarnings()
 
-write_csv(LRS, here("data-raw", "LRS_fordryad.csv"), na = "")
+#write_csv(LRS, here("data-raw", "LRS_fordryad.csv"), na = "")
 
 LRS <- LRS %>%
   rename(
@@ -58,7 +58,7 @@ ARS <- read_excel("data-raw/ARS_dryadcopy.xlsx",
   suppressWarnings()
 
 
-write_csv(ARS, here("data-raw", "ARS_dryadcopy.csv"), na = "")
+#write_csv(ARS, here("data-raw", "ARS_dryadcopy.csv"), na = "")
 
 
 ARS <- ARS %>%

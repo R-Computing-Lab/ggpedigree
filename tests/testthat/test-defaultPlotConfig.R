@@ -129,7 +129,19 @@ test_that("buildPlotConfig returns a list", {
   custom <- list(point_size = 2)
   pedigree_size <- 3
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
-  expect_equal(result$point_size, 2 / sqrt(pedigree_size), tolerance = 1e-8)
+  expect_equal(result$point_size, custom$point_size, tolerance = 1e-8)
   expect_equal(result$label_nudge_y, 0.15)
   expect_true(is.list(result))
+  pedigree_size <- 30
+  result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
+  expect_equal(result$point_size, custom$point_size / sqrt(pedigree_size), tolerance = 1e-8)
+
+  pedigree_size <- 300
+  result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
+  expect_equal(result$point_size, custom$point_size / sqrt(pedigree_size)*1.5, tolerance = 1e-8)
+
+  pedigree_size <- 501
+  result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
+  expect_equal(result$point_size, custom$point_size / sqrt(pedigree_size)*2.5, tolerance = 1e-8)
+
 })
