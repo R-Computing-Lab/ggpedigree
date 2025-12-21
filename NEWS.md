@@ -13,6 +13,7 @@
 * Add default point scaling as a function of pedigree size
 * Set Sex key to be hidden by default in ggpedigree
 * Slight tweaks to GoT dataset demonstration to improve visualization
+* Remove reshape2 dependency by using base R functions
 
 # ggpedigree 1.0.0.1
 ## cran resubmission

@@ -167,7 +167,19 @@ ggRelatednessMatrix.core <- function(
     mat_plot[upper.tri(mat_plot)] <- NA
   }
   # Melt the matrix into long format for ggplot2
-  df_melted <- reshape2::melt(mat_plot)
+  # df_melted <- r e s h a p e 2 :: m e l t(mat_plot)
+  rnames <- rownames(mat_plot)
+  cnames <- colnames(mat_plot)
+
+  # Handle case where matrix has no row/column names
+  if (is.null(rnames)) {
+    rnames <- seq_len(nrow(mat_plot))
+  }
+  if (is.null(cnames)) {
+    cnames <- seq_len(ncol(mat_plot))
+  }
+  df_melted <- expand.grid(ID1 = rnames, ID2 = cnames, stringsAsFactors = FALSE)
+  df_melted$value <- as.vector(mat_plot)
 
   colnames(df_melted) <- c("ID1", "ID2", "value")
 
@@ -225,20 +237,25 @@ ggRelatednessMatrix.core <- function(
       mid = config$tile_color_palette[2],
       high = config$tile_color_palette[3],
       midpoint = config$color_scale_midpoint
-    ) +
-    ggplot2::theme_minimal() +
-    ggplot2::theme(
-      axis.text.x = ggplot2::element_text(
-        angle = config$axis_text_angle_x, vjust = 0.5,
-        hjust = 1, size = config$axis_text_size,
-        color = config$axis_text_color
-      ),
-      axis.text.y = ggplot2::element_text(
-        size = config$axis_text_size,
-        angle = config$axis_text_angle_y,
-        color = config$axis_text_color
-      ),
-    ) +
+    )
+
+  if (config$apply_default_theme == TRUE) {
+    p <- p +
+      ggplot2::theme_minimal() +
+      ggplot2::theme(
+        axis.text.x = ggplot2::element_text(
+          angle = config$axis_text_angle_x, vjust = 0.5,
+          hjust = 1, size = config$axis_text_size,
+          color = config$axis_text_color
+        ),
+        axis.text.y = ggplot2::element_text(
+          size = config$axis_text_size,
+          angle = config$axis_text_angle_y,
+          color = config$axis_text_color
+        ),
+      )
+  }
+  p <- p +
     ggplot2::labs(
       x = config$axis_x_label,
       y = config$axis_y_label,

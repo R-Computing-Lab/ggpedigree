@@ -21,7 +21,6 @@ Imports:
     stringr,
     utils,
     plotly,
-    reshape2,
     scales,
     tidyr
 Suggests:
