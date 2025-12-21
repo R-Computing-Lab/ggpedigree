@@ -237,20 +237,25 @@ ggRelatednessMatrix.core <- function(
       mid = config$tile_color_palette[2],
       high = config$tile_color_palette[3],
       midpoint = config$color_scale_midpoint
-    ) +
-    ggplot2::theme_minimal() +
-    ggplot2::theme(
-      axis.text.x = ggplot2::element_text(
-        angle = config$axis_text_angle_x, vjust = 0.5,
-        hjust = 1, size = config$axis_text_size,
-        color = config$axis_text_color
-      ),
-      axis.text.y = ggplot2::element_text(
-        size = config$axis_text_size,
-        angle = config$axis_text_angle_y,
-        color = config$axis_text_color
-      ),
-    ) +
+    )
+
+  if (config$apply_default_theme == TRUE) {
+    p <- p +
+      ggplot2::theme_minimal() +
+      ggplot2::theme(
+        axis.text.x = ggplot2::element_text(
+          angle = config$axis_text_angle_x, vjust = 0.5,
+          hjust = 1, size = config$axis_text_size,
+          color = config$axis_text_color
+        ),
+        axis.text.y = ggplot2::element_text(
+          size = config$axis_text_size,
+          angle = config$axis_text_angle_y,
+          color = config$axis_text_color
+        ),
+      )
+  }
+  p <- p +
     ggplot2::labs(
       x = config$axis_x_label,
       y = config$axis_y_label,
