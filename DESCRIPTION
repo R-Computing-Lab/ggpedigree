@@ -44,7 +44,6 @@ Suggests:
     corrplot,
     showtext,
     sysfonts,
-    readxl,
     withr,
     htmlwidgets,
     testthat (>= 3.0.0),
