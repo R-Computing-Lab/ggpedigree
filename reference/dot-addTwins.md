@@ -1,21 +1,38 @@
-# Adjust spacing in ggPedigree coordinate columns
+# Add Twins to ggplot Pedigree Plot
 
-Uniformly expands or contracts the horizontal (\`x\_\*\`) and vertical
-(\`y\_\*\`) configuration settings for generation height and width.
+Adds twin connections to the ggplot pedigree plot. This function
+modifies the \`plotObject\` by adding segments to represent twin
+relationships.
 
 ## Usage
 
 ``` r
-.adjustSpacing(ds, config)
+.addTwins(
+  plotObject,
+  connections,
+  config,
+  plot_connections,
+  personID = "personID"
+)
 
-adjustSpacing(ds, config)
+addTwins(
+  plotObject,
+  connections,
+  config,
+  plot_connections,
+  personID = "personID"
+)
 ```
 
 ## Arguments
 
-- ds:
+- plotObject:
 
-  A data frame containing the ggPedigree data.
+  A ggplot object to which twin segments will be added.
+
+- connections:
+
+  A data frame containing twin connection coordinates.
 
 - config:
 
@@ -69,6 +86,15 @@ adjustSpacing(ds, config)
 
   :   Color used for label connector lines.
 
+- plot_connections:
+
+  A data frame containing the coordinates for twin segments.
+
+- personID:
+
+  Character string specifying the column name for individual IDs.
+  Defaults to "personID".
+
 ## Value
 
-A data frame with adjusted x and y positions.
+A ggplot object with twin segments added.

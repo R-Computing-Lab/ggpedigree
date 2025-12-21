@@ -15,7 +15,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior."></h
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,6 +81,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  value_rounding_digits <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  code_male <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  code_na <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  code_unknown <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  code_female <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  label_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  label_column <span class="op">=</span> <span class="st">"personID"</span>,</span>
@@ -95,6 +96,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  label_text_color <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>  label_text_family <span class="op">=</span> <span class="st">"sans"</span>,</span>
 <span>  point_size <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>  point_scale_by_pedigree <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  outline_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  outline_multiplier <span class="op">=</span> <span class="fl">1.25</span>,</span>
 <span>  outline_additional_size <span class="op">=</span> <span class="fl">0</span>,</span>
@@ -139,8 +141,9 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  sex_shape_female <span class="op">=</span> <span class="fl">16</span>,</span>
 <span>  sex_shape_male <span class="op">=</span> <span class="fl">15</span>,</span>
 <span>  sex_shape_unknown <span class="op">=</span> <span class="fl">18</span>,</span>
+<span>  sex_shape_values <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sex_shape_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  sex_legend_show <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  sex_legend_show <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  status_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  status_code_affected <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  status_code_unaffected <span class="op">=</span> <span class="fl">0</span>,</span>
@@ -229,6 +232,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  override_many2many <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  optimize_plotly <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  recode_missing_ids <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  add_phantoms <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -306,15 +310,19 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 
 <dt id="arg-code-male">code_male<a class="anchor" aria-label="anchor" href="#arg-code-male"></a></dt>
-<dd><p>Integer/string code for males in data.</p></dd>
+<dd><p>Integer/string code for males in data. Default is 1.</p></dd>
 
 
 <dt id="arg-code-na">code_na<a class="anchor" aria-label="anchor" href="#arg-code-na"></a></dt>
-<dd><p>optional Integer/string code for missing values in data.</p></dd>
+<dd><p>optional Integer/string code for missing values in data. Default is NA.</p></dd>
+
+
+<dt id="arg-code-unknown">code_unknown<a class="anchor" aria-label="anchor" href="#arg-code-unknown"></a></dt>
+<dd><p>optional Integer/string code for unknown sex in data. Default is NULL.</p></dd>
 
 
 <dt id="arg-code-female">code_female<a class="anchor" aria-label="anchor" href="#arg-code-female"></a></dt>
-<dd><p>optional Integer/string code for females in data.</p></dd>
+<dd><p>optional Integer/string code for females in data. Default is 0.</p></dd>
 
 
 <dt id="arg-label-include">label_include<a class="anchor" aria-label="anchor" href="#arg-label-include"></a></dt>
@@ -367,6 +375,10 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 <dt id="arg-point-size">point_size<a class="anchor" aria-label="anchor" href="#arg-point-size"></a></dt>
 <dd><p>Size of points drawn in plot.</p></dd>
+
+
+<dt id="arg-point-scale-by-pedigree">point_scale_by_pedigree<a class="anchor" aria-label="anchor" href="#arg-point-scale-by-pedigree"></a></dt>
+<dd><p>Whether to scale point sizes by pedigree size.</p></dd>
 
 
 <dt id="arg-outline-include">outline_include<a class="anchor" aria-label="anchor" href="#arg-outline-include"></a></dt>
@@ -446,79 +458,79 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 
 <dt id="arg-segment-linewidth">segment_linewidth<a class="anchor" aria-label="anchor" href="#arg-segment-linewidth"></a></dt>
-<dd><p>Line width for segments.</p></dd>
+<dd><p>Line width for segments. Default is 0.5.</p></dd>
 
 
 <dt id="arg-segment-linetype">segment_linetype<a class="anchor" aria-label="anchor" href="#arg-segment-linetype"></a></dt>
-<dd><p>Line type for segments.</p></dd>
+<dd><p>Line type for segments. Default is 1 (solid).</p></dd>
 
 
 <dt id="arg-segment-lineend">segment_lineend<a class="anchor" aria-label="anchor" href="#arg-segment-lineend"></a></dt>
-<dd><p>Line end type for segments.</p></dd>
+<dd><p>Line end type for segments. Default is "round".</p></dd>
 
 
 <dt id="arg-segment-linejoin">segment_linejoin<a class="anchor" aria-label="anchor" href="#arg-segment-linejoin"></a></dt>
-<dd><p>Line join type for segments.</p></dd>
+<dd><p>Line join type for segments. Default is "round".</p></dd>
 
 
 <dt id="arg-segment-offspring-color">segment_offspring_color<a class="anchor" aria-label="anchor" href="#arg-segment-offspring-color"></a></dt>
-<dd><p>Color for offspring segments.</p></dd>
+<dd><p>Color for offspring segments. Default uses segment_default_color.</p></dd>
 
 
 <dt id="arg-segment-parent-color">segment_parent_color<a class="anchor" aria-label="anchor" href="#arg-segment-parent-color"></a></dt>
-<dd><p>Color for parent segments.</p></dd>
+<dd><p>Color for parent segments. Default uses segment_default_color.</p></dd>
 
 
 <dt id="arg-segment-self-color">segment_self_color<a class="anchor" aria-label="anchor" href="#arg-segment-self-color"></a></dt>
-<dd><p>Color for self-loop segments.</p></dd>
+<dd><p>Color for self-loop segments. Default uses segment_default_color.</p></dd>
 
 
 <dt id="arg-segment-sibling-color">segment_sibling_color<a class="anchor" aria-label="anchor" href="#arg-segment-sibling-color"></a></dt>
-<dd><p>Color for sibling segments.</p></dd>
+<dd><p>Color for sibling segments. Default uses segment_default_color.</p></dd>
 
 
 <dt id="arg-segment-spouse-color">segment_spouse_color<a class="anchor" aria-label="anchor" href="#arg-segment-spouse-color"></a></dt>
-<dd><p>Color for spouse segments.</p></dd>
+<dd><p>Color for spouse segments. Default uses segment_default_color.</p></dd>
 
 
 <dt id="arg-segment-mz-color">segment_mz_color<a class="anchor" aria-label="anchor" href="#arg-segment-mz-color"></a></dt>
-<dd><p>Color for monozygotic twin segments.</p></dd>
+<dd><p>Color for monozygotic twin segments. Default uses segment_default_color.</p></dd>
 
 
 <dt id="arg-segment-mz-linetype">segment_mz_linetype<a class="anchor" aria-label="anchor" href="#arg-segment-mz-linetype"></a></dt>
-<dd><p>Line type for MZ segments.</p></dd>
+<dd><p>Line type for MZ segments. Default uses segment_linetype.</p></dd>
 
 
 <dt id="arg-segment-mz-alpha">segment_mz_alpha<a class="anchor" aria-label="anchor" href="#arg-segment-mz-alpha"></a></dt>
-<dd><p>Alpha for MZ segments.</p></dd>
+<dd><p>Alpha for MZ segments. Default is 1.</p></dd>
 
 
 <dt id="arg-segment-mz-t">segment_mz_t<a class="anchor" aria-label="anchor" href="#arg-segment-mz-t"></a></dt>
-<dd><p>Tuning parameter for MZ segment layout.</p></dd>
+<dd><p>Tuning parameter for MZ segment layout. Default is 0.6.</p></dd>
 
 
 <dt id="arg-segment-self-linetype">segment_self_linetype<a class="anchor" aria-label="anchor" href="#arg-segment-self-linetype"></a></dt>
-<dd><p>Line type for self-loop segments.</p></dd>
+<dd><p>Line type for self-loop segments. Default is "dotdash".</p></dd>
 
 
 <dt id="arg-segment-self-linewidth">segment_self_linewidth<a class="anchor" aria-label="anchor" href="#arg-segment-self-linewidth"></a></dt>
-<dd><p>Width of self-loop segment lines.</p></dd>
+<dd><p>Width of self-loop segment lines. Default is half of segment_linewidth.</p></dd>
 
 
 <dt id="arg-segment-self-alpha">segment_self_alpha<a class="anchor" aria-label="anchor" href="#arg-segment-self-alpha"></a></dt>
-<dd><p>Alpha value for self-loop segments.</p></dd>
+<dd><p>Alpha value for self-loop segments. Default is 0.5.</p></dd>
 
 
 <dt id="arg-segment-self-angle">segment_self_angle<a class="anchor" aria-label="anchor" href="#arg-segment-self-angle"></a></dt>
-<dd><p>Angle of self-loop segment.</p></dd>
+<dd><p>Angle of self-loop segment. Default is 90 degrees.</p></dd>
 
 
 <dt id="arg-segment-self-curvature">segment_self_curvature<a class="anchor" aria-label="anchor" href="#arg-segment-self-curvature"></a></dt>
-<dd><p>Curvature of self-loop segment.</p></dd>
+<dd><p>Curvature of self-loop segment. Default is -0.2.</p></dd>
 
 
 <dt id="arg-sex-color-include">sex_color_include<a class="anchor" aria-label="anchor" href="#arg-sex-color-include"></a></dt>
-<dd><p>Whether to color nodes by sex.</p></dd>
+<dd><p>Whether to color nodes by sex. Default is TRUE.</p></dd>
 
 
 <dt id="arg-sex-legend-title">sex_legend_title<a class="anchor" aria-label="anchor" href="#arg-sex-legend-title"></a></dt>
@@ -530,7 +542,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 
 <dt id="arg-sex-color-palette">sex_color_palette<a class="anchor" aria-label="anchor" href="#arg-sex-color-palette"></a></dt>
-<dd><p>A character vector of colors for sex.</p></dd>
+<dd><p>A character vector of colors for sex. Default uses color_palette_default.</p></dd>
 
 
 <dt id="arg-sex-shape-female">sex_shape_female<a class="anchor" aria-label="anchor" href="#arg-sex-shape-female"></a></dt>
@@ -543,6 +555,10 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 <dt id="arg-sex-shape-unknown">sex_shape_unknown<a class="anchor" aria-label="anchor" href="#arg-sex-shape-unknown"></a></dt>
 <dd><p>Shape for unknown sex nodes.</p></dd>
+
+
+<dt id="arg-sex-shape-values">sex_shape_values<a class="anchor" aria-label="anchor" href="#arg-sex-shape-values"></a></dt>
+<dd><p>A named vector mapping sex codes to shapes.</p></dd>
 
 
 <dt id="arg-sex-shape-include">sex_shape_include<a class="anchor" aria-label="anchor" href="#arg-sex-shape-include"></a></dt>
@@ -650,15 +666,15 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 
 <dt id="arg-focal-fill-include">focal_fill_include<a class="anchor" aria-label="anchor" href="#arg-focal-fill-include"></a></dt>
-<dd><p>Whether to fill focal individuals.</p></dd>
+<dd><p>Whether to fill focal individuals. Default is FALSE.</p></dd>
 
 
 <dt id="arg-focal-fill-legend-show">focal_fill_legend_show<a class="anchor" aria-label="anchor" href="#arg-focal-fill-legend-show"></a></dt>
-<dd><p>Whether to show legend for focal fill.</p></dd>
+<dd><p>Whether to show legend for focal fill. Default is TRUE.</p></dd>
 
 
 <dt id="arg-focal-fill-personid">focal_fill_personID<a class="anchor" aria-label="anchor" href="#arg-focal-fill-personid"></a></dt>
-<dd><p>ID of focal individual.</p></dd>
+<dd><p>ID of focal individual. Default is 1.</p></dd>
 
 
 <dt id="arg-focal-fill-legend-title">focal_fill_legend_title<a class="anchor" aria-label="anchor" href="#arg-focal-fill-legend-title"></a></dt>
@@ -678,7 +694,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 
 <dt id="arg-focal-fill-scale-midpoint">focal_fill_scale_midpoint<a class="anchor" aria-label="anchor" href="#arg-focal-fill-scale-midpoint"></a></dt>
-<dd><p>Midpoint for focal fill scale.</p></dd>
+<dd><p>Midpoint for focal fill scale. Default uses color_scale_midpoint.</p></dd>
 
 
 <dt id="arg-focal-fill-method">focal_fill_method<a class="anchor" aria-label="anchor" href="#arg-focal-fill-method"></a></dt>
@@ -814,7 +830,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 
 <dt id="arg-tile-color-palette">tile_color_palette<a class="anchor" aria-label="anchor" href="#arg-tile-color-palette"></a></dt>
-<dd><p>Color palette for matrix plots.</p></dd>
+<dd><p>Color palette for matrix plots. Default is c("white", "gold", "red").</p></dd>
 
 
 <dt id="arg-tile-interpolate">tile_interpolate<a class="anchor" aria-label="anchor" href="#arg-tile-interpolate"></a></dt>
@@ -822,7 +838,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 
 <dt id="arg-tile-color-border">tile_color_border<a class="anchor" aria-label="anchor" href="#arg-tile-color-border"></a></dt>
-<dd><p>Color border for matrix tiles.</p></dd>
+<dd><p>Color border for matrix tiles. Default is NA (no border).</p></dd>
 
 
 <dt id="arg-tile-cluster">tile_cluster<a class="anchor" aria-label="anchor" href="#arg-tile-cluster"></a></dt>
@@ -834,15 +850,15 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 
 <dt id="arg-tile-na-rm">tile_na_rm<a class="anchor" aria-label="anchor" href="#arg-tile-na-rm"></a></dt>
-<dd><p>Whether to remove NA values in matrix tiles.</p></dd>
+<dd><p>Whether to remove NA values in matrix tiles. Default is FALSE.</p></dd>
 
 
 <dt id="arg-tile-linejoin">tile_linejoin<a class="anchor" aria-label="anchor" href="#arg-tile-linejoin"></a></dt>
-<dd><p>Line join type for matrix tiles.</p></dd>
+<dd><p>Line join type for matrix tiles. Default is "mitre".</p></dd>
 
 
 <dt id="arg-matrix-diagonal-include">matrix_diagonal_include<a class="anchor" aria-label="anchor" href="#arg-matrix-diagonal-include"></a></dt>
-<dd><p>Whether to include diagonal in matrix plots.</p></dd>
+<dd><p>Whether to include diagonal in matrix plots. Default is TRUE.</p></dd>
 
 
 <dt id="arg-matrix-upper-triangle-include">matrix_upper_triangle_include<a class="anchor" aria-label="anchor" href="#arg-matrix-upper-triangle-include"></a></dt>
@@ -858,7 +874,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 
 <dt id="arg-matrix-ischild-method">matrix_isChild_method<a class="anchor" aria-label="anchor" href="#arg-matrix-ischild-method"></a></dt>
-<dd><p>Method used for isChild matrix derivation.</p></dd>
+<dd><p>Method used for isChild matrix derivation. Options are "partialparent", "fullparent", "anyparent".</p></dd>
 
 
 <dt id="arg-return-static">return_static<a class="anchor" aria-label="anchor" href="#arg-return-static"></a></dt>
@@ -898,7 +914,11 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 
 <dt id="arg-recode-missing-ids">recode_missing_ids<a class="anchor" aria-label="anchor" href="#arg-recode-missing-ids"></a></dt>
-<dd><p>Whether to recode 0s as missing IDs in the pedigree.</p></dd>
+<dd><p>Whether to recode 0s as missing IDs in the pedigree. Default is TRUE.</p></dd>
+
+
+<dt id="arg-add-phantoms">add_phantoms<a class="anchor" aria-label="anchor" href="#arg-add-phantoms"></a></dt>
+<dd><p>Whether to add phantom parents for individuals without parents.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

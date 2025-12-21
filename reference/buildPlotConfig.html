@@ -11,7 +11,7 @@ ensuring all necessary parameters are set."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@ ensuring all necessary parameters are set."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>build Config</h1>
-      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/main/R/defaultPlotConfig.R" class="external-link"><code>R/defaultPlotConfig.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/main/R/buildPlotConfig.R" class="external-link"><code>R/buildPlotConfig.R</code></a></small>
       <div class="d-none name"><code>buildPlotConfig.Rd</code></div>
     </div>
 
@@ -55,7 +55,12 @@ ensuring all necessary parameters are set.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">buildPlotConfig</span><span class="op">(</span><span class="va">default_config</span>, <span class="va">config</span>, function_name <span class="op">=</span> <span class="st">"ggPedigree"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">buildPlotConfig</span><span class="op">(</span></span>
+<span>  <span class="va">default_config</span>,</span>
+<span>  <span class="va">config</span>,</span>
+<span>  function_name <span class="op">=</span> <span class="st">"ggPedigree"</span>,</span>
+<span>  pedigree_size <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -72,6 +77,10 @@ ensuring all necessary parameters are set.</p>
 
 <dt id="arg-function-name">function_name<a class="anchor" aria-label="anchor" href="#arg-function-name"></a></dt>
 <dd><p>The name of the function for which the configuration is being built.</p></dd>
+
+
+<dt id="arg-pedigree-size">pedigree_size<a class="anchor" aria-label="anchor" href="#arg-pedigree-size"></a></dt>
+<dd><p>Size of the pedigree, used for point scaling.</p></dd>
 
 </dl></div>
     <div class="section level2">

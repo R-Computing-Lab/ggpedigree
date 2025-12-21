@@ -18,7 +18,6 @@
 <url><loc>https://r-computing-lab.github.io/ggpedigree/news/index.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/ASOIAF.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/addFocalFillColumn.html</loc></url>
-<url><loc>https://r-computing-lab.github.io/ggpedigree/reference/addTwins.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/alignPedigreeWithHints.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/alignPedigreeWithRelations.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/buildPlotConfig.html</loc></url>
@@ -35,6 +34,7 @@
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-addOverlay.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-addScales.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-addSelfSegment.html</loc></url>
+<url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-addTwins.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-adjustSpacing.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-computeCurvedMidpoint.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-makeSymmetricKey.html</loc></url>

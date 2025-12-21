@@ -15,7 +15,7 @@ preparePedigreeData(
   matID = "matID",
   patID = "patID",
   config = list(focal_fill_include = TRUE, focal_fill_component = "maternal",
-    recode_missing_ids = TRUE),
+    recode_missing_ids = TRUE, add_phantoms = FALSE),
   fill_group_paternal = c("paternal", "patID", "paternal line", "paternal lineages",
     "paternal lines"),
   fill_group_maternal = c("maternal", "matID", "maternal line", "maternal lineages",
@@ -23,7 +23,6 @@ preparePedigreeData(
   fill_group_family = c("family", "famID", "family line", "family lineages",
     "family lines"),
   status_column = NULL,
-  phantoms = FALSE,
   focal_fill_column = NULL
 )
 ```
@@ -68,12 +67,12 @@ preparePedigreeData(
 - config:
 
   A list of configuration options for customizing the plot. See
-  getDefaultPlotConfig for details. The list can include:
+  getDefaultPlotConfig for details of each option. The list can include:
 
   code_male
 
   :   Integer or string. Value identifying males in the sex column.
-      (typically 0 or 1) Default: 1.
+      (typically 0 or 1) Default: 1
 
   segment_spouse_color, segment_self_color
 
@@ -133,11 +132,6 @@ preparePedigreeData(
 
   Character string specifying the column name for affected status.
   Defaults to NULL.
-
-- phantoms:
-
-  Logical. If TRUE, adds phantom parents for individuals without
-  parents.
 
 - focal_fill_column:
 

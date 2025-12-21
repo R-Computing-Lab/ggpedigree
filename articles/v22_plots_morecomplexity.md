@@ -86,6 +86,7 @@ df_repaired <- checkParentIDs(df_got,
   parentswithoutrow = FALSE,
   repairsex = FALSE
 ) %>% mutate(
+  famID_mulit =famID,
   famID = 1,
   affected = case_when(
     ID %in% c(jon_id, dany_id, "365") ~ 1,
@@ -126,6 +127,9 @@ customizable way to visualize pedigrees, allowing for easy integration
 with other `ggplot2` functions.
 
 ``` r
+df_repaired <- df_repaired %>% mutate(
+  famID =famID_mulit)
+
 pltstatic <- ggPedigree(df_repaired,
   status_column = "affected",
   personID = "ID",
@@ -134,13 +138,13 @@ pltstatic <- ggPedigree(df_repaired,
     status_label_unaffected = 0,
     sex_color_include = TRUE,
     code_male = "M",
-    point_size = 1,
+    point_size = 10,
     status_label_affected = 1,
     status_shape_affected = 4,
     ped_width = 14,
     tooltip_include = TRUE,
     label_nudge_y = .25,
-    label_include = TRUE,
+    label_include = FALSE,
     label_method = "geom_text",
     #  segment_self_color = "purple",
     #   label_segment_color = "gray",
@@ -152,6 +156,11 @@ pltstatic
 ```
 
 ![](v22_plots_morecomplexity_files/figure-html/unnamed-chunk-6-1.png)
+
+``` r
+
+#pltstatic+ facet_wrap(~famID_mulit, drop=TRUE,scales = "free")
+```
 
 ``` r
 df_repaired_renamed <- df_repaired %>% rename(
@@ -167,7 +176,8 @@ plt <- ggPedigreeInteractive(df_repaired_renamed,
     focal_fill_personID = 353,
     focal_fill_include = TRUE,
     code_male = "M",
-    point_size = 1,
+    point_size = 10,
+        segment_linewidth = 0.25,
     status_include = FALSE,
     status_label_affected = 1,
     status_shape_affected = 4,
@@ -188,6 +198,7 @@ plt <- ggPedigreeInteractive(df_repaired_renamed,
     tooltip_include = TRUE,
     label_nudge_y = .25,
     label_include = TRUE,
+    label_text_size = 1,
     label_method = "geom_text",
     segment_self_color = "black",
     tooltip_columns = c("personID", "name", "focal_fill")
@@ -210,7 +221,8 @@ plt <- ggPedigreeInteractive(df_repaired_renamed,
     focal_fill_personID = 339,
     focal_fill_include = TRUE,
     code_male = "M",
-    point_size = 1,
+    point_size = 10,
+    segment_linewidth = 0.25,
     status_include = FALSE,
     status_label_affected = 1,
     status_shape_affected = 4,
@@ -231,6 +243,7 @@ plt <- ggPedigreeInteractive(df_repaired_renamed,
     tooltip_include = TRUE,
     label_nudge_y = .25,
     label_include = TRUE,
+    label_text_size = 1,
     label_method = "geom_text",
     segment_self_color = "black",
     tooltip_columns = c("personID", "name", "focal_fill")

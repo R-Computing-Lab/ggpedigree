@@ -171,6 +171,9 @@ fig1 <- ggPedigree(
 #> Pedigree data prepared. Number of individuals: 14
 #> Coordinates calculated. Number of individuals: 14
 #> Connections calculated. Number of connections: 14
+#> Adding nodes to the plot...
+#> Focal fill column:
+#> Status column: proband
 # fig1
 
 fig1$plot + geom_point(aes(x = x_pos, y = y_pos),
