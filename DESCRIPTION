@@ -24,6 +24,7 @@ Imports:
     scales,
     tidyr
 Suggests:
+    selectr (>= 0.5-1),
     kinship2,
     quadprog,
     ggrepel,
