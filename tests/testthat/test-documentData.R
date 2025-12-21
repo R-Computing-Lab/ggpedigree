@@ -24,4 +24,16 @@ test_that("ASOIAF data loads", {
     verbose = TRUE
   )
   expect_true(checkis_acyclic$is_acyclic)
+
+  ggped <- ggPedigree(ASOIAF,
+    famID = "famID",
+    personID = "id",
+    momID = "momID",
+    dadID = "dadID",
+    config = list(
+      add_phantoms = TRUE,
+      code_male = "M"
+    )
+  )
+  expect_true(inherits(ggped, "ggplot"))
 })

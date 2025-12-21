@@ -21,7 +21,6 @@ ggPedigree.core(
   debug = FALSE,
   hints = NULL,
   function_name = "ggPedigree",
-  phantoms = FALSE,
   ...
 )
 }
@@ -51,9 +50,9 @@ ggPedigree.core(
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
 
 \item{config}{A list of configuration options for customizing the plot.
-      See getDefaultPlotConfig for details. The list can include:
+      See getDefaultPlotConfig for details of each option. The list can include:
 \describe{
-   \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1.}
+   \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1}
    \item{segment_spouse_color, segment_self_color}{Character. Line colors for respective connection types.}
    \item{segment_sibling_color, segment_parent_color, segment_offspring_color}{Character. Line colors for respective connection types.}
    \item{label_text_size, point_size, segment_linewidth}{Numeric. Controls text size, point size, and line thickness.}
@@ -69,8 +68,6 @@ ggPedigree.core(
 \item{debug}{Logical. If TRUE, prints debugging information. Default: FALSE.}
 
 \item{hints}{Data frame with hints for layout adjustments. Default: NULL.}
-
-\item{phantoms}{Logical. If TRUE, adds phantom parents for individuals without parents.}
 
 \item{...}{Additional arguments passed to `ggplot2` functions.}
 }

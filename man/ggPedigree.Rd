@@ -24,7 +24,6 @@ ggPedigree(
   debug = FALSE,
   hints = NULL,
   interactive = FALSE,
-  phantoms = FALSE,
   ...
 )
 
@@ -47,7 +46,6 @@ ggpedigree(
   debug = FALSE,
   hints = NULL,
   interactive = FALSE,
-  phantoms = FALSE,
   ...
 )
 }
@@ -86,9 +84,9 @@ If FALSE, returns the underlying plotly object (useful for further
 customization before printing).}
 
 \item{config}{A list of configuration options for customizing the plot.
-      See getDefaultPlotConfig for details. The list can include:
+      See getDefaultPlotConfig for details of each option. The list can include:
 \describe{
-   \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1.}
+   \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1}
    \item{segment_spouse_color, segment_self_color}{Character. Line colors for respective connection types.}
    \item{segment_sibling_color, segment_parent_color, segment_offspring_color}{Character. Line colors for respective connection types.}
    \item{label_text_size, point_size, segment_linewidth}{Numeric. Controls text size, point size, and line thickness.}
@@ -106,8 +104,6 @@ customization before printing).}
 \item{hints}{Data frame with hints for layout adjustments. Default: NULL.}
 
 \item{interactive}{Logical. If TRUE, generates an interactive plot using `plotly`. Default: FALSE.}
-
-\item{phantoms}{Logical. If TRUE, adds phantom parents for individuals without parents.}
 
 \item{...}{Additional arguments passed to `ggplot2` functions.}
 }

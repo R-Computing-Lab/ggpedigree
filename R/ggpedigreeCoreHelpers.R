@@ -19,7 +19,8 @@ preparePedigreeData <- function(ped,
                                 config = list(
                                   focal_fill_include = TRUE,
                                   focal_fill_component = "maternal",
-                                  recode_missing_ids = TRUE
+                                  recode_missing_ids = TRUE,
+                                  add_phantoms = FALSE
                                 ),
                                 fill_group_paternal = c(
                                   "paternal",
@@ -43,7 +44,6 @@ preparePedigreeData <- function(ped,
                                   "family lines"
                                 ),
                                 status_column = NULL,
-                                phantoms = FALSE,
                                 focal_fill_column = NULL) {
   # -----
   # STEP 2: Pedigree Data Transformation
@@ -84,7 +84,7 @@ preparePedigreeData <- function(ped,
     recode_female = config$code_female
   )
 
-  if (phantoms == TRUE) {
+  if (config$add_phantoms == TRUE) {
     # If phantoms are requested, add phantom parents
     ds_ped <- BGmisc::checkParentIDs(
       ds_ped,

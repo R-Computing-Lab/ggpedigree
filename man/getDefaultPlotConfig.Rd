@@ -175,6 +175,7 @@ getDefaultPlotConfig(
   override_many2many = FALSE,
   optimize_plotly = TRUE,
   recode_missing_ids = TRUE,
+  add_phantoms = FALSE,
   ...
 )
 }
@@ -516,6 +517,8 @@ getDefaultPlotConfig(
 \item{optimize_plotly}{Whether to optimize the plotly output for speed.}
 
 \item{recode_missing_ids}{Whether to recode 0s as missing IDs in the pedigree. Default is TRUE.}
+
+\item{add_phantoms}{Whether to add phantom parents for individuals without parents.}
 
 \item{...}{Additional arguments for future extensibility.}
 }

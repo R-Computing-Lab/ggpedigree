@@ -26,7 +26,6 @@ ggPedigree.core <- function(ped,
                             debug = FALSE,
                             hints = NULL,
                             function_name = "ggPedigree",
-                            phantoms = FALSE,
                             ...) {
   # -----
   # STEP 1: Configuration and Preparation
@@ -84,7 +83,6 @@ ggPedigree.core <- function(ped,
     fill_group_maternal = fill_group_maternal,
     fill_group_family = fill_group_family,
     status_column = status_column,
-    phantoms = phantoms,
     focal_fill_column = focal_fill_column
   )
 

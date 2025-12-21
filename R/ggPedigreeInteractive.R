@@ -30,7 +30,6 @@ ggPedigreeInteractive <- function(ped,
                                   config = list(optimize_plotly = TRUE),
                                   debug = FALSE,
                                   return_widget = TRUE,
-                                  phantoms = FALSE,
                                   ...) {
   if (!requireNamespace("plotly", quietly = TRUE)) {
     stop("The 'plotly' package is required for interactive plots.")
@@ -76,6 +75,8 @@ ggPedigreeInteractive <- function(ped,
     function_name = "ggpedigreeinteractive",
     pedigree_size = nrow(ped)
   )
+
+
   ## 1. Build the static ggplot using the existing engine
   static_plot <- ggPedigree.core(ped,
     famID = famID,
@@ -90,7 +91,6 @@ ggPedigreeInteractive <- function(ped,
     config = config,
     debug = config$debug,
     focal_fill_column = focal_fill_column,
-    phantoms = phantoms,
     function_name = "ggpedigreeinteractive",
     ...
   )

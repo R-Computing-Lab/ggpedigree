@@ -174,6 +174,7 @@
 #' @param relation Optional relation to pass along to kinship2::pedigree
 #' @param recode_missing_ids Whether to recode 0s as missing IDs in the pedigree. Default is TRUE.
 #' @param debug Whether to enable debugging mode.
+#' @param add_phantoms Whether to add phantom parents for individuals without parents.
 #' @param ... Additional arguments for future extensibility.
 #' @return A named list of default plotting and layout parameters.
 #' @export
@@ -384,6 +385,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  override_many2many = FALSE,
                                  optimize_plotly = TRUE,
                                  recode_missing_ids = TRUE,
+                                 add_phantoms = FALSE,
                                  # ---- Future Extensibility ----
                                  ...) {
   # Ensure the color palette is a character vector
@@ -614,6 +616,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     override_many2many = override_many2many,
     optimize_plotly = optimize_plotly,
     recode_missing_ids = recode_missing_ids,
+    add_phantoms = add_phantoms,
     debug = debug
   )
   lc_function_name <- stringr::str_to_lower(function_name)

@@ -77,7 +77,6 @@ test_that("calculateConnections returns expected columns and structure with no s
 })
 
 
-
 test_that("calculateConnections returns correct parent coordinates", {
   # A is mother of C and D; X is father of C and D
   ped <- data.frame(

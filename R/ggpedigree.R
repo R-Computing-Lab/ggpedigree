@@ -27,12 +27,11 @@
 #'        If FALSE, returns the underlying plotly object (useful for further
 #'        customization before printing).
 #' @param focal_fill_column Character string specifying the column name for focal fill color.
-#' @param phantoms Logical. If TRUE, adds phantom parents for individuals without parents.
 #' @param ... Additional arguments passed to `ggplot2` functions.
 #' @param config A list of configuration options for customizing the plot.
-#'        See getDefaultPlotConfig for details. The list can include:
+#'        See getDefaultPlotConfig for details of each option. The list can include:
 #'  \describe{
-#'     \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1.}
+#'     \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1}
 #'     \item{segment_spouse_color, segment_self_color}{Character. Line colors for respective connection types.}
 #'     \item{segment_sibling_color, segment_parent_color, segment_offspring_color}{Character. Line colors for respective connection types.}
 #'     \item{label_text_size, point_size, segment_linewidth}{Numeric. Controls text size, point size, and line thickness.}
@@ -79,7 +78,6 @@ ggPedigree <- function(ped,
                        debug = FALSE,
                        hints = NULL,
                        interactive = FALSE,
-                       phantoms = FALSE,
                        ...) {
   if (!inherits(ped, "data.frame")) {
     if (rlang::inherits_any(ped, c("ped", "pedigree", "kinship2.pedigree"))) {
@@ -119,7 +117,6 @@ ggPedigree <- function(ped,
       hints = hints,
       return_widget = return_widget,
       tooltip_columns = tooltip_columns,
-      phantoms = phantoms,
       ...
     )
   } else {
@@ -139,6 +136,8 @@ ggPedigree <- function(ped,
       function_name = "ggpedigree",
       pedigree_size = nrow(ped)
     )
+
+
     # Call the core function with the provided arguments
     ggPedigree.core(
       ped = ped,
@@ -156,7 +155,6 @@ ggPedigree <- function(ped,
       config = config,
       debug = debug,
       hints = hints,
-      phantoms = phantoms,
       ...
     )
   }

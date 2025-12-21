@@ -13,7 +13,7 @@ preparePedigreeData(
   matID = "matID",
   patID = "patID",
   config = list(focal_fill_include = TRUE, focal_fill_component = "maternal",
-    recode_missing_ids = TRUE),
+    recode_missing_ids = TRUE, add_phantoms = FALSE),
   fill_group_paternal = c("paternal", "patID", "paternal line", "paternal lineages",
     "paternal lines"),
   fill_group_maternal = c("maternal", "matID", "maternal line", "maternal lineages",
@@ -21,7 +21,6 @@ preparePedigreeData(
   fill_group_family = c("family", "famID", "family line", "family lineages",
     "family lines"),
   status_column = NULL,
-  phantoms = FALSE,
   focal_fill_column = NULL
 )
 }
@@ -41,9 +40,9 @@ preparePedigreeData(
 \item{patID}{Character string specifying the column name for paternal lines Defaults to "patID".}
 
 \item{config}{A list of configuration options for customizing the plot.
-      See getDefaultPlotConfig for details. The list can include:
+      See getDefaultPlotConfig for details of each option. The list can include:
 \describe{
-   \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1.}
+   \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1}
    \item{segment_spouse_color, segment_self_color}{Character. Line colors for respective connection types.}
    \item{segment_sibling_color, segment_parent_color, segment_offspring_color}{Character. Line colors for respective connection types.}
    \item{label_text_size, point_size, segment_linewidth}{Numeric. Controls text size, point size, and line thickness.}
@@ -63,8 +62,6 @@ preparePedigreeData(
 \item{fill_group_family}{A character vector specifying the family fill group names.}
 
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
-
-\item{phantoms}{Logical. If TRUE, adds phantom parents for individuals without parents.}
 
 \item{focal_fill_column}{Character string specifying the column name for focal fill color.}
 }

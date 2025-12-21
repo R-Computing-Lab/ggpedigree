@@ -185,7 +185,7 @@ test_that("ggPedigree handles self-segment", {
     #  debug = TRUE,
     config = list(
       code_male = 0,
-      code_female=1,
+      code_female = 1,
       override_many2many = TRUE,
       sex_color_include = FALSE,
       status_code_affected = TRUE,
@@ -207,7 +207,7 @@ test_that("ggPedigree handles self-segment", {
     #  debug = TRUE,
     config = list(
       code_male = 0,
-      code_female=1,
+      code_female = 1,
       debug = TRUE,
       override_many2many = TRUE,
       sex_color_include = FALSE,
@@ -364,6 +364,7 @@ test_that("debug", {
       focal_fill_include = TRUE,
       sex_color_include = FALSE,
       focal_fill_use_log = TRUE,
+      add_phantoms = TRUE,
       debug = TRUE
     )
   ))
@@ -377,6 +378,7 @@ test_that("debug", {
       focal_fill_include = TRUE,
       sex_color_include = FALSE,
       debug = TRUE,
+      add_phantoms = TRUE,
       focal_fill_use_log = FALSE
     )
   )
@@ -413,10 +415,11 @@ test_that("behaves with kinship 2 pedigree object", {
       personID = "id",
       momID = "mindex",
       sexVar = "sex",
-      config = list(code_male = 1,
-                    code_female = 0,
-                    code_na = NA
-                    ),
+      config = list(
+        code_male = 1,
+        code_female = 0,
+        code_na = NA
+      ),
       dadID = "findex",
       overlay_column = "affected",
       status_column = "status"

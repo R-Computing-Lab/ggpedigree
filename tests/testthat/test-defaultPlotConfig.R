@@ -16,7 +16,7 @@ test_that("getDefaultPlotConfig returns expected defaults", {
   config <- getDefaultPlotConfig()
 
   expect_true(is.list(config))
-  expect_equal(length(config), 162) # Check number of default parameters
+  expect_equal(length(config), 163) # Check number of default parameters
 
   expect_equal(config$apply_default_scales, TRUE)
   expect_equal(config$apply_default_theme, TRUE)
@@ -138,10 +138,9 @@ test_that("buildPlotConfig returns a list", {
 
   pedigree_size <- 300
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
-  expect_equal(result$point_size, custom$point_size / sqrt(pedigree_size)*1.5, tolerance = 1e-8)
+  expect_equal(result$point_size, custom$point_size / sqrt(pedigree_size) * 1.5, tolerance = 1e-8)
 
   pedigree_size <- 501
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
-  expect_equal(result$point_size, custom$point_size / sqrt(pedigree_size)*2.5, tolerance = 1e-8)
-
+  expect_equal(result$point_size, custom$point_size / sqrt(pedigree_size) * 2.5, tolerance = 1e-8)
 })
