@@ -900,7 +900,7 @@ addSelfSegment <- .addSelfSegment
         values = config$sex_color_palette,
         labels = config$sex_shape_labels
       )
-    }   else {
+    } else {
       plotObject <- plotObject +
         ggplot2::scale_color_discrete(labels = config$sex_shape_labels)
     }
@@ -997,7 +997,6 @@ addSelfSegment <- .addSelfSegment
         } else {
           NULL
         }
-
       )
     if (config$focal_fill_legend_show == FALSE) {
       plotObject <- plotObject + ggplot2::guides(color = "none")
