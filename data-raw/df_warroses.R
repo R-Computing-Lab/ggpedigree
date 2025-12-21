@@ -56,35 +56,36 @@ df_repaired <- checkSex(warsofroses,
     personID = ID
   )
 
-
-ggpedigree::ggpedigree(df_repaired,
-  personID = "personID",
-  momID = "momID",
-  dadID = "dadID",
-  famID = "famID",
-  config = list(
-    code_male = "M",
-    code_female = "F",
-    code_na = "U",
-    focal_fill_include = TRUE,
-    focal_fill_force_zero = TRUE,
-    focal_fill_personID = 1, # Edward III
-    # apply_default_scales = FALSE,
-    label_column = "name",
-    label_method = "ggrepel",
-    sex_legend_show = FALSE,
-    sex_color_include = FALSE,
-    #  focal_fill_high_color = "#4A7023",
-    # focal_fill_mid_color =  "#C1E1A6",
-    #  focal_fill_low_color =  "#F0F8FF",
-    #  focal_fill_na_color = "lightgrey",
-    label_include = TRUE,
-    label_text_angle = -90,
-    label_text_size = 2,
-    # label_nudge_y = -0.05#,
-    label_nudge_x = -.05
+if (FALSE) {
+  ggpedigree::ggpedigree(df_repaired,
+    personID = "personID",
+    momID = "momID",
+    dadID = "dadID",
+    famID = "famID",
+    config = list(
+      code_male = "M",
+      code_female = "F",
+      code_na = "U",
+      focal_fill_include = TRUE,
+      focal_fill_force_zero = TRUE,
+      focal_fill_personID = 1, # Edward III
+      # apply_default_scales = FALSE,
+      label_column = "name",
+      label_method = "ggrepel",
+      sex_legend_show = FALSE,
+      sex_color_include = FALSE,
+      #  focal_fill_high_color = "#4A7023",
+      # focal_fill_mid_color =  "#C1E1A6",
+      #  focal_fill_low_color =  "#F0F8FF",
+      #  focal_fill_na_color = "lightgrey",
+      label_include = TRUE,
+      label_text_angle = -90,
+      label_text_size = 2,
+      # label_nudge_y = -0.05#,
+      label_nudge_x = -.05
+    )
   )
-)
+}
 checkIDs(df_repaired)
 
 checkis_acyclic <- checkPedigreeNetwork(df_repaired,

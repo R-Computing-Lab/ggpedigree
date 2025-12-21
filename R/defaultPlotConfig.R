@@ -22,9 +22,10 @@
 #' @param plot_title Main title of the plot.
 #' @param plot_subtitle Subtitle of the plot.
 #' @param value_rounding_digits Number of digits to round displayed values.
-#' @param code_male Integer/string code for males in data.
-#' @param code_na optional Integer/string code for missing values in data.
-#' @param code_female  optional Integer/string code for females in data.
+#' @param code_male Integer/string code for males in data. Default is 1.
+#' @param code_na optional Integer/string code for missing values in data. Default is NA.
+#' @param code_female  optional Integer/string code for females in data. Default is 0.
+#' @param code_unknown  optional Integer/string code for unknown sex in data. Default is NULL.
 #' @param filter_n_pairs Threshold to filter maximum number of pairs.
 #' @param filter_degree_min Minimum degree value used in filtering.
 #' @param filter_degree_max Maximum degree value used in filtering.
@@ -52,6 +53,7 @@
 #' @param label_text_color Color of the label text.
 #' @param label_text_family Font family for label text.
 #' @param point_size Size of points drawn in plot.
+#' @param point_scale_by_pedigree Whether to scale point sizes by pedigree size.
 #' @param outline_include Whether to include outlines around points.
 #' @param outline_multiplier Multiplier to compute outline size from point size.
 #' @param outline_additional_size Additional size added to outlines.
@@ -71,31 +73,32 @@
 #' @param ped_packed Whether the pedigree should use packed layout.
 #' @param ped_align Whether to align pedigree generations.
 #' @param ped_width Plot width of the pedigree block.
-#' @param segment_linewidth Line width for segments.
-#' @param segment_linetype Line type for segments.
-#' @param segment_lineend Line end type for segments.
-#' @param segment_linejoin Line join type for segments.
-#' @param segment_offspring_color Color for offspring segments.
-#' @param segment_parent_color Color for parent segments.
-#' @param segment_self_color Color for self-loop segments.
-#' @param segment_sibling_color Color for sibling segments.
-#' @param segment_spouse_color Color for spouse segments.
-#' @param segment_mz_color Color for monozygotic twin segments.
-#' @param segment_mz_linetype Line type for MZ segments.
-#' @param segment_mz_alpha Alpha for MZ segments.
-#' @param segment_mz_t Tuning parameter for MZ segment layout.
-#' @param segment_self_linetype Line type for self-loop segments.
-#' @param segment_self_alpha Alpha value for self-loop segments.
-#' @param segment_self_angle Angle of self-loop segment.
-#' @param segment_self_curvature Curvature of self-loop segment.
-#' @param segment_self_linewidth Width of self-loop segment lines.
-#' @param sex_color_include Whether to color nodes by sex.
-#' @param sex_color_palette A character vector of colors for sex.
+#' @param segment_linewidth Line width for segments. Default is 0.5.
+#' @param segment_linetype Line type for segments. Default is 1 (solid).
+#' @param segment_lineend Line end type for segments. Default is "round".
+#' @param segment_linejoin Line join type for segments. Default is "round".
+#' @param segment_offspring_color Color for offspring segments. Default uses segment_default_color.
+#' @param segment_parent_color Color for parent segments. Default uses segment_default_color.
+#' @param segment_self_color Color for self-loop segments. Default uses segment_default_color.
+#' @param segment_sibling_color Color for sibling segments. Default uses segment_default_color.
+#' @param segment_spouse_color Color for spouse segments. Default uses segment_default_color.
+#' @param segment_mz_color Color for monozygotic twin segments. Default uses segment_default_color.
+#' @param segment_mz_linetype Line type for MZ segments. Default uses segment_linetype.
+#' @param segment_mz_alpha Alpha for MZ segments. Default is 1.
+#' @param segment_mz_t Tuning parameter for MZ segment layout. Default is 0.6.
+#' @param segment_self_linetype Line type for self-loop segments. Default is "dotdash".
+#' @param segment_self_alpha Alpha value for self-loop segments. Default is 0.5.
+#' @param segment_self_angle Angle of self-loop segment. Default is 90 degrees.
+#' @param segment_self_curvature Curvature of self-loop segment. Default is -0.2.
+#' @param segment_self_linewidth Width of self-loop segment lines. Default is half of segment_linewidth.
+#' @param sex_color_include Whether to color nodes by sex. Default is TRUE.
+#' @param sex_color_palette A character vector of colors for sex. Default uses color_palette_default.
 #' @param sex_legend_title Title of the sex legend.
 #' @param sex_shape_labels Labels used in sex legend.
 #' @param sex_shape_female Shape for female nodes.
 #' @param sex_shape_male Shape for male nodes.
 #' @param sex_shape_unknown Shape for unknown sex nodes.
+#' @param sex_shape_values A named vector mapping sex codes to shapes.
 #' @param sex_shape_include Whether to display the shape for sex variables
 #' @param sex_legend_show Whether to display sex in the legend
 #' @param status_include Whether to display affected status.
@@ -122,14 +125,14 @@
 #' @param overlay_include Whether to include overlay points in the plot. Default is FALSE.
 #' @param overlay_legend_title  Title of the overlay legend. Default is "Overlay".
 #' @param overlay_legend_show  Whether to show the overlay legend. Default is FALSE.
-#' @param focal_fill_include Whether to fill focal individuals.
-#' @param focal_fill_legend_show Whether to show legend for focal fill.
-#' @param focal_fill_personID ID of focal individual.
+#' @param focal_fill_include Whether to fill focal individuals. Default is FALSE.
+#' @param focal_fill_legend_show Whether to show legend for focal fill. Default is TRUE.
+#' @param focal_fill_personID ID of focal individual. Default is 1.
 #' @param focal_fill_legend_title Title of focal fill legend.
 #' @param focal_fill_high_color High-end color for focal gradient.
 #' @param focal_fill_mid_color Midpoint color for focal gradient.
 #' @param focal_fill_low_color Low-end color for focal gradient.
-#' @param focal_fill_scale_midpoint Midpoint for focal fill scale.
+#' @param focal_fill_scale_midpoint Midpoint for focal fill scale. Default uses color_scale_midpoint.
 #' @param focal_fill_method Method used for focal fill gradient. Options are 'steps', 'steps2', 'step', 'step2', 'viridis_c', 'viridis_d', 'viridis_b', 'manual', 'hue', 'gradient2', 'gradient'.
 #' @param focal_fill_component Component type for focal fill.
 #' @param focal_fill_shape Shape used for focal fill points.
@@ -149,18 +152,18 @@
 #' @param focal_fill_viridis_direction Direction of viridis color scale (1 for left to right, -1 for right to left).
 #' @param ci_include Whether to show confidence intervals.
 #' @param ci_ribbon_alpha Alpha level for CI ribbons.
-#' @param tile_color_palette Color palette for matrix plots.
-#' @param tile_color_border Color border for matrix tiles.
+#' @param tile_color_palette Color palette for matrix plots. Default is c("white", "gold", "red").
+#' @param tile_color_border Color border for matrix tiles. Default is NA (no border).
 #' @param tile_interpolate Whether to interpolate colors in matrix tiles.
 #' @param tile_geom Geometry type for matrix tiles (e.g., "geom_tile", "geom_raster").
 #' @param tile_cluster Whether to sort by clusters the matrix.
-#' @param tile_na_rm Whether to remove NA values in matrix tiles.
-#' @param tile_linejoin Line join type for matrix tiles.
-#' @param matrix_diagonal_include Whether to include diagonal in matrix plots.
+#' @param tile_na_rm Whether to remove NA values in matrix tiles. Default is FALSE.
+#' @param tile_linejoin Line join type for matrix tiles. Default is "mitre".
+#' @param matrix_diagonal_include Whether to include diagonal in matrix plots. Default is TRUE.
 #' @param matrix_upper_triangle_include Whether to include upper triangle in matrix plots.
 #' @param matrix_lower_triangle_include Whether to include lower triangle in matrix plots.
 #' @param matrix_sparse Whether matrix input is sparse.
-#' @param matrix_isChild_method Method used for isChild matrix derivation.
+#' @param matrix_isChild_method Method used for isChild matrix derivation. Options are "partialparent", "fullparent", "anyparent".
 #' @param return_static Whether to return a static plot.
 #' @param return_widget Whether to return a widget object.
 #' @param return_interactive Whether to return an interactive plot.
@@ -169,8 +172,9 @@
 #' @param override_many2many Whether to override many-to-many link logic.
 #' @param hints Optional hints to pass along to kinship2::autohint
 #' @param relation Optional relation to pass along to kinship2::pedigree
-#' @param recode_missing_ids Whether to recode 0s as missing IDs in the pedigree.
+#' @param recode_missing_ids Whether to recode 0s as missing IDs in the pedigree. Default is TRUE.
 #' @param debug Whether to enable debugging mode.
+#' @param add_phantoms Whether to add phantom parents for individuals without parents.
 #' @param ... Additional arguments for future extensibility.
 #' @return A named list of default plotting and layout parameters.
 #' @export
@@ -184,12 +188,16 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  apply_default_scales = TRUE,
                                  apply_default_theme = TRUE,
                                  segment_default_color = "black",
-                                 color_palette_default = c("#440154FF", "#FDE725FF", "#21908CFF"),
+                                 color_palette_default = c(
+                                   "#440154FF",
+                                   "#FDE725FF",
+                                   "#21908CFF"
+                                 ),
                                  color_palette_low = "#000004FF",
                                  color_palette_mid = "#56106EFF",
                                  color_palette_high = "#FCFDBFFF",
                                  color_scale_midpoint = 0.50,
-                                 color_scale_theme = "ggthemes::calc", # only used in gg
+                                 color_scale_theme = "ggthemes::calc", # only used in ggPhenotypeByDegree
                                  alpha = alpha_default,
                                  plot_title = NULL,
                                  plot_subtitle = NULL,
@@ -197,6 +205,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  # --- SEX ------------------------------------------------------------
                                  code_male = 1,
                                  code_na = NA,
+                                 code_unknown = NULL,
                                  code_female = 0,
                                  #  code_unknown = NULL,
                                  #    recode_male = code_male,#"M",
@@ -218,6 +227,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  label_text_family = "sans",
                                  # --- POINT / OUTLINE AESTHETICS ---------------------------------------
                                  point_size = 4,
+                                 point_scale_by_pedigree = TRUE,
                                  outline_include = FALSE,
                                  outline_multiplier = 1.25,
                                  outline_additional_size = 0,
@@ -267,8 +277,9 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  sex_shape_female = 16,
                                  sex_shape_male = 15,
                                  sex_shape_unknown = 18,
+                                 sex_shape_values = NULL, # will be set later
                                  sex_shape_include = TRUE,
-                                 sex_legend_show = TRUE,
+                                 sex_legend_show = FALSE,
                                  # ---- Affected Status Controls ----
                                  status_include = TRUE,
                                  status_code_affected = 1,
@@ -374,6 +385,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  override_many2many = FALSE,
                                  optimize_plotly = TRUE,
                                  recode_missing_ids = TRUE,
+                                 add_phantoms = FALSE,
                                  # ---- Future Extensibility ----
                                  ...) {
   # Ensure the color palette is a character vector
@@ -418,7 +430,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     code_male = code_male,
     code_na = code_na,
     code_female = code_female,
-    #  code_unknown = code_unknown,
+    code_unknown = ifelse(is.null(code_unknown), code_na, code_unknown),
     # recode_male = recode_male,
     #   recode_na =  recode_na,
     #  recode_female =  recode_female,
@@ -459,6 +471,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
 
     # --- POINT / OUTLINE AESTHETICS ---------------------------------------
     point_size = point_size,
+    point_scale_by_pedigree = point_scale_by_pedigree,
     outline_include = outline_include,
     outline_multiplier = outline_multiplier,
     outline_color = outline_color,
@@ -603,6 +616,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     override_many2many = override_many2many,
     optimize_plotly = optimize_plotly,
     recode_missing_ids = recode_missing_ids,
+    add_phantoms = add_phantoms,
     debug = debug
   )
   lc_function_name <- stringr::str_to_lower(function_name)
@@ -687,7 +701,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     core_list$tooltip_columns <- c(personID, "sex", status_column)
     core_list$label_method <- "geom_text"
     core_list$label_include <- FALSE # default to FALSE
-    core_list$segment_linewidth <- 0.5 # too think
+    core_list$segment_linewidth <- 0.5 # too thick
     core_list$segment_self_linewidth <- .5 * core_list$segment_linewidth
     core_list$tooltip_include <- TRUE
     core_list$return_static <- FALSE
@@ -699,121 +713,3 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
 
   return(core_list)
 }
-
-#' @title build Config
-#' @description
-#' This function builds a configuration list for ggPedigree plots.
-#' It merges a default configuration with user-specified settings,
-#' ensuring all necessary parameters are set.
-#' @param default_config A list of default configuration parameters.
-#' @param config A list of user-specified configuration parameters.
-#' @param function_name The name of the function for which the configuration is being built.
-#' @return A complete configuration list with all necessary parameters.
-#'
-buildPlotConfig <- function(default_config,
-                            config,
-                            function_name = "ggPedigree") {
-  # -- Detect duplicate configuration entries --
-  config_names <- names(config)
-  duplicated_keys <- config_names[duplicated(config_names)]
-
-  if (length(duplicated_keys) > 0) {
-    warning(sprintf(
-      "Duplicate config keys detected: %s. Later values will override earlier ones.",
-      paste(unique(duplicated_keys), collapse = ", ")
-    ))
-  }
-  # -- Detect unrecognized configuration entries --
-  valid_keys <- names(formals(getDefaultPlotConfig))
-  valid_keys <- setdiff(valid_keys, "function_name") # it's passed separately
-
-  unrecognized_keys <- setdiff(config_names, valid_keys)
-  if (length(unrecognized_keys) > 0) {
-    warning(sprintf(
-      "The following config values are not recognized by getDefaultPlotConfig(): %s",
-      paste(unrecognized_keys, collapse = ", ")
-    ))
-  }
-
-  # -- Merge user config with defaults --
-  built_config <- utils::modifyList(default_config, config)
-
-  built_config$label_nudge_y <- ifelse(built_config$label_nudge_y_flip,
-    built_config$label_nudge_y * -1, built_config$label_nudge_y
-  )
-
-  if (stringr::str_to_lower(function_name) %in%
-    c("ggpedigree", "ggpedigreeinteractive")) {
-    # Set additional internal config values based on other entries
-    if ("sex_shape_values" %in% names(built_config) == FALSE) {
-      built_config$sex_shape_values <- c(
-        built_config$sex_shape_female,
-        built_config$sex_shape_male,
-        built_config$sex_shape_unknown
-      )
-    }
-
-
-    if ("status_labs" %in% names(built_config) == FALSE) {
-      built_config$status_labs <- c(
-        built_config$status_label_affected,
-        built_config$status_label_unaffected
-      )
-    }
-    if ("status_codes" %in% names(built_config) == FALSE) {
-      built_config$status_codes <- c(
-        built_config$status_code_affected,
-        built_config$status_code_unaffected
-      )
-    }
-
-    built_config$status_alpha_values <- stats::setNames(
-      c(
-        built_config$status_alpha_affected,
-        built_config$status_alpha_unaffected
-      ),
-      built_config$status_labs
-    )
-    # Set color values for affected status
-    built_config$status_color_values <- stats::setNames(
-      c(
-        built_config$status_color_palette[1],
-        built_config$status_color_palette[2]
-      ),
-      built_config$status_labs
-    )
-
-    built_config$status_labels <- stats::setNames(
-      c(
-        built_config$status_label_affected,
-        built_config$status_label_unaffected
-      ),
-      built_config$status_labs
-    )
-    if ("overlay_labs" %in% names(built_config) == FALSE) {
-      built_config$overlay_labs <- c(
-        built_config$overlay_label_affected,
-        built_config$overlay_label_unaffected
-      )
-    }
-    if ("overlay_codes" %in% names(built_config) == FALSE) {
-      built_config$overlay_codes <- c(
-        built_config$overlay_code_affected,
-        built_config$overlay_code_unaffected
-      )
-    }
-    built_config$overlay_alpha_values <- stats::setNames(
-      c(
-        built_config$overlay_alpha_affected,
-        built_config$overlay_alpha_unaffected
-      ),
-      built_config$overlay_labs
-    )
-  } else if (stringr::str_to_lower(function_name) %in%
-    c("ggphenotypebydegree", "phenotypebydegree")) {
-    built_config$label_nudge_y_flip <- FALSE # default to TRUE for ggphenotypebydegree
-  }
-
-  return(built_config)
-}
-# -----

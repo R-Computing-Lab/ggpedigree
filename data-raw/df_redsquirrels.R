@@ -11,13 +11,16 @@ library(BGmisc)
 
 ## Create dataframe
 
-Ped <- read_excel("data-raw/Pedigree_dryadcopy.xlsx",
-  col_types = c(
-    "numeric", "numeric", "numeric",
-    "text"
-  )
-)
-write_csv(Ped, here("data-raw", "Pedigree_dryadcopy.csv"), na = "")
+# Ped <- readxl::read_excel("data-raw/Pedigree_dryadcopy.xlsx",
+#  col_types = c(
+#    "numeric", "numeric", "numeric",
+#    "text"
+#  )
+# )
+# write_csv(Ped, here("data-raw", "Pedigree_dryadcopy.csv"), na = "")
+
+Ped <- read.csv(here("data-raw", "Pedigree_dryadcopy.csv")) %>%
+  suppressWarnings()
 
 Ped <- Ped %>% rename(
   momID = dam,
@@ -26,14 +29,16 @@ Ped <- Ped %>% rename(
   sex = Sex
 )
 
-LRS <- read_excel("data-raw/LRS_fordryad.xlsx", col_types = c(
-  "numeric", "numeric", "numeric",
-  "text", "numeric", "numeric", "text",
-  "numeric"
-)) %>%
-  suppressWarnings()
+# LRS <- readxl::read_excel("data-raw/LRS_fordryad.xlsx", col_types = c(
+#  "numeric", "numeric", "numeric",
+#  "text", "numeric", "numeric", "text",
+#  "numeric"
+# )) %>%
+#  suppressWarnings()
 
-write_csv(LRS, here("data-raw", "LRS_fordryad.csv"), na = "")
+# write_csv(LRS, here("data-raw", "LRS_fordryad.csv"), na = "")
+LRS <- read.csv(here("data-raw", "LRS_fordryad.csv")) %>%
+  suppressWarnings()
 
 LRS <- LRS %>%
   rename(
@@ -48,18 +53,19 @@ LRS <- LRS %>%
   ) %>%
   select(-c("cod", "byear", "dyear"))
 
-ARS <- read_excel("data-raw/ARS_dryadcopy.xlsx",
-  col_types = c(
-    "numeric", "numeric", "numeric",
-    "text", "numeric", "numeric", "text",
-    "numeric", "numeric"
-  )
-) %>%
+# ARS <- readxl::read_excel("data-raw/ARS_dryadcopy.xlsx",
+#  col_types = c(
+#    "numeric", "numeric", "numeric",
+#    "text", "numeric", "numeric", "text",
+#    "numeric", "numeric"
+#  )
+# ) %>%
+#  suppressWarnings()
+
+
+# write_csv(ARS, here("data-raw", "ARS_dryadcopy.csv"), na = "")
+ARS <- read.csv(here("data-raw", "ARS_dryadcopy.csv")) %>%
   suppressWarnings()
-
-
-write_csv(ARS, here("data-raw", "ARS_dryadcopy.csv"), na = "")
-
 
 ARS <- ARS %>%
   rename(
@@ -97,7 +103,7 @@ ds$personID %>%
 
 ds_grouped <- ds %>%
   group_by(personID, momID, dadID, sex, famID, byear, dyear, lrs) %>%
-  summarise(
+  summarize(
     ars_mean = round(mean(ars, na.rm = TRUE), digits = 2),
     ars_max = round(max(ars, na.rm = TRUE), digits = 2),
     ars_med = round(median(ars, na.rm = TRUE), digits = 2),

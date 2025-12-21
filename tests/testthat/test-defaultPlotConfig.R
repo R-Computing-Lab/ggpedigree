@@ -16,7 +16,7 @@ test_that("getDefaultPlotConfig returns expected defaults", {
   config <- getDefaultPlotConfig()
 
   expect_true(is.list(config))
-  expect_equal(length(config), 160) # Check number of default parameters
+  expect_equal(length(config), 163) # Check number of default parameters
 
   expect_equal(config$apply_default_scales, TRUE)
   expect_equal(config$apply_default_theme, TRUE)
@@ -80,7 +80,7 @@ test_that("handles function_name variations", {
 test_that("buildPlotConfig warns on unrecognized keys", {
   default_config <- getDefaultPlotConfig(function_name = "ggPedigree")
 
-  expect_warning(buildPlotConfig(default_config, list(bogus_key = 1)), regexp = "not recognized")
+  expect_warning(buildPlotConfig(default_config, list(bogus_key = 1), pedigree_size = 1), regexp = "not recognized")
 })
 
 
@@ -89,7 +89,8 @@ test_that("buildPlotConfig accepts valid keys without warning", {
 
   config <- list(point_size = 3, label_include = FALSE)
 
-  expect_silent(buildPlotConfig(default_config, config))
+  expect_silent(buildPlotConfig(default_config, config, pedigree_size = 1))
+  expect_warning(buildPlotConfig(default_config, config))
 })
 
 test_that("buildPlotConfig  warns on duplicated keys, honors first value in duplicate", {
@@ -97,14 +98,14 @@ test_that("buildPlotConfig  warns on duplicated keys, honors first value in dupl
 
   config <- list(point_size = 1, point_size = 99)
 
-  result <- suppressWarnings(buildPlotConfig(default_config, config))
+  result <- suppressWarnings(buildPlotConfig(default_config, config, pedigree_size = 1))
   expect_equal(result$point_size, 1)
 
-  expect_warning(buildPlotConfig(default_config, config), regexp = "Duplicate config keys detected")
+  expect_warning(buildPlotConfig(default_config, config, pedigree_size = 1), regexp = "Duplicate config keys detected")
 
   config <- list(point_size = 99, point_size = 1)
 
-  result <- suppressWarnings(buildPlotConfig(default_config, config))
+  result <- suppressWarnings(buildPlotConfig(default_config, config, pedigree_size = 1))
   expect_equal(result$point_size, 99)
 })
 
@@ -113,7 +114,7 @@ test_that("buildPlotConfig merges valid subset overrides correctly", {
 
   custom <- list(point_size = 2, label_text_size = 10)
 
-  result <- buildPlotConfig(default_config, custom)
+  result <- buildPlotConfig(default_config, custom, pedigree_size = 1)
   expect_equal(result$point_size, 2)
   expect_equal(result$label_text_size, 10)
   expect_equal(
@@ -126,8 +127,20 @@ test_that("buildPlotConfig merges valid subset overrides correctly", {
 test_that("buildPlotConfig returns a list", {
   default_config <- getDefaultPlotConfig(function_name = "ggrelatednessmatrix")
   custom <- list(point_size = 2)
-
-  result <- buildPlotConfig(default_config, custom)
+  pedigree_size <- 3
+  result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
+  expect_equal(result$point_size, custom$point_size, tolerance = 1e-8)
   expect_equal(result$label_nudge_y, 0.15)
   expect_true(is.list(result))
+  pedigree_size <- 30
+  result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
+  expect_equal(result$point_size, custom$point_size / sqrt(pedigree_size), tolerance = 1e-8)
+
+  pedigree_size <- 300
+  result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
+  expect_equal(result$point_size, custom$point_size / sqrt(pedigree_size) * 1.5, tolerance = 1e-8)
+
+  pedigree_size <- 501
+  result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
+  expect_equal(result$point_size, custom$point_size / sqrt(pedigree_size) * 2.5, tolerance = 1e-8)
 })

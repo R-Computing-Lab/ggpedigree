@@ -1,5 +1,6 @@
 test_that("simulated pedigree plots correctly", {
   library(BGmisc)
+  library(kinship2)
   set.seed(5)
   Ngen <- 4
   kpc <- 4

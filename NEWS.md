@@ -1,15 +1,23 @@
 # ggpedigree (development version)
 # ==============================
+
+# ggpedigree 1.1.0.0
 * Saved raw excel data as csv to have a non-proprietary format for data storage
 * Added more refactorings of kinship2 internals for maintainability
 * Harmonize names by changing midparent to mid_parent throughout the codebase
 * Repair inconsistent handling of string IDs vs numeric IDs
 * Added rough cut of Wars of the Roses Pedigree Data Set
 * Required columns check much earlier in ggpedigree function, including sex
+* Added more informative error messages when constructing pedigree objects fails due to incorrect or non-standard sex coding. 
+* Expanded and refactored tests for various sex code and ID input scenarios, including comprehensive testing of input types, missing values, and configuration options. 
+* Add default point scaling as a function of pedigree size
+* Set Sex key to be hidden by default in ggpedigree
+* Slight tweaks to GoT dataset demonstration to improve visualization
+* Remove reshape2 dependency by using base R functions
 
 # ggpedigree 1.0.0.1
 ## cran resubmission
-* Fixed a minor documentation issue with a url whose certificate had expired.
+* Fixed a minor documentation issue with a URL whose certificate had expired.
 
 # ggpedigree 1.0.0
 ## cran submission
