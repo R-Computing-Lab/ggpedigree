@@ -22,10 +22,10 @@
 #' @param plot_title Main title of the plot.
 #' @param plot_subtitle Subtitle of the plot.
 #' @param value_rounding_digits Number of digits to round displayed values.
-#' @param code_male Integer/string code for males in data.
-#' @param code_na optional Integer/string code for missing values in data.
-#' @param code_female  optional Integer/string code for females in data.
-#' @param code_unknown  optional Integer/string code for unknown
+#' @param code_male Integer/string code for males in data. Default is 1.
+#' @param code_na optional Integer/string code for missing values in data. Default is NA.
+#' @param code_female  optional Integer/string code for females in data. Default is 0.
+#' @param code_unknown  optional Integer/string code for unknown sex in data. Default is NULL.
 #' @param filter_n_pairs Threshold to filter maximum number of pairs.
 #' @param filter_degree_min Minimum degree value used in filtering.
 #' @param filter_degree_max Maximum degree value used in filtering.
@@ -73,26 +73,26 @@
 #' @param ped_packed Whether the pedigree should use packed layout.
 #' @param ped_align Whether to align pedigree generations.
 #' @param ped_width Plot width of the pedigree block.
-#' @param segment_linewidth Line width for segments.
-#' @param segment_linetype Line type for segments.
-#' @param segment_lineend Line end type for segments.
-#' @param segment_linejoin Line join type for segments.
-#' @param segment_offspring_color Color for offspring segments.
-#' @param segment_parent_color Color for parent segments.
-#' @param segment_self_color Color for self-loop segments.
-#' @param segment_sibling_color Color for sibling segments.
-#' @param segment_spouse_color Color for spouse segments.
-#' @param segment_mz_color Color for monozygotic twin segments.
-#' @param segment_mz_linetype Line type for MZ segments.
-#' @param segment_mz_alpha Alpha for MZ segments.
-#' @param segment_mz_t Tuning parameter for MZ segment layout.
-#' @param segment_self_linetype Line type for self-loop segments.
-#' @param segment_self_alpha Alpha value for self-loop segments.
-#' @param segment_self_angle Angle of self-loop segment.
-#' @param segment_self_curvature Curvature of self-loop segment.
-#' @param segment_self_linewidth Width of self-loop segment lines.
-#' @param sex_color_include Whether to color nodes by sex.
-#' @param sex_color_palette A character vector of colors for sex.
+#' @param segment_linewidth Line width for segments. Default is 0.5.
+#' @param segment_linetype Line type for segments. Default is 1 (solid).
+#' @param segment_lineend Line end type for segments. Default is "round".
+#' @param segment_linejoin Line join type for segments. Default is "round".
+#' @param segment_offspring_color Color for offspring segments. Default uses segment_default_color.
+#' @param segment_parent_color Color for parent segments. Default uses segment_default_color.
+#' @param segment_self_color Color for self-loop segments. Default uses segment_default_color.
+#' @param segment_sibling_color Color for sibling segments. Default uses segment_default_color.
+#' @param segment_spouse_color Color for spouse segments. Default uses segment_default_color.
+#' @param segment_mz_color Color for monozygotic twin segments. Default uses segment_default_color.
+#' @param segment_mz_linetype Line type for MZ segments. Default uses segment_linetype.
+#' @param segment_mz_alpha Alpha for MZ segments. Default is 1.
+#' @param segment_mz_t Tuning parameter for MZ segment layout. Default is 0.6.
+#' @param segment_self_linetype Line type for self-loop segments. Default is "dotdash".
+#' @param segment_self_alpha Alpha value for self-loop segments. Default is 0.5.
+#' @param segment_self_angle Angle of self-loop segment. Default is 90 degrees.
+#' @param segment_self_curvature Curvature of self-loop segment. Default is -0.2.
+#' @param segment_self_linewidth Width of self-loop segment lines. Default is half of segment_linewidth.
+#' @param sex_color_include Whether to color nodes by sex. Default is TRUE.
+#' @param sex_color_palette A character vector of colors for sex. Default uses color_palette_default.
 #' @param sex_legend_title Title of the sex legend.
 #' @param sex_shape_labels Labels used in sex legend.
 #' @param sex_shape_female Shape for female nodes.
@@ -125,14 +125,14 @@
 #' @param overlay_include Whether to include overlay points in the plot. Default is FALSE.
 #' @param overlay_legend_title  Title of the overlay legend. Default is "Overlay".
 #' @param overlay_legend_show  Whether to show the overlay legend. Default is FALSE.
-#' @param focal_fill_include Whether to fill focal individuals.
-#' @param focal_fill_legend_show Whether to show legend for focal fill.
-#' @param focal_fill_personID ID of focal individual.
+#' @param focal_fill_include Whether to fill focal individuals. Default is FALSE.
+#' @param focal_fill_legend_show Whether to show legend for focal fill. Default is TRUE.
+#' @param focal_fill_personID ID of focal individual. Default is 1.
 #' @param focal_fill_legend_title Title of focal fill legend.
 #' @param focal_fill_high_color High-end color for focal gradient.
 #' @param focal_fill_mid_color Midpoint color for focal gradient.
 #' @param focal_fill_low_color Low-end color for focal gradient.
-#' @param focal_fill_scale_midpoint Midpoint for focal fill scale.
+#' @param focal_fill_scale_midpoint Midpoint for focal fill scale. Default uses color_scale_midpoint.
 #' @param focal_fill_method Method used for focal fill gradient. Options are 'steps', 'steps2', 'step', 'step2', 'viridis_c', 'viridis_d', 'viridis_b', 'manual', 'hue', 'gradient2', 'gradient'.
 #' @param focal_fill_component Component type for focal fill.
 #' @param focal_fill_shape Shape used for focal fill points.
@@ -152,18 +152,18 @@
 #' @param focal_fill_viridis_direction Direction of viridis color scale (1 for left to right, -1 for right to left).
 #' @param ci_include Whether to show confidence intervals.
 #' @param ci_ribbon_alpha Alpha level for CI ribbons.
-#' @param tile_color_palette Color palette for matrix plots.
-#' @param tile_color_border Color border for matrix tiles.
+#' @param tile_color_palette Color palette for matrix plots. Default is c("white", "gold", "red").
+#' @param tile_color_border Color border for matrix tiles. Default is NA (no border).
 #' @param tile_interpolate Whether to interpolate colors in matrix tiles.
 #' @param tile_geom Geometry type for matrix tiles (e.g., "geom_tile", "geom_raster").
 #' @param tile_cluster Whether to sort by clusters the matrix.
-#' @param tile_na_rm Whether to remove NA values in matrix tiles.
-#' @param tile_linejoin Line join type for matrix tiles.
-#' @param matrix_diagonal_include Whether to include diagonal in matrix plots.
+#' @param tile_na_rm Whether to remove NA values in matrix tiles. Default is FALSE.
+#' @param tile_linejoin Line join type for matrix tiles. Default is "mitre".
+#' @param matrix_diagonal_include Whether to include diagonal in matrix plots. Default is TRUE.
 #' @param matrix_upper_triangle_include Whether to include upper triangle in matrix plots.
 #' @param matrix_lower_triangle_include Whether to include lower triangle in matrix plots.
 #' @param matrix_sparse Whether matrix input is sparse.
-#' @param matrix_isChild_method Method used for isChild matrix derivation.
+#' @param matrix_isChild_method Method used for isChild matrix derivation. Options are "partialparent", "fullparent", "anyparent".
 #' @param return_static Whether to return a static plot.
 #' @param return_widget Whether to return a widget object.
 #' @param return_interactive Whether to return an interactive plot.
@@ -172,7 +172,7 @@
 #' @param override_many2many Whether to override many-to-many link logic.
 #' @param hints Optional hints to pass along to kinship2::autohint
 #' @param relation Optional relation to pass along to kinship2::pedigree
-#' @param recode_missing_ids Whether to recode 0s as missing IDs in the pedigree.
+#' @param recode_missing_ids Whether to recode 0s as missing IDs in the pedigree. Default is TRUE.
 #' @param debug Whether to enable debugging mode.
 #' @param ... Additional arguments for future extensibility.
 #' @return A named list of default plotting and layout parameters.
@@ -196,7 +196,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  color_palette_mid = "#56106EFF",
                                  color_palette_high = "#FCFDBFFF",
                                  color_scale_midpoint = 0.50,
-                                 color_scale_theme = "ggthemes::calc", # only used in gg
+                                 color_scale_theme = "ggthemes::calc", # only used in ggPhenotypeByDegree
                                  alpha = alpha_default,
                                  plot_title = NULL,
                                  plot_subtitle = NULL,

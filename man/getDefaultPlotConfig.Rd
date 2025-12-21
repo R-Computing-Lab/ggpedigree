@@ -213,13 +213,13 @@ getDefaultPlotConfig(
 
 \item{value_rounding_digits}{Number of digits to round displayed values.}
 
-\item{code_male}{Integer/string code for males in data.}
+\item{code_male}{Integer/string code for males in data. Default is 1.}
 
-\item{code_na}{optional Integer/string code for missing values in data.}
+\item{code_na}{optional Integer/string code for missing values in data. Default is NA.}
 
-\item{code_unknown}{optional Integer/string code for unknown}
+\item{code_unknown}{optional Integer/string code for unknown sex in data. Default is NULL.}
 
-\item{code_female}{optional Integer/string code for females in data.}
+\item{code_female}{optional Integer/string code for females in data. Default is 0.}
 
 \item{label_include}{Whether to display labels on plot points.}
 
@@ -287,49 +287,49 @@ getDefaultPlotConfig(
 
 \item{ped_width}{Plot width of the pedigree block.}
 
-\item{segment_linewidth}{Line width for segments.}
+\item{segment_linewidth}{Line width for segments. Default is 0.5.}
 
-\item{segment_linetype}{Line type for segments.}
+\item{segment_linetype}{Line type for segments. Default is 1 (solid).}
 
-\item{segment_lineend}{Line end type for segments.}
+\item{segment_lineend}{Line end type for segments. Default is "round".}
 
-\item{segment_linejoin}{Line join type for segments.}
+\item{segment_linejoin}{Line join type for segments. Default is "round".}
 
-\item{segment_offspring_color}{Color for offspring segments.}
+\item{segment_offspring_color}{Color for offspring segments. Default uses segment_default_color.}
 
-\item{segment_parent_color}{Color for parent segments.}
+\item{segment_parent_color}{Color for parent segments. Default uses segment_default_color.}
 
-\item{segment_self_color}{Color for self-loop segments.}
+\item{segment_self_color}{Color for self-loop segments. Default uses segment_default_color.}
 
-\item{segment_sibling_color}{Color for sibling segments.}
+\item{segment_sibling_color}{Color for sibling segments. Default uses segment_default_color.}
 
-\item{segment_spouse_color}{Color for spouse segments.}
+\item{segment_spouse_color}{Color for spouse segments. Default uses segment_default_color.}
 
-\item{segment_mz_color}{Color for monozygotic twin segments.}
+\item{segment_mz_color}{Color for monozygotic twin segments. Default uses segment_default_color.}
 
-\item{segment_mz_linetype}{Line type for MZ segments.}
+\item{segment_mz_linetype}{Line type for MZ segments. Default uses segment_linetype.}
 
-\item{segment_mz_alpha}{Alpha for MZ segments.}
+\item{segment_mz_alpha}{Alpha for MZ segments. Default is 1.}
 
-\item{segment_mz_t}{Tuning parameter for MZ segment layout.}
+\item{segment_mz_t}{Tuning parameter for MZ segment layout. Default is 0.6.}
 
-\item{segment_self_linetype}{Line type for self-loop segments.}
+\item{segment_self_linetype}{Line type for self-loop segments. Default is "dotdash".}
 
-\item{segment_self_linewidth}{Width of self-loop segment lines.}
+\item{segment_self_linewidth}{Width of self-loop segment lines. Default is half of segment_linewidth.}
 
-\item{segment_self_alpha}{Alpha value for self-loop segments.}
+\item{segment_self_alpha}{Alpha value for self-loop segments. Default is 0.5.}
 
-\item{segment_self_angle}{Angle of self-loop segment.}
+\item{segment_self_angle}{Angle of self-loop segment. Default is 90 degrees.}
 
-\item{segment_self_curvature}{Curvature of self-loop segment.}
+\item{segment_self_curvature}{Curvature of self-loop segment. Default is -0.2.}
 
-\item{sex_color_include}{Whether to color nodes by sex.}
+\item{sex_color_include}{Whether to color nodes by sex. Default is TRUE.}
 
 \item{sex_legend_title}{Title of the sex legend.}
 
 \item{sex_shape_labels}{Labels used in sex legend.}
 
-\item{sex_color_palette}{A character vector of colors for sex.}
+\item{sex_color_palette}{A character vector of colors for sex. Default uses color_palette_default.}
 
 \item{sex_shape_female}{Shape for female nodes.}
 
@@ -391,11 +391,11 @@ getDefaultPlotConfig(
 
 \item{overlay_legend_show}{Whether to show the overlay legend. Default is FALSE.}
 
-\item{focal_fill_include}{Whether to fill focal individuals.}
+\item{focal_fill_include}{Whether to fill focal individuals. Default is FALSE.}
 
-\item{focal_fill_legend_show}{Whether to show legend for focal fill.}
+\item{focal_fill_legend_show}{Whether to show legend for focal fill. Default is TRUE.}
 
-\item{focal_fill_personID}{ID of focal individual.}
+\item{focal_fill_personID}{ID of focal individual. Default is 1.}
 
 \item{focal_fill_legend_title}{Title of focal fill legend.}
 
@@ -405,7 +405,7 @@ getDefaultPlotConfig(
 
 \item{focal_fill_low_color}{Low-end color for focal gradient.}
 
-\item{focal_fill_scale_midpoint}{Midpoint for focal fill scale.}
+\item{focal_fill_scale_midpoint}{Midpoint for focal fill scale. Default uses color_scale_midpoint.}
 
 \item{focal_fill_method}{Method used for focal fill gradient. Options are 'steps', 'steps2', 'step', 'step2', 'viridis_c', 'viridis_d', 'viridis_b', 'manual', 'hue', 'gradient2', 'gradient'.}
 
@@ -473,21 +473,21 @@ getDefaultPlotConfig(
 
 \item{ci_ribbon_alpha}{Alpha level for CI ribbons.}
 
-\item{tile_color_palette}{Color palette for matrix plots.}
+\item{tile_color_palette}{Color palette for matrix plots. Default is c("white", "gold", "red").}
 
 \item{tile_interpolate}{Whether to interpolate colors in matrix tiles.}
 
-\item{tile_color_border}{Color border for matrix tiles.}
+\item{tile_color_border}{Color border for matrix tiles. Default is NA (no border).}
 
 \item{tile_cluster}{Whether to sort by clusters the matrix.}
 
 \item{tile_geom}{Geometry type for matrix tiles (e.g., "geom_tile", "geom_raster").}
 
-\item{tile_na_rm}{Whether to remove NA values in matrix tiles.}
+\item{tile_na_rm}{Whether to remove NA values in matrix tiles. Default is FALSE.}
 
-\item{tile_linejoin}{Line join type for matrix tiles.}
+\item{tile_linejoin}{Line join type for matrix tiles. Default is "mitre".}
 
-\item{matrix_diagonal_include}{Whether to include diagonal in matrix plots.}
+\item{matrix_diagonal_include}{Whether to include diagonal in matrix plots. Default is TRUE.}
 
 \item{matrix_upper_triangle_include}{Whether to include upper triangle in matrix plots.}
 
@@ -495,7 +495,7 @@ getDefaultPlotConfig(
 
 \item{matrix_sparse}{Whether matrix input is sparse.}
 
-\item{matrix_isChild_method}{Method used for isChild matrix derivation.}
+\item{matrix_isChild_method}{Method used for isChild matrix derivation. Options are "partialparent", "fullparent", "anyparent".}
 
 \item{return_static}{Whether to return a static plot.}
 
@@ -515,7 +515,7 @@ getDefaultPlotConfig(
 
 \item{optimize_plotly}{Whether to optimize the plotly output for speed.}
 
-\item{recode_missing_ids}{Whether to recode 0s as missing IDs in the pedigree.}
+\item{recode_missing_ids}{Whether to recode 0s as missing IDs in the pedigree. Default is TRUE.}
 
 \item{...}{Additional arguments for future extensibility.}
 }
