@@ -144,6 +144,30 @@ result <- dataRelatedPair_merge %>%
   rename(cnu = cnuRel, mtdna = mitRel)
 ```
 
+The resulting data frame `result` contains the phenotypic correlations
+for lifetime reproductive success (LRS) and annual reproductive success
+(ARS-n) across different degrees of relatedness, along with confidence
+intervals and p-values.
+
+``` r
+head(result)
+#> # A tibble: 6 × 20
+#>   addRel_factor mtdna   cnu n_pairs addRel_mean addRel_sd addRel_min addRel_max
+#>   <fct>         <dbl> <dbl>   <dbl>       <dbl>     <dbl>      <dbl>      <dbl>
+#> 1 addRel_1          1     1     103       1      1.90e-17      1          1    
+#> 2 addRel_0.5        0     0       1       0.5    0             0.5        0.5  
+#> 3 addRel_0.5        1     0     101       0.5    2.35e-17      0.5        0.5  
+#> 4 addRel_0.25       0     0       1       0.25   0             0.25       0.25 
+#> 5 addRel_0.25       1     0     544       0.25   1.43e-17      0.25       0.25 
+#> 6 addRel_0.125      0     0       8       0.125  0             0.125      0.125
+#> # ℹ 12 more variables: cor_lrs <dbl>, cor_lrs_stat <dbl>, cor_lrs_p <dbl>,
+#> #   cor_lrs_df <dbl>, cor_lrs_ci_lb <dbl>, cor_lrs_ci_ub <dbl>,
+#> #   cor_ars_n <dbl>, cor_ars_n_stat <dbl>, cor_ars_n_p <dbl>,
+#> #   cor_ars_n_df <dbl>, cor_ars_n_ci_lb <dbl>, cor_ars_n_ci_ub <dbl>
+```
+
+## Phenotypic Correlation by Degree of Relatedness
+
 ``` r
 ggPhenotypeByDegree(
   df = result,
@@ -163,7 +187,7 @@ ggPhenotypeByDegree(
 )
 ```
 
-![](v21_phenotypicbydegree_files/figure-html/unnamed-chunk-3-1.png)
+![](v21_phenotypicbydegree_files/figure-html/unnamed-chunk-4-1.png)
 
 ## Pedigree Setup
 
@@ -218,4 +242,4 @@ ggPhenotypeByDegree(
 )
 ```
 
-![](v21_phenotypicbydegree_files/figure-html/unnamed-chunk-5-1.png)
+![](v21_phenotypicbydegree_files/figure-html/unnamed-chunk-6-1.png)

@@ -44,7 +44,7 @@ getDefaultPlotConfig(
   label_text_size = 3,
   label_text_color = "black",
   label_text_family = "sans",
-  point_size = 4,
+  point_size = 5,
   point_scale_by_pedigree = TRUE,
   outline_include = FALSE,
   outline_multiplier = 1.25,

@@ -153,6 +153,7 @@ fig1 <- ggPedigree(
     label_method = "geom_text",
     label_column = "personID",
     point_size = 5,
+    point_scale_by_pedigree = FALSE,
     outline_include = TRUE,
     status_code_affected = TRUE,
     status_code_unaffected = FALSE,
@@ -187,11 +188,6 @@ fig1$plot + geom_point(aes(x = x_pos, y = y_pos),
   guides(shape = "none") + scale_color_manual(
     values = c("pink", "white")
   ) +
-
-  # discrete = TRUE,
-  # labels = c("TRUE", "FALSE"),
-  #  name = ""
-  # ) +
   theme(
     strip.text = element_blank(),
     legend.position = "none"
@@ -211,6 +207,7 @@ p2 <- ggPedigree(
     code_male = 1,
     sex_color_include = FALSE,
     apply_default_scales = FALSE,
+    point_scale_by_pedigree = FALSE,
     label_method = "geom_text",
     label_include = TRUE,
     label_column = "cleanpersonID",
@@ -281,6 +278,7 @@ p <- ggPedigree(
     status_code_unaffected = FALSE,
     generation_height = 1,
     point_size = 2,
+    point_scale_by_pedigree = FALSE,
     generation_width = 1,
     status_shape_affected = 4,
     segment_self_color = "purple",
@@ -334,6 +332,7 @@ m1 <- ggPedigree(potter %>% filter(personID %in% c(1:7, 101:104)),
   personID = "personID",
   config = list(
     label_include = TRUE,
+    point_scale_by_pedigree = FALSE,
     label_column = "first_name",
     point_size = 8,
     focal_fill_personID = 8,
@@ -359,7 +358,7 @@ m1 <- ggPedigree(potter %>% filter(personID %in% c(1:7, 101:104)),
   plot.title = element_blank(),
   plot.title.position = "plot",
   text = element_text(family = family_wfu, size = 14)
-) + coord_cartesian(ylim = c(3.25, 1), clip = "off")
+) + coord_cartesian(ylim = c(2.25, 0), clip = "off")
 # Panel B
 m2 <- ggPedigree(potter,
   famID = "famID",
@@ -368,6 +367,7 @@ m2 <- ggPedigree(potter,
     label_include = TRUE,
     label_column = "first_name",
     point_size = 8,
+    point_scale_by_pedigree = FALSE,
     focal_fill_personID = 8, # Molly Weasley
     segment_linewidth = 0.5,
     label_text_size = 10,
@@ -398,7 +398,7 @@ m2 <- ggPedigree(potter,
     family = family_wfu,
     size = 14, face = "bold"
   )
-) + coord_cartesian(ylim = c(4.5, 1), clip = "off")
+) + coord_cartesian(ylim = c(3.5, 0), clip = "off")
 ```
 
 ``` r

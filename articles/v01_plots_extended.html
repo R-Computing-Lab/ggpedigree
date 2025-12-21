@@ -222,6 +222,7 @@ Click to expand pedigree setup
 <span>    label_method <span class="op">=</span> <span class="st">"geom_text"</span>,</span>
 <span>    label_column <span class="op">=</span> <span class="st">"personID"</span>,</span>
 <span>    point_size <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>    point_scale_by_pedigree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    outline_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    status_code_affected <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    status_code_unaffected <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -256,11 +257,6 @@ Click to expand pedigree setup
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span></span>
 <span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pink"</span>, <span class="st">"white"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
-<span></span>
-<span>  <span class="co"># discrete = TRUE,</span></span>
-<span>  <span class="co"># labels = c("TRUE", "FALSE"),</span></span>
-<span>  <span class="co">#  name = ""</span></span>
-<span>  <span class="co"># ) +</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
 <span>    strip.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    legend.position <span class="op">=</span> <span class="st">"none"</span></span>
@@ -277,6 +273,7 @@ Click to expand pedigree setup
 <span>    code_male <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>    sex_color_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    apply_default_scales <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    point_scale_by_pedigree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    label_method <span class="op">=</span> <span class="st">"geom_text"</span>,</span>
 <span>    label_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    label_column <span class="op">=</span> <span class="st">"cleanpersonID"</span>,</span>
@@ -345,6 +342,7 @@ purple.</p>
 <span>    status_code_unaffected <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    generation_height <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>    point_size <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    point_scale_by_pedigree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    generation_width <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>    status_shape_affected <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>    segment_self_color <span class="op">=</span> <span class="st">"purple"</span>,</span>
@@ -395,6 +393,7 @@ with Molly Weasley’s mitochondrial descendants in gold.</p>
 <span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    label_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    point_scale_by_pedigree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    label_column <span class="op">=</span> <span class="st">"first_name"</span>,</span>
 <span>    point_size <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>    focal_fill_personID <span class="op">=</span> <span class="fl">8</span>,</span>
@@ -420,7 +419,7 @@ with Molly Weasley’s mitochondrial descendants in gold.</p>
 <span>  plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  plot.title.position <span class="op">=</span> <span class="st">"plot"</span>,</span>
 <span>  text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="va">family_wfu</span>, size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span>
-<span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3.25</span>, <span class="fl">1</span><span class="op">)</span>, clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.25</span>, <span class="fl">0</span><span class="op">)</span>, clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span></span>
 <span><span class="co"># Panel B</span></span>
 <span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span><span class="va">potter</span>,</span>
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
@@ -429,6 +428,7 @@ with Molly Weasley’s mitochondrial descendants in gold.</p>
 <span>    label_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    label_column <span class="op">=</span> <span class="st">"first_name"</span>,</span>
 <span>    point_size <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>    point_scale_by_pedigree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    focal_fill_personID <span class="op">=</span> <span class="fl">8</span>, <span class="co"># Molly Weasley</span></span>
 <span>    segment_linewidth <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>    label_text_size <span class="op">=</span> <span class="fl">10</span>,</span>
@@ -459,7 +459,7 @@ with Molly Weasley’s mitochondrial descendants in gold.</p>
 <span>    family <span class="op">=</span> <span class="va">family_wfu</span>,</span>
 <span>    size <span class="op">=</span> <span class="fl">14</span>, face <span class="op">=</span> <span class="st">"bold"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4.5</span>, <span class="fl">1</span><span class="op">)</span>, clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3.5</span>, <span class="fl">0</span><span class="op">)</span>, clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_auto.html" class="external-link">showtext_auto</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
