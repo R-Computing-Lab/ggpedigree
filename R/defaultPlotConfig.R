@@ -226,7 +226,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  label_text_color = "black",
                                  label_text_family = "sans",
                                  # --- POINT / OUTLINE AESTHETICS ---------------------------------------
-                                 point_size = 4,
+                                 point_size = 5,
                                  point_scale_by_pedigree = TRUE,
                                  outline_include = FALSE,
                                  outline_multiplier = 1.25,

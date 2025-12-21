@@ -168,8 +168,6 @@ make_df_num <- function(sex = c(0, 1, 0),
 }
 
 
-
-
 test_that("full cross: strict expectations + roundtrip invariant", {
   for (i in seq_len(nrow(grid))) {
     row <- grid[i, ]
@@ -205,8 +203,6 @@ test_that("full cross: strict expectations + roundtrip invariant", {
     })
   }
 })
-
-
 
 
 # resolving error message mystery

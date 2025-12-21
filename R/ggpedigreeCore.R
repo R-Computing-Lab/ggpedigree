@@ -935,7 +935,6 @@ addScales <- .addScales
 addLabels <- .addLabels
 
 
-
 #' @title Add Twins to ggplot Pedigree Plot
 #' @description
 #' Adds twin connections to the ggplot pedigree plot.

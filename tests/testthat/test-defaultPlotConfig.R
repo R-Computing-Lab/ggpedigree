@@ -45,13 +45,13 @@ test_that("getDefaultPlotConfig returns expected defaults", {
   expect_equal(config$axis_text_family, "sans")
   expect_equal(config$outline_additional_size, 0)
   expect_equal(config$outline_multiplier, 1.25)
-  expect_equal(config$point_size, 4)
+  expect_equal(config$point_size, 5)
   expect_true(is.null(config$hints))
   expect_true(is.null(config$relation))
-  expect_equal(config$outline_multiplier * config$point_size, 5)
+  expect_equal(config$outline_multiplier * config$point_size, 6.25)
   expect_equal(
     config$outline_multiplier * config$point_size + config$outline_additional_size,
-    5
+    6.25
   )
 })
 test_that("handles function_name variations", {

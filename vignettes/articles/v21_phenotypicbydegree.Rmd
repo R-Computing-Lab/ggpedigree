@@ -154,6 +154,14 @@ result <- dataRelatedPair_merge %>%
 ```
 </details>
 
+The resulting data frame `result` contains the phenotypic correlations for lifetime reproductive success (LRS) and annual reproductive success (ARS-n) across different degrees of relatedness, along with confidence intervals and p-values.
+
+```{r}
+head(result)
+```
+
+## Phenotypic Correlation by Degree of Relatedness
+
 ```{r, message=FALSE, warning=FALSE}
 ggPhenotypeByDegree(
   df = result,
