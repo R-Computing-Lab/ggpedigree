@@ -259,7 +259,7 @@ ggPedigree.core <- function(ped,
         by = dplyr::join_by(personID == !!rlang::sym(personID))
       )
 
-    p <- addTwins(
+    p <- .addTwins(
       plotObject = p,
       connections = connections,
       config = config,
@@ -950,11 +950,11 @@ addLabels <- .addLabels
 #' @keywords internal
 #' @return A ggplot object with twin segments added.
 
-addTwins <- function(plotObject,
-                     connections,
-                     config,
-                     plot_connections,
-                     personID = "personID") {
+.addTwins <- function(plotObject,
+                      connections,
+                      config,
+                      plot_connections,
+                      personID = "personID") {
   # Sibling vertical drop line
   # special handling for twin sibling
 
@@ -1013,3 +1013,5 @@ addTwins <- function(plotObject,
 
   return(plotObject)
 }
+#' @rdname dot-addTwins
+addTwins <- .addTwins
