@@ -621,7 +621,7 @@ addOverlay <- .addOverlay
       ) |>
       dplyr::select(-"midpoint")
 
-
+    # Add segments in four parts to approximate a curve
     plotObject <- plotObject + ggplot2::geom_segment(
       data = otherself,
       ggplot2::aes(
