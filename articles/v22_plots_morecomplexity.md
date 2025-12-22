@@ -86,7 +86,7 @@ df_repaired <- checkParentIDs(df_got,
   parentswithoutrow = FALSE,
   repairsex = FALSE
 ) %>% mutate(
-  famID_mulit =famID,
+  famID_mulit = famID,
   famID = 1,
   affected = case_when(
     ID %in% c(jon_id, dany_id, "365") ~ 1,
@@ -128,7 +128,8 @@ with other `ggplot2` functions.
 
 ``` r
 df_repaired <- df_repaired %>% mutate(
-  famID =famID_mulit)
+  famID = famID_mulit
+)
 
 pltstatic <- ggPedigree(df_repaired,
   status_column = "affected",
@@ -159,7 +160,7 @@ pltstatic
 
 ``` r
 
-#pltstatic+ facet_wrap(~famID_mulit, drop=TRUE,scales = "free")
+# pltstatic+ facet_wrap(~famID_mulit, drop=TRUE,scales = "free")
 ```
 
 ``` r
@@ -177,7 +178,7 @@ plt <- ggPedigreeInteractive(df_repaired_renamed,
     focal_fill_include = TRUE,
     code_male = "M",
     point_size = 10,
-        segment_linewidth = 0.25,
+    segment_linewidth = 0.25,
     status_include = FALSE,
     status_label_affected = 1,
     status_shape_affected = 4,
