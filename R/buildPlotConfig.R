@@ -78,13 +78,13 @@ buildPlotConfig <- function(default_config,
         built_config$segment_self_linewidth <- built_config$segment_self_linewidth
       } else if (pedigree_size <= 100) {
         built_config$segment_linewidth <- max(built_config$segment_linewidth / sqrt(pedigree_size), 0.5)
-        built_config$segment_self_linewidth <- max(built_config$segment_self_linewidth / sqrt(pedigree_size), 0.5)
+        built_config$segment_self_linewidth <- max(built_config$segment_self_linewidth / sqrt(pedigree_size), 0.5*.5)
       } else if (pedigree_size <= 500) {
         built_config$segment_linewidth <- max(built_config$segment_linewidth / sqrt(pedigree_size) * 1.5, 0.5)
-        built_config$segment_self_linewidth <- max(built_config$segment_self_linewidth / sqrt(pedigree_size) * 1.5, 0.5)
+        built_config$segment_self_linewidth <- max(built_config$segment_self_linewidth / sqrt(pedigree_size) * 1.5, 0.5*.5)
       } else {
         built_config$segment_linewidth <-  max(built_config$segment_linewidth / sqrt(pedigree_size) * 2.5, 0.5)
-        built_config$segment_self_linewidth <-  max(built_config$segment_self_linewidth / sqrt(pedigree_size) * 2.5, 0.5)
+        built_config$segment_self_linewidth <-  max(built_config$segment_self_linewidth / sqrt(pedigree_size) * 2.5, 0.5*.5)
       }
     }
 
