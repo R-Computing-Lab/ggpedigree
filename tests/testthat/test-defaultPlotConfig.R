@@ -126,13 +126,13 @@ test_that("buildPlotConfig merges valid subset overrides correctly", {
 })
 test_that("buildPlotConfig returns a list", {
   default_config <- getDefaultPlotConfig(function_name = "ggrelatednessmatrix")
-  custom <- list(point_size = 2)
+  custom <- list(point_size = 5)
   pedigree_size <- 3
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
   expect_equal(result$point_size, custom$point_size, tolerance = 1e-8)
   expect_equal(result$label_nudge_y, 0.15)
   expect_true(is.list(result))
-  pedigree_size <- 30
+  pedigree_size <- 51
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
   expect_equal(result$point_size, custom$point_size / sqrt(pedigree_size), tolerance = 1e-8)
 
