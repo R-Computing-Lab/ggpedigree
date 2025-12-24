@@ -24,15 +24,17 @@ test_that("ASOIAF data loads", {
     verbose = TRUE
   )
   expect_true(checkis_acyclic$is_acyclic)
-
-  ggped <- ggPedigree(ASOIAF,
+  ASOIAF_df <- as.data.frame(ASOIAF)
+  ggped <- ggPedigree(ASOIAF_df,
     famID = "famID",
     personID = "id",
     momID = "momID",
     dadID = "dadID",
+    code_male = "M",
     config = list(
       add_phantoms = TRUE,
-      code_male = "M"
+      code_male = "M"#,
+   #   relation =  'many-to-many'
     )
   )
   expect_true(inherits(ggped, "ggplot"))

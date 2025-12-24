@@ -1,5 +1,6 @@
 # ggpedigree (development version)
 # ==============================
+* Improved documentation of datasets included in the package
 
 # ggpedigree 1.1.0.0
 * Saved raw excel data as csv to have a non-proprietary format for data storage

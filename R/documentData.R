@@ -34,8 +34,27 @@
 #' @name redsquirrels
 #' @usage data(redsquirrels)
 #' @source <https://doi.org/10.5061/dryad.n5q05>
+#' @examples
+#' # Load the red squirrels dataset
+#' data(redsquirrels)
+#'
+#' # View the structure of the dataset
+#' str(redsquirrels)
+#'
+#' # Plot a pedigree for a single family
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   # Select one family to plot
+#'   family_data <- subset(redsquirrels, famID == 1)
+#'
+#'   # Create a pedigree plot
+#'   ggPedigree(family_data,
+#'     personID = "personID",
+#'     momID = "momID",
+#'     dadID = "dadID",
+#'     sex = "sex"
+#'   )
+#' }
 "redsquirrels"
-
 #' A pedigree of ice and fire
 #'
 #' A structured dataset of fictional characters derived from the Song of Ice and
@@ -54,13 +73,15 @@
 #' The variables are as follows:
 #' \itemize{
 #'   \item \code{id}:  Person identification variable
+#'   \item \code{famID}:  Family identification variable
 #'   \item \code{momID}:  ID of the mother
 #'   \item \code{dadID}:  ID of the father
 #'   \item \code{name}:  Name of the person
-#'   \item \code{sex}: Biological sex
+#'   \item \code{sex}: Biological sex (M/F)
+#'   \item \code{url}:  URL to a wiki page about the character
 #'   \item \code{twinID}:  ID of the twin, if applicable
 #'   \item \code{zygosity}: Zygosity of the twin, if applicable. mz is monozygotic; dz is dizygotic
-#'   \item \code{url}:  URL to a wiki page about the character
+
 #'   }
 #'
 #' @docType data
@@ -68,6 +89,28 @@
 #' @name ASOIAF
 #' @usage data(ASOIAF)
 #' @format A data frame with 679 observations on 9 variables.
+#'
+#' @examples
+#' # Load the ASOIAF dataset
+#' data(ASOIAF)
+#'
+#' # View the structure of the dataset
+#' str(ASOIAF)
+#'
+#' # Plot a pedigree for a specific family
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   # Create a pedigree plot for House Stark
+#'   ggPedigree(ASOIAF,
+#'     famID = "famID",
+#'     personID = "id",
+#'     momID = "momID",
+#'     dadID = "dadID",
+#'     config = list(
+#'       add_phantoms = TRUE,
+#'       code_male = "M"
+#'     )
+#'   )
+#' }
 NULL
 
 
