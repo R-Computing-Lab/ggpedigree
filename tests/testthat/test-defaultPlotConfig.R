@@ -16,7 +16,7 @@ test_that("getDefaultPlotConfig returns expected defaults", {
   config <- getDefaultPlotConfig()
 
   expect_true(is.list(config))
-  expect_equal(length(config), 163) # Check number of default parameters
+  expect_equal(length(config), 164) # Check number of default parameters
 
   expect_equal(config$apply_default_scales, TRUE)
   expect_equal(config$apply_default_theme, TRUE)
@@ -45,13 +45,13 @@ test_that("getDefaultPlotConfig returns expected defaults", {
   expect_equal(config$axis_text_family, "sans")
   expect_equal(config$outline_additional_size, 0)
   expect_equal(config$outline_multiplier, 1.25)
-  expect_equal(config$point_size, 5)
+  expect_equal(config$point_size, 6)
   expect_true(is.null(config$hints))
   expect_true(is.null(config$relation))
-  expect_equal(config$outline_multiplier * config$point_size, 6.25)
+  expect_equal(config$outline_multiplier * config$point_size, 7.5)
   expect_equal(
     config$outline_multiplier * config$point_size + config$outline_additional_size,
-    6.25
+    7.5
   )
 })
 test_that("handles function_name variations", {
@@ -124,23 +124,48 @@ test_that("buildPlotConfig merges valid subset overrides correctly", {
   expect_equal(result$label_nudge_y, -0.15)
   expect_equal(result$label_nudge_y, -1 * default_config$label_nudge_y)
 })
-test_that("buildPlotConfig returns a list", {
-  default_config <- getDefaultPlotConfig(function_name = "ggrelatednessmatrix")
-  custom <- list(point_size = 2)
+test_that("buildPlotConfig handles scaling correctly", {
+  default_config <- getDefaultPlotConfig(function_name = "ggPedigree", segment_scale_by_pedigree = TRUE)
+  custom <- list(point_size = 5, segment_linewidth = 20, segment_self_linewidth = 10)
   pedigree_size <- 3
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
   expect_equal(result$point_size, custom$point_size, tolerance = 1e-8)
-  expect_equal(result$label_nudge_y, 0.15)
-  expect_true(is.list(result))
-  pedigree_size <- 30
+  expect_equal(result$segment_linewidth, custom$segment_linewidth, tolerance = 1e-8)
+  expect_equal(result$segment_self_linewidth, custom$segment_self_linewidth, tolerance = 1e-8)
+
+
+  pedigree_size <- 51
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
   expect_equal(result$point_size, custom$point_size / sqrt(pedigree_size), tolerance = 1e-8)
+  expect_equal(result$segment_linewidth, custom$segment_linewidth / sqrt(pedigree_size), tolerance = 1e-8)
+  expect_equal(result$segment_self_linewidth, max(custom$segment_self_linewidth / sqrt(pedigree_size),.25), tolerance = 1e-8)
 
   pedigree_size <- 300
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
-  expect_equal(result$point_size, custom$point_size / sqrt(pedigree_size) * 1.5, tolerance = 1e-8)
+  expect_equal(result$point_size, max(custom$point_size / sqrt(pedigree_size) * 1.5,.5), tolerance = 1e-8)
+  expect_equal(result$segment_linewidth, custom$segment_linewidth / sqrt(pedigree_size)*1.5, tolerance = 1e-8)
+  expect_equal(result$segment_self_linewidth, max(custom$segment_self_linewidth / sqrt(pedigree_size)*1.5,.25), tolerance = 1e-8)
 
   pedigree_size <- 501
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
-  expect_equal(result$point_size, custom$point_size / sqrt(pedigree_size) * 2.5, tolerance = 1e-8)
+  expect_equal(result$point_size, max(custom$point_size / sqrt(pedigree_size) * 2.5,.5), tolerance = 1e-8)
+  expect_equal(result$segment_linewidth, custom$segment_linewidth / sqrt(pedigree_size)*2.5, tolerance = 1e-8)
+  expect_equal(result$segment_self_linewidth, max(custom$segment_self_linewidth / sqrt(pedigree_size)*2.5,.25), tolerance = 1e-8)
+})
+
+
+
+
+test_that("buildPlotConfig returns a list for ggrelatednessmatrix", {
+  default_config <- getDefaultPlotConfig(function_name = "ggrelatednessmatrix", segment_scale_by_pedigree = TRUE)
+  custom <- list(point_size = 5, segment_linewidth = 2, segment_self_linewidth = 1)
+  pedigree_size <- 3
+  result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
+  expect_equal(result$point_size, custom$point_size, tolerance = 1e-8)
+  expect_equal(result$segment_linewidth, custom$segment_linewidth, tolerance = 1e-8)
+  expect_equal(result$segment_self_linewidth, custom$segment_self_linewidth, tolerance = 1e-8)
+
+  expect_equal(result$label_nudge_y, 0.15)
+  expect_true(is.list(result))
+
 })

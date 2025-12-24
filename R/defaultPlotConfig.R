@@ -91,16 +91,17 @@
 #' @param segment_self_angle Angle of self-loop segment. Default is 90 degrees.
 #' @param segment_self_curvature Curvature of self-loop segment. Default is -0.2.
 #' @param segment_self_linewidth Width of self-loop segment lines. Default is half of segment_linewidth.
+#' @param segment_scale_by_pedigree Whether to scale segment sizes by pedigree size. Default is FALSE.
 #' @param sex_color_include Whether to color nodes by sex. Default is TRUE.
 #' @param sex_color_palette A character vector of colors for sex. Default uses color_palette_default.
 #' @param sex_legend_title Title of the sex legend.
 #' @param sex_shape_labels Labels used in sex legend.
-#' @param sex_shape_female Shape for female nodes.
-#' @param sex_shape_male Shape for male nodes.
-#' @param sex_shape_unknown Shape for unknown sex nodes.
+#' @param sex_shape_female Shape for female nodes. Default is 16 (circle).
+#' @param sex_shape_male Shape for male nodes. Default is 15 (square).
+#' @param sex_shape_unknown Shape for unknown sex nodes. Default is 18 (diamond).
 #' @param sex_shape_values A named vector mapping sex codes to shapes.
 #' @param sex_shape_include Whether to display the shape for sex variables
-#' @param sex_legend_show Whether to display sex in the legend
+#' @param sex_legend_show Whether to display sex in the legend or not.
 #' @param status_include Whether to display affected status.
 #' @param status_code_affected Value that encodes affected status.
 #' @param status_code_unaffected Value that encodes unaffected status.
@@ -226,7 +227,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  label_text_color = "black",
                                  label_text_family = "sans",
                                  # --- POINT / OUTLINE AESTHETICS ---------------------------------------
-                                 point_size = 5,
+                                 point_size = 6,
                                  point_scale_by_pedigree = TRUE,
                                  outline_include = FALSE,
                                  outline_multiplier = 1.25,
@@ -255,6 +256,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  segment_linetype = 1,
                                  segment_lineend = "round",
                                  segment_linejoin = "round",
+                                 segment_scale_by_pedigree = FALSE,
                                  segment_offspring_color = segment_default_color,
                                  segment_parent_color = segment_default_color,
                                  segment_self_color = segment_default_color,
@@ -502,6 +504,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     segment_linetype = segment_linetype,
     segment_lineend = segment_lineend,
     segment_linejoin = segment_linejoin,
+    segment_scale_by_pedigree = segment_scale_by_pedigree,
     segment_offspring_color = ifelse(segment_default_color == "black", segment_offspring_color, segment_default_color),
     segment_parent_color = ifelse(segment_default_color == "black", segment_parent_color, segment_default_color),
     segment_self_color = ifelse(segment_default_color == "black", segment_self_color, segment_default_color),

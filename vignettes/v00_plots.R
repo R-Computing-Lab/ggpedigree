@@ -47,8 +47,8 @@ ggPedigree(
   config = list(
     code_male = 1, # Here, 1 = male, 0 = female
     sex_color_include = FALSE,
-    segment_linewidth = .5,
-    point_size = 3,
+    segment_linewidth = .75,
+    point_size = 5,
     outline_multiplier = 1.5,
     # outline_additional_size = -1,
     sex_shape_female = "💸",
@@ -171,7 +171,8 @@ ggPedigree(potter,
     focal_fill_n_breaks = NULL,
     focal_fill_legend_title = "Genetic Relatives \nof Harry Potter",
     # "additive",
-    sex_color_include = FALSE
+    sex_color_include = FALSE,
+    sex_legend_show = FALSE
   ) # highlight Harry Potter
   # config  = list(segment_mz_color = NA) # color for monozygotic twins
 )
