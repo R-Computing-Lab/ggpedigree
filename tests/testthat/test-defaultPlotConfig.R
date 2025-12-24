@@ -98,14 +98,14 @@ test_that("buildPlotConfig  warns on duplicated keys, honors first value in dupl
 
   config <- list(point_size = 1, point_size = 99)
 
-  result <- suppressWarnings(buildPlotConfig(default_config, config, pedigree_size = 1))
+  result <- suppressWarnings(buildPlotConfig(default_config, config, pedigree_size = 5))
   expect_equal(result$point_size, 1)
 
-  expect_warning(buildPlotConfig(default_config, config, pedigree_size = 1), regexp = "Duplicate config keys detected")
+  expect_warning(buildPlotConfig(default_config, config, pedigree_size = 5), regexp = "Duplicate config keys detected")
 
   config <- list(point_size = 99, point_size = 1)
 
-  result <- suppressWarnings(buildPlotConfig(default_config, config, pedigree_size = 1))
+  result <- suppressWarnings(buildPlotConfig(default_config, config, pedigree_size = 5))
   expect_equal(result$point_size, 99)
 })
 
@@ -114,7 +114,7 @@ test_that("buildPlotConfig merges valid subset overrides correctly", {
 
   custom <- list(point_size = 2, label_text_size = 10)
 
-  result <- buildPlotConfig(default_config, custom, pedigree_size = 1)
+  result <- buildPlotConfig(default_config, custom, pedigree_size = 4)
   expect_equal(result$point_size, 2)
   expect_equal(result$label_text_size, 10)
   expect_equal(
@@ -129,7 +129,7 @@ test_that("buildPlotConfig handles scaling correctly", {
   custom <- list(point_size = 5, segment_linewidth = 20, segment_self_linewidth = 10)
   pedigree_size <- 3
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
-  expect_equal(result$point_size, custom$point_size, tolerance = 1e-8)
+  expect_equal(result$point_size, custom$point_size*2, tolerance = 1e-8)
   expect_equal(result$segment_linewidth, custom$segment_linewidth, tolerance = 1e-8)
   expect_equal(result$segment_self_linewidth, custom$segment_self_linewidth, tolerance = 1e-8)
 
@@ -159,7 +159,7 @@ test_that("buildPlotConfig handles scaling correctly", {
 test_that("buildPlotConfig returns a list for ggrelatednessmatrix", {
   default_config <- getDefaultPlotConfig(function_name = "ggrelatednessmatrix", segment_scale_by_pedigree = TRUE)
   custom <- list(point_size = 5, segment_linewidth = 2, segment_self_linewidth = 1)
-  pedigree_size <- 3
+  pedigree_size <- 4
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
   expect_equal(result$point_size, custom$point_size, tolerance = 1e-8)
   expect_equal(result$segment_linewidth, custom$segment_linewidth, tolerance = 1e-8)

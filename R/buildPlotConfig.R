@@ -57,7 +57,10 @@ buildPlotConfig <- function(default_config,
         warning("pedigree_size must be provided in config when point_scale_by_pedigree is TRUE. Defaulting to 1.")
         pedigree_size <- 1
       }
-      if (pedigree_size <= 50) {
+      if (pedigree_size <= 3) {
+        built_config$point_size <- built_config$point_size*2
+
+      } else if (pedigree_size <= 50) {
         built_config$point_size <- built_config$point_size
 
       } else if (pedigree_size <= 100) {
