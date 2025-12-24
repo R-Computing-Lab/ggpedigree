@@ -43,4 +43,25 @@ McFarlane, S. Eryn; Boutin, Stan; Humphries, Murray M. et al. (2015). Data from:
 Very low levels of direct additive genetic variance in fitness and fitness components in a red squirrel population [Dataset].
 Dryad. <https://doi.org/10.5061/dryad.n5q05>
 }
+\examples{
+# Load the red squirrels dataset
+data(redsquirrels)
+
+# View the structure of the dataset
+str(redsquirrels)
+
+# Plot a pedigree for a single family
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  # Select one family to plot
+  family_data <- subset(redsquirrels, famID == 1)
+
+  # Create a pedigree plot
+  ggPedigree(family_data,
+    personID = "personID",
+    momID = "momID",
+    dadID = "dadID",
+    sex = "sex"
+  )
+}
+}
 \keyword{datasets}
