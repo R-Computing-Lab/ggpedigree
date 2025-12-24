@@ -44,7 +44,7 @@ getDefaultPlotConfig(
   label_text_size = 3,
   label_text_color = "black",
   label_text_family = "sans",
-  point_size = 5,
+  point_size = 6,
   point_scale_by_pedigree = TRUE,
   outline_include = FALSE,
   outline_multiplier = 1.25,
@@ -69,6 +69,7 @@ getDefaultPlotConfig(
   segment_linetype = 1,
   segment_lineend = "round",
   segment_linejoin = "round",
+  segment_scale_by_pedigree = FALSE,
   segment_offspring_color = segment_default_color,
   segment_parent_color = segment_default_color,
   segment_self_color = segment_default_color,
@@ -423,6 +424,10 @@ getDefaultPlotConfig(
 
   Line join type for segments. Default is "round".
 
+- segment_scale_by_pedigree:
+
+  Whether to scale segment sizes by pedigree size. Default is FALSE.
+
 - segment_offspring_color:
 
   Color for offspring segments. Default uses segment_default_color.
@@ -500,15 +505,15 @@ getDefaultPlotConfig(
 
 - sex_shape_female:
 
-  Shape for female nodes.
+  Shape for female nodes. Default is 16 (circle).
 
 - sex_shape_male:
 
-  Shape for male nodes.
+  Shape for male nodes. Default is 15 (square).
 
 - sex_shape_unknown:
 
-  Shape for unknown sex nodes.
+  Shape for unknown sex nodes. Default is 18 (diamond).
 
 - sex_shape_values:
 
@@ -520,7 +525,7 @@ getDefaultPlotConfig(
 
 - sex_legend_show:
 
-  Whether to display sex in the legend
+  Whether to display sex in the legend or not.
 
 - status_include:
 

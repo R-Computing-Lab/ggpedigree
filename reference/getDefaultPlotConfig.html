@@ -95,7 +95,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  label_text_size <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  label_text_color <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>  label_text_family <span class="op">=</span> <span class="st">"sans"</span>,</span>
-<span>  point_size <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  point_size <span class="op">=</span> <span class="fl">6</span>,</span>
 <span>  point_scale_by_pedigree <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  outline_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  outline_multiplier <span class="op">=</span> <span class="fl">1.25</span>,</span>
@@ -120,6 +120,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  segment_linetype <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  segment_lineend <span class="op">=</span> <span class="st">"round"</span>,</span>
 <span>  segment_linejoin <span class="op">=</span> <span class="st">"round"</span>,</span>
+<span>  segment_scale_by_pedigree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  segment_offspring_color <span class="op">=</span> <span class="va">segment_default_color</span>,</span>
 <span>  segment_parent_color <span class="op">=</span> <span class="va">segment_default_color</span>,</span>
 <span>  segment_self_color <span class="op">=</span> <span class="va">segment_default_color</span>,</span>
@@ -473,6 +474,10 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <dd><p>Line join type for segments. Default is "round".</p></dd>
 
 
+<dt id="arg-segment-scale-by-pedigree">segment_scale_by_pedigree<a class="anchor" aria-label="anchor" href="#arg-segment-scale-by-pedigree"></a></dt>
+<dd><p>Whether to scale segment sizes by pedigree size. Default is FALSE.</p></dd>
+
+
 <dt id="arg-segment-offspring-color">segment_offspring_color<a class="anchor" aria-label="anchor" href="#arg-segment-offspring-color"></a></dt>
 <dd><p>Color for offspring segments. Default uses segment_default_color.</p></dd>
 
@@ -546,15 +551,15 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 
 <dt id="arg-sex-shape-female">sex_shape_female<a class="anchor" aria-label="anchor" href="#arg-sex-shape-female"></a></dt>
-<dd><p>Shape for female nodes.</p></dd>
+<dd><p>Shape for female nodes. Default is 16 (circle).</p></dd>
 
 
 <dt id="arg-sex-shape-male">sex_shape_male<a class="anchor" aria-label="anchor" href="#arg-sex-shape-male"></a></dt>
-<dd><p>Shape for male nodes.</p></dd>
+<dd><p>Shape for male nodes. Default is 15 (square).</p></dd>
 
 
 <dt id="arg-sex-shape-unknown">sex_shape_unknown<a class="anchor" aria-label="anchor" href="#arg-sex-shape-unknown"></a></dt>
-<dd><p>Shape for unknown sex nodes.</p></dd>
+<dd><p>Shape for unknown sex nodes. Default is 18 (diamond).</p></dd>
 
 
 <dt id="arg-sex-shape-values">sex_shape_values<a class="anchor" aria-label="anchor" href="#arg-sex-shape-values"></a></dt>
@@ -566,7 +571,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 
 <dt id="arg-sex-legend-show">sex_legend_show<a class="anchor" aria-label="anchor" href="#arg-sex-legend-show"></a></dt>
-<dd><p>Whether to display sex in the legend</p></dd>
+<dd><p>Whether to display sex in the legend or not.</p></dd>
 
 
 <dt id="arg-status-include">status_include<a class="anchor" aria-label="anchor" href="#arg-status-include"></a></dt>

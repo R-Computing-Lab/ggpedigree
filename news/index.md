@@ -19,6 +19,7 @@
   scenarios, including comprehensive testing of input types, missing
   values, and configuration options.
 - Add default point scaling as a function of pedigree size
+- Add non-default segment size scaling as a function of pedigree size
 - Set Sex key to be hidden by default in ggpedigree
 - Slight tweaks to GoT dataset demonstration to improve visualization
 - Remove reshape2 dependency by using base R functions
