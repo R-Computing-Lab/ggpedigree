@@ -63,6 +63,7 @@ getDefaultPlotConfig(
   segment_linetype = 1,
   segment_lineend = "round",
   segment_linejoin = "round",
+  segment_scale_by_pedigree = FALSE,
   segment_offspring_color = segment_default_color,
   segment_parent_color = segment_default_color,
   segment_self_color = segment_default_color,
@@ -296,6 +297,8 @@ getDefaultPlotConfig(
 
 \item{segment_linejoin}{Line join type for segments. Default is "round".}
 
+\item{segment_scale_by_pedigree}{Whether to scale segment sizes by pedigree size. Default is FALSE.}
+
 \item{segment_offspring_color}{Color for offspring segments. Default uses segment_default_color.}
 
 \item{segment_parent_color}{Color for parent segments. Default uses segment_default_color.}
@@ -332,17 +335,17 @@ getDefaultPlotConfig(
 
 \item{sex_color_palette}{A character vector of colors for sex. Default uses color_palette_default.}
 
-\item{sex_shape_female}{Shape for female nodes.}
+\item{sex_shape_female}{Shape for female nodes. Default is 16 (circle).}
 
-\item{sex_shape_male}{Shape for male nodes.}
+\item{sex_shape_male}{Shape for male nodes. Default is 15 (square).}
 
-\item{sex_shape_unknown}{Shape for unknown sex nodes.}
+\item{sex_shape_unknown}{Shape for unknown sex nodes. Default is 18 (diamond).}
 
 \item{sex_shape_values}{A named vector mapping sex codes to shapes.}
 
 \item{sex_shape_include}{Whether to display the shape for sex variables}
 
-\item{sex_legend_show}{Whether to display sex in the legend}
+\item{sex_legend_show}{Whether to display sex in the legend or not.}
 
 \item{status_include}{Whether to display affected status.}
 
