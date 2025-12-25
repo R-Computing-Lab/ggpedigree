@@ -284,7 +284,7 @@ alignPedigreeWithRelations <- function(ped,
                                        dadID,
                                        momID,
                                        code_male = NULL,
-                                       sexVar,
+                                       sexVar = "sex",
                                        config) {
   # recodeSex <- function(
   #  ped, verbose = FALSE, code_male = NULL, code_na = NULL, code_female = NULL,

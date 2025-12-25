@@ -48,7 +48,7 @@ test_that("redsquirrels data structure", {
   str(redsquirrels)
 
   #'   # Select one family to plot
-   family_data <- subset(redsquirrels, famID == 1)
+   family_data <- subset(redsquirrels, famID == 160)
   #'
   #'   # Create a pedigree plot
 expect_no_error(   ggPedigree(family_data,

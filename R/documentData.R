@@ -2,14 +2,22 @@
 #'
 #' A tidy data frame of life‐history and reproductive metrics for 7,799 individual red squirrels
 #' from the Kluane Red Squirrel Project (1987–present).
+#'
+#' #' This package provides two related datasets:
+#' \itemize{
+#'   \item \code{redsquirrels_full}: the complete dataset from the published source
+#'   \item \code{redsquirrels}: a more workable subset derived from \code{redsquirrels_full}
+#' }
+#'
 #' Each row corresponds to one squirrel with associated pedigree links and reproductive success summaries.
+#'
 #' The original data are published under a CC0 1.0 Universal Public Domain Dedication:
 #'
 #' McFarlane, S. Eryn; Boutin, Stan; Humphries, Murray M. et al. (2015). Data from:
 #' Very low levels of direct additive genetic variance in fitness and fitness components in a red squirrel population [Dataset].
 #' Dryad. <https://doi.org/10.5061/dryad.n5q05>
 #'
-#' @format ## `redsquirrels`
+#' @format ## `redsquirrels_full`
 #' A data frame with 7799 rows and 16 columns:
 #' \describe{
 #'   \item{personID}{Unique identifier for each squirrel}
@@ -29,22 +37,31 @@
 #'   \item{year_last}{Last year of ARS data for the squirrel}
 #'   ...
 #' }
+#' ## `redsquirrels`
+#' A data frame with 5251 rows and 16 columns:
+#' A subset of \code{redsquirrels_full} intended for convenient analysis and examples.
+#' (Same variables as \code{redsquirrels_full}, with fewer rows.)
+#'
+#'
 #' @docType data
 #' @keywords datasets
 #' @name redsquirrels
 #' @usage data(redsquirrels)
 #' @source <https://doi.org/10.5061/dryad.n5q05>
 #' @examples
-#' # Load the red squirrels dataset
-#' data(redsquirrels)
 #'
-#' # View the structure of the dataset
+#' # Load the red squirrels datasets
+#' data(redsquirrels)
+#' data(redsquirrels_full)
+#'
+#' # View the structure of the dataset(s)
 #' str(redsquirrels)
+#' str(redsquirrels_full)
 #'
 #' # Plot a pedigree for a single family
 #' if (requireNamespace("ggplot2", quietly = TRUE)) {
 #'   # Select one family to plot
-#'   family_data <- subset(redsquirrels, famID == 1)
+#'   family_data <- subset(redsquirrels, famID == 160)
 #'
 #'   # Create a pedigree plot
 #'   ggPedigree(family_data,
@@ -59,6 +76,12 @@
 #'   )
 #' }
 "redsquirrels"
+
+#' @rdname redsquirrels
+#' @usage data(redsquirrels_full)
+#'
+"redsquirrels_full"
+
 #' A pedigree of ice and fire
 #'
 #' A structured dataset of fictional characters derived from the Song of Ice and
