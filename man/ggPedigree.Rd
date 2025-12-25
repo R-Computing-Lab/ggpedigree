@@ -110,8 +110,6 @@ customization before printing).}
 \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1}
 
 \item{sexVar}{Character string specifying the column name for sex. Defaults to "sex".}
-
-\item{...}{Additional arguments passed to `ggplot2` functions.}
 }
 \value{
 A `ggplot` object rendering the pedigree diagram.
