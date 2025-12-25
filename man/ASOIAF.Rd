@@ -41,14 +41,14 @@ The variables are as follows:
 \examples{
 # Load the ASOIAF dataset
 data(ASOIAF)
-
+df_ASOIAF <-  ASOIAF[ASOIAF$famID == 26,]  # Subset to House Tarth
 # View the structure of the dataset
-str(ASOIAF)
+str(df_ASOIAF)
 
-# Plot a pedigree for a specific family
+# Plot a pedigree for House Tarth
 if (requireNamespace("ggplot2", quietly = TRUE)) {
-  # Create a pedigree plot for House Stark
-  ggPedigree(ASOIAF,
+  # Create a pedigree plot for House Tarth
+  ggPedigree(df_ASOIAF,
     famID = "famID",
     personID = "id",
     momID = "momID",
