@@ -24,6 +24,7 @@ ggPedigree(
   debug = FALSE,
   hints = NULL,
   interactive = FALSE,
+  code_male = NULL,
   ...
 )
 
@@ -46,6 +47,7 @@ ggpedigree(
   debug = FALSE,
   hints = NULL,
   interactive = FALSE,
+  code_male = NULL,
   ...
 )
 }
@@ -104,6 +106,8 @@ customization before printing).}
 \item{hints}{Data frame with hints for layout adjustments. Default: NULL.}
 
 \item{interactive}{Logical. If TRUE, generates an interactive plot using `plotly`. Default: FALSE.}
+
+\item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1}
 
 \item{...}{Additional arguments passed to `ggplot2` functions.}
 }

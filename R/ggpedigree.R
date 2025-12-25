@@ -26,6 +26,7 @@
 #' @param return_widget Logical; if TRUE (default) returns a plotly htmlwidget.
 #'        If FALSE, returns the underlying plotly object (useful for further
 #'        customization before printing).
+#' @param code_male Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1
 #' @param focal_fill_column Character string specifying the column name for focal fill color.
 #' @param ... Additional arguments passed to `ggplot2` functions.
 #' @param config A list of configuration options for customizing the plot.
@@ -78,6 +79,7 @@ ggPedigree <- function(ped,
                        debug = FALSE,
                        hints = NULL,
                        interactive = FALSE,
+                       code_male = NULL,
                        ...) {
   if (!inherits(ped, "data.frame")) {
     if (rlang::inherits_any(ped, c("ped", "pedigree", "kinship2.pedigree"))) {
@@ -136,6 +138,10 @@ ggPedigree <- function(ped,
       function_name = "ggpedigree",
       pedigree_size = nrow(ped)
     )
+    if(exists("code_male")&&is.null(code_male) == FALSE){
+      config$code_male <- code_male
+      code_male <- NULL
+    }
 
 
     # Call the core function with the provided arguments

@@ -30,6 +30,7 @@ ggPedigreeInteractive <- function(ped,
                                   config = list(optimize_plotly = TRUE),
                                   debug = FALSE,
                                   return_widget = TRUE,
+                                  code_male = NULL,
                                   ...) {
   if (!requireNamespace("plotly", quietly = TRUE)) {
     stop("The 'plotly' package is required for interactive plots.")
@@ -54,12 +55,15 @@ ggPedigreeInteractive <- function(ped,
 
   if (!is.null(tooltip_columns)) {
     config$tooltip_columns <- tooltip_columns
+    tooltip_columns <- NULL
   }
   if (!is.null(return_widget)) {
     config$return_widget <- return_widget
+    return_widget <- NULL
   }
   if (!is.null(debug)) {
     config$debug <- debug
+    debug <- NULL
   }
   # Set default styling and layout parameters
   default_config <- getDefaultPlotConfig(
@@ -75,7 +79,10 @@ ggPedigreeInteractive <- function(ped,
     function_name = "ggpedigreeinteractive",
     pedigree_size = nrow(ped)
   )
-
+  if(exists("code_male")&&is.null(code_male) == FALSE){
+    config$code_male <- code_male
+    code_male <- NULL
+  }
 
   ## 1. Build the static ggplot using the existing engine
   static_plot <- ggPedigree.core(ped,

@@ -23,6 +23,7 @@ ggPedigreeInteractive(
   config = list(optimize_plotly = TRUE),
   debug = FALSE,
   return_widget = TRUE,
+  code_male = NULL,
   ...
 )
 
@@ -42,6 +43,7 @@ ggpedigreeInteractive(
   config = list(optimize_plotly = TRUE),
   debug = FALSE,
   return_widget = TRUE,
+  code_male = NULL,
   ...
 )
 
@@ -61,6 +63,7 @@ ggpedigreeinteractive(
   config = list(optimize_plotly = TRUE),
   debug = FALSE,
   return_widget = TRUE,
+  code_male = NULL,
   ...
 )
 }
@@ -113,6 +116,8 @@ Defaults to NULL, which uses the default tooltip columns.}
 \item{return_widget}{Logical; if TRUE (default) returns a plotly htmlwidget.
 If FALSE, returns the underlying plotly object (useful for further
 customization before printing).}
+
+\item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1}
 
 \item{...}{Additional arguments passed to `ggplot2` functions.}
 }
