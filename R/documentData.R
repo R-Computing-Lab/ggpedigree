@@ -51,7 +51,11 @@
 #'     personID = "personID",
 #'     momID = "momID",
 #'     dadID = "dadID",
-#'     sex = "sex"
+#'     sex = "sex",
+#'     config = list(
+#'       add_phantoms = TRUE,
+#'       code_male = "M"
+#'   )
 #'   )
 #' }
 "redsquirrels"
