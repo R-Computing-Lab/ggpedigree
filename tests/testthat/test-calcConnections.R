@@ -588,7 +588,8 @@ test_that("buildSpouseSegments with use_hash=TRUE handles unmatched parent IDs",
     stringsAsFactors = FALSE
   )
 
-  result <- buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
+  result <- buildSpouseSegments(ped, connections_for_FOO,
+                                use_hash = TRUE)
 
   expect_true(is.data.frame(result))
   expect_equal(nrow(result), 2)

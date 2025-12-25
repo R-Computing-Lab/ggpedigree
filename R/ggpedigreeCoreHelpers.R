@@ -79,14 +79,16 @@ preparePedigreeData <- function(ped,
     )
   }
 
+
+
   # Standardize sex variable using code_male convention
-
+ # if (config$recode_sex == TRUE) {
   ds_ped <- BGmisc::recodeSex(ds_ped,
-    recode_male = config$code_male,
-    recode_na = config$code_na,
-    recode_female = config$code_female
+                              recode_male = config$code_male,
+                              recode_na = config$code_na,
+                              recode_female = config$code_female
   )
-
+#  }
   if (config$add_phantoms == TRUE) {
     # If phantoms are requested, add phantom parents
     ds_ped <- BGmisc::checkParentIDs(
@@ -94,7 +96,7 @@ preparePedigreeData <- function(ped,
       addphantoms = TRUE,
       repair = TRUE,
       parentswithoutrow = FALSE,
-      repairsex = FALSE,
+      repairsex = T,
       personID = personID,
       momID = momID,
       dadID = dadID,

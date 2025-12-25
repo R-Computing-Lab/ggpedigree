@@ -33,9 +33,34 @@ test_that("ASOIAF data loads", {
  #   code_male = "M",
     config = list(
       add_phantoms = TRUE,
-      code_male = "M" # ,
-      #   relation =  'many-to-many'
+      code_male = "M"  ,
+      override_many2many = TRUE
     )
   )
   expect_true(inherits(ggped, "ggplot"))
 })
+
+
+test_that("redsquirrels data structure", {
+  data(redsquirrels)
+  #'
+  #' # View the structure of the dataset
+  str(redsquirrels)
+
+  #'   # Select one family to plot
+   family_data <- subset(redsquirrels, famID == 1)
+  #'
+  #'   # Create a pedigree plot
+expect_no_error(   ggPedigree(family_data,
+     personID = "personID",
+    momID = "momID",
+    dadID = "dadID",
+  # sex = "sex",
+     config = list(
+      add_phantoms = TRUE,
+      code_male = "M",
+      code_female="F"
+ )
+  )
+)
+ })

@@ -84,6 +84,7 @@ calculateCoordinates <- function(ped,
   # Fill missing configuration values with defaults
   default_config <- list(
     code_male = 1,
+    code_female = 0,
     ped_packed = TRUE,
     ped_align = TRUE,
     ped_width = 15,
@@ -282,15 +283,20 @@ alignPedigreeWithRelations <- function(ped,
                                        personID,
                                        dadID,
                                        momID,
-                                       code_male,
+                                       code_male = NULL,
                                        sexVar,
                                        config) {
   # recodeSex <- function(
   #  ped, verbose = FALSE, code_male = NULL, code_na = NULL, code_female = NULL,
   #   recode_male = "M", recode_female = "F", recode_na = NA_character_)
   # Recode sex values in case non-standard codes are used (e.g., "M"/"F")
+
+  if(!is.null(code_male)){
+    config$code_male <- code_male
+    code_male <- NULL
+  }
   ped_recode <- BGmisc::recodeSex(ped,
-    code_male = code_male
+    code_male = config$code_male
   )
   if ("relation" %in% names(config) && !is.null(config$relation)) {
     # Construct a pedigree object to compute layout coordinates
