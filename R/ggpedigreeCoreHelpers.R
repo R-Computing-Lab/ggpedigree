@@ -20,7 +20,10 @@ preparePedigreeData <- function(ped,
                                   focal_fill_include = TRUE,
                                   focal_fill_component = "maternal",
                                   recode_missing_ids = TRUE,
-                                  add_phantoms = FALSE
+                                  add_phantoms = FALSE,
+                                  code_male = "M",
+                                  code_female = "F",
+                                  code_na = NA
                                 ),
                                 fill_group_paternal = c(
                                   "paternal",

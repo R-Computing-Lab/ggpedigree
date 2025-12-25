@@ -30,7 +30,7 @@ test_that("ASOIAF data loads", {
     personID = "id",
     momID = "momID",
     dadID = "dadID",
-    code_male = "M",
+ #   code_male = "M",
     config = list(
       add_phantoms = TRUE,
       code_male = "M" # ,

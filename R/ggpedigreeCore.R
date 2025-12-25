@@ -26,6 +26,7 @@ ggPedigree.core <- function(ped,
                             config = list(),
                             debug = FALSE,
                             hints = NULL,
+                            sexVar = "sex",
                             function_name = "ggPedigree") {
   # -----
   # STEP 1: Configuration and Preparation

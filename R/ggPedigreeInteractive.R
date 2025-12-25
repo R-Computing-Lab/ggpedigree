@@ -23,6 +23,7 @@ ggPedigreeInteractive <- function(ped,
                                   patID = "patID",
                                   matID = "matID",
                                   twinID = "twinID",
+                                  spouseID = "spouseID",
                                   status_column = NULL,
                                   tooltip_columns = NULL,
                                   focal_fill_column = NULL,
@@ -31,7 +32,7 @@ ggPedigreeInteractive <- function(ped,
                                   debug = FALSE,
                                   return_widget = TRUE,
                                   code_male = NULL,
-                                  ...) {
+                                  sexVar = "sex") {
   if (!requireNamespace("plotly", quietly = TRUE)) {
     stop("The 'plotly' package is required for interactive plots.")
   }
@@ -93,13 +94,14 @@ ggPedigreeInteractive <- function(ped,
     patID = patID,
     matID = matID,
     twinID = twinID,
+    spouseID = spouseID,
     status_column = config$status_column,
     overlay_column = overlay_column,
     config = config,
     debug = config$debug,
     focal_fill_column = focal_fill_column,
     function_name = "ggpedigreeinteractive",
-    ...
+    sexVar = sexVar
   )
 
   ## 2. Identify data columns for tooltips ----------------------------------
