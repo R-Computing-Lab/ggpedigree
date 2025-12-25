@@ -31,6 +31,7 @@ ggPedigreeInteractive <- function(ped,
                                   config = list(optimize_plotly = TRUE),
                                   debug = FALSE,
                                   return_widget = TRUE,
+                                  hints = NULL,
                                   code_male = NULL,
                                   sexVar = "sex") {
   if (!requireNamespace("plotly", quietly = TRUE)) {

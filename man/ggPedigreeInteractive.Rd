@@ -16,6 +16,7 @@ ggPedigreeInteractive(
   patID = "patID",
   matID = "matID",
   twinID = "twinID",
+  spouseID = "spouseID",
   status_column = NULL,
   tooltip_columns = NULL,
   focal_fill_column = NULL,
@@ -23,8 +24,9 @@ ggPedigreeInteractive(
   config = list(optimize_plotly = TRUE),
   debug = FALSE,
   return_widget = TRUE,
+  hints = NULL,
   code_male = NULL,
-  ...
+  sexVar = "sex"
 )
 
 ggpedigreeInteractive(
@@ -36,6 +38,7 @@ ggpedigreeInteractive(
   patID = "patID",
   matID = "matID",
   twinID = "twinID",
+  spouseID = "spouseID",
   status_column = NULL,
   tooltip_columns = NULL,
   focal_fill_column = NULL,
@@ -43,8 +46,9 @@ ggpedigreeInteractive(
   config = list(optimize_plotly = TRUE),
   debug = FALSE,
   return_widget = TRUE,
+  hints = NULL,
   code_male = NULL,
-  ...
+  sexVar = "sex"
 )
 
 ggpedigreeinteractive(
@@ -56,6 +60,7 @@ ggpedigreeinteractive(
   patID = "patID",
   matID = "matID",
   twinID = "twinID",
+  spouseID = "spouseID",
   status_column = NULL,
   tooltip_columns = NULL,
   focal_fill_column = NULL,
@@ -63,8 +68,9 @@ ggpedigreeinteractive(
   config = list(optimize_plotly = TRUE),
   debug = FALSE,
   return_widget = TRUE,
+  hints = NULL,
   code_male = NULL,
-  ...
+  sexVar = "sex"
 )
 }
 \arguments{
@@ -83,6 +89,8 @@ ggpedigreeinteractive(
 \item{matID}{Character string specifying the column name for maternal lines Defaults to "matID".}
 
 \item{twinID}{Character string specifying the column name for twin IDs. Defaults to "twinID".}
+
+\item{spouseID}{Character string specifying the column name for spouse IDs. Defaults to "spouseID".}
 
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
 
@@ -117,9 +125,11 @@ Defaults to NULL, which uses the default tooltip columns.}
 If FALSE, returns the underlying plotly object (useful for further
 customization before printing).}
 
+\item{hints}{Data frame with hints for layout adjustments. Default: NULL.}
+
 \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1}
 
-\item{...}{Additional arguments passed to `ggplot2` functions.}
+\item{sexVar}{Character string specifying the column name for sex. Defaults to "sex".}
 }
 \value{
 A plotly htmlwidget (or plotly object if `return_widget = FALSE`)

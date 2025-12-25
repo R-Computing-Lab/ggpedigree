@@ -78,7 +78,9 @@ calculateCoordinates <- function(ped,
   # -----
   # Set up
   # -----
-
+  if(!is.null(code_male)){
+    config$code_male <- code_male
+  }
   # Fill missing configuration values with defaults
   default_config <- list(
     code_male = 1,
@@ -98,7 +100,7 @@ calculateCoordinates <- function(ped,
     personID = personID,
     dadID = dadID,
     momID = momID,
-    code_male = code_male,
+    code_male = config$code_male,
     sexVar = sexVar,
     config = config
   )

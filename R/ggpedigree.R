@@ -27,6 +27,7 @@
 #'        If FALSE, returns the underlying plotly object (useful for further
 #'        customization before printing).
 #' @param code_male Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1
+#' @param sexVar Character string specifying the column name for sex. Defaults to "sex".
 #' @param focal_fill_column Character string specifying the column name for focal fill color.
 #' @param ... Additional arguments passed to `ggplot2` functions.
 #' @param config A list of configuration options for customizing the plot.
