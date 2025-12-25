@@ -52,10 +52,9 @@
 #'     momID = "momID",
 #'     dadID = "dadID",
 #'     sex = "sex",
-#'     code_male="M",
 #'     config = list(
-#'       add_phantoms = TRUE#,
-#'     #  code_male = "M"
+#'       add_phantoms = TRUE,
+#'       code_male = "M"
 #'   )
 #'   )
 #' }
