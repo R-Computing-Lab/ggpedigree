@@ -33,8 +33,8 @@ test_that("ASOIAF data loads", {
     code_male = "M",
     config = list(
       add_phantoms = TRUE,
-      code_male = "M"#,
-   #   relation =  'many-to-many'
+      code_male = "M" # ,
+      #   relation =  'many-to-many'
     )
   )
   expect_true(inherits(ggped, "ggplot"))

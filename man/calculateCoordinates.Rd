@@ -65,8 +65,9 @@ coords <- calculateCoordinates(
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
-  config  = list(
-   code_male = 1)
+  config = list(
+    code_male = 1
+  )
 )
 
 # View the coordinates

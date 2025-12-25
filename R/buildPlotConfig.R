@@ -58,17 +58,15 @@ buildPlotConfig <- function(default_config,
         pedigree_size <- 1
       }
       if (pedigree_size <= 3) {
-        built_config$point_size <- built_config$point_size*2
-
+        built_config$point_size <- built_config$point_size * 2
       } else if (pedigree_size <= 50) {
         built_config$point_size <- built_config$point_size
-
       } else if (pedigree_size <= 100) {
         built_config$point_size <- max(built_config$point_size / sqrt(pedigree_size), 0.5)
       } else if (pedigree_size <= 500) {
         built_config$point_size <- max(built_config$point_size / sqrt(pedigree_size) * 1.5, 0.5)
       } else {
-        built_config$point_size <-  max(built_config$point_size / sqrt(pedigree_size) * 2.5, 0.5)
+        built_config$point_size <- max(built_config$point_size / sqrt(pedigree_size) * 2.5, 0.5)
       }
     }
     if (built_config$segment_scale_by_pedigree == TRUE) {
@@ -81,17 +79,15 @@ buildPlotConfig <- function(default_config,
         built_config$segment_self_linewidth <- built_config$segment_self_linewidth
       } else if (pedigree_size <= 100) {
         built_config$segment_linewidth <- max(built_config$segment_linewidth / sqrt(pedigree_size), 0.5)
-        built_config$segment_self_linewidth <- max(built_config$segment_self_linewidth / sqrt(pedigree_size), 0.5*.5)
+        built_config$segment_self_linewidth <- max(built_config$segment_self_linewidth / sqrt(pedigree_size), 0.5 * .5)
       } else if (pedigree_size <= 500) {
         built_config$segment_linewidth <- max(built_config$segment_linewidth / sqrt(pedigree_size) * 1.5, 0.5)
-        built_config$segment_self_linewidth <- max(built_config$segment_self_linewidth / sqrt(pedigree_size) * 1.5, 0.5*.5)
+        built_config$segment_self_linewidth <- max(built_config$segment_self_linewidth / sqrt(pedigree_size) * 1.5, 0.5 * .5)
       } else {
-        built_config$segment_linewidth <-  max(built_config$segment_linewidth / sqrt(pedigree_size) * 2.5, 0.5)
-        built_config$segment_self_linewidth <-  max(built_config$segment_self_linewidth / sqrt(pedigree_size) * 2.5, 0.5*.5)
+        built_config$segment_linewidth <- max(built_config$segment_linewidth / sqrt(pedigree_size) * 2.5, 0.5)
+        built_config$segment_self_linewidth <- max(built_config$segment_self_linewidth / sqrt(pedigree_size) * 2.5, 0.5 * .5)
       }
     }
-
-
 
 
     if ("status_labs" %in% names(built_config) == FALSE) {

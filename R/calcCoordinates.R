@@ -37,8 +37,9 @@ utils::globalVariables(c(":="))
 #'   personID = "personID",
 #'   momID = "momID",
 #'   dadID = "dadID",
-#'   config  = list(
-#'    code_male = 1)
+#'   config = list(
+#'     code_male = 1
+#'   )
 #' )
 #'
 #' # View the coordinates
@@ -55,7 +56,6 @@ utils::globalVariables(c(":="))
 #'     ped_width = 20
 #'   )
 #' )
-
 calculateCoordinates <- function(ped,
                                  personID = "personID",
                                  momID = "momID",
