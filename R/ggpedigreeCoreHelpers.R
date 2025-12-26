@@ -20,7 +20,10 @@ preparePedigreeData <- function(ped,
                                   focal_fill_include = TRUE,
                                   focal_fill_component = "maternal",
                                   recode_missing_ids = TRUE,
-                                  add_phantoms = FALSE
+                                  add_phantoms = FALSE,
+                                  code_male = "M",
+                                  code_female = "F",
+                                  code_na = NA
                                 ),
                                 fill_group_paternal = c(
                                   "paternal",
@@ -76,14 +79,16 @@ preparePedigreeData <- function(ped,
     )
   }
 
+
+
   # Standardize sex variable using code_male convention
-
+ # if (config$recode_sex == TRUE) {
   ds_ped <- BGmisc::recodeSex(ds_ped,
-    recode_male = config$code_male,
-    recode_na = config$code_na,
-    recode_female = config$code_female
+                              recode_male = config$code_male,
+                              recode_na = config$code_na,
+                              recode_female = config$code_female
   )
-
+#  }
   if (config$add_phantoms == TRUE) {
     # If phantoms are requested, add phantom parents
     ds_ped <- BGmisc::checkParentIDs(

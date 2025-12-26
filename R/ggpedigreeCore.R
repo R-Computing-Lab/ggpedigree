@@ -22,11 +22,12 @@ ggPedigree.core <- function(ped,
                             focal_fill_column = NULL,
                             overlay_column = NULL,
                             status_column = NULL,
+                            code_male = NULL,
                             config = list(),
                             debug = FALSE,
                             hints = NULL,
-                            function_name = "ggPedigree",
-                            ...) {
+                            sexVar = "sex",
+                            function_name = "ggPedigree") {
   # -----
   # STEP 1: Configuration and Preparation
   # -----
@@ -91,10 +92,7 @@ ggPedigree.core <- function(ped,
 
     # assign("DEBUG_ds_ped", ds_ped, envir = .GlobalEnv)
   }
-  #  print(class(ped$spouseID))
-  #  print(class(ped$personID))
-  #  print(class(ped$momID))
-  # print(class(ped$dadID))
+
 
 
   # -----
