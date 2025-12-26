@@ -73,7 +73,7 @@ str(redsquirrels_full)
 # Plot a pedigree for a single family
 if (requireNamespace("ggplot2", quietly = TRUE)) {
   # Select one family to plot
-  family_data <- subset(redsquirrels, famID == 8)
+  family_data <- subset(redsquirrels, famID == 160)
 
   # Create a pedigree plot
   ggPedigree(family_data,
