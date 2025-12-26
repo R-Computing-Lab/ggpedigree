@@ -170,7 +170,6 @@ write_csv(redsquirrels_full, here("data-raw", "redsquirrels_full.csv"), na = "")
 usethis::use_data(redsquirrels_full, overwrite = TRUE, compress = "xz")
 
 
-
 group_fams_withdads <- ds_grouped %>%
   group_by(famID) %>%
 summarize(
@@ -182,6 +181,7 @@ summarize(
 # handling families that have at least one dadID present
 redsquirrels <- ds_grouped %>%
   filter(famID %in% group_fams_withdads$famID) %>%
+  select(-year_first, -year_last, -ars_sd, -ars_n, -ars_min, -ars_med, -ars_max) %>%
   arrange(personID)
 
 write_csv(redsquirrels, here("data-raw", "redsquirrels.csv"), na = "")
