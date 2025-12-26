@@ -59,7 +59,8 @@ expect_no_error(   ggPedigree(family_data,
      config = list(
       add_phantoms = TRUE,
       code_male = "M",
-      code_female="F"
+      code_female="F",
+      override_many2many = TRUE
  )
   )
 )
