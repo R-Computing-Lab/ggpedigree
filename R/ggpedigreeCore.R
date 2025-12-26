@@ -295,10 +295,9 @@ ggPedigree.core <- function(ped,
   )
 
   # Add overlay points for affected status if applicable
-  if (
-    config$focal_fill_include == TRUE && config$sex_color_include == FALSE ||
-      config$overlay_include == TRUE && !is.null(overlay_column) ||
-      !is.null(status_column) && config$status_include == TRUE && config$sex_color_include == TRUE) {
+
+  if (.should_add_overlay(config, overlay_column, status_column, focal_fill_column)) {
+
     # If overlay_column is specified, use it for alpha aesthetic
 
     p <- .addOverlay(
@@ -404,7 +403,7 @@ ggPedigree.core <- function(ped,
     message("Status column: ", status_column)
   }
 
-  if (config$outline_include == TRUE) {
+  if (isTRUE(config$outline_include)) {
     plotObject <- plotObject +
       ggplot2::geom_point(
         ggplot2::aes(shape = as.factor(.data$sex)),
@@ -416,8 +415,30 @@ ggPedigree.core <- function(ped,
       )
   }
 
-  if (config$sex_color_include == TRUE) {
-    # Use color and shape to represent sex
+
+  # 2) Determine which "node mode" to use (exactly one)
+  node_mode <- .pick_first(
+    rules = list(
+      list(
+        when = function() isTRUE(config$sex_color_include),
+        do   = "sex_color"
+      ),
+      list(
+        when = function() isTRUE(config$focal_fill_include),
+        do   = "focal_fill"
+      ),
+      list(
+        when = function() isTRUE(config$status_include) && !is.null(status_column),
+        do   = "status"
+      )
+    ),
+    default = "shape_only"
+  )
+
+
+
+  # 3) Add the selected layer
+  if (node_mode == "sex_color") {
     plotObject <- plotObject +
       ggplot2::geom_point(
         ggplot2::aes(
@@ -427,34 +448,22 @@ ggPedigree.core <- function(ped,
         size = config$point_size,
         na.rm = TRUE
       )
-  } else if (config$focal_fill_include == TRUE) {
-    # If status_column is not present but status_include is TRUE,
-    # use alpha aesthetic to show affected status
-    if (is.null(focal_fill_column)) {
-      plotObject <- plotObject +
-        ggplot2::geom_point(
-          ggplot2::aes(
-            color = .data$focal_fill,
-            shape = as.factor(.data$sex)
-          ),
-          size = config$point_size,
-          na.rm = TRUE
-        )
-    } else {
-      plotObject <- plotObject +
-        ggplot2::geom_point(
-          ggplot2::aes(
-            color = !!rlang::sym(focal_fill_column),
-            shape = as.factor(.data$sex)
-          ),
-          size = config$point_size,
-          na.rm = TRUE
-        )
-    }
-  } else if (config$status_include == TRUE &&
-    !is.null(status_column)) {
-    # If status_column is present but sex_color_include is FALSE,
-    # use shape for sex and color for affected status
+
+  } else if (node_mode == "focal_fill") {
+    # Preserve your original "if focal_fill_column is NULL, use .data$focal_fill"
+    color_expr <- if (is.null(focal_fill_column)) rlang::expr(.data$focal_fill) else rlang::sym(focal_fill_column)
+
+    plotObject <- plotObject +
+      ggplot2::geom_point(
+        ggplot2::aes(
+          color = !!color_expr,
+          shape = as.factor(.data$sex)
+        ),
+        size = config$point_size,
+        na.rm = TRUE
+      )
+
+  } else if (node_mode == "status") {
     plotObject <- plotObject +
       ggplot2::geom_point(
         ggplot2::aes(
@@ -464,18 +473,18 @@ ggPedigree.core <- function(ped,
         size = config$point_size,
         na.rm = TRUE
       )
-  } else {
-    # If neither sex color nor status_column is active,
-    # plot using shape (sex) only
+
+  } else { # "shape_only"
     plotObject <- plotObject +
-      ggplot2::geom_point(ggplot2::aes(shape = as.factor(.data$sex)),
+      ggplot2::geom_point(
+        ggplot2::aes(shape = as.factor(.data$sex)),
         size = config$point_size,
         na.rm = TRUE
       )
   }
 
+  plotObject
 
-  return(plotObject)
 }
 
 #' @rdname dot-addNodes
@@ -489,50 +498,66 @@ addNodes <- .addNodes
 #' @return A ggplot object with added overlay.
 #'
 .addOverlay <- function(plotObject,
-                        config,
+                        config = list(overlay_include = FALSE,
+                                      status_include = FALSE,
+                                      focal_fill_include = FALSE,
+                                      sex_color_include = FALSE),
+
                         focal_fill_column = NULL,
                         status_column = NULL,
                         overlay_column = NULL) {
   # print("Adding overlay to the plot...")
-  if (config$overlay_include == TRUE && !is.null(overlay_column)) {
-    # If overlay_column is specified, use it for alpha aesthetic
-    plotObject <- plotObject + ggplot2::geom_point(
-      ggplot2::aes(alpha = !!rlang::sym(overlay_column)),
-      # config$overlay_alpha_values), #
-      shape = config$overlay_shape,
-      size = config$point_size,
-      color = config$overlay_color,
-      na.rm = TRUE
-    )
-    # print("Overlay added using overlay_column.")
-  } else if (config$status_include == TRUE &&
-    !is.null(status_column) && config$sex_color_include == TRUE) {
-    # If no overlay_column is specified, use status_column for alpha aesthetic
-    #
-    plotObject <- plotObject + ggplot2::geom_point(
-      ggplot2::aes(alpha = !!rlang::sym(status_column)),
-      # config$status_alpha_values),
-      shape = config$status_shape_affected,
-      size = config$point_size,
-      color = config$status_color_affected,
-      na.rm = TRUE
-    )
-    # print("Overlay added using status_column.")
-  } else if (config$focal_fill_include == TRUE &&
-    !is.null(focal_fill_column) && config$sex_color_include == FALSE) {
-    # If focal_fill_column is specified, use it for alpha aesthetic
-    plotObject <- plotObject + ggplot2::geom_point(
-      ggplot2::aes(alpha = !!rlang::sym(focal_fill_column)),
-      shape = config$focal_fill_shape,
-      size = config$point_size,
-      color = config$focal_fill_mid_color,
-      na.rm = TRUE
-    )
 
-    # print("Overlay added using focal_fill_column.")
+  overlay_spec <- .pick_first(
+    rules = list(
+      list(
+        when = function() isTRUE(config$overlay_include) && !is.null(overlay_column),
+        do   = list(
+          alpha_var = overlay_column,
+          shape      = config$overlay_shape,
+          color      = config$overlay_color
+        )
+      ),
+      list(
+        when = function() isTRUE(config$status_include) &&
+          !is.null(status_column) &&
+          isTRUE(config$sex_color_include),
+        do   = list(
+          alpha_var = status_column,
+          shape      = config$status_shape_affected,
+          color      = config$status_color_affected
+        )
+      ),
+      list(
+        when = function() isTRUE(config$focal_fill_include) &&
+      exists("focal_fill_column") &&    !is.null(focal_fill_column) &&
+          !isTRUE(config$sex_color_include),
+        do   = list(
+          alpha_var  = focal_fill_column,
+          shape      = config$focal_fill_shape,
+          color      = config$focal_fill_mid_color
+        )
+      )
+    ),
+    default = NULL
+  )
+
+  if (!is.null(overlay_spec)) {
+    # Convert to symbol only after a rule has been selected
+    overlay_spec$alpha_expr <- rlang::sym(overlay_spec$alpha_var)
+
+    plotObject <- plotObject +
+      ggplot2::geom_point(
+        ggplot2::aes(alpha = !!overlay_spec$alpha_expr),
+        shape = overlay_spec$shape,
+        size = config$point_size,
+        color = overlay_spec$color,
+        na.rm = TRUE
+      )
   }
 
-  return(plotObject)
+  plotObject
+
 }
 
 #' @rdname dot-addOverlay
