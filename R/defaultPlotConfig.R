@@ -12,7 +12,8 @@
 #' @param overlay_shape The shape used for overlaying points in the plot.
 #' @param color_scale_midpoint Midpoint value for continuous color scales.
 #' @param alpha_default Default alpha transparency level.
-#' @param apply_default_scales Whether to apply default color scales.
+#' @param apply_default_scales Whether to apply default scales.
+#' @param apply_default_color Whether to apply default color palette. If TRUE, uses color_palette_default. Otherwise, uses black.
 #' @param apply_default_theme Whether to apply default ggplot2 theme.
 #' @param color_palette_low Color for the low end of a gradient.
 #' @param color_palette_mid Color for the midpoint of a gradient.
@@ -188,6 +189,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  # ---- General Appearance ----
                                  apply_default_scales = TRUE,
                                  apply_default_theme = TRUE,
+                                 apply_default_color = TRUE,
                                  segment_default_color = "black",
                                  color_palette_default = c(
                                    "#440154FF",
@@ -275,7 +277,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  sex_color_include = TRUE,
                                  sex_legend_title = "Sex",
                                  sex_shape_labels = c("Female", "Male", "Unknown"),
-                                 sex_color_palette = color_palette_default,
+                                 sex_color_palette = if(apply_default_color){color_palette_default} else {c("black", "black", "black")},
                                  sex_shape_female = 16,
                                  sex_shape_male = 15,
                                  sex_shape_unknown = 18,
@@ -418,7 +420,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     apply_default_scales = apply_default_scales,
     segment_default_color = segment_default_color,
     apply_default_theme = apply_default_theme,
-    color_palette_default = color_palette_default,
+    apply_default_color = apply_default_color,
+    color_palette_default = if(apply_default_color){color_palette_default} else {rep("black", length(color_palette_default))},
     color_palette_low = color_palette_low,
     color_palette_mid = color_palette_mid,
     color_palette_high = color_palette_high,
@@ -524,7 +527,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     sex_color_include = sex_color_include,
     sex_legend_title = sex_legend_title,
     sex_shape_labels = sex_shape_labels,
-    sex_color_palette = sex_color_palette,
+    sex_color_palette = if(apply_default_color){sex_color_palette} else {c("black", "black", "black")},
     sex_shape_female = sex_shape_female,
     sex_shape_male = sex_shape_male,
     sex_shape_unknown = sex_shape_unknown,

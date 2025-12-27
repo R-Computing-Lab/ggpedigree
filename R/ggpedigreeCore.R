@@ -356,6 +356,7 @@ ggPedigree.core <- function(ped,
       )
   }
 
+
   # -----
   # STEP 12: Final Legend Adjustments
   # -----
@@ -368,6 +369,7 @@ ggPedigree.core <- function(ped,
       focal_fill_column = focal_fill_column
     )
   }
+
   # add plot_connections to the plot object
   attr(p, "connections") <- plot_connections
   if (config$debug == TRUE) {
@@ -424,9 +426,10 @@ ggPedigree.core <- function(ped,
         do   = "sex_color"
       ),
       list(
-        when = function() isTRUE(config$focal_fill_include),
+        when = function() isTRUE(config$focal_fill_include) && !is.null(focal_fill_column),
         do   = "focal_fill"
       ),
+
       list(
         when = function() isTRUE(config$status_include) && !is.null(status_column),
         do   = "status"
@@ -451,7 +454,11 @@ ggPedigree.core <- function(ped,
 
   } else if (node_mode == "focal_fill") {
     # Preserve your original "if focal_fill_column is NULL, use .data$focal_fill"
-    color_expr <- if (is.null(focal_fill_column)) rlang::expr(.data$focal_fill) else rlang::sym(focal_fill_column)
+    color_expr <- if (is.null(focal_fill_column)){
+      rlang::expr(.data$focal_fill)
+      } else {
+      rlang::sym(focal_fill_column)
+      }
 
     plotObject <- plotObject +
       ggplot2::geom_point(
@@ -897,7 +904,7 @@ addSelfSegment <- .addSelfSegment
   )
 
   if (isFALSE(config$focal_fill_legend_show)) {
-    p <- p + ggplot2::guides(color = "none")
+    p <- p + ggplot2::guides(color = "none", shape = "none")
   }
 
   p
@@ -916,7 +923,8 @@ addScales <- .addScales
 #'
 .addLabels <- function(plotObject, config) {
   ggrepel_label_methods <- c("geom_text_repel", "ggrepel", "geom_label_repel")
-  if (!requireNamespace("ggrepel", quietly = TRUE) &&
+
+   if (!requireNamespace("ggrepel", quietly = TRUE) &&
     config$label_method %in% ggrepel_label_methods) {
     warning(
       "The 'ggrepel' package is required for label methods 'geom_text_repel', 'ggrepel', and 'geom_label_repel'. Please install it using install.packages('ggrepel')."

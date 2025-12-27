@@ -11,6 +11,7 @@ getDefaultPlotConfig(
   alpha_default = 1,
   apply_default_scales = TRUE,
   apply_default_theme = TRUE,
+  apply_default_color = TRUE,
   segment_default_color = "black",
   color_palette_default = c("#440154FF", "#FDE725FF", "#21908CFF"),
   color_palette_low = "#000004FF",
@@ -81,7 +82,12 @@ getDefaultPlotConfig(
   sex_color_include = TRUE,
   sex_legend_title = "Sex",
   sex_shape_labels = c("Female", "Male", "Unknown"),
-  sex_color_palette = color_palette_default,
+  sex_color_palette = if (apply_default_color) {
+     color_palette_default
+ } else {
+   
+     c("black", "black", "black")
+ },
   sex_shape_female = 16,
   sex_shape_male = 15,
   sex_shape_unknown = 18,
@@ -189,9 +195,11 @@ getDefaultPlotConfig(
 
 \item{alpha_default}{Default alpha transparency level.}
 
-\item{apply_default_scales}{Whether to apply default color scales.}
+\item{apply_default_scales}{Whether to apply default scales.}
 
 \item{apply_default_theme}{Whether to apply default ggplot2 theme.}
+
+\item{apply_default_color}{Whether to apply default color palette. If TRUE, uses color_palette_default. Otherwise, uses black.}
 
 \item{segment_default_color}{A character string for the default color of segments in the plot.}
 
