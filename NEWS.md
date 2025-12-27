@@ -4,6 +4,7 @@
 * Added smarter warning message for tryCatch
 * Tweak code_male handling to be more robust about using config values
 * Slice up squirrel dataset into smaller pedigrees for testing
+* Refactored add node
 
 # ggpedigree 1.1.0.0
 * Saved raw excel data as csv to have a non-proprietary format for data storage
