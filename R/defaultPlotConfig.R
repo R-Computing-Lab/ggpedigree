@@ -277,7 +277,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  sex_color_include = TRUE,
                                  sex_legend_title = "Sex",
                                  sex_shape_labels = c("Female", "Male", "Unknown"),
-                                 sex_color_palette = if(apply_default_color){color_palette_default} else {c("black", "black", "black")},
+                                 sex_color_palette = NULL,
                                  sex_shape_female = 16,
                                  sex_shape_male = 15,
                                  sex_shape_unknown = 18,
@@ -292,10 +292,10 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  status_label_unaffected = "Unaffected",
                                  status_alpha_affected = 1,
                                  status_alpha_unaffected = 0,
-                                 status_color_palette = c(color_palette_default[1], color_palette_default[2]),
+                                 status_color_palette =  NULL,
                                  # Use first color for affected,
                                  status_color_affected = "black",
-                                 status_color_unaffected = color_palette_default[2],
+                                 status_color_unaffected = NULL,
                                  status_shape_affected = 4,
                                  status_legend_title = "Affected",
                                  status_legend_show = FALSE,
@@ -415,13 +415,33 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     ))
   }
 
+
+  # Add effective palette that is either default or all black
+  effective_palette_default <- if (apply_default_color) {
+    color_palette_default
+  } else {
+    rep("black", length(color_palette_default))
+  }
+
+  # Defaults that previously leaked color_palette_default
+  if (is.null(sex_color_palette)) {
+    sex_color_palette <- effective_palette_default
+  }
+  if (is.null(status_color_palette)) {
+    status_color_palette <- effective_palette_default[1:2]
+  }
+  if (is.null(status_color_unaffected)) {
+    status_color_unaffected <- effective_palette_default[2]
+  }
+
+
   core_list <- list(
     # ---- General Appearance ----
     apply_default_scales = apply_default_scales,
     segment_default_color = segment_default_color,
     apply_default_theme = apply_default_theme,
     apply_default_color = apply_default_color,
-    color_palette_default = if(apply_default_color){color_palette_default} else {rep("black", length(color_palette_default))},
+    color_palette_default = effective_palette_default,
     color_palette_low = color_palette_low,
     color_palette_mid = color_palette_mid,
     color_palette_high = color_palette_high,
@@ -527,7 +547,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     sex_color_include = sex_color_include,
     sex_legend_title = sex_legend_title,
     sex_shape_labels = sex_shape_labels,
-    sex_color_palette = if(apply_default_color){sex_color_palette} else {c("black", "black", "black")},
+    sex_color_palette = sex_color_palette,
     sex_shape_female = sex_shape_female,
     sex_shape_male = sex_shape_male,
     sex_shape_unknown = sex_shape_unknown,
