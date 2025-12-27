@@ -55,7 +55,6 @@ utils::globalVariables(c(":="))
 #'     ped_width = 20
 #'   )
 #' )
-
 calculateCoordinates <- function(ped,
                                  personID = "personID",
                                  momID = "momID",
@@ -78,7 +77,7 @@ calculateCoordinates <- function(ped,
   # -----
   # Set up
   # -----
-  if(!is.null(code_male)){
+  if (!is.null(code_male)) {
     config$code_male <- code_male
   }
   # Fill missing configuration values with defaults
@@ -291,7 +290,7 @@ alignPedigreeWithRelations <- function(ped,
   #   recode_male = "M", recode_female = "F", recode_na = NA_character_)
   # Recode sex values in case non-standard codes are used (e.g., "M"/"F")
 
-  if(!is.null(code_male)){
+  if (!is.null(code_male)) {
     config$code_male <- code_male
     code_male <- NULL
   }

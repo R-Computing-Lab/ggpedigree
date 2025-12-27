@@ -39,27 +39,24 @@ buildPlotConfig <- function(default_config,
   built_config <- utils::modifyList(default_config, config)
 
 
-
-
   # -- Post-process certain config entries --
 
   if (!isTRUE(built_config$apply_default_color)) {
-
     # Color palette default
     if (!is.null(built_config$color_palette_default) &&
-        length(built_config$color_palette_default) > 0) {
+      length(built_config$color_palette_default) > 0) {
       built_config$color_palette_default <- rep("black", length(built_config$color_palette_default))
     }
 
     # Sex palette
     if (!is.null(built_config$sex_color_palette) &&
-        length(built_config$sex_color_palette) > 0) {
+      length(built_config$sex_color_palette) > 0) {
       built_config$sex_color_palette <- rep("black", length(built_config$sex_color_palette))
     }
 
     # Status palette (should be length 2)
     if (!is.null(built_config$status_color_palette) &&
-        length(built_config$status_color_palette) >= 2) {
+      length(built_config$status_color_palette) >= 2) {
       built_config$status_color_palette <- rep("black", length(built_config$status_color_palette))
     } else {
       built_config$status_color_palette <- c("black", "black")
@@ -70,12 +67,11 @@ buildPlotConfig <- function(default_config,
     built_config$status_color_unaffected <- "black"
 
     # Focal fill palette values (if used by a manual scale)
- #   if (!is.null(built_config$focal_fill_color_values) &&
-   #     length(built_config$focal_fill_color_values) > 0) {
- #     built_config$focal_fill_color_values <- rep("black", length(built_config$focal_fill_color_values))
- #   }
+    #   if (!is.null(built_config$focal_fill_color_values) &&
+    #     length(built_config$focal_fill_color_values) > 0) {
+    #     built_config$focal_fill_color_values <- rep("black", length(built_config$focal_fill_color_values))
+    #   }
   }
-
 
 
   built_config$label_nudge_y <- ifelse(built_config$label_nudge_y_flip,

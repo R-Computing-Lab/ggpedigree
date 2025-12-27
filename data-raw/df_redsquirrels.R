@@ -172,10 +172,11 @@ usethis::use_data(redsquirrels_full, overwrite = TRUE, compress = "xz")
 
 group_fams_withdads <- ds_grouped %>%
   group_by(famID) %>%
-summarize(
+  summarize(
     unq_dadID_n =  n_distinct(dadID[!is.na(dadID)]),
     unq_momID_n =  n_distinct(momID[!is.na(momID)])
-  ) %>% filter(unq_dadID_n > 0 )
+  ) %>%
+  filter(unq_dadID_n > 0)
 
 
 # handling families that have at least one dadID present

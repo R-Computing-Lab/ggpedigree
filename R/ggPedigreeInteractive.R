@@ -81,7 +81,7 @@ ggPedigreeInteractive <- function(ped,
     function_name = "ggpedigreeinteractive",
     pedigree_size = nrow(ped)
   )
-  if(exists("code_male")&&is.null(code_male) == FALSE){
+  if (exists("code_male") && is.null(code_male) == FALSE) {
     config$code_male <- code_male
     code_male <- NULL
   }
