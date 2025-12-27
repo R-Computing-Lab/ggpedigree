@@ -55,3 +55,32 @@ Extracts and modifies the x and y positions for each individual in a
 pedigree data frame using the align.pedigree function from the `kinship2` package.
 It returns a data.frame with positions for plotting.
 }
+\examples{
+# Load example data
+data(potter, package = "BGmisc")
+
+# Calculate coordinates for the pedigree
+coords <- calculateCoordinates(
+  ped = potter,
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  code_male = 1
+)
+
+# View the coordinates
+head(coords)
+
+# Example with custom configuration
+coords_custom <- calculateCoordinates(
+  ped = potter,
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  code_male = 1,
+  config = list(
+    ped_packed = FALSE,
+    ped_width = 20
+  )
+)
+}

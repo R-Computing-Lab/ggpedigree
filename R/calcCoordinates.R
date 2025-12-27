@@ -27,7 +27,34 @@ utils::globalVariables(c(":="))
 #'   }
 #'
 #' @export
-
+#' @examples
+#' # Load example data
+#' data(potter, package = "BGmisc")
+#'
+#' # Calculate coordinates for the pedigree
+#' coords <- calculateCoordinates(
+#'   ped = potter,
+#'   personID = "personID",
+#'   momID = "momID",
+#'   dadID = "dadID",
+#'   code_male = 1
+#' )
+#'
+#' # View the coordinates
+#' head(coords)
+#'
+#' # Example with custom configuration
+#' coords_custom <- calculateCoordinates(
+#'   ped = potter,
+#'   personID = "personID",
+#'   momID = "momID",
+#'   dadID = "dadID",
+#'   code_male = 1,
+#'   config = list(
+#'     ped_packed = FALSE,
+#'     ped_width = 20
+#'   )
+#' )
 calculateCoordinates <- function(ped,
                                  personID = "personID",
                                  momID = "momID",
@@ -50,10 +77,13 @@ calculateCoordinates <- function(ped,
   # -----
   # Set up
   # -----
-
+  if (!is.null(code_male)) {
+    config$code_male <- code_male
+  }
   # Fill missing configuration values with defaults
   default_config <- list(
     code_male = 1,
+    code_female = 0,
     ped_packed = TRUE,
     ped_align = TRUE,
     ped_width = 15,
@@ -70,7 +100,7 @@ calculateCoordinates <- function(ped,
     personID = personID,
     dadID = dadID,
     momID = momID,
-    code_male = code_male,
+    code_male = config$code_male,
     sexVar = sexVar,
     config = config
   )
@@ -252,15 +282,20 @@ alignPedigreeWithRelations <- function(ped,
                                        personID,
                                        dadID,
                                        momID,
-                                       code_male,
-                                       sexVar,
+                                       code_male = NULL,
+                                       sexVar = "sex",
                                        config) {
   # recodeSex <- function(
   #  ped, verbose = FALSE, code_male = NULL, code_na = NULL, code_female = NULL,
   #   recode_male = "M", recode_female = "F", recode_na = NA_character_)
   # Recode sex values in case non-standard codes are used (e.g., "M"/"F")
+
+  if (!is.null(code_male)) {
+    config$code_male <- code_male
+    code_male <- NULL
+  }
   ped_recode <- BGmisc::recodeSex(ped,
-    code_male = code_male
+    code_male = config$code_male
   )
   if ("relation" %in% names(config) && !is.null(config$relation)) {
     # Construct a pedigree object to compute layout coordinates
@@ -274,8 +309,13 @@ alignPedigreeWithRelations <- function(ped,
         relation = config$relation
       ),
       error = function(e) {
-        stop("Error in constructing pedigree object. Please check that you've
-           correctly specified the sex of individuals. Setting code_male may help if non-standard codes are used (e.g., 'M'/'F'; '1,2').")
+        stop(
+          "Error in constructing pedigree object. Please check that you've ",
+          "correctly specified the sex of individuals. Setting code_male may help ",
+          "if non-standard codes are used (e.g., 'M'/'F'; '1,2').\n\n",
+          "Underlying error: ", conditionMessage(e),
+          call. = FALSE
+        )
       }
     )
   } else {
@@ -287,8 +327,13 @@ alignPedigreeWithRelations <- function(ped,
         sex = ped_recode[[sexVar]]
       ),
       error = function(e) {
-        stop("Error in constructing pedigree object. Please check that you've
-           correctly specified the sex of individuals. Setting code_male may help if non-standard codes are used (e.g., 'M'/'F'; '1,2').")
+        stop(
+          "Error in constructing pedigree object. Please check that you've ",
+          "correctly specified the sex of individuals. Setting code_male may help ",
+          "if non-standard codes are used (e.g., 'M'/'F'; '1,2').\n\n",
+          "Underlying error: ", conditionMessage(e),
+          call. = FALSE
+        )
       }
     )
   }
@@ -315,8 +360,12 @@ alignPedigreeWithHints <- function(ped_ped, config) {
         packed = config$ped_packed
       ),
       error = function(e) {
-        warning("Your hints caused an error and were not used.
-                Using default hints instead.")
+        warning(
+          "Your hints caused an error and were not used.\n",
+          "Using default hints instead.\n\n",
+          "Underlying error from kinship2_autohint(): ", conditionMessage(e),
+          call. = FALSE
+        )
         kinship2_autohint(ped_ped,
           align = config$ped_align,
           packed = config$ped_packed

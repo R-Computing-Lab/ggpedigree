@@ -69,7 +69,7 @@ ggPedigree(potter,
   famID = "famID",
   personID = "personID"
 ) +
-  theme_bw(base_size = 12)
+  theme_bw(base_size = 12) + scale_colour_brewer(palette = "Set2")
 
 ## -----------------------------------------------------------------------------
 ggPedigree(

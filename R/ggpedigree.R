@@ -26,8 +26,9 @@
 #' @param return_widget Logical; if TRUE (default) returns a plotly htmlwidget.
 #'        If FALSE, returns the underlying plotly object (useful for further
 #'        customization before printing).
+#' @param code_male Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1
+#' @param sexVar Character string specifying the column name for sex. Defaults to "sex".
 #' @param focal_fill_column Character string specifying the column name for focal fill color.
-#' @param ... Additional arguments passed to `ggplot2` functions.
 #' @param config A list of configuration options for customizing the plot.
 #'        See getDefaultPlotConfig for details of each option. The list can include:
 #'  \describe{
@@ -78,7 +79,8 @@ ggPedigree <- function(ped,
                        debug = FALSE,
                        hints = NULL,
                        interactive = FALSE,
-                       ...) {
+                       code_male = NULL,
+                       sexVar = "sex") {
   if (!inherits(ped, "data.frame")) {
     if (rlang::inherits_any(ped, c("ped", "pedigree", "kinship2.pedigree"))) {
       # Convert ped object to data.frame
@@ -91,7 +93,7 @@ ggPedigree <- function(ped,
       stop("ped should be a data.frame or inherit to a data.frame")
     }
   }
-  if (!all(c(personID, dadID, momID, "sex") %in% names(ped))) {
+  if (!all(c(personID, dadID, momID, sexVar) %in% names(ped))) {
     stop("ped must contain personID, sex, dadID, and momID columns")
   }
 
@@ -117,7 +119,8 @@ ggPedigree <- function(ped,
       hints = hints,
       return_widget = return_widget,
       tooltip_columns = tooltip_columns,
-      ...
+      code_male = code_male,
+      sexVar = sexVar
     )
   } else {
     if (interactive == TRUE &&
@@ -136,6 +139,10 @@ ggPedigree <- function(ped,
       function_name = "ggpedigree",
       pedigree_size = nrow(ped)
     )
+    if (exists("code_male") && is.null(code_male) == FALSE) {
+      config$code_male <- code_male
+      code_male <- NULL
+    }
 
 
     # Call the core function with the provided arguments
@@ -155,7 +162,7 @@ ggPedigree <- function(ped,
       config = config,
       debug = debug,
       hints = hints,
-      ...
+      sexVar = sexVar
     )
   }
 }

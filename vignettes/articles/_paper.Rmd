@@ -68,7 +68,7 @@ None of these packages offers the combination of modern `ggplot2` integration, i
 
 I describe the main features of the `ggpedigree` package below. More detailed descriptions of features and usage are available in the [package vignettes](https://r-computing-lab.github.io/ggpedigree/articles/), including examples of how to create static and interactive pedigree plots, customize aesthetics, and visualize relatedness matrices. Additional example data include squirrel data from the Kluane Red Squirrel Project [@mcfarlane2015; @mcfarlane2014] and Targaryen family data from the Song of Ice and Fire universe [@martin1997; @martin2018].
 
--   Data Standardization and Family Structure Analysis: `ggPedigree()` integrates with BGmisc functions like `ped2fam()` to organize individuals by family, `recodeSex()` to standardize sex coding, and `checkParentIDs()` to validate pedigree structures. The function handles consanguineous relationships and individuals appearing in multiple pedigree positions.
+-   Data Standardization and Family Structure Analysis: `ggPedigree()` integrates with network-based functions from BGmisc like `ped2fam()` to organize individuals by family and `checkParentIDs()` to validate pedigree structures. The function handles consanguineous relationships and individuals appearing in multiple pedigree positions.
 
 -   Coordinate Calculation: `calculateCoordinates()` computes optimal positioning for individuals using algorithms adapted from `kinship2::align.pedigree`, with enhancements for large multi-generational pedigrees and complex family structures. These steps are vectorized as much as possible to ensure computational efficiency and compatibility with ggplot2.
 
@@ -177,7 +177,7 @@ m1 <- ggPedigree(potter %>% filter(personID %in% c(1:7, 101:104)),
   plot.title = element_blank(),
   plot.title.position = "plot",
   text = element_text(family = family_wfu, size = 14)
-) + coord_cartesian(ylim = c(3.25, 1), clip = "off")
+) + coord_cartesian(ylim = c(2.25, 0), clip = "off")
 # Panel B
 m2 <- ggPedigree(potter,
   famID = "famID",
@@ -217,7 +217,7 @@ m2 <- ggPedigree(potter,
     family = family_wfu,
     size = 14, face = "bold"
   )
-) + coord_cartesian(ylim = c(4.5, 1), clip = "off")
+) + coord_cartesian(ylim = c(3.5, 0), clip = "off")
 
 # Combine
 showtext_auto()

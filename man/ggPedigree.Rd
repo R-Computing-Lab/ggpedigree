@@ -24,7 +24,8 @@ ggPedigree(
   debug = FALSE,
   hints = NULL,
   interactive = FALSE,
-  ...
+  code_male = NULL,
+  sexVar = "sex"
 )
 
 ggpedigree(
@@ -46,7 +47,8 @@ ggpedigree(
   debug = FALSE,
   hints = NULL,
   interactive = FALSE,
-  ...
+  code_male = NULL,
+  sexVar = "sex"
 )
 }
 \arguments{
@@ -105,7 +107,9 @@ customization before printing).}
 
 \item{interactive}{Logical. If TRUE, generates an interactive plot using `plotly`. Default: FALSE.}
 
-\item{...}{Additional arguments passed to `ggplot2` functions.}
+\item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1}
+
+\item{sexVar}{Character string specifying the column name for sex. Defaults to "sex".}
 }
 \value{
 A `ggplot` object rendering the pedigree diagram.
