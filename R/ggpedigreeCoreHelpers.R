@@ -20,7 +20,10 @@ preparePedigreeData <- function(ped,
                                   focal_fill_include = TRUE,
                                   focal_fill_component = "maternal",
                                   recode_missing_ids = TRUE,
-                                  add_phantoms = FALSE
+                                  add_phantoms = FALSE,
+                                  code_male = "M",
+                                  code_female = "F",
+                                  code_na = NA
                                 ),
                                 fill_group_paternal = c(
                                   "paternal",
@@ -76,14 +79,15 @@ preparePedigreeData <- function(ped,
     )
   }
 
-  # Standardize sex variable using code_male convention
 
+  # Standardize sex variable using code_male convention
+  # if (config$recode_sex == TRUE) {
   ds_ped <- BGmisc::recodeSex(ds_ped,
     recode_male = config$code_male,
     recode_na = config$code_na,
     recode_female = config$code_female
   )
-
+  #  }
   if (config$add_phantoms == TRUE) {
     # If phantoms are requested, add phantom parents
     ds_ped <- BGmisc::checkParentIDs(
@@ -417,4 +421,41 @@ addFocalFillColumn <- function(ds_ped,
   # STEP 3: Return modified data frame with focal_fill (if applicable)
   # -----
   return(ds_ped)
+}
+#' @title Pick First Matching Rule
+#' @description
+#' This function evaluates a list of rules and returns the action associated with the first rule that matches.
+#' If no rules match, it returns a default value.
+#' @param rules A list of rules, where each rule is a list with `when` and `do` elements.
+#' @param default The default value to return if no rules match (default is NULL).
+#' @return The action associated with the first matching rule, or the default value.
+#' @keywords internal
+.pick_first <- function(rules, default = NULL) {
+  for (r in rules) {
+    if (isTRUE(r$when())) {
+      return(r$do)
+    }
+  }
+  default
+}
+
+
+.should_add_overlay <- function(config,
+                                overlay_column = NULL,
+                                status_column = NULL,
+                                focal_fill_column = NULL) {
+  isTRUE(config$overlay_include) && !is.null(overlay_column) ||
+    (isTRUE(config$status_include) && !is.null(status_column) && isTRUE(config$sex_color_include)) ||
+    (isTRUE(config$focal_fill_include) && !is.null(focal_fill_column) && !isTRUE(config$sex_color_include))
+}
+
+.get_color_mode <- function(config, status_column, focal_fill_column) {
+  .pick_first(
+    rules = list(
+      list(when = function() isTRUE(config$sex_color_include), do = "sex"),
+      list(when = function() isTRUE(config$focal_fill_include), do = "focal_fill"),
+      list(when = function() !is.null(status_column) && isTRUE(config$status_include), do = "status")
+    ),
+    default = "none"
+  )
 }

@@ -162,7 +162,28 @@ ds_grouped <- ds %>%
     )
   )
 
-redsquirrels <- ds_grouped
+redsquirrels_full <- ds_grouped %>%
+  arrange(personID)
+
+write_csv(redsquirrels_full, here("data-raw", "redsquirrels_full.csv"), na = "")
+
+usethis::use_data(redsquirrels_full, overwrite = TRUE, compress = "xz")
+
+
+group_fams_withdads <- ds_grouped %>%
+  group_by(famID) %>%
+  summarize(
+    unq_dadID_n =  n_distinct(dadID[!is.na(dadID)]),
+    unq_momID_n =  n_distinct(momID[!is.na(momID)])
+  ) %>%
+  filter(unq_dadID_n > 0)
+
+
+# handling families that have at least one dadID present
+redsquirrels <- ds_grouped %>%
+  filter(famID %in% group_fams_withdads$famID) %>%
+  select(-year_first, -year_last, -ars_sd, -ars_n, -ars_min, -ars_med, -ars_max) %>%
+  arrange(personID)
 
 write_csv(redsquirrels, here("data-raw", "redsquirrels.csv"), na = "")
 

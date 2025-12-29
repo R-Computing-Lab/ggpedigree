@@ -12,7 +12,8 @@
 #' @param overlay_shape The shape used for overlaying points in the plot.
 #' @param color_scale_midpoint Midpoint value for continuous color scales.
 #' @param alpha_default Default alpha transparency level.
-#' @param apply_default_scales Whether to apply default color scales.
+#' @param apply_default_scales Whether to apply default scales.
+#' @param apply_default_color Whether to apply default color palette. If TRUE, uses color_palette_default. Otherwise, uses black.
 #' @param apply_default_theme Whether to apply default ggplot2 theme.
 #' @param color_palette_low Color for the low end of a gradient.
 #' @param color_palette_mid Color for the midpoint of a gradient.
@@ -188,11 +189,12 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  # ---- General Appearance ----
                                  apply_default_scales = TRUE,
                                  apply_default_theme = TRUE,
+                                 apply_default_color = TRUE,
                                  segment_default_color = "black",
                                  color_palette_default = c(
                                    "#440154FF",
-                                   "#FDE725FF",
-                                   "#21908CFF"
+                                   "#7fd34e",
+                                   "#f1e51d"
                                  ),
                                  color_palette_low = "#000004FF",
                                  color_palette_mid = "#56106EFF",
@@ -275,7 +277,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  sex_color_include = TRUE,
                                  sex_legend_title = "Sex",
                                  sex_shape_labels = c("Female", "Male", "Unknown"),
-                                 sex_color_palette = color_palette_default,
+                                 sex_color_palette = NULL,
                                  sex_shape_female = 16,
                                  sex_shape_male = 15,
                                  sex_shape_unknown = 18,
@@ -290,10 +292,10 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  status_label_unaffected = "Unaffected",
                                  status_alpha_affected = 1,
                                  status_alpha_unaffected = 0,
-                                 status_color_palette = c(color_palette_default[1], color_palette_default[2]),
+                                 status_color_palette = NULL,
                                  # Use first color for affected,
                                  status_color_affected = "black",
-                                 status_color_unaffected = color_palette_default[2],
+                                 status_color_unaffected = NULL,
                                  status_shape_affected = 4,
                                  status_legend_title = "Affected",
                                  status_legend_show = FALSE,
@@ -413,12 +415,33 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     ))
   }
 
+
+  # Add effective palette that is either default or all black
+  effective_palette_default <- if (apply_default_color) {
+    color_palette_default
+  } else {
+    rep("black", length(color_palette_default))
+  }
+
+  # Defaults that previously leaked color_palette_default
+  if (is.null(sex_color_palette)) {
+    sex_color_palette <- effective_palette_default
+  }
+  if (is.null(status_color_palette)) {
+    status_color_palette <- effective_palette_default[1:2]
+  }
+  if (is.null(status_color_unaffected)) {
+    status_color_unaffected <- effective_palette_default[2]
+  }
+
+
   core_list <- list(
     # ---- General Appearance ----
     apply_default_scales = apply_default_scales,
     segment_default_color = segment_default_color,
     apply_default_theme = apply_default_theme,
-    color_palette_default = color_palette_default,
+    apply_default_color = apply_default_color,
+    color_palette_default = effective_palette_default,
     color_palette_low = color_palette_low,
     color_palette_mid = color_palette_mid,
     color_palette_high = color_palette_high,

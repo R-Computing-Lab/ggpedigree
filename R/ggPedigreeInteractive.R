@@ -23,6 +23,7 @@ ggPedigreeInteractive <- function(ped,
                                   patID = "patID",
                                   matID = "matID",
                                   twinID = "twinID",
+                                  spouseID = "spouseID",
                                   status_column = NULL,
                                   tooltip_columns = NULL,
                                   focal_fill_column = NULL,
@@ -30,7 +31,9 @@ ggPedigreeInteractive <- function(ped,
                                   config = list(optimize_plotly = TRUE),
                                   debug = FALSE,
                                   return_widget = TRUE,
-                                  ...) {
+                                  hints = NULL,
+                                  code_male = NULL,
+                                  sexVar = "sex") {
   if (!requireNamespace("plotly", quietly = TRUE)) {
     stop("The 'plotly' package is required for interactive plots.")
   }
@@ -54,12 +57,15 @@ ggPedigreeInteractive <- function(ped,
 
   if (!is.null(tooltip_columns)) {
     config$tooltip_columns <- tooltip_columns
+    tooltip_columns <- NULL
   }
   if (!is.null(return_widget)) {
     config$return_widget <- return_widget
+    return_widget <- NULL
   }
   if (!is.null(debug)) {
     config$debug <- debug
+    debug <- NULL
   }
   # Set default styling and layout parameters
   default_config <- getDefaultPlotConfig(
@@ -75,7 +81,10 @@ ggPedigreeInteractive <- function(ped,
     function_name = "ggpedigreeinteractive",
     pedigree_size = nrow(ped)
   )
-
+  if (exists("code_male") && is.null(code_male) == FALSE) {
+    config$code_male <- code_male
+    code_male <- NULL
+  }
 
   ## 1. Build the static ggplot using the existing engine
   static_plot <- ggPedigree.core(ped,
@@ -86,13 +95,14 @@ ggPedigreeInteractive <- function(ped,
     patID = patID,
     matID = matID,
     twinID = twinID,
+    spouseID = spouseID,
     status_column = config$status_column,
     overlay_column = overlay_column,
     config = config,
     debug = config$debug,
     focal_fill_column = focal_fill_column,
     function_name = "ggpedigreeinteractive",
-    ...
+    sexVar = sexVar
   )
 
   ## 2. Identify data columns for tooltips ----------------------------------

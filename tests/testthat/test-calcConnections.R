@@ -8,7 +8,6 @@ test_that("calculateConnections returns expected columns and structure", {
   )
 
   ped <- calculateCoordinates(ped,
-    code_male = "M",
     personID = "personID",
     momID = "momID",
     dadID = "dadID",
@@ -16,7 +15,8 @@ test_that("calculateConnections returns expected columns and structure", {
     config = list(
       ped_align = TRUE,
       ped_packed = TRUE,
-      return_mid_parent = TRUE
+      return_mid_parent = TRUE,
+      code_male = "M"
     )
   )
 
@@ -47,7 +47,6 @@ test_that("calculateConnections returns expected columns and structure with no s
   )
 
   ped <- calculateCoordinates(ped,
-    code_male = "M",
     personID = "personID",
     momID = "momID",
     dadID = "dadID",
@@ -55,7 +54,8 @@ test_that("calculateConnections returns expected columns and structure with no s
     config = list(
       ped_align = TRUE,
       ped_packed = TRUE,
-      return_mid_parent = TRUE
+      return_mid_parent = TRUE,
+      code_male = "M"
     )
   )
 
@@ -89,11 +89,13 @@ test_that("calculateConnections returns correct parent coordinates", {
   )
 
   ped <- calculateCoordinates(ped,
-    code_male = "M",
     personID = "personID",
     momID = "momID",
     dadID = "dadID",
-    spouseID = "spouseID"
+    spouseID = "spouseID",
+    config = list(
+      code_male = "M"
+    )
   )
   conn_out <- calculateConnections(ped)
   conns <- conn_out$connections
@@ -119,11 +121,11 @@ test_that("mid_parent coordinates are correct", {
   )
 
   ped <- calculateCoordinates(ped,
-    code_male = "M",
     personID = "personID",
     momID = "momID",
     dadID = "dadID",
-    spouseID = "spouseID"
+    spouseID = "spouseID",
+    config = list(code_male = "M")
   )
   conn_out <- calculateConnections(ped)
   conns <- conn_out$connections
@@ -583,7 +585,9 @@ test_that("buildSpouseSegments with use_hash=TRUE handles unmatched parent IDs",
     stringsAsFactors = FALSE
   )
 
-  result <- buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
+  result <- buildSpouseSegments(ped, connections_for_FOO,
+    use_hash = TRUE
+  )
 
   expect_true(is.data.frame(result))
   expect_equal(nrow(result), 2)

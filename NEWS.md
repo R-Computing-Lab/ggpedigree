@@ -2,6 +2,12 @@
 # ==============================
 
 # ggpedigree 1.1.0.0
+* Improved documentation of datasets included in the package
+* Added smarter warning message for tryCatch
+* Tweak code_male handling to be more robust about using config values
+* Slice up squirrel dataset into smaller pedigrees for testing
+* Refactored add node
+* set option to include black coloring if apply_default_color is FALSE
 * Saved raw excel data as csv to have a non-proprietary format for data storage
 * Added more refactorings of kinship2 internals for maintainability
 * Harmonize names by changing midparent to mid_parent throughout the codebase
