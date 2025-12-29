@@ -193,8 +193,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  segment_default_color = "black",
                                  color_palette_default = c(
                                    "#440154FF",
-                                   "#FDE725FF",
-                                   "#21908CFF"
+                                   "#7fd34e",
+                                   "#f1e51d"
                                  ),
                                  color_palette_low = "#000004FF",
                                  color_palette_mid = "#56106EFF",

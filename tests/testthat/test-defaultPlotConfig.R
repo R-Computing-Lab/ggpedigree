@@ -22,7 +22,11 @@ test_that("getDefaultPlotConfig returns expected defaults", {
   expect_equal(config$apply_default_theme, TRUE)
   expect_equal(
     config$color_palette_default,
-    c("#440154FF", "#FDE725FF", "#21908CFF")
+    c( "#440154FF",
+    "#7fd34e",
+    "#f1e51d"
+  )
+   # c("#440154FF", "#FDE725FF", "#21908CFF")
   )
   expect_equal(config$segment_self_color, "black")
   expect_equal(config$segment_parent_color, "black")
