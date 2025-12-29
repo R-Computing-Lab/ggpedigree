@@ -41,38 +41,6 @@ buildPlotConfig <- function(default_config,
 
   # -- Post-process certain config entries --
 
-  if (!isTRUE(built_config$apply_default_color)) {
-    # Color palette default
-    if (!is.null(built_config$color_palette_default) &&
-      length(built_config$color_palette_default) > 0) {
-      built_config$color_palette_default <- rep("black", length(built_config$color_palette_default))
-    }
-
-    # Sex palette
-    if (!is.null(built_config$sex_color_palette) &&
-      length(built_config$sex_color_palette) > 0) {
-      built_config$sex_color_palette <- rep("black", length(built_config$sex_color_palette))
-    }
-
-    # Status palette (should be length 2)
-    if (!is.null(built_config$status_color_palette) &&
-      length(built_config$status_color_palette) >= 2) {
-      built_config$status_color_palette <- rep("black", length(built_config$status_color_palette))
-    } else {
-      built_config$status_color_palette <- c("black", "black")
-    }
-
-    # Status colors if used directly anywhere
-    built_config$status_color_affected <- "black"
-    built_config$status_color_unaffected <- "black"
-
-    # Focal fill palette values (if used by a manual scale)
-    #   if (!is.null(built_config$focal_fill_color_values) &&
-    #     length(built_config$focal_fill_color_values) > 0) {
-    #     built_config$focal_fill_color_values <- rep("black", length(built_config$focal_fill_color_values))
-    #   }
-  }
-
 
   built_config$label_nudge_y <- ifelse(built_config$label_nudge_y_flip,
     built_config$label_nudge_y * -1, built_config$label_nudge_y
@@ -124,7 +92,39 @@ buildPlotConfig <- function(default_config,
         built_config$segment_self_linewidth <- max(built_config$segment_self_linewidth / sqrt(pedigree_size) * 2.5, 0.5 * .5)
       }
     }
+    if (!isTRUE(built_config$apply_default_color)) {
+      # Color palette default
+      if (#!is.null(built_config$color_palette_default) &&
+          length(built_config$color_palette_default) > 0) {
+        built_config$color_palette_default <- rep("black", length(built_config$color_palette_default))
+      }
 
+      # Sex palette
+      if (!is.null(built_config$sex_color_palette) &&
+          length(built_config$sex_color_palette) > 0) {
+        built_config$sex_color_palette <- rep("black", length(built_config$sex_color_palette))
+      }
+
+      # Status palette (should be length 2)
+      if (!is.null(built_config$status_color_palette) &&
+          length(built_config$status_color_palette) >= 2) {
+        built_config$status_color_palette <- rep("black", length(built_config$status_color_palette))
+      } else {
+        built_config$status_color_palette <- c("black", "grey")
+      }
+
+      # Status colors if used directly anywhere
+      built_config$status_color_affected <- "black"
+      built_config$status_color_unaffected <- "grey"
+
+
+
+      # Focal fill palette values (if used by a manual scale)
+      #   if (!is.null(built_config$focal_fill_color_values) &&
+      #     length(built_config$focal_fill_color_values) > 0) {
+      #     built_config$focal_fill_color_values <- rep("black", length(built_config$focal_fill_color_values))
+      #   }
+    }
 
     if ("status_labs" %in% names(built_config) == FALSE) {
       built_config$status_labs <- c(
