@@ -331,13 +331,19 @@ ggPedigree.core <- function(ped,
   # -----
   # STEP 11: Scales, Theme
   # -----
+# scale min
+
+
+ if(is.na(min(ds$y_pos)) ) {
+   stop("y_pos contains all NA values, cannot set y-axis limits. This occurs when there are less than two people in the pedigree.")
+ } else {
 
   p <- p +
     ggplot2::scale_y_reverse(limits = c(
       NA,
       min(ds$y_pos)
     ))
-
+}
   if (config$apply_default_theme == TRUE) {
     p <- p +
       ggplot2::theme_minimal() +
