@@ -18,7 +18,7 @@ getDefaultPlotConfig(
   apply_default_scales = TRUE,
   apply_default_theme = TRUE,
   segment_default_color = "black",
-  color_palette_default = c("#440154FF", "#FDE725FF", "#21908CFF"),
+  color_palette_default = c("#440154FF", "#7fd34e", "#f1e51d"),
   color_palette_low = "#000004FF",
   color_palette_mid = "#56106EFF",
   color_palette_high = "#FCFDBFFF",
