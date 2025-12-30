@@ -55,6 +55,34 @@ utils::globalVariables(c(":="))
 #'     ped_width = 20
 #'   )
 #' )
+#' @examples
+#' # Load example data
+#' data(potter, package = "BGmisc")
+#'
+#' # Calculate coordinates for the pedigree
+#' coords <- calculateCoordinates(
+#'   ped = potter,
+#'   personID = "personID",
+#'   momID = "momID",
+#'   dadID = "dadID",
+#'   config  = list(
+#'    code_male = 1)
+#' )
+#'
+#' # View the coordinates
+#' head(coords)
+#'
+#' # Example with custom configuration
+#' coords_custom <- calculateCoordinates(
+#'   ped = potter,
+#'   personID = "personID",
+#'   momID = "momID",
+#'   dadID = "dadID",
+#'   config = list(
+#'     ped_packed = FALSE,
+#'     ped_width = 20
+#'   )
+#' )
 
 calculateCoordinates <- function(ped,
                                  personID = "personID",
