@@ -28,7 +28,8 @@ ggPedigree(
   debug = FALSE,
   hints = NULL,
   interactive = FALSE,
-  ...
+  code_male = NULL,
+  sexVar = "sex"
 )
 
 ggpedigree(
@@ -50,7 +51,8 @@ ggpedigree(
   debug = FALSE,
   hints = NULL,
   interactive = FALSE,
-  ...
+  code_male = NULL,
+  sexVar = "sex"
 )
 ```
 
@@ -192,9 +194,15 @@ ggpedigree(
   Logical. If TRUE, generates an interactive plot using \`plotly\`.
   Default: FALSE.
 
-- ...:
+- code_male:
 
-  Additional arguments passed to \`ggplot2\` functions.
+  Integer or string. Value identifying males in the sex column.
+  (typically 0 or 1) Default: 1
+
+- sexVar:
+
+  Character string specifying the column name for sex. Defaults to
+  "sex".
 
 ## Value
 

@@ -92,15 +92,52 @@ dataset is not intended to represent any real individuals or families.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The variables are as follows:</p><ul><li><p><code>id</code>:  Person identification variable</p></li>
+<li><p><code>famID</code>:  Family identification variable</p></li>
 <li><p><code>momID</code>:  ID of the mother</p></li>
 <li><p><code>dadID</code>:  ID of the father</p></li>
 <li><p><code>name</code>:  Name of the person</p></li>
-<li><p><code>sex</code>: Biological sex</p></li>
+<li><p><code>sex</code>: Biological sex (M/F)</p></li>
+<li><p><code>url</code>:  URL to a wiki page about the character</p></li>
 <li><p><code>twinID</code>:  ID of the twin, if applicable</p></li>
 <li><p><code>zygosity</code>: Zygosity of the twin, if applicable. mz is monozygotic; dz is dizygotic</p></li>
-<li><p><code>url</code>:  URL to a wiki page about the character</p></li>
 </ul></div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load the ASOIAF dataset</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ASOIAF</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df_ASOIAF</span> <span class="op">&lt;-</span> <span class="va">ASOIAF</span><span class="op">[</span><span class="va">ASOIAF</span><span class="op">$</span><span class="va">famID</span> <span class="op">==</span> <span class="fl">26</span>, <span class="op">]</span> <span class="co"># Subset to House Tarth</span></span></span>
+<span class="r-in"><span><span class="co"># View the structure of the dataset</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df_ASOIAF</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	6 obs. of  9 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ id      : num  654 655 656 657 658 659</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ famID   : num  26 26 26 26 26 26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ momID   : num  NA NA 655 655 655 655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dadID   : num  NA NA 654 654 654 654</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ name    : chr  "Selwyn Tarth" "Unknown wife of Selwyn Tarth" "Galladon Tarth" "Arianne Tarth" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ sex     : chr  "M" "F" "M" "F" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ url     : chr  "https://awoiaf.westeros.org/index.php/Selwyn_Tarth" "https://awoiaf.westeros.org/index.php/Selwyn_Tarth#Family" "https://awoiaf.westeros.org/index.php/Galladon_Tarth" "https://awoiaf.westeros.org/index.php/Arianne_Tarth" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ twinID  : num  NA NA NA NA NA NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ zygosity: chr  NA NA NA NA ...</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Plot a pedigree for House Tarth</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ggplot2"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="co"># Create a pedigree plot for House Tarth</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="ggPedigree.html">ggPedigree</a></span><span class="op">(</span><span class="va">df_ASOIAF</span>,</span></span>
+<span class="r-in"><span>    famID <span class="op">=</span> <span class="st">"famID"</span>,</span></span>
+<span class="r-in"><span>    personID <span class="op">=</span> <span class="st">"id"</span>,</span></span>
+<span class="r-in"><span>    momID <span class="op">=</span> <span class="st">"momID"</span>,</span></span>
+<span class="r-in"><span>    dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span></span>
+<span class="r-in"><span>    config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      add_phantoms <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>      code_male <span class="op">=</span> <span class="st">"M"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> REPAIR IN EARLY ALPHA</span>
+<span class="r-plt img"><img src="ASOIAF-1.png" alt="" width="700" height="433"></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

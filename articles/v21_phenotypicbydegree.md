@@ -22,7 +22,7 @@ library(dplyr)
 # library(broom) # for tidy()
 library(purrr) # for map_* helpers
 # Filter for the largest family, recode sex if needed
-ped_filtered <- redsquirrels %>%
+ped_filtered <- redsquirrels_full %>%
   recodeSex(code_female = "F") %>%
   filter(famID == 160)
 

@@ -205,6 +205,8 @@ plt <- ggPedigreeInteractive(df_repaired_renamed,
     tooltip_columns = c("personID", "name", "focal_fill")
   )
 )
+#> Ignoring unknown labels:
+#> • colour : "Focal Fill"
 
 plt
 ```
@@ -250,6 +252,8 @@ plt <- ggPedigreeInteractive(df_repaired_renamed,
     tooltip_columns = c("personID", "name", "focal_fill")
   )
 )
+#> Ignoring unknown labels:
+#> • colour : "Focal Fill"
 
 plt
 ```
