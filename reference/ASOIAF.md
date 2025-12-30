@@ -31,17 +31,55 @@ The variables are as follows:
 
 - `id`: Person identification variable
 
+- `famID`: Family identification variable
+
 - `momID`: ID of the mother
 
 - `dadID`: ID of the father
 
 - `name`: Name of the person
 
-- `sex`: Biological sex
+- `sex`: Biological sex (M/F)
+
+- `url`: URL to a wiki page about the character
 
 - `twinID`: ID of the twin, if applicable
 
 - `zygosity`: Zygosity of the twin, if applicable. mz is monozygotic; dz
   is dizygotic
 
-- `url`: URL to a wiki page about the character
+## Examples
+
+``` r
+# Load the ASOIAF dataset
+data(ASOIAF)
+
+# View the structure of the dataset
+str(ASOIAF)
+#> 'data.frame':    679 obs. of  9 variables:
+#>  $ id      : num  1 2 3 4 5 6 7 8 9 10 ...
+#>  $ famID   : num  1 1 1 1 1 1 1 1 1 1 ...
+#>  $ momID   : num  566 NA 2 2 2 NA 6 NA NA NA ...
+#>  $ dadID   : num  564 NA 1 1 1 NA 3 7 7 7 ...
+#>  $ name    : chr  "Walder Frey" "Perra Royce" "Stevron Frey" "Emmon Frey" ...
+#>  $ sex     : chr  "M" "F" "M" "M" ...
+#>  $ url     : chr  "https://awoiaf.westeros.org/index.php/Walder_Frey" "https://awoiaf.westeros.org/index.php/Perra_Royce" "https://awoiaf.westeros.org/index.php/Stevron_Frey" "https://awoiaf.westeros.org/index.php/Emmon_Frey" ...
+#>  $ twinID  : num  NA NA NA NA NA NA NA NA NA NA ...
+#>  $ zygosity: chr  NA NA NA NA ...
+
+# Plot a pedigree for a specific family
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  # Create a pedigree plot for House Stark
+  ggPedigree(ASOIAF,
+    famID = "famID",
+    personID = "id",
+    momID = "momID",
+    dadID = "dadID",
+    config = list(
+      add_phantoms = TRUE,
+      code_male = "M"
+    )
+  )
+}
+#> REPAIR IN EARLY ALPHA
+```

@@ -94,3 +94,40 @@ A data frame with one or more rows per person, each containing:
 
 - \`extra\`: Logical flag indicating whether this row is a secondary
   appearance.
+
+## Examples
+
+``` r
+# Load example data
+data(potter, package = "BGmisc")
+
+# Calculate coordinates for the pedigree
+coords <- calculateCoordinates(
+  ped = potter,
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config  = list(
+   code_male = 1)
+)
+#> Error in value[[3L]](cond): Error in constructing pedigree object. Please check that you've
+#>            correctly specified the sex of individuals. Setting code_male may help if non-standard codes are used (e.g., 'M'/'F'; '1,2').
+
+# View the coordinates
+head(coords)
+#> Error: object 'coords' not found
+
+# Example with custom configuration
+coords_custom <- calculateCoordinates(
+  ped = potter,
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
+    ped_packed = FALSE,
+    ped_width = 20
+  )
+)
+#> Error in value[[3L]](cond): Error in constructing pedigree object. Please check that you've
+#>            correctly specified the sex of individuals. Setting code_male may help if non-standard codes are used (e.g., 'M'/'F'; '1,2').
+```

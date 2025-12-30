@@ -129,6 +129,42 @@ It returns a data.frame with positions for plotting.</p>
 <li><p>`extra`: Logical flag indicating whether this row is a secondary appearance.</p></li>
 </ul></div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load example data</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">potter</span>, package <span class="op">=</span> <span class="st">"BGmisc"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Calculate coordinates for the pedigree</span></span></span>
+<span class="r-in"><span><span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu">calculateCoordinates</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  ped <span class="op">=</span> <span class="va">potter</span>,</span></span>
+<span class="r-in"><span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span></span>
+<span class="r-in"><span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span></span>
+<span class="r-in"><span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span></span>
+<span class="r-in"><span>  config  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>   code_male <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in value[[3L]](cond):</span> Error in constructing pedigree object. Please check that you've</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>            correctly specified the sex of individuals. Setting code_male may help if non-standard codes are used (e.g., 'M'/'F'; '1,2').</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># View the coordinates</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">coords</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'coords' not found</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example with custom configuration</span></span></span>
+<span class="r-in"><span><span class="va">coords_custom</span> <span class="op">&lt;-</span> <span class="fu">calculateCoordinates</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  ped <span class="op">=</span> <span class="va">potter</span>,</span></span>
+<span class="r-in"><span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span></span>
+<span class="r-in"><span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span></span>
+<span class="r-in"><span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span></span>
+<span class="r-in"><span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    ped_packed <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>    ped_width <span class="op">=</span> <span class="fl">20</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in value[[3L]](cond):</span> Error in constructing pedigree object. Please check that you've</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>            correctly specified the sex of individuals. Setting code_male may help if non-standard codes are used (e.g., 'M'/'F'; '1,2').</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
