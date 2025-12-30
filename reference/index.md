@@ -69,7 +69,6 @@
   package `kinship2`.
 
 - [`redsquirrels`](https://r-computing-lab.github.io/ggpedigree/reference/redsquirrels.md)
-  [`redsquirrels_full`](https://r-computing-lab.github.io/ggpedigree/reference/redsquirrels.md)
   : Kluane Red Squirrel Data
 
 - [`warsofroses`](https://r-computing-lab.github.io/ggpedigree/reference/warsofroses.md)

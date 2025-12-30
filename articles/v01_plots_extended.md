@@ -139,11 +139,6 @@ df_fig1 <- tribble(
 
 ### Plotting the pedigree
 
-This example shows how to create a custom pedigree plot highlighting
-individuals from a specific mitochondrial lineage (in blue). The plot
-uses various configuration options to adjust the appearance of the
-pedigree, including point size, outline, and segment colors.
-
 ``` r
 fig1 <- ggPedigree(
   df_fig1,

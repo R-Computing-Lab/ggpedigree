@@ -116,9 +116,7 @@ ggPedigree(potter,
   famID = "famID",
   personID = "personID"
 ) +
-  theme_bw(base_size = 12) + scale_colour_brewer(palette = "Set2")
-#> Scale for colour is already present.
-#> Adding another scale for colour, which will replace the existing scale.
+  theme_bw(base_size = 12)
 ```
 
 ![](v00_plots_files/figure-html/unnamed-chunk-1-1.png)
@@ -305,8 +303,6 @@ ggPedigree(potter,
   ) # highlight Harry Potter
   # config  = list(segment_mz_color = NA) # color for monozygotic twins
 )
-#> Ignoring unknown labels:
-#> • colour : "Genetic Relatives of Harry Potter"
 ```
 
 ![](v00_plots_files/figure-html/focal_fill-1.png)

@@ -17,9 +17,8 @@ getDefaultPlotConfig(
   alpha_default = 1,
   apply_default_scales = TRUE,
   apply_default_theme = TRUE,
-  apply_default_color = TRUE,
   segment_default_color = "black",
-  color_palette_default = c("#440154FF", "#7fd34e", "#f1e51d"),
+  color_palette_default = c("#440154FF", "#FDE725FF", "#21908CFF"),
   color_palette_low = "#000004FF",
   color_palette_mid = "#56106EFF",
   color_palette_high = "#FCFDBFFF",
@@ -88,7 +87,7 @@ getDefaultPlotConfig(
   sex_color_include = TRUE,
   sex_legend_title = "Sex",
   sex_shape_labels = c("Female", "Male", "Unknown"),
-  sex_color_palette = NULL,
+  sex_color_palette = color_palette_default,
   sex_shape_female = 16,
   sex_shape_male = 15,
   sex_shape_unknown = 18,
@@ -102,9 +101,9 @@ getDefaultPlotConfig(
   status_label_unaffected = "Unaffected",
   status_alpha_affected = 1,
   status_alpha_unaffected = 0,
-  status_color_palette = NULL,
+  status_color_palette = c(color_palette_default[1], color_palette_default[2]),
   status_color_affected = "black",
-  status_color_unaffected = NULL,
+  status_color_unaffected = color_palette_default[2],
   status_shape_affected = 4,
   status_legend_title = "Affected",
   status_legend_show = FALSE,
@@ -208,16 +207,11 @@ getDefaultPlotConfig(
 
 - apply_default_scales:
 
-  Whether to apply default scales.
+  Whether to apply default color scales.
 
 - apply_default_theme:
 
   Whether to apply default ggplot2 theme.
-
-- apply_default_color:
-
-  Whether to apply default color palette. If TRUE, uses
-  color_palette_default. Otherwise, uses black.
 
 - segment_default_color:
 

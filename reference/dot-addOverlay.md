@@ -7,8 +7,7 @@ Add Overlay to ggplot Pedigree Plot
 ``` r
 .addOverlay(
   plotObject,
-  config = list(overlay_include = FALSE, status_include = FALSE, focal_fill_include =
-    FALSE, sex_color_include = FALSE),
+  config,
   focal_fill_column = NULL,
   status_column = NULL,
   overlay_column = NULL
@@ -16,8 +15,7 @@ Add Overlay to ggplot Pedigree Plot
 
 addOverlay(
   plotObject,
-  config = list(overlay_include = FALSE, status_include = FALSE, focal_fill_include =
-    FALSE, sex_color_include = FALSE),
+  config,
   focal_fill_column = NULL,
   status_column = NULL,
   overlay_column = NULL
