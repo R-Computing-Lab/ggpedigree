@@ -29,7 +29,7 @@ missing_parent_num <- list(
 )
 
 config_map <- list(
-  cfg_skip = "cfg_skip",
+#  cfg_skip = "cfg_skip",
   cfg_dbg = list(debug = TRUE),
   cfg_m2 = list(code_male = 2),
   cfg_m1 = list(code_male = 1),
@@ -176,7 +176,8 @@ test_that("full cross: strict expectations + roundtrip invariant", {
     cfg <- config_map[[row$config_case]]
 
 
-    mp <- if (row$id_type == "char") missing_parent_char[[row$missing_parent]] else missing_parent_num[[row$missing_parent]]
+    mp <- if (row$id_type == "char"){ missing_parent_char[[row$missing_parent]] }else{ missing_parent_num[[row$missing_parent]]
+    }
     df <- if (row$id_type == "char") {
       make_df_char(sex = sex, missing_parent = mp)
     } else {

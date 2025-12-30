@@ -17,11 +17,12 @@ ggPedigree.core(
   focal_fill_column = NULL,
   overlay_column = NULL,
   status_column = NULL,
+  code_male = NULL,
   config = list(),
   debug = FALSE,
   hints = NULL,
-  function_name = "ggPedigree",
-  ...
+  sexVar = "sex",
+  function_name = "ggPedigree"
 )
 }
 \arguments{
@@ -49,6 +50,8 @@ ggPedigree.core(
 
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
 
+\item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1}
+
 \item{config}{A list of configuration options for customizing the plot.
       See getDefaultPlotConfig for details of each option. The list can include:
 \describe{
@@ -69,7 +72,7 @@ ggPedigree.core(
 
 \item{hints}{Data frame with hints for layout adjustments. Default: NULL.}
 
-\item{...}{Additional arguments passed to `ggplot2` functions.}
+\item{sexVar}{Character string specifying the column name for sex. Defaults to "sex".}
 }
 \description{
 This function is the core implementation of the ggPedigree function.

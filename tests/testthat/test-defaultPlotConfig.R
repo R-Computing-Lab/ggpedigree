@@ -133,7 +133,7 @@ test_that("buildPlotConfig handles scaling correctly", {
   custom <- list(point_size = 5, segment_linewidth = 20, segment_self_linewidth = 10)
   pedigree_size <- 3
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
-  expect_equal(result$point_size, custom$point_size*2, tolerance = 1e-8)
+  expect_equal(result$point_size, custom$point_size * 2, tolerance = 1e-8)
   expect_equal(result$segment_linewidth, custom$segment_linewidth, tolerance = 1e-8)
   expect_equal(result$segment_self_linewidth, custom$segment_self_linewidth, tolerance = 1e-8)
 
@@ -142,22 +142,20 @@ test_that("buildPlotConfig handles scaling correctly", {
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
   expect_equal(result$point_size, custom$point_size / sqrt(pedigree_size), tolerance = 1e-8)
   expect_equal(result$segment_linewidth, custom$segment_linewidth / sqrt(pedigree_size), tolerance = 1e-8)
-  expect_equal(result$segment_self_linewidth, max(custom$segment_self_linewidth / sqrt(pedigree_size),.25), tolerance = 1e-8)
+  expect_equal(result$segment_self_linewidth, max(custom$segment_self_linewidth / sqrt(pedigree_size), .25), tolerance = 1e-8)
 
   pedigree_size <- 300
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
-  expect_equal(result$point_size, max(custom$point_size / sqrt(pedigree_size) * 1.5,.5), tolerance = 1e-8)
-  expect_equal(result$segment_linewidth, custom$segment_linewidth / sqrt(pedigree_size)*1.5, tolerance = 1e-8)
-  expect_equal(result$segment_self_linewidth, max(custom$segment_self_linewidth / sqrt(pedigree_size)*1.5,.25), tolerance = 1e-8)
+  expect_equal(result$point_size, max(custom$point_size / sqrt(pedigree_size) * 1.5, .5), tolerance = 1e-8)
+  expect_equal(result$segment_linewidth, custom$segment_linewidth / sqrt(pedigree_size) * 1.5, tolerance = 1e-8)
+  expect_equal(result$segment_self_linewidth, max(custom$segment_self_linewidth / sqrt(pedigree_size) * 1.5, .25), tolerance = 1e-8)
 
   pedigree_size <- 501
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
-  expect_equal(result$point_size, max(custom$point_size / sqrt(pedigree_size) * 2.5,.5), tolerance = 1e-8)
-  expect_equal(result$segment_linewidth, custom$segment_linewidth / sqrt(pedigree_size)*2.5, tolerance = 1e-8)
-  expect_equal(result$segment_self_linewidth, max(custom$segment_self_linewidth / sqrt(pedigree_size)*2.5,.25), tolerance = 1e-8)
+  expect_equal(result$point_size, max(custom$point_size / sqrt(pedigree_size) * 2.5, .5), tolerance = 1e-8)
+  expect_equal(result$segment_linewidth, custom$segment_linewidth / sqrt(pedigree_size) * 2.5, tolerance = 1e-8)
+  expect_equal(result$segment_self_linewidth, max(custom$segment_self_linewidth / sqrt(pedigree_size) * 2.5, .25), tolerance = 1e-8)
 })
-
-
 
 
 test_that("buildPlotConfig returns a list for ggrelatednessmatrix", {
@@ -171,5 +169,4 @@ test_that("buildPlotConfig returns a list for ggrelatednessmatrix", {
 
   expect_equal(result$label_nudge_y, 0.15)
   expect_true(is.list(result))
-
 })

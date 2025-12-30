@@ -10,7 +10,7 @@ test_that("test that data loads", {
   expect_true(is.data.frame(redsquirrels))
   expect_true(nrow(redsquirrels) > 0)
   expect_true(ncol(redsquirrels) > 0)
-  expect_true(all(c("ars_max", "ars_med", "ars_min", "ars_sd", "ars_n", "year_first", "year_last") %in% names(redsquirrels)))
+  expect_true(all(c("ars_max", "ars_med", "ars_min", "ars_sd", "ars_n", "year_first", "year_last") %in% names(redsquirrels_full)))
 })
 
 test_that("ASOIAF data loads", {
@@ -30,12 +30,38 @@ test_that("ASOIAF data loads", {
     personID = "id",
     momID = "momID",
     dadID = "dadID",
-    code_male = "M",
+ #   code_male = "M",
     config = list(
       add_phantoms = TRUE,
-      code_male = "M"#,
-   #   relation =  'many-to-many'
+      code_male = "M"  ,
+      override_many2many = TRUE
     )
   )
   expect_true(inherits(ggped, "ggplot"))
 })
+
+
+test_that("redsquirrels data structure", {
+  data(redsquirrels)
+  #'
+  #' # View the structure of the dataset
+  str(redsquirrels)
+
+  #'   # Select one family to plot
+   family_data <- subset(redsquirrels, famID == 160)
+  #'
+  #'   # Create a pedigree plot
+expect_no_error(   ggPedigree(family_data,
+     personID = "personID",
+    momID = "momID",
+    dadID = "dadID",
+  # sex = "sex",
+     config = list(
+      add_phantoms = TRUE,
+      code_male = "M",
+      code_female="F",
+      override_many2many = TRUE
+ )
+  )
+)
+ })
