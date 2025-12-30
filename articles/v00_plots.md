@@ -116,7 +116,9 @@ ggPedigree(potter,
   famID = "famID",
   personID = "personID"
 ) +
-  theme_bw(base_size = 12)
+  theme_bw(base_size = 12) + scale_colour_brewer(palette = "Set2")
+#> Scale for colour is already present.
+#> Adding another scale for colour, which will replace the existing scale.
 ```
 
 ![](v00_plots_files/figure-html/unnamed-chunk-1-1.png)
@@ -176,7 +178,7 @@ p <- ggPedigree(
     status_code_unaffected = FALSE,
     status_shape_affected = 4
   )
-)
+) 
 
 p
 ```

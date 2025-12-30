@@ -107,15 +107,81 @@ coords <- calculateCoordinates(
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
-  config  = list(
-   code_male = 1)
+  code_male = 1
 )
-#> Error in value[[3L]](cond): Error in constructing pedigree object. Please check that you've
-#>            correctly specified the sex of individuals. Setting code_male may help if non-standard codes are used (e.g., 'M'/'F'; '1,2').
 
 # View the coordinates
 head(coords)
-#> Error: object 'coords' not found
+#>   personID famID             name first_name surname gen momID dadID spouseID
+#> 1        1     1   Vernon Dursley     Vernon Dursley   1   101   102        3
+#> 2        2     1 Marjorie Dursley   Marjorie Dursley   1   101   102       NA
+#> 3        3     1    Petunia Evans    Petunia   Evans   1   103   104        1
+#> 4        4     1       Lily Evans       Lily   Evans   1   103   104        5
+#> 5        5     1     James Potter      James  Potter   1    NA    NA        4
+#> 6        6     1   Dudley Dursley     Dudley Dursley   2     3     1       NA
+#>   sex twinID zygosity nid x_pos x_order y_order y_pos parent_fam spousehint
+#> 1   1     NA     <NA>   1   1.0       2       2     2          1          1
+#> 2   0     NA     <NA>   2   0.0       1       2     2          1          0
+#> 3   0     NA     <NA>   3   2.0       3       2     2          3          0
+#> 4   0     NA     <NA>   4   4.0       5       2     2          3          0
+#> 5   1     NA     <NA>   5   3.0       4       2     2          0          1
+#> 6   1     NA     <NA>   6   1.5       1       3     3          2          0
+#>   y_fam extra x_fam
+#> 1     1 FALSE   0.5
+#> 2     1 FALSE   0.5
+#> 3     1 FALSE   3.0
+#> 4     1 FALSE   3.0
+#> 5    NA FALSE    NA
+#> 6     2 FALSE   1.5
+
+# Example with custom configuration
+coords_custom <- calculateCoordinates(
+  ped = potter,
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  code_male = 1,
+  config = list(
+    ped_packed = FALSE,
+    ped_width = 20
+  )
+)
+# Load example data
+data(potter, package = "BGmisc")
+
+# Calculate coordinates for the pedigree
+coords <- calculateCoordinates(
+  ped = potter,
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config  = list(
+   code_male = 1)
+)
+
+# View the coordinates
+head(coords)
+#>   personID famID             name first_name surname gen momID dadID spouseID
+#> 1        1     1   Vernon Dursley     Vernon Dursley   1   101   102        3
+#> 2        2     1 Marjorie Dursley   Marjorie Dursley   1   101   102       NA
+#> 3        3     1    Petunia Evans    Petunia   Evans   1   103   104        1
+#> 4        4     1       Lily Evans       Lily   Evans   1   103   104        5
+#> 5        5     1     James Potter      James  Potter   1    NA    NA        4
+#> 6        6     1   Dudley Dursley     Dudley Dursley   2     3     1       NA
+#>   sex twinID zygosity nid x_pos x_order y_order y_pos parent_fam spousehint
+#> 1   1     NA     <NA>   1   1.0       2       2     2          1          1
+#> 2   0     NA     <NA>   2   0.0       1       2     2          1          0
+#> 3   0     NA     <NA>   3   2.0       3       2     2          3          0
+#> 4   0     NA     <NA>   4   4.0       5       2     2          3          0
+#> 5   1     NA     <NA>   5   3.0       4       2     2          0          1
+#> 6   1     NA     <NA>   6   1.5       1       3     3          2          0
+#>   y_fam extra x_fam
+#> 1     1 FALSE   0.5
+#> 2     1 FALSE   0.5
+#> 3     1 FALSE   3.0
+#> 4     1 FALSE   3.0
+#> 5    NA FALSE    NA
+#> 6     2 FALSE   1.5
 
 # Example with custom configuration
 coords_custom <- calculateCoordinates(
@@ -128,6 +194,4 @@ coords_custom <- calculateCoordinates(
     ped_width = 20
   )
 )
-#> Error in value[[3L]](cond): Error in constructing pedigree object. Please check that you've
-#>            correctly specified the sex of individuals. Setting code_male may help if non-standard codes are used (e.g., 'M'/'F'; '1,2').
 ```

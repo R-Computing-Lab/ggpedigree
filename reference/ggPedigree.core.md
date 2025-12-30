@@ -20,11 +20,12 @@ ggPedigree.core(
   focal_fill_column = NULL,
   overlay_column = NULL,
   status_column = NULL,
+  code_male = NULL,
   config = list(),
   debug = FALSE,
   hints = NULL,
-  function_name = "ggPedigree",
-  ...
+  sexVar = "sex",
+  function_name = "ggPedigree"
 )
 ```
 
@@ -88,6 +89,11 @@ ggPedigree.core(
   Character string specifying the column name for affected status.
   Defaults to NULL.
 
+- code_male:
+
+  Integer or string. Value identifying males in the sex column.
+  (typically 0 or 1) Default: 1
+
 - config:
 
   A list of configuration options for customizing the plot. See
@@ -148,6 +154,7 @@ ggPedigree.core(
 
   Data frame with hints for layout adjustments. Default: NULL.
 
-- ...:
+- sexVar:
 
-  Additional arguments passed to \`ggplot2\` functions.
+  Character string specifying the column name for sex. Defaults to
+  "sex".
