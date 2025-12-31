@@ -2,7 +2,7 @@
 # ==============================
 
 
-# ggpedigree 1.1.0.0
+# ggpedigree 1.1.0.1
 
 * Saved raw excel data as csv to have a non-proprietary format for data storage
 * Added more refactorings of kinship2 internals for maintainability
