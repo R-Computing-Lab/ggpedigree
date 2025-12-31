@@ -166,12 +166,28 @@ ggPedigree.core <- function(ped,
   config$gap_woff <- 0.5 * config$generation_width # single constant for all “stub” offsets
 
   # recode missing sex to "unknown"
-  if (any(is.na(ds$sex)) && is.character(ds$sex)) {
-    ds <- ds |>
-      dplyr::mutate(sex = dplyr::case_when(
-        is.na(.data$sex) ~ "unknown",
-        TRUE ~ as.character(.data$sex)
-      ))
+  if (config$recode_missing_sex == TRUE) {
+    if (any(is.na(ds$sex)) && is.character(ds$sex)) {
+      ds <- ds |>
+        dplyr::mutate(sex = dplyr::case_when(
+          is.na(.data$sex) ~ "unknown",
+          TRUE ~ as.character(.data$sex)
+        ))
+    } else if (any(is.na(ds$sex)) && is.numeric(ds$sex)) {
+      if (length(unique(ds$sex)[!is.na(unique(ds$sex))]) == 3 && (max(ds$sex, na.rm = TRUE) == 3 || max(ds$sex, na.rm = TRUE) == 2)) {
+        ds <- ds |>
+          dplyr::mutate(sex = dplyr::case_when(
+            is.na(.data$sex) ~ 3,
+            TRUE ~ as.numeric(.data$sex)
+          ))
+      } else if (length(unique(ds$sex)[!is.na(unique(ds$sex))]) == 2) {
+        ds <- ds |>
+          dplyr::mutate(sex = dplyr::case_when(
+            is.na(.data$sex) ~ max(ds$sex, na.rm = TRUE) + 1,
+            TRUE ~ as.numeric(.data$sex)
+          ))
+      }
+    }
   }
   p <- ggplot2::ggplot(
     ds,

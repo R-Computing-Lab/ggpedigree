@@ -179,6 +179,7 @@
 #' @param hints Optional hints to pass along to kinship2::autohint
 #' @param relation Optional relation to pass along to kinship2::pedigree
 #' @param recode_missing_ids Whether to recode 0s as missing IDs in the pedigree. Default is TRUE.
+#' @param recode_missing_sex Whether to recode missing sex codes in the pedigree. Default is TRUE.
 #' @param debug Whether to enable debugging mode.
 #' @param add_phantoms Whether to add phantom parents for individuals without parents.
 #' @param ... Additional arguments for future extensibility.
@@ -398,6 +399,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  override_many2many = FALSE,
                                  optimize_plotly = TRUE,
                                  recode_missing_ids = TRUE,
+                                 recode_missing_sex = TRUE,
                                  add_phantoms = FALSE,
                                  # ---- Future Extensibility ----
                                  ...) {
@@ -678,6 +680,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     override_many2many = override_many2many,
     optimize_plotly = optimize_plotly,
     recode_missing_ids = recode_missing_ids,
+    recode_missing_sex = recode_missing_sex,
     add_phantoms = add_phantoms,
     debug = debug
   )
