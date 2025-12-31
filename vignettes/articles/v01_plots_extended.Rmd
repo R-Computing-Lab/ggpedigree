@@ -270,7 +270,7 @@ p <- ggPedigree(
     generation_height = 1,
     point_size = 2,
     label_text_size = 2,
-    label_method = "ggrepel",
+    label_method = "geom_text_repel",
     label_segment_color = "gray",
     point_scale_by_pedigree = FALSE,
     generation_width = 1,
