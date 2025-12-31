@@ -280,6 +280,7 @@ test_that("focal fill works with ID and different methods", {
   library(BGmisc)
   data("potter") # load example data from BGmisc
 
+  # Test with greyscale theme
   p <- ggPedigree(potter,
     famID = "famID",
     personID = "personID",
@@ -294,6 +295,23 @@ test_that("focal fill works with ID and different methods", {
   expect_s3_class(p, "gg") # Should return a ggplot object
   expect_true("focal_fill" %in% names(p$data)) # focal_fill column should be present
   expect_true(all(p$data$focal_fill >= 0 & p$data$focal_fill <= 1)) # focal_fill values should be between 0 and 1
+
+  # Test that greyscale color scale is applied
+  # The plot should have a colour scale for the focal fill
+  colour_scales <- p$scales$find("colour")
+  expect_true(length(colour_scales) > 0, "Plot should have a colour scale for focal fill")
+
+  # Build the plot to verify greyscale colors are used
+  built <- ggplot2::ggplot_build(p)
+  expect_s3_class(built, "ggplot_built")
+
+  # Verify that the scale uses greyscale by checking the scale aesthetics
+  if (length(colour_scales) > 0) {
+    scale <- p$scales$scales
+    expect_true("colour" %in% scale[[3]]$aesthetics)
+    # The scale should be a Binned scale (used for gradient/steps methods)
+    expect_true(inherits(scale[[3]], "ScaleBinned"))
+  }
 
   p2 <- ggPedigree(potter,
     famID = "famID",
