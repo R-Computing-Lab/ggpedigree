@@ -287,8 +287,7 @@ test_that("focal fill works with ID and different methods", {
       focal_fill_include = TRUE,
       sex_color_include = FALSE,
       focal_fill_personID = 1,
-      focal_fill_method = "steps",
-      color_theme = "greyscale"
+      focal_fill_method = "steps"
     )
   )
   expect_s3_class(p, "gg") # Should return a ggplot object
