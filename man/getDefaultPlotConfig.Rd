@@ -12,6 +12,11 @@ getDefaultPlotConfig(
   apply_default_scales = TRUE,
   apply_default_theme = TRUE,
   segment_default_color = "black",
+  color_theme = "color",
+  greyscale_palette_default = c("#1A1A1A", "#7F7F7F", "#D9D9D9"),
+  greyscale_low = "#000000",
+  greyscale_mid = "#7F7F7F",
+  greyscale_high = "#FFFFFF",
   color_palette_default = c("#440154FF", "#7fd34e", "#f1e51d"),
   color_palette_low = "#000004FF",
   color_palette_mid = "#56106EFF",
@@ -194,6 +199,16 @@ getDefaultPlotConfig(
 \item{apply_default_theme}{Whether to apply default ggplot2 theme.}
 
 \item{segment_default_color}{A character string for the default color of segments in the plot.}
+
+\item{color_theme}{Theme mode controlling default palettes. Options: "color" (default) or "greyscale".}
+
+\item{greyscale_palette_default}{Default discrete greyscale palette used when color_theme="greyscale".}
+
+\item{greyscale_low}{Greyscale low color for continuous gradients when color_theme="greyscale".}
+
+\item{greyscale_mid}{Greyscale midpoint color for continuous gradients when color_theme="greyscale".}
+
+\item{greyscale_high}{Greyscale high color for continuous gradients when color_theme="greyscale".}
 
 \item{color_palette_default}{A character vector of default colors for the plot.}
 

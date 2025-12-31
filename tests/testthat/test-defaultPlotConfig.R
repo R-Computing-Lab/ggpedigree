@@ -16,17 +16,18 @@ test_that("getDefaultPlotConfig returns expected defaults", {
   config <- getDefaultPlotConfig()
 
   expect_true(is.list(config))
-  expect_equal(length(config), 164) # Check number of default parameters
+  expect_equal(length(config), 165) # Check number of default parameters
 
   expect_equal(config$apply_default_scales, TRUE)
   expect_equal(config$apply_default_theme, TRUE)
   expect_equal(
     config$color_palette_default,
-    c( "#440154FF",
-    "#7fd34e",
-    "#f1e51d"
-  )
-   # c("#440154FF", "#FDE725FF", "#21908CFF")
+    c(
+      "#440154FF",
+      "#7fd34e",
+      "#f1e51d"
+    )
+    # c("#440154FF", "#FDE725FF", "#21908CFF")
   )
   expect_equal(config$segment_self_color, "black")
   expect_equal(config$segment_parent_color, "black")
@@ -169,4 +170,37 @@ test_that("buildPlotConfig returns a list for ggrelatednessmatrix", {
 
   expect_equal(result$label_nudge_y, 0.15)
   expect_true(is.list(result))
+})
+
+
+test_that("getDefaultPlotConfig supports greyscale color_theme", {
+  config <- getDefaultPlotConfig(function_name = "ggPedigree", color_theme = "greyscale")
+
+  expect_true(is.list(config))
+  expect_equal(config$color_theme, "greyscale")
+
+  # discrete palette becomes greyscale
+  expect_equal(
+    config$color_palette_default,
+    c("#1A1A1A", "#7F7F7F", "#D9D9D9")
+  )
+
+  # continuous gradient defaults become greyscale
+  expect_equal(config$color_palette_low, "#000000")
+  expect_equal(config$color_palette_mid, "#7F7F7F")
+  expect_equal(config$color_palette_high, "#FFFFFF")
+
+  # sex palette should follow discrete palette in greyscale mode
+  expect_equal(config$sex_color_palette, c("black", "black", "black"))
+
+  # status palette becomes greyscale-friendly
+  expect_equal(config$status_color_palette, c("#1A1A1A", "#BDBDBD"))
+  expect_equal(config$status_color_affected, "#1A1A1A")
+  expect_equal(config$status_color_unaffected, "#BDBDBD")
+
+  # matrix/tile palette becomes greyscale
+  expect_equal(config$tile_color_palette, c("#FFFFFF", "#BDBDBD", "#000000"))
+
+  # sanity check: segment defaults remain printable
+  expect_equal(config$segment_default_color, "black")
 })

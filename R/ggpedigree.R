@@ -80,8 +80,7 @@ ggPedigree <- function(ped,
                        hints = NULL,
                        interactive = FALSE,
                        code_male = NULL,
-                       sexVar = "sex"
-                       ) {
+                       sexVar = "sex") {
   if (!inherits(ped, "data.frame")) {
     if (rlang::inherits_any(ped, c("ped", "pedigree", "kinship2.pedigree"))) {
       # Convert ped object to data.frame
@@ -122,7 +121,6 @@ ggPedigree <- function(ped,
       tooltip_columns = tooltip_columns,
       code_male = code_male,
       sexVar = sexVar
-
     )
   } else {
     if (interactive == TRUE &&
@@ -131,7 +129,12 @@ ggPedigree <- function(ped,
     }
 
     # Set default styling and layout parameters
-    default_config <- getDefaultPlotConfig(function_name = "ggpedigree", personID = personID)
+    default_config <- getDefaultPlotConfig(
+      function_name = "ggpedigree",
+      personID = personID,
+      color_theme = ifelse(is.null(config$color_theme), "color", config$color_theme)
+    )
+
 
     # Merge with user-specified overrides
     # This allows the user to override any of the default values
@@ -141,7 +144,7 @@ ggPedigree <- function(ped,
       function_name = "ggpedigree",
       pedigree_size = nrow(ped)
     )
-    if(exists("code_male")&&is.null(code_male) == FALSE){
+    if (exists("code_male") && is.null(code_male) == FALSE) {
       config$code_male <- code_male
       code_male <- NULL
     }
