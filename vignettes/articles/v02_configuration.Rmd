@@ -1,8 +1,8 @@
 ---
-title: "Using `config` to control ggpedigree plots"
+title: "Extended: Using `config` to control ggpedigree plots"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Using config to control ggpedigree plots}
+  %\VignetteIndexEntry{Extended: Using config to control ggpedigree plots}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -27,7 +27,7 @@ library(tidyverse) # for data wrangling
 
 Every gg-based plotting function in `{ggpedigree}` accepts a `config` argument. 
 
-This is the easier way to control plot behavior without rewriting the plotting code.
+This is an easier way to control plot behavior without rewriting the plotting code.
 
 A `config` is a named list. Each element corresponds to one plotting, layout, or aesthetic option. You pass the list to the plotting function and the plot is drawn using those values.
 
@@ -590,5 +590,8 @@ cfg_names <- sort(names(getDefaultPlotConfig("ggPedigree")))
 tibble::tibble(Config_Key = cfg_names) %>%
   knitr::kable()
 ```
-</details> <details> <summary><strong>Show all config keys with defaults</strong></summary>
+</details>
 
+<details>
+<summary><strong>Show all config keys with defaults</strong></summary>
+</details>
