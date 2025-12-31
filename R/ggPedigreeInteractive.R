@@ -70,7 +70,8 @@ ggPedigreeInteractive <- function(ped,
   # Set default styling and layout parameters
   default_config <- getDefaultPlotConfig(
     function_name = "ggpedigreeinteractive",
-    personID = personID
+    personID = personID,
+    color_theme = ifelse(is.null(config$color_theme), "color", config$color_theme)
   )
 
   # Merge with user-specified overrides
@@ -81,7 +82,7 @@ ggPedigreeInteractive <- function(ped,
     function_name = "ggpedigreeinteractive",
     pedigree_size = nrow(ped)
   )
-  if(exists("code_male")&&is.null(code_male) == FALSE){
+  if (exists("code_male") && is.null(code_male) == FALSE) {
     config$code_male <- code_male
     code_male <- NULL
   }

@@ -90,9 +90,21 @@ if (!"twinID" %in% names(potter)) {
 Here is a basic example of how to use `ggpedigree` to visualize a pedigree structure. The `potter` dataset contains simulated pedigree data for the Weasley family from the Harry Potter series.
 
 ```{r basic-usage,out.width = "80%"}
+library(ggpedigree) # ggPedigree lives here
+library(BGmisc) # helper utilities & example data
+potter <- BGmisc::potter # load example data
 ggPedigree(potter,
   famID = "famID",
   personID = "personID"
+)
+```
+
+```{r slightly-usage,out.width = "80%"}
+ggPedigree(potter,
+  famID = "famID",
+  personID = "personID",
+  config = list(
+    color_theme = "greyscale")
 )
 ```
 

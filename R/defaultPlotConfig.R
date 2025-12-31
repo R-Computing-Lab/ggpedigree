@@ -5,6 +5,11 @@
 #' plotting functions such as `ggPedigree()`, `ggRelatednessMatrix()`, and `ggPhenotypeByDegree()`.
 #' Each key corresponds to a configurable plot, layout, or aesthetic behavior.
 #' @param color_palette_default A character vector of default colors for the plot.
+#' @param color_theme Theme mode controlling default palettes. Options: "color" (default) or "greyscale".
+#' @param greyscale_palette_default Default discrete greyscale palette used when color_theme="greyscale".
+#' @param greyscale_low Greyscale low color for continuous gradients when color_theme="greyscale".
+#' @param greyscale_mid Greyscale midpoint color for continuous gradients when color_theme="greyscale".
+#' @param greyscale_high Greyscale high color for continuous gradients when color_theme="greyscale".
 #' @param segment_default_color A character string for the default color of segments in the plot.
 #' @param function_name The name of the function calling this configuration.
 #' @param personID The column name for person identifiers in the data.
@@ -189,6 +194,12 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  apply_default_scales = TRUE,
                                  apply_default_theme = TRUE,
                                  segment_default_color = "black",
+                                 # Greyscale theming option
+                                 color_theme = "color", # c("color", "greyscale"),
+                                 greyscale_palette_default = c("grey10", "grey50", "grey85"),
+                                 greyscale_low = "black",
+                                 greyscale_mid = "grey50",
+                                 greyscale_high = "white",
                                  color_palette_default = c(
                                    "#440154FF",
                                    "#7fd34e",
@@ -412,12 +423,60 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
       " is not supported by getDefaultPlotConfig."
     ))
   }
+  # color_theme <- match.arg(color_theme)
 
+  grey_color_names <- c(
+    "greyscale",
+    "grayscale",
+    "grey",
+    "gray"
+  )
+  black_color_names <- c(
+    "blackscale",
+    "blackandwhite",
+    "black & white",
+    "black white",
+    "bw",
+    "black"
+  )
+
+  if (!is.character(color_theme) || length(color_theme) != 1L || is.na(color_theme)) {
+    stop("`color_theme` must be a non-missing character string.")
+  }
+  color_theme_lower <- stringr::str_to_lower(color_theme)
+
+  if (color_theme_lower %in% c(grey_color_names, black_color_names)) {
+    color_palette_default <- greyscale_palette_default
+    color_palette_low <- greyscale_low
+    color_palette_mid <- greyscale_mid
+    color_palette_high <- greyscale_high
+
+    segment_default_color <- "black"
+    label_text_color <- "black"
+    outline_color <- "black"
+    overlay_color <- "black"
+
+    status_color_palette <- c("grey10", "grey74")
+    status_color_affected <- "grey10"
+    status_color_unaffected <- "grey74"
+
+    focal_fill_high_color <- "grey80"
+    focal_fill_mid_color <- "grey50"
+    focal_fill_low_color <- "grey10"
+    focal_fill_na_value <- "black"
+    tile_color_palette <- c("white", "grey74", "black")
+
+    # Make sex palette greyscale too
+    sex_color_palette <- rep("black", length(sex_color_palette))
+
+    focal_fill_color_values <- c("grey10", "grey50", "grey85")
+  }
   core_list <- list(
     # ---- General Appearance ----
     apply_default_scales = apply_default_scales,
     segment_default_color = segment_default_color,
     apply_default_theme = apply_default_theme,
+    color_theme = color_theme,
     color_palette_default = color_palette_default,
     color_palette_low = color_palette_low,
     color_palette_mid = color_palette_mid,
@@ -428,7 +487,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     plot_title = plot_title,
     plot_subtitle = plot_subtitle,
     value_rounding_digits = value_rounding_digits,
-    # --- SEX ------------------------------------------------------------
+    # --- SEX ----------------
     code_male = code_male,
     code_na = code_na,
     code_female = code_female,
@@ -690,9 +749,6 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     core_list$label_column <- personID
     core_list$label_nudge_y_flip <- TRUE
     core_list$value_rounding_digits <- 3
-    # core_list$focal_fill_low_color <- core_list$color_palette_low
-    # core_list$focal_fill_mid_color <- core_list$color_palette_mid
-    # core_list$focal_fill_high_color <- core_list$color_palette_high
   }
   if (lc_function_name %in% c("ggpedigree")) {
     # core_list$label_method <- "ggrepel"
