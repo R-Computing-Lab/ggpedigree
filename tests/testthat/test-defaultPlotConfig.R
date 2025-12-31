@@ -182,24 +182,24 @@ test_that("getDefaultPlotConfig supports greyscale color_theme", {
   # discrete palette becomes greyscale
   expect_equal(
     config$color_palette_default,
-    c("#1A1A1A", "#7F7F7F", "#D9D9D9")
+    c("grey10", "grey50", "grey85")
   )
 
   # continuous gradient defaults become greyscale
-  expect_equal(config$color_palette_low, "#000000")
-  expect_equal(config$color_palette_mid, "#7F7F7F")
-  expect_equal(config$color_palette_high, "#FFFFFF")
+  expect_equal(config$color_palette_low, "black")
+  expect_equal(config$color_palette_mid, "grey50")
+  expect_equal(config$color_palette_high, "white")
 
   # sex palette should follow discrete palette in greyscale mode
   expect_equal(config$sex_color_palette, c("black", "black", "black"))
 
   # status palette becomes greyscale-friendly
-  expect_equal(config$status_color_palette, c("#1A1A1A", "#BDBDBD"))
-  expect_equal(config$status_color_affected, "#1A1A1A")
-  expect_equal(config$status_color_unaffected, "#BDBDBD")
+  expect_equal(config$status_color_palette, c("grey10", "grey74"))
+  expect_equal(config$status_color_affected, "grey10")
+  expect_equal(config$status_color_unaffected, "grey74")
 
   # matrix/tile palette becomes greyscale
-  expect_equal(config$tile_color_palette, c("#FFFFFF", "#BDBDBD", "#000000"))
+  expect_equal(config$tile_color_palette, c("white", "grey74", "black"))
 
   # sanity check: segment defaults remain printable
   expect_equal(config$segment_default_color, "black")

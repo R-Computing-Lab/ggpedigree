@@ -196,10 +196,10 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  segment_default_color = "black",
                                  # Greyscale theming option
                                  color_theme = "color", # c("color", "greyscale"),
-                                 greyscale_palette_default = c("#1A1A1A", "#7F7F7F", "#D9D9D9"),
-                                 greyscale_low = "#000000",
-                                 greyscale_mid = "#7F7F7F",
-                                 greyscale_high = "#FFFFFF",
+                                 greyscale_palette_default = c("grey10", "grey50", "grey85"),
+                                 greyscale_low = "black",
+                                 greyscale_mid = "grey50",
+                                 greyscale_high = "white",
                                  color_palette_default = c(
                                    "#440154FF",
                                    "#7fd34e",
@@ -456,20 +456,20 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     outline_color <- "black"
     overlay_color <- "black"
 
-    status_color_palette <- c("#1A1A1A", "#BDBDBD")
-    status_color_affected <- "#1A1A1A"
-    status_color_unaffected <- "#BDBDBD"
+    status_color_palette <- c("grey10", "grey74")
+    status_color_affected <- "grey10"
+    status_color_unaffected <- "grey74"
 
     focal_fill_high_color <- "grey80"
     focal_fill_mid_color <- "grey50"
-    focal_fill_low_color <- "#1A1A1A"
+    focal_fill_low_color <- "grey10"
     focal_fill_na_value <- "black"
-    tile_color_palette <- c("#FFFFFF", "#BDBDBD", "#000000")
+    tile_color_palette <- c("white", "grey74", "black")
 
     # Make sex palette greyscale too
     sex_color_palette <- rep("black", length(sex_color_palette))
 
-    focal_fill_color_values <- c("#1A1A1A", "#7F7F7F", "#D9D9D9")
+    focal_fill_color_values <- c("grey10", "grey50", "grey85")
   }
   core_list <- list(
     # ---- General Appearance ----
