@@ -440,7 +440,12 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     "black"
   )
 
-  if (stringr::str_to_lower(color_theme) %in% c(grey_color_names, black_color_names)) {
+  if (!is.character(color_theme) || length(color_theme) != 1L || is.na(color_theme)) {
+    stop("`color_theme` must be a non-missing character string.")
+  }
+  color_theme_lower <- stringr::str_to_lower(color_theme)
+
+  if (color_theme_lower %in% c(grey_color_names, black_color_names)) {
     color_palette_default <- greyscale_palette_default
     color_palette_low <- greyscale_low
     color_palette_mid <- greyscale_mid
