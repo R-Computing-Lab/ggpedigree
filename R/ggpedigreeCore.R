@@ -94,7 +94,6 @@ ggPedigree.core <- function(ped,
   }
 
 
-
   # -----
   # STEP 4: Coordinate Generation
   # -----
@@ -297,7 +296,6 @@ ggPedigree.core <- function(ped,
   # Add overlay points for affected status if applicable
 
   if (.should_add_overlay(config, overlay_column, status_column, focal_fill_column)) {
-
     # If overlay_column is specified, use it for alpha aesthetic
 
     p <- .addOverlay(
@@ -333,21 +331,20 @@ ggPedigree.core <- function(ped,
   # -----
   # STEP 11: Scales, Theme
   # -----
-# scale min
+  # scale min
 
 
- if(is.na(min(ds$y_pos, na.rm = TRUE)) ) {
-   warning("y_pos contains all NA values, cannot set y-axis limits. This occurs when there are less than two people in the pedigree.")
-p <- p +
-    ggplot2::scale_y_reverse()
- } else {
-
-  p <- p +
-    ggplot2::scale_y_reverse(limits = c(
-      NA,
-      min(ds$y_pos, na.rm = TRUE)
-    ))
- }
+  if (is.na(min(ds$y_pos, na.rm = TRUE))) {
+    warning("y_pos contains all NA values, cannot set y-axis limits. This occurs when there are less than two people in the pedigree.")
+    p <- p +
+      ggplot2::scale_y_reverse()
+  } else {
+    p <- p +
+      ggplot2::scale_y_reverse(limits = c(
+        NA,
+        min(ds$y_pos, na.rm = TRUE)
+      ))
+  }
   if (config$apply_default_theme == TRUE) {
     p <- p +
       ggplot2::theme_minimal() +
@@ -444,7 +441,6 @@ p <- p +
   )
 
 
-
   # 3) Add the selected layer
   if (node_mode == "sex_color") {
     plotObject <- plotObject +
@@ -456,7 +452,6 @@ p <- p +
         size = config$point_size,
         na.rm = TRUE
       )
-
   } else if (node_mode == "focal_fill") {
     # Preserve your original "if focal_fill_column is NULL, use .data$focal_fill"
     color_expr <- if (is.null(focal_fill_column)) rlang::expr(.data$focal_fill) else rlang::sym(focal_fill_column)
@@ -470,7 +465,6 @@ p <- p +
         size = config$point_size,
         na.rm = TRUE
       )
-
   } else if (node_mode == "status") {
     plotObject <- plotObject +
       ggplot2::geom_point(
@@ -481,7 +475,6 @@ p <- p +
         size = config$point_size,
         na.rm = TRUE
       )
-
   } else { # "shape_only"
     plotObject <- plotObject +
       ggplot2::geom_point(
@@ -492,7 +485,6 @@ p <- p +
   }
 
   plotObject
-
 }
 
 #' @rdname dot-addNodes
@@ -506,11 +498,12 @@ addNodes <- .addNodes
 #' @return A ggplot object with added overlay.
 #'
 .addOverlay <- function(plotObject,
-                        config = list(overlay_include = FALSE,
-                                      status_include = FALSE,
-                                      focal_fill_include = FALSE,
-                                      sex_color_include = FALSE),
-
+                        config = list(
+                          overlay_include = FALSE,
+                          status_include = FALSE,
+                          focal_fill_include = FALSE,
+                          sex_color_include = FALSE
+                        ),
                         focal_fill_column = NULL,
                         status_column = NULL,
                         overlay_column = NULL) {
@@ -520,27 +513,31 @@ addNodes <- .addNodes
     rules = list(
       list(
         when = function() isTRUE(config$overlay_include) && !is.null(overlay_column),
-        do   = list(
+        do = list(
           alpha_var = overlay_column,
-          shape      = config$overlay_shape,
-          color      = config$overlay_color
+          shape = config$overlay_shape,
+          color = config$overlay_color
         )
       ),
       list(
-        when = function() isTRUE(config$status_include) &&
-          !is.null(status_column) &&
-          isTRUE(config$sex_color_include),
-        do   = list(
+        when = function() {
+          isTRUE(config$status_include) &&
+            !is.null(status_column) &&
+            isTRUE(config$sex_color_include)
+        },
+        do = list(
           alpha_var = status_column,
-          shape      = config$status_shape_affected,
-          color      = config$status_color_affected
+          shape = config$status_shape_affected,
+          color = config$status_color_affected
         )
       ),
       list(
-        when = function() isTRUE(config$focal_fill_include) &&
-      exists("focal_fill_column") &&    !is.null(focal_fill_column) &&
-          !isTRUE(config$sex_color_include),
-        do   = list(
+        when = function() {
+          isTRUE(config$focal_fill_include) &&
+            exists("focal_fill_column") && !is.null(focal_fill_column) &&
+            !isTRUE(config$sex_color_include)
+        },
+        do = list(
           alpha_var  = focal_fill_column,
           shape      = config$focal_fill_shape,
           color      = config$focal_fill_mid_color
@@ -565,7 +562,6 @@ addNodes <- .addNodes
   }
 
   plotObject
-
 }
 
 #' @rdname dot-addOverlay
@@ -756,12 +752,11 @@ addSelfSegment <- .addSelfSegment
 
   color_mode <- .get_color_mode(config, status_column, focal_fill_column)
 
-  plotObject <- switch(
-    color_mode,
-    sex        = .add_sex_scales(plotObject, config),
+  plotObject <- switch(color_mode,
+    sex = .add_sex_scales(plotObject, config),
     focal_fill = .add_focal_fill_scales(plotObject, config),
-    status     = .add_status_scales(plotObject, config),
-    none       = {
+    status = .add_status_scales(plotObject, config),
+    none = {
       plotObject + ggplot2::labs(
         shape = if (isTRUE(config$sex_legend_show)) config$sex_legend_title else NULL
       )
@@ -774,14 +769,18 @@ addSelfSegment <- .addSelfSegment
 
 .add_sex_scales <- function(p, config) {
   if (!is.null(config$sex_color_palette)) {
-    p <- p + ggplot2::scale_color_manual(values = config$sex_color_palette,
-                                         labels = config$sex_shape_labels)
+    p <- p + ggplot2::scale_color_manual(
+      values = config$sex_color_palette,
+      labels = config$sex_shape_labels
+    )
   } else {
     p <- p + ggplot2::scale_color_discrete(labels = config$sex_shape_labels)
   }
 
-  p <- p + ggplot2::labs(color = config$sex_legend_title,
-                         shape = config$sex_legend_title)
+  p <- p + ggplot2::labs(
+    color = config$sex_legend_title,
+    shape = config$sex_legend_title
+  )
 
   if (isFALSE(config$sex_legend_show)) {
     p <- p + ggplot2::guides(color = "none", shape = "none")
@@ -791,8 +790,10 @@ addSelfSegment <- .addSelfSegment
 
 .add_status_scales <- function(p, config) {
   if (!is.null(config$status_color_palette)) {
-    p <- p + ggplot2::scale_color_manual(values = config$status_color_values,
-                                         labels = config$status_labels)
+    p <- p + ggplot2::scale_color_manual(
+      values = config$status_color_values,
+      labels = config$status_labels
+    )
   } else {
     p <- p + ggplot2::scale_color_discrete(labels = config$status_labels)
   }
@@ -811,76 +812,90 @@ addSelfSegment <- .addSelfSegment
     rules = list(
       list(
         when = function() method %in% c("steps", "steps2", "step", "step2"),
-        do   = function() ggplot2::scale_colour_steps2(
-          low = config$focal_fill_low_color,
-          mid = config$focal_fill_mid_color,
-          high = config$focal_fill_high_color,
-          midpoint = config$focal_fill_scale_midpoint,
-          n.breaks = config$focal_fill_n_breaks,
-          na.value = config$focal_fill_na_value,
-          transform = ifelse(config$focal_fill_use_log, "log2", "identity")
-        )
+        do = function() {
+          ggplot2::scale_colour_steps2(
+            low = config$focal_fill_low_color,
+            mid = config$focal_fill_mid_color,
+            high = config$focal_fill_high_color,
+            midpoint = config$focal_fill_scale_midpoint,
+            n.breaks = config$focal_fill_n_breaks,
+            na.value = config$focal_fill_na_value,
+            transform = ifelse(config$focal_fill_use_log, "log2", "identity")
+          )
+        }
       ),
       list(
         when = function() method %in% c("gradient2", "gradient"),
-        do   = function() ggplot2::scale_colour_gradient2(
-          low = config$focal_fill_low_color,
-          mid = config$focal_fill_mid_color,
-          high = config$focal_fill_high_color,
-          midpoint = config$focal_fill_scale_midpoint,
-          n.breaks = config$focal_fill_n_breaks,
-          na.value = config$focal_fill_na_value,
-          transform = ifelse(config$focal_fill_use_log, "log2", "identity")
-        )
+        do = function() {
+          ggplot2::scale_colour_gradient2(
+            low = config$focal_fill_low_color,
+            mid = config$focal_fill_mid_color,
+            high = config$focal_fill_high_color,
+            midpoint = config$focal_fill_scale_midpoint,
+            n.breaks = config$focal_fill_n_breaks,
+            na.value = config$focal_fill_na_value,
+            transform = ifelse(config$focal_fill_use_log, "log2", "identity")
+          )
+        }
       ),
       list(
         when = function() method %in% c("hue"),
-        do   = function() ggplot2::scale_color_hue(
-          h = config$focal_fill_hue_range,
-          c = config$focal_fill_chroma,
-          l = config$focal_fill_lightness,
-          direction = config$focal_fill_hue_direction,
-          na.value = config$focal_fill_na_value
-        )
+        do = function() {
+          ggplot2::scale_color_hue(
+            h = config$focal_fill_hue_range,
+            c = config$focal_fill_chroma,
+            l = config$focal_fill_lightness,
+            direction = config$focal_fill_hue_direction,
+            na.value = config$focal_fill_na_value
+          )
+        }
       ),
       list(
         when = function() method %in% c("viridis_c"),
-        do   = function() ggplot2::scale_colour_viridis_c(
-          option = config$focal_fill_viridis_option,
-          begin = config$focal_fill_viridis_begin,
-          end = config$focal_fill_viridis_end,
-          direction = config$focal_fill_viridis_direction,
-          na.value = config$focal_fill_na_value,
-          transform = ifelse(config$focal_fill_use_log, "log2", "identity")
-        )
+        do = function() {
+          ggplot2::scale_colour_viridis_c(
+            option = config$focal_fill_viridis_option,
+            begin = config$focal_fill_viridis_begin,
+            end = config$focal_fill_viridis_end,
+            direction = config$focal_fill_viridis_direction,
+            na.value = config$focal_fill_na_value,
+            transform = ifelse(config$focal_fill_use_log, "log2", "identity")
+          )
+        }
       ),
       list(
         when = function() method %in% c("viridis_d"),
-        do   = function() ggplot2::scale_colour_viridis_d(
-          option = config$focal_fill_viridis_option,
-          begin = config$focal_fill_viridis_begin,
-          end = config$focal_fill_viridis_end,
-          direction = config$focal_fill_viridis_direction,
-          na.value = config$focal_fill_na_value
-        )
+        do = function() {
+          ggplot2::scale_colour_viridis_d(
+            option = config$focal_fill_viridis_option,
+            begin = config$focal_fill_viridis_begin,
+            end = config$focal_fill_viridis_end,
+            direction = config$focal_fill_viridis_direction,
+            na.value = config$focal_fill_na_value
+          )
+        }
       ),
       list(
         when = function() method %in% c("viridis_b"),
-        do   = function() ggplot2::scale_colour_viridis_b(
-          option = config$focal_fill_viridis_option,
-          begin = config$focal_fill_viridis_begin,
-          end = config$focal_fill_viridis_end,
-          direction = config$focal_fill_viridis_direction,
-          na.value = config$focal_fill_na_value,
-          transform = ifelse(config$focal_fill_use_log, "log2", "identity")
-        )
+        do = function() {
+          ggplot2::scale_colour_viridis_b(
+            option = config$focal_fill_viridis_option,
+            begin = config$focal_fill_viridis_begin,
+            end = config$focal_fill_viridis_end,
+            direction = config$focal_fill_viridis_direction,
+            na.value = config$focal_fill_na_value,
+            transform = ifelse(config$focal_fill_use_log, "log2", "identity")
+          )
+        }
       ),
       list(
         when = function() method %in% c("manual"),
-        do   = function() ggplot2::scale_color_manual(
-          values = config$focal_fill_color_values,
-          labels = config$focal_fill_labels
-        )
+        do = function() {
+          ggplot2::scale_color_manual(
+            values = config$focal_fill_color_values,
+            labels = config$focal_fill_labels
+          )
+        }
       )
     ),
     default = NULL
@@ -907,7 +922,9 @@ addSelfSegment <- .addSelfSegment
   if (isFALSE(config$focal_fill_legend_show)) {
     p <- p + ggplot2::guides(color = "none")
   }
-
+  if (isFALSE(config$sex_legend_show)) {
+    p <- p + ggplot2::guides(shape = "none")
+  }
   p
 }
 
