@@ -42,6 +42,9 @@ pedigree structure. The `potter` dataset contains simulated pedigree
 data for the Weasley family from the Harry Potter series.
 
 ``` r
+library(ggpedigree) # ggPedigree lives here
+library(BGmisc) # helper utilities & example data
+potter <- BGmisc::potter # load example data
 ggPedigree(potter,
   famID = "famID",
   personID = "personID"
@@ -49,6 +52,17 @@ ggPedigree(potter,
 ```
 
 ![](reference/figures/README-basic-usage-1.png)
+
+``` r
+ggPedigree(potter,
+  famID = "famID",
+  personID = "personID",
+  config = list(
+    color_theme = "greyscale")
+)
+```
+
+![](reference/figures/README-slightly-usage-1.png)
 
 ## Citation
 
@@ -60,7 +74,7 @@ citation(package = "ggpedigree")
 ```
 
 Garrison S (2025). *ggpedigree: Visualizing Pedigrees with ‘ggplot2’ and
-‘plotly’*. R package version 1.0.0.1,
+‘plotly’*. R package version 1.1.0.1,
 <https://github.com/R-Computing-Lab/ggpedigree/>.
 
 A BibTeX entry for LaTeX users is
@@ -70,7 +84,7 @@ A BibTeX entry for LaTeX users is
   title = {ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'},
   author = {S. Mason Garrison},
   year = {2025},
-  note = {R package version 1.0.0.1},
+  note = {R package version 1.1.0.1},
   url = {https://github.com/R-Computing-Lab/ggpedigree/},
 }
 ```

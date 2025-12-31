@@ -2,7 +2,7 @@
 
 ## ggpedigree (development version)
 
-## ggpedigree 1.1.0.0
+## ggpedigree 1.1.0.1
 
 - Saved raw excel data as csv to have a non-proprietary format for data
   storage
@@ -23,6 +23,12 @@
 - Set Sex key to be hidden by default in ggpedigree
 - Slight tweaks to GoT dataset demonstration to improve visualization
 - Remove reshape2 dependency by using base R functions
+- Improved documentation of datasets included in the package
+- Added smarter warning message for tryCatch
+- Tweak code_male handling to be more robust about using config values
+- Slice up squirrel dataset into smaller pedigrees for testing
+- Refactored add node
+- Added greyscale option
 
 ## ggpedigree 1.0.0.1
 

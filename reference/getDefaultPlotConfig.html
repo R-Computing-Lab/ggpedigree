@@ -15,7 +15,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior."></h
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,6 +69,11 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  apply_default_scales <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  apply_default_theme <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  segment_default_color <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>  color_theme <span class="op">=</span> <span class="st">"color"</span>,</span>
+<span>  greyscale_palette_default <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"grey10"</span>, <span class="st">"grey50"</span>, <span class="st">"grey85"</span><span class="op">)</span>,</span>
+<span>  greyscale_low <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>  greyscale_mid <span class="op">=</span> <span class="st">"grey50"</span>,</span>
+<span>  greyscale_high <span class="op">=</span> <span class="st">"white"</span>,</span>
 <span>  color_palette_default <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#440154FF"</span>, <span class="st">"#7fd34e"</span>, <span class="st">"#f1e51d"</span><span class="op">)</span>,</span>
 <span>  color_palette_low <span class="op">=</span> <span class="st">"#000004FF"</span>,</span>
 <span>  color_palette_mid <span class="op">=</span> <span class="st">"#56106EFF"</span>,</span>
@@ -268,6 +273,26 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 <dt id="arg-segment-default-color">segment_default_color<a class="anchor" aria-label="anchor" href="#arg-segment-default-color"></a></dt>
 <dd><p>A character string for the default color of segments in the plot.</p></dd>
+
+
+<dt id="arg-color-theme">color_theme<a class="anchor" aria-label="anchor" href="#arg-color-theme"></a></dt>
+<dd><p>Theme mode controlling default palettes. Options: "color" (default) or "greyscale".</p></dd>
+
+
+<dt id="arg-greyscale-palette-default">greyscale_palette_default<a class="anchor" aria-label="anchor" href="#arg-greyscale-palette-default"></a></dt>
+<dd><p>Default discrete greyscale palette used when color_theme="greyscale".</p></dd>
+
+
+<dt id="arg-greyscale-low">greyscale_low<a class="anchor" aria-label="anchor" href="#arg-greyscale-low"></a></dt>
+<dd><p>Greyscale low color for continuous gradients when color_theme="greyscale".</p></dd>
+
+
+<dt id="arg-greyscale-mid">greyscale_mid<a class="anchor" aria-label="anchor" href="#arg-greyscale-mid"></a></dt>
+<dd><p>Greyscale midpoint color for continuous gradients when color_theme="greyscale".</p></dd>
+
+
+<dt id="arg-greyscale-high">greyscale_high<a class="anchor" aria-label="anchor" href="#arg-greyscale-high"></a></dt>
+<dd><p>Greyscale high color for continuous gradients when color_theme="greyscale".</p></dd>
 
 
 <dt id="arg-color-palette-default">color_palette_default<a class="anchor" aria-label="anchor" href="#arg-color-palette-default"></a></dt>
