@@ -187,6 +187,7 @@ getDefaultPlotConfig(
   override_many2many = FALSE,
   optimize_plotly = TRUE,
   recode_missing_ids = TRUE,
+  recode_missing_sex = TRUE,
   add_phantoms = FALSE,
   ...
 )
@@ -907,6 +908,10 @@ getDefaultPlotConfig(
 - recode_missing_ids:
 
   Whether to recode 0s as missing IDs in the pedigree. Default is TRUE.
+
+- recode_missing_sex:
+
+  Whether to recode missing sex codes in the pedigree. Default is TRUE.
 
 - add_phantoms:
 

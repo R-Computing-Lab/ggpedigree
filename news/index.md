@@ -2,7 +2,7 @@
 
 ## ggpedigree (development version)
 
-## ggpedigree 1.1.0.1
+## ggpedigree 1.1.0
 
 - Saved raw excel data as csv to have a non-proprietary format for data
   storage
@@ -28,7 +28,9 @@
 - Tweak code_male handling to be more robust about using config values
 - Slice up squirrel dataset into smaller pedigrees for testing
 - Refactored add node
-- Added greyscale option
+- Added greyscale option to color_theme
+- Added new vignette demonstrating the config options available in
+  ggpedigree
 
 ## ggpedigree 1.0.0.1
 

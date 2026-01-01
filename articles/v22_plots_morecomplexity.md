@@ -1,14 +1,19 @@
-# Plotting more complicated pedigrees with \`ggPedigree()\`
+# Extended: Plotting more complicated pedigrees with \`ggPedigree()\`
 
 ## Introduction
 
 This vignette demonstrates some of the more complex family trees you can
 visualization with
 [`ggPedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/ggPedigree.md).
+It extends the basic examples found in the main package documentation.
 
-We illustrate usage with a more complicated data set from BGmisc:
-
-- `asoiaf` – extended Targaryen family
+We illustrate usage with a more complicated data set from ggpedigree:
+`asoiaf` a fictional pedigree based on characters from the *A Song of
+Ice and Fire* universe by George R. R. Martin. This dataset includes
+complex relationships, such as half-siblings, multiple marriages, and
+consanguineous relationships, making it an excellent example for
+showcasing the capabilities of
+[`ggPedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/ggPedigree.md).
 
 ## Basic usage
 

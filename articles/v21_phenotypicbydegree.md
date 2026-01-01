@@ -1,10 +1,11 @@
-# Extended Plotting Phenotypic Correlation by Degree of Relatedness
+# Extended: Plotting Phenotypic Correlation by Degree of Relatedness
 
 This vignette demonstrates how to visualize phenotypic correlation by
 degree of relatedness using the `ggPhenotypeByDegree` function from the
 `ggpedigree` package. This function is particularly useful for analyzing
 and visualizing the relationship between phenotypic traits and genetic
-relatedness in pedigree data.
+relatedness in pedigree data. It extends the basic examples found in the
+main package documentation.
 
 The example below uses a squirrel pedigree dataset to illustrate how to
 create a plot showing the phenotypic correlation across different

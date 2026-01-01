@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,12 +19,13 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/v00_plots.html">Plotting pedigrees with ggPedigree()</a></li>
-    <li><a class="dropdown-item" href="../articles/v01_plots_extended.html">Extended Plotting pedigrees with ggPedigree()</a></li>
+    <li><a class="dropdown-item" href="../articles/v01_plots_extended.html">Extended: Plotting pedigrees with ggPedigree()</a></li>
+    <li><a class="dropdown-item" href="../articles/v02_configuration.html">Extended: Using `config` to control ggpedigree plots</a></li>
     <li><a class="dropdown-item" href="../articles/v10_interactiveplots.html">Interactive Pedigree Plotting with ggPedigreeInteractive</a></li>
-    <li><a class="dropdown-item" href="../articles/v11_extendedinteractiveplots.html">Extended More Complex Pedigree Plots with ggPedigreeInteractive</a></li>
+    <li><a class="dropdown-item" href="../articles/v11_extendedinteractiveplots.html">Extended: More Complex Pedigree Plots with ggPedigreeInteractive</a></li>
     <li><a class="dropdown-item" href="../articles/v20_matrix.html">Visualizing Relatedness Matrices with ggRelatednessMatrix()</a></li>
-    <li><a class="dropdown-item" href="../articles/v21_phenotypicbydegree.html">Extended Plotting Phenotypic Correlation by Degree of Relatedness</a></li>
-    <li><a class="dropdown-item" href="../articles/v22_plots_morecomplexity.html">Plotting more complicated pedigrees with `ggPedigree()`</a></li>
+    <li><a class="dropdown-item" href="../articles/v21_phenotypicbydegree.html">Extended: Plotting Phenotypic Correlation by Degree of Relatedness</a></li>
+    <li><a class="dropdown-item" href="../articles/v22_plots_morecomplexity.html">Extended: Plotting more complicated pedigrees with `ggPedigree()`</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -46,7 +47,7 @@
 <h2 class="pkg-version" data-toc-text="development version" id="ggpedigree-development-version">ggpedigree (development version)<a class="anchor" aria-label="anchor" href="#ggpedigree-development-version"></a></h2>
 </div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.1.0.1" id="ggpedigree-1101">ggpedigree 1.1.0.1<a class="anchor" aria-label="anchor" href="#ggpedigree-1101"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.1.0" id="ggpedigree-110">ggpedigree 1.1.0<a class="anchor" aria-label="anchor" href="#ggpedigree-110"></a></h2>
 <ul><li>Saved raw excel data as csv to have a non-proprietary format for data storage</li>
 <li>Added more refactorings of kinship2 internals for maintainability</li>
 <li>Harmonize names by changing midparent to mid_parent throughout the codebase</li>
@@ -65,7 +66,8 @@
 <li>Tweak code_male handling to be more robust about using config values</li>
 <li>Slice up squirrel dataset into smaller pedigrees for testing</li>
 <li>Refactored add node</li>
-<li>Added greyscale option</li>
+<li>Added greyscale option to color_theme</li>
+<li>Added new vignette demonstrating the config options available in ggpedigree</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.0.1" id="ggpedigree-1001">ggpedigree 1.0.0.1<a class="anchor" aria-label="anchor" href="#ggpedigree-1001"></a></h2><p class="text-muted">CRAN release: 2025-11-30</p>

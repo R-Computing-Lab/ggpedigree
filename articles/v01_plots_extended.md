@@ -1,4 +1,4 @@
-# Extended Plotting pedigrees with ggPedigree()
+# Extended: Plotting pedigrees with ggPedigree()
 
 ``` r
 library(ggpedigree) # ggPedigree lives here
@@ -7,6 +7,13 @@ library(ggplot2) # ggplot2 for plotting
 library(viridis) # viridis for color palettes
 library(tidyverse) # for data wrangling
 ```
+
+This vignette demonstrates advanced plotting capabilities of the
+`ggpedigree` package, focusing on creating custom pedigrees for
+publication and handling complex pedigree structures. We will walk
+through the steps to prepare pedigree data, customize plot aesthetics,
+and generate publication-quality figures. It extends the basic examples
+found in the main package documentation.
 
 ## Constructing Custom Pedigrees for Publication
 
@@ -142,7 +149,9 @@ df_fig1 <- tribble(
 This example shows how to create a custom pedigree plot highlighting
 individuals from a specific mitochondrial lineage (in blue). The plot
 uses various configuration options to adjust the appearance of the
-pedigree, including point size, outline, and segment colors.
+pedigree, including point size, outline, and segment colors. Debug mode
+is enabled to facilitate fine-tuning of the layout as well as to extract
+coordinates for overlaying additional information.
 
 ``` r
 fig1 <- ggPedigree(
@@ -283,6 +292,9 @@ p <- ggPedigree(
     status_code_unaffected = FALSE,
     generation_height = 1,
     point_size = 2,
+    label_text_size = 2,
+    label_method = "geom_text_repel",
+    label_segment_color = "gray",
     point_scale_by_pedigree = FALSE,
     generation_width = 1,
     status_shape_affected = 4,
