@@ -1,8 +1,8 @@
 ---
-title: "Extended More Complex Pedigree Plots with ggPedigreeInteractive"
+title: "Extended: More Complex Pedigree Plots with ggPedigreeInteractive"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Extended More Complex Pedigree Plots with ggPedigreeInteractive}
+  %\VignetteIndexEntry{Extended: More Complex Pedigree Plots with ggPedigreeInteractive}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -23,8 +23,7 @@ library(viridis) # viridis for color palettes
 library(tidyverse) # for data wrangling
 ```
 
-
-
+This vignette demonstrates how to create interactive pedigree plots using the `ggPedigreeInteractive()` function from the `ggpedigree` package. It extends the basic examples found in the main package documentation.
 
 # Customising labels and tool‑tips
 

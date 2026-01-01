@@ -29,11 +29,11 @@ missing_parent_num <- list(
 )
 
 config_map <- list(
-#  cfg_skip = "cfg_skip",
-  cfg_dbg = list(debug = TRUE),
-  cfg_m2 = list(code_male = 2),
-  cfg_m1 = list(code_male = 1),
-  cfg_m0 = list(code_male = 0)
+  #  cfg_skip = "cfg_skip",
+  cfg_dbg = list(debug = TRUE, recode_missing_sex = FALSE),
+  cfg_m2 = list(code_male = 2, recode_missing_sex = FALSE),
+  cfg_m1 = list(code_male = 1, recode_missing_sex = FALSE),
+  cfg_m0 = list(code_male = 0, recode_missing_sex = FALSE)
 )
 
 # 1) Create a full cross product of "dimensions"
@@ -86,11 +86,18 @@ expect_roundtrip <- function(
   NA_id_value = NA,
   expect_warnings = FALSE,
   expect_errors = FALSE,
-  config = list(debug = TRUE),
+  config = list(
+    debug = TRUE,
+    recode_missing_sex = FALSE
+  ),
   info = NULL
 ) {
   run_ped <- function() {
-    if (is.null(config) || config == "cfg_skip") ggPedigree(df) else ggPedigree(df, config = config)
+    if (is.null(config) || "cfg_skip" %in% config) {
+      ggPedigree(df)
+    } else {
+      ggPedigree(df, config = config)
+    }
   }
 
   if (expect_errors && expect_warnings) {
@@ -176,7 +183,10 @@ test_that("full cross: strict expectations + roundtrip invariant", {
     cfg <- config_map[[row$config_case]]
 
 
-    mp <- if (row$id_type == "char"){ missing_parent_char[[row$missing_parent]] }else{ missing_parent_num[[row$missing_parent]]
+    mp <- if (row$id_type == "char") {
+      missing_parent_char[[row$missing_parent]]
+    } else {
+      missing_parent_num[[row$missing_parent]]
     }
     df <- if (row$id_type == "char") {
       make_df_char(sex = sex, missing_parent = mp)
@@ -227,5 +237,11 @@ test_that("better warning for string ids", {
     df$sex <- c(1, 0, 1)
 
     expect_warning(expect_error(ggPedigree(df, config = list(code_male = 0))))
+
+    df$sex <- c(0, 1, NA)
+    # two warnings
+    expect_warning(expect_warning(expect_error(ggPedigree(df, config = list(code_male = 1)))))
+    df$sex <- c(2, 1, NA)
+    expect_warning(expect_warning(ggPedigree(df, config = list(code_male = 2))))
   }
 })
