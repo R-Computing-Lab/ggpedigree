@@ -333,7 +333,8 @@ m1 <- ggPedigree(potter,
     focal_fill_n_breaks = 19,
     focal_fill_legend_show = FALSE,
     focal_fill_legend_title = "Mitochondrial Relatives \nof Harry Potter",
-    sex_color_include = FALSE
+    sex_color_include = FALSE,
+    label_text_size = 3
   ) # highlight Harry Potter
   # config  = list(segment_mz_color = NA) # color for monozygotic twins
 ) + ggplot2::guides(shape = "none")
@@ -352,7 +353,8 @@ m2 <- ggPedigree(potter,
     focal_fill_n_breaks = 19,
     focal_fill_legend_show = FALSE,
     focal_fill_legend_title = "Mitochondrial Relatives \nof Ginny Weasley",
-    sex_color_include = FALSE
+    sex_color_include = FALSE,
+    label_text_size = 3
   ) # highlight Harry Potter
   # config  = list(segment_mz_color = NA) # color for monozygotic twins
 ) + ggplot2::guides(shape = "none")

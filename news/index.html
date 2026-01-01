@@ -47,28 +47,46 @@
 <h2 class="pkg-version" data-toc-text="development version" id="ggpedigree-development-version">ggpedigree (development version)<a class="anchor" aria-label="anchor" href="#ggpedigree-development-version"></a></h2>
 </div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.1.0" id="ggpedigree-110">ggpedigree 1.1.0<a class="anchor" aria-label="anchor" href="#ggpedigree-110"></a></h2>
-<ul><li>Saved raw excel data as csv to have a non-proprietary format for data storage</li>
-<li>Added more refactorings of kinship2 internals for maintainability</li>
-<li>Harmonize names by changing midparent to mid_parent throughout the codebase</li>
-<li>Repair inconsistent handling of string IDs vs numeric IDs</li>
-<li>Added rough cut of Wars of the Roses Pedigree Data Set</li>
-<li>Required columns check much earlier in ggpedigree function, including sex</li>
-<li>Added more informative error messages when constructing pedigree objects fails due to incorrect or non-standard sex coding.</li>
-<li>Expanded and refactored tests for various sex code and ID input scenarios, including comprehensive testing of input types, missing values, and configuration options.</li>
-<li>Add default point scaling as a function of pedigree size</li>
-<li>Add non-default segment size scaling as a function of pedigree size</li>
-<li>Set Sex key to be hidden by default in ggpedigree</li>
-<li>Slight tweaks to GoT dataset demonstration to improve visualization</li>
-<li>Remove reshape2 dependency by using base R functions</li>
-<li>Improved documentation of datasets included in the package</li>
-<li>Added smarter warning message for tryCatch</li>
-<li>Tweak code_male handling to be more robust about using config values</li>
-<li>Slice up squirrel dataset into smaller pedigrees for testing</li>
-<li>Refactored add node</li>
-<li>Added greyscale option to color_theme</li>
-<li>Added new vignette demonstrating the config options available in ggpedigree</li>
+<h2 class="pkg-version" data-toc-text="1.1.0.2" id="ggpedigree-1102">ggpedigree 1.1.0.2<a class="anchor" aria-label="anchor" href="#ggpedigree-1102"></a></h2>
+<div class="section level3">
+<h3 id="new-data-1-1-0-2">New data<a class="anchor" aria-label="anchor" href="#new-data-1-1-0-2"></a></h3>
+<ul><li>Added a preliminary Wars of the Roses pedigree dataset.</li>
+<li>Improved dataset documentation.</li>
+<li>Tweaked the GoT dataset example for improved clarity.</li>
+<li>Split the squirrel dataset into smaller pedigrees for testing.</li>
 </ul></div>
+<div class="section level3">
+<h3 id="new-features-1-1-0-2">New features<a class="anchor" aria-label="anchor" href="#new-features-1-1-0-2"></a></h3>
+<ul><li>Added a greyscale option to <code>color_theme</code>.</li>
+<li>Added automatic point scaling based on pedigree size.</li>
+<li>Added optional segment size scaling based on pedigree size.</li>
+<li>Hid the Sex key by default in <code>ggpedigree</code>.</li>
+<li>Added a vignette describing <code>ggpedigree</code> configuration options.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="validation-and-messages-1-1-0-2">Validation and messages<a class="anchor" aria-label="anchor" href="#validation-and-messages-1-1-0-2"></a></h3>
+<ul><li>Performed required-column checks earlier in <code><a href="../reference/ggPedigree.html">ggpedigree()</a></code>, including <code>sex</code>.</li>
+<li>Improved errors for invalid or non-standard <code>sex</code> coding.</li>
+<li>Improved the warning message used in <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code>.</li>
+<li>Made <code>code_male</code> handling more resilient when using config values.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-1-1-0-2">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-1-0-2"></a></h3>
+<ul><li>Standardized naming by replacing <code>midparent</code> with <code>mid_parent</code>.</li>
+<li>Fixed inconsistent handling of character vs numeric IDs.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="internal-changes-1-1-0-2">Internal changes<a class="anchor" aria-label="anchor" href="#internal-changes-1-1-0-2"></a></h3>
+<ul><li>Saved raw Excel inputs as CSV for non-proprietary storage.</li>
+<li>Refactored <code>kinship2</code> internals for maintainability.</li>
+<li>Refactored node-adding internals.</li>
+<li>Remove reshape2 dependency</li>
+</ul></div>
+<div class="section level3">
+<h3 id="testing-1-1-0-2">Testing<a class="anchor" aria-label="anchor" href="#testing-1-1-0-2"></a></h3>
+<ul><li>Expanded tests for ID and sex-code inputs, including type, missingness, and configuration scenarios.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.0.1" id="ggpedigree-1001">ggpedigree 1.0.0.1<a class="anchor" aria-label="anchor" href="#ggpedigree-1001"></a></h2><p class="text-muted">CRAN release: 2025-11-30</p>
 <div class="section level3">

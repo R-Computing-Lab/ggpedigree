@@ -107,7 +107,7 @@ corresponding shape settings (`sex_shape_female`, `sex_shape_male`,
 The rest of this section demonstrates how `config` affects specific
 components of the pedigree plot.
 
-### Labels
+### 1) Labels
 
 Label behavior is controlled by keys such as:
 
@@ -175,10 +175,11 @@ label_segment_color = "grey50"
 )
 ```
 
-![](v02_configuration_files/figure-html/unnamed-chunk-5-1.png) Note that
-short labels are less likely to overlap, so consider abbreviating labels
-if your pedigree is dense. In this example, I enlarged the text size to
-demonstrate repulsion more clearly.
+![](v02_configuration_files/figure-html/unnamed-chunk-5-1.png)
+
+Note that short labels are less likely to overlap, so consider
+abbreviating labels if your pedigree is dense. In this example, I
+enlarged the text size to demonstrate repulsion more clearly.
 
 ### 2) Points and outlines
 
@@ -306,11 +307,13 @@ sex_color_include = FALSE
 )
 ```
 
-![](v02_configuration_files/figure-html/unnamed-chunk-9-1.png) Here I
-use a custom color palette for sex as well as emoji shapes for fun.
+![](v02_configuration_files/figure-html/unnamed-chunk-9-1.png)
+
+Below, I use a custom color palette for sex as well as emoji shapes for
+fun.
 
 ``` r
-ggPedigree(
+plot_ped <- ggPedigree(
 potter,
 famID = "famID",
 personID = "personID",
@@ -322,9 +325,29 @@ sex_shape_female = "🥰",
 sex_shape_male = "🚗"
 )
 )
+plot_ped
 ```
 
 ![](v02_configuration_files/figure-html/unnamed-chunk-10-1.png)
+
+``` r
+ggplot2::ggsave(
+  filename = "custom_sex_emoji_pedigree.png",
+  plot = plot_ped,
+  width = 8,
+  height = 6,
+  dpi = 300
+)
+```
+
+Note that when using emoji shapes, it is best to use
+[`ggsave()`](https://ggplot2.tidyverse.org/reference/ggsave.html) to
+save the plot to a file, as some R graphics devices may not render emoji
+correctly. Notice how the emoji shapes appear in the saved PNG file
+below compares to the image rendered above, which may vary because of
+differences in font rendering.
+
+![](custom_sex_emoji_pedigree.png)
 
 ### 5) Affected status overlay
 
@@ -598,7 +621,7 @@ point_size = 6
 
 ![](v02_configuration_files/figure-html/unnamed-chunk-18-1.png)
 
-## Interactive pedigrees: `ggPedigreeInteractive()`
+### 8) Interactive pedigrees: `ggPedigreeInteractive()`
 
 Interactive pedigrees usually require thinner segments and careful
 tooltip selection. Tooltips are controlled primarily through
@@ -633,7 +656,8 @@ point_scale_by_pedigree = FALSE,
 point_size = 6,
 segment_linewidth = 0.7,
 label_include = TRUE,
-label_text_size = 3
+label_text_size = 3,
+sex_color_palette = c("purple", "orange", "grey50")
 )
 
 saveRDS(cfg, file = "ggpedigree_config.rds")

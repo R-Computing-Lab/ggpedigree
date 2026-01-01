@@ -2,35 +2,49 @@
 
 ## ggpedigree (development version)
 
-## ggpedigree 1.1.0
+## ggpedigree 1.1.0.2
 
-- Saved raw excel data as csv to have a non-proprietary format for data
-  storage
-- Added more refactorings of kinship2 internals for maintainability
-- Harmonize names by changing midparent to mid_parent throughout the
-  codebase
-- Repair inconsistent handling of string IDs vs numeric IDs
-- Added rough cut of Wars of the Roses Pedigree Data Set
-- Required columns check much earlier in ggpedigree function, including
-  sex
-- Added more informative error messages when constructing pedigree
-  objects fails due to incorrect or non-standard sex coding.
-- Expanded and refactored tests for various sex code and ID input
-  scenarios, including comprehensive testing of input types, missing
-  values, and configuration options.
-- Add default point scaling as a function of pedigree size
-- Add non-default segment size scaling as a function of pedigree size
-- Set Sex key to be hidden by default in ggpedigree
-- Slight tweaks to GoT dataset demonstration to improve visualization
-- Remove reshape2 dependency by using base R functions
-- Improved documentation of datasets included in the package
-- Added smarter warning message for tryCatch
-- Tweak code_male handling to be more robust about using config values
-- Slice up squirrel dataset into smaller pedigrees for testing
-- Refactored add node
-- Added greyscale option to color_theme
-- Added new vignette demonstrating the config options available in
-  ggpedigree
+### New data
+
+- Added a preliminary Wars of the Roses pedigree dataset.
+- Improved dataset documentation.
+- Tweaked the GoT dataset example for improved clarity.
+- Split the squirrel dataset into smaller pedigrees for testing.
+
+### New features
+
+- Added a greyscale option to `color_theme`.
+- Added automatic point scaling based on pedigree size.
+- Added optional segment size scaling based on pedigree size.
+- Hid the Sex key by default in `ggpedigree`.
+- Added a vignette describing `ggpedigree` configuration options.
+
+### Validation and messages
+
+- Performed required-column checks earlier in
+  [`ggpedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/ggPedigree.md),
+  including `sex`.
+- Improved errors for invalid or non-standard `sex` coding.
+- Improved the warning message used in
+  [`tryCatch()`](https://rdrr.io/r/base/conditions.html).
+- Made `code_male` handling more resilient when using config values.
+
+### Bug fixes
+
+- Standardized naming by replacing `midparent` with `mid_parent`.
+- Fixed inconsistent handling of character vs numeric IDs.
+
+### Internal changes
+
+- Saved raw Excel inputs as CSV for non-proprietary storage.
+- Refactored `kinship2` internals for maintainability.
+- Refactored node-adding internals.
+- Remove reshape2 dependency
+
+### Testing
+
+- Expanded tests for ID and sex-code inputs, including type,
+  missingness, and configuration scenarios.
 
 ## ggpedigree 1.0.0.1
 

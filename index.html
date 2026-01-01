@@ -65,14 +65,8 @@
 <!-- badges: start -->
 
 <!-- badges: end -->
-<p><code>ggpedigree</code> provides modern tools for visualizing pedigree structures using both ‘ggplot2’ and ‘plotly’. It is designed to work seamlessly with the <code>BGmisc</code> package for simulated or empirical pedigree data, and extends the plotting capabilities of the base-graphics functions in <code>kinship2</code>.</p>
-<p>The package supports:</p>
-<ul>
-<li><p>Static, publication-ready pedigree plots using the <code>ggplot2</code> framework</p></li>
-<li><p>Interactive pedigree visualizations using <code>plotly</code></p></li>
-<li><p>Layout customization, complex mating structures, and duplicated individuals</p></li>
-</ul>
-<p><code>ggpedigree</code> is useful in behavior genetics, kinship analysis, and any research involving complex pedigree data.</p>
+<p><code>ggpedigree</code> provides modern tools for visualizing family trees and pedigree structures using both <code>ggplot2</code> and <code>plotly</code>. Specifically, it enables the creation of static and interactive pedigree plots that can accommodate complex family relationships, including duplicated individuals and various mating structures.</p>
+<p>The package complements a behavior genetics package <code>BGmisc</code> [Garrison et al. (2024) <a href="doi:10.21105/joss.06203" class="uri">doi:10.21105/joss.06203</a>] by rendering pedigrees using the ‘ggplot2’ framework. Features include support for duplicated individuals, complex mating structures, integration with simulated pedigrees, and layout customization. Due to the impending deprecation of <code>kinship2</code>, version 1.0 incorporates the layout helper functions from kinship2. The pedigree alignment algorithms are adapted from ‘kinship2’ [Sinnwell et al. (2014) <a href="doi:10.1159/000363105" class="uri">doi:10.1159/000363105</a>]. We gratefully acknowledge the original authors: Jason Sinnwell, Terry Therneau, Daniel Schaid, and Elizabeth Atkinson for their foundational work.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -111,13 +105,13 @@
 </h2>
 <p>If you use ggpedigree in your research or wish to refer to it, please cite the following:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">citation</span>(<span class="at">package =</span> <span class="st">"ggpedigree"</span>)</span></code></pre></div>
-<p>Garrison S (2025). <em>ggpedigree: Visualizing Pedigrees with ‘ggplot2’ and ‘plotly’</em>. R package version 1.1.0.1, <a href="https://github.com/R-Computing-Lab/ggpedigree/" class="external-link uri">https://github.com/R-Computing-Lab/ggpedigree/</a>.</p>
+<p>Garrison S (2026). <em>ggpedigree: Visualizing Pedigrees with ‘ggplot2’ and ‘plotly’</em>. R package version 1.1.0.2, <a href="https://github.com/R-Computing-Lab/ggpedigree/" class="external-link uri">https://github.com/R-Computing-Lab/ggpedigree/</a>.</p>
 <p>A BibTeX entry for LaTeX users is</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="sc">@</span>Manual{,</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  title <span class="ot">=</span> {ggpedigree<span class="sc">:</span> Visualizing Pedigrees with <span class="st">'ggplot2'</span> and <span class="st">'plotly'</span>},</span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  author <span class="ot">=</span> {S. Mason Garrison},</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  year <span class="ot">=</span> {<span class="dv">2025</span>},</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  note <span class="ot">=</span> {R package version <span class="dv">1</span>.<span class="dv">1</span>.<span class="fl">0.1</span>},</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  year <span class="ot">=</span> {<span class="dv">2026</span>},</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  note <span class="ot">=</span> {R package version <span class="dv">1</span>.<span class="dv">1</span>.<span class="fl">0.2</span>},</span>
 <span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  url <span class="ot">=</span> {https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>R<span class="sc">-</span>Computing<span class="sc">-</span>Lab<span class="sc">/</span>ggpedigree<span class="sc">/</span>},</span>
 <span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>}</span></code></pre></div>
 </div>
