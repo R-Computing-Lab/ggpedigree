@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
   fig.height = 5
 )
 ```
+
 ```{r libraries, message=FALSE, warning=FALSE}
 library(ggpedigree) # ggPedigree lives here
 library(BGmisc) # helper utilities & example data
@@ -23,9 +24,7 @@ library(viridis) # viridis for color palettes
 library(tidyverse) # for data wrangling
 ```
 
-
-
-Every gg-based plotting function in `{ggpedigree}` accepts a `config` argument. 
+Every gg-based plotting function in `{ggpedigree}` accepts a `config` argument.
 
 This is an easier way to control plot behavior without rewriting the plotting code.
 
@@ -56,19 +55,18 @@ dadID = "dadID"
 )
 ```
 
-
 ## Sex coding: `code_male` and `code_female`
 
 `ggPedigree()` (and other ggpedigree plots that use sex) need to know how sex is encoded in your data so they can assign the correct **shapes** (and optionally **colors**) for female, male, and unknown.
 
 The `code_male` and `code_female` config options define which values in your sex column should be treated as male vs female. The defaults assume:
 
-* `code_female = 0`
-* `code_male = 1`
+-   `code_female = 0`
+-   `code_male = 1`
 
 If your dataset uses different codes (for example `1/2` or `"M"/"F"`), override these in `config`.
 
-```r
+``` r
 # Example: sex coded as 1 = male, 2 = female
 ggPedigree(
   ped,
@@ -99,24 +97,22 @@ ggPedigree(
 
 Once the sex codes are interpreted correctly, the plot uses the corresponding shape settings (`sex_shape_female`, `sex_shape_male`, `sex_shape_unknown`) and, when enabled, sex-based coloring (`sex_color_include`, `sex_color_palette`).
 
-
 # Customizing specific plot components via `config`
 
 The rest of this section demonstrates how `config` affects specific components of the pedigree plot.
 
-## Labels
+## 1) Labels
 
 Label behavior is controlled by keys such as:
 
-* `label_include`
-* `label_column`
-* `label_method`
-* `label_max_overlaps`
-* `label_text_color`, `label_text_family`
-* `label_text_size`
-* `label_nudge_x`, `label_nudge_y`
-* `label_text_angle`
-
+-   `label_include`
+-   `label_column`
+-   `label_method`
+-   `label_max_overlaps`
+-   `label_text_color`, `label_text_family`
+-   `label_text_size`
+-   `label_nudge_x`, `label_nudge_y`
+-   `label_text_angle`
 
 This example customizes labels. Here we label individuals by `first_name`, enlarge label text, and nudge the labels down slightly.
 
@@ -138,6 +134,7 @@ label_nudge_y = 0.15
 ```
 
 To turn labels off completely:
+
 ```{r}
 ggPedigree(
 potter,
@@ -150,6 +147,7 @@ config = list(label_include = FALSE)
 ```
 
 You can also use repelled labels to avoid overlaps:
+
 ```{r}
 ggPedigree(
 potter,
@@ -166,21 +164,22 @@ label_segment_color = "grey50"
 )
 )
 ```
+
 Note that short labels are less likely to overlap, so consider abbreviating labels if your pedigree is dense. In this example, I enlarged the text size to demonstrate repulsion more clearly.
 
 ## 2) Points and outlines
 
 Point size and whether points scale automatically are controlled by:
 
-* `point_size`
-* `point_scale_by_pedigree`
+-   `point_size`
+-   `point_scale_by_pedigree`
 
 Outlines are controlled by:
 
-* `outline_include`
-* `outline_multiplier`
-* `outline_color`
-* `outline_alpha`
+-   `outline_include`
+-   `outline_multiplier`
+-   `outline_color`
+-   `outline_alpha`
 
 This example disables automatic point scaling and adds black outlines to points.
 
@@ -206,12 +205,10 @@ outline_alpha = 1
 
 Segments are controlled by options such as:
 
-* `segment_linewidth`, `segment_linetype`
-* `segment_offspring_color`, `segment_parent_color`, `segment_spouse_color`
-* `segment_self_*` for self-loops
-* `segment_mz_*` for MZ twin segments
-
-
+-   `segment_linewidth`, `segment_linetype`
+-   `segment_offspring_color`, `segment_parent_color`, `segment_spouse_color`
+-   `segment_self_*` for self-loops
+-   `segment_mz_*` for MZ twin segments
 
 This example thickens relationship segments and changes the spouse segment color.
 
@@ -256,10 +253,10 @@ code_male = 0
 
 Sex is controlled by:
 
-* `sex_color_include`
-* `sex_color_palette`
-* `sex_shape_female`, `sex_shape_male`, `sex_shape_unknown`
-* `sex_legend_show`, `sex_legend_title`
+-   `sex_color_include`
+-   `sex_color_palette`
+-   `sex_shape_female`, `sex_shape_male`, `sex_shape_unknown`
+-   `sex_legend_show`, `sex_legend_title`
 
 This example shows sex legend and customizes shapes.
 
@@ -281,10 +278,11 @@ sex_color_include = FALSE
 )
 )
 ```
-Here I use a custom color palette for sex as well as emoji shapes for fun.
+
+Below, I use a custom color palette for sex as well as emoji shapes for fun.
 
 ```{r}
-ggPedigree(
+plot_ped <- ggPedigree(
 potter,
 famID = "famID",
 personID = "personID",
@@ -296,22 +294,33 @@ sex_shape_female = "🥰",
 sex_shape_male = "🚗"
 )
 )
+plot_ped
+ggplot2::ggsave(
+  filename = "custom_sex_emoji_pedigree.png",
+  plot = plot_ped,
+  width = 8,
+  height = 6,
+  dpi = 300
+)
 ```
 
+Note that when using emoji shapes, it is best to use `ggsave()` to save the plot to a file, as some R graphics devices may not render emoji correctly. Notice how the emoji shapes appear in the saved PNG file below compares to the image rendered above, which may vary because of differences in font rendering.
+
+![](custom_sex_emoji_pedigree.png){width="7in" height="5in"}
 
 ## 5) Affected status overlay
 
 Affected status behavior is controlled by keys such as:
 
-* `status_include`
-* `status_code_affected`, `status_code_unaffected`
-* `status_alpha_affected`, `status_alpha_unaffected`
-* `status_color_affected`, `status_color_unaffected`
-* `status_legend_show`
+-   `status_include`
+-   `status_code_affected`, `status_code_unaffected`
+-   `status_alpha_affected`, `status_alpha_unaffected`
+-   `status_color_affected`, `status_color_unaffected`
+-   `status_legend_show`
 
 If your dataset includes an affected status column, you can control how affected status is drawn.
 
-Below is a template showing the relevant config keys. Here I use the `hazard` dataset from `{BGmisc}`. The `affected` column uses 1 for affected and 0 for unaffected. 
+Below is a template showing the relevant config keys. Here I use the `hazard` dataset from `{BGmisc}`. The `affected` column uses 1 for affected and 0 for unaffected.
 
 ```{r}
 ggPedigree(
@@ -335,18 +344,16 @@ status_legend_show = TRUE
 )
 ```
 
-
 ## 6) Focal fill: highlighting relatives of a focal individual
 
 A common analysis task is to pick a focal individual and visually emphasize how strongly other individuals are related to that focal person. In `{ggpedigree}`, this is handled by **focal fill**. When focal fill is enabled, node fill colors are mapped to a focal-based value (for example additive genetic relatedness or another focal-derived scalar).
 
 Focal fill is controlled entirely through `config`. The minimal ingredients are:
 
-* `focal_fill_include = TRUE`
-* `focal_fill_personID = <ID of focal person>`
-* `focal_fill_component = <component to use for focal calculation>`. It can be `"additive"` (default), `"mitochondrial"`, `"patID"`, or `"matID"`.
-* `focal_fill_method` is the Method used for focal fill gradient. Options are 'steps', 'steps2', 'step', 'step2', 'viridis_c', 'viridis_d', 'viridis_b', 'manual', 'hue', 'gradient2', 'gradient'.
-
+-   `focal_fill_include = TRUE`
+-   `focal_fill_personID = <ID of focal person>`
+-   `focal_fill_component = <component to use for focal calculation>`. It can be `"additive"` (default), `"mitochondrial"`, `"patID"`, or `"matID"`.
+-   `focal_fill_method` is the Method used for focal fill gradient. Options are 'steps', 'steps2', 'step', 'step2', 'viridis_c', 'viridis_d', 'viridis_b', 'manual', 'hue', 'gradient2', 'gradient'.
 
 ### Turning focal fill on
 
@@ -418,7 +425,6 @@ ggPedigree(
 )
 ```
 
-
 ### Discrete focal fill palettes
 
 If you prefer discrete bins rather than a continuous gradient, you can use step-based scales (for example `"steps"` / `"steps2"`). When using step-based methods, `focal_fill_n_breaks` controls the number of discrete breaks.
@@ -466,10 +472,10 @@ ggPedigree(
 
 If you want perceptually uniform color scaling, focal fill supports viridis options through `focal_fill_method = "viridis_c"` (continuous) or `"viridis_d"` (discrete). You can control the viridis option and range using:
 
-* `focal_fill_viridis_option`
-* `focal_fill_viridis_begin`
-* `focal_fill_viridis_end`
-* `focal_fill_viridis_direction`
+-   `focal_fill_viridis_option`
+-   `focal_fill_viridis_begin`
+-   `focal_fill_viridis_end`
+-   `focal_fill_viridis_direction`
 
 Here the focal fill is drawn using paternal relatedness. Each individual's fill color indicates which patriline they belong to, colored using a discrete viridis palette.
 
@@ -495,13 +501,11 @@ ggPedigree(
 )
 ```
 
-
-
 ## 7) Global greyscale / black-and-white switch
 
 If you want a black-and-white plot, you can request it using:
 
-* `color_theme = "greyscale"` (also accepts `"bw"`, `"black"`, etc.)
+-   `color_theme = "greyscale"` (also accepts `"bw"`, `"black"`, etc.)
 
 This triggers coordinated adjustments so the plot remains coherent without manually changing multiple palettes.
 
@@ -524,10 +528,9 @@ point_size = 6
 )
 ```
 
-# Interactive pedigrees: `ggPedigreeInteractive()`
+## 8) Interactive pedigrees: `ggPedigreeInteractive()`
 
-Interactive pedigrees usually require thinner segments and careful tooltip selection.
-Tooltips are controlled primarily through `tooltip_columns`, while most drawing options are still handled by `config`.
+Interactive pedigrees usually require thinner segments and careful tooltip selection. Tooltips are controlled primarily through `tooltip_columns`, while most drawing options are still handled by `config`.
 
 ```{r}
 ggPedigreeInteractive(
@@ -547,11 +550,9 @@ segment_linewidth = 0.5
 ```
 
 
-
 # Saving and loading a config file
 
 If you want to reuse the same overrides across scripts or share them with collaborators, save your config list.
-
 
 ```{r}
 cfg <- list(
@@ -559,7 +560,8 @@ point_scale_by_pedigree = FALSE,
 point_size = 6,
 segment_linewidth = 0.7,
 label_include = TRUE,
-label_text_size = 3
+label_text_size = 3,
+sex_color_palette = c("purple", "orange", "grey50")
 )
 
 saveRDS(cfg, file = "ggpedigree_config.rds")
@@ -580,8 +582,8 @@ config = cfg
 
 The `config` argument accepts many options. Most users will only change a small subset, but the full list of supported keys can be printed programmatically.
 
-
 <details>
+
 <summary><strong>Show all config keys (names only)</strong></summary>
 
 ```{r}
@@ -590,8 +592,11 @@ cfg_names <- sort(names(getDefaultPlotConfig("ggPedigree")))
 tibble::tibble(Config_Key = cfg_names) %>%
   knitr::kable()
 ```
+
 </details>
 
 <details>
+
 <summary><strong>Show all config keys with defaults</strong></summary>
+
 </details>
