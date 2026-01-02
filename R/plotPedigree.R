@@ -23,20 +23,20 @@ utils::globalVariables(c("plot.pedigree")) # to avoid R CMD check NOTE
 #' @return A plot of the provided pedigree
 #' @export
 
-plotPedigree <- function(ped,
-                         # optional data management
-                         code_male = NULL,
-                         verbose = FALSE,
-                         affected = NULL,
-                         # optional inputs for the pedigree plot
-                         cex = .5,
-                         col = 1,
-                         symbolsize = 1, branch = 0.6,
-                         packed = TRUE, align = c(1.5, 2), width = 8,
-                         density = c(-1, 35, 65, 20), mar = c(2.1, 1, 2.1, 1),
-                         angle = c(90, 65, 40, 0), keep.par = FALSE,
-                         pconnect = .5,
-                         ...) {
+kinship2_plotPedigree <- function(ped,
+                                  # optional data management
+                                  code_male = NULL,
+                                  verbose = FALSE,
+                                  affected = NULL,
+                                  # optional inputs for the pedigree plot
+                                  cex = .5,
+                                  col = 1,
+                                  symbolsize = 1, branch = 0.6,
+                                  packed = TRUE, align = c(1.5, 2), width = 8,
+                                  density = c(-1, 35, 65, 20), mar = c(2.1, 1, 2.1, 1),
+                                  angle = c(90, 65, 40, 0), keep.par = FALSE,
+                                  pconnect = .5,
+                                  ...) {
   if (!requireNamespace("kinship2", quietly = TRUE)) {
     stop("The 'kinship2' package is required for this function. Please install it using install.packages('kinship2').")
   }
@@ -44,10 +44,10 @@ plotPedigree <- function(ped,
   ped <- BGmisc:::standardizeColnames(ped, verbose = verbose)
 
   # Define required columns
-  simulated_vars <- c("famID", "ID", "dadID", "momID", "sex")
+  required_vars <- c("famID", "ID", "dadID", "momID", "sex")
 
   # Check if dataframe contains the required columns
-  if (all(simulated_vars %in% names(ped))) {
+  if (all(required_vars %in% names(ped))) {
     p <- ped[, c("famID", "ID", "dadID", "momID", "sex")]
     colnames(p) <- c("ped", "id", "father", "mother", "sex")
 
@@ -139,4 +139,15 @@ plotPedigree <- function(ped,
   } else {
     stop("The structure of the provided pedigree data does not match the expected structure.")
   }
+}
+
+# deprecated
+
+#' @rdname kinship2_plotPedigree
+#' @export
+#' @section Deprecated:
+#' `plotPedigree()` is deprecated; use `kinship2_plotPedigree()` instead.
+plotPedigree <- function(...) {
+  .Deprecated("kinship2_plotPedigree", package = "ggpedigree")
+  kinship2_plotPedigree(...)
 }

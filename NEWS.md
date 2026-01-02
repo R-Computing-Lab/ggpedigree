@@ -34,6 +34,7 @@
 * Refactored `kinship2` internals for maintainability.
 * Refactored node-adding internals.
 * Remove reshape2 dependency
+* Deprecating plotPedigree function in favor of kinship2_plotPedigree
 
 ## Testing
 * Expanded tests for ID and sex-code inputs, including type, missingness, and configuration scenarios.
