@@ -60,7 +60,6 @@
 #' @importFrom BGmisc ped2fam ped2paternal ped2maternal recodeSex checkParentIDs
 #' @importFrom rlang sym
 #' @importFrom utils modifyList
-#' @aliases ggpedigree
 ggPedigree <- function(ped,
                        famID = "famID",
                        personID = "personID",

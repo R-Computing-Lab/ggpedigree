@@ -28,60 +28,28 @@ utils::globalVariables(c(":="))
 #'
 #' @export
 #' @examples
-#' # Load example data
-#' data(potter, package = "BGmisc")
+#' # Use built-in data to avoid external dependencies
+#' data(ASOIAF)
+#' tarth <- subset(ASOIAF, famID == 26)
 #'
-#' # Calculate coordinates for the pedigree
 #' coords <- calculateCoordinates(
-#'   ped = potter,
-#'   personID = "personID",
+#'   ped = tarth,
+#'   personID = "id",
 #'   momID = "momID",
 #'   dadID = "dadID",
-#'   code_male = 1
+#'   sexVar = "sex",
+#'   config = list(code_male = "M")
 #' )
-#'
-#' # View the coordinates
 #' head(coords)
 #'
-#' # Example with custom configuration
-#' coords_custom <- calculateCoordinates(
-#'   ped = potter,
-#'   personID = "personID",
+#' # Adjust layout spacing
+#' coords_wide <- calculateCoordinates(
+#'   ped = tarth,
+#'   personID = "id",
 #'   momID = "momID",
 #'   dadID = "dadID",
-#'   code_male = 1,
-#'   config = list(
-#'     ped_packed = FALSE,
-#'     ped_width = 20
-#'   )
-#' )
-#' @examples
-#' # Load example data
-#' data(potter, package = "BGmisc")
-#'
-#' # Calculate coordinates for the pedigree
-#' coords <- calculateCoordinates(
-#'   ped = potter,
-#'   personID = "personID",
-#'   momID = "momID",
-#'   dadID = "dadID",
-#'   config  = list(
-#'    code_male = 1)
-#' )
-#'
-#' # View the coordinates
-#' head(coords)
-#'
-#' # Example with custom configuration
-#' coords_custom <- calculateCoordinates(
-#'   ped = potter,
-#'   personID = "personID",
-#'   momID = "momID",
-#'   dadID = "dadID",
-#'   config = list(
-#'     ped_packed = FALSE,
-#'     ped_width = 20
-#'   )
+#'   sexVar = "sex",
+#'   config = list(ped_width = 20)
 #' )
 
 calculateCoordinates <- function(ped,

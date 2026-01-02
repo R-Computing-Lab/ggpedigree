@@ -33,15 +33,22 @@ accommodate complex family relationships, including duplicated
 individuals and various mating structures.
 
 The package complements a behavior genetics package `BGmisc` \[Garrison
-et al. (2024) <doi:10.21105/joss.06203>\] by rendering pedigrees using
-the ‘ggplot2’ framework. Features include support for duplicated
-individuals, complex mating structures, integration with simulated
-pedigrees, and layout customization. Due to the impending deprecation of
-`kinship2`, version 1.0 incorporates the layout helper functions from
-kinship2. The pedigree alignment algorithms are adapted from ‘kinship2’
-\[Sinnwell et al. (2014) <doi:10.1159/000363105>\]. We gratefully
-acknowledge the original authors: Jason Sinnwell, Terry Therneau, Daniel
-Schaid, and Elizabeth Atkinson for their foundational work.
+et al. (2024) <doi:10.21105/joss.06203>\] for tasks such as pedigree
+validation and computing relatedness matrices. Core plotting functions
+(`ggPedigree()`, `ggPedigreeInteractive()`, `calculateCoordinates()`)
+work on any rectangular pedigree and ship with built-in example data,
+while relatedness workflows reuse matrix builders from `BGmisc`. Due to
+the impending deprecation of `kinship2`, version 1.0 incorporates the
+layout helper functions from kinship2. The pedigree alignment algorithms
+are adapted from ‘kinship2’ \[Sinnwell et al. (2014)
+<doi:10.1159/000363105>\]. We gratefully acknowledge the original
+authors: Jason Sinnwell, Terry Therneau, Daniel Schaid, and Elizabeth
+Atkinson for their foundational work.
+
+See the [package
+vignettes](https://r-computing-lab.github.io/ggpedigree/articles/) for
+end-to-end tutorials, including relatedness matrices and interactive
+plots.
 
 ## Installation
 
@@ -63,27 +70,33 @@ devtools::install_github("R-Computing-Lab/ggpedigree")
 ## Demonstration
 
 Here is a basic example of how to use `ggpedigree` to visualize a
-pedigree structure. The `potter` dataset contains simulated pedigree
-data for the Weasley family from the Harry Potter series.
+pedigree structure using only data shipped with the package.
 
 ``` r
-library(ggpedigree) # ggPedigree lives here
-library(BGmisc) # helper utilities & example data
-potter <- BGmisc::potter # load example data
-ggPedigree(potter,
+library(ggpedigree)
+data(ASOIAF)
+tarth <- subset(ASOIAF, famID == 26) # built-in example pedigree
+
+ggPedigree(tarth,
   famID = "famID",
-  personID = "personID"
+  personID = "id",
+  momID = "momID",
+  dadID = "dadID",
+  sexVar = "sex",
+  config = list(code_male = "M")
 )
 ```
 
 <img src="man/figures/README-basic-usage-1.png" width="80%" />
 
 ``` r
-ggPedigree(potter,
+ggPedigree(tarth,
   famID = "famID",
-  personID = "personID",
-  config = list(
-    color_theme = "greyscale")
+  personID = "id",
+  momID = "momID",
+  dadID = "dadID",
+  sexVar = "sex",
+  config = list(color_theme = "greyscale", code_male = "M")
 )
 ```
 

@@ -64,6 +64,8 @@ None of these packages offers the combination of modern `ggplot2` integration, i
 
 `ggpedigree` is built on a modular architecture that separates data processing, layout calculation, and visualization layers. The core workflow involves: (1) data standardization and family structure analysis using BGmisc functions, (2) coordinate calculation using algorithms adapted from kinship2, (3) relationship connection mapping, and (4) layer-based plot construction using ggplot2 geometry functions. This design allows users to customize any aspect of the visualization while maintaining computational efficiency for large pedigrees. The package integrates tightly with the broader R ecosystem, particularly the tidyverse [@wickham2019] and BGmisc [@bgmisc]. All functions return standard R objects (ggplot or plotly) that can be further customized.
 
+For standard plotting tasks, `ggpedigree` is self contained: it ships built-in pedagogical pedigrees (e.g., `ASOIAF`, `redsquirrels`) and only requires `ggplot2`. BGmisc remains an optional companion for relatedness-heavy workflows, supplying validation utilities (`checkParentIDs()`, `ped2fam()`) and the additive/mitochondrial matrices consumed by `ggRelatednessMatrix()`.
+
 ## Features
 
 I describe the main features of the `ggpedigree` package below. More detailed descriptions of features and usage are available in the [package vignettes](https://r-computing-lab.github.io/ggpedigree/articles/), including examples of how to create static and interactive pedigree plots, customize aesthetics, and visualize relatedness matrices. Additional example data include squirrel data from the Kluane Red Squirrel Project [@mcfarlane2015; @mcfarlane2014] and Targaryen family data from the Song of Ice and Fire universe [@martin1997; @martin2018].
@@ -82,12 +84,18 @@ I describe the main features of the `ggpedigree` package below. More detailed de
 
 ### Code example
 
-This example shows how to use `ggpedigree` to visualize a pedigree. The `potter` dataset includes several wizarding families from the Harry Potter series.
+This example shows how to use `ggpedigree` to visualize a pedigree using only package data. The `ASOIAF` dataset includes several fictional families from the Song of Ice and Fire universe.
 
 ```r
-ggPedigree(potter,
+data(ASOIAF)
+tarth <- subset(ASOIAF, famID == 26)
+ggPedigree(tarth,
   famID = "famID",
-  personID = "personID"
+  personID = "id",
+  momID = "momID",
+  dadID = "dadID",
+  sexVar = "sex",
+  config = list(code_male = "M")
 )
 ```
 

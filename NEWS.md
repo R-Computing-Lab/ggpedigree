@@ -1,6 +1,9 @@
 # ggpedigree (development version)
 # ==============================
 
+## API notes
+* Documented `ggPedigree()` / `ggPedigreeInteractive()` / `ggRelatednessMatrix()` as canonical entry points while retaining backward-compatible aliases.
+
 # ggpedigree 1.1.0.2
 
 ## New data

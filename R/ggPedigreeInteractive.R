@@ -7,7 +7,6 @@
 #'
 #' @inheritParams ggPedigree
 #' @return A plotly htmlwidget (or plotly object if `return_widget = FALSE`)
-#' @aliases ggpedigreeinteractive ggPedigreeInteractive ggpedigreeInteractive  ggPedigreeinteractive
 #' @examples
 #' library(BGmisc)
 #' data("potter")
@@ -243,6 +242,13 @@ optimizePedigree <- function(p, config = list(), plot_type = c("plotly", "static
   p
 }
 
+#' @rdname ggPedigreeInteractive
+#' @export
+ggpedigreeInteractive <- ggPedigreeInteractive
+
+#' @rdname ggPedigreeInteractive
+#' @export
+ggpedigreeinteractive <- ggPedigreeInteractive
 
 #' @title Optimize Plotly Pedigree Plot
 #' @description
@@ -323,12 +329,3 @@ optimizeStaticPedigree <- function(p, config = list(), variable_drop = c(
 
   p
 }
-
-
-#' @rdname ggPedigreeInteractive
-#' @export
-ggpedigreeInteractive <- ggPedigreeInteractive
-
-#' @rdname ggPedigreeInteractive
-#' @export
-ggpedigreeinteractive <- ggPedigreeInteractive
