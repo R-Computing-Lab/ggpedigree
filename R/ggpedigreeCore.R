@@ -170,13 +170,13 @@ ggPedigree.core <- function(ped,
     non_na_sex <- unique(ds$sex)[!is.na(ds$sex)]
     n_unique_sex <- length(non_na_sex)
 
-    if (is.character(ds$sex)) {
+    if (is.character(ds$sex) || is.factor(ds$sex)) {
       ds <- ds |>
         dplyr::mutate(sex = dplyr::case_when(
-          is.na(.data$sex) ~ "unknown",
+          is.na(.data$sex) ~ "Unknown",
           TRUE ~ as.character(.data$sex)
         ))
-    } else if (is.numeric(ds$sex)) {
+    } else if (is.numeric(ds$sex) || is.integer(ds$sex)) {
       max_sex <- max(ds$sex, na.rm = TRUE)
 
       if (n_unique_sex == 3 && (max_sex == 3 || max_sex == 2)) {
@@ -421,7 +421,6 @@ ggPedigree.core <- function(ped,
                       config,
                       focal_fill_column = NULL,
                       status_column = NULL) {
-  # recode NA sex to "unknown"
   # plot points with appropriate aesthetics
   if (config$debug == TRUE) {
     message("Adding nodes to the plot...")
