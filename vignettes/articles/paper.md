@@ -27,7 +27,7 @@ affiliations:
 citation_author: Garrison
 csl: apa.csl
 journal: JOSS
-date: "03 November, 2025"
+date: "01 January, 2026"
 bibliography: paper.bib
 vignette: >
   %\VignetteEncoding{UTF-8}
@@ -119,15 +119,23 @@ pedigree-specific visualization challenges.
 
 `ggpedigree` is built on a modular architecture that separates data
 processing, layout calculation, and visualization layers. The core
-workflow involves: (1) data standardization and family structure
-analysis using BGmisc functions, (2) coordinate calculation using
-algorithms adapted from kinship2, (3) relationship connection mapping,
-and (4) layer-based plot construction using ggplot2 geometry functions.
-This design allows users to customize any aspect of the visualization
-while maintaining computational efficiency for large pedigrees. The
-package integrates tightly with the broader R ecosystem, particularly
-the tidyverse [@wickham2019] and BGmisc [@bgmisc]. All functions return
+workflow involves: (1) data standardization and family restructuring
+using BGmisc functions, (2) coordinate calculation using algorithms
+adapted from kinship2, (3) relationship connection mapping, and (4)
+layer-based plot construction using ggplot2 geometry functions. This
+design allows users to customize any aspect of the visualization while
+maintaining computational efficiency for large pedigrees. The package
+integrates tightly with the broader R ecosystem, particularly the
+tidyverse [@wickham2019] and BGmisc [@bgmisc]. All functions return
 standard R objects (ggplot or plotly) that can be further customized.
+
+BGmisc [@bgmisc], as described in Garrison et al, is a dependency for
+its relatedness-heavy workflows, supplying network-based validation
+utilities (`checkParentIDs()`) and relatedness components, like
+`ped2fam()`, `ped2paternal()`, and `ped2maternal()`. These components
+allow `ggpedigree` to visualize how related any two individuals are
+based on additive genetic, mitochondrial, or other relationship
+matrices.
 
 ## Features
 
@@ -142,11 +150,14 @@ Squirrel Project [@mcfarlane2015; @mcfarlane2014] and Targaryen family
 data from the Song of Ice and Fire universe [@martin1997; @martin2018].
 
 -   Data Standardization and Family Structure Analysis: `ggPedigree()`
-    integrates with BGmisc functions like `ped2fam()` to organize
-    individuals by family, `recodeSex()` to standardize sex coding, and
-    `checkParentIDs()` to validate pedigree structures. The function
-    handles consanguineous relationships and individuals appearing in
-    multiple pedigree positions.
+    integrates with network-based functions from BGmisc like `ped2fam()`
+    to organize individuals by family and `checkParentIDs()` to validate
+    pedigree structures. The function handles consanguineous
+    relationships and individuals appearing in multiple pedigree
+    positions. More details are in the [complex pedigree data
+    vignette](https://r-computing-lab.github.io/ggpedigree/articles/v22_plots_morecomplexity.html),
+    as well as in Garrison et al. [@bgmisc], and Hunter, Garrison, et al
+    [@hunter_analytic_2021,@hunter2025tracing] .
 
 -   Coordinate Calculation: `calculateCoordinates()` computes optimal
     positioning for individuals using algorithms adapted from
@@ -167,7 +178,9 @@ data from the Song of Ice and Fire universe [@martin1997; @martin2018].
     ggplot2 geometry functions, returning standard ggplot2 objects that
     integrate with existing R workflows. `ggPedigreeInteractive()`
     extends plots into interactive plotly widgets. A config system
-    allows customization of over 100 aesthetic and layout parameters.
+    allows customization of over 150 aesthetic and layout parameters.
+    More details are in the [configuration
+    vignette](https://r-computing-lab.github.io/ggpedigree/articles/v02_configuration.html).
 
 -   Individual Highlighting: Advanced functionality to highlight
     specific individuals and their relatives based on additive genetic,
