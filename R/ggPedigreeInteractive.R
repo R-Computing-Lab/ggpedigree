@@ -7,7 +7,6 @@
 #'
 #' @inheritParams ggPedigree
 #' @return A plotly htmlwidget (or plotly object if `return_widget = FALSE`)
-#' @aliases ggpedigreeinteractive ggPedigreeInteractive ggpedigreeInteractive  ggPedigreeinteractive
 #' @examples
 #' library(BGmisc)
 #' data("potter")
@@ -229,7 +228,7 @@ formatTooltip <- function(df, tooltip_columns, sep = ": ") {
 #'  "static". Default is "plotly".
 #'  @return The optimized plot object with rounded coordinates.
 #'  @keywords internal
-#'  @aliases optimisePedigree
+
 
 optimizePedigree <- function(p, config = list(), plot_type = c("plotly", "static")) {
   plot_type <- match.arg(plot_type)
@@ -279,7 +278,7 @@ optimizePlotlyPedigree <- function(p, config = list()) {
 #' "y_order", "y_fam", "zygosity", "extra", and "x_fam".
 #' @return The optimized ggplot object with rounded coordinates and reduced data frame.
 #' @keywords internal
-#' @aliases optimiseStaticPedigree
+
 
 
 optimizeStaticPedigree <- function(p, config = list(), variable_drop = c(
@@ -323,7 +322,15 @@ optimizeStaticPedigree <- function(p, config = list(), variable_drop = c(
 
   p
 }
+#' @rdname optimizePedigree
+#' @export
 
+optimisePedigree <- optimizePedigree
+
+#' @rdname optimizeStaticPedigree
+#' @export
+
+optimiseStaticPedigree <- optimizeStaticPedigree
 
 #' @rdname ggPedigreeInteractive
 #' @export

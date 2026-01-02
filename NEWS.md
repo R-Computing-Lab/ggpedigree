@@ -3,6 +3,9 @@
 
 # ggpedigree 1.1.0.2
 
+## API notes
+* Documented `ggPedigree()` / `ggPedigreeInteractive()` / `ggRelatednessMatrix()` as canonical entry points while retaining backward-compatible aliases.
+
 ## New data
 * Added a preliminary Wars of the Roses pedigree dataset.
 * Improved dataset documentation.

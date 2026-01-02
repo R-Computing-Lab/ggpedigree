@@ -2,9 +2,12 @@
 % Please edit documentation in R/ggPedigreeInteractive.R
 \name{optimizePedigree}
 \alias{optimizePedigree}
+\alias{optimisePedigree}
 \title{Optimize Pedigree Plot}
 \usage{
 optimizePedigree(p, config = list(), plot_type = c("plotly", "static"))
+
+optimisePedigree(p, config = list(), plot_type = c("plotly", "static"))
 }
 \arguments{
 \item{p}{A plotly or ggplot object representing the pedigree plot.}
@@ -14,8 +17,7 @@ optimizePedigree(p, config = list(), plot_type = c("plotly", "static"))
 \item{plot_type}{A string indicating the type of plot: "plotly" or
 "static". Default is "plotly".
 @return The optimized plot object with rounded coordinates.
-@keywords internal
-@aliases optimisePedigree}
+@keywords internal}
 }
 \description{
 Optimize a pedigree plot by rounding coordinates to reduce file size.

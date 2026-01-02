@@ -2,9 +2,8 @@
 % Please edit documentation in R/ggPedigreeInteractive.R
 \name{ggPedigreeInteractive}
 \alias{ggPedigreeInteractive}
-\alias{ggpedigreeinteractive}
 \alias{ggpedigreeInteractive}
-\alias{ggPedigreeinteractive}
+\alias{ggpedigreeinteractive}
 \title{Interactive pedigree plot (Plotly wrapper around ggPedigree)}
 \usage{
 ggPedigreeInteractive(
