@@ -1,8 +1,8 @@
 ---
-title: "Extended: Using `config` to control ggpedigree plots"
+title: "Extended: More uses of `config` to control ggpedigree plots"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Extended: Using config to control ggpedigree plots}
+  %\VignetteIndexEntry{Extended: More uses of config to control ggpedigree plots}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
