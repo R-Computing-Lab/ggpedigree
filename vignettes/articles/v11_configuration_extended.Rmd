@@ -26,15 +26,14 @@ library(tidyverse) # for data wrangling
 
 Every gg-based plotting function in `{ggpedigree}` accepts a `config` argument. This is an easier way to control plot behavior without rewriting the plotting code.
 
-A `config` is a named list. Each element corresponds to one plotting, layout, or aesthetic option. You pass the list to the plotting function and the plot is drawn using those values.
+As already discussed, a `config` is a named list. Each element corresponds to one plotting, layout, or aesthetic option. You pass the list to the plotting function and the plot is drawn using those values.
 
 You do not need to supply every option. You only provide the options you want to change. Any options you do not specify will use the package defaults. You can see a full list of supported options and their defaults by reviewing the documentation for `getDefaultPlotConfig()`.
 
-This vignette demonstrates how `config` is used in practice.
 
 # Basic usage of `config` in `ggPedigree()`
 
-We will use the `potter` pedigree dataset bundled in `{BGmisc}`.
+As before, we will use the `potter` pedigree dataset bundled in `{BGmisc}`.
 
 ```{r}
 library(BGmisc)
