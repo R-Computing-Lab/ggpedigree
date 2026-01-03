@@ -159,7 +159,7 @@ if (requireNamespace("ggplot2", quietly = TRUE)) {
     config = list(
       add_phantoms = TRUE,
       code_male = "M"
-  )
+    )
   )
 }
 #> REPAIR IN EARLY ALPHA

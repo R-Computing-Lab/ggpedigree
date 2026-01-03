@@ -101,18 +101,18 @@ df_repaired <- checkParentIDs(df_got,
 #> REPAIR IN EARLY ALPHA
 ```
 
-### Visualize the Pedigree with `plotPedigree()`
+### Visualize the Pedigree with `kinship2`
 
 Here is the classic pedigree plot of the Targaryen family, with Jon Snow
 and Daenerys Targaryen highlighted in black. The
-[`plotPedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/plotPedigree.md)
+[`kinship2_plotPedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/kinship2_plotPedigree.md)
 function provides a quick way to visualize the pedigree structure. It
 serves as a wrapper function from {kinship2} and is useful for quickly
 checking the pedigree structure.
 
 ``` r
 library(kinship2)
-plotPedigree(df_repaired,
+kinship2_plotPedigree(df_repaired,
   affected = df_repaired$affected,
   verbose = FALSE
 )
@@ -142,7 +142,7 @@ pltstatic <- ggPedigree(df_repaired,
   config = list(
     return_static = TRUE,
     status_label_unaffected = 0,
-    sex_color_include = TRUE,
+    sex_color_include = FALSE,
     code_male = "M",
     point_size = 10,
     status_label_affected = 1,

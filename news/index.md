@@ -4,6 +4,16 @@
 
 ## ggpedigree 1.1.0.2
 
+### API notes
+
+- Documented
+  [`ggPedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/ggPedigree.md)
+  /
+  [`ggPedigreeInteractive()`](https://r-computing-lab.github.io/ggpedigree/reference/ggPedigreeInteractive.md)
+  /
+  [`ggRelatednessMatrix()`](https://r-computing-lab.github.io/ggpedigree/reference/ggRelatednessMatrix.md)
+  as canonical entry points while retaining backward-compatible aliases.
+
 ### New data
 
 - Added a preliminary Wars of the Roses pedigree dataset.
@@ -40,6 +50,7 @@
 - Refactored `kinship2` internals for maintainability.
 - Refactored node-adding internals.
 - Remove reshape2 dependency
+- Deprecating plotPedigree function in favor of kinship2_plotPedigree
 
 ### Testing
 
@@ -141,7 +152,7 @@ CRAN release: 2025-06-09
 ## ggpedigree 0.6.1
 
 - Transferred
-  [`plotPedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/plotPedigree.md)
+  [`plotPedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/kinship2_plotPedigree.md)
   function from BGmisc to ggpedigree.
 
 ## ggpedigree 0.6.0

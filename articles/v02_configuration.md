@@ -41,11 +41,11 @@ A basic pedigree plot uses defaults:
 
 ``` r
 ggPedigree(
-potter,
-famID = "famID",
-personID = "personID",
-momID = "momID",
-dadID = "dadID"
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID"
 )
 ```
 
@@ -125,17 +125,17 @@ This example customizes labels. Here we label individuals by
 
 ``` r
 ggPedigree(
-potter,
-famID = "famID",
-personID = "personID",
-momID = "momID",
-dadID = "dadID",
-config = list(
-label_include = TRUE,
-label_column = "first_name",
-label_text_size = 3.2,
-label_nudge_y = 0.15
-)
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
+    label_include = TRUE,
+    label_column = "first_name",
+    label_text_size = 3.2,
+    label_nudge_y = 0.15
+  )
 )
 ```
 
@@ -145,12 +145,12 @@ To turn labels off completely:
 
 ``` r
 ggPedigree(
-potter,
-famID = "famID",
-personID = "personID",
-momID = "momID",
-dadID = "dadID",
-config = list(label_include = FALSE)
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config = list(label_include = FALSE)
 )
 ```
 
@@ -160,18 +160,18 @@ You can also use repelled labels to avoid overlaps:
 
 ``` r
 ggPedigree(
-potter,
-famID = "famID",
-personID = "personID",
-momID = "momID",
-dadID = "dadID",
-config = list(
-label_include = TRUE,
-label_method = "geom_text_repel",
-label_max_overlaps = 10,
-label_text_size = 9,
-label_segment_color = "grey50"
-)
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
+    label_include = TRUE,
+    label_method = "geom_text_repel",
+    label_max_overlaps = 10,
+    label_text_size = 9,
+    label_segment_color = "grey50"
+  )
 )
 ```
 
@@ -200,19 +200,19 @@ points.
 
 ``` r
 ggPedigree(
-potter,
-famID = "famID",
-personID = "personID",
-momID = "momID",
-dadID = "dadID",
-config = list(
-point_scale_by_pedigree = FALSE,
-point_size = 6,
-outline_include = TRUE,
-outline_color = "maroon",
-outline_multiplier = 1.5,
-outline_alpha = 1
-)
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
+    point_scale_by_pedigree = FALSE,
+    point_size = 6,
+    outline_include = TRUE,
+    outline_color = "maroon",
+    outline_multiplier = 1.5,
+    outline_alpha = 1
+  )
 )
 ```
 
@@ -233,17 +233,17 @@ segment color.
 
 ``` r
 ggPedigree(
-potter,
-famID = "famID",
-personID = "personID",
-momID = "momID",
-dadID = "dadID",
-config = list(
-segment_linewidth = 2,
-segment_spouse_color = "steelblue",
-segment_parent_color = "black",
-segment_offspring_color = "black"
-)
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
+    segment_linewidth = 2,
+    segment_spouse_color = "steelblue",
+    segment_parent_color = "black",
+    segment_offspring_color = "black"
+  )
 )
 ```
 
@@ -253,20 +253,20 @@ Self-loop geometry is also configurable:
 
 ``` r
 ggPedigree(
-inbreeding %>% filter(famID %in% 5),
-famID = "famID",
-personID = "ID",
-momID = "momID",
-dadID = "dadID",
-config = list(
-segment_self_linetype = "dotdash",
-segment_self_color = "hotpink",
-segment_self_alpha = 0.6,
-segment_self_linewidth = 1.5,
-segment_self_curvature = -0.2,
-segment_self_angle = 80,
-code_male = 0
-)
+  inbreeding %>% filter(famID %in% 5),
+  famID = "famID",
+  personID = "ID",
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
+    segment_self_linetype = "dotdash",
+    segment_self_color = "hotpink",
+    segment_self_alpha = 0.6,
+    segment_self_linewidth = 1.5,
+    segment_self_curvature = -0.2,
+    segment_self_angle = 80,
+    code_male = 0
+  )
 ) + ggtitle("Custom self-loop appearance")
 ```
 
@@ -292,18 +292,18 @@ Here I also disable sex coloring to focus on shapes alone.
 
 ``` r
 ggPedigree(
-potter,
-famID = "famID",
-personID = "personID",
-momID = "momID",
-dadID = "dadID",
-config = list(
-sex_legend_show = TRUE,
-sex_shape_female = 18,
-sex_shape_male = 17,
-sex_shape_unknown = 16,
-sex_color_include = FALSE
-)
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
+    sex_legend_show = TRUE,
+    sex_shape_female = 18,
+    sex_shape_male = 17,
+    sex_shape_unknown = 16,
+    sex_color_include = FALSE
+  )
 )
 ```
 
@@ -314,16 +314,16 @@ fun.
 
 ``` r
 plot_ped <- ggPedigree(
-potter,
-famID = "famID",
-personID = "personID",
-momID = "momID",
-dadID = "dadID",
-config = list(
-sex_color_palette = c("purple", "orange", "grey50"),
-sex_shape_female = "🥰",
-sex_shape_male = "🚗"
-)
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
+    sex_color_palette = c("purple", "orange", "grey50"),
+    sex_shape_female = "🥰",
+    sex_shape_male = "🚗"
+  )
 )
 plot_ped
 ```
@@ -369,23 +369,23 @@ column uses 1 for affected and 0 for unaffected.
 
 ``` r
 ggPedigree(
-hazard,
-famID = "famID",
-personID = "ID",
-momID = "momID",
-dadID = "dadID",
-status_column = "affected",
-config = list(
-  code_male = 0,
-status_include = TRUE,
-status_code_affected = 1,
-status_code_unaffected = 0,
-status_alpha_affected = .6,
-status_alpha_unaffected = 0,
-status_color_affected = "red",
-status_shape_affected = 8,
-status_legend_show = TRUE
-)
+  hazard,
+  famID = "famID",
+  personID = "ID",
+  momID = "momID",
+  dadID = "dadID",
+  status_column = "affected",
+  config = list(
+    code_male = 0,
+    status_include = TRUE,
+    status_code_affected = 1,
+    status_code_unaffected = 0,
+    status_alpha_affected = .6,
+    status_alpha_unaffected = 0,
+    status_color_affected = "red",
+    status_shape_affected = 8,
+    status_legend_show = TRUE
+  )
 )
 ```
 
@@ -579,7 +579,7 @@ ggPedigree(
     sex_color_include = FALSE,
     focal_fill_personID = 5,
     focal_fill_method = "viridis_d",
-     focal_fill_component = "patID",
+    focal_fill_component = "patID",
     focal_fill_viridis_option = "D",
     focal_fill_viridis_begin = 0.05,
     focal_fill_viridis_end = 0.95,
@@ -602,20 +602,20 @@ without manually changing multiple palettes.
 
 ``` r
 ggPedigree(
-potter,
-famID = "famID",
-personID = "personID",
-momID = "momID",
-dadID = "dadID",
-config = list(
-color_theme = "bw",
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
+    color_theme = "bw",
     focal_fill_include = TRUE,
     sex_color_include = FALSE,
     focal_fill_personID = 5,
-segment_linewidth = 0.7,
-point_scale_by_pedigree = FALSE,
-point_size = 6
-)
+    segment_linewidth = 0.7,
+    point_scale_by_pedigree = FALSE,
+    point_size = 6
+  )
 )
 ```
 
@@ -630,18 +630,18 @@ tooltip selection. Tooltips are controlled primarily through
 
 ``` r
 ggPedigreeInteractive(
-potter,
-famID = "famID",
-personID = "personID",
-momID = "momID",
-dadID = "dadID",
-tooltip_columns = c("personID", "first_name", "sex"),
-config = list(
-label_include = FALSE,
-point_scale_by_pedigree = FALSE,
-point_size = 7,
-segment_linewidth = 0.5
-)
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  tooltip_columns = c("personID", "first_name", "sex"),
+  config = list(
+    label_include = FALSE,
+    point_scale_by_pedigree = FALSE,
+    point_size = 7,
+    segment_linewidth = 0.5
+  )
 )
 ```
 
@@ -652,12 +652,12 @@ with collaborators, save your config list.
 
 ``` r
 cfg <- list(
-point_scale_by_pedigree = FALSE,
-point_size = 6,
-segment_linewidth = 0.7,
-label_include = TRUE,
-label_text_size = 3,
-sex_color_palette = c("purple", "orange", "grey50")
+  point_scale_by_pedigree = FALSE,
+  point_size = 6,
+  segment_linewidth = 0.7,
+  label_include = TRUE,
+  label_text_size = 3,
+  sex_color_palette = c("purple", "orange", "grey50")
 )
 
 saveRDS(cfg, file = "ggpedigree_config.rds")
@@ -665,12 +665,12 @@ saveRDS(cfg, file = "ggpedigree_config.rds")
 cfg <- readRDS("ggpedigree_config.rds")
 
 ggPedigree(
-potter,
-famID = "famID",
-personID = "personID",
-momID = "momID",
-dadID = "dadID",
-config = cfg
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config = cfg
 )
 ```
 

@@ -105,11 +105,11 @@ practice.</p>
 <p>A basic pedigree plot uses defaults:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
-<span><span class="va">potter</span>,</span>
-<span>famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
-<span>personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
-<span>momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
-<span>dadID <span class="op">=</span> <span class="st">"dadID"</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="v02_configuration_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="672"></p>
 <div class="section level3">
@@ -190,45 +190,45 @@ specific components of the pedigree plot.</p>
 slightly.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
-<span><span class="va">potter</span>,</span>
-<span>famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
-<span>personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
-<span>momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
-<span>dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
-<span>config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>label_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>label_column <span class="op">=</span> <span class="st">"first_name"</span>,</span>
-<span>label_text_size <span class="op">=</span> <span class="fl">3.2</span>,</span>
-<span>label_nudge_y <span class="op">=</span> <span class="fl">0.15</span></span>
-<span><span class="op">)</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    label_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    label_column <span class="op">=</span> <span class="st">"first_name"</span>,</span>
+<span>    label_text_size <span class="op">=</span> <span class="fl">3.2</span>,</span>
+<span>    label_nudge_y <span class="op">=</span> <span class="fl">0.15</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="v02_configuration_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="672"></p>
 <p>To turn labels off completely:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
-<span><span class="va">potter</span>,</span>
-<span>famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
-<span>personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
-<span>momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
-<span>dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
-<span>config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label_include <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label_include <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="v02_configuration_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="672"></p>
 <p>You can also use repelled labels to avoid overlaps:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
-<span><span class="va">potter</span>,</span>
-<span>famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
-<span>personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
-<span>momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
-<span>dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
-<span>config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>label_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>label_method <span class="op">=</span> <span class="st">"geom_text_repel"</span>,</span>
-<span>label_max_overlaps <span class="op">=</span> <span class="fl">10</span>,</span>
-<span>label_text_size <span class="op">=</span> <span class="fl">9</span>,</span>
-<span>label_segment_color <span class="op">=</span> <span class="st">"grey50"</span></span>
-<span><span class="op">)</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    label_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    label_method <span class="op">=</span> <span class="st">"geom_text_repel"</span>,</span>
+<span>    label_max_overlaps <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>    label_text_size <span class="op">=</span> <span class="fl">9</span>,</span>
+<span>    label_segment_color <span class="op">=</span> <span class="st">"grey50"</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="v02_configuration_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="672"></p>
 <p>Note that short labels are less likely to overlap, so consider
@@ -255,19 +255,19 @@ by:</p>
 to points.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
-<span><span class="va">potter</span>,</span>
-<span>famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
-<span>personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
-<span>momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
-<span>dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
-<span>config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>point_scale_by_pedigree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>point_size <span class="op">=</span> <span class="fl">6</span>,</span>
-<span>outline_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>outline_color <span class="op">=</span> <span class="st">"maroon"</span>,</span>
-<span>outline_multiplier <span class="op">=</span> <span class="fl">1.5</span>,</span>
-<span>outline_alpha <span class="op">=</span> <span class="fl">1</span></span>
-<span><span class="op">)</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    point_scale_by_pedigree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    point_size <span class="op">=</span> <span class="fl">6</span>,</span>
+<span>    outline_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    outline_color <span class="op">=</span> <span class="st">"maroon"</span>,</span>
+<span>    outline_multiplier <span class="op">=</span> <span class="fl">1.5</span>,</span>
+<span>    outline_alpha <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="v02_configuration_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="672"></p>
 </div>
@@ -293,36 +293,36 @@ to points.</p>
 segment color.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
-<span><span class="va">potter</span>,</span>
-<span>famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
-<span>personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
-<span>momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
-<span>dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
-<span>config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>segment_linewidth <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>segment_spouse_color <span class="op">=</span> <span class="st">"steelblue"</span>,</span>
-<span>segment_parent_color <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span>segment_offspring_color <span class="op">=</span> <span class="st">"black"</span></span>
-<span><span class="op">)</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    segment_linewidth <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    segment_spouse_color <span class="op">=</span> <span class="st">"steelblue"</span>,</span>
+<span>    segment_parent_color <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>    segment_offspring_color <span class="op">=</span> <span class="st">"black"</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="v02_configuration_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="672"></p>
 <p>Self-loop geometry is also configurable:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
-<span><span class="va">inbreeding</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">famID</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fl">5</span><span class="op">)</span>,</span>
-<span>famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
-<span>personID <span class="op">=</span> <span class="st">"ID"</span>,</span>
-<span>momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
-<span>dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
-<span>config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>segment_self_linetype <span class="op">=</span> <span class="st">"dotdash"</span>,</span>
-<span>segment_self_color <span class="op">=</span> <span class="st">"hotpink"</span>,</span>
-<span>segment_self_alpha <span class="op">=</span> <span class="fl">0.6</span>,</span>
-<span>segment_self_linewidth <span class="op">=</span> <span class="fl">1.5</span>,</span>
-<span>segment_self_curvature <span class="op">=</span> <span class="op">-</span><span class="fl">0.2</span>,</span>
-<span>segment_self_angle <span class="op">=</span> <span class="fl">80</span>,</span>
-<span>code_male <span class="op">=</span> <span class="fl">0</span></span>
-<span><span class="op">)</span></span>
+<span>  <span class="va">inbreeding</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">famID</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"ID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    segment_self_linetype <span class="op">=</span> <span class="st">"dotdash"</span>,</span>
+<span>    segment_self_color <span class="op">=</span> <span class="st">"hotpink"</span>,</span>
+<span>    segment_self_alpha <span class="op">=</span> <span class="fl">0.6</span>,</span>
+<span>    segment_self_linewidth <span class="op">=</span> <span class="fl">1.5</span>,</span>
+<span>    segment_self_curvature <span class="op">=</span> <span class="op">-</span><span class="fl">0.2</span>,</span>
+<span>    segment_self_angle <span class="op">=</span> <span class="fl">80</span>,</span>
+<span>    code_male <span class="op">=</span> <span class="fl">0</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Custom self-loop appearance"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="v02_configuration_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="672"></p>
 </div>
@@ -350,34 +350,34 @@ filled shapes). Here I also disable sex coloring to focus on shapes
 alone.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
-<span><span class="va">potter</span>,</span>
-<span>famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
-<span>personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
-<span>momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
-<span>dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
-<span>config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>sex_legend_show <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>sex_shape_female <span class="op">=</span> <span class="fl">18</span>,</span>
-<span>sex_shape_male <span class="op">=</span> <span class="fl">17</span>,</span>
-<span>sex_shape_unknown <span class="op">=</span> <span class="fl">16</span>,</span>
-<span>sex_color_include <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    sex_legend_show <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    sex_shape_female <span class="op">=</span> <span class="fl">18</span>,</span>
+<span>    sex_shape_male <span class="op">=</span> <span class="fl">17</span>,</span>
+<span>    sex_shape_unknown <span class="op">=</span> <span class="fl">16</span>,</span>
+<span>    sex_color_include <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="v02_configuration_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="672"></p>
 <p>Below, I use a custom color palette for sex as well as emoji shapes
 for fun.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plot_ped</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
-<span><span class="va">potter</span>,</span>
-<span>famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
-<span>personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
-<span>momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
-<span>dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
-<span>config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>sex_color_palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"purple"</span>, <span class="st">"orange"</span>, <span class="st">"grey50"</span><span class="op">)</span>,</span>
-<span>sex_shape_female <span class="op">=</span> <span class="st">"🥰"</span>,</span>
-<span>sex_shape_male <span class="op">=</span> <span class="st">"🚗"</span></span>
-<span><span class="op">)</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    sex_color_palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"purple"</span>, <span class="st">"orange"</span>, <span class="st">"grey50"</span><span class="op">)</span>,</span>
+<span>    sex_shape_female <span class="op">=</span> <span class="st">"🥰"</span>,</span>
+<span>    sex_shape_male <span class="op">=</span> <span class="st">"🚗"</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">plot_ped</span></span></code></pre></div>
 <p><img src="v02_configuration_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="672"></p>
@@ -424,23 +424,23 @@ how affected status is drawn.</p>
 unaffected.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
-<span><span class="va">hazard</span>,</span>
-<span>famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
-<span>personID <span class="op">=</span> <span class="st">"ID"</span>,</span>
-<span>momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
-<span>dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
-<span>status_column <span class="op">=</span> <span class="st">"affected"</span>,</span>
-<span>config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  code_male <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>status_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>status_code_affected <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>status_code_unaffected <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>status_alpha_affected <span class="op">=</span> <span class="fl">.6</span>,</span>
-<span>status_alpha_unaffected <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>status_color_affected <span class="op">=</span> <span class="st">"red"</span>,</span>
-<span>status_shape_affected <span class="op">=</span> <span class="fl">8</span>,</span>
-<span>status_legend_show <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
+<span>  <span class="va">hazard</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"ID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  status_column <span class="op">=</span> <span class="st">"affected"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    code_male <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    status_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    status_code_affected <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    status_code_unaffected <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    status_alpha_affected <span class="op">=</span> <span class="fl">.6</span>,</span>
+<span>    status_alpha_unaffected <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    status_color_affected <span class="op">=</span> <span class="st">"red"</span>,</span>
+<span>    status_shape_affected <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>    status_legend_show <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="v02_configuration_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="672"></p>
 </div>
@@ -625,7 +625,7 @@ colored using a discrete viridis palette.</p>
 <span>    sex_color_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    focal_fill_personID <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>    focal_fill_method <span class="op">=</span> <span class="st">"viridis_d"</span>,</span>
-<span>     focal_fill_component <span class="op">=</span> <span class="st">"patID"</span>,</span>
+<span>    focal_fill_component <span class="op">=</span> <span class="st">"patID"</span>,</span>
 <span>    focal_fill_viridis_option <span class="op">=</span> <span class="st">"D"</span>,</span>
 <span>    focal_fill_viridis_begin <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>    focal_fill_viridis_end <span class="op">=</span> <span class="fl">0.95</span>,</span>
@@ -649,20 +649,20 @@ colored using a discrete viridis palette.</p>
 without manually changing multiple palettes.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
-<span><span class="va">potter</span>,</span>
-<span>famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
-<span>personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
-<span>momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
-<span>dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
-<span>config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>color_theme <span class="op">=</span> <span class="st">"bw"</span>,</span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    color_theme <span class="op">=</span> <span class="st">"bw"</span>,</span>
 <span>    focal_fill_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    sex_color_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    focal_fill_personID <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>segment_linewidth <span class="op">=</span> <span class="fl">0.7</span>,</span>
-<span>point_scale_by_pedigree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>point_size <span class="op">=</span> <span class="fl">6</span></span>
-<span><span class="op">)</span></span>
+<span>    segment_linewidth <span class="op">=</span> <span class="fl">0.7</span>,</span>
+<span>    point_scale_by_pedigree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    point_size <span class="op">=</span> <span class="fl">6</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="v02_configuration_files/figure-html/unnamed-chunk-18-1.png" class="r-plt" alt="" width="672"></p>
 </div>
@@ -675,21 +675,21 @@ tooltip selection. Tooltips are controlled primarily through
 handled by <code>config</code>.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigreeInteractive.html">ggPedigreeInteractive</a></span><span class="op">(</span></span>
-<span><span class="va">potter</span>,</span>
-<span>famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
-<span>personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
-<span>momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
-<span>dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
-<span>tooltip_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"personID"</span>, <span class="st">"first_name"</span>, <span class="st">"sex"</span><span class="op">)</span>,</span>
-<span>config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>label_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>point_scale_by_pedigree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>point_size <span class="op">=</span> <span class="fl">7</span>,</span>
-<span>segment_linewidth <span class="op">=</span> <span class="fl">0.5</span></span>
-<span><span class="op">)</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  tooltip_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"personID"</span>, <span class="st">"first_name"</span>, <span class="st">"sex"</span><span class="op">)</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    label_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    point_scale_by_pedigree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    point_size <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>    segment_linewidth <span class="op">=</span> <span class="fl">0.5</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="plotly html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"data":[{"x":[2,1,null,null,0,null,1,2,null,3,4,null,4,3,null,null,1.5,null,4,3,null,3,4,null,8.5,7.5,null,7.5,8.5,null,6,5,null,null,7,null,null,8,null,10,9,null,null,11,null,13,12,null,5,6,null,12,13,null,null,14,null,9,10,null,null,2.2250000000000001,null,null,3.2250000000000001,null,null,4.2249999999999996,null,null,5.2249999999999996,null,null,6.2249999999999996,null,null,11.5,null,null,12.5,null,null,13.5,null,null,9,null,null,10,null,-0,1,null,1,-0,null,3.5,2.5,null,2.5,3.5,null,14,13,null,13,14],"y":[-1,-1,null,null,-1,null,-1,-1,null,-1,-1,null,-1,-1,null,null,-2,null,-2,-2,null,-2,-2,null,-1,-1,null,-1,-1,null,-2,-2,null,null,-2,null,null,-2,null,-2,-2,null,null,-2,null,-2,-2,null,-2,-2,null,-2,-2,null,null,-2,null,-2,-2,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,0,0,null,0,0,null,0,0,null,0,0,null,-1,-1,null,-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.5,0.5,null,0.5,0.5,null,3,3,null,3,3,null,null,null,null,1.5,1.5,null,3,3.5,null,8,8,null,null,null,null,null,null,null,8,8,null,8,8,null,8,8,null,8,8,null,8,8,null,8,8,null,null,null,null,13.5,13.5,null,13.5,13.5,null,null,null,null,3.2250000000000001,3.5,null,3.2250000000000001,3.5,null,3.2250000000000001,3.5,null,5.7249999999999996,5.5,null,5.7249999999999996,5.5,null,12.5,12.5,null,12.5,12.5,null,12.5,12.5,null,9.5,9.5,null,9.5,9.5,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"y":[-0.5,-0,null,-0.5,-0,null,-0.5,-0,null,-0.5,-0,null,null,null,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,null,null,null,null,null,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,null,null,null,-1.5,-1,null,-1.5,-1,null,null,null,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,0.5,null,0,0.5,null,2,3,null,4,3,null,3,null,null,1.5,1.5,null,3,3,null,4,8,null,7.5,null,null,8.5,null,null,5,8,null,9,8,null,11,8,null,12,8,null,6,null,null,13,13.5,null,14,13.5,null,10,null,null,2.2250000000000001,3.2250000000000001,null,3.2250000000000001,3.2250000000000001,null,4.2249999999999996,3.2250000000000001,null,5.2249999999999996,5.7249999999999996,null,6.2249999999999996,5.7249999999999996,null,11.5,12.5,null,12.5,12.5,null,13.5,12.5,null,9,9.5,null,10,9.5,null,1,null,null,-0,null,null,2.5,null,null,3.5,null,null,13,null,null,14,null],"y":[-0.5,-0.5,null,-0.5,-0.5,null,-0.5,-0.5,null,-0.5,-0.5,null,-0.5,null,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,-1.5,null,-0.5,null,null,-0.5,null,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,null,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,null,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,null,null,null,null,null,null,null,null,null,null,null,null,-0.5,null,null,-0.5,null],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7.5,8,null,7.5,8],"y":[-1.5,-1.5,null,-1.5,-1.5],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7,7.5,null,8,7.5],"y":[-2,-1.5,null,-2,-1.5],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7.2999999999999998,7.7000000000000002,null,7.7000000000000002,7.2999999999999998],"y":[-1.7,-1.7,null,-1.7,-1.7],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,1,null,0,0,null,2,2,null,4,4,null,3,3,null,1.5,1.5,null,3,3,null,4,4,null,7.5,7.5,null,8.5,8.5,null,5,5,null,9,9,null,11,11,null,12,12,null,6,6,null,13,13,null,14,14,null,10,10,null,2.2250000000000001,2.2250000000000001,null,3.2250000000000001,3.2250000000000001,null,4.2249999999999996,4.2249999999999996,null,5.2249999999999996,5.2249999999999996,null,6.2249999999999996,6.2249999999999996,null,11.5,11.5,null,12.5,12.5,null,13.5,13.5,null,9,9,null,10,10,null,1,1,null,-0,-0,null,2.5,2.5,null,3.5,3.5,null,13,13,null,14,14],"y":[-0.5,-1,null,-0.5,-1,null,-0.5,-1,null,-0.5,-1,null,null,-1,null,-1.5,-2,null,-1.5,-2,null,-1.5,-2,null,null,-1,null,null,-1,null,-1.5,-2,null,-1.5,-2,null,-1.5,-2,null,-1.5,-2,null,null,-2,null,-1.5,-2,null,-1.5,-2,null,null,-2,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,null,0,null,null,0,null,null,0,null,null,0,null,null,-1,null,null,-1],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,2,4,4,8.5,6,13,14,10,4.2249999999999996,5.2249999999999996,11.5,12.5,9,10,1,3.5,14],"y":[-1,-1,-1,-2,-1,-2,-2,-2,-2,-3,-3,-3,-3,-3,-3,-0,-0,-1],"text":["personID:   2<br>first_name: Marjorie<br>sex: 0","personID:   3<br>first_name: Petunia<br>sex: 0","personID:   4<br>first_name: Lily<br>sex: 0","personID:   8<br>first_name: Ginny<br>sex: 0","personID:  10<br>first_name: Molly<br>sex: 0","personID:  17<br>first_name: Hermione<br>sex: 0","personID:  18<br>first_name: Fleur<br>sex: 0","personID:  19<br>first_name: Gabrielle<br>sex: 0","personID:  20<br>first_name: Audrey<br>sex: 0","personID:  23<br>first_name: Lily<br>sex: 0","personID:  24<br>first_name: Rose<br>sex: 0","personID:  26<br>first_name: Victoire<br>sex: 0","personID:  27<br>first_name: Dominique<br>sex: 0","personID:  29<br>first_name: Molly<br>sex: 0","personID:  30<br>first_name: Lucy<br>sex: 0","personID: 101<br>first_name: Mother<br>sex: 0","personID: 103<br>first_name: Mother<br>sex: 0","personID: 105<br>first_name: Mother<br>sex: 0"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(68,1,84,1)","opacity":1,"size":26.45669291338583,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(68,1,84,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,3,1.5,3,7.5,5,7,8,9,11,12,2.2250000000000001,3.2250000000000001,6.2249999999999996,13.5,-0,2.5,13],"y":[-1,-1,-2,-2,-1,-2,-2,-2,-2,-2,-2,-3,-3,-3,-3,-0,-0,-1],"text":["personID:   1<br>first_name: Vernon<br>sex: 1","personID:   5<br>first_name: James<br>sex: 1","personID:   6<br>first_name: Dudley<br>sex: 1","personID:   7<br>first_name: Harry<br>sex: 1","personID:   9<br>first_name: Arthur<br>sex: 1","personID:  11<br>first_name: Ron<br>sex: 1","personID:  12<br>first_name: Fred<br>sex: 1","personID:  13<br>first_name: George<br>sex: 1","personID:  14<br>first_name: Percy<br>sex: 1","personID:  15<br>first_name: Charlie<br>sex: 1","personID:  16<br>first_name: Bill<br>sex: 1","personID:  21<br>first_name: James<br>sex: 1","personID:  22<br>first_name: Albus<br>sex: 1","personID:  25<br>first_name: Hugo<br>sex: 1","personID:  28<br>first_name: Louis<br>sex: 1","personID: 102<br>first_name: Father<br>sex: 1","personID: 104<br>first_name: Father<br>sex: 1","personID: 106<br>first_name: Father<br>sex: 1"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(127,211,78,1)","opacity":1,"size":26.45669291338583,"symbol":"square","line":{"width":1.8897637795275593,"color":"rgba(127,211,78,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":23.305936073059364,"r":7.3059360730593621,"b":10.958904109589042,"l":10.958904109589042},"paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.70000000647490612,14.700000000308329],"tickmode":"array","ticktext":["0","5","10"],"tickvals":[0,5,10],"categoryorder":"array","categoryarray":["0","5","10"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-3.1499999999999999,0.15000000000000002],"tickmode":"array","ticktext":["0","1","2","3"],"tickvals":[0,-1,-2,-3],"categoryorder":"array","categoryarray":["0","1","2","3"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","layer":"below","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"204622b40439":{"x":{},"y":{},"xend":{},"yend":{},"type":"scatter"},"20467521a1c3":{"x":{},"y":{},"xend":{},"yend":{}},"20464e14b7e2":{"x":{},"y":{},"xend":{},"yend":{}},"204660b5bf8b":{"x":{},"y":{},"xend":{},"yend":{}},"20463e9d5b2d":{"x":{},"y":{},"xend":{},"yend":{}},"204641e1c29a":{"x":{},"y":{},"xend":{},"yend":{}},"20465653d0a9":{"x":{},"y":{},"xend":{},"yend":{}},"20461e0104f1":{"x":{},"y":{},"colour":{},"shape":{},"text":{}}},"cur_data":"204622b40439","visdat":{"204622b40439":["function (y) ","x"],"20467521a1c3":["function (y) ","x"],"20464e14b7e2":["function (y) ","x"],"204660b5bf8b":["function (y) ","x"],"20463e9d5b2d":["function (y) ","x"],"204641e1c29a":["function (y) ","x"],"20465653d0a9":["function (y) ","x"],"20461e0104f1":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"data":[{"x":[2,1,null,null,0,null,1,2,null,3,4,null,4,3,null,null,1.5,null,4,3,null,3,4,null,8.5,7.5,null,7.5,8.5,null,6,5,null,null,7,null,null,8,null,10,9,null,null,11,null,13,12,null,5,6,null,12,13,null,null,14,null,9,10,null,null,2.2250000000000001,null,null,3.2250000000000001,null,null,4.2249999999999996,null,null,5.2249999999999996,null,null,6.2249999999999996,null,null,11.5,null,null,12.5,null,null,13.5,null,null,9,null,null,10,null,-0,1,null,1,-0,null,3.5,2.5,null,2.5,3.5,null,14,13,null,13,14],"y":[-1,-1,null,null,-1,null,-1,-1,null,-1,-1,null,-1,-1,null,null,-2,null,-2,-2,null,-2,-2,null,-1,-1,null,-1,-1,null,-2,-2,null,null,-2,null,null,-2,null,-2,-2,null,null,-2,null,-2,-2,null,-2,-2,null,-2,-2,null,null,-2,null,-2,-2,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,0,0,null,0,0,null,0,0,null,0,0,null,-1,-1,null,-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.5,0.5,null,0.5,0.5,null,3,3,null,3,3,null,null,null,null,1.5,1.5,null,3,3.5,null,8,8,null,null,null,null,null,null,null,8,8,null,8,8,null,8,8,null,8,8,null,8,8,null,8,8,null,null,null,null,13.5,13.5,null,13.5,13.5,null,null,null,null,3.2250000000000001,3.5,null,3.2250000000000001,3.5,null,3.2250000000000001,3.5,null,5.7249999999999996,5.5,null,5.7249999999999996,5.5,null,12.5,12.5,null,12.5,12.5,null,12.5,12.5,null,9.5,9.5,null,9.5,9.5,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"y":[-0.5,-0,null,-0.5,-0,null,-0.5,-0,null,-0.5,-0,null,null,null,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,null,null,null,null,null,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,null,null,null,-1.5,-1,null,-1.5,-1,null,null,null,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,0.5,null,0,0.5,null,2,3,null,4,3,null,3,null,null,1.5,1.5,null,3,3,null,4,8,null,7.5,null,null,8.5,null,null,5,8,null,9,8,null,11,8,null,12,8,null,6,null,null,13,13.5,null,14,13.5,null,10,null,null,2.2250000000000001,3.2250000000000001,null,3.2250000000000001,3.2250000000000001,null,4.2249999999999996,3.2250000000000001,null,5.2249999999999996,5.7249999999999996,null,6.2249999999999996,5.7249999999999996,null,11.5,12.5,null,12.5,12.5,null,13.5,12.5,null,9,9.5,null,10,9.5,null,1,null,null,-0,null,null,2.5,null,null,3.5,null,null,13,null,null,14,null],"y":[-0.5,-0.5,null,-0.5,-0.5,null,-0.5,-0.5,null,-0.5,-0.5,null,-0.5,null,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,-1.5,null,-0.5,null,null,-0.5,null,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,null,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,null,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,null,null,null,null,null,null,null,null,null,null,null,null,-0.5,null,null,-0.5,null],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7.5,8,null,7.5,8],"y":[-1.5,-1.5,null,-1.5,-1.5],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7,7.5,null,8,7.5],"y":[-2,-1.5,null,-2,-1.5],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7.2999999999999998,7.7000000000000002,null,7.7000000000000002,7.2999999999999998],"y":[-1.7,-1.7,null,-1.7,-1.7],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,1,null,0,0,null,2,2,null,4,4,null,3,3,null,1.5,1.5,null,3,3,null,4,4,null,7.5,7.5,null,8.5,8.5,null,5,5,null,9,9,null,11,11,null,12,12,null,6,6,null,13,13,null,14,14,null,10,10,null,2.2250000000000001,2.2250000000000001,null,3.2250000000000001,3.2250000000000001,null,4.2249999999999996,4.2249999999999996,null,5.2249999999999996,5.2249999999999996,null,6.2249999999999996,6.2249999999999996,null,11.5,11.5,null,12.5,12.5,null,13.5,13.5,null,9,9,null,10,10,null,1,1,null,-0,-0,null,2.5,2.5,null,3.5,3.5,null,13,13,null,14,14],"y":[-0.5,-1,null,-0.5,-1,null,-0.5,-1,null,-0.5,-1,null,null,-1,null,-1.5,-2,null,-1.5,-2,null,-1.5,-2,null,null,-1,null,null,-1,null,-1.5,-2,null,-1.5,-2,null,-1.5,-2,null,-1.5,-2,null,null,-2,null,-1.5,-2,null,-1.5,-2,null,null,-2,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,null,0,null,null,0,null,null,0,null,null,0,null,null,-1,null,null,-1],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,2,4,4,8.5,6,13,14,10,4.2249999999999996,5.2249999999999996,11.5,12.5,9,10,1,3.5,14],"y":[-1,-1,-1,-2,-1,-2,-2,-2,-2,-3,-3,-3,-3,-3,-3,-0,-0,-1],"text":["personID:   2<br>first_name: Marjorie<br>sex: 0","personID:   3<br>first_name: Petunia<br>sex: 0","personID:   4<br>first_name: Lily<br>sex: 0","personID:   8<br>first_name: Ginny<br>sex: 0","personID:  10<br>first_name: Molly<br>sex: 0","personID:  17<br>first_name: Hermione<br>sex: 0","personID:  18<br>first_name: Fleur<br>sex: 0","personID:  19<br>first_name: Gabrielle<br>sex: 0","personID:  20<br>first_name: Audrey<br>sex: 0","personID:  23<br>first_name: Lily<br>sex: 0","personID:  24<br>first_name: Rose<br>sex: 0","personID:  26<br>first_name: Victoire<br>sex: 0","personID:  27<br>first_name: Dominique<br>sex: 0","personID:  29<br>first_name: Molly<br>sex: 0","personID:  30<br>first_name: Lucy<br>sex: 0","personID: 101<br>first_name: Mother<br>sex: 0","personID: 103<br>first_name: Mother<br>sex: 0","personID: 105<br>first_name: Mother<br>sex: 0"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(68,1,84,1)","opacity":1,"size":26.45669291338583,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(68,1,84,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,3,1.5,3,7.5,5,7,8,9,11,12,2.2250000000000001,3.2250000000000001,6.2249999999999996,13.5,-0,2.5,13],"y":[-1,-1,-2,-2,-1,-2,-2,-2,-2,-2,-2,-3,-3,-3,-3,-0,-0,-1],"text":["personID:   1<br>first_name: Vernon<br>sex: 1","personID:   5<br>first_name: James<br>sex: 1","personID:   6<br>first_name: Dudley<br>sex: 1","personID:   7<br>first_name: Harry<br>sex: 1","personID:   9<br>first_name: Arthur<br>sex: 1","personID:  11<br>first_name: Ron<br>sex: 1","personID:  12<br>first_name: Fred<br>sex: 1","personID:  13<br>first_name: George<br>sex: 1","personID:  14<br>first_name: Percy<br>sex: 1","personID:  15<br>first_name: Charlie<br>sex: 1","personID:  16<br>first_name: Bill<br>sex: 1","personID:  21<br>first_name: James<br>sex: 1","personID:  22<br>first_name: Albus<br>sex: 1","personID:  25<br>first_name: Hugo<br>sex: 1","personID:  28<br>first_name: Louis<br>sex: 1","personID: 102<br>first_name: Father<br>sex: 1","personID: 104<br>first_name: Father<br>sex: 1","personID: 106<br>first_name: Father<br>sex: 1"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(127,211,78,1)","opacity":1,"size":26.45669291338583,"symbol":"square","line":{"width":1.8897637795275593,"color":"rgba(127,211,78,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":23.305936073059364,"r":7.3059360730593621,"b":10.958904109589042,"l":10.958904109589042},"paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.70000000647490612,14.700000000308329],"tickmode":"array","ticktext":["0","5","10"],"tickvals":[0,5,10],"categoryorder":"array","categoryarray":["0","5","10"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-3.1499999999999999,0.15000000000000002],"tickmode":"array","ticktext":["0","1","2","3"],"tickvals":[0,-1,-2,-3],"categoryorder":"array","categoryarray":["0","1","2","3"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","layer":"below","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"201c786dc49b":{"x":{},"y":{},"xend":{},"yend":{},"type":"scatter"},"201c1f929ef3":{"x":{},"y":{},"xend":{},"yend":{}},"201c22d407":{"x":{},"y":{},"xend":{},"yend":{}},"201c2027740":{"x":{},"y":{},"xend":{},"yend":{}},"201c2f46b145":{"x":{},"y":{},"xend":{},"yend":{}},"201c89cae48":{"x":{},"y":{},"xend":{},"yend":{}},"201c62a097fd":{"x":{},"y":{},"xend":{},"yend":{}},"201c8603767":{"x":{},"y":{},"colour":{},"shape":{},"text":{}}},"cur_data":"201c786dc49b","visdat":{"201c786dc49b":["function (y) ","x"],"201c1f929ef3":["function (y) ","x"],"201c22d407":["function (y) ","x"],"201c2027740":["function (y) ","x"],"201c2f46b145":["function (y) ","x"],"201c89cae48":["function (y) ","x"],"201c62a097fd":["function (y) ","x"],"201c8603767":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="section level2">
@@ -699,12 +699,12 @@ handled by <code>config</code>.</p>
 with collaborators, save your config list.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cfg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>point_scale_by_pedigree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>point_size <span class="op">=</span> <span class="fl">6</span>,</span>
-<span>segment_linewidth <span class="op">=</span> <span class="fl">0.7</span>,</span>
-<span>label_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>label_text_size <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>sex_color_palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"purple"</span>, <span class="st">"orange"</span>, <span class="st">"grey50"</span><span class="op">)</span></span>
+<span>  point_scale_by_pedigree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  point_size <span class="op">=</span> <span class="fl">6</span>,</span>
+<span>  segment_linewidth <span class="op">=</span> <span class="fl">0.7</span>,</span>
+<span>  label_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  label_text_size <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  sex_color_palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"purple"</span>, <span class="st">"orange"</span>, <span class="st">"grey50"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">cfg</span>, file <span class="op">=</span> <span class="st">"ggpedigree_config.rds"</span><span class="op">)</span></span>
@@ -712,12 +712,12 @@ with collaborators, save your config list.</p>
 <span><span class="va">cfg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"ggpedigree_config.rds"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
-<span><span class="va">potter</span>,</span>
-<span>famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
-<span>personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
-<span>momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
-<span>dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
-<span>config <span class="op">=</span> <span class="va">cfg</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="va">cfg</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="v02_configuration_files/figure-html/unnamed-chunk-20-1.png" class="r-plt" alt="" width="672"></p>
 </div>
