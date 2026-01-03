@@ -57,7 +57,7 @@ df_repaired <- checkSex(warsofroses,
   )
 
 if (FALSE) {
-  ggpedigree::ggpedigree(df_repaired,
+  ggpedigree::ggPedigree(df_repaired,
     personID = "personID",
     momID = "momID",
     dadID = "dadID",

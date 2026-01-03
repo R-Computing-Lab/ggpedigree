@@ -2,19 +2,9 @@
 % Please edit documentation in R/ggRelatednessMatrix.R
 \name{ggRelatednessMatrix}
 \alias{ggRelatednessMatrix}
-\alias{ggrelatednessmatrix}
 \title{Plot a relatedness matrix as a heatmap (ggpedigree style)}
 \usage{
 ggRelatednessMatrix(
-  mat,
-  config = list(),
-  interactive = FALSE,
-  tooltip_columns = NULL,
-  personID = "personID",
-  ...
-)
-
-ggrelatednessmatrix(
   mat,
   config = list(),
   interactive = FALSE,

@@ -2,17 +2,9 @@
 % Please edit documentation in R/ggPedigreeInteractive.R
 \name{optimizeStaticPedigree}
 \alias{optimizeStaticPedigree}
-\alias{optimiseStaticPedigree}
 \title{Optimize Static Pedigree Plot}
 \usage{
 optimizeStaticPedigree(
-  p,
-  config = list(),
-  variable_drop = c("parent_hash", "couple_hash", "gen", "spousehint", "parent_fam",
-    "nid", "x_order", "y_order", "y_fam", "zygosity", "extra", "x_fam")
-)
-
-optimiseStaticPedigree(
   p,
   config = list(),
   variable_drop = c("parent_hash", "couple_hash", "gen", "spousehint", "parent_fam",

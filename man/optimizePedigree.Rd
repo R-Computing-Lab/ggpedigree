@@ -2,12 +2,9 @@
 % Please edit documentation in R/ggPedigreeInteractive.R
 \name{optimizePedigree}
 \alias{optimizePedigree}
-\alias{optimisePedigree}
 \title{Optimize Pedigree Plot}
 \usage{
 optimizePedigree(p, config = list(), plot_type = c("plotly", "static"))
-
-optimisePedigree(p, config = list(), plot_type = c("plotly", "static"))
 }
 \arguments{
 \item{p}{A plotly or ggplot object representing the pedigree plot.}

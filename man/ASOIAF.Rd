@@ -41,7 +41,7 @@ The variables are as follows:
 \examples{
 # Load the ASOIAF dataset
 data(ASOIAF)
-df_ASOIAF <-  ASOIAF[ASOIAF$famID == 26,]  # Subset to House Tarth
+df_ASOIAF <- ASOIAF[ASOIAF$famID == 26, ] # Subset to House Tarth
 # View the structure of the dataset
 str(df_ASOIAF)
 

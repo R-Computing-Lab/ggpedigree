@@ -68,7 +68,7 @@ ggPedigreeInteractive <- function(ped,
   }
   # Set default styling and layout parameters
   default_config <- getDefaultPlotConfig(
-    function_name = "ggpedigreeinteractive",
+    function_name = "ggPedigreeInteractive",
     personID = personID,
     color_theme = ifelse(is.null(config$color_theme), "color", config$color_theme)
   )
@@ -78,7 +78,7 @@ ggPedigreeInteractive <- function(ped,
   config <- buildPlotConfig(
     default_config = default_config,
     config = config,
-    function_name = "ggpedigreeinteractive",
+    function_name = "ggPedigreeInteractive",
     pedigree_size = nrow(ped)
   )
   if (exists("code_male") && is.null(code_male) == FALSE) {
@@ -101,7 +101,7 @@ ggPedigreeInteractive <- function(ped,
     config = config,
     debug = config$debug,
     focal_fill_column = focal_fill_column,
-    function_name = "ggpedigreeinteractive",
+    function_name = "ggPedigreeInteractive",
     sexVar = sexVar
   )
 
@@ -280,7 +280,6 @@ optimizePlotlyPedigree <- function(p, config = list()) {
 #' @keywords internal
 
 
-
 optimizeStaticPedigree <- function(p, config = list(), variable_drop = c(
                                      "parent_hash",
                                      "couple_hash",
@@ -322,20 +321,3 @@ optimizeStaticPedigree <- function(p, config = list(), variable_drop = c(
 
   p
 }
-#' @rdname optimizePedigree
-#' @export
-
-optimisePedigree <- optimizePedigree
-
-#' @rdname optimizeStaticPedigree
-#' @export
-
-optimiseStaticPedigree <- optimizeStaticPedigree
-
-#' @rdname ggPedigreeInteractive
-#' @export
-ggpedigreeInteractive <- ggPedigreeInteractive
-
-#' @rdname ggPedigreeInteractive
-#' @export
-ggpedigreeinteractive <- ggPedigreeInteractive

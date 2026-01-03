@@ -147,8 +147,10 @@ test_that("calculateCoordinates uses default code_male = 1", {
     sex = c(0, 1, 0, 0, 1)
   )
 
-  coords <- calculateCoordinates(ped, personID = "ID",
-                                 config = list(debug = TRUE))
+  coords <- calculateCoordinates(ped,
+    personID = "ID",
+    config = list(debug = TRUE)
+  )
   expect_true(all(c("x_order", "y_order", "x_pos", "y_pos", "nid") %in% names(coords)))
   expect_true(all(coords$ID %in% ped$ID)) # ID retention
   expect_true(all(coords$momID %in% ped$momID)) # momID retention

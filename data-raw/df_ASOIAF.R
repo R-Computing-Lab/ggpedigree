@@ -1296,7 +1296,8 @@ if (checkis_acyclic$is_acyclic) {
   message("The pedigree is acyclic.")
   write_csv(ASOIAF, here("data-raw", "ASOIAF.csv"))
   usethis::use_data(ASOIAF,
-                    overwrite = TRUE, compress = "xz")
+    overwrite = TRUE, compress = "xz"
+  )
 } else {
   message("The pedigree contains cyclic relationships.")
 }

@@ -99,7 +99,8 @@ ggPedigree(potter,
   famID = "famID",
   personID = "personID",
   config = list(
-    color_theme = "greyscale")
+    color_theme = "greyscale"
+  )
 )
 ```
 

@@ -272,7 +272,3 @@ ggRelatednessMatrix.core <- function(
     )
   )
 }
-
-#' @rdname ggRelatednessMatrix
-#' @export
-ggrelatednessmatrix <- ggRelatednessMatrix

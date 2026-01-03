@@ -103,7 +103,7 @@ p <- ggPedigree(
     status_code_unaffected = FALSE,
     status_shape_affected = 4
   )
-) 
+)
 
 p
 
