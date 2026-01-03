@@ -1,4 +1,4 @@
-# Extended: More Complex Pedigree Plots with ggPedigreeInteractive
+# Extended More Complex Pedigree Plots with ggPedigreeInteractive
 
 ``` r
 library(ggpedigree) # ggPedigree lives here
@@ -7,12 +7,6 @@ library(ggplot2) # ggplot2 for plotting
 library(viridis) # viridis for color palettes
 library(tidyverse) # for data wrangling
 ```
-
-This vignette demonstrates how to create interactive pedigree plots
-using the
-[`ggPedigreeInteractive()`](https://r-computing-lab.github.io/ggpedigree/reference/ggPedigreeInteractive.md)
-function from the `ggpedigree` package. It extends the basic examples
-found in the main package documentation.
 
 ## Customising labels and tool‑tips
 

@@ -13,6 +13,15 @@ ggRelatednessMatrix(
   personID = "personID",
   ...
 )
+
+ggrelatednessmatrix(
+  mat,
+  config = list(),
+  interactive = FALSE,
+  tooltip_columns = NULL,
+  personID = "personID",
+  ...
+)
 ```
 
 ## Arguments

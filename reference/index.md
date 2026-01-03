@@ -34,24 +34,16 @@
   : Plot a custom pedigree diagram
 
 - [`ggPedigreeInteractive()`](https://r-computing-lab.github.io/ggpedigree/reference/ggPedigreeInteractive.md)
+  [`ggpedigreeInteractive()`](https://r-computing-lab.github.io/ggpedigree/reference/ggPedigreeInteractive.md)
+  [`ggpedigreeinteractive()`](https://r-computing-lab.github.io/ggpedigree/reference/ggPedigreeInteractive.md)
   : Interactive pedigree plot (Plotly wrapper around ggPedigree)
 
 - [`ggPhenotypeByDegree()`](https://r-computing-lab.github.io/ggpedigree/reference/ggPhenotypeByDegree.md)
   : Plot correlation of genetic relatedness by phenotype
 
 - [`ggRelatednessMatrix()`](https://r-computing-lab.github.io/ggpedigree/reference/ggRelatednessMatrix.md)
+  [`ggrelatednessmatrix()`](https://r-computing-lab.github.io/ggpedigree/reference/ggRelatednessMatrix.md)
   : Plot a relatedness matrix as a heatmap (ggpedigree style)
-
-- [`kinship2_autohint()`](https://r-computing-lab.github.io/ggpedigree/reference/kinship2_autohint.md)
-  : Automatically generate alignment hints for pedigree plotting
-
-- [`kinship2_plotPedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/kinship2_plotPedigree.md)
-  [`plotPedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/kinship2_plotPedigree.md)
-  :
-
-  plotPedigree A wrapped function to plot simulated pedigree from
-  function `simulatePedigree`. This function require the installation of
-  package `kinship2`.
 
 - [`optimizePedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/optimizePedigree.md)
   : Optimize Pedigree Plot
@@ -66,9 +58,12 @@
   [`print(`*`<pedigreeList>`*`)`](https://r-computing-lab.github.io/ggpedigree/reference/pedigree.md)
   : Create a pedigree or pedigreeList object
 
-- [`redsquirrels`](https://r-computing-lab.github.io/ggpedigree/reference/redsquirrels.md)
-  [`redsquirrels_full`](https://r-computing-lab.github.io/ggpedigree/reference/redsquirrels.md)
-  : Kluane Red Squirrel Data
+- [`plotPedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/plotPedigree.md)
+  :
 
-- [`warsofroses`](https://r-computing-lab.github.io/ggpedigree/reference/warsofroses.md)
-  : Wars of the Roses Pedigree Data
+  plotPedigree A wrapped function to plot simulated pedigree from
+  function `simulatePedigree`. This function require the installation of
+  package `kinship2`.
+
+- [`redsquirrels`](https://r-computing-lab.github.io/ggpedigree/reference/redsquirrels.md)
+  : Kluane Red Squirrel Data

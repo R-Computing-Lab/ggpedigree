@@ -74,7 +74,7 @@ graphical rendering. Includes:
 
 - \`x_spouse\`, \`y_spouse\`: spousal positions (if available)
 
-- \`x_mid_parent\`, \`y_mid_parent\`: midpoint between parents
+- \`x_midparent\`, \`y_midparent\`: midpoint between parents
 
 - \`x_mid_sib\`, \`y_mid_sib\`: sibling group midpoint
 

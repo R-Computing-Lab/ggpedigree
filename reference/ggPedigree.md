@@ -28,8 +28,8 @@ ggPedigree(
   debug = FALSE,
   hints = NULL,
   interactive = FALSE,
-  code_male = NULL,
-  sexVar = "sex"
+  phantoms = FALSE,
+  ...
 )
 
 ggpedigree(
@@ -51,8 +51,8 @@ ggpedigree(
   debug = FALSE,
   hints = NULL,
   interactive = FALSE,
-  code_male = NULL,
-  sexVar = "sex"
+  phantoms = FALSE,
+  ...
 )
 ```
 
@@ -132,12 +132,12 @@ ggpedigree(
 - config:
 
   A list of configuration options for customizing the plot. See
-  getDefaultPlotConfig for details of each option. The list can include:
+  getDefaultPlotConfig for details. The list can include:
 
   code_male
 
   :   Integer or string. Value identifying males in the sex column.
-      (typically 0 or 1) Default: 1
+      (typically 0 or 1) Default: 1.
 
   segment_spouse_color, segment_self_color
 
@@ -194,15 +194,14 @@ ggpedigree(
   Logical. If TRUE, generates an interactive plot using \`plotly\`.
   Default: FALSE.
 
-- code_male:
+- phantoms:
 
-  Integer or string. Value identifying males in the sex column.
-  (typically 0 or 1) Default: 1
+  Logical. If TRUE, adds phantom parents for individuals without
+  parents.
 
-- sexVar:
+- ...:
 
-  Character string specifying the column name for sex. Defaults to
-  "sex".
+  Additional arguments passed to \`ggplot2\` functions.
 
 ## Value
 

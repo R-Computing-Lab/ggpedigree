@@ -7,12 +7,7 @@ all necessary parameters are set.
 ## Usage
 
 ``` r
-buildPlotConfig(
-  default_config,
-  config,
-  function_name = "ggPedigree",
-  pedigree_size = NULL
-)
+buildPlotConfig(default_config, config, function_name = "ggPedigree")
 ```
 
 ## Arguments
@@ -28,10 +23,6 @@ buildPlotConfig(
 - function_name:
 
   The name of the function for which the configuration is being built.
-
-- pedigree_size:
-
-  Size of the pedigree, used for point scaling.
 
 ## Value
 

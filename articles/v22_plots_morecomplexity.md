@@ -1,19 +1,14 @@
-# Extended: Plotting more complicated pedigrees with \`ggPedigree()\`
+# Plotting more complicated pedigrees with \`ggPedigree()\`
 
 ## Introduction
 
 This vignette demonstrates some of the more complex family trees you can
 visualization with
 [`ggPedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/ggPedigree.md).
-It extends the basic examples found in the main package documentation.
 
-We illustrate usage with a more complicated data set from ggpedigree:
-`asoiaf` a fictional pedigree based on characters from the *A Song of
-Ice and Fire* universe by George R. R. Martin. This dataset includes
-complex relationships, such as half-siblings, multiple marriages, and
-consanguineous relationships, making it an excellent example for
-showcasing the capabilities of
-[`ggPedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/ggPedigree.md).
+We illustrate usage with a more complicated data set from BGmisc:
+
+- `asoiaf` – extended Targaryen family
 
 ## Basic usage
 
@@ -91,7 +86,6 @@ df_repaired <- checkParentIDs(df_got,
   parentswithoutrow = FALSE,
   repairsex = FALSE
 ) %>% mutate(
-  famID_mulit = famID,
   famID = 1,
   affected = case_when(
     ID %in% c(jon_id, dany_id, "365") ~ 1,
@@ -101,18 +95,18 @@ df_repaired <- checkParentIDs(df_got,
 #> REPAIR IN EARLY ALPHA
 ```
 
-### Visualize the Pedigree with `kinship2`
+### Visualize the Pedigree with `plotPedigree()`
 
 Here is the classic pedigree plot of the Targaryen family, with Jon Snow
 and Daenerys Targaryen highlighted in black. The
-[`kinship2_plotPedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/kinship2_plotPedigree.md)
+[`plotPedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/plotPedigree.md)
 function provides a quick way to visualize the pedigree structure. It
 serves as a wrapper function from {kinship2} and is useful for quickly
 checking the pedigree structure.
 
 ``` r
 library(kinship2)
-kinship2_plotPedigree(df_repaired,
+plotPedigree(df_repaired,
   affected = df_repaired$affected,
   verbose = FALSE
 )
@@ -132,25 +126,21 @@ customizable way to visualize pedigrees, allowing for easy integration
 with other `ggplot2` functions.
 
 ``` r
-df_repaired <- df_repaired %>% mutate(
-  famID = famID_mulit
-)
-
 pltstatic <- ggPedigree(df_repaired,
   status_column = "affected",
   personID = "ID",
   config = list(
     return_static = TRUE,
     status_label_unaffected = 0,
-    sex_color_include = FALSE,
+    sex_color_include = TRUE,
     code_male = "M",
-    point_size = 10,
+    point_size = 1,
     status_label_affected = 1,
     status_shape_affected = 4,
     ped_width = 14,
     tooltip_include = TRUE,
     label_nudge_y = .25,
-    label_include = FALSE,
+    label_include = TRUE,
     label_method = "geom_text",
     #  segment_self_color = "purple",
     #   label_segment_color = "gray",
@@ -162,11 +152,6 @@ pltstatic
 ```
 
 ![](v22_plots_morecomplexity_files/figure-html/unnamed-chunk-6-1.png)
-
-``` r
-
-# pltstatic+ facet_wrap(~famID_mulit, drop=TRUE,scales = "free")
-```
 
 ``` r
 df_repaired_renamed <- df_repaired %>% rename(
@@ -182,8 +167,7 @@ plt <- ggPedigreeInteractive(df_repaired_renamed,
     focal_fill_personID = 353,
     focal_fill_include = TRUE,
     code_male = "M",
-    point_size = 10,
-    segment_linewidth = 0.25,
+    point_size = 1,
     status_include = FALSE,
     status_label_affected = 1,
     status_shape_affected = 4,
@@ -204,7 +188,6 @@ plt <- ggPedigreeInteractive(df_repaired_renamed,
     tooltip_include = TRUE,
     label_nudge_y = .25,
     label_include = TRUE,
-    label_text_size = 1,
     label_method = "geom_text",
     segment_self_color = "black",
     tooltip_columns = c("personID", "name", "focal_fill")
@@ -227,8 +210,7 @@ plt <- ggPedigreeInteractive(df_repaired_renamed,
     focal_fill_personID = 339,
     focal_fill_include = TRUE,
     code_male = "M",
-    point_size = 10,
-    segment_linewidth = 0.25,
+    point_size = 1,
     status_include = FALSE,
     status_label_affected = 1,
     status_shape_affected = 4,
@@ -249,7 +231,6 @@ plt <- ggPedigreeInteractive(df_repaired_renamed,
     tooltip_include = TRUE,
     label_nudge_y = .25,
     label_include = TRUE,
-    label_text_size = 1,
     label_method = "geom_text",
     segment_self_color = "black",
     tooltip_columns = c("personID", "name", "focal_fill")

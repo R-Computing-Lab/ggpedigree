@@ -16,8 +16,7 @@ transformPed(
   dadID = "dadID",
   matID = "matID",
   patID = "patID",
-  config = list(focal_fill_include = TRUE, focal_fill_component = "maternal",
-    recode_missing_ids = TRUE),
+  config = list(focal_fill_include = TRUE, focal_fill_component = "maternal"),
   fill_group_paternal = c("paternal", "patID", "paternal line", "paternal lineages",
     "paternal lines"),
   fill_group_maternal = c("maternal", "matID", "maternal line", "maternal lineages",
@@ -65,12 +64,12 @@ transformPed(
 - config:
 
   A list of configuration options for customizing the plot. See
-  getDefaultPlotConfig for details of each option. The list can include:
+  getDefaultPlotConfig for details. The list can include:
 
   code_male
 
   :   Integer or string. Value identifying males in the sex column.
-      (typically 0 or 1) Default: 1
+      (typically 0 or 1) Default: 1.
 
   segment_spouse_color, segment_self_color
 

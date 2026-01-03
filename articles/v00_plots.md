@@ -88,8 +88,8 @@ ggPedigree(
   config = list(
     code_male = 1, # Here, 1 = male, 0 = female
     sex_color_include = FALSE,
-    segment_linewidth = .75,
-    point_size = 5,
+    segment_linewidth = .5,
+    point_size = 3,
     outline_multiplier = 1.5,
     # outline_additional_size = -1,
     sex_shape_female = "💸",
@@ -116,9 +116,7 @@ ggPedigree(potter,
   famID = "famID",
   personID = "personID"
 ) +
-  theme_bw(base_size = 12) + scale_colour_brewer(palette = "Set2")
-#> Scale for colour is already present.
-#> Adding another scale for colour, which will replace the existing scale.
+  theme_bw(base_size = 12)
 ```
 
 ![](v00_plots_files/figure-html/unnamed-chunk-1-1.png)
@@ -300,8 +298,7 @@ ggPedigree(potter,
     focal_fill_n_breaks = NULL,
     focal_fill_legend_title = "Genetic Relatives \nof Harry Potter",
     # "additive",
-    sex_color_include = FALSE,
-    sex_legend_show = FALSE
+    sex_color_include = FALSE
   ) # highlight Harry Potter
   # config  = list(segment_mz_color = NA) # color for monozygotic twins
 )
@@ -333,8 +330,7 @@ m1 <- ggPedigree(potter,
     focal_fill_n_breaks = 19,
     focal_fill_legend_show = FALSE,
     focal_fill_legend_title = "Mitochondrial Relatives \nof Harry Potter",
-    sex_color_include = FALSE,
-    label_text_size = 3
+    sex_color_include = FALSE
   ) # highlight Harry Potter
   # config  = list(segment_mz_color = NA) # color for monozygotic twins
 ) + ggplot2::guides(shape = "none")
@@ -353,8 +349,7 @@ m2 <- ggPedigree(potter,
     focal_fill_n_breaks = 19,
     focal_fill_legend_show = FALSE,
     focal_fill_legend_title = "Mitochondrial Relatives \nof Ginny Weasley",
-    sex_color_include = FALSE,
-    label_text_size = 3
+    sex_color_include = FALSE
   ) # highlight Harry Potter
   # config  = list(segment_mz_color = NA) # color for monozygotic twins
 ) + ggplot2::guides(shape = "none")

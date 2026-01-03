@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Extended: Plotting Phenotypic Correlation by Degree of Relatedness • ggpedigree</title>
+<title>Extended Plotting Phenotypic Correlation by Degree of Relatedness • ggpedigree</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Extended: Plotting Phenotypic Correlation by Degree of Relatedness">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Extended Plotting Phenotypic Correlation by Degree of Relatedness">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,13 +34,12 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/v00_plots.html">Plotting pedigrees with ggPedigree()</a></li>
-    <li><a class="dropdown-item" href="../articles/v01_plots_extended.html">Extended: Plotting pedigrees with ggPedigree()</a></li>
-    <li><a class="dropdown-item" href="../articles/v02_configuration.html">Extended: Using `config` to control ggpedigree plots</a></li>
+    <li><a class="dropdown-item" href="../articles/v01_plots_extended.html">Extended Plotting pedigrees with ggPedigree()</a></li>
     <li><a class="dropdown-item" href="../articles/v10_interactiveplots.html">Interactive Pedigree Plotting with ggPedigreeInteractive</a></li>
-    <li><a class="dropdown-item" href="../articles/v11_extendedinteractiveplots.html">Extended: More Complex Pedigree Plots with ggPedigreeInteractive</a></li>
+    <li><a class="dropdown-item" href="../articles/v11_extendedinteractiveplots.html">Extended More Complex Pedigree Plots with ggPedigreeInteractive</a></li>
     <li><a class="dropdown-item" href="../articles/v20_matrix.html">Visualizing Relatedness Matrices with ggRelatednessMatrix()</a></li>
-    <li><a class="dropdown-item" href="../articles/v21_phenotypicbydegree.html">Extended: Plotting Phenotypic Correlation by Degree of Relatedness</a></li>
-    <li><a class="dropdown-item" href="../articles/v22_plots_morecomplexity.html">Extended: Plotting more complicated pedigrees with `ggPedigree()`</a></li>
+    <li><a class="dropdown-item" href="../articles/v21_phenotypicbydegree.html">Extended Plotting Phenotypic Correlation by Degree of Relatedness</a></li>
+    <li><a class="dropdown-item" href="../articles/v22_plots_morecomplexity.html">Plotting more complicated pedigrees with `ggPedigree()`</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -63,13 +62,13 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Extended: Plotting Phenotypic Correlation by Degree of Relatedness</h1>
+      <h1>Extended Plotting Phenotypic Correlation by Degree of Relatedness</h1>
                         <h4 data-toc-skip class="author">S. Mason
 Garrison</h4>
             
             <h4 data-toc-skip class="date">2026-01-03</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/main/vignettes/articles/v21_phenotypicbydegree.Rmd" class="external-link"><code>vignettes/articles/v21_phenotypicbydegree.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/v1.0.0.1/vignettes/articles/v21_phenotypicbydegree.Rmd" class="external-link"><code>vignettes/articles/v21_phenotypicbydegree.Rmd</code></a></small>
       <div class="d-none name"><code>v21_phenotypicbydegree.Rmd</code></div>
     </div>
 
@@ -79,8 +78,7 @@ Garrison</h4>
 degree of relatedness using the <code>ggPhenotypeByDegree</code>
 function from the <code>ggpedigree</code> package. This function is
 particularly useful for analyzing and visualizing the relationship
-between phenotypic traits and genetic relatedness in pedigree data. It
-extends the basic examples found in the main package documentation.</p>
+between phenotypic traits and genetic relatedness in pedigree data.</p>
 The example below uses a squirrel pedigree dataset to illustrate how to
 create a plot showing the phenotypic correlation across different
 degrees of relatedness.
@@ -96,7 +94,7 @@ Click to expand pedigree setup
 <span><span class="co"># library(broom) # for tidy()</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span> <span class="co"># for map_* helpers</span></span>
 <span><span class="co"># Filter for the largest family, recode sex if needed</span></span>
-<span><span class="va">ped_filtered</span> <span class="op">&lt;-</span> <span class="va">redsquirrels_full</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="va">ped_filtered</span> <span class="op">&lt;-</span> <span class="va">redsquirrels</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://r-computing-lab.github.io/BGmisc/reference/recodeSex.html" class="external-link">recodeSex</a></span><span class="op">(</span>code_female <span class="op">=</span> <span class="st">"F"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">famID</span> <span class="op">==</span> <span class="fl">160</span><span class="op">)</span></span>
 <span></span>
@@ -214,29 +212,7 @@ Click to expand pedigree setup
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">lrs_cor_test</span>, <span class="op">-</span><span class="va">ars_n_cor_test</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># drop the list‑columns once unpacked</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>cnu <span class="op">=</span> <span class="va">cnuRel</span>, mtdna <span class="op">=</span> <span class="va">mitRel</span><span class="op">)</span></span></code></pre></div>
-</details><p>The resulting data frame <code>result</code> contains the phenotypic
-correlations for lifetime reproductive success (LRS) and annual
-reproductive success (ARS-n) across different degrees of relatedness,
-along with confidence intervals and p-values.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 20</span></span></span>
-<span><span class="co">#&gt;   addRel_factor mtdna   cnu n_pairs addRel_mean addRel_sd addRel_min addRel_max</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> addRel_1          1     1     103       1      1.90<span style="color: #949494;">e</span><span style="color: #BB0000;">-17</span>      1          1    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> addRel_0.5        0     0       1       0.5    0   <span style="color: #949494;"> </span>         0.5        0.5  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> addRel_0.5        1     0     101       0.5    2.35<span style="color: #949494;">e</span><span style="color: #BB0000;">-17</span>      0.5        0.5  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> addRel_0.25       0     0       1       0.25   0   <span style="color: #949494;"> </span>         0.25       0.25 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> addRel_0.25       1     0     544       0.25   1.43<span style="color: #949494;">e</span><span style="color: #BB0000;">-17</span>      0.25       0.25 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> addRel_0.125      0     0       8       0.125  0   <span style="color: #949494;"> </span>         0.125      0.125</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 12 more variables: cor_lrs &lt;dbl&gt;, cor_lrs_stat &lt;dbl&gt;, cor_lrs_p &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   cor_lrs_df &lt;dbl&gt;, cor_lrs_ci_lb &lt;dbl&gt;, cor_lrs_ci_ub &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   cor_ars_n &lt;dbl&gt;, cor_ars_n_stat &lt;dbl&gt;, cor_ars_n_p &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   cor_ars_n_df &lt;dbl&gt;, cor_ars_n_ci_lb &lt;dbl&gt;, cor_ars_n_ci_ub &lt;dbl&gt;</span></span></span></code></pre></div>
-<div class="section level2">
-<h2 id="phenotypic-correlation-by-degree-of-relatedness">Phenotypic Correlation by Degree of Relatedness<a class="anchor" aria-label="anchor" href="#phenotypic-correlation-by-degree-of-relatedness"></a>
-</h2>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+</details><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPhenotypeByDegree.html">ggPhenotypeByDegree</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">result</span>,</span>
 <span>  y_var <span class="op">=</span> <span class="st">"cor_lrs"</span>,</span>
@@ -253,14 +229,13 @@ along with confidence intervals and p-values.</p>
 <span>    filter_n_pairs <span class="op">=</span> <span class="fl">10</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="v21_phenotypicbydegree_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="700"></p>
-</div>
+<p><img src="v21_phenotypicbydegree_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="700"></p>
 <div class="section level2">
 <h2 id="pedigree-setup">Pedigree Setup<a class="anchor" aria-label="anchor" href="#pedigree-setup"></a>
 </h2>
 <details><summary>
 Click to expand pedigree setup
-</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/R-Computing-Lab/ggpedigree/" class="external-link">ggpedigree</a></span><span class="op">)</span></span>
@@ -298,14 +273,14 @@ Click to expand pedigree setup
 <span>  <span class="fl">1018929</span>, <span class="fl">0.9</span>, <span class="fl">1.1</span>, <span class="fl">0.90234375</span>, <span class="fl">0.994306976854356</span>, <span class="fl">1</span>, <span class="fl">1.09375</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">61.9059012997516</span>, <span class="fl">0.523600756854653</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">0.254706541475618</span>, <span class="fl">0.9999</span>, <span class="cn">Inf</span>, <span class="fl">12530.2189094715</span>, <span class="fl">0</span>, <span class="fl">0.9999</span>,</span>
 <span>  <span class="fl">352</span>, <span class="fl">1.1</span>, <span class="fl">1.5</span>, <span class="fl">1.1005859375</span>, <span class="fl">1.12844427065416</span>, <span class="fl">1.125</span>, <span class="fl">1.25</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">47.7579829059829</span>, <span class="fl">0.545454545454545</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">0.153846153846154</span>, <span class="fl">0.9999</span>, <span class="cn">Inf</span>, <span class="fl">3.76616019073219</span>, <span class="fl">0</span>, <span class="fl">0.9999</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-</details><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+</details><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPhenotypeByDegree.html">ggPhenotypeByDegree</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">df</span>,</span>
 <span>  y_var <span class="op">=</span> <span class="st">"USA_flag_10_polychorFunction_rho"</span>,</span>
 <span>  y_stem_se <span class="op">=</span> <span class="st">"USA_flag_10_polychorFunction"</span>,</span>
 <span>  y_se <span class="op">=</span> <span class="st">"USA_flag_10_polychorFunction_se"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="v21_phenotypicbydegree_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="700"></p>
+<p><img src="v21_phenotypicbydegree_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="700"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

@@ -1,4 +1,4 @@
-# Extended: Plotting pedigrees with ggPedigree()
+# Extended Plotting pedigrees with ggPedigree()
 
 ``` r
 library(ggpedigree) # ggPedigree lives here
@@ -7,13 +7,6 @@ library(ggplot2) # ggplot2 for plotting
 library(viridis) # viridis for color palettes
 library(tidyverse) # for data wrangling
 ```
-
-This vignette demonstrates advanced plotting capabilities of the
-`ggpedigree` package, focusing on creating custom pedigrees for
-publication and handling complex pedigree structures. We will walk
-through the steps to prepare pedigree data, customize plot aesthetics,
-and generate publication-quality figures. It extends the basic examples
-found in the main package documentation.
 
 ## Constructing Custom Pedigrees for Publication
 
@@ -146,13 +139,6 @@ df_fig1 <- tribble(
 
 ### Plotting the pedigree
 
-This example shows how to create a custom pedigree plot highlighting
-individuals from a specific mitochondrial lineage (in blue). The plot
-uses various configuration options to adjust the appearance of the
-pedigree, including point size, outline, and segment colors. Debug mode
-is enabled to facilitate fine-tuning of the layout as well as to extract
-coordinates for overlaying additional information.
-
 ``` r
 fig1 <- ggPedigree(
   df_fig1,
@@ -167,7 +153,6 @@ fig1 <- ggPedigree(
     label_method = "geom_text",
     label_column = "personID",
     point_size = 5,
-    point_scale_by_pedigree = FALSE,
     outline_include = TRUE,
     status_code_affected = TRUE,
     status_code_unaffected = FALSE,
@@ -183,12 +168,8 @@ fig1 <- ggPedigree(
   )
 )
 #> Debug mode is ON. Debugging information will be printed.
-#> Pedigree data prepared. Number of individuals: 14
 #> Coordinates calculated. Number of individuals: 14
 #> Connections calculated. Number of connections: 14
-#> Adding nodes to the plot...
-#> Focal fill column:
-#> Status column: proband
 # fig1
 
 fig1$plot + geom_point(aes(x = x_pos, y = y_pos),
@@ -202,6 +183,11 @@ fig1$plot + geom_point(aes(x = x_pos, y = y_pos),
   guides(shape = "none") + scale_color_manual(
     values = c("pink", "white")
   ) +
+
+  # discrete = TRUE,
+  # labels = c("TRUE", "FALSE"),
+  #  name = ""
+  # ) +
   theme(
     strip.text = element_blank(),
     legend.position = "none"
@@ -221,7 +207,6 @@ p2 <- ggPedigree(
     code_male = 1,
     sex_color_include = FALSE,
     apply_default_scales = FALSE,
-    point_scale_by_pedigree = FALSE,
     label_method = "geom_text",
     label_include = TRUE,
     label_column = "cleanpersonID",
@@ -292,10 +277,6 @@ p <- ggPedigree(
     status_code_unaffected = FALSE,
     generation_height = 1,
     point_size = 2,
-    label_text_size = 2,
-    label_method = "geom_text_repel",
-    label_segment_color = "gray",
-    point_scale_by_pedigree = FALSE,
     generation_width = 1,
     status_shape_affected = 4,
     segment_self_color = "purple",
@@ -349,7 +330,6 @@ m1 <- ggPedigree(potter %>% filter(personID %in% c(1:7, 101:104)),
   personID = "personID",
   config = list(
     label_include = TRUE,
-    point_scale_by_pedigree = FALSE,
     label_column = "first_name",
     point_size = 8,
     focal_fill_personID = 8,
@@ -375,7 +355,7 @@ m1 <- ggPedigree(potter %>% filter(personID %in% c(1:7, 101:104)),
   plot.title = element_blank(),
   plot.title.position = "plot",
   text = element_text(family = family_wfu, size = 14)
-) + coord_cartesian(ylim = c(2.25, 0), clip = "off")
+) + coord_cartesian(ylim = c(3.25, 1), clip = "off")
 # Panel B
 m2 <- ggPedigree(potter,
   famID = "famID",
@@ -384,7 +364,6 @@ m2 <- ggPedigree(potter,
     label_include = TRUE,
     label_column = "first_name",
     point_size = 8,
-    point_scale_by_pedigree = FALSE,
     focal_fill_personID = 8, # Molly Weasley
     segment_linewidth = 0.5,
     label_text_size = 10,
@@ -415,7 +394,7 @@ m2 <- ggPedigree(potter,
     family = family_wfu,
     size = 14, face = "bold"
   )
-) + coord_cartesian(ylim = c(3.5, 0), clip = "off")
+) + coord_cartesian(ylim = c(4.5, 1), clip = "off")
 ```
 
 ``` r

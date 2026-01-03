@@ -18,12 +18,7 @@ getDefaultPlotConfig(
   apply_default_scales = TRUE,
   apply_default_theme = TRUE,
   segment_default_color = "black",
-  color_theme = "color",
-  greyscale_palette_default = c("grey10", "grey50", "grey85"),
-  greyscale_low = "black",
-  greyscale_mid = "grey50",
-  greyscale_high = "white",
-  color_palette_default = c("#440154FF", "#7fd34e", "#f1e51d"),
+  color_palette_default = c("#440154FF", "#FDE725FF", "#21908CFF"),
   color_palette_low = "#000004FF",
   color_palette_mid = "#56106EFF",
   color_palette_high = "#FCFDBFFF",
@@ -35,7 +30,6 @@ getDefaultPlotConfig(
   value_rounding_digits = 5,
   code_male = 1,
   code_na = NA,
-  code_unknown = NULL,
   code_female = 0,
   label_include = TRUE,
   label_column = "personID",
@@ -49,8 +43,7 @@ getDefaultPlotConfig(
   label_text_size = 3,
   label_text_color = "black",
   label_text_family = "sans",
-  point_size = 6,
-  point_scale_by_pedigree = TRUE,
+  point_size = 4,
   outline_include = FALSE,
   outline_multiplier = 1.25,
   outline_additional_size = 0,
@@ -74,7 +67,6 @@ getDefaultPlotConfig(
   segment_linetype = 1,
   segment_lineend = "round",
   segment_linejoin = "round",
-  segment_scale_by_pedigree = FALSE,
   segment_offspring_color = segment_default_color,
   segment_parent_color = segment_default_color,
   segment_self_color = segment_default_color,
@@ -96,9 +88,8 @@ getDefaultPlotConfig(
   sex_shape_female = 16,
   sex_shape_male = 15,
   sex_shape_unknown = 18,
-  sex_shape_values = NULL,
   sex_shape_include = TRUE,
-  sex_legend_show = FALSE,
+  sex_legend_show = TRUE,
   status_include = TRUE,
   status_code_affected = 1,
   status_code_unaffected = 0,
@@ -180,15 +171,12 @@ getDefaultPlotConfig(
   return_static = TRUE,
   return_widget = FALSE,
   return_interactive = FALSE,
-  return_mid_parent = FALSE,
+  return_midparent = FALSE,
   hints = NULL,
   relation = NULL,
   debug = FALSE,
   override_many2many = FALSE,
   optimize_plotly = TRUE,
-  recode_missing_ids = TRUE,
-  recode_missing_sex = TRUE,
-  add_phantoms = FALSE,
   ...
 )
 ```
@@ -222,30 +210,6 @@ getDefaultPlotConfig(
 - segment_default_color:
 
   A character string for the default color of segments in the plot.
-
-- color_theme:
-
-  Theme mode controlling default palettes. Options: "color" (default) or
-  "greyscale".
-
-- greyscale_palette_default:
-
-  Default discrete greyscale palette used when color_theme="greyscale".
-
-- greyscale_low:
-
-  Greyscale low color for continuous gradients when
-  color_theme="greyscale".
-
-- greyscale_mid:
-
-  Greyscale midpoint color for continuous gradients when
-  color_theme="greyscale".
-
-- greyscale_high:
-
-  Greyscale high color for continuous gradients when
-  color_theme="greyscale".
 
 - color_palette_default:
 
@@ -289,20 +253,15 @@ getDefaultPlotConfig(
 
 - code_male:
 
-  Integer/string code for males in data. Default is 1.
+  Integer/string code for males in data.
 
 - code_na:
 
-  optional Integer/string code for missing values in data. Default is
-  NA.
-
-- code_unknown:
-
-  optional Integer/string code for unknown sex in data. Default is NULL.
+  optional Integer/string code for missing values in data.
 
 - code_female:
 
-  optional Integer/string code for females in data. Default is 0.
+  optional Integer/string code for females in data.
 
 - label_include:
 
@@ -357,10 +316,6 @@ getDefaultPlotConfig(
 - point_size:
 
   Size of points drawn in plot.
-
-- point_scale_by_pedigree:
-
-  Whether to scale point sizes by pedigree size.
 
 - outline_include:
 
@@ -440,85 +395,79 @@ getDefaultPlotConfig(
 
 - segment_linewidth:
 
-  Line width for segments. Default is 0.5.
+  Line width for segments.
 
 - segment_linetype:
 
-  Line type for segments. Default is 1 (solid).
+  Line type for segments.
 
 - segment_lineend:
 
-  Line end type for segments. Default is "round".
+  Line end type for segments.
 
 - segment_linejoin:
 
-  Line join type for segments. Default is "round".
-
-- segment_scale_by_pedigree:
-
-  Whether to scale segment sizes by pedigree size. Default is FALSE.
+  Line join type for segments.
 
 - segment_offspring_color:
 
-  Color for offspring segments. Default uses segment_default_color.
+  Color for offspring segments.
 
 - segment_parent_color:
 
-  Color for parent segments. Default uses segment_default_color.
+  Color for parent segments.
 
 - segment_self_color:
 
-  Color for self-loop segments. Default uses segment_default_color.
+  Color for self-loop segments.
 
 - segment_sibling_color:
 
-  Color for sibling segments. Default uses segment_default_color.
+  Color for sibling segments.
 
 - segment_spouse_color:
 
-  Color for spouse segments. Default uses segment_default_color.
+  Color for spouse segments.
 
 - segment_mz_color:
 
-  Color for monozygotic twin segments. Default uses
-  segment_default_color.
+  Color for monozygotic twin segments.
 
 - segment_mz_linetype:
 
-  Line type for MZ segments. Default uses segment_linetype.
+  Line type for MZ segments.
 
 - segment_mz_alpha:
 
-  Alpha for MZ segments. Default is 1.
+  Alpha for MZ segments.
 
 - segment_mz_t:
 
-  Tuning parameter for MZ segment layout. Default is 0.6.
+  Tuning parameter for MZ segment layout.
 
 - segment_self_linetype:
 
-  Line type for self-loop segments. Default is "dotdash".
+  Line type for self-loop segments.
 
 - segment_self_linewidth:
 
-  Width of self-loop segment lines. Default is half of
-  segment_linewidth.
+  Width of self-loop segment lines.
 
 - segment_self_alpha:
 
-  Alpha value for self-loop segments. Default is 0.5.
+  Alpha value for self-loop segments.
 
 - segment_self_angle:
 
-  Angle of self-loop segment. Default is 90 degrees.
+  Angle of self-loop segment.
 
 - segment_self_curvature:
 
-  Curvature of self-loop segment. Default is -0.2.
+  Curvature of self-loop segment.
 
 - sex_color_include:
 
-  Whether to color nodes by sex. Default is TRUE.
+  Whether to color nodes by sex.
 
 - sex_legend_title:
 
@@ -530,24 +479,19 @@ getDefaultPlotConfig(
 
 - sex_color_palette:
 
-  A character vector of colors for sex. Default uses
-  color_palette_default.
+  A character vector of colors for sex.
 
 - sex_shape_female:
 
-  Shape for female nodes. Default is 16 (circle).
+  Shape for female nodes.
 
 - sex_shape_male:
 
-  Shape for male nodes. Default is 15 (square).
+  Shape for male nodes.
 
 - sex_shape_unknown:
 
-  Shape for unknown sex nodes. Default is 18 (diamond).
-
-- sex_shape_values:
-
-  A named vector mapping sex codes to shapes.
+  Shape for unknown sex nodes.
 
 - sex_shape_include:
 
@@ -555,7 +499,7 @@ getDefaultPlotConfig(
 
 - sex_legend_show:
 
-  Whether to display sex in the legend or not.
+  Whether to display sex in the legend
 
 - status_include:
 
@@ -655,15 +599,15 @@ getDefaultPlotConfig(
 
 - focal_fill_include:
 
-  Whether to fill focal individuals. Default is FALSE.
+  Whether to fill focal individuals.
 
 - focal_fill_legend_show:
 
-  Whether to show legend for focal fill. Default is TRUE.
+  Whether to show legend for focal fill.
 
 - focal_fill_personID:
 
-  ID of focal individual. Default is 1.
+  ID of focal individual.
 
 - focal_fill_legend_title:
 
@@ -683,7 +627,7 @@ getDefaultPlotConfig(
 
 - focal_fill_scale_midpoint:
 
-  Midpoint for focal fill scale. Default uses color_scale_midpoint.
+  Midpoint for focal fill scale.
 
 - focal_fill_method:
 
@@ -822,7 +766,7 @@ getDefaultPlotConfig(
 
 - tile_color_palette:
 
-  Color palette for matrix plots. Default is c("white", "gold", "red").
+  Color palette for matrix plots.
 
 - tile_interpolate:
 
@@ -830,7 +774,7 @@ getDefaultPlotConfig(
 
 - tile_color_border:
 
-  Color border for matrix tiles. Default is NA (no border).
+  Color border for matrix tiles.
 
 - tile_cluster:
 
@@ -842,15 +786,15 @@ getDefaultPlotConfig(
 
 - tile_na_rm:
 
-  Whether to remove NA values in matrix tiles. Default is FALSE.
+  Whether to remove NA values in matrix tiles.
 
 - tile_linejoin:
 
-  Line join type for matrix tiles. Default is "mitre".
+  Line join type for matrix tiles.
 
 - matrix_diagonal_include:
 
-  Whether to include diagonal in matrix plots. Default is TRUE.
+  Whether to include diagonal in matrix plots.
 
 - matrix_upper_triangle_include:
 
@@ -866,8 +810,7 @@ getDefaultPlotConfig(
 
 - matrix_isChild_method:
 
-  Method used for isChild matrix derivation. Options are
-  "partialparent", "fullparent", "anyparent".
+  Method used for isChild matrix derivation.
 
 - return_static:
 
@@ -881,9 +824,9 @@ getDefaultPlotConfig(
 
   Whether to return an interactive plot.
 
-- return_mid_parent:
+- return_midparent:
 
-  Whether to return mid_parent values in the plot.
+  Whether to return midparent values in the plot.
 
 - hints:
 
@@ -904,18 +847,6 @@ getDefaultPlotConfig(
 - optimize_plotly:
 
   Whether to optimize the plotly output for speed.
-
-- recode_missing_ids:
-
-  Whether to recode 0s as missing IDs in the pedigree. Default is TRUE.
-
-- recode_missing_sex:
-
-  Whether to recode missing sex codes in the pedigree. Default is TRUE.
-
-- add_phantoms:
-
-  Whether to add phantom parents for individuals without parents.
 
 - ...:
 
