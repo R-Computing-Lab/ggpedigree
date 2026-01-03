@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Using config to control ggpedigree plots</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Using config to control ggpedigree
+plots</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(ggpedigree) <span class="co"># ggPedigree lives here</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(BGmisc) <span class="co"># helper utilities &amp; example data</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># ggplot2 for plotting</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(viridis) <span class="co"># viridis for color palettes</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># for data wrangling</span></span></code></pre></div>
+<p>This vignette demonstrates how to use the <code>config</code>
+argument to control the behavior of pedigree plots in the
+<code>{ggpedigree}</code> package.</p>
+<p>Every gg-based plotting function in <code>{ggpedigree}</code> accepts
+a <code>config</code> argument. A <code>config</code> is a named list.
+Each element corresponds to one plotting, layout, or aesthetic option.
+You pass the list to the plotting function and the plot is drawn using
+those values.</p>
+<p>You do not need to supply every option. You only provide the options
+you want to change. Any options you do not specify will use the package
+defaults. You can see a full list of supported options and their
+defaults by reviewing the documentation for
+<code>getDefaultPlotConfig()</code>.</p>
+<p>This vignette demonstrates how <code>config</code> is used in
+practice. An extended list of all available options is provided in the
+online documentation.</p>
+<div id="basic-usage-of-config-in-ggpedigree" class="section level1">
+<h1>Basic usage of <code>config</code> in <code>ggPedigree()</code></h1>
+<p>We will use the <code>potter</code> pedigree dataset bundled in
+<code>{BGmisc}</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(BGmisc)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;potter&quot;</span>)</span></code></pre></div>
+<p>A basic pedigree plot uses defaults:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">ggPedigree</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  potter,</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="at">famID =</span> <span class="st">&quot;famID&quot;</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="at">personID =</span> <span class="st">&quot;personID&quot;</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="at">momID =</span> <span class="st">&quot;momID&quot;</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  <span class="at">dadID =</span> <span class="st">&quot;dadID&quot;</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+<div id="sex-coding-code_male-and-code_female" class="section level2">
+<h2>Sex coding: <code>code_male</code> and <code>code_female</code></h2>
+<p><code>ggPedigree()</code> (and other ggpedigree plots that use sex)
+need to know how sex is encoded in your data so they can assign the
+correct <strong>shapes</strong> (and optionally <strong>colors</strong>)
+for female, male, and unknown.</p>
+<p>The <code>code_male</code> and <code>code_female</code> config
+options define which values in your sex column should be treated as male
+vs female. The defaults assume:</p>
+<ul>
+<li><code>code_female = 0</code></li>
+<li><code>code_male = 1</code></li>
+</ul>
+<p>If your dataset uses different codes (for example <code>1/2</code> or
+<code>&quot;M&quot;/&quot;F&quot;</code>), override these in <code>config</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># Example: sex coded as 1 = male, 2 = female</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">ggPedigree</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  ped,</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  <span class="at">famID =</span> <span class="st">&quot;famID&quot;</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  <span class="at">personID =</span> <span class="st">&quot;personID&quot;</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="at">momID =</span> <span class="st">&quot;momID&quot;</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="at">dadID =</span> <span class="st">&quot;dadID&quot;</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  <span class="at">config =</span> <span class="fu">list</span>(</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>    <span class="at">code_male =</span> <span class="dv">1</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>    <span class="at">code_female =</span> <span class="dv">2</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>    <span class="at">code_unknown =</span> <span class="dv">3</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>  )</span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>)</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co"># Example: sex coded as &quot;M&quot; / &quot;F&quot;</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="fu">ggPedigree</span>(</span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>  ped,</span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>  <span class="at">famID =</span> <span class="st">&quot;famID&quot;</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a>  <span class="at">personID =</span> <span class="st">&quot;personID&quot;</span>,</span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a>  <span class="at">momID =</span> <span class="st">&quot;momID&quot;</span>,</span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>  <span class="at">dadID =</span> <span class="st">&quot;dadID&quot;</span>,</span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>  <span class="at">config =</span> <span class="fu">list</span>(</span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a>    <span class="at">code_male =</span> <span class="st">&quot;M&quot;</span>,</span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a>    <span class="at">code_female =</span> <span class="st">&quot;F&quot;</span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a>  )</span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a>)</span></code></pre></div>
+<p>Once the sex codes are interpreted correctly, the plot uses the
+corresponding shape settings (<code>sex_shape_female</code>,
+<code>sex_shape_male</code>, <code>sex_shape_unknown</code>) and, when
+enabled, sex-based coloring (<code>sex_color_include</code>,
+<code>sex_color_palette</code>).</p>
+</div>
+</div>
+<div id="advanced-examples" class="section level1">
+<h1>Advanced Examples</h1>
+<p>Additional examples are available in the online documentation to keep
+the package file size reasonable. These are provided as articles that
+demonstrate more complex pedigree plots. You can find these on the <a href="https://r-computing-lab.github.io/ggpedigree/">ggpedigree
+website</a>.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

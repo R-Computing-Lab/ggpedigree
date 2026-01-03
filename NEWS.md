@@ -17,7 +17,7 @@
 * Added automatic point scaling based on pedigree size.
 * Added optional segment size scaling based on pedigree size.
 * Hid the Sex key by default in `ggpedigree`.
-* Added a vignette describing `ggpedigree` configuration options.
+* Added two vignettes describing `ggpedigree` configuration options.
 
 ## Validation and messages
 * Performed required-column checks earlier in `ggpedigree()`, including `sex`.
