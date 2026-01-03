@@ -255,7 +255,7 @@ getRelativeCoordinates <- function(ped,
 #' @return A string representing the symmetric key
 #' @keywords internal
 #' @importFrom dplyr if_else
-#' @aliases makeSymmetricKey
+
 .makeSymmetricKey <- function(id1, id2, sep = ".") {
   if (missing(id1) || missing(id2)) {
     stop("Both id1 and id2 must be provided.")

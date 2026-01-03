@@ -2,56 +2,9 @@
 % Please edit documentation in R/ggPedigreeInteractive.R
 \name{ggPedigreeInteractive}
 \alias{ggPedigreeInteractive}
-\alias{ggpedigreeinteractive}
-\alias{ggpedigreeInteractive}
-\alias{ggPedigreeinteractive}
 \title{Interactive pedigree plot (Plotly wrapper around ggPedigree)}
 \usage{
 ggPedigreeInteractive(
-  ped,
-  famID = "famID",
-  personID = "personID",
-  momID = "momID",
-  dadID = "dadID",
-  patID = "patID",
-  matID = "matID",
-  twinID = "twinID",
-  spouseID = "spouseID",
-  status_column = NULL,
-  tooltip_columns = NULL,
-  focal_fill_column = NULL,
-  overlay_column = NULL,
-  config = list(optimize_plotly = TRUE),
-  debug = FALSE,
-  return_widget = TRUE,
-  hints = NULL,
-  code_male = NULL,
-  sexVar = "sex"
-)
-
-ggpedigreeInteractive(
-  ped,
-  famID = "famID",
-  personID = "personID",
-  momID = "momID",
-  dadID = "dadID",
-  patID = "patID",
-  matID = "matID",
-  twinID = "twinID",
-  spouseID = "spouseID",
-  status_column = NULL,
-  tooltip_columns = NULL,
-  focal_fill_column = NULL,
-  overlay_column = NULL,
-  config = list(optimize_plotly = TRUE),
-  debug = FALSE,
-  return_widget = TRUE,
-  hints = NULL,
-  code_male = NULL,
-  sexVar = "sex"
-)
-
-ggpedigreeinteractive(
   ped,
   famID = "famID",
   personID = "personID",

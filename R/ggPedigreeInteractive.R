@@ -7,7 +7,6 @@
 #'
 #' @inheritParams ggPedigree
 #' @return A plotly htmlwidget (or plotly object if `return_widget = FALSE`)
-#' @aliases ggpedigreeinteractive ggPedigreeInteractive ggpedigreeInteractive  ggPedigreeinteractive
 #' @examples
 #' library(BGmisc)
 #' data("potter")
@@ -69,7 +68,7 @@ ggPedigreeInteractive <- function(ped,
   }
   # Set default styling and layout parameters
   default_config <- getDefaultPlotConfig(
-    function_name = "ggpedigreeinteractive",
+    function_name = "ggPedigreeInteractive",
     personID = personID,
     color_theme = ifelse(is.null(config$color_theme), "color", config$color_theme)
   )
@@ -79,7 +78,7 @@ ggPedigreeInteractive <- function(ped,
   config <- buildPlotConfig(
     default_config = default_config,
     config = config,
-    function_name = "ggpedigreeinteractive",
+    function_name = "ggPedigreeInteractive",
     pedigree_size = nrow(ped)
   )
   if (exists("code_male") && is.null(code_male) == FALSE) {
@@ -102,7 +101,7 @@ ggPedigreeInteractive <- function(ped,
     config = config,
     debug = config$debug,
     focal_fill_column = focal_fill_column,
-    function_name = "ggpedigreeinteractive",
+    function_name = "ggPedigreeInteractive",
     sexVar = sexVar
   )
 
@@ -229,7 +228,7 @@ formatTooltip <- function(df, tooltip_columns, sep = ": ") {
 #'  "static". Default is "plotly".
 #'  @return The optimized plot object with rounded coordinates.
 #'  @keywords internal
-#'  @aliases optimisePedigree
+
 
 optimizePedigree <- function(p, config = list(), plot_type = c("plotly", "static")) {
   plot_type <- match.arg(plot_type)
@@ -279,7 +278,6 @@ optimizePlotlyPedigree <- function(p, config = list()) {
 #' "y_order", "y_fam", "zygosity", "extra", and "x_fam".
 #' @return The optimized ggplot object with rounded coordinates and reduced data frame.
 #' @keywords internal
-#' @aliases optimiseStaticPedigree
 
 
 optimizeStaticPedigree <- function(p, config = list(), variable_drop = c(
@@ -323,12 +321,3 @@ optimizeStaticPedigree <- function(p, config = list(), variable_drop = c(
 
   p
 }
-
-
-#' @rdname ggPedigreeInteractive
-#' @export
-ggpedigreeInteractive <- ggPedigreeInteractive
-
-#' @rdname ggPedigreeInteractive
-#' @export
-ggpedigreeinteractive <- ggPedigreeInteractive

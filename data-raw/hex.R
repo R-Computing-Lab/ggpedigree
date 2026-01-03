@@ -47,7 +47,7 @@ rsvg::rsvg_png("data-raw/recoloredcat.svg", "data-raw/recoloredcat.png", width =
 
 ## Step 2: Generate the background graph
 data(potter)
-p <- ggpedigree(potter,
+p <- ggPedigree(potter,
   config =
     list(
       label_include = FALSE,

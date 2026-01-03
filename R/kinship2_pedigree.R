@@ -367,9 +367,9 @@ pedigree.sexrepair <- function(sex) {
   }
   sex <- ifelse(sex < 1 | sex > 4, 3, sex)
   if (all(sex > 2)) {
-    stop("All sex values are labeled as unknown. Please try using config options to specify male and female labels (code_male, code_female, code_unknown)")
+    stop("All sex values are labeled as unknown. Please try using config options to specify male, female, and unknown labels (code_male, code_female, code_unknown)")
   } else if (mean(sex == 3) > 0.25) {
-    warning("More than 25% of the sex values are 'unknown'. Please try using config options to specify male and female labels.")
+    warning("More than 25% of the sex values are 'unknown'. Please try using config options to specify male, female, and unknown labels.")
   }
   sex <- factor(sex, 1:4, labels = codes)
 

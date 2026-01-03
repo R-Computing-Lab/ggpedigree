@@ -30,10 +30,10 @@ test_that("ASOIAF data loads", {
     personID = "id",
     momID = "momID",
     dadID = "dadID",
- #   code_male = "M",
+    #   code_male = "M",
     config = list(
       add_phantoms = TRUE,
-      code_male = "M"  ,
+      code_male = "M",
       override_many2many = TRUE
     )
   )
@@ -48,20 +48,19 @@ test_that("redsquirrels data structure", {
   str(redsquirrels)
 
   #'   # Select one family to plot
-   family_data <- subset(redsquirrels, famID == 160)
+  family_data <- subset(redsquirrels, famID == 160)
   #'
   #'   # Create a pedigree plot
-expect_no_error(   ggPedigree(family_data,
-     personID = "personID",
+  expect_no_error(ggPedigree(family_data,
+    personID = "personID",
     momID = "momID",
     dadID = "dadID",
-  # sex = "sex",
-     config = list(
+    # sex = "sex",
+    config = list(
       add_phantoms = TRUE,
       code_male = "M",
-      code_female="F",
+      code_female = "F",
       override_many2many = TRUE
- )
-  )
-)
- })
+    )
+  ))
+})

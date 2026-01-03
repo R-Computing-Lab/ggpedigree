@@ -80,15 +80,14 @@ preparePedigreeData <- function(ped,
   }
 
 
-
   # Standardize sex variable using code_male convention
- # if (config$recode_sex == TRUE) {
+  # if (config$recode_sex == TRUE) {
   ds_ped <- BGmisc::recodeSex(ds_ped,
-                              recode_male = config$code_male,
-                              recode_na = config$code_na,
-                              recode_female = config$code_female
+    recode_male = config$code_male,
+    recode_na = config$code_na,
+    recode_female = config$code_female
   )
-#  }
+  #  }
   if (config$add_phantoms == TRUE) {
     # If phantoms are requested, add phantom parents
     ds_ped <- BGmisc::checkParentIDs(
@@ -433,7 +432,9 @@ addFocalFillColumn <- function(ds_ped,
 #' @keywords internal
 .pick_first <- function(rules, default = NULL) {
   for (r in rules) {
-    if (isTRUE(r$when())) return(r$do)
+    if (isTRUE(r$when())) {
+      return(r$do)
+    }
   }
   default
 }
@@ -441,9 +442,8 @@ addFocalFillColumn <- function(ds_ped,
 
 .should_add_overlay <- function(config,
                                 overlay_column = NULL,
-                                status_column= NULL,
-                                focal_fill_column = NULL
-                                ) {
+                                status_column = NULL,
+                                focal_fill_column = NULL) {
   isTRUE(config$overlay_include) && !is.null(overlay_column) ||
     (isTRUE(config$status_include) && !is.null(status_column) && isTRUE(config$sex_color_include)) ||
     (isTRUE(config$focal_fill_include) && !is.null(focal_fill_column) && !isTRUE(config$sex_color_include))

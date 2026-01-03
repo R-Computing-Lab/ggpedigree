@@ -8,7 +8,6 @@ test_that("calculateConnections returns expected columns and structure", {
   )
 
   ped <- calculateCoordinates(ped,
-
     personID = "personID",
     momID = "momID",
     dadID = "dadID",
@@ -48,7 +47,6 @@ test_that("calculateConnections returns expected columns and structure with no s
   )
 
   ped <- calculateCoordinates(ped,
-
     personID = "personID",
     momID = "momID",
     dadID = "dadID",
@@ -97,7 +95,7 @@ test_that("calculateConnections returns correct parent coordinates", {
     spouseID = "spouseID",
     config = list(
       code_male = "M"
-  )
+    )
   )
   conn_out <- calculateConnections(ped)
   conns <- conn_out$connections
@@ -123,7 +121,6 @@ test_that("mid_parent coordinates are correct", {
   )
 
   ped <- calculateCoordinates(ped,
-
     personID = "personID",
     momID = "momID",
     dadID = "dadID",
@@ -589,7 +586,8 @@ test_that("buildSpouseSegments with use_hash=TRUE handles unmatched parent IDs",
   )
 
   result <- buildSpouseSegments(ped, connections_for_FOO,
-                                use_hash = TRUE)
+    use_hash = TRUE
+  )
 
   expect_true(is.data.frame(result))
   expect_equal(nrow(result), 2)

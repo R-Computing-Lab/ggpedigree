@@ -2,7 +2,6 @@
 % Please edit documentation in R/ggPedigreeInteractive.R
 \name{optimizeStaticPedigree}
 \alias{optimizeStaticPedigree}
-\alias{optimiseStaticPedigree}
 \title{Optimize Static Pedigree Plot}
 \usage{
 optimizeStaticPedigree(
