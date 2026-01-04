@@ -61,7 +61,7 @@
 #' @importFrom BGmisc ped2fam ped2paternal ped2maternal recodeSex checkParentIDs
 #' @importFrom rlang sym
 #' @importFrom utils modifyList
-
+#' @seealso ggPedigree.core, ggPedigreeInteractive, vignette("v00_plots")
 ggPedigree <- function(ped,
                        famID = "famID",
                        personID = "personID",

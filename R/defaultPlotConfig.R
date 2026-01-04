@@ -185,6 +185,7 @@
 #' @param ... Additional arguments for future extensibility.
 #' @return A named list of default plotting and layout parameters.
 #' @export
+#' @seealso buildPlotConfig, vignette("v10_configuration")
 
 
 getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",

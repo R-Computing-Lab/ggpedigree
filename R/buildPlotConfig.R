@@ -8,7 +8,8 @@
 #' @param function_name The name of the function for which the configuration is being built.
 #' @param pedigree_size Size of the pedigree, used for point scaling.
 #' @return A complete configuration list with all necessary parameters.
-#'
+#' @seealso getDefaultPlotConfig, vignette("v10_configuration")
+#' @keywords internal
 buildPlotConfig <- function(default_config,
                             config,
                             function_name = "ggPedigree",

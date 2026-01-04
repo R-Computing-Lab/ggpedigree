@@ -17,7 +17,22 @@
 #'   }
 #'
 #' @export
-
+#' @examples
+#' ped <- data.frame(
+#'   personID = c("A", "B", "C", "D", "X"),
+#'   momID = c(NA, "A", "A", "C", NA),
+#'   dadID = c(NA, "X", "X", "B", NA),
+#'   spouseID = c("X", "C", "B", NA, "A"),
+#'   sex = c("F", "M", "F", "F", "M")
+#' )
+#'
+#' coords <- calculateCoordinates(ped, code_male = "M")
+#' conns <- calculateConnections(coords, config = list(code_male = "M"))
+#' names(conns)
+#' head(conns$connections)
+#'
+#' @seealso calculateCoordinates, ggPedigree, vignette("v00_plots")
+#'
 calculateConnections <- function(ped,
                                  config = list(),
                                  spouseID = "spouseID",
