@@ -7,7 +7,7 @@ test_that("simulated pedigree plots correctly", {
   sexR <- .50
   marR <- .7
 
-  results <- simulatePedigree(kpc = kpc, Ngen = Ngen, sexR = sexR, marR = marR)
+  results <- BGmisc::simulatePedigree(kpc = kpc, Ngen = Ngen, sexR = sexR, marR = marR)
 
   expect_no_error(kinship2_plotPedigree(results, verbose = FALSE))
 
@@ -52,6 +52,6 @@ test_that("pedigree errs when affected variables named", {
 test_that("pedigree plots multiple families", {
   library(BGmisc)
   data(inbreeding)
-  plotPedigree(inbreeding, verbose = TRUE)
+  expect_warning(plotPedigree(inbreeding, verbose = TRUE))
   expect_message(kinship2_plotPedigree(inbreeding, verbose = TRUE))
 })
