@@ -1,8 +1,8 @@
 ---
-title: "Extended: Using `config` to control ggpedigree plots"
+title: "Extended: More uses of `config` to control ggpedigree plots"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Extended: Using config to control ggpedigree plots}
+  %\VignetteIndexEntry{Extended: More uses of config to control ggpedigree plots}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -24,19 +24,16 @@ library(viridis) # viridis for color palettes
 library(tidyverse) # for data wrangling
 ```
 
-Every gg-based plotting function in `{ggpedigree}` accepts a `config` argument.
+Every gg-based plotting function in `{ggpedigree}` accepts a `config` argument. This is an easier way to control plot behavior without rewriting the plotting code.
 
-This is an easier way to control plot behavior without rewriting the plotting code.
-
-A `config` is a named list. Each element corresponds to one plotting, layout, or aesthetic option. You pass the list to the plotting function and the plot is drawn using those values.
+As already discussed, a `config` is a named list. Each element corresponds to one plotting, layout, or aesthetic option. You pass the list to the plotting function and the plot is drawn using those values.
 
 You do not need to supply every option. You only provide the options you want to change. Any options you do not specify will use the package defaults. You can see a full list of supported options and their defaults by reviewing the documentation for `getDefaultPlotConfig()`.
 
-This vignette demonstrates how `config` is used in practice.
 
 # Basic usage of `config` in `ggPedigree()`
 
-We will use the `potter` pedigree dataset bundled in `{BGmisc}`.
+As before, we will use the `potter` pedigree dataset bundled in `{BGmisc}`.
 
 ```{r}
 library(BGmisc)
@@ -77,7 +74,7 @@ ggPedigree(
   config = list(
     code_male = 1,
     code_female = 2,
-    code_unknown = 0
+    code_unknown = 3
   )
 )
 
@@ -293,7 +290,7 @@ plot_ped <- ggPedigree(
     sex_shape_male = "🚗"
   )
 )
-plot_ped
+
 ggplot2::ggsave(
   filename = "custom_sex_emoji_pedigree.png",
   plot = plot_ped,
@@ -303,9 +300,14 @@ ggplot2::ggsave(
 )
 ```
 
-Note that when using emoji shapes, it is best to use `ggsave()` to save the plot to a file, as some R graphics devices may not render emoji correctly. Notice how the emoji shapes appear in the saved PNG file below compares to the image rendered above, which may vary because of differences in font rendering.
+
+![](emoji_preview.png){width="7in" height="5in"}
+
+Note that when using emoji shapes, it is best to use `ggsave()` to save the plot to a file, as some R graphics devices may  render emoji differently. Notice how the emoji shapes appear in the saved PNG file below compares to the image rendered during the preview above. These may vary because of differences in font rendering.
 
 ![](custom_sex_emoji_pedigree.png){width="7in" height="5in"}
+
+
 
 ## 5) Affected status overlay
 

@@ -377,4 +377,4 @@ p +
 
 # Advanced Examples: Large Pedigrees with self-loops
 
-Additional examples are provided as articles that demonstrate more complex pedigree plots. You can find these on the [ggpedigree website](https://r-computing-lab.github.io/ggpedigree/). These articles cover advanced topics such as: multiple families, self-loops, and other advanced features.
+Additional examples are available in the online documentation to keep the package file size reasonable. These are provided as articles that demonstrate more complex pedigree plots. You can find these on the [ggpedigree website](https://r-computing-lab.github.io/ggpedigree/). These articles cover advanced topics such as: multiple families, self-loops, and other advanced features.
