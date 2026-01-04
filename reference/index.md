@@ -5,9 +5,6 @@
 - [`ASOIAF`](https://r-computing-lab.github.io/ggpedigree/reference/ASOIAF.md)
   : A pedigree of ice and fire
 
-- [`buildPlotConfig()`](https://r-computing-lab.github.io/ggpedigree/reference/buildPlotConfig.md)
-  : build Config
-
 - [`calculateConnections()`](https://r-computing-lab.github.io/ggpedigree/reference/calculateConnections.md)
   : Calculate connections for a pedigree dataset
 

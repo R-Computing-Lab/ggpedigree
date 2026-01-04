@@ -114,7 +114,53 @@ of individuals (marked as `extra`) to ensure relational accuracy.</p>
 <li><p>`x_mid_sib`, `y_mid_sib`: sibling group midpoint</p></li>
 <li><p>`x_mid_spouse`, `y_mid_spouse`: midpoint between spouses</p></li>
 </ul></div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p>calculateCoordinates, ggPedigree, vignette("v00_plots")</p></div>
+    </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ped</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  personID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"X"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  momID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"C"</span>, <span class="cn">NA</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  dadID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="st">"X"</span>, <span class="st">"X"</span>, <span class="st">"B"</span>, <span class="cn">NA</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  spouseID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"X"</span>, <span class="st">"C"</span>, <span class="st">"B"</span>, <span class="cn">NA</span>, <span class="st">"A"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  sex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"F"</span>, <span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"M"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="calculateCoordinates.html">calculateCoordinates</a></span><span class="op">(</span><span class="va">ped</span>, code_male <span class="op">=</span> <span class="st">"M"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">conns</span> <span class="op">&lt;-</span> <span class="fu">calculateConnections</span><span class="op">(</span><span class="va">coords</span>, config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>code_male <span class="op">=</span> <span class="st">"M"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">conns</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "connections" "self_coords" "twin_coords"</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">conns</span><span class="op">$</span><span class="va">connections</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   personID        x_pos y_pos dadID momID x_fam y_fam parent_hash couple_hash</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        A 1.000000e+00     1  &lt;NA&gt;  &lt;NA&gt;    NA    NA        &lt;NA&gt;         A.X</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        B 2.237231e-20     2     X     A   0.5     1         A.X         B.C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3        C 1.000000e+00     2     X     A   0.5     1         A.X         B.C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4        D 5.000000e-01     3     B     C   0.5     2         B.C        &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5        X 0.000000e+00     1  &lt;NA&gt;  &lt;NA&gt;    NA    NA        &lt;NA&gt;         A.X</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   spouseID famID extra link_as_spouse link_as_sibling link_as_twin x_mom y_mom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        X     1 FALSE           TRUE           FALSE        FALSE    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        C     1 FALSE           TRUE            TRUE        FALSE     1     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3        B     1 FALSE           TRUE            TRUE        FALSE     1     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     &lt;NA&gt;     1 FALSE           TRUE            TRUE        FALSE     1     2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5        A     1 FALSE           TRUE           FALSE        FALSE    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          x_dad y_dad     x_spouse y_spouse x_mid_spouse y_mid_spouse x_mid_sib</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1           NA    NA 0.000000e+00        1          0.5            1        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.000000e+00     1 1.000000e+00        2          0.5            2       0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.000000e+00     1 2.237231e-20        2          0.5            2       0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2.237231e-20     2           NA       NA           NA           NA       0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5           NA    NA 1.000000e+00        1          0.5            1        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   y_mid_sib</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4         3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5        NA</span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

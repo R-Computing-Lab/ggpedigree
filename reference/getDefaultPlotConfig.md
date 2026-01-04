@@ -924,3 +924,7 @@ getDefaultPlotConfig(
 ## Value
 
 A named list of default plotting and layout parameters.
+
+## See also
+
+buildPlotConfig, vignette("v10_configuration")

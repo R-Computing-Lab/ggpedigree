@@ -157,3 +157,21 @@ ggPhenotypeByDegree(
 ## Value
 
 A ggplot object containing the correlation plot.
+
+## See also
+
+ggPhenotypeByDegree.core, preparePhenotypeByDegreeData,
+vignette("v31_phenotypebydegree")
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+ggPhenotypeByDegree(
+  df = df,
+  y_var = "USA_flag_10_polychorFunction_rho",
+  y_stem_se = "USA_flag_10_polychorFunction",
+  y_se = "USA_flag_10_polychorFunction_se"
+)
+} # }
+```

@@ -208,6 +208,10 @@ ggpedigree(
 
 A \`ggplot\` object rendering the pedigree diagram.
 
+## See also
+
+ggPedigree.core, ggPedigreeInteractive, vignette("v00_plots")
+
 ## Examples
 
 ``` r

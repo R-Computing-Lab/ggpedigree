@@ -28,6 +28,7 @@
 - Added optional segment size scaling based on pedigree size.
 - Hid the Sex key by default in `ggpedigree`.
 - Added two vignettes describing `ggpedigree` configuration options.
+- Cross-referenced vignettes in function documentation.
 
 ### Validation and messages
 

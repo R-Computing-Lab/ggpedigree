@@ -36,3 +36,7 @@ buildPlotConfig(
 ## Value
 
 A complete configuration list with all necessary parameters.
+
+## See also
+
+getDefaultPlotConfig, vignette("v10_configuration")
