@@ -129,3 +129,6 @@ data("hazard")
 ggPedigree(hazard, famID = "famID", personID = "ID", config = list(code_male = 0))
 
 }
+\seealso{
+ggPedigree.core, ggPedigreeInteractive, vignette("v00_plots")
+}

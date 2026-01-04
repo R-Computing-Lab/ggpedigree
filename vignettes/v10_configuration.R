@@ -25,4 +25,3 @@ ggPedigree(
   momID = "momID",
   dadID = "dadID"
 )
-

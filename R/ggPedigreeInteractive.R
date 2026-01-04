@@ -12,6 +12,7 @@
 #' data("potter")
 #' ggPedigreeInteractive(potter, famID = "famID", personID = "personID")
 #' @export
+#' @seealso ggPedigree.core, ggPedigree, vignette("v20_interactiveplots")
 
 
 ggPedigreeInteractive <- function(ped,

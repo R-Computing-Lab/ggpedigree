@@ -48,3 +48,21 @@ Computes graphical connection paths for a pedigree layout, including parent-chil
 sibling, and spousal connections. Optionally processes duplicate appearances
 of individuals (marked as `extra`) to ensure relational accuracy.
 }
+\examples{
+ped <- data.frame(
+  personID = c("A", "B", "C", "D", "X"),
+  momID = c(NA, "A", "A", "C", NA),
+  dadID = c(NA, "X", "X", "B", NA),
+  spouseID = c("X", "C", "B", NA, "A"),
+  sex = c("F", "M", "F", "F", "M")
+)
+
+coords <- calculateCoordinates(ped, code_male = "M")
+conns <- calculateConnections(coords, config = list(code_male = "M"))
+names(conns)
+head(conns$connections)
+
+}
+\seealso{
+calculateCoordinates, ggPedigree, vignette("v00_plots")
+}

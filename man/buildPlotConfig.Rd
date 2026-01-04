@@ -28,3 +28,7 @@ This function builds a configuration list for ggPedigree plots.
 It merges a default configuration with user-specified settings,
 ensuring all necessary parameters are set.
 }
+\seealso{
+getDefaultPlotConfig, vignette("v10_configuration")
+}
+\keyword{internal}

@@ -69,3 +69,16 @@ A ggplot object containing the correlation plot.
 \description{
 This function plots the phenotypic correlation as a function of genetic relatedness.
 }
+\examples{
+\dontrun{
+ggPhenotypeByDegree(
+  df = df,
+  y_var = "USA_flag_10_polychorFunction_rho",
+  y_stem_se = "USA_flag_10_polychorFunction",
+  y_se = "USA_flag_10_polychorFunction_se"
+)
+}
+}
+\seealso{
+ggPhenotypeByDegree.core, preparePhenotypeByDegreeData, vignette("v31_phenotypebydegree")
+}

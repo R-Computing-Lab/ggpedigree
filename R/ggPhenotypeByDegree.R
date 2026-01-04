@@ -44,7 +44,17 @@ utils::globalVariables(c(".x"))
 #'
 #' @return A ggplot object containing the correlation plot.
 #' @export
-
+#' @seealso ggPhenotypeByDegree.core, preparePhenotypeByDegreeData, vignette("v31_phenotypebydegree")
+#'
+#' @examples
+#' \dontrun{
+#' ggPhenotypeByDegree(
+#'   df = df,
+#'   y_var = "USA_flag_10_polychorFunction_rho",
+#'   y_stem_se = "USA_flag_10_polychorFunction",
+#'   y_se = "USA_flag_10_polychorFunction_se"
+#' )
+#' }
 ggPhenotypeByDegree <- function(df,
                                 y_var,
                                 y_se = NULL,

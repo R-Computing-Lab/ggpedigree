@@ -98,3 +98,6 @@ library(BGmisc)
 data("potter")
 ggPedigreeInteractive(potter, famID = "famID", personID = "personID")
 }
+\seealso{
+ggPedigree.core, ggPedigree, vignette("v20_interactiveplots")
+}

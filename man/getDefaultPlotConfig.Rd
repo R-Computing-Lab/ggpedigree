@@ -553,3 +553,6 @@ This configuration can be overridden by supplying a list of key-value pairs to
 plotting functions such as `ggPedigree()`, `ggRelatednessMatrix()`, and `ggPhenotypeByDegree()`.
 Each key corresponds to a configurable plot, layout, or aesthetic behavior.
 }
+\seealso{
+buildPlotConfig, vignette("v10_configuration")
+}
