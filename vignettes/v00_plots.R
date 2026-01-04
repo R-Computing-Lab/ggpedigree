@@ -14,7 +14,9 @@ library(viridis) # viridis for color palettes
 library(tidyverse) # for data wrangling
 
 ## ----load-data, include=FALSE-------------------------------------------------
-# if you don't have the most recent version of BGmisc, you may need to install it first as a stop-gap I've added the data loading here
+# if you don't have the most recent version of BGmisc, 
+# you may need to install it first. 
+# As a stop-gap I've added the data loading here
 data("potter") # load example data from BGmisc
 # if (!"twinID" %in% names(potter)) {
 # Add twinID and zygosity columns for demonstration purposes

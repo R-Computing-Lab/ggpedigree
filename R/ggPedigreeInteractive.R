@@ -290,7 +290,6 @@ optimizePlotlyPedigree <- function(p, config = list()) {
     }
   }
 
-
   p
 }
 #' @title Optimize Static Pedigree Plot

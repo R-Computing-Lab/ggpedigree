@@ -83,4 +83,3 @@ if (interactive()) {
 ```
 
 The above code generates an interactive pedigree plot of the Potter family tree. You can zoom in, pan around, and hover over nodes to see more information. You can do much more with the `ggPedigreeInteractive()` function, including customizing labels, colors, and tooltips. To experience the full list of options, refer to the online article.
-

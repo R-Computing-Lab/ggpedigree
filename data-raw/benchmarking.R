@@ -4,7 +4,7 @@ library(goodpractice)
 
 gp <- goodpractice::gp()
 
-if (F) {
+if (FALSE) {
   profvis({
     library(dplyr)
     library(ggplot2)

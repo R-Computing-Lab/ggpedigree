@@ -29,7 +29,7 @@ kinship2_bitSize <- function(ped) {
 
   father <- ped$findex
   mother <- ped$mindex
-  id <- ped$id
+  # id <- ped$id
 
   founder <- father == 0 & mother == 0
   pedSize <- length(father)

@@ -45,7 +45,9 @@ library(tidyverse) # for data wrangling
 The simplest usage requires a data frame and column names for family and individual IDs. Here’s a basic pedigree plot using the `potter` data:
 
 ```{r load-data, include=FALSE}
-# if you don't have the most recent version of BGmisc, you may need to install it first as a stop-gap I've added the data loading here
+# if you don't have the most recent version of BGmisc, 
+# you may need to install it first. 
+# As a stop-gap I've added the data loading here
 data("potter") # load example data from BGmisc
 # if (!"twinID" %in% names(potter)) {
 # Add twinID and zygosity columns for demonstration purposes
@@ -368,7 +370,8 @@ p +
     axis.ticks.y     = element_blank(),
     axis.title.x     = element_blank(),
     axis.title.y     = element_blank()
-  ) + scale_color_viridis(
+    ) + 
+  scale_color_viridis(
     option = "mako",
     discrete = TRUE,
     labels = c("Female", "Male", "Unknown")
