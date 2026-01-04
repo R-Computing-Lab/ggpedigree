@@ -482,7 +482,7 @@ ggPedigree(
     focal_fill_low_color = "purple",
     focal_fill_mid_color = "orange",
     focal_fill_high_color = "red",
-    focal_fill_scale_midpoint = 0.50,
+    focal_fill_scale_midpoint = 0.10,
     focal_fill_legend_show = TRUE
   )
 )
