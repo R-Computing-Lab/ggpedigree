@@ -20,12 +20,12 @@ adjustSpacing(ds, config)
 - config:
 
   A list of configuration options for customizing the plot. See
-  getDefaultPlotConfig for details. The list can include:
+  getDefaultPlotConfig for details of each option. The list can include:
 
   code_male
 
   :   Integer or string. Value identifying males in the sex column.
-      (typically 0 or 1) Default: 1.
+      (typically 0 or 1) Default: 1
 
   segment_spouse_color, segment_self_color
 

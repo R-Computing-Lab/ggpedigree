@@ -1,22 +1,21 @@
 # ggpedigree
 
-`ggpedigree` provides modern tools for visualizing pedigree structures
-using both ‘ggplot2’ and ‘plotly’. It is designed to work seamlessly
-with the `BGmisc` package for simulated or empirical pedigree data, and
-extends the plotting capabilities of the base-graphics functions in
-`kinship2`.
+`ggpedigree` provides modern tools for visualizing family trees and
+pedigree structures using both `ggplot2` and `plotly`. Specifically, it
+enables the creation of static and interactive pedigree plots that can
+accommodate complex family relationships, including duplicated
+individuals and various mating structures.
 
-The package supports:
-
-- Static, publication-ready pedigree plots using the `ggplot2` framework
-
-- Interactive pedigree visualizations using `plotly`
-
-- Layout customization, complex mating structures, and duplicated
-  individuals
-
-`ggpedigree` is useful in behavior genetics, kinship analysis, and any
-research involving complex pedigree data.
+The package complements a behavior genetics package `BGmisc` \[Garrison
+et al. (2024) <doi:10.21105/joss.06203>\] by rendering pedigrees using
+the ‘ggplot2’ framework. Features include support for duplicated
+individuals, complex mating structures, integration with simulated
+pedigrees, and layout customization. Due to the impending deprecation of
+`kinship2`, version 1.0 incorporates the layout helper functions from
+kinship2. The pedigree alignment algorithms are adapted from ‘kinship2’
+\[Sinnwell et al. (2014) <doi:10.1159/000363105>\]. We gratefully
+acknowledge the original authors: Jason Sinnwell, Terry Therneau, Daniel
+Schaid, and Elizabeth Atkinson for their foundational work.
 
 ## Installation
 
@@ -42,6 +41,9 @@ pedigree structure. The `potter` dataset contains simulated pedigree
 data for the Weasley family from the Harry Potter series.
 
 ``` r
+library(ggpedigree) # ggPedigree lives here
+library(BGmisc) # helper utilities & example data
+potter <- BGmisc::potter # load example data
 ggPedigree(potter,
   famID = "famID",
   personID = "personID"
@@ -49,6 +51,17 @@ ggPedigree(potter,
 ```
 
 ![](reference/figures/README-basic-usage-1.png)
+
+``` r
+ggPedigree(potter,
+  famID = "famID",
+  personID = "personID",
+  config = list(
+    color_theme = "greyscale")
+)
+```
+
+![](reference/figures/README-slightly-usage-1.png)
 
 ## Citation
 
@@ -59,8 +72,8 @@ cite the following:
 citation(package = "ggpedigree")
 ```
 
-Garrison S (2025). *ggpedigree: Visualizing Pedigrees with ‘ggplot2’ and
-‘plotly’*. R package version 1.0.0.1,
+Garrison S (2026). *ggpedigree: Visualizing Pedigrees with ‘ggplot2’ and
+‘plotly’*. R package version 1.1.0.2,
 <https://github.com/R-Computing-Lab/ggpedigree/>.
 
 A BibTeX entry for LaTeX users is
@@ -69,8 +82,8 @@ A BibTeX entry for LaTeX users is
 @Manual{,
   title = {ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'},
   author = {S. Mason Garrison},
-  year = {2025},
-  note = {R package version 1.0.0.1},
+  year = {2026},
+  note = {R package version 1.1.0.2},
   url = {https://github.com/R-Computing-Lab/ggpedigree/},
 }
 ```

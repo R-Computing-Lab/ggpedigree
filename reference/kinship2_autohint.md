@@ -3,7 +3,8 @@
 This function automatically generates alignment hints for pedigree
 plotting. Hints control the relative horizontal positioning of subjects
 within their generation and the placement of spouse pairs. The function
-handles twins, multiple marriages, and complex pedigree structures.
+handles twins, multiple marriages, and complex pedigree structures. It
+is a somewhat optimized version of kinship2's autohint.
 
 ## Usage
 

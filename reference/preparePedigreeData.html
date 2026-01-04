@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,12 +19,14 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/v00_plots.html">Plotting pedigrees with ggPedigree()</a></li>
-    <li><a class="dropdown-item" href="../articles/v01_plots_extended.html">Extended Plotting pedigrees with ggPedigree()</a></li>
-    <li><a class="dropdown-item" href="../articles/v10_interactiveplots.html">Interactive Pedigree Plotting with ggPedigreeInteractive</a></li>
-    <li><a class="dropdown-item" href="../articles/v11_extendedinteractiveplots.html">Extended More Complex Pedigree Plots with ggPedigreeInteractive</a></li>
-    <li><a class="dropdown-item" href="../articles/v20_matrix.html">Visualizing Relatedness Matrices with ggRelatednessMatrix()</a></li>
-    <li><a class="dropdown-item" href="../articles/v21_phenotypicbydegree.html">Extended Plotting Phenotypic Correlation by Degree of Relatedness</a></li>
-    <li><a class="dropdown-item" href="../articles/v22_plots_morecomplexity.html">Plotting more complicated pedigrees with `ggPedigree()`</a></li>
+    <li><a class="dropdown-item" href="../articles/v01_plots_extended.html">Extended: Plotting pedigrees with ggPedigree()</a></li>
+    <li><a class="dropdown-item" href="../articles/v10_configuration.html">Using config to control ggpedigree plots</a></li>
+    <li><a class="dropdown-item" href="../articles/v11_configuration_extended.html">Extended: More uses of `config` to control ggpedigree plots</a></li>
+    <li><a class="dropdown-item" href="../articles/v20_interactiveplots.html">Interactive Pedigree Plotting with ggPedigreeInteractive</a></li>
+    <li><a class="dropdown-item" href="../articles/v21_extendedinteractiveplots.html">Extended: More Complex Pedigree Plots with ggPedigreeInteractive</a></li>
+    <li><a class="dropdown-item" href="../articles/v30_matrix.html">Visualizing Relatedness Matrices with ggRelatednessMatrix()</a></li>
+    <li><a class="dropdown-item" href="../articles/v31_phenotypicbydegree.html">Extended: Plotting Phenotypic Correlation by Degree of Relatedness</a></li>
+    <li><a class="dropdown-item" href="../articles/v32_plots_morecomplexity.html">Extended: Plotting more complicated pedigrees with `ggPedigree()`</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -39,7 +41,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Prepare Pedigree Data</h1>
-      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/v1.0.0.1/R/ggpedigree.R" class="external-link"><code>R/ggpedigree.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/main/R/ggpedigreeCoreHelpers.R" class="external-link"><code>R/ggpedigreeCoreHelpers.R</code></a></small>
       <div class="d-none name"><code>preparePedigreeData.Rd</code></div>
     </div>
 
@@ -57,7 +59,9 @@
 <span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
 <span>  matID <span class="op">=</span> <span class="st">"matID"</span>,</span>
 <span>  patID <span class="op">=</span> <span class="st">"patID"</span>,</span>
-<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>focal_fill_include <span class="op">=</span> <span class="cn">TRUE</span>, focal_fill_component <span class="op">=</span> <span class="st">"maternal"</span><span class="op">)</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>focal_fill_include <span class="op">=</span> <span class="cn">TRUE</span>, focal_fill_component <span class="op">=</span> <span class="st">"maternal"</span>,</span>
+<span>    recode_missing_ids <span class="op">=</span> <span class="cn">TRUE</span>, add_phantoms <span class="op">=</span> <span class="cn">FALSE</span>, code_male <span class="op">=</span> <span class="st">"M"</span>, code_female <span class="op">=</span> <span class="st">"F"</span>,</span>
+<span>    code_na <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,</span>
 <span>  fill_group_paternal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"paternal"</span>, <span class="st">"patID"</span>, <span class="st">"paternal line"</span>, <span class="st">"paternal lineages"</span>,</span>
 <span>    <span class="st">"paternal lines"</span><span class="op">)</span>,</span>
 <span>  fill_group_maternal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"maternal"</span>, <span class="st">"matID"</span>, <span class="st">"maternal line"</span>, <span class="st">"maternal lineages"</span>,</span>
@@ -65,7 +69,6 @@
 <span>  fill_group_family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"family"</span>, <span class="st">"famID"</span>, <span class="st">"family line"</span>, <span class="st">"family lineages"</span>,</span>
 <span>    <span class="st">"family lines"</span><span class="op">)</span>,</span>
 <span>  status_column <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  phantoms <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  focal_fill_column <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -104,8 +107,8 @@
 
 <dt id="arg-config">config<a class="anchor" aria-label="anchor" href="#arg-config"></a></dt>
 <dd><p>A list of configuration options for customizing the plot.
-      See getDefaultPlotConfig for details. The list can include:</p><dl><dt>code_male</dt>
-<dd><p>Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1.</p></dd>
+      See getDefaultPlotConfig for details of each option. The list can include:</p><dl><dt>code_male</dt>
+<dd><p>Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1</p></dd>
 
    <dt>segment_spouse_color, segment_self_color</dt>
 <dd><p>Character. Line colors for respective connection types.</p></dd>
@@ -155,10 +158,6 @@
 
 <dt id="arg-status-column">status_column<a class="anchor" aria-label="anchor" href="#arg-status-column"></a></dt>
 <dd><p>Character string specifying the column name for affected status. Defaults to NULL.</p></dd>
-
-
-<dt id="arg-phantoms">phantoms<a class="anchor" aria-label="anchor" href="#arg-phantoms"></a></dt>
-<dd><p>Logical. If TRUE, adds phantom parents for individuals without parents.</p></dd>
 
 
 <dt id="arg-focal-fill-column">focal_fill_column<a class="anchor" aria-label="anchor" href="#arg-focal-fill-column"></a></dt>

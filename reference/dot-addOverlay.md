@@ -7,7 +7,8 @@ Add Overlay to ggplot Pedigree Plot
 ``` r
 .addOverlay(
   plotObject,
-  config,
+  config = list(overlay_include = FALSE, status_include = FALSE, focal_fill_include =
+    FALSE, sex_color_include = FALSE),
   focal_fill_column = NULL,
   status_column = NULL,
   overlay_column = NULL
@@ -15,7 +16,8 @@ Add Overlay to ggplot Pedigree Plot
 
 addOverlay(
   plotObject,
-  config,
+  config = list(overlay_include = FALSE, status_include = FALSE, focal_fill_include =
+    FALSE, sex_color_include = FALSE),
   focal_fill_column = NULL,
   status_column = NULL,
   overlay_column = NULL
@@ -31,12 +33,12 @@ addOverlay(
 - config:
 
   A list of configuration options for customizing the plot. See
-  getDefaultPlotConfig for details. The list can include:
+  getDefaultPlotConfig for details of each option. The list can include:
 
   code_male
 
   :   Integer or string. Value identifying males in the sex column.
-      (typically 0 or 1) Default: 1.
+      (typically 0 or 1) Default: 1
 
   segment_spouse_color, segment_self_color
 

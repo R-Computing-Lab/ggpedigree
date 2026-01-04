@@ -23,4 +23,4 @@ optimizePedigree(p, config = list(), plot_type = c("plotly", "static"))
 
   A string indicating the type of plot: "plotly" or "static". Default is
   "plotly". @return The optimized plot object with rounded coordinates.
-  @keywords internal @aliases optimisePedigree
+  @keywords internal
