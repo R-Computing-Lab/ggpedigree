@@ -428,7 +428,8 @@ p +
     axis.ticks.y     = element_blank(),
     axis.title.x     = element_blank(),
     axis.title.y     = element_blank()
-  ) + scale_color_viridis(
+    ) + 
+  scale_color_viridis(
     option = "mako",
     discrete = TRUE,
     labels = c("Female", "Male", "Unknown")

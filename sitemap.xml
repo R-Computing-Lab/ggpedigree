@@ -26,6 +26,7 @@
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/buildSpouseSegments.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/calculateConnections.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/calculateCoordinates.html</loc></url>
+<url><loc>https://r-computing-lab.github.io/ggpedigree/reference/closest_dup.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/computeDistance.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/countOffspring.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/countSiblings.html</loc></url>
@@ -77,6 +78,7 @@
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/processExtras.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/recodeMissingIDs.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/redsquirrels.html</loc></url>
+<url><loc>https://r-computing-lab.github.io/ggpedigree/reference/relink.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/transformPed.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/warsofroses.html</loc></url>
 </urlset>

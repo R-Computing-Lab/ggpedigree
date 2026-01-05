@@ -75,6 +75,10 @@ Config options include:
 
   Axis text size
 
+## See also
+
+ggRelatednessMatrix.core, vignette("v30_matrix")
+
 ## Examples
 
 ``` r
