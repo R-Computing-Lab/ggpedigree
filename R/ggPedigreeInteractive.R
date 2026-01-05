@@ -30,12 +30,12 @@
 #'     sex_color_include = TRUE
 #'   ),
 #'   tooltip_columns = c("personID", "birthYr", "onsetYr", "deathYr")
-#' ) %>%
+#' ) |>
 #'   plotly::layout(
 #'     title = "Hazard Pedigree (interactive)",
 #'     hoverlabel = list(bgcolor = "white"),
 #'     margin = list(l = 50, r = 50, t = 50, b = 50)
-#'   ) %>%
+#'   ) |>
 #'   plotly::config(displayModeBar = TRUE)
 #' @export
 #' @seealso ggPedigree.core, ggPedigree, vignette("v20_interactiveplots")
