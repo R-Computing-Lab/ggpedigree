@@ -234,54 +234,9 @@ processExtras <- function(ped, config = list()) {
   # pre-split version for faster lookup
   dup_xy_list <- split(dup_xy, dup_xy$coreID)
 
-  closest_dup <- function(target_core, x0, y0) {
-    cand <- dup_xy_list[[as.character(target_core)]]
-    if (nrow(cand) == 0L) {
-      return(dup_xy$coreID[NA_integer_]) # return correct NA type
-    }
-    # compute Manhattan (“city‑block”) distance for all candidates
-    d <- computeDistance(
-      method = "cityblock",
-      x1 = x0, y1 = y0,
-      x2 = cand$x_pos, y2 = cand$y_pos
-    )
-    ord <- order(d) # ascending distance
-    pick <- if (any(cand$total_blue, na.rm = TRUE)) {
-      2L
-    } else {
-      1L
-    } # 2nd if blue present, else 1st
 
-    if (length(ord) < pick) {
-      pick <- 1L
-    }
 
-    cand$personID[ord[pick]]
 
-    #  cand$personID[
-    #    which.min(
-    #      computeDistance(method = "cityblock",
-    #                     x1= x0, y1=y0,
-    #                     x2=cand$x_pos, y2=cand$y_pos)
-    #   )
-    #  ]
-  }
-
-  relink <- function(df, col) {
-    df |>
-      dplyr::rowwise() |>
-      dplyr::mutate(
-        "{col}" := {
-          tgt <- .data[[col]]
-          if (is.na(tgt)) {
-            tgt[NA_integer_] # return correct NA type
-          } else {
-            closest_dup(tgt, .data$x_pos, .data$y_pos)
-          }
-        }
-      ) |>
-      dplyr::ungroup()
-  }
 
   # remove parent ids from all but the closest coreID,
   # if there's no choice to be made, then keep existing momID
@@ -312,7 +267,7 @@ processExtras <- function(ped, config = list()) {
       -dplyr::starts_with("newID")
     )
   ped <- ped |>
-    relink("spouseID") |>
+    relink("spouseID",dup_xy_list=dup_xy_list) |>
     #   relink("momID") |>
     #  relink("dadID") |>
     unique()
@@ -360,4 +315,73 @@ processExtras <- function(ped, config = list()) {
     # assign("DEBUG_full_extra", full_extra, envir = .GlobalEnv)
   }
   return(full_extra)
+}
+#' Find the closest duplicate appearance based on coordinates
+#' @param target_core The coreID of the individual to find.
+#' @param x0 The x-coordinate of the reference point.
+#' @param y0 The y-coordinate of the reference point.
+#' @return The personID of the closest duplicate appearance.
+#' @keywords internal
+
+
+closest_dup <- function(target_core, x0, y0,
+                        dup_xy_list
+                        ) {
+  cand <- dup_xy_list[[as.character(target_core)]]
+  if (nrow(cand) == 0L) {
+    return(dup_xy$coreID[NA_integer_]) # return correct NA type
+  }
+  # compute Manhattan (“city‑block”) distance for all candidates
+  d <- computeDistance(
+    method = "cityblock",
+    x1 = x0, y1 = y0,
+    x2 = cand$x_pos, y2 = cand$y_pos
+  )
+  ord <- order(d) # ascending distance
+  pick <- if (any(cand$total_blue, na.rm = TRUE)) {
+    2L
+  } else {
+    1L
+  } # 2nd if blue present, else 1st
+
+  if (length(ord) < pick) {
+    pick <- 1L
+  }
+
+  cand$personID[ord[pick]]
+
+  #  cand$personID[
+  #    which.min(
+  #      computeDistance(method = "cityblock",
+  #                     x1= x0, y1=y0,
+  #                     x2=cand$x_pos, y2=cand$y_pos)
+  #   )
+  #  ]
+}
+
+
+#' Relink IDs to closest duplicate appearance based on coordinates
+#'
+#' @param df A data.frame containing pedigree layout info with columns including:
+#'   `x_pos`, `y_pos`, and the target column to relink.
+#' @param col Character; name of the column to relink (e.g., `"momID"`, `dadID"`, `spouseID"`).
+#' @return A modified `df` data.frame with updated IDs in the specified column.
+#' @keywords internal
+
+relink <- function(df, col,dup_xy_list) {
+  df |>
+    dplyr::rowwise() |>
+    dplyr::mutate(
+      "{col}" := {
+        tgt <- .data[[col]]
+        if (is.na(tgt)) {
+          tgt[NA_integer_] # return correct NA type
+        } else {
+          closest_dup(tgt, .data$x_pos, .data$y_pos,
+            dup_xy_list = dup_xy_list
+          )
+        }
+      }
+    ) |>
+    dplyr::ungroup()
 }
