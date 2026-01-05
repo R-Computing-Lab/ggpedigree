@@ -245,3 +245,56 @@ test_that("better warning for string ids", {
     expect_warning(expect_warning(ggPedigree(df, config = list(code_male = 2))))
   }
 })
+
+
+# issues from 95
+
+
+.issue95_extract_labels <- function(p) {
+  b <- ggplot2::ggplot_build(p)
+  lab_idx <- which(vapply(
+    b$data,
+    function(d) all(c("x", "y", "label") %in% names(d)),
+    logical(1)
+  ))
+  if (length(lab_idx) == 0) return(NULL)
+  unique(as.character(b$data[[lab_idx[1]]]$label))
+}
+
+test_that("#95.1: character IDs with NA parents do not error", {
+  df <- data.frame(
+    personID = c("1", "2", "3"),
+    momID    = c(NA, NA, "1"),
+    dadID    = c(NA, NA, "2"),
+    sex      = c(2, 1, 2)
+  )
+
+  cfg <- list(code_male = 1, code_female = 2, code_unknown = 3)
+
+  expect_error(
+    ggPedigree(df, config = cfg),
+    regexp = NA
+  )
+})
+
+test_that("#95.4: NA sex does not silently drop the individual (label still present)", {
+  df <- data.frame(
+    personID = 1:3,
+    dadID    = c(0, 0, 1),
+    momID    = c(0, 0, 2),
+    sex      = c(1, 2, NA)
+  )
+
+  cfg <- list(code_male = 1, code_female = 2, code_unknown = 3)
+
+  expect_warning(
+    p <- ggPedigree(df, config = cfg)
+  )
+#  p <- ggPedigree(df, config = cfg)
+  expect_s3_class(p, "ggplot")
+
+  labs <- .issue95_extract_labels(p)
+
+    if (is.null(labs)) testthat::skip("Could not extract labels from ggplot build.")
+  testthat::expect_true("3" %in% labs)
+})
