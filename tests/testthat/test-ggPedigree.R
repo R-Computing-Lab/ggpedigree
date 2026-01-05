@@ -254,10 +254,18 @@ test_that("focal fill works with ID", {
       focal_fill_personID = 1
     )
   )
-  expect_s3_class(p2, "gg") # Should return a ggplot object
-  expect_true("focal_fill" %in% names(p2$data)) # focal_fill column should be present
-  expect_true(any(is.na(p2$data$focal_fill))) # focal_fill values should be ge 0 and 1
-  expect_true(all(p2$data$focal_fill[!is.na(p2$data$focal_fill)] > 0 & p2$data$focal_fill[!is.na(p2$data$focal_fill)] <= 1)) # focal_fill values should be greater than 0 and less than or equal to 1
+
+  # Should return a ggplot object
+  expect_s3_class(p2, "gg")
+
+  # focal_fill column should be present
+  expect_true("focal_fill" %in% names(p2$data))
+
+  # focal_fill values should be ge 0 and 1
+  expect_true(any(is.na(p2$data$focal_fill)))
+
+  # focal_fill values should be greater than 0 and less than or equal to 1
+  expect_true(all(p2$data$focal_fill[!is.na(p2$data$focal_fill)] > 0 & p2$data$focal_fill[!is.na(p2$data$focal_fill)] <= 1))
 
   # test focal_fill with a different personID
 
@@ -273,7 +281,9 @@ test_that("focal fill works with ID", {
   expect_s3_class(p3, "gg") # Should return a ggplot object
   expect_true("focal_fill" %in% names(p3$data)) # focal_fill column should be present
   expect_true(all(p3$data$focal_fill >= 0 & p3$data$focal_fill <= 1)) # focal_fill values should be between 0 and 1
-  expect_true(all(p3$data$focal_fill[p3$data$personID == 8] == 1)) # focal_fill for personID 8 should be 1
+
+  # focal_fill for personID 8 should be 1
+  expect_true(all(p3$data$focal_fill[p3$data$personID == 8] == 1))
 })
 
 test_that("focal fill works with ID and different methods", {

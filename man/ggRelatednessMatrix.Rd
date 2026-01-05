@@ -64,3 +64,6 @@ ggRelatednessMatrix(mat,
   )
 )
 }
+\seealso{
+ggRelatednessMatrix.core, vignette("v30_matrix")
+}

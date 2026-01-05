@@ -15,7 +15,6 @@
 #' @return A list containing:
 #'   \item{order}{Numeric vector of relative ordering hints for subjects}
 #'   \item{spouse}{Matrix of spouse pair information}
-#' @export
 #' @details
 #' The function is called automatically by kinship2_align.pedigree if no hints
 #' are provided. It analyzes the pedigree structure, identifies twins, handles

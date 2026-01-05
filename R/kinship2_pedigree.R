@@ -466,8 +466,8 @@ pedigree.process_affected <- function(affected, n) {
 
   if (length(indx) == 1) {
     class(x) <- "pedigree"
-  } # only one family chosen
-  else {
+    # only one family chosen
+  } else {
     class(x) <- "pedigreeList"
   }
   x
