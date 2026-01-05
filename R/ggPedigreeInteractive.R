@@ -38,7 +38,7 @@
 #'   ) |>
 #'   plotly::config(displayModeBar = TRUE)
 #' @export
-#' @seealso ggPedigree.core, ggPedigree, vignette("v20_interactiveplots")
+#' @seealso ggPedigree.core, ggPedigree, vignette("v20_interactiveplots"), vignette("v21_extendedinteractiveplots"), vignette("v32_plots_morecomplexity")
 
 
 ggPedigreeInteractive <- function(ped,

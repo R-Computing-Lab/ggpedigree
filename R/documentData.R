@@ -158,7 +158,7 @@ NULL
 #'  \item \code{dadID}:  ID of the father
 #'  \item \code{name}:  Name of the person
 #'  \item \code{sex}: Biological sex
-#'   \item \code{url}:  URL to a wiki page about the character
+#'  \item \code{url}:  URL to a wiki page about the character
 #'   }
 
 #' @docType data

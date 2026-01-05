@@ -125,5 +125,5 @@ ggPedigreeInteractive(
   plotly::config(displayModeBar = TRUE)
 }
 \seealso{
-ggPedigree.core, ggPedigree, vignette("v20_interactiveplots")
+ggPedigree.core, ggPedigree, vignette("v20_interactiveplots"), vignette("v21_extendedinteractiveplots"), vignette("v32_plots_morecomplexity")
 }

@@ -21,6 +21,7 @@
 #'   \item{axis_text_size}{Axis text size}
 #' }
 #' @return A ggplot object displaying the relatedness matrix as a heatmap.
+#' @seealso ggRelatednessMatrix.core, vignette("v30_matrix")
 #' @export
 #' @examples
 #' # Example relatedness matrix
