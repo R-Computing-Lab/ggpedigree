@@ -12,8 +12,8 @@ buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
 
 - ped:
 
-  A data frame containing the pedigree data. Needs personID, momID, and
-  dadID columns
+  A data frame containing the pedigree data. Needs personID, momID,
+  dadID, and sex columns.
 
 - connections_for_FOO:
 

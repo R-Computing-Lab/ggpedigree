@@ -21,8 +21,8 @@ alignPedigreeWithRelations(
 
 - ped:
 
-  A data frame containing the pedigree data. Needs personID, momID, and
-  dadID columns
+  A data frame containing the pedigree data. Needs personID, momID,
+  dadID, and sex columns.
 
 - personID:
 
