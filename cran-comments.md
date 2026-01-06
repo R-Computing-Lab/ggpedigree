@@ -1,6 +1,7 @@
 # Description
 
-This is a resubmitted version due to an expired url certificate. This version eliminates the dependency on the `kinship2` package by folding in its relevant functions directly into `ggpedigree`. The `kinship2` package is now optional and only required for the `plotPedigree` function, which serves as a wrapper around `kinship2` functionality. This change enhances the maintainability of `ggpedigree` and reduces the number of dependencies users need to install. 
+This version incorporates the revisions made as part of the JOSS review process. Key changes include two new datasets, enhanced configuration options, improved validation and error messaging, and various bug fixes and internal refactoring for better maintainability. Additionally, the package now includes vignettes to help users understand configuration options.
+
 
 ## Note Comment
 
@@ -23,12 +24,13 @@ There was one note about how a suggested package (openMX) wasn't available for r
 
 ## R CMD check results
 
-── R CMD check results ───────── ggpedigree 1.0.0.1 ────
-Duration: 1m 38.4s
+── R CMD check results ─────────────────────────── ggpedigree 1.1.0.3 ────
+Duration: 2m 30.3s
 
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
 R CMD check succeeded
+
 
 ## revdepcheck results
 

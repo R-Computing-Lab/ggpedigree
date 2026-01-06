@@ -267,7 +267,10 @@ processExtras <- function(ped, config = list()) {
       -dplyr::starts_with("newID")
     )
   ped <- ped |>
-    relink("spouseID",dup_xy_list=dup_xy_list) |>
+    relink("spouseID",
+           dup_xy_list=dup_xy_list,
+           dup_xy=dup_xy
+           ) |>
     #   relink("momID") |>
     #  relink("dadID") |>
     unique()
@@ -320,12 +323,17 @@ processExtras <- function(ped, config = list()) {
 #' @param target_core The coreID of the individual to find.
 #' @param x0 The x-coordinate of the reference point.
 #' @param y0 The y-coordinate of the reference point.
+#' @param dup_xy_list A list of data.frames, each containing duplicate appearances
+#'   for a specific coreID with columns: `personID`, `x_pos`, `y_pos`, and `total_blue`.
+#' @param dup_xy A data.frame containing all duplicate appearances with columns:
+#'   `personID`, `coreID`, `x_pos`, `y_pos`, and `total_blue`.
 #' @return The personID of the closest duplicate appearance.
 #' @keywords internal
 
 
 closest_dup <- function(target_core, x0, y0,
-                        dup_xy_list
+                        dup_xy_list,
+                        dup_xy
                         ) {
   cand <- dup_xy_list[[as.character(target_core)]]
   if (nrow(cand) == 0L) {
@@ -365,10 +373,14 @@ closest_dup <- function(target_core, x0, y0,
 #' @param df A data.frame containing pedigree layout info with columns including:
 #'   `x_pos`, `y_pos`, and the target column to relink.
 #' @param col Character; name of the column to relink (e.g., `"momID"`, `dadID"`, `spouseID"`).
+#' @param dup_xy_list A list of data.frames, each containing duplicate appearances
+#'   for a specific coreID with columns: `personID`, `x_pos`, `y_pos`, and `total_blue`.
+#' @param dup_xy A data.frame containing all duplicate appearances with columns:
+#'   `personID`, `coreID`, `x_pos`, `y_pos`, and `total_blue`.
 #' @return A modified `df` data.frame with updated IDs in the specified column.
 #' @keywords internal
 
-relink <- function(df, col,dup_xy_list) {
+relink <- function(df, col,dup_xy_list,dup_xy ) {
   df |>
     dplyr::rowwise() |>
     dplyr::mutate(
@@ -378,7 +390,8 @@ relink <- function(df, col,dup_xy_list) {
           tgt[NA_integer_] # return correct NA type
         } else {
           closest_dup(tgt, .data$x_pos, .data$y_pos,
-            dup_xy_list = dup_xy_list
+            dup_xy_list = dup_xy_list,
+            dup_xy = dup_xy
           )
         }
       }
