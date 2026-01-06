@@ -1,6 +1,7 @@
 # Description
 
-This is a resubmitted version due to an expired url certificate. This version eliminates the dependency on the `kinship2` package by folding in its relevant functions directly into `ggpedigree`. The `kinship2` package is now optional and only required for the `plotPedigree` function, which serves as a wrapper around `kinship2` functionality. This change enhances the maintainability of `ggpedigree` and reduces the number of dependencies users need to install. 
+This version incorporates the revisions made as part of the JOSS review process. Key changes include two new datasets, enhanced configuration options, improved validation and error messaging, and various bug fixes and internal refactoring for better maintainability. Additionally, the package now includes vignettes to help users understand configuration options.
+
 
 ## Note Comment
 
@@ -9,9 +10,10 @@ There was one note about how a suggested package (openMX) wasn't available for r
 
 # Test Environments
 
-1. Local OS: Windows 11 x64 (build 26220), R version 4.5.2 (2025-10-31 ucrt)
-    - RStudio version 37.6.1, 2025.09.2+418 (desktop)
-    - All package dependencies up to date as of 2025-11-29.
+1. Local OS: Windows 11 x64 (build 26200), R version 4.5.2 (2025-10-31 ucrt)
+    - RStudio version 2025.09.2+418 "Cucumberleaf Sunflower" Release (12f6d5e22720bd78dbd926bb344efe12d0dce83d, 2025-10-20) for windows
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) RStudio/2025.09.2+418 Chrome/138.0.7204.251 Electron/37.6.1 Safari/537.36, Quarto 1.7.32
+    - All package dependencies up to date as of 2026-01-06.
 2. **GitHub Actions**:  
     - [Link](https://github.com/R-Computing-Lab/ggpedigree/actions/runs/19802521294)
     - macOS (latest version) with the latest R release.
@@ -23,28 +25,41 @@ There was one note about how a suggested package (openMX) wasn't available for r
 
 ## R CMD check results
 
-── R CMD check results ───────── ggpedigree 1.0.0.1 ────
-Duration: 1m 38.4s
+── R CMD check results ─────────────────────────── ggpedigree 1.1.0.3 ────
+Duration: 2m 30.3s
 
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
 R CMD check succeeded
 
+
 ## revdepcheck results
 
 revdepcheck::revdep_check() found 2 reverse dependencies to check.
-We checked those reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package. 
 
- * We saw 0 new problems
+We checked 2 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+
+ * We saw 1 new problems
  * We failed to check 0 packages
 
-── CHECK ──────────────────────────────────────────────────── 2 packages ──
-✔ BGmisc 1.5.0                           ── E: 0     | W: 0     | N: 0     
-✔ discord 1.2.4.1                        ── E: 0     | W: 0     | N: 0     
-OK: 2                                                                    
+Issues with CRAN packages are summarised below.
 
-BROKEN: 0
-Total time: 6 min
+### New problems
+(This reports the first line of each new failure)
+
+* BGmisc
+  checking running R code from vignettes ...
+
+This error was the result of moving verbose into the config options. This error occurs in a vignette, and has already been resolved in the development version of BGmisc. The version has already been submitted to CRAN for review and should be processed by cran after they return from the holiday break.
+
+── CHECK ────────────────────────────────────────────────────────────────────────────── 2 packages ──
+✖ BGmisc 1.5.0                           ── E: 0  +1 | W: 0     | N: 0                               
+✔ discord 1.2.4.1                        ── E: 0     | W: 0     | N: 0                               
+OK: 1                                                                                              
+
+BROKEN: 1
+Total time: 6 min                                                                  
+
 
 ## urlchecker results
 > urlchecker::url_check()

@@ -4,7 +4,7 @@
 \alias{closest_dup}
 \title{Find the closest duplicate appearance based on coordinates}
 \usage{
-closest_dup(target_core, x0, y0, dup_xy_list)
+closest_dup(target_core, x0, y0, dup_xy_list, dup_xy)
 }
 \arguments{
 \item{target_core}{The coreID of the individual to find.}
@@ -12,6 +12,12 @@ closest_dup(target_core, x0, y0, dup_xy_list)
 \item{x0}{The x-coordinate of the reference point.}
 
 \item{y0}{The y-coordinate of the reference point.}
+
+\item{dup_xy_list}{A list of data.frames, each containing duplicate appearances
+for a specific coreID with columns: `personID`, `x_pos`, `y_pos`, and `total_blue`.}
+
+\item{dup_xy}{A data.frame containing all duplicate appearances with columns:
+`personID`, `coreID`, `x_pos`, `y_pos`, and `total_blue`.}
 }
 \value{
 The personID of the closest duplicate appearance.
