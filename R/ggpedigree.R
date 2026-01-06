@@ -5,7 +5,7 @@
 #' It processes the data using `ped2fam()`. This function
 #' supports multiple families and optionally displays affected status and sex-based color/shape.
 #'
-#' @param ped A data frame containing the pedigree data. Needs personID, momID, and dadID columns
+#' @param ped A data frame containing the pedigree data. Needs personID, momID, dadID, and sex columns.
 #' @param famID Character string specifying the column name for family IDs. Defaults to "famID".
 #' @param personID Character string specifying the column name for individual IDs. Defaults to "personID".
 #' @param momID Character string specifying the column name for mother IDs. Defaults to "momID".

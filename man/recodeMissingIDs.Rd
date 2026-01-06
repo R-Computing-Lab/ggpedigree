@@ -18,7 +18,7 @@ recodeMissingIDs(
 )
 }
 \arguments{
-\item{ped}{A data frame containing the pedigree data. Needs personID, momID, and dadID columns}
+\item{ped}{A data frame containing the pedigree data. Needs personID, momID, dadID, and sex columns.}
 
 \item{momID}{Character string specifying the column name for mother IDs. Defaults to "momID".}
 
