@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/R-Computing-Lab/ggpedigree/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/R-Computing-Lab/ggpedigree/blob/v1.1.0.3/DESCRIPTION)
 
 Garrison S (2026). *ggpedigree: Visualizing Pedigrees with 'ggplot2' and
 'plotly'*. R package version 1.1.0.3,
