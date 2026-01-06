@@ -1,11 +1,11 @@
 ---
 title: "ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'"
 output:
+  rticles::joss_article:
+    keep_md: TRUE
   md_document:
     variant: markdown
     preserve_yaml: true
-  rticles::joss_article:
-    keep_md: TRUE
   rmarkdown::html_vignette:
     keep_md: TRUE
 tags:
@@ -68,7 +68,7 @@ BGmisc, as described in @bgmisc, is a dependency for its relatedness-heavy workf
 
 I describe the main features of the `ggpedigree` package below. Detailed descriptions of features and usage are available in the [package vignettes](https://r-computing-lab.github.io/ggpedigree/articles/), including examples of how to create static and interactive pedigree plots, customize aesthetics, and visualize relatedness matrices. Additional example data include squirrel data from the Kluane Red Squirrel Project [@mcfarlane2015; @mcfarlane2014] and Targaryen family data from the Song of Ice and Fire universe [@martin1997; @martin2018].
 
--   Data Standardization and Family Structure Analysis: `ggPedigree()` integrates with network-based functions from BGmisc like `ped2fam()` to organize individuals by family and `checkParentIDs()` to validate pedigree structures. The function handles consanguineous relationships and individuals appearing in multiple pedigree positions. More details are in the [complex pedigree data vignette](https://r-computing-lab.github.io/ggpedigree/articles/v22_plots_morecomplexity.html), as well as in Garrison et al. [@bgmisc], and Hunter, Garrison, et al [@hunter_analytic_2021,@hunter2025tracing].
+-   Data Standardization and Family Structure Analysis: `ggPedigree()` integrates with network-based functions from BGmisc like `ped2fam()` to organize individuals by family and `checkParentIDs()` to validate pedigree structures. The function handles consanguineous relationships and individuals appearing in multiple pedigree positions. More details are in the [complex pedigree data vignette](https://r-computing-lab.github.io/ggpedigree/articles/v22_plots_morecomplexity.html), as well as in @bgmisc, and Hunter, Garrison, et al [@hunter_analytic_2021; @hunter2025tracing].
 
 -   Coordinate Calculation: `calculateCoordinates()` computes optimal positioning for individuals using algorithms adapted from `kinship2::align.pedigree`, with enhancements for large multi-generational pedigrees and complex family structures. These steps are vectorized as much as possible to ensure computational efficiency and compatibility with ggplot2.
 
@@ -93,7 +93,7 @@ ggPedigree(potter,
 
 This code produces the following pedigree plot:
 
-\includegraphics[width=0.65\textwidth,keepaspectratio]{potter_pedigree.png}
+\includegraphics[width=0.55\textwidth,keepaspectratio]{potter_pedigree.png}
 
 The package supports extensive customization of visual aesthetics. The following example is a figure from @hunter2025tracing that used the Potter pedigree data. The figure has been restyled according to Wake Forest  University brand identity guidelines to demonstrate ggpedigree's customization capabilities. The figure combines two panels:  panel (a) highlights unique mitochondrial lines in the Dursley and Evans families, while panel (b) shows the full pedigree with Molly Weasley’s mitochondrial descendants in gold. 
 
