@@ -15,7 +15,7 @@ There was one note about how a suggested package (openMX) wasn't available for r
 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) RStudio/2025.09.2+418 Chrome/138.0.7204.251 Electron/37.6.1 Safari/537.36, Quarto 1.7.32
     - All package dependencies up to date as of 2026-01-06.
 2. **GitHub Actions**:  
-    - [Link](https://github.com/R-Computing-Lab/ggpedigree/actions/runs/19802521294)
+    - [Link](https://github.com/R-Computing-Lab/ggpedigree/actions/runs/20753857768)
     - macOS (latest version) with the latest R release.
     - Windows (latest version) with the latest R release.
     - Ubuntu (latest version) with:
@@ -34,8 +34,7 @@ R CMD check succeeded
 
 
 ## revdepcheck results
-
-revdepcheck::revdep_check() found 2 reverse dependencies to check.
+> revdepcheck::revdep_check()
 
 We checked 2 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
@@ -50,7 +49,7 @@ Issues with CRAN packages are summarised below.
 * BGmisc
   checking running R code from vignettes ...
 
-This error was the result of moving verbose into the config options. This error occurs in a vignette, and has already been resolved in the development version of BGmisc. The version has already been submitted to CRAN for review and should be processed by cran after they return from the holiday break.
+This error was the consequence of moving verbose into the config options, resulting in "Error: unused argument (verbose = FALSE)". This error occurs in some vignettes, and has already been resolved in the development version of BGmisc. Version 1.5.2 has already been submitted to CRAN for review and should be processed by cran after they return from the holiday break.
 
 ── CHECK ────────────────────────────────────────────────────────────────────────────── 2 packages ──
 ✖ BGmisc 1.5.0                           ── E: 0  +1 | W: 0     | N: 0                               
