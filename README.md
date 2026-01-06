@@ -23,7 +23,7 @@ branch](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-de
 Deployed](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/pkgdown.yaml)
 [![License](https://img.shields.io/badge/License-GPL_v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![status](https://joss.theoj.org/papers/e5116b83b03e2740960d1153c45f9480/status.svg)](https://joss.theoj.org/papers/e5116b83b03e2740960d1153c45f9480)
-
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18165893.svg)](https://doi.org/10.5281/zenodo.18165893)
 <!-- badges: end -->
 
 `ggpedigree` provides modern tools for visualizing family trees and
