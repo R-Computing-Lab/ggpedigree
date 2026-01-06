@@ -16,7 +16,7 @@ getRelativeCoordinates(
 )
 }
 \arguments{
-\item{ped}{A data frame containing the pedigree data. Needs personID, momID, and dadID columns}
+\item{ped}{A data frame containing the pedigree data. Needs personID, momID, dadID, and sex columns.}
 
 \item{connections}{A `data.frame` containing the individuals and their associated relative IDs.}
 

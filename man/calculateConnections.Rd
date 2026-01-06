@@ -16,7 +16,7 @@ calculateConnections(
 )
 }
 \arguments{
-\item{ped}{A data frame containing the pedigree data. Needs personID, momID, and dadID columns}
+\item{ped}{A data frame containing the pedigree data. Needs personID, momID, dadID, and sex columns.}
 
 \item{config}{List of configuration parameters. Currently unused but passed through to internal helpers.}
 

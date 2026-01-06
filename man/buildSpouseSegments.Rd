@@ -7,7 +7,7 @@
 buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
 }
 \arguments{
-\item{ped}{A data frame containing the pedigree data. Needs personID, momID, and dadID columns}
+\item{ped}{A data frame containing the pedigree data. Needs personID, momID, dadID, and sex columns.}
 
 \item{connections_for_FOO}{A data frame containing the connections for the spouse segments from parent connections}
 

@@ -15,7 +15,7 @@ alignPedigreeWithRelations(
 )
 }
 \arguments{
-\item{ped}{A data frame containing the pedigree data. Needs personID, momID, and dadID columns}
+\item{ped}{A data frame containing the pedigree data. Needs personID, momID, dadID, and sex columns.}
 
 \item{personID}{Character string specifying the column name for individual IDs. Defaults to "personID".}
 
