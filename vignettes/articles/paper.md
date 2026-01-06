@@ -61,14 +61,14 @@ None of these packages offers the combination of modern `ggplot2` integration, i
 
 `ggpedigree` is built on a modular architecture that separates data processing, layout calculation, and visualization layers. The core workflow involves: (1) data standardization and family restructuring using BGmisc functions, (2) coordinate calculation using algorithms adapted from kinship2, (3) relationship connection mapping, and (4) layer-based plot construction using ggplot2 geometry functions. This design allows users to customize any aspect of the visualization while maintaining computational efficiency for large pedigrees. The package integrates tightly with the broader R ecosystem, particularly the tidyverse [@wickham2019] and BGmisc [@bgmisc]. All functions return standard R objects (ggplot or plotly) that can be further customized. 
 
-BGmisc [@bgmisc], as described in @bgmisc, is a dependency for its relatedness-heavy workflows, supplying network-based validation utilities (`checkParentIDs()`) and relatedness components, like `ped2fam()`, `ped2paternal()`, and `ped2maternal()`. These components allow `ggpedigree` to visualize how related any two individuals are based on additive genetic, mitochondrial, or other relationship matrices. 
+BGmisc, as described in @bgmisc, is a dependency for its relatedness-heavy workflows, supplying network-based validation utilities (`checkParentIDs()`) and relatedness components, like `ped2fam()`, `ped2paternal()`, and `ped2maternal()`. These components allow `ggpedigree` to visualize how related any two individuals are based on additive genetic, mitochondrial, or other relationship matrices. 
 
 
 ## Features
 
 I describe the main features of the `ggpedigree` package below. Detailed descriptions of features and usage are available in the [package vignettes](https://r-computing-lab.github.io/ggpedigree/articles/), including examples of how to create static and interactive pedigree plots, customize aesthetics, and visualize relatedness matrices. Additional example data include squirrel data from the Kluane Red Squirrel Project [@mcfarlane2015; @mcfarlane2014] and Targaryen family data from the Song of Ice and Fire universe [@martin1997; @martin2018].
 
--   Data Standardization and Family Structure Analysis: `ggPedigree()` integrates with network-based functions from BGmisc like `ped2fam()` to organize individuals by family and `checkParentIDs()` to validate pedigree structures. The function handles consanguineous relationships and individuals appearing in multiple pedigree positions. More details are in the [complex pedigree data vignette](https://r-computing-lab.github.io/ggpedigree/articles/v22_plots_morecomplexity.html), as well as in Garrison et al. [@bgmisc], and Hunter, Garrison, et al [@hunter_analytic_2021,@hunter2025tracing] .
+-   Data Standardization and Family Structure Analysis: `ggPedigree()` integrates with network-based functions from BGmisc like `ped2fam()` to organize individuals by family and `checkParentIDs()` to validate pedigree structures. The function handles consanguineous relationships and individuals appearing in multiple pedigree positions. More details are in the [complex pedigree data vignette](https://r-computing-lab.github.io/ggpedigree/articles/v22_plots_morecomplexity.html), as well as in Garrison et al. [@bgmisc], and Hunter, Garrison, et al [@hunter_analytic_2021,@hunter2025tracing].
 
 -   Coordinate Calculation: `calculateCoordinates()` computes optimal positioning for individuals using algorithms adapted from `kinship2::align.pedigree`, with enhancements for large multi-generational pedigrees and complex family structures. These steps are vectorized as much as possible to ensure computational efficiency and compatibility with ggplot2.
 
@@ -106,11 +106,11 @@ Collectively, these tools provide a valuable resource for behavior geneticists a
 
 # Availability
 
-The `ggpedigree` package is open-source and available on both GitHub at <https://github.com/R-Computing-Lab/ggpedigree> and the Comprehensive R Archive Network (CRAN) at <https://cran.r-project.org/package=ggpedigree>. It is licensed under the GNU General Public License.
+The `ggpedigree` package is open-source and available on both [GitHub](https://github.com/R-Computing-Lab/ggpedigree) and the [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/package=ggpedigree). It is licensed under the GNU General Public License.
 
 # Acknowledgments
 
-The current research is supported by the National Institute on Aging (NIA), RF1-AG073189. The author would like to thank Michael Hunter for his enthusiasm for the development of this package.
+The current research is supported by the National Institute on Aging (NIA), [R01-AG073189](https://reporter.nih.gov/project-details/10883896). The author would like to thank Michael Hunter for his enthusiasm for the development of this package.
 
 # References
 
