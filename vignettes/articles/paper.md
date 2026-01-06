@@ -68,9 +68,9 @@ BGmisc, as described in @bgmisc, is a dependency for its relatedness-heavy workf
 
 I describe the main features of the `ggpedigree` package below. Detailed descriptions of features and usage are available in the [package vignettes](https://r-computing-lab.github.io/ggpedigree/articles/), including how to create static and interactive pedigree plots, customize aesthetics, and visualize relatedness matrices. Additional example data include squirrels from the Kluane Red Squirrel Project [@mcfarlane2015; @mcfarlane2014] and Targaryens from the Song of Ice and Fire universe [@martin1997; @martin2018].
 
--   Data Standardization and Family Structure Analysis: `ggPedigree()` integrates with network-based functions from BGmisc like `ped2fam()` to organize individuals by family and `checkParentIDs()` to validate pedigree structures. The function handles consanguineous relationships and individuals appearing in multiple pedigree positions. More details are in the [complex pedigree data vignette](https://r-computing-lab.github.io/ggpedigree/articles/v22_plots_morecomplexity.html), as well as in @bgmisc, and Hunter, Garrison, et al [@hunter_analytic_2021; @hunter2025tracing].
+-   Data Standardization and Family Structure Analysis: `ggPedigree()` integrates with network-based functions from BGmisc like `ped2fam()` to organize individuals by family and `checkParentIDs()` to validate pedigree structures. The function handles consanguineous relationships and individuals appearing in multiple pedigree positions. More details are in the [complex pedigree data vignette](https://r-computing-lab.github.io/ggpedigree/articles/v22_plots_morecomplexity.html), as well as in these works [@bgmisc; @hunter_analytic_2021; @hunter2025tracing].
 
--   Coordinate Calculation: `calculateCoordinates()` computes optimal positioning for individuals using algorithms adapted from `kinship2::align.pedigree`, with enhancements for large multi-generational pedigrees and complex family structures. These steps are vectorized as much as possible to ensure efficient computation and compatibility with ggplot2.
+-   Coordinate Calculation: `calculateCoordinates()` computes optimal positioning for individuals using algorithms adapted from `kinship2::align.pedigree`, with enhancements for complex multi-generational pedigrees. These steps are vectorized as much as possible to ensure efficient computation and compatibility with ggplot2.
 
 -   Relationship Connection Mapping: `calculateConnections()` generates connection paths between family members, mapping parent-child, sibling, spousal, and twin relationships. The function determines midpoints for line intersections and handles overlapping connections with curved segments. These calculations are optimized for large datasets by using vectorized operations rather than the loop-based approaches used in kinship2.
 
@@ -102,7 +102,7 @@ The package supports extensive customization of visual aesthetics. The following
 
 The complete source code for this example is available in the package documentation [website](https://r-computing-lab.github.io/ggpedigree/articles/v01_plots_extended.html).
 
-Collectively, these tools provide a valuable resource for behavior geneticists and others who work with extended family data. They were developed as part of a grant and have been used in several ongoing projects, presentations [@garrison2024; @hunter2024], and forthcoming papers [@lyu2025; @hunter2025tracing; @burt2025mtDNA].
+Collectively, these tools provide a valuable resource for those work with extended family data. They were developed as part of a grant and have been used in several ongoing projects, presentations [@garrison2024; @hunter2024], and forthcoming papers [@lyu2025; @hunter2025tracing; @burt2025mtDNA].
 
 # Availability
 
@@ -110,7 +110,7 @@ The `ggpedigree` package is open-source and available on both [GitHub](https://g
 
 # Acknowledgments
 
-The current research is supported by the National Institute on Aging (NIA), [R01-AG073189](https://reporter.nih.gov/project-details/10883896). The author would like to thank Michael Hunter for his enthusiasm for the development of this package.
+The current research is supported by the National Institute on Aging, [R01-AG073189](https://reporter.nih.gov/project-details/10883896). The author thanks Michael Hunter for his enthusiasm for the development of this package.
 
 # References
 
