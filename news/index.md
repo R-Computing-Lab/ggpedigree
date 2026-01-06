@@ -2,7 +2,7 @@
 
 ## ggpedigree (development version)
 
-## ggpedigree 1.1.0.2
+## ggpedigree 1.1.0.3
 
 ### API notes
 
@@ -47,6 +47,7 @@
 
 ### Internal changes
 
+- Changed default colors and sizes for better visibility.
 - Saved raw Excel inputs as CSV for non-proprietary storage.
 - Refactored `kinship2` internals for maintainability.
 - Refactored node-adding internals.

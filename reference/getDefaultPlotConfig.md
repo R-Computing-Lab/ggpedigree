@@ -70,7 +70,7 @@ getDefaultPlotConfig(
   ped_packed = TRUE,
   ped_align = TRUE,
   ped_width = 15,
-  segment_linewidth = 0.5,
+  segment_linewidth = 0.8,
   segment_linetype = 1,
   segment_lineend = "round",
   segment_linejoin = "round",
@@ -440,7 +440,7 @@ getDefaultPlotConfig(
 
 - segment_linewidth:
 
-  Line width for segments. Default is 0.5.
+  Line width for segments. Default is 0.80.
 
 - segment_linetype:
 

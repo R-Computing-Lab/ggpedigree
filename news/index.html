@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,20 +48,20 @@
 <h2 class="pkg-version" data-toc-text="development version" id="ggpedigree-development-version">ggpedigree (development version)<a class="anchor" aria-label="anchor" href="#ggpedigree-development-version"></a></h2>
 </div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.1.0.2" id="ggpedigree-1102">ggpedigree 1.1.0.2<a class="anchor" aria-label="anchor" href="#ggpedigree-1102"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.1.0.3" id="ggpedigree-1103">ggpedigree 1.1.0.3<a class="anchor" aria-label="anchor" href="#ggpedigree-1103"></a></h2>
 <div class="section level3">
-<h3 id="api-notes-1-1-0-2">API notes<a class="anchor" aria-label="anchor" href="#api-notes-1-1-0-2"></a></h3>
+<h3 id="api-notes-1-1-0-3">API notes<a class="anchor" aria-label="anchor" href="#api-notes-1-1-0-3"></a></h3>
 <ul><li>Documented <code><a href="../reference/ggPedigree.html">ggPedigree()</a></code> / <code><a href="../reference/ggPedigreeInteractive.html">ggPedigreeInteractive()</a></code> / <code><a href="../reference/ggRelatednessMatrix.html">ggRelatednessMatrix()</a></code> as canonical entry points while retaining backward-compatible aliases.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-data-1-1-0-2">New data<a class="anchor" aria-label="anchor" href="#new-data-1-1-0-2"></a></h3>
+<h3 id="new-data-1-1-0-3">New data<a class="anchor" aria-label="anchor" href="#new-data-1-1-0-3"></a></h3>
 <ul><li>Added a preliminary Wars of the Roses pedigree dataset.</li>
 <li>Improved dataset documentation.</li>
 <li>Tweaked the GoT dataset example for improved clarity.</li>
 <li>Split the squirrel dataset into smaller pedigrees for testing.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-features-1-1-0-2">New features<a class="anchor" aria-label="anchor" href="#new-features-1-1-0-2"></a></h3>
+<h3 id="new-features-1-1-0-3">New features<a class="anchor" aria-label="anchor" href="#new-features-1-1-0-3"></a></h3>
 <ul><li>Added a greyscale option to <code>color_theme</code>.</li>
 <li>Added automatic point scaling based on pedigree size.</li>
 <li>Added optional segment size scaling based on pedigree size.</li>
@@ -70,27 +70,28 @@
 <li>Cross-referenced vignettes in function documentation.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="validation-and-messages-1-1-0-2">Validation and messages<a class="anchor" aria-label="anchor" href="#validation-and-messages-1-1-0-2"></a></h3>
+<h3 id="validation-and-messages-1-1-0-3">Validation and messages<a class="anchor" aria-label="anchor" href="#validation-and-messages-1-1-0-3"></a></h3>
 <ul><li>Performed required-column checks earlier in <code><a href="../reference/ggPedigree.html">ggpedigree()</a></code>, including <code>sex</code>.</li>
 <li>Improved errors for invalid or non-standard <code>sex</code> coding.</li>
 <li>Improved the warning message used in <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code>.</li>
 <li>Made <code>code_male</code> handling more resilient when using config values.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-1-1-0-2">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-1-0-2"></a></h3>
+<h3 id="bug-fixes-1-1-0-3">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-1-0-3"></a></h3>
 <ul><li>Standardized naming by replacing <code>midparent</code> with <code>mid_parent</code>.</li>
 <li>Fixed inconsistent handling of character vs numeric IDs.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="internal-changes-1-1-0-2">Internal changes<a class="anchor" aria-label="anchor" href="#internal-changes-1-1-0-2"></a></h3>
-<ul><li>Saved raw Excel inputs as CSV for non-proprietary storage.</li>
+<h3 id="internal-changes-1-1-0-3">Internal changes<a class="anchor" aria-label="anchor" href="#internal-changes-1-1-0-3"></a></h3>
+<ul><li>Changed default colors and sizes for better visibility.</li>
+<li>Saved raw Excel inputs as CSV for non-proprietary storage.</li>
 <li>Refactored <code>kinship2</code> internals for maintainability.</li>
 <li>Refactored node-adding internals.</li>
 <li>Remove reshape2 dependency</li>
 <li>Deprecating plotPedigree function in favor of kinship2_plotPedigree</li>
 </ul></div>
 <div class="section level3">
-<h3 id="testing-1-1-0-2">Testing<a class="anchor" aria-label="anchor" href="#testing-1-1-0-2"></a></h3>
+<h3 id="testing-1-1-0-3">Testing<a class="anchor" aria-label="anchor" href="#testing-1-1-0-3"></a></h3>
 <ul><li>Expanded tests for ID and sex-code inputs, including type, missingness, and configuration scenarios.</li>
 </ul></div>
 </div>
