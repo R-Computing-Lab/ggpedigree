@@ -78,7 +78,7 @@
 #' @param ped_packed Whether the pedigree should use packed layout.
 #' @param ped_align Whether to align pedigree generations.
 #' @param ped_width Plot width of the pedigree block.
-#' @param segment_linewidth Line width for segments. Default is 0.5.
+#' @param segment_linewidth Line width for segments. Default is 0.80.
 #' @param segment_linetype Line type for segments. Default is 1 (solid).
 #' @param segment_lineend Line end type for segments. Default is "round".
 #' @param segment_linejoin Line join type for segments. Default is "round".
@@ -265,7 +265,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  ped_align = TRUE,
                                  ped_width = 15,
                                  # ---- Segment Drawing Options ----
-                                 segment_linewidth = .5,
+                                 segment_linewidth = .80,
                                  segment_linetype = 1,
                                  segment_lineend = "round",
                                  segment_linejoin = "round",
@@ -764,7 +764,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     core_list$tooltip_columns <- c(personID, "sex", status_column)
     core_list$label_method <- "geom_text"
     core_list$label_include <- FALSE # default to FALSE
-    core_list$segment_linewidth <- 0.5 # too thick
+    core_list$segment_linewidth <- 0.6 # too thick
     core_list$segment_self_linewidth <- .5 * core_list$segment_linewidth
     core_list$tooltip_include <- TRUE
     core_list$return_static <- FALSE
