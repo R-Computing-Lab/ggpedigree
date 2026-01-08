@@ -4,13 +4,19 @@
 \alias{relink}
 \title{Relink IDs to closest duplicate appearance based on coordinates}
 \usage{
-relink(df, col, dup_xy_list)
+relink(df, col, dup_xy_list, dup_xy)
 }
 \arguments{
 \item{df}{A data.frame containing pedigree layout info with columns including:
 `x_pos`, `y_pos`, and the target column to relink.}
 
 \item{col}{Character; name of the column to relink (e.g., `"momID"`, `dadID"`, `spouseID"`).}
+
+\item{dup_xy_list}{A list of data.frames, each containing duplicate appearances
+for a specific coreID with columns: `personID`, `x_pos`, `y_pos`, and `total_blue`.}
+
+\item{dup_xy}{A data.frame containing all duplicate appearances with columns:
+`personID`, `coreID`, `x_pos`, `y_pos`, and `total_blue`.}
 }
 \value{
 A modified `df` data.frame with updated IDs in the specified column.

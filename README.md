@@ -23,7 +23,7 @@ branch](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-de
 Deployed](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/pkgdown.yaml)
 [![License](https://img.shields.io/badge/License-GPL_v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![status](https://joss.theoj.org/papers/e5116b83b03e2740960d1153c45f9480/status.svg)](https://joss.theoj.org/papers/e5116b83b03e2740960d1153c45f9480)
-
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18165893.svg)](https://doi.org/10.5281/zenodo.18165893)
 <!-- badges: end -->
 
 `ggpedigree` provides modern tools for visualizing family trees and
@@ -32,16 +32,23 @@ enables the creation of static and interactive pedigree plots that can
 accommodate complex family relationships, including duplicated
 individuals and various mating structures.
 
-The package complements a behavior genetics package `BGmisc` \[Garrison
-et al. (2024) <doi:10.21105/joss.06203>\] by rendering pedigrees using
-the ‘ggplot2’ framework. Features include support for duplicated
-individuals, complex mating structures, integration with simulated
-pedigrees, and layout customization. Due to the impending deprecation of
-`kinship2`, version 1.0 incorporates the layout helper functions from
-kinship2. The pedigree alignment algorithms are adapted from ‘kinship2’
-\[Sinnwell et al. (2014) <doi:10.1159/000363105>\]. We gratefully
-acknowledge the original authors: Jason Sinnwell, Terry Therneau, Daniel
-Schaid, and Elizabeth Atkinson for their foundational work.
+The package complements the behavior genetics toolkit `BGmisc`
+\[Garrison et al. (2024) <doi:10.21105/joss.06203>\] for tasks such as
+pedigree validation and computing relatedness matrices. Core plotting
+functions (`ggPedigree()`, `ggPedigreeInteractive()`,
+`calculateCoordinates()`) work on any rectangular pedigree and ship with
+built-in example data, while relatedness workflows reuse matrix builders
+from `BGmisc`. Due to the impending deprecation of `kinship2`, version
+1.0 incorporates the layout helper functions from kinship2. The pedigree
+alignment algorithms are adapted from ‘kinship2’ \[Sinnwell et
+al. (2014) <doi:10.1159/000363105>\]. We gratefully acknowledge the
+original authors: Jason Sinnwell, Terry Therneau, Daniel Schaid, and
+Elizabeth Atkinson for their foundational work.
+
+See the [package
+vignettes](https://r-computing-lab.github.io/ggpedigree/articles/) for
+end-to-end tutorials, including relatedness matrices and interactive
+plots.
 
 ## Installation
 
@@ -76,18 +83,19 @@ ggPedigree(potter,
 )
 ```
 
-<img src="man/figures/README-basic-usage-1.png" width="80%" />
+<img src="man/figures/README-basic-usage-1.png" alt="" width="80%" />
 
 ``` r
 ggPedigree(potter,
   famID = "famID",
   personID = "personID",
   config = list(
-    color_theme = "greyscale")
+    color_theme = "greyscale"
+  )
 )
 ```
 
-<img src="man/figures/README-slightly-usage-1.png" width="80%" />
+<img src="man/figures/README-slightly-usage-1.png" alt="" width="80%" />
 
 ## Citation
 
@@ -97,7 +105,7 @@ cite the following:
     citation(package = "ggpedigree")
 
 Garrison S (2026). *ggpedigree: Visualizing Pedigrees with ‘ggplot2’ and
-‘plotly’*. R package version 1.1.0.2,
+‘plotly’*. R package version 1.1.0.3,
 <https://github.com/R-Computing-Lab/ggpedigree/>.
 
 A BibTeX entry for LaTeX users is
@@ -106,7 +114,7 @@ A BibTeX entry for LaTeX users is
       title = {ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'},
       author = {S. Mason Garrison},
       year = {2026},
-      note = {R package version 1.1.0.2},
+      note = {R package version 1.1.0.3},
       url = {https://github.com/R-Computing-Lab/ggpedigree/},
     }
 

@@ -1,7 +1,7 @@
 # ggpedigree (development version)
 # ==============================
 
-# ggpedigree 1.1.0.2
+# ggpedigree 1.1.0.3
 
 ## API notes
 * Documented `ggPedigree()` / `ggPedigreeInteractive()` / `ggRelatednessMatrix()` as canonical entry points while retaining backward-compatible aliases.
@@ -31,6 +31,7 @@
 * Fixed inconsistent handling of character vs numeric IDs.
 
 ## Internal changes
+* Changed default colors and sizes for better visibility.
 * Saved raw Excel inputs as CSV for non-proprietary storage.
 * Refactored `kinship2` internals for maintainability.
 * Refactored node-adding internals.

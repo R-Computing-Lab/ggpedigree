@@ -64,7 +64,7 @@ getDefaultPlotConfig(
   ped_packed = TRUE,
   ped_align = TRUE,
   ped_width = 15,
-  segment_linewidth = 0.5,
+  segment_linewidth = 0.8,
   segment_linetype = 1,
   segment_lineend = "round",
   segment_linejoin = "round",
@@ -305,7 +305,7 @@ getDefaultPlotConfig(
 
 \item{ped_width}{Plot width of the pedigree block.}
 
-\item{segment_linewidth}{Line width for segments. Default is 0.5.}
+\item{segment_linewidth}{Line width for segments. Default is 0.80.}
 
 \item{segment_linetype}{Line type for segments. Default is 1 (solid).}
 
