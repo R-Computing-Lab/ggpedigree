@@ -47,10 +47,14 @@ preparePedigreeData <- function(ped,
                                   "family lines"
                                 ),
                                 status_column = NULL,
-                                focal_fill_column = NULL) {
+                                focal_fill_column = NULL,
+                                sexVar = "sex") {
   # -----
   # STEP 2: Pedigree Data Transformation
   # -----
+  if (sexVar != "sex" && !"sex" %in% names(ped)) {
+    ped$sex <- ped[[sexVar]]
+  }
 
   # Transform the pedigree data frame to include family, paternal, and maternal IDs
   ds_ped <- transformPed(

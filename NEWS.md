@@ -1,6 +1,8 @@
 # ggpedigree (development version)
 # ==============================
 
+* Making the sexVar variable more robust
+
 # ggpedigree 1.1.0.3
 
 ## API notes
