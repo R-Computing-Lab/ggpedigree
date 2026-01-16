@@ -4,6 +4,8 @@
 
 ## ggpedigree 1.1.0.3
 
+CRAN release: 2026-01-11
+
 ### API notes
 
 - Documented
