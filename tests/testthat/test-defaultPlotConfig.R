@@ -147,13 +147,13 @@ test_that("buildPlotConfig handles scaling correctly", {
 
   pedigree_size <- 300
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
-  expect_equal(result$point_size, max(custom$point_size / sqrt(pedigree_size) * 1.5, .5), tolerance = 1e-8)
+  expect_equal(result$point_size, max(custom$point_size / sqrt(pedigree_size) * 1.5, .75), tolerance = 1e-8)
   expect_equal(result$segment_linewidth, custom$segment_linewidth / sqrt(pedigree_size) * 1.5, tolerance = 1e-8)
   expect_equal(result$segment_self_linewidth, max(custom$segment_self_linewidth / sqrt(pedigree_size) * 1.5, .25), tolerance = 1e-8)
 
   pedigree_size <- 501
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
-  expect_equal(result$point_size, max(custom$point_size / sqrt(pedigree_size) * 2.5, .5), tolerance = 1e-8)
+  expect_equal(result$point_size, max(custom$point_size / sqrt(pedigree_size) * 2.5, .75), tolerance = 1e-8)
   expect_equal(result$segment_linewidth, custom$segment_linewidth / sqrt(pedigree_size) * 2.5, tolerance = 1e-8)
   expect_equal(result$segment_self_linewidth, max(custom$segment_self_linewidth / sqrt(pedigree_size) * 2.5, .25), tolerance = 1e-8)
 })
