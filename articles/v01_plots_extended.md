@@ -331,6 +331,9 @@ library(sysfonts)
 library(patchwork) # combining plots
 data("potter") # load the potter pedigree data
 
+potter <- potter %>% 
+  mutate(idnames = paste0(personID, ": ", first_name))
+
 # Load Google fonts for styling
 font_add_google(name = "Cormorant", family = "cormorant")
 showtext_auto() # render Google fonts
@@ -350,7 +353,7 @@ m1 <- ggPedigree(potter %>% filter(personID %in% c(1:7, 101:104)),
   config = list(
     label_include = TRUE,
     point_scale_by_pedigree = FALSE,
-    label_column = "first_name",
+    label_column = "idnames",#"first_name",
     point_size = 8,
     focal_fill_personID = 8,
     segment_linewidth = 0.5,
@@ -382,7 +385,7 @@ m2 <- ggPedigree(potter,
   personID = "personID",
   config = list(
     label_include = TRUE,
-    label_column = "first_name",
+    label_column = "idnames",#"first_name",
     point_size = 8,
     point_scale_by_pedigree = FALSE,
     focal_fill_personID = 8, # Molly Weasley
