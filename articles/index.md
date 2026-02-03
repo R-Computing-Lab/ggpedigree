@@ -7,7 +7,7 @@
 - [Extended: Plotting pedigrees with
   ggPedigree()](https://r-computing-lab.github.io/ggpedigree/articles/v01_plots_extended.md):
 - [Using config to control ggpedigree
-  plots](https://r-computing-lab.github.io/ggpedigree/articles/v10_configuration.md):
+  plots](https://r-computing-lab.github.io/ggpedigree/articles/v02_configuration.md):
 - [Extended: More uses of \`config\` to control ggpedigree
   plots](https://r-computing-lab.github.io/ggpedigree/articles/v11_configuration_extended.md):
 - [Interactive Pedigree Plotting with

@@ -4,14 +4,14 @@ pkgdown_sha: ~
 articles:
   v00_plots: v00_plots.html
   articles/v01_plots_extended: v01_plots_extended.html
-  v10_configuration: v10_configuration.html
+  v02_configuration: v02_configuration.html
   articles/v11_configuration_extended: v11_configuration_extended.html
   v20_interactiveplots: v20_interactiveplots.html
   articles/v21_extendedinteractiveplots: v21_extendedinteractiveplots.html
   v30_matrix: v30_matrix.html
   articles/v31_phenotypicbydegree: v31_phenotypicbydegree.html
   articles/v32_plots_morecomplexity: v32_plots_morecomplexity.html
-last_built: 2026-02-01T00:21Z
+last_built: 2026-02-03T03:39Z
 urls:
   reference: https://r-computing-lab.github.io/ggpedigree/reference
   article: https://r-computing-lab.github.io/ggpedigree/articles
