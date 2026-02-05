@@ -57,6 +57,7 @@
 #' @param label_text_size Font size for labels.
 #' @param label_text_color Color of the label text.
 #' @param label_text_family Font family for label text.
+#' @param label_scale_by_pedigree Whether to scale label size by pedigree size.
 #' @param point_size Size of points drawn in plot.
 #' @param point_scale_by_pedigree Whether to scale point sizes by pedigree size.
 #' @param outline_include Whether to include outlines around points.
@@ -239,6 +240,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  label_text_size = 3,
                                  label_text_color = "black",
                                  label_text_family = "sans",
+                                 label_scale_by_pedigree = TRUE,
                                  # --- POINT / OUTLINE AESTHETICS ---------------------------------------
                                  point_size = 6,
                                  point_scale_by_pedigree = TRUE,
@@ -532,6 +534,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     label_text_size = label_text_size,
     label_text_color = label_text_color,
     label_text_family = label_text_family,
+    label_scale_by_pedigree = label_scale_by_pedigree,
 
     # --- POINT / OUTLINE AESTHETICS ---------------------------------------
     point_size = point_size,

@@ -1,6 +1,8 @@
 # ggpedigree (development version)
 # ==============================
 
+* Add scale label size by pedigree size option
+
 # ggpedigree 1.1.0.3
 
 ## API notes
