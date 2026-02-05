@@ -7,6 +7,7 @@ This version incorporates the revisions made as part of the JOSS review process.
 
 There was one note about how a suggested package (openMX) wasn't available for r-oldrel-windows-x86_64. This is expected behavior due to changes in openmx dependencies. It does not impact the functionality of `ggpedigree`, as `openMX` is not a required dependency.
 
+Therneau and and Schaid are spelled correctly in the DESCRIPTION file.
 
 # Test Environments
 

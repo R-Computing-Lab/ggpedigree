@@ -63,11 +63,11 @@ buildPlotConfig <- function(default_config,
       } else if (pedigree_size <= 50) {
         built_config$point_size <- built_config$point_size
       } else if (pedigree_size <= 100) {
-        built_config$point_size <- max(built_config$point_size / sqrt(pedigree_size), 0.5)
+        built_config$point_size <- max(built_config$point_size / sqrt(pedigree_size), 0.75)
       } else if (pedigree_size <= 500) {
-        built_config$point_size <- max(built_config$point_size / sqrt(pedigree_size) * 1.5, 0.5)
+        built_config$point_size <- max(built_config$point_size / sqrt(pedigree_size) * 1.5, 0.75)
       } else {
-        built_config$point_size <- max(built_config$point_size / sqrt(pedigree_size) * 2.5, 0.5)
+        built_config$point_size <- max(built_config$point_size / sqrt(pedigree_size) * 2.5, 0.75)
       }
     }
     if (built_config$segment_scale_by_pedigree == TRUE) {
