@@ -65,7 +65,8 @@ ggRelatednessMatrix <- function(
   config <- buildPlotConfig(
     default_config = default_config,
     config = config,
-    function_name = "ggrelatednessmatrix"
+    function_name = "ggrelatednessmatrix",
+    pedigree_size = nrow(mat)
   )
 
   if (!is.null(tooltip_columns)) {
