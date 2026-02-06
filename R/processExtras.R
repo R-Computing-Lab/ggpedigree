@@ -235,9 +235,6 @@ processExtras <- function(ped, config = list()) {
   dup_xy_list <- split(dup_xy, dup_xy$coreID)
 
 
-
-
-
   # remove parent ids from all but the closest coreID,
   # if there's no choice to be made, then keep existing momID
 
@@ -268,9 +265,9 @@ processExtras <- function(ped, config = list()) {
     )
   ped <- ped |>
     relink("spouseID",
-           dup_xy_list=dup_xy_list,
-           dup_xy=dup_xy
-           ) |>
+      dup_xy_list = dup_xy_list,
+      dup_xy = dup_xy
+    ) |>
     #   relink("momID") |>
     #  relink("dadID") |>
     unique()
@@ -333,8 +330,7 @@ processExtras <- function(ped, config = list()) {
 
 closest_dup <- function(target_core, x0, y0,
                         dup_xy_list,
-                        dup_xy
-                        ) {
+                        dup_xy) {
   cand <- dup_xy_list[[as.character(target_core)]]
   if (nrow(cand) == 0L) {
     return(dup_xy$coreID[NA_integer_]) # return correct NA type
@@ -380,7 +376,7 @@ closest_dup <- function(target_core, x0, y0,
 #' @return A modified `df` data.frame with updated IDs in the specified column.
 #' @keywords internal
 
-relink <- function(df, col,dup_xy_list,dup_xy ) {
+relink <- function(df, col, dup_xy_list, dup_xy) {
   df |>
     dplyr::rowwise() |>
     dplyr::mutate(

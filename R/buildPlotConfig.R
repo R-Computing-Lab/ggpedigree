@@ -149,6 +149,27 @@ buildPlotConfig <- function(default_config,
   } else if (stringr::str_to_lower(function_name) %in%
     c("ggphenotypebydegree", "phenotypebydegree")) {
     built_config$label_nudge_y_flip <- FALSE # default to TRUE for ggphenotypebydegree
+  } else if (stringr::str_to_lower(function_name) %in%
+    c("ggrelatednessmatrix", "relatednessmatrix")) {
+    # No additional processing needed currently
+    if ("matrix_color_palette" %in% names(built_config) == FALSE) {
+      built_config$matrix_color_palette <- c("white", "blue", "red")
+    }
+    if (built_config$label_scale_by_pedigree == TRUE) {
+      if (is.null(pedigree_size) || pedigree_size <= 0) {
+        warning("pedigree_size must be provided in config when point_scale_by_pedigree is TRUE. Defaulting to 1.")
+        pedigree_size <- 1
+      }
+      if (pedigree_size <= 50) {
+        built_config$axis_text_size <- built_config$axis_text_size
+      } else if (pedigree_size <= 100) {
+        built_config$axis_text_size <- max(built_config$axis_text_size / log10(pedigree_size), 6)
+      } else {
+        built_config$label_include <- FALSE
+
+
+      }
+    }
   }
 
   return(built_config)

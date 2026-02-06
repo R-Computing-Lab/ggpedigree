@@ -12,7 +12,8 @@
   dadID = "dadID",
   spouseID = "spouseID",
   twinID = "twinID",
-  famID = "famID"
+  famID = "famID",
+  sexVar = "sex"
 )
 
 restoreNames(
@@ -22,13 +23,14 @@ restoreNames(
   dadID = "dadID",
   spouseID = "spouseID",
   twinID = "twinID",
-  famID = "famID"
+  famID = "famID",
+  sexVar = "sex"
 )
 }
 \arguments{
 \item{connections}{A data frame containing connection identifiers whose
 columns may currently be named with internal defaults such as
-`personID`, `momID`, `dadID`, `spouseID`, `twinID`, `famID`.}
+`personID`, `momID`, `dadID`, `spouseID`, `twinID`, `famID`, and `sex`.}
 
 \item{personID}{Character string specifying the column name for individual IDs. Defaults to "personID".}
 
@@ -41,6 +43,8 @@ columns may currently be named with internal defaults such as
 \item{twinID}{Character string specifying the column name for twin IDs. Defaults to "twinID".}
 
 \item{famID}{Character string specifying the column name for family IDs. Defaults to "famID".}
+
+\item{sexVar}{Character string specifying the column name for sex. Defaults to "sex".}
 }
 \description{
 Rename standard internal columns in a pedigree connections data frame

@@ -66,7 +66,10 @@ ggPedigree.core <- function(ped,
     "family line"
   )
 
-
+  if (sexVar != "sex" && sexVar %in% names(ped)) {
+    # names(ped)[names(ped) == sexVar] <- "sex"
+    ped$sex <- ped[[sexVar]]
+  }
   # -----
   # STEP 2+3: Pedigree Data Transformation and Data Cleaning and Recoding
   # -----
@@ -154,7 +157,8 @@ ggPedigree.core <- function(ped,
     dadID = dadID,
     spouseID = spouseID,
     twinID = twinID,
-    famID = famID
+    famID = famID # ,
+    #   sexVar = sexVar
   )
 
 

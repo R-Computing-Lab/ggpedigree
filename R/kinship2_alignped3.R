@@ -71,9 +71,9 @@ kinship2_alignped3 <- function(x1, x2, packed, space = 1) {
         overlap <- 0
       }
 
-      if (packed){
+      if (packed) {
         slide <- if (n1 == 0) 0 else pos[i, n1] + space - overlap
-}
+      }
       zz <- seq(from = overlap + 1, length = n2 - overlap)
       nid[i, n1 + zz - overlap] <- x2$nid[i, zz]
       fam[i, n1 + zz - overlap] <- fam2[i, zz]

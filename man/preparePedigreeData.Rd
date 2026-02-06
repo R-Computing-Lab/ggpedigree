@@ -22,7 +22,8 @@ preparePedigreeData(
   fill_group_family = c("family", "famID", "family line", "family lineages",
     "family lines"),
   status_column = NULL,
-  focal_fill_column = NULL
+  focal_fill_column = NULL,
+  sexVar = "sex"
 )
 }
 \arguments{
@@ -65,6 +66,8 @@ preparePedigreeData(
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
 
 \item{focal_fill_column}{Character string specifying the column name for focal fill color.}
+
+\item{sexVar}{Character string specifying the column name for sex. Defaults to "sex".}
 }
 \value{
 A data frame with the prepared pedigree data.
