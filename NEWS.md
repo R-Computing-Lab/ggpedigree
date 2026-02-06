@@ -2,6 +2,8 @@
 # ==============================
 
 * Add scale label size by pedigree size option
+* Making the sexVar variable more robust
+
 
 # ggpedigree 1.1.0.3
 

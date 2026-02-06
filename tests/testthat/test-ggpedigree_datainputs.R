@@ -1,4 +1,7 @@
 # Tests for ggPedigree data input handling
+debug <- FALSE
+
+
 sex_map <- list(
   s212 = c(2, 1, 2),
   s21NA = c(2, 1, NA),
@@ -174,44 +177,64 @@ make_df_num <- function(sex = c(0, 1, 0),
   )
 }
 
+test_that("sexVar ne sex", {
+  df <- data.frame(
+    personID = 1:3,
+    dadID    = c(0, 0, 1),
+    momID    = c(0, 0, 2),
+    FOO      = c(1, 2, 3)
+  )
+
+  cfg <- list(code_male = 1, code_female = 2, code_unknown = 3)
+
+  expect_no_warning(
+    p <- ggPedigree(df, config = cfg, sexVar = "FOO")
+  )
+  #  p <- ggPedigree(df, config = cfg)
+  expect_s3_class(p, "ggplot")
+})
 
 test_that("full cross: strict expectations + roundtrip invariant", {
-  for (i in seq_len(nrow(grid))) {
-    row <- grid[i, ]
+  if (debug == TRUE) {
+    skip("Skipping full cross-product tests (debug=FALSE)")
+  } else {
+    for (i in seq_len(nrow(grid))) {
+      row <- grid[i, ]
 
-    sex <- sex_map[[row$sex_case]]
-    cfg <- config_map[[row$config_case]]
+      sex <- sex_map[[row$sex_case]]
+      cfg <- config_map[[row$config_case]]
 
 
-    mp <- if (row$id_type == "char") {
-      missing_parent_char[[row$missing_parent]]
-    } else {
-      missing_parent_num[[row$missing_parent]]
+      mp <- if (row$id_type == "char") {
+        missing_parent_char[[row$missing_parent]]
+      } else {
+        missing_parent_num[[row$missing_parent]]
+      }
+      df <- if (row$id_type == "char") {
+        make_df_char(sex = sex, missing_parent = mp)
+      } else {
+        make_df_num(sex = sex, missing_parent = mp)
+      }
+
+
+      info <- paste0(
+        "id_type=", row$id_type,
+        " mp=", row$missing_parent,
+        " sex=", row$sex_case,
+        " cfg=", row$config_case
+      )
+
+      tryCatch(expect_roundtrip(
+        df,
+        NA_id_value = mp,
+        expect_warnings = row$expect_warnings,
+        expect_errors = row$expect_errors,
+        config = cfg,
+        info = info
+      ), error = function(e) {
+        stop(paste0("Failed test with info: ", info, "\n", e$message))
+      })
     }
-    df <- if (row$id_type == "char") {
-      make_df_char(sex = sex, missing_parent = mp)
-    } else {
-      make_df_num(sex = sex, missing_parent = mp)
-    }
-
-
-    info <- paste0(
-      "id_type=", row$id_type,
-      " mp=", row$missing_parent,
-      " sex=", row$sex_case,
-      " cfg=", row$config_case
-    )
-
-    tryCatch(expect_roundtrip(
-      df,
-      NA_id_value = mp,
-      expect_warnings = row$expect_warnings,
-      expect_errors = row$expect_errors,
-      config = cfg,
-      info = info
-    ), error = function(e) {
-      stop(paste0("Failed test with info: ", info, "\n", e$message))
-    })
   }
 })
 
@@ -257,7 +280,9 @@ test_that("better warning for string ids", {
     function(d) all(c("x", "y", "label") %in% names(d)),
     logical(1)
   ))
-  if (length(lab_idx) == 0) return(NULL)
+  if (length(lab_idx) == 0) {
+    return(NULL)
+  }
   unique(as.character(b$data[[lab_idx[1]]]$label))
 }
 
@@ -290,11 +315,11 @@ test_that("#95.4: NA sex does not silently drop the individual (label still pres
   expect_warning(
     p <- ggPedigree(df, config = cfg)
   )
-#  p <- ggPedigree(df, config = cfg)
+  #  p <- ggPedigree(df, config = cfg)
   expect_s3_class(p, "ggplot")
 
   labs <- .issue95_extract_labels(p)
 
-    if (is.null(labs)) testthat::skip("Could not extract labels from ggplot build.")
+  if (is.null(labs)) testthat::skip("Could not extract labels from ggplot build.")
   testthat::expect_true("3" %in% labs)
 })

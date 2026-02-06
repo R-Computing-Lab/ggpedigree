@@ -125,7 +125,7 @@ adjustSpacing <- .adjustSpacing
 #' back to user-specified names.
 #' @param connections A data frame containing connection identifiers whose
 #'   columns may currently be named with internal defaults such as
-#'   `personID`, `momID`, `dadID`, `spouseID`, `twinID`, `famID`.
+#'   `personID`, `momID`, `dadID`, `spouseID`, `twinID`, `famID`, and `sex`.
 #' @inheritParams ggPedigree
 #' @keywords internal
 
@@ -135,7 +135,8 @@ adjustSpacing <- .adjustSpacing
                           dadID = "dadID",
                           spouseID = "spouseID",
                           twinID = "twinID",
-                          famID = "famID") {
+                          famID = "famID",
+                          sexVar = "sex") {
   # Restore the names of the columns in connections
   # to the user-specified names
   if (!is.data.frame(connections)) {
@@ -147,6 +148,12 @@ adjustSpacing <- .adjustSpacing
     # Rename twinID to the user-specified name
     names(connections)[names(connections) == "twinID"] <- twinID
   }
+  # instead this just duplicates the sex variable under a new name
+  #  if ("sex" %in% names(connections) &&
+  #   sexVar != "sex") {
+  # Rename sex to the user-specified name
+  #   names(connections)[names(connections) == "sex"] <- sexVar
+  # }
 
   if (personID != "personID") {
     # Rename personID to the user-specified name
