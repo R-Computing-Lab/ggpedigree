@@ -43,6 +43,7 @@ getDefaultPlotConfig(
   label_text_size = 3,
   label_text_color = "black",
   label_text_family = "sans",
+  label_scale_by_pedigree = TRUE,
   point_size = 6,
   point_scale_by_pedigree = TRUE,
   outline_include = FALSE,
@@ -262,6 +263,8 @@ getDefaultPlotConfig(
 \item{label_text_color}{Color of the label text.}
 
 \item{label_text_family}{Font family for label text.}
+
+\item{label_scale_by_pedigree}{Whether to scale label size by pedigree size.}
 
 \item{point_size}{Size of points drawn in plot.}
 
