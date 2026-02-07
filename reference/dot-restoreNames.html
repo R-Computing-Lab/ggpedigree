@@ -26,9 +26,9 @@ back to user-specified names."></head><body>
     <li><a class="dropdown-item" href="../articles/v11_configuration_extended.html">Extended: More uses of `config` to control ggpedigree plots</a></li>
     <li><a class="dropdown-item" href="../articles/v20_interactiveplots.html">Interactive Pedigree Plotting with ggPedigreeInteractive</a></li>
     <li><a class="dropdown-item" href="../articles/v21_extendedinteractiveplots.html">Extended: More Complex Pedigree Plots with ggPedigreeInteractive</a></li>
+    <li><a class="dropdown-item" href="../articles/v22_plots_morecomplexity.html">Extended: Plotting more complicated pedigrees with `ggPedigree()`</a></li>
     <li><a class="dropdown-item" href="../articles/v30_matrix.html">Visualizing Relatedness Matrices with ggRelatednessMatrix()</a></li>
     <li><a class="dropdown-item" href="../articles/v31_phenotypicbydegree.html">Extended: Plotting Phenotypic Correlation by Degree of Relatedness</a></li>
-    <li><a class="dropdown-item" href="../articles/v32_plots_morecomplexity.html">Extended: Plotting more complicated pedigrees with `ggPedigree()`</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -61,7 +61,8 @@ back to user-specified names.</p>
 <span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
 <span>  spouseID <span class="op">=</span> <span class="st">"spouseID"</span>,</span>
 <span>  twinID <span class="op">=</span> <span class="st">"twinID"</span>,</span>
-<span>  famID <span class="op">=</span> <span class="st">"famID"</span></span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  sexVar <span class="op">=</span> <span class="st">"sex"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">restoreNames</span><span class="op">(</span></span>
@@ -71,7 +72,8 @@ back to user-specified names.</p>
 <span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
 <span>  spouseID <span class="op">=</span> <span class="st">"spouseID"</span>,</span>
 <span>  twinID <span class="op">=</span> <span class="st">"twinID"</span>,</span>
-<span>  famID <span class="op">=</span> <span class="st">"famID"</span></span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  sexVar <span class="op">=</span> <span class="st">"sex"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -82,7 +84,7 @@ back to user-specified names.</p>
 <dl><dt id="arg-connections">connections<a class="anchor" aria-label="anchor" href="#arg-connections"></a></dt>
 <dd><p>A data frame containing connection identifiers whose
 columns may currently be named with internal defaults such as
-`personID`, `momID`, `dadID`, `spouseID`, `twinID`, `famID`.</p></dd>
+`personID`, `momID`, `dadID`, `spouseID`, `twinID`, `famID`, and `sex`.</p></dd>
 
 
 <dt id="arg-personid">personID<a class="anchor" aria-label="anchor" href="#arg-personid"></a></dt>
@@ -107,6 +109,10 @@ columns may currently be named with internal defaults such as
 
 <dt id="arg-famid">famID<a class="anchor" aria-label="anchor" href="#arg-famid"></a></dt>
 <dd><p>Character string specifying the column name for family IDs. Defaults to "famID".</p></dd>
+
+
+<dt id="arg-sexvar">sexVar<a class="anchor" aria-label="anchor" href="#arg-sexvar"></a></dt>
+<dd><p>Character string specifying the column name for sex. Defaults to "sex".</p></dd>
 
 </dl></div>
 

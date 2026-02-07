@@ -24,9 +24,9 @@
     <li><a class="dropdown-item" href="../articles/v11_configuration_extended.html">Extended: More uses of `config` to control ggpedigree plots</a></li>
     <li><a class="dropdown-item" href="../articles/v20_interactiveplots.html">Interactive Pedigree Plotting with ggPedigreeInteractive</a></li>
     <li><a class="dropdown-item" href="../articles/v21_extendedinteractiveplots.html">Extended: More Complex Pedigree Plots with ggPedigreeInteractive</a></li>
+    <li><a class="dropdown-item" href="../articles/v22_plots_morecomplexity.html">Extended: Plotting more complicated pedigrees with `ggPedigree()`</a></li>
     <li><a class="dropdown-item" href="../articles/v30_matrix.html">Visualizing Relatedness Matrices with ggRelatednessMatrix()</a></li>
     <li><a class="dropdown-item" href="../articles/v31_phenotypicbydegree.html">Extended: Plotting Phenotypic Correlation by Degree of Relatedness</a></li>
-    <li><a class="dropdown-item" href="../articles/v32_plots_morecomplexity.html">Extended: Plotting more complicated pedigrees with `ggPedigree()`</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -69,7 +69,8 @@
 <span>  fill_group_family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"family"</span>, <span class="st">"famID"</span>, <span class="st">"family line"</span>, <span class="st">"family lineages"</span>,</span>
 <span>    <span class="st">"family lines"</span><span class="op">)</span>,</span>
 <span>  status_column <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  focal_fill_column <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  focal_fill_column <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sexVar <span class="op">=</span> <span class="st">"sex"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -162,6 +163,10 @@
 
 <dt id="arg-focal-fill-column">focal_fill_column<a class="anchor" aria-label="anchor" href="#arg-focal-fill-column"></a></dt>
 <dd><p>Character string specifying the column name for focal fill color.</p></dd>
+
+
+<dt id="arg-sexvar">sexVar<a class="anchor" aria-label="anchor" href="#arg-sexvar"></a></dt>
+<dd><p>Character string specifying the column name for sex. Defaults to "sex".</p></dd>
 
 </dl></div>
     <div class="section level2">

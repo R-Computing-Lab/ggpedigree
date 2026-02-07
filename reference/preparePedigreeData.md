@@ -24,7 +24,8 @@ preparePedigreeData(
   fill_group_family = c("family", "famID", "family line", "family lineages",
     "family lines"),
   status_column = NULL,
-  focal_fill_column = NULL
+  focal_fill_column = NULL,
+  sexVar = "sex"
 )
 ```
 
@@ -137,6 +138,11 @@ preparePedigreeData(
 - focal_fill_column:
 
   Character string specifying the column name for focal fill color.
+
+- sexVar:
+
+  Character string specifying the column name for sex. Defaults to
+  "sex".
 
 ## Value
 

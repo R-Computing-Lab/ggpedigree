@@ -14,9 +14,9 @@
   ggPedigreeInteractive](https://r-computing-lab.github.io/ggpedigree/articles/v20_interactiveplots.md):
 - [Extended: More Complex Pedigree Plots with
   ggPedigreeInteractive](https://r-computing-lab.github.io/ggpedigree/articles/v21_extendedinteractiveplots.md):
+- [Extended: Plotting more complicated pedigrees with
+  \`ggPedigree()\`](https://r-computing-lab.github.io/ggpedigree/articles/v22_plots_morecomplexity.md):
 - [Visualizing Relatedness Matrices with
   ggRelatednessMatrix()](https://r-computing-lab.github.io/ggpedigree/articles/v30_matrix.md):
 - [Extended: Plotting Phenotypic Correlation by Degree of
   Relatedness](https://r-computing-lab.github.io/ggpedigree/articles/v31_phenotypicbydegree.md):
-- [Extended: Plotting more complicated pedigrees with
-  \`ggPedigree()\`](https://r-computing-lab.github.io/ggpedigree/articles/v32_plots_morecomplexity.md):

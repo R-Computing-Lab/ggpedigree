@@ -49,6 +49,7 @@ getDefaultPlotConfig(
   label_text_size = 3,
   label_text_color = "black",
   label_text_family = "sans",
+  label_scale_by_pedigree = TRUE,
   point_size = 6,
   point_scale_by_pedigree = TRUE,
   outline_include = FALSE,
@@ -353,6 +354,10 @@ getDefaultPlotConfig(
 - label_text_family:
 
   Font family for label text.
+
+- label_scale_by_pedigree:
+
+  Whether to scale label size by pedigree size.
 
 - point_size:
 

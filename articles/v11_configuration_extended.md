@@ -754,6 +754,7 @@ tibble::tibble(Config_Key = cfg_names) %>%
 | label_nudge_x                 |
 | label_nudge_y                 |
 | label_nudge_y_flip            |
+| label_scale_by_pedigree       |
 | label_segment_color           |
 | label_text_angle              |
 | label_text_color              |

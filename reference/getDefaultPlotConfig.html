@@ -32,9 +32,9 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior."></h
     <li><a class="dropdown-item" href="../articles/v11_configuration_extended.html">Extended: More uses of `config` to control ggpedigree plots</a></li>
     <li><a class="dropdown-item" href="../articles/v20_interactiveplots.html">Interactive Pedigree Plotting with ggPedigreeInteractive</a></li>
     <li><a class="dropdown-item" href="../articles/v21_extendedinteractiveplots.html">Extended: More Complex Pedigree Plots with ggPedigreeInteractive</a></li>
+    <li><a class="dropdown-item" href="../articles/v22_plots_morecomplexity.html">Extended: Plotting more complicated pedigrees with `ggPedigree()`</a></li>
     <li><a class="dropdown-item" href="../articles/v30_matrix.html">Visualizing Relatedness Matrices with ggRelatednessMatrix()</a></li>
     <li><a class="dropdown-item" href="../articles/v31_phenotypicbydegree.html">Extended: Plotting Phenotypic Correlation by Degree of Relatedness</a></li>
-    <li><a class="dropdown-item" href="../articles/v32_plots_morecomplexity.html">Extended: Plotting more complicated pedigrees with `ggPedigree()`</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -102,6 +102,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  label_text_size <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  label_text_color <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>  label_text_family <span class="op">=</span> <span class="st">"sans"</span>,</span>
+<span>  label_scale_by_pedigree <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  point_size <span class="op">=</span> <span class="fl">6</span>,</span>
 <span>  point_scale_by_pedigree <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  outline_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -400,6 +401,10 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 
 <dt id="arg-label-text-family">label_text_family<a class="anchor" aria-label="anchor" href="#arg-label-text-family"></a></dt>
 <dd><p>Font family for label text.</p></dd>
+
+
+<dt id="arg-label-scale-by-pedigree">label_scale_by_pedigree<a class="anchor" aria-label="anchor" href="#arg-label-scale-by-pedigree"></a></dt>
+<dd><p>Whether to scale label size by pedigree size.</p></dd>
 
 
 <dt id="arg-point-size">point_size<a class="anchor" aria-label="anchor" href="#arg-point-size"></a></dt>

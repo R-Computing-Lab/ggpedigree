@@ -13,7 +13,8 @@ back to user-specified names.
   dadID = "dadID",
   spouseID = "spouseID",
   twinID = "twinID",
-  famID = "famID"
+  famID = "famID",
+  sexVar = "sex"
 )
 
 restoreNames(
@@ -23,7 +24,8 @@ restoreNames(
   dadID = "dadID",
   spouseID = "spouseID",
   twinID = "twinID",
-  famID = "famID"
+  famID = "famID",
+  sexVar = "sex"
 )
 ```
 
@@ -33,7 +35,8 @@ restoreNames(
 
   A data frame containing connection identifiers whose columns may
   currently be named with internal defaults such as \`personID\`,
-  \`momID\`, \`dadID\`, \`spouseID\`, \`twinID\`, \`famID\`.
+  \`momID\`, \`dadID\`, \`spouseID\`, \`twinID\`, \`famID\`, and
+  \`sex\`.
 
 - personID:
 
@@ -64,3 +67,8 @@ restoreNames(
 
   Character string specifying the column name for family IDs. Defaults
   to "famID".
+
+- sexVar:
+
+  Character string specifying the column name for sex. Defaults to
+  "sex".
