@@ -152,7 +152,8 @@ createFillColumn <- function(ped,
     component = component,
     personID = personID,
     isChild_method = config$matrix_isChild_method,
-    sparse = config$matrix_sparse
+    sparse = config$matrix_sparse,
+    mz_twins = twinID %in% names(ped)
   )
 
   if (config$matrix_sparse == TRUE) {
@@ -205,6 +206,7 @@ transformPed <- function(ped,
                          dadID = "dadID",
                          matID = "matID",
                          patID = "patID",
+                         twinID = "twinID",
                          config = list(
                            focal_fill_include = TRUE,
                            focal_fill_component = "maternal",
@@ -234,6 +236,7 @@ transformPed <- function(ped,
       famID = famID,
       matID = matID,
       patID = patID,
+      twinID = twinID,
       config = config
     )
   }
@@ -328,6 +331,7 @@ addFocalFillColumn <- function(ds_ped,
                                matID = "matID",
                                patID = "patID",
                                personID = "personID",
+                               twinID = "twinID",
                                fill_group_family = c(
                                  "famID",
                                  "family",

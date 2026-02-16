@@ -198,13 +198,14 @@ restoreNames <- .restoreNames
 recodeMissingIDs <- function(ped, momID = "momID", dadID = "dadID",
                              personID = "personID",
                              famID = "famID", matID = "matID", patID = "patID",
+                             twinID = "twinID",
                              missing_code_numeric = 0,
                              missing_code_character = c("0", "NA", "na", ""),
                              config = list()) {
   # Which columns are treated as ID fields
   ids_to_check <- c(momID, dadID, personID, famID, matID, patID)
-  if ("twinID" %in% names(ped)) {
-    ids_to_check <- c(ids_to_check, "twinID")
+  if (twinID %in% names(ped)) {
+    ids_to_check <- c(ids_to_check, twinID)
   }
   ids_to_check <- unique(ids_to_check)
 

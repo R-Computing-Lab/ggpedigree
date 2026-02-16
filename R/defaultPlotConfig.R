@@ -353,6 +353,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                    "#f0e442", "#0072b2", "#d55e00", "#cc79a7"
                                  ),
                                  focal_fill_labels = c("Low", "Mid", "High"),
+
                                  # Use first color for affected,
                                  # ---- correlation by bin ----
                                  ## ---- Filtering and Computation ----
