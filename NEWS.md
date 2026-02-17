@@ -3,7 +3,7 @@
 
 * Add scale label size by pedigree size option
 * Making the sexVar variable more robust
-
+* Made twin handling smarter as well as compatible with twin options for bgmisc
 
 # ggpedigree 1.1.0.3
 

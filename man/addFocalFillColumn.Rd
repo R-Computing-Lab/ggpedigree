@@ -12,6 +12,7 @@ addFocalFillColumn(
   matID = "matID",
   patID = "patID",
   personID = "personID",
+  twinID = "twinID",
   fill_group_family = c("famID", "family", "family lineages", "family lines",
     "family line"),
   fill_group_maternal = c("maternal", "matID", "maternal line", "maternal lineages",
@@ -48,6 +49,8 @@ addFocalFillColumn(
 \item{patID}{Character string specifying the column name for paternal lines Defaults to "patID".}
 
 \item{personID}{Character string specifying the column name for individual IDs. Defaults to "personID".}
+
+\item{twinID}{Character string specifying the column name for twin IDs. Defaults to "twinID".}
 
 \item{fill_group_family}{Character vector specifying fill types for family lineage.}
 

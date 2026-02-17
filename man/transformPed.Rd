@@ -12,6 +12,7 @@ transformPed(
   dadID = "dadID",
   matID = "matID",
   patID = "patID",
+  twinID = "twinID",
   config = list(focal_fill_include = TRUE, focal_fill_component = "maternal",
     recode_missing_ids = TRUE),
   fill_group_paternal = c("paternal", "patID", "paternal line", "paternal lineages",
@@ -34,6 +35,8 @@ transformPed(
 \item{matID}{Character string specifying the column name for maternal lines Defaults to "matID".}
 
 \item{patID}{Character string specifying the column name for paternal lines Defaults to "patID".}
+
+\item{twinID}{Character string specifying the column name for twin IDs. Defaults to "twinID".}
 
 \item{config}{A list of configuration options for customizing the plot.
       See getDefaultPlotConfig for details of each option. The list can include:

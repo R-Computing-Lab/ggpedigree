@@ -12,6 +12,7 @@ recodeMissingIDs(
   famID = "famID",
   matID = "matID",
   patID = "patID",
+  twinID = "twinID",
   missing_code_numeric = 0,
   missing_code_character = c("0", "NA", "na", ""),
   config = list()
@@ -31,6 +32,8 @@ recodeMissingIDs(
 \item{matID}{Character string specifying the column name for maternal lines Defaults to "matID".}
 
 \item{patID}{Character string specifying the column name for paternal lines Defaults to "patID".}
+
+\item{twinID}{Character string specifying the column name for twin IDs. Defaults to "twinID".}
 
 \item{missing_code_numeric}{Numeric code representing missing IDs (default is 0).}
 
