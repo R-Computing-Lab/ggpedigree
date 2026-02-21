@@ -7,13 +7,12 @@ contact:
 - family-names: Garrison
   given-names: S. Mason
   orcid: "https://orcid.org/0000-0002-4804-6003"
-doi: 10.5281/zenodo.18165893
+doi: 10.6084/m9.figshare.25238536
 message: If you use this software, please cite our article in the
   Journal of Open Source Software.
 preferred-citation:
   authors:
   - family-names: Garrison
-    affiliation: Wake Forest University
     given-names: S. Mason
     orcid: "https://orcid.org/0000-0002-4804-6003"
   date-published: 2026-02-01
@@ -26,32 +25,7 @@ preferred-citation:
   start: 9434
   title: "ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'"
   type: article
+  year: 2026
   url: "https://joss.theoj.org/papers/10.21105/joss.09434"
   volume: 11
 title: "ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'"
-abstract: <p><code>ggpedigree</code>&nbsp;provides modern tools for visualizing family
-  trees and pedigree structures using both&nbsp;<code>ggplot2</code>&nbsp;and&nbsp;<code>plotly</code>.
-  Specifically, it enables the creation of static and interactive pedigree plots that
-  can accommodate complex family relationships, including duplicated individuals and
-  various mating structures.</p>
-date-released: '2026-01-06'
-doi: 10.5281/zenodo.18165893
-identifiers:
-- type: doi
-  value: 10.32614/CRAN.package.ggpedigree
-- type: swh
-  value: swh:1:dir:83da770f063bba10b8cc958ac260be351e906287;origin=https://doi.org/10.5281/zenodo.18165892;visit=swh:1:snp:177698055cb6bbf05eed01c36d6046edab9d4adc;anchor=swh:1:rel:680818c2ef80cc6ad9363608470300fab14df3d3;path=ggpedigree-1.1.0.3
-keywords:
-- mesh:D014644Q000235
-- Genetic Variation/genetics
-- mesh:D005824
-- Genetics, Behavioral
-- R software
-- mesh:D000078326
-- Data Visualization
-license:
-- gpl-3.0-only
-message: If you use this software, please cite it using the metadata from this file.
-title: ggpedigree
-type: software
-version: v1.1.0.3
