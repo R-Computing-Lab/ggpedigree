@@ -252,7 +252,8 @@ getDefaultPlotConfig(
 
 \item{label_nudge_y}{Vertical nudge for label text.}
 
-\item{label_nudge_y_flip}{TRUE. Whether to flip the nudge y value to be negative. The plot is reversed vertically, so this is needed to nudge labels up instead of down.}
+\item{label_nudge_y_flip}{TRUE. Whether to flip the nudge y value to be negative.
+The plot is reversed vertically, so this is needed to nudge labels up instead of down.}
 
 \item{label_segment_color}{Segment color for label connectors.}
 
@@ -430,7 +431,8 @@ getDefaultPlotConfig(
 
 \item{focal_fill_scale_midpoint}{Midpoint for focal fill scale. Default uses color_scale_midpoint.}
 
-\item{focal_fill_method}{Method used for focal fill gradient. Options are 'steps', 'steps2', 'step', 'step2', 'viridis_c', 'viridis_d', 'viridis_b', 'manual', 'hue', 'gradient2', 'gradient'.}
+\item{focal_fill_method}{Method used for focal fill gradient. Options are 'steps', 'steps2', 'step',
+'step2', 'viridis_c', 'viridis_d', 'viridis_b', 'manual', 'hue', 'gradient2', 'gradient'.}
 
 \item{focal_fill_component}{Component type for focal fill.}
 
@@ -518,7 +520,8 @@ getDefaultPlotConfig(
 
 \item{matrix_sparse}{Whether matrix input is sparse.}
 
-\item{matrix_isChild_method}{Method used for isChild matrix derivation. Options are "partialparent", "fullparent", "anyparent".}
+\item{matrix_isChild_method}{Method used for isChild matrix derivation. Options are
+"partialparent", "fullparent", "anyparent".}
 
 \item{return_static}{Whether to return a static plot.}
 
