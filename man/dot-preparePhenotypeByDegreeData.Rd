@@ -4,7 +4,8 @@
 \alias{.preparePhenotypeByDegreeData}
 \alias{preparePhenotypeByDegreeData}
 \title{Prepare data for ggPhenotypeByDegree
-This function prepares the data frame for plotting by calculating necessary columns and ensuring required columns are present.}
+This function prepares the data frame for plotting by calculating necessary
+columns and ensuring required columns are present.}
 \usage{
 .preparePhenotypeByDegreeData(
   df,
@@ -74,6 +75,7 @@ A modified data frame with additional columns for plotting.
 }
 \description{
 Prepare data for ggPhenotypeByDegree
-This function prepares the data frame for plotting by calculating necessary columns and ensuring required columns are present.
+This function prepares the data frame for plotting by calculating necessary
+columns and ensuring required columns are present.
 }
 \keyword{internal}

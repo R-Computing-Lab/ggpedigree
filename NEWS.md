@@ -1,9 +1,11 @@
 # ggpedigree (development version)
 # ==============================
 
+
+# ggpedigree Version: 1.1.1.0
 * Add scale label size by pedigree size option
 * Making the sexVar variable more robust
-
+* Add implemented CodeFactor recommendations for styling and maintainability
 
 # ggpedigree 1.1.0.3
 
