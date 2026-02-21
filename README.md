@@ -15,7 +15,8 @@ version](https://www.r-pkg.org/badges/version/ggpedigree)](https://CRAN.R-projec
 checks](https://badges.cranchecks.info/worst/ggpedigree.svg)](https://cran.r-project.org/web/checks/check_results_ggpedigree.html)
 [![Package
 downloads](https://cranlogs.r-pkg.org/badges/grand-total/ggpedigree)](https://cranlogs.r-pkg.org/badges/grand-total/ggpedigree)
-[![codecov](https://codecov.io/gh/R-Computing-Lab/ggpedigree/branch/main/graph/badge.svg?token=xXWYDcD9CF)](https://app.codecov.io/gh/R-Computing-Lab/ggpedigree)</br>
+[![codecov](https://codecov.io/gh/R-Computing-Lab/ggpedigree/branch/main/graph/badge.svg?token=xXWYDcD9CF)](https://app.codecov.io/gh/R-Computing-Lab/ggpedigree)
+[![CodeFactor](https://www.codefactor.io/repository/github/r-computing-lab/ggpedigree/badge/main)](https://www.codefactor.io/repository/github/r-computing-lab/ggpedigree/overview/main)</br>
 [![R-CMD-check](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-check.yaml)
 [![Dev
 branch](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-devcheck.yaml/badge.svg)](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-devcheck.yaml)
