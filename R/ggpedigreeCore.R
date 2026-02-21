@@ -360,7 +360,10 @@ ggPedigree.core <- function(ped,
 
 
   if (is.na(min(ds$y_pos, na.rm = TRUE))) {
-    warning("y_pos contains all NA values, cannot set y-axis limits. This occurs when there are less than two people in the pedigree.")
+    warning(
+      "y_pos contains all NA values, cannot set y-axis limits. ",
+      "This occurs when there are less than two people in the pedigree."
+    )
     p <- p +
       ggplot2::scale_y_reverse()
   } else {
@@ -401,16 +404,16 @@ ggPedigree.core <- function(ped,
   # add plot_connections to the plot object
   attr(p, "connections") <- plot_connections
   if (config$debug == TRUE) {
-    return(list(
+    list(
       plot = p,
       data = ds,
       connections = connections,
       config = config
-    ))
+    )
   } else {
     # If debug is FALSE, return only the plot
 
-    return(p)
+    p
   }
 }
 
@@ -757,8 +760,8 @@ addSelfSegment <- .addSelfSegment
 
   # Add alpha scale for affected status if applicable
   if (!is.null(status_column) &&
-    config$sex_color_include == TRUE &&
-    config$status_include == TRUE) {
+        config$sex_color_include == TRUE &&
+        config$status_include == TRUE) {
     plotObject <- plotObject + ggplot2::scale_alpha_manual(
       name = if (config$status_legend_show) {
         config$status_legend_title
@@ -966,16 +969,18 @@ addScales <- .addScales
 .addLabels <- function(plotObject, config) {
   ggrepel_label_methods <- c("geom_text_repel", "ggrepel", "geom_label_repel")
   if (!requireNamespace("ggrepel", quietly = TRUE) &&
-    config$label_method %in% ggrepel_label_methods) {
+        config$label_method %in% ggrepel_label_methods) {
     warning(
-      "The 'ggrepel' package is required for label methods 'geom_text_repel', 'ggrepel', and 'geom_label_repel'. Please install it using install.packages('ggrepel')."
+      "The 'ggrepel' package is required for label methods ",
+      "'geom_text_repel', 'ggrepel', and 'geom_label_repel'. ",
+      "Please install it using install.packages('ggrepel')."
     )
 
     config$label_method <- "geom_text" # fallback to geom_text if ggrepel is not available
   }
 
   if (config$label_method %in% ggrepel_label_methods &&
-    requireNamespace("ggrepel", quietly = TRUE)) {
+        requireNamespace("ggrepel", quietly = TRUE)) {
     # If ggrepel is available, use geom_text_repel or geom_label_repel
     # for better label placement and avoidance of overlaps
     plotObject <- plotObject +
@@ -1018,7 +1023,8 @@ addScales <- .addScales
       )
   } else {
     warning(
-      "Invalid label_method specified in config. Must be one of 'geom_text_repel', 'ggrepel', 'geom_label_repel', 'geom_label', or 'geom_text'."
+      "Invalid label_method specified in config. Must be one of ",
+      "'geom_text_repel', 'ggrepel', 'geom_label_repel', 'geom_label', or 'geom_text'."
     )
   }
   plotObject
@@ -1080,7 +1086,7 @@ addLabels <- .addLabels
     )
 
   if ("mz" %in% names(plot_connections$twin_coords) &&
-    any(plot_connections$twin_coords$mz == TRUE, na.rm = TRUE)) {
+        any(plot_connections$twin_coords$mz == TRUE, na.rm = TRUE)) {
     plotObject <- plotObject + # horizontal line to twin midpoint for MZ twins
       ggplot2::geom_segment(
         data = plot_connections$twin_coords |>
@@ -1101,7 +1107,7 @@ addLabels <- .addLabels
       )
   }
 
-  return(plotObject)
+  plotObject
 }
 #' @rdname dot-addTwins
 addTwins <- .addTwins
