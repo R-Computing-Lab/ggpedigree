@@ -51,7 +51,8 @@
 #' @param label_max_overlaps Maximum number of overlapping labels.
 #' @param label_nudge_x Horizontal nudge for label text.
 #' @param label_nudge_y Vertical nudge for label text.
-#' @param label_nudge_y_flip TRUE. Whether to flip the nudge y value to be negative. The plot is reversed vertically, so this is needed to nudge labels up instead of down.
+#' @param label_nudge_y_flip TRUE. Whether to flip the nudge y value to be negative.
+#'   The plot is reversed vertically, so this is needed to nudge labels up instead of down.
 #' @param label_segment_color Segment color for label connectors.
 #' @param label_text_angle Text angle for labels.
 #' @param label_text_size Font size for labels.
@@ -140,7 +141,8 @@
 #' @param focal_fill_mid_color Midpoint color for focal gradient.
 #' @param focal_fill_low_color Low-end color for focal gradient.
 #' @param focal_fill_scale_midpoint Midpoint for focal fill scale. Default uses color_scale_midpoint.
-#' @param focal_fill_method Method used for focal fill gradient. Options are 'steps', 'steps2', 'step', 'step2', 'viridis_c', 'viridis_d', 'viridis_b', 'manual', 'hue', 'gradient2', 'gradient'.
+#' @param focal_fill_method Method used for focal fill gradient. Options are 'steps', 'steps2', 'step',
+#'   'step2', 'viridis_c', 'viridis_d', 'viridis_b', 'manual', 'hue', 'gradient2', 'gradient'.
 #' @param focal_fill_component Component type for focal fill.
 #' @param focal_fill_shape Shape used for focal fill points.
 #' @param focal_fill_n_breaks Number of breaks in focal fill scale.
@@ -170,7 +172,8 @@
 #' @param matrix_upper_triangle_include Whether to include upper triangle in matrix plots.
 #' @param matrix_lower_triangle_include Whether to include lower triangle in matrix plots.
 #' @param matrix_sparse Whether matrix input is sparse.
-#' @param matrix_isChild_method Method used for isChild matrix derivation. Options are "partialparent", "fullparent", "anyparent".
+#' @param matrix_isChild_method Method used for isChild matrix derivation. Options are
+#'   "partialparent", "fullparent", "anyparent".
 #' @param return_static Whether to return a static plot.
 #' @param return_widget Whether to return a widget object.
 #' @param return_interactive Whether to return an interactive plot.
@@ -338,7 +341,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  focal_fill_n_breaks = NULL,
                                  focal_fill_na_value = "black",
                                  focal_fill_shape = 21, # shape for focal fill points
-                                 focal_fill_force_zero = FALSE, # work around that sets zero to NA so you can distinguish from low values
+                                 # work around that sets zero to NA so you can distinguish from low values
+                                 focal_fill_force_zero = FALSE,
                                  focal_fill_use_log = FALSE,
                                  focal_fill_hue_range = c(0, 360),
                                  focal_fill_chroma = 50,
@@ -408,11 +412,11 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  ...) {
   # Ensure the color palette is a character vector
   if (!is.character(color_palette_default) ||
-    length(color_palette_default) < 3) {
+        length(color_palette_default) < 3) {
     stop("color_palette_default must be a character vector with at least 3 colors.")
   }
   if (!is.character(segment_default_color) ||
-    length(segment_default_color) != 1) {
+        length(segment_default_color) != 1) {
     stop("segment_default_color must be a single character string.")
   }
 
@@ -639,7 +643,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     focal_fill_shape = focal_fill_shape, # shape for focal fill points
     focal_fill_na_value = focal_fill_na_value,
     focal_fill_use_log = focal_fill_use_log, # use log scale for focal fill
-    focal_fill_force_zero = focal_fill_force_zero, # work around that sets zero to NA so you can distinguish from low values
+    # work around that sets zero to NA so you can distinguish from low values
+    focal_fill_force_zero = focal_fill_force_zero,
     focal_fill_hue_range = focal_fill_hue_range, # hue range for focal fill
     focal_fill_chroma = focal_fill_chroma, # chroma for focal fill
     focal_fill_lightness = focal_fill_lightness, # lightness for focal fill
@@ -708,7 +713,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     core_list$return_widget <- FALSE
     core_list$return_interactive <- FALSE
   } else if (lc_function_name %in%
-    c("ggphenotypebydegree", "phenotypebydegree")) {
+               c("ggphenotypebydegree", "phenotypebydegree")) {
     core_list$point_size <- 1
     core_list$plot_title <- "Phenotypic Correlation vs Genetic Relatedness"
     core_list$return_static <- FALSE
@@ -777,5 +782,5 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     core_list$segment_self_curvature <- -0.15
   }
 
-  return(core_list)
+  core_list
 }
