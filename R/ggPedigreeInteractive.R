@@ -38,7 +38,8 @@
 #'   ) |>
 #'   plotly::config(displayModeBar = TRUE)
 #' @export
-#' @seealso ggPedigree.core, ggPedigree, vignette("v20_interactiveplots"), vignette("v21_extendedinteractiveplots"), vignette("v32_plots_morecomplexity")
+#' @seealso ggPedigree.core, ggPedigree, vignette("v20_interactiveplots"),
+#'   vignette("v21_extendedinteractiveplots"), vignette("v32_plots_morecomplexity")
 
 
 ggPedigreeInteractive <- function(ped,
@@ -189,7 +190,7 @@ ggPedigreeInteractive <- function(ped,
       error = function(e) {
         warning("Error in ggplotly conversion: ", e$message)
         message("Returning static ggplot object instead.")
-        return(static_plot)
+        static_plot
       }
     )
   } else {
@@ -206,7 +207,7 @@ ggPedigreeInteractive <- function(ped,
       error = function(e) {
         warning("Error in ggplotly conversion: ", e$message)
         message("Returning static ggplot object instead.")
-        return(static_plot)
+        static_plot
       }
     )
   }
@@ -217,12 +218,12 @@ ggPedigreeInteractive <- function(ped,
   }
 
   if (config$return_static == TRUE) {
-    return(static_plot) # return the static plot
+    static_plot # return the static plot
   } else if (config$return_widget == TRUE) {
-    return(plt)
+    plt
   } else {
     class(plt) <- c("plotly", class(plt)) # ensure proper S3 dispatch
-    return(plt)
+    plt
   }
 }
 
@@ -307,18 +308,18 @@ optimizePlotlyPedigree <- function(p, config = list()) {
 
 
 optimizeStaticPedigree <- function(p, config = list(), variable_drop = c(
-                                     "parent_hash",
-                                     "couple_hash",
-                                     "gen",
-                                     "spousehint",
-                                     "parent_fam",
-                                     "nid",
-                                     "x_order",
-                                     "y_order",
-                                     "y_fam",
-                                     "zygosity",
-                                     "extra", "x_fam"
-                                   )) {
+  "parent_hash",
+  "couple_hash",
+  "gen",
+  "spousehint",
+  "parent_fam",
+  "nid",
+  "x_order",
+  "y_order",
+  "y_fam",
+  "zygosity",
+  "extra", "x_fam"
+)) {
   # round coordinates to reduce file size
   if (!inherits(p, "ggplot")) {
     stop("Input must be a ggplot object.")
