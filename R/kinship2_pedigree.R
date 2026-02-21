@@ -92,7 +92,7 @@ pedigree <- function(id, dadid, momid,
   findex <- match(dadid, id, nomatch = 0)
   if (any(sex[findex] != "male")) {
     who <- unique((id[findex])[sex[findex] != "male"])
-    msg.n <- 1:min(max_message_n, length(who)) # Don't list a zillion
+    msg.n <- seq_len(min(max_message_n, length(who))) # Don't list a zillion
     stop(paste(
       "Id not male, but is a father:",
       paste(who[msg.n], collapse = " ")
@@ -101,7 +101,7 @@ pedigree <- function(id, dadid, momid,
 
   if (any(findex == 0 & !nofather)) {
     who <- dadid[which(findex == 0 & !nofather)]
-    msg.n <- 1:min(max_message_n, length(who)) # Don't list a zillion
+    msg.n <- seq_len(min(max_message_n, length(who))) # Don't list a zillion
     stop(paste(
       "Value of 'dadid' not found in the id list",
       paste(who[msg.n], collapse = " ")
@@ -112,7 +112,7 @@ pedigree <- function(id, dadid, momid,
 
   if (any(sex[mindex] != "female")) {
     who <- unique((id[mindex])[sex[mindex] != "female"])
-    msg.n <- 1:min(max_message_n, length(who))
+    msg.n <- seq_len(min(max_message_n, length(who)))
     stop(paste(
       "Id not female, but is a mother:",
       paste(who[msg.n], collapse = " ")
@@ -121,7 +121,7 @@ pedigree <- function(id, dadid, momid,
 
   if (any(mindex == 0 & !nomother)) {
     who <- momid[which(mindex == 0 & !nomother)]
-    msg.n <- 1:min(max_message_n, length(who)) # Don't list a zillion
+    msg.n <- seq_len(min(max_message_n, length(who))) # Don't list a zillion
     stop(paste(
       "Value of 'momid' not found in the id list",
       paste(who[msg.n], collapse = " ")
@@ -130,7 +130,7 @@ pedigree <- function(id, dadid, momid,
 
   if (any(mindex == 0 & findex != 0) || any(mindex != 0 & findex == 0)) {
     who <- id[which((mindex == 0 & findex != 0) | (mindex != 0 & findex == 0))]
-    msg.n <- 1:min(max_message_n, length(who)) # Don't list a zillion
+    msg.n <- seq_len(min(max_message_n, length(who))) # Don't list a zillion
     stop(paste(
       "Subjects must have both a father and mother, or have neither",
       paste(who[msg.n], collapse = " ")
@@ -140,7 +140,7 @@ pedigree <- function(id, dadid, momid,
   if (!missing(famid)) {
     if (any(famid[mindex] != famid[mindex > 0])) {
       who <- (id[mindex > 0])[famid[mindex] != famid[mindex > 0]]
-      msg.n <- 1:min(max_message_n, length(who))
+      msg.n <- seq_len(min(max_message_n, length(who)))
       stop(paste(
         "Mother's family != subject's family",
         paste(who[msg.n], collapse = " ")
@@ -148,7 +148,7 @@ pedigree <- function(id, dadid, momid,
     }
     if (any(famid[findex] != famid[findex > 0])) {
       who <- (id[findex > 0])[famid[findex] != famid[findex > 0]]
-      msg.n <- 1:min(max_message_n, length(who))
+      msg.n <- seq_len(min(max_message_n, length(who)))
       stop(paste(
         "Father's family != subject's family",
         paste(who[msg.n], collapse = " ")
@@ -288,7 +288,7 @@ pedigree.parse_relation <- function(relation, has_famid) {
     fam <- if (has_famid) relation$famid else NULL
 
     if (is.null(id1) || is.null(id2) || is.null(code) ||
-      (has_famid && is.null(fam))) {
+          (has_famid && is.null(fam))) {
       if (has_famid) {
         stop("Relation data must have id1, id2, code, and family id")
       } else {
@@ -352,7 +352,7 @@ pedigree.sexrepair <- function(sex) {
   if (is.character(sex)) {
     # if all numeric strings, convert to numeric
     if (length(unique(suppressWarnings(as.numeric(sex)))) > 1 &&
-      all(is.numeric(unique(suppressWarnings(as.numeric(sex)))), na.rm = TRUE)) {
+          all(is.numeric(unique(suppressWarnings(as.numeric(sex)))), na.rm = TRUE)) {
       sex <- as.numeric(sex)
     } else {
       sex <- charmatch(casefold(sex, upper = FALSE), codes,
@@ -367,9 +367,16 @@ pedigree.sexrepair <- function(sex) {
   }
   sex <- ifelse(sex < 1 | sex > 4, 3, sex)
   if (all(sex > 2)) {
-    stop("All sex values are labeled as unknown. Please try using config options to specify male, female, and unknown labels (code_male, code_female, code_unknown)")
+    stop(
+      "All sex values are labeled as unknown. Please try using config options ",
+      "to specify male, female, and unknown labels ",
+      "(code_male, code_female, code_unknown)"
+    )
   } else if (mean(sex == 3) > 0.25) {
-    warning("More than 25% of the sex values are 'unknown'. Please try using config options to specify male, female, and unknown labels.")
+    warning(
+      "More than 25% of the sex values are 'unknown'. ",
+      "Please try using config options to specify male, female, and unknown labels."
+    )
   }
   sex <- factor(sex, 1:4, labels = codes)
 
@@ -435,7 +442,7 @@ pedigree.process_affected <- function(affected, n) {
     x[[i]] <- (x[[i]])[keep]
   }
 
-  kept.rows <- (1:length(x$findex))[keep]
+  kept.rows <- seq_along(x$findex)[keep]
   x$findex <- match(x$findex[keep], kept.rows, nomatch = 0)
   x$mindex <- match(x$mindex[keep], kept.rows, nomatch = 0)
 
@@ -480,7 +487,7 @@ pedigree.process_affected <- function(affected, n) {
   if (is.character(..1) || is.factor(..1)) {
     i <- match(..1, x$id)
   } else {
-    i <- (1:length(x$id))[..1]
+    i <- seq_along(x$id)[..1]
   }
 
   if (any(is.na(i))) paste("Subject", ..1[which(is.na(i))][1], "not found")
@@ -527,7 +534,7 @@ pedigree.process_affected <- function(affected, n) {
     z$hints <- temp
   }
 
-  if (any(z$findex == 0 & z$mindex > 0) | any(z$findex > 0 & z$mindex == 0)) {
+  if (any(z$findex == 0 & z$mindex > 0) || any(z$findex > 0 & z$mindex == 0)) {
     stop("A subpedigree cannot choose only one parent of a subject")
   }
   class(z) <- "pedigree"
