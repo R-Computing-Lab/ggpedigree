@@ -191,7 +191,12 @@ ggPhenotypeByDegree.core <- function(df,
   df <- df |>
     tidyr::drop_na(!!y_var_sym) |>
     dplyr::mutate(classic_kin_factor = factor(paste0(.data$classic_kin, .data$mtdna))) |>
-    dplyr::filter(.data$n_pairs > config$filter_n_pairs & .data$addRel_center < 1 & .data$degree_relative < config$filter_degree_max & .data$degree_relative > config$filter_degree_min)
+    dplyr::filter(
+      .data$n_pairs > config$filter_n_pairs &
+        .data$addRel_center < 1 &
+        .data$degree_relative < config$filter_degree_max &
+        .data$degree_relative > config$filter_degree_min
+    )
 
   # drop weird sibs
   if (config$drop_non_classic_sibs == TRUE) {
@@ -325,11 +330,12 @@ ggPhenotypeByDegree.core <- function(df,
       ggplot2::scale_color_brewer(palette = "Set1") +
       ggplot2::scale_fill_brewer(palette = "Set1")
   }
-  return(core_plot)
+  core_plot
 }
 
 #' Prepare data for ggPhenotypeByDegree
-#' This function prepares the data frame for plotting by calculating necessary columns and ensuring required columns are present.
+#' This function prepares the data frame for plotting by calculating necessary
+#' columns and ensuring required columns are present.
 #'
 #' @inheritParams ggPhenotypeByDegree
 #' @return A modified data frame with additional columns for plotting.
@@ -379,18 +385,18 @@ ggPhenotypeByDegree.core <- function(df,
   if (is.null(y_ci_lb) && !paste0(y_stem_se, "_minusse") %in% names(df)) {
     df <- df |>
       mutate(!!sym(paste0(y_stem_se, "_minusse")) :=
-        .data[[y_se]] - 1.96 * (.data[[y_se]] / sqrt(.data$n_pairs)))
+               .data[[y_se]] - 1.96 * (.data[[y_se]] / sqrt(.data$n_pairs)))
   }
   if (is.null(y_ci_ub) && !paste0(y_stem_se, "_plusse") %in% names(df)) {
     df <- df |>
       mutate(!!sym(paste0(y_stem_se, "_plusse")) :=
-        .data[[y_se]] + 1.96 * (.data[[y_se]] / sqrt(.data$n_pairs)))
+               .data[[y_se]] + 1.96 * (.data[[y_se]] / sqrt(.data$n_pairs)))
   }
   if (!"mtdna_factor" %in% names(df)) {
     df <- df |>
       mutate(mtdna_factor = factor(.data$mtdna, levels = c(0, 1)))
   }
-  return(df)
+  df
 }
 
 #' @rdname dot-preparePhenotypeByDegreeData
@@ -450,7 +456,7 @@ preparePhenotypeByDegreeData <- .preparePhenotypeByDegreeData
         hjust = 0, vjust = -0, color = "black", size = 4
       )
   }
-  return(p)
+  p
 }
 
 #' @rdname dot-addAnnotate
