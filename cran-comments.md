@@ -1,6 +1,6 @@
 # Description
 
-This version incorporates the revisions made as part of the JOSS review process. Key changes include two new datasets, enhanced configuration options, improved validation and error messaging, and various bug fixes and internal refactoring for better maintainability. Additionally, the package now includes vignettes to help users understand configuration options.
+This version includes minor quality of life improvments to the code base and a few new features, but no major changes to the underlying functionality.
 
 
 ## Note Comment
@@ -11,10 +11,8 @@ Therneau and and Schaid are spelled correctly in the DESCRIPTION file.
 
 # Test Environments
 
-1. Local OS: Windows 11 x64 (build 26200), R version 4.5.2 (2025-10-31 ucrt)
-    - RStudio version 2025.09.2+418 "Cucumberleaf Sunflower" Release (12f6d5e22720bd78dbd926bb344efe12d0dce83d, 2025-10-20) for windows
-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) RStudio/2025.09.2+418 Chrome/138.0.7204.251 Electron/37.6.1 Safari/537.36, Quarto 1.7.32
-    - All package dependencies up to date as of 2026-01-06.
+1. Local OS: Windows 11 x64 (build 26220), R version 4.5.3 (2026-03-11 ucrt)
+    - All package dependencies up to date as of 2026-03-13.
 2. **GitHub Actions**:  
     - [Link](https://github.com/R-Computing-Lab/ggpedigree/actions/runs/20753857768)
     - macOS (latest version) with the latest R release.
