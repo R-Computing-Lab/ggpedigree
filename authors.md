@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/R-Computing-Lab/ggpedigree/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/R-Computing-Lab/ggpedigree/blob/v1.1.1.0.0/inst/CITATION)
 
 Garrison, S. Mason (2026). “ggpedigree: Visualizing Pedigrees with
 'ggplot2' and 'plotly'.” *Journal of Open Source Software*,
