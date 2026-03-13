@@ -3,12 +3,12 @@
 
 
 # ggpedigree Version: 1.1.1.0
+## cran submission
 * Add scale label size by pedigree size option
 * Making the sexVar variable more robust
 * Add implemented CodeFactor recommendations for styling and maintainability
 
 # ggpedigree 1.1.0.3
-
 ## API notes
 * Documented `ggPedigree()` / `ggPedigreeInteractive()` / `ggRelatednessMatrix()` as canonical entry points while retaining backward-compatible aliases.
 
