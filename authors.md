@@ -8,16 +8,21 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/R-Computing-Lab/ggpedigree/blob/main/DESCRIPTION)
+[`inst/CITATION`](https://github.com/R-Computing-Lab/ggpedigree/blob/main/inst/CITATION)
 
-Garrison S (2026). *ggpedigree: Visualizing Pedigrees with 'ggplot2' and
-'plotly'*. R package version 1.1.1.0.0,
-<https://github.com/R-Computing-Lab/ggpedigree/>.
+Garrison, S. Mason (2026). “ggpedigree: Visualizing Pedigrees with
+'ggplot2' and 'plotly'.” *Journal of Open Source Software*,
+**11**(9434).
+[doi:10.21105/joss.09434](https://doi.org/10.21105/joss.09434),
+<https://joss.theoj.org/papers/10.21105/joss.09434>.
 
-    @Manual{,
+    @Article{ggpedigree,
       title = {ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'},
-      author = {S. Mason Garrison},
+      author = {{Garrison, S. Mason}},
+      journal = {Journal of Open Source Software},
       year = {2026},
-      note = {R package version 1.1.1.0.0},
-      url = {https://github.com/R-Computing-Lab/ggpedigree/},
+      volume = {11},
+      number = {9434},
+      doi = {10.21105/joss.09434},
+      url = {https://joss.theoj.org/papers/10.21105/joss.09434},
     }
