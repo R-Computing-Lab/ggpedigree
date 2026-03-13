@@ -23,7 +23,7 @@ branch](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/R-CMD-de
 [![Website
 Deployed](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/R-Computing-Lab/ggpedigree/actions/workflows/pkgdown.yaml)
 [![License](https://img.shields.io/badge/License-GPL_v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
-[![status](https://joss.theoj.org/papers/e5116b83b03e2740960d1153c45f9480/status.svg)](https://joss.theoj.org/papers/e5116b83b03e2740960d1153c45f9480)
+[![status](https://joss.theoj.org/papers/10.21105/joss.09434/status.svg)](https://doi.org/10.21105/joss.09434)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18165893.svg)](https://doi.org/10.5281/zenodo.18165893)
 <!-- badges: end -->
 
@@ -105,18 +105,22 @@ cite the following:
 
     citation(package = "ggpedigree")
 
-Garrison S (2026). *ggpedigree: Visualizing Pedigrees with ‘ggplot2’ and
-‘plotly’*. R package version 1.1.1.0.0,
-<https://github.com/R-Computing-Lab/ggpedigree/>.
+Garrison, S. Mason (2026). “ggpedigree: Visualizing Pedigrees with
+‘ggplot2’ and ‘plotly’.” *Journal of Open Source Software*, *11*(9434).
+<doi:10.21105/joss.09434> <https://doi.org/10.21105/joss.09434>,
+<https://joss.theoj.org/papers/10.21105/joss.09434>.
 
 A BibTeX entry for LaTeX users is
 
-    @Manual{,
+    @Article{ggpedigree,
       title = {ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'},
-      author = {S. Mason Garrison},
+      author = {{Garrison, S. Mason}},
+      journal = {Journal of Open Source Software},
       year = {2026},
-      note = {R package version 1.1.1.0.0},
-      url = {https://github.com/R-Computing-Lab/ggpedigree/},
+      volume = {11},
+      number = {9434},
+      doi = {10.21105/joss.09434},
+      url = {https://joss.theoj.org/papers/10.21105/joss.09434},
     }
 
 ## Contributing

@@ -4,6 +4,7 @@
 ^R/\.Rhistory$
 ^R/paper$
 ^doc$
+CITATION.cff$
 ^data-raw$
 ^Meta$
 ^vignettes/articles$
