@@ -484,6 +484,9 @@ ggPedigree.core <- function(ped,
 
   # Handle affected fill column (clinical pedigree conditional fill)
   if (!is.null(affected_fill_column)) {
+    # Determine node border color for filled shapes
+    node_border_color <- config$outline_color_default %||% config$outline_color %||% "black"
+
     # Use filled shapes for affected, unfilled for unaffected
     plotObject <- plotObject +
       ggplot2::geom_point(
@@ -493,8 +496,8 @@ ggPedigree.core <- function(ped,
         ),
         size = config$point_size,
         na.rm = TRUE,
-        color = NA,
-        stroke = 0
+        color = node_border_color,
+        stroke = config$segment_linewidth * 0.5
       )
     return(plotObject)
   }
@@ -656,9 +659,9 @@ addOverlay <- .addOverlay
 .addDeceasedOverlay <- function(plotObject, config, deceased_column) {
   marker_type <- config$deceased_marker %||% "cross"
   marker_shape <- switch(marker_type,
-    "cross" = 4L,   # + cross
-    "slash" = 47L,  # / slash (approximated as shape)
-    "x"     = 4L,   # x mark
+    "cross" = 4L,   # x cross (conventional deceased marker)
+    "slash" = 47L,  # / slash
+    "x"     = 8L,   # asterisk-like x mark
     4L               # default to cross
   )
   marker_size <- config$deceased_marker_size %||% config$point_size
