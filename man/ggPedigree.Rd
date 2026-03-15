@@ -25,7 +25,10 @@ ggPedigree(
   hints = NULL,
   interactive = FALSE,
   code_male = NULL,
-  sexVar = "sex"
+  sexVar = "sex",
+  affected_fill_column = NULL,
+  deceased_column = NULL,
+  outline_color_column = NULL
 )
 
 ggpedigree(
@@ -48,7 +51,10 @@ ggpedigree(
   hints = NULL,
   interactive = FALSE,
   code_male = NULL,
-  sexVar = "sex"
+  sexVar = "sex",
+  affected_fill_column = NULL,
+  deceased_column = NULL,
+  outline_color_column = NULL
 )
 }
 \arguments{
@@ -114,6 +120,18 @@ customization before printing).}
 \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1}
 
 \item{sexVar}{Character string specifying the column name for sex. Defaults to "sex".}
+
+\item{affected_fill_column}{Character string specifying the column name for conditional
+affected fill. When provided, individuals matching the `affected_fill_value` config
+will have their symbols filled. Default is NULL.}
+
+\item{deceased_column}{Character string specifying the column name for deceased status.
+When provided, a cross (or other marker) overlay is drawn on symbols of deceased
+individuals. Default is NULL.}
+
+\item{outline_color_column}{Character string specifying the column name for outline
+color control. When provided, individuals matching `outline_color_value` config
+will have colored outlines (e.g., blue for included). Default is NULL.}
 }
 \value{
 A `ggplot` object rendering the pedigree diagram.

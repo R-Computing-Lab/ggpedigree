@@ -29,6 +29,15 @@
 #' @param code_male Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1
 #' @param sexVar Character string specifying the column name for sex. Defaults to "sex".
 #' @param focal_fill_column Character string specifying the column name for focal fill color.
+#' @param affected_fill_column Character string specifying the column name for conditional
+#'   affected fill. When provided, individuals matching the `affected_fill_value` config
+#'   will have their symbols filled. Default is NULL.
+#' @param deceased_column Character string specifying the column name for deceased status.
+#'   When provided, a cross (or other marker) overlay is drawn on symbols of deceased
+#'   individuals. Default is NULL.
+#' @param outline_color_column Character string specifying the column name for outline
+#'   color control. When provided, individuals matching `outline_color_value` config
+#'   will have colored outlines (e.g., blue for included). Default is NULL.
 #' @param config A list of configuration options for customizing the plot.
 #'        See getDefaultPlotConfig for details of each option. The list can include:
 #'  \describe{
@@ -85,7 +94,10 @@ ggPedigree <- function(ped,
                        hints = NULL,
                        interactive = FALSE,
                        code_male = NULL,
-                       sexVar = "sex") {
+                       sexVar = "sex",
+                       affected_fill_column = NULL,
+                       deceased_column = NULL,
+                       outline_color_column = NULL) {
   if (!inherits(ped, "data.frame")) {
     if (rlang::inherits_any(ped, c("ped", "pedigree", "kinship2.pedigree"))) {
       # Convert ped object to data.frame
@@ -154,6 +166,14 @@ ggPedigree <- function(ped,
       code_male <- NULL
     }
 
+    # Apply clinical preset if specified
+    if (identical(config$preset, "clinical")) {
+      # Clinical defaults: shape by sex, unfilled by default, blue outline for included
+      config$sex_color_include <- FALSE
+      config$outline_include <- TRUE
+      config$outline_color <- config$outline_color_default
+    }
+
 
     # Call the core function with the provided arguments
     ggPedigree.core(
@@ -172,7 +192,10 @@ ggPedigree <- function(ped,
       config = config,
       debug = debug,
       hints = hints,
-      sexVar = sexVar
+      sexVar = sexVar,
+      affected_fill_column = affected_fill_column,
+      deceased_column = deceased_column,
+      outline_color_column = outline_color_column
     )
   }
 }

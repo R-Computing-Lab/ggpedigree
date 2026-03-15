@@ -186,6 +186,22 @@
 #' @param recode_missing_sex Whether to recode missing sex codes in the pedigree. Default is TRUE.
 #' @param debug Whether to enable debugging mode.
 #' @param add_phantoms Whether to add phantom parents for individuals without parents.
+#' @param affected_fill_value Value in the affected fill column that triggers filling. Default is 1.
+#' @param affected_fill_color Color used to fill symbols for affected individuals. Default is "black".
+#' @param affected_fill_shape_female Filled shape for affected females. Default is 21 (filled circle).
+#' @param affected_fill_shape_male Filled shape for affected males. Default is 22 (filled square).
+#' @param affected_fill_shape_unknown Filled shape for affected unknown sex. Default is 23 (filled diamond).
+#' @param deceased_marker Character string specifying the type of deceased marker.
+#'   Options: "cross", "slash", "x". Default is "cross".
+#' @param deceased_value Value in the deceased column that indicates deceased status. Default is 1.
+#' @param deceased_marker_size Numeric. Size of the deceased marker. Default is NULL (inherits from point_size).
+#' @param deceased_marker_color Color for the deceased marker. Default is "black".
+#' @param deceased_marker_stroke Stroke width for the deceased marker. Default is 1.5.
+#' @param outline_color_value Value in the outline color column that triggers colored outlines. Default is 1.
+#' @param outline_color_highlight Color used for highlighted outlines. Default is "blue".
+#' @param outline_color_default Color used for default (non-highlighted) outlines. Default is "black".
+#' @param preset Optional preset name for default styling combinations.
+#'   Currently supported: "clinical" for standard clinical pedigree styling. Default is NULL.
 #' @param ... Additional arguments for future extensibility.
 #' @return A named list of default plotting and layout parameters.
 #' @export
@@ -408,6 +424,21 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  recode_missing_ids = TRUE,
                                  recode_missing_sex = TRUE,
                                  add_phantoms = FALSE,
+                                 # ---- Clinical Pedigree Styling ----
+                                 affected_fill_value = 1,
+                                 affected_fill_color = "black",
+                                 affected_fill_shape_female = 21,
+                                 affected_fill_shape_male = 22,
+                                 affected_fill_shape_unknown = 23,
+                                 deceased_marker = "cross",
+                                 deceased_value = 1,
+                                 deceased_marker_size = NULL,
+                                 deceased_marker_color = "black",
+                                 deceased_marker_stroke = 1.5,
+                                 outline_color_value = 1,
+                                 outline_color_highlight = "blue",
+                                 outline_color_default = "black",
+                                 preset = NULL,
                                  # ---- Future Extensibility ----
                                  ...) {
   # Ensure the color palette is a character vector
@@ -691,7 +722,22 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     recode_missing_ids = recode_missing_ids,
     recode_missing_sex = recode_missing_sex,
     add_phantoms = add_phantoms,
-    debug = debug
+    debug = debug,
+    # ---- Clinical Pedigree Styling ----
+    affected_fill_value = affected_fill_value,
+    affected_fill_color = affected_fill_color,
+    affected_fill_shape_female = affected_fill_shape_female,
+    affected_fill_shape_male = affected_fill_shape_male,
+    affected_fill_shape_unknown = affected_fill_shape_unknown,
+    deceased_marker = deceased_marker,
+    deceased_value = deceased_value,
+    deceased_marker_size = deceased_marker_size,
+    deceased_marker_color = deceased_marker_color,
+    deceased_marker_stroke = deceased_marker_stroke,
+    outline_color_value = outline_color_value,
+    outline_color_highlight = outline_color_highlight,
+    outline_color_default = outline_color_default,
+    preset = preset
   )
   lc_function_name <- stringr::str_to_lower(function_name)
   if (lc_function_name %in% c("ggrelatednessmatrix")) {

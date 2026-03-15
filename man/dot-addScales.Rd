@@ -5,9 +5,23 @@
 \alias{addScales}
 \title{Add Scales to ggplot Pedigree Plot}
 \usage{
-.addScales(plotObject, config, status_column = NULL, focal_fill_column = NULL)
+.addScales(
+  plotObject,
+  config,
+  status_column = NULL,
+  focal_fill_column = NULL,
+  affected_fill_column = NULL,
+  outline_color_column = NULL
+)
 
-addScales(plotObject, config, status_column = NULL, focal_fill_column = NULL)
+addScales(
+  plotObject,
+  config,
+  status_column = NULL,
+  focal_fill_column = NULL,
+  affected_fill_column = NULL,
+  outline_color_column = NULL
+)
 }
 \arguments{
 \item{plotObject}{A ggplot object.}
@@ -35,6 +49,14 @@ addScales(plotObject, config, status_column = NULL, focal_fill_column = NULL)
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
 
 \item{focal_fill_column}{Character string specifying the column name for focal fill color.}
+
+\item{affected_fill_column}{Character string specifying the column name for conditional
+affected fill. When provided, individuals matching the `affected_fill_value` config
+will have their symbols filled. Default is NULL.}
+
+\item{outline_color_column}{Character string specifying the column name for outline
+color control. When provided, individuals matching `outline_color_value` config
+will have colored outlines (e.g., blue for included). Default is NULL.}
 }
 \value{
 A ggplot object with added scales.

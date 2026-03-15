@@ -184,6 +184,20 @@ getDefaultPlotConfig(
   recode_missing_ids = TRUE,
   recode_missing_sex = TRUE,
   add_phantoms = FALSE,
+  affected_fill_value = 1,
+  affected_fill_color = "black",
+  affected_fill_shape_female = 21,
+  affected_fill_shape_male = 22,
+  affected_fill_shape_unknown = 23,
+  deceased_marker = "cross",
+  deceased_value = 1,
+  deceased_marker_size = NULL,
+  deceased_marker_color = "black",
+  deceased_marker_stroke = 1.5,
+  outline_color_value = 1,
+  outline_color_highlight = "blue",
+  outline_color_default = "black",
+  preset = NULL,
   ...
 )
 }
@@ -546,6 +560,36 @@ The plot is reversed vertically, so this is needed to nudge labels up instead of
 \item{recode_missing_sex}{Whether to recode missing sex codes in the pedigree. Default is TRUE.}
 
 \item{add_phantoms}{Whether to add phantom parents for individuals without parents.}
+
+\item{affected_fill_value}{Value in the affected fill column that triggers filling. Default is 1.}
+
+\item{affected_fill_color}{Color used to fill symbols for affected individuals. Default is "black".}
+
+\item{affected_fill_shape_female}{Filled shape for affected females. Default is 21 (filled circle).}
+
+\item{affected_fill_shape_male}{Filled shape for affected males. Default is 22 (filled square).}
+
+\item{affected_fill_shape_unknown}{Filled shape for affected unknown sex. Default is 23 (filled diamond).}
+
+\item{deceased_marker}{Character string specifying the type of deceased marker.
+Options: "cross", "slash", "x". Default is "cross".}
+
+\item{deceased_value}{Value in the deceased column that indicates deceased status. Default is 1.}
+
+\item{deceased_marker_size}{Numeric. Size of the deceased marker. Default is NULL (inherits from point_size).}
+
+\item{deceased_marker_color}{Color for the deceased marker. Default is "black".}
+
+\item{deceased_marker_stroke}{Stroke width for the deceased marker. Default is 1.5.}
+
+\item{outline_color_value}{Value in the outline color column that triggers colored outlines. Default is 1.}
+
+\item{outline_color_highlight}{Color used for highlighted outlines. Default is "blue".}
+
+\item{outline_color_default}{Color used for default (non-highlighted) outlines. Default is "black".}
+
+\item{preset}{Optional preset name for default styling combinations.
+Currently supported: "clinical" for standard clinical pedigree styling. Default is NULL.}
 
 \item{...}{Additional arguments for future extensibility.}
 }
