@@ -66,13 +66,14 @@ test_that("pedigree.sexrepair handles character numeric strings", {
   expect_equal(as.character(ped$sex), c("male", "female", "male", "female"))
 })
 
-test_that("pedigree.sexrepair handles 0-indexed sex (0=female, 1=male)", {
-  # In the 0-indexed scheme: 0=female, 1=male; +1 gives 1=male, 2=female
+test_that("pedigree.sexrepair handles 0-indexed sex (min=0 triggers +1 shift)", {
+  # When min(sex) == 0, the code shifts all values up by 1.
+  # sex=c(0,1,0,1): 0 -> 1="male", 1 -> 2="female" after the +1 shift.
   ped <- ggpedigree:::pedigree(
     id    = 1:4,
-    dadid = c(0, 0, 1, 1),   # dad = subject 1 (becomes male after +1)
-    momid = c(0, 0, 2, 2),   # mom = subject 2 (becomes female after +1)
-    sex   = c(0, 1, 0, 1)    # 0=female, 1=male in 0-indexed; after +1: male,female,male,female
+    dadid = c(0, 0, 1, 1),   # dad = subject 1 (sex=0 -> male after shift)
+    momid = c(0, 0, 2, 2),   # mom = subject 2 (sex=1 -> female after shift)
+    sex   = c(0, 1, 0, 1)    # shifted up by 1: 0->1="male", 1->2="female"
   )
   expect_s3_class(ped, "pedigree")
   expect_equal(as.character(ped$sex), c("male", "female", "male", "female"))
