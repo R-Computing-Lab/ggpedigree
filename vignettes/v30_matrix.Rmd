@@ -120,7 +120,7 @@ p_mit
 ```{r echo=FALSE}
 # reduce file size for CRAN; fall back gracefully if network is unavailable
 tryCatch(
-  plotly::partial_bundle(p_mit),
+  plotly::partial_bundle(p_mit, local = TRUE),
   error = function(e) p_mit
 )
 ```

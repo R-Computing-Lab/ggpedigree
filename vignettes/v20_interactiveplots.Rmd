@@ -74,7 +74,7 @@ plt
 ```{r echo=FALSE}
 # reduce file size for CRAN; fall back gracefully if network is unavailable
 tryCatch(
-  plotly::partial_bundle(plt),
+  plotly::partial_bundle(plt, local = TRUE),
   error = function(e) plt
 )
 ```
