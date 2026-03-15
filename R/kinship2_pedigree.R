@@ -288,7 +288,7 @@ pedigree.parse_relation <- function(relation, has_famid) {
     fam <- if (has_famid) relation$famid else NULL
 
     if (is.null(id1) || is.null(id2) || is.null(code) ||
-          (has_famid && is.null(fam))) {
+      (has_famid && is.null(fam))) {
       if (has_famid) {
         stop("Relation data must have id1, id2, code, and family id")
       } else {
@@ -352,7 +352,7 @@ pedigree.sexrepair <- function(sex) {
   if (is.character(sex)) {
     # if all numeric strings, convert to numeric
     if (length(unique(suppressWarnings(as.numeric(sex)))) > 1 &&
-          all(is.numeric(unique(suppressWarnings(as.numeric(sex)))), na.rm = TRUE)) {
+      all(is.numeric(unique(suppressWarnings(as.numeric(sex)))), na.rm = TRUE)) {
       sex <- as.numeric(sex)
     } else {
       sex <- charmatch(casefold(sex, upper = FALSE), codes,

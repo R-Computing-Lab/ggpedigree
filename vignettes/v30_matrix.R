@@ -73,12 +73,11 @@ p_mit <- ggRelatednessMatrix(
 # p_mit
 
 ## ----echo=FALSE---------------------------------------------------------------
-# reduce file size for CRAN
-if (interactive()) {
-  plotly::partial_bundle(p_mit)
-} else {
-  plotly::partial_bundle(p_mit, local = TRUE)
-}
+# reduce file size for CRAN; fall back gracefully if network is unavailable
+tryCatch(
+  plotly::partial_bundle(p_mit, local = TRUE),
+  error = function(e) p_mit
+)
 
 ## -----------------------------------------------------------------------------
 p_add_noclust <- ggRelatednessMatrix(
