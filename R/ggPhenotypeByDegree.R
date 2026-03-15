@@ -385,12 +385,12 @@ ggPhenotypeByDegree.core <- function(df,
   if (is.null(y_ci_lb) && !paste0(y_stem_se, "_minusse") %in% names(df)) {
     df <- df |>
       mutate(!!sym(paste0(y_stem_se, "_minusse")) :=
-               .data[[y_se]] - 1.96 * (.data[[y_se]] / sqrt(.data$n_pairs)))
+        .data[[y_se]] - 1.96 * (.data[[y_se]] / sqrt(.data$n_pairs)))
   }
   if (is.null(y_ci_ub) && !paste0(y_stem_se, "_plusse") %in% names(df)) {
     df <- df |>
       mutate(!!sym(paste0(y_stem_se, "_plusse")) :=
-               .data[[y_se]] + 1.96 * (.data[[y_se]] / sqrt(.data$n_pairs)))
+        .data[[y_se]] + 1.96 * (.data[[y_se]] / sqrt(.data$n_pairs)))
   }
   if (!"mtdna_factor" %in% names(df)) {
     df <- df |>

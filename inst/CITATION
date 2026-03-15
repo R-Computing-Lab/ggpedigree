@@ -1,0 +1,14 @@
+citHeader("If you use this software, please cite our article in the Journal of Open Source Software:")
+
+bibentry(
+  bibtype  = "Article",
+  key = "ggpedigree",
+  title    = "ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'",
+  author = c(person("Garrison, S. Mason")),
+  journal  = "Journal of Open Source Software",
+  year     = 2026,
+  volume   = 11,
+  number   = 9434,
+  doi      = "10.21105/joss.09434",
+  url = "https://joss.theoj.org/papers/10.21105/joss.09434"
+)

@@ -166,8 +166,6 @@ buildPlotConfig <- function(default_config,
         built_config$axis_text_size <- max(built_config$axis_text_size / log10(pedigree_size), 6)
       } else {
         built_config$label_include <- FALSE
-
-
       }
     }
   }

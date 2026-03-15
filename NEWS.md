@@ -1,14 +1,16 @@
 # ggpedigree (development version)
 # ==============================
 
+# ggpedigree Version: 1.1.1.1
+* Hotpatch to fix plotly vignette selectively failing by using tryCatch to catch the error and print a warning instead of failing the whole vignette build.
 
 # ggpedigree Version: 1.1.1.0
+## cran submission
 * Add scale label size by pedigree size option
 * Making the sexVar variable more robust
 * Add implemented CodeFactor recommendations for styling and maintainability
 
 # ggpedigree 1.1.0.3
-
 ## API notes
 * Documented `ggPedigree()` / `ggPedigreeInteractive()` / `ggRelatednessMatrix()` as canonical entry points while retaining backward-compatible aliases.
 

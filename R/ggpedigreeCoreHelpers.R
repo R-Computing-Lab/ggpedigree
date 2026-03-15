@@ -241,7 +241,7 @@ transformPed <- function(ped,
   }
   # Check if famID, patID, matID are present; if not, create them
   if (!all(c(famID, patID, matID) %in% names(ped)) &&
-        !famID %in% names(ped)) {
+    !famID %in% names(ped)) {
     ds_ped <- BGmisc::ped2fam(
       ped,
       famID = famID,
@@ -250,19 +250,19 @@ transformPed <- function(ped,
       dadID = dadID
     )
     if (!class(ped[[personID]]) %in% c("numeric", "integer") &&
-        class(ds_ped[[personID]]) %in% c("numeric", "integer")
+      class(ds_ped[[personID]]) %in% c("numeric", "integer")
     ) {
       # fix strange converse of cases
       ds_ped[[personID]] <- as.character(ds_ped[[personID]])
     }
     if (!class(ped[[momID]]) %in% c("numeric", "integer") &&
-        class(ds_ped[[momID]]) %in% c("numeric", "integer")
+      class(ds_ped[[momID]]) %in% c("numeric", "integer")
     ) {
       # fix strange converse of cases
       ds_ped[[momID]] <- as.character(ds_ped[[momID]])
     }
     if (!class(ped[[dadID]]) %in% c("numeric", "integer") &&
-        class(ds_ped[[dadID]]) %in% c("numeric", "integer")
+      class(ds_ped[[dadID]]) %in% c("numeric", "integer")
     ) {
       # fix strange converse of cases
       ds_ped[[dadID]] <- as.character(ds_ped[[dadID]])
@@ -274,7 +274,7 @@ transformPed <- function(ped,
 
   if (config$focal_fill_include == TRUE) {
     if (!patID %in% names(ds_ped) &&
-          config$focal_fill_component %in% fill_group_paternal) {
+      config$focal_fill_component %in% fill_group_paternal) {
       ds_ped <- BGmisc::ped2paternal(
         ds_ped,
         patID = patID,
@@ -283,7 +283,7 @@ transformPed <- function(ped,
         dadID = dadID
       )
       if (!class(ped[[personID]]) %in% c("numeric", "integer") &&
-          class(ds_ped[[personID]]) %in% c("numeric", "integer")
+        class(ds_ped[[personID]]) %in% c("numeric", "integer")
       ) {
         # fix strange converse of cases
         ds_ped[[personID]] <- as.character(ds_ped[[personID]])
@@ -291,7 +291,7 @@ transformPed <- function(ped,
     }
 
     if (!matID %in% names(ds_ped) &&
-          config$focal_fill_component %in% fill_group_maternal) {
+      config$focal_fill_component %in% fill_group_maternal) {
       ds_ped <- BGmisc::ped2maternal(
         ds_ped,
         matID = matID,
@@ -300,7 +300,7 @@ transformPed <- function(ped,
         dadID = dadID
       )
       if (!class(ped[[personID]]) %in% c("numeric", "integer") &&
-          class(ds_ped[[personID]]) %in% c("numeric", "integer")
+        class(ds_ped[[personID]]) %in% c("numeric", "integer")
       ) {
         # fix strange converse of cases
         ds_ped[[personID]] <- as.character(ds_ped[[personID]])
@@ -355,7 +355,7 @@ addFocalFillColumn <- function(ds_ped,
   # STEP 1: Compute inferred fill column from component if no user-specified fill
   # -----
   if (config$focal_fill_include == TRUE &&
-        is.null(focal_fill_column)) {
+    is.null(focal_fill_column)) {
     # -----
     # CASE 1: Component-based fill (e.g., additive, mtDNA)
     # -----
@@ -417,7 +417,7 @@ addFocalFillColumn <- function(ds_ped,
     # STEP 2: Use explicitly supplied fill column
     # -----
   } else if (config$focal_fill_include == TRUE &&
-               !is.null(focal_fill_column)) {
+    !is.null(focal_fill_column)) {
     # Use column directly from pedigree data
     ds_ped <- ds_ped |>
       dplyr::mutate(focal_fill = !!rlang::sym(focal_fill_column))

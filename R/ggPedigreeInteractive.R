@@ -308,18 +308,18 @@ optimizePlotlyPedigree <- function(p, config = list()) {
 
 
 optimizeStaticPedigree <- function(p, config = list(), variable_drop = c(
-  "parent_hash",
-  "couple_hash",
-  "gen",
-  "spousehint",
-  "parent_fam",
-  "nid",
-  "x_order",
-  "y_order",
-  "y_fam",
-  "zygosity",
-  "extra", "x_fam"
-)) {
+                                     "parent_hash",
+                                     "couple_hash",
+                                     "gen",
+                                     "spousehint",
+                                     "parent_fam",
+                                     "nid",
+                                     "x_order",
+                                     "y_order",
+                                     "y_fam",
+                                     "zygosity",
+                                     "extra", "x_fam"
+                                   )) {
   # round coordinates to reduce file size
   if (!inherits(p, "ggplot")) {
     stop("Input must be a ggplot object.")

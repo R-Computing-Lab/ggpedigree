@@ -1,27 +1,26 @@
 cff-version: "1.2.0"
 authors:
 - family-names: Garrison
-  given-names: S. Mason
+  given-names: "S. Mason"
   orcid: "https://orcid.org/0000-0002-4804-6003"
 contact:
 - family-names: Garrison
-  given-names: S. Mason
+  given-names: "S. Mason"
   orcid: "https://orcid.org/0000-0002-4804-6003"
 doi: 10.6084/m9.figshare.25238536
-message: If you use this software, please cite our article in the
-  Journal of Open Source Software.
+message: "If you use this software, please cite our article in the Journal of Open Source Software."
 preferred-citation:
   authors:
   - family-names: Garrison
-    given-names: S. Mason
+    given-names: "S. Mason"
     orcid: "https://orcid.org/0000-0002-4804-6003"
   date-published: 2026-02-01
   doi: 10.21105/joss.09434
   issn: 2475-9066
   issue: 118
-  journal: Journal of Open Source Software
+  journal: "Journal of Open Source Software"
   publisher:
-    name: Open Journals
+    name: "Open Journals"
   start: 9434
   title: "ggpedigree: Visualizing Pedigrees with 'ggplot2' and 'plotly'"
   type: article
