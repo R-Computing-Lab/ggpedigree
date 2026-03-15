@@ -7,7 +7,6 @@
 #'
 #' @inheritParams ggPedigree
 #'
-#' @importFrom rlang %||%
 #' @keywords internal
 
 
@@ -485,7 +484,7 @@ ggPedigree.core <- function(ped,
   # Handle affected fill column (clinical pedigree conditional fill)
   if (!is.null(affected_fill_column)) {
     # Determine node border color for filled shapes
-    node_border_color <- config$outline_color_default %||% config$outline_color %||% "black"
+    node_border_color <- if (!is.null(config$outline_color_default)) config$outline_color_default else config$outline_color
 
     # Use filled shapes for affected, unfilled for unaffected
     plotObject <- plotObject +
@@ -657,17 +656,17 @@ addOverlay <- .addOverlay
 #' @return A ggplot object with deceased overlay markers added.
 #'
 .addDeceasedOverlay <- function(plotObject, config, deceased_column) {
-  marker_type <- config$deceased_marker %||% "cross"
+  marker_type <- config$deceased_marker
   marker_shape <- switch(marker_type,
     "cross" = 4L,   # x cross (conventional deceased marker)
     "slash" = 47L,  # / slash
     "x"     = 8L,   # asterisk-like x mark
     4L               # default to cross
   )
-  marker_size <- config$deceased_marker_size %||% config$point_size
-  marker_color <- config$deceased_marker_color %||% "black"
-  marker_stroke <- config$deceased_marker_stroke %||% 1.5
-  deceased_value <- config$deceased_value %||% 1
+  marker_size <- if (!is.null(config$deceased_marker_size)) config$deceased_marker_size else config$point_size
+  marker_color <- config$deceased_marker_color
+  marker_stroke <- config$deceased_marker_stroke
+  deceased_value <- config$deceased_value
 
   plotObject <- plotObject +
     ggplot2::geom_point(
@@ -849,8 +848,8 @@ addSelfSegment <- .addSelfSegment
                        outline_color_column = NULL) {
   # Handle affected fill mode: use fillable shapes and fill scale
   if (!is.null(affected_fill_column)) {
-    affected_fill_value <- config$affected_fill_value %||% 1
-    fill_color <- config$affected_fill_color %||% "black"
+    affected_fill_value <- config$affected_fill_value
+    fill_color <- config$affected_fill_color
 
     # Use fillable shapes (21=circle, 22=square, 23=diamond) for affected fill mode
     fill_shape_values <- c(
@@ -885,9 +884,9 @@ addSelfSegment <- .addSelfSegment
 
   # Handle outline color column
   if (!is.null(outline_color_column)) {
-    highlight_val <- as.character(config$outline_color_value %||% 1)
-    highlight_color <- config$outline_color_highlight %||% "blue"
-    default_color <- config$outline_color_default %||% "black"
+    highlight_val <- as.character(config$outline_color_value)
+    highlight_color <- config$outline_color_highlight
+    default_color <- config$outline_color_default
 
     all_levels <- levels(plotObject$data[[outline_color_column]])
     if (is.null(all_levels)) {
