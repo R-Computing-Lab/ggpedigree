@@ -1,6 +1,8 @@
 # ggpedigree (development version)
 # ==============================
 
+# ggpedigree Version: 1.1.1.1
+* Hotpatch to fix plotly vignette selectively failing by using tryCatch to catch the error and print a warning instead of failing the whole vignette build.
 
 # ggpedigree Version: 1.1.1.0
 ## cran submission
