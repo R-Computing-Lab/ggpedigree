@@ -11,8 +11,8 @@ test_that("affected_fill_column creates filled/unfilled nodes", {
     affected_fill_column = "SEP",
     config = list(
       sex_color_include = FALSE,
-      affected_fill_value = 1,
-      affected_fill_color = "red"
+      affected_fill_code_affected = 1,
+      affected_fill_color_affected = "red"
     )
   )
   expect_s3_class(p, "gg")
@@ -34,7 +34,7 @@ test_that("deceased_column adds cross overlay", {
     personID = "personID",
     deceased_column = "DECES",
     config = list(
-      deceased_value = 1,
+      deceased_code_affected = 1,
       deceased_marker = "cross",
       deceased_marker_color = "black"
     )
@@ -62,9 +62,9 @@ test_that("outline_color_column applies per-individual outlines", {
     outline_color_column = "INCLUS",
     config = list(
       sex_color_include = FALSE,
-      outline_color_value = 1,
-      outline_color_highlight = "blue",
-      outline_color_default = "black"
+      outline_color_code_affected = 1,
+      outline_color_affected = "blue",
+      outline_color_unaffected = "black"
     )
   )
   expect_s3_class(p, "gg")
@@ -90,10 +90,10 @@ test_that("clinical preset sets correct defaults", {
     outline_color_column = "INCLUS",
     config = list(
       preset = "clinical",
-      affected_fill_value = 1,
-      deceased_value = 1,
-      outline_color_value = 1,
-      outline_color_highlight = "blue"
+      affected_fill_code_affected = 1,
+      deceased_code_affected = 1,
+      outline_color_code_affected = 1,
+      outline_color_affected = "blue"
     )
   )
   expect_s3_class(p, "gg")
@@ -116,14 +116,14 @@ test_that("all clinical features compose without error", {
     outline_color_column = "INCLUS",
     config = list(
       sex_color_include = FALSE,
-      affected_fill_value = 1,
-      affected_fill_color = "black",
-      deceased_value = 1,
+      affected_fill_code_affected = 1,
+      affected_fill_color_affected = "black",
+      deceased_code_affected = 1,
       deceased_marker = "cross",
       deceased_marker_color = "black",
-      outline_color_value = 1,
-      outline_color_highlight = "blue",
-      outline_color_default = "black"
+      outline_color_code_affected = 1,
+      outline_color_affected = "blue",
+      outline_color_unaffected = "black"
     )
   )
   expect_s3_class(p, "gg")
@@ -143,7 +143,7 @@ test_that("deceased overlay only renders for matching values", {
     personID = "personID",
     deceased_column = "DECES",
     config = list(
-      deceased_value = 1
+      deceased_code_affected = 1
     )
   )
   expect_s3_class(p, "gg")
@@ -158,22 +158,42 @@ test_that("deceased overlay only renders for matching values", {
   expect_true(any(deceased_layers))
 })
 
-test_that("config defaults for clinical params", {
+test_that("config defaults for clinical params follow naming conventions", {
   config <- getDefaultPlotConfig()
 
-  expect_equal(config$affected_fill_value, 1)
-  expect_equal(config$affected_fill_color, "black")
+  # affected_fill uses _code_affected/_code_unaffected pattern
+  expect_equal(config$affected_fill_include, FALSE)
+  expect_equal(config$affected_fill_code_affected, 1)
+  expect_equal(config$affected_fill_code_unaffected, 0)
+  expect_equal(config$affected_fill_label_affected, "Affected")
+  expect_equal(config$affected_fill_label_unaffected, "Unaffected")
+  expect_equal(config$affected_fill_color_affected, "black")
+  expect_true(is.na(config$affected_fill_color_unaffected))
   expect_equal(config$affected_fill_shape_female, 21)
   expect_equal(config$affected_fill_shape_male, 22)
   expect_equal(config$affected_fill_shape_unknown, 23)
+
+  # deceased uses _code_affected/_code_unaffected pattern
+  expect_equal(config$deceased_include, FALSE)
+  expect_equal(config$deceased_code_affected, 1)
+  expect_equal(config$deceased_code_unaffected, 0)
+  expect_equal(config$deceased_label_affected, "Deceased")
+  expect_equal(config$deceased_label_unaffected, "Alive")
   expect_equal(config$deceased_marker, "cross")
-  expect_equal(config$deceased_value, 1)
   expect_true(is.null(config$deceased_marker_size))
   expect_equal(config$deceased_marker_color, "black")
   expect_equal(config$deceased_marker_stroke, 1.5)
-  expect_equal(config$outline_color_value, 1)
-  expect_equal(config$outline_color_highlight, "blue")
-  expect_equal(config$outline_color_default, "black")
+
+  # outline_color uses _code_affected/_code_unaffected pattern
+  expect_equal(config$outline_color_include, FALSE)
+  expect_equal(config$outline_color_code_affected, 1)
+  expect_equal(config$outline_color_code_unaffected, 0)
+  expect_equal(config$outline_color_label_affected, "Highlighted")
+  expect_equal(config$outline_color_label_unaffected, "Default")
+  expect_equal(config$outline_color_affected, "blue")
+  expect_equal(config$outline_color_unaffected, "black")
+
+  # preset
   expect_true(is.null(config$preset))
 })
 

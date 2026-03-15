@@ -122,7 +122,7 @@ customization before printing).}
 \item{sexVar}{Character string specifying the column name for sex. Defaults to "sex".}
 
 \item{affected_fill_column}{Character string specifying the column name for conditional
-affected fill. When provided, individuals matching the `affected_fill_value` config
+affected fill. When provided, individuals matching the `affected_fill_code_affected` config
 will have their symbols filled. Default is NULL.}
 
 \item{deceased_column}{Character string specifying the column name for deceased status.
@@ -130,7 +130,7 @@ When provided, a cross (or other marker) overlay is drawn on symbols of deceased
 individuals. Default is NULL.}
 
 \item{outline_color_column}{Character string specifying the column name for outline
-color control. When provided, individuals matching `outline_color_value` config
+color control. When provided, individuals matching `outline_color_code_affected` config
 will have colored outlines (e.g., blue for included). Default is NULL.}
 }
 \value{

@@ -186,20 +186,33 @@
 #' @param recode_missing_sex Whether to recode missing sex codes in the pedigree. Default is TRUE.
 #' @param debug Whether to enable debugging mode.
 #' @param add_phantoms Whether to add phantom parents for individuals without parents.
-#' @param affected_fill_value Value in the affected fill column that triggers filling. Default is 1.
-#' @param affected_fill_color Color used to fill symbols for affected individuals. Default is "black".
+#' @param affected_fill_include Whether to enable affected fill styling. Default is FALSE.
+#' @param affected_fill_code_affected Value in the affected fill column that triggers filling. Default is 1.
+#' @param affected_fill_code_unaffected Value in the affected fill column for unaffected individuals. Default is 0.
+#' @param affected_fill_label_affected Label for affected individuals in fill legend. Default is "Affected".
+#' @param affected_fill_label_unaffected Label for unaffected individuals in fill legend. Default is "Unaffected".
+#' @param affected_fill_color_affected Color used to fill symbols for affected individuals. Default is "black".
+#' @param affected_fill_color_unaffected Color used to fill symbols for unaffected individuals. Default is NA (transparent).
 #' @param affected_fill_shape_female Filled shape for affected females. Default is 21 (filled circle).
 #' @param affected_fill_shape_male Filled shape for affected males. Default is 22 (filled square).
 #' @param affected_fill_shape_unknown Filled shape for affected unknown sex. Default is 23 (filled diamond).
+#' @param deceased_include Whether to enable deceased overlay markers. Default is FALSE.
+#' @param deceased_code_affected Value in the deceased column that indicates deceased status. Default is 1.
+#' @param deceased_code_unaffected Value in the deceased column for alive individuals. Default is 0.
+#' @param deceased_label_affected Label for deceased individuals. Default is "Deceased".
+#' @param deceased_label_unaffected Label for alive individuals. Default is "Alive".
 #' @param deceased_marker Character string specifying the type of deceased marker.
 #'   Options: "cross", "slash", "x". Default is "cross".
-#' @param deceased_value Value in the deceased column that indicates deceased status. Default is 1.
 #' @param deceased_marker_size Numeric. Size of the deceased marker. Default is NULL (inherits from point_size).
 #' @param deceased_marker_color Color for the deceased marker. Default is "black".
 #' @param deceased_marker_stroke Stroke width for the deceased marker. Default is 1.5.
-#' @param outline_color_value Value in the outline color column that triggers colored outlines. Default is 1.
-#' @param outline_color_highlight Color used for highlighted outlines. Default is "blue".
-#' @param outline_color_default Color used for default (non-highlighted) outlines. Default is "black".
+#' @param outline_color_include Whether to enable column-based outline coloring. Default is FALSE.
+#' @param outline_color_code_affected Value in the outline color column that triggers colored outlines. Default is 1.
+#' @param outline_color_code_unaffected Value in the outline color column for default outlines. Default is 0.
+#' @param outline_color_label_affected Label for highlighted outline individuals. Default is "Highlighted".
+#' @param outline_color_label_unaffected Label for default outline individuals. Default is "Default".
+#' @param outline_color_affected Color used for highlighted outlines. Default is "blue".
+#' @param outline_color_unaffected Color used for default (non-highlighted) outlines. Default is "black".
 #' @param preset Optional preset name for default styling combinations.
 #'   Currently supported: "clinical" for standard clinical pedigree styling. Default is NULL.
 #' @param ... Additional arguments for future extensibility.
@@ -425,19 +438,36 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  recode_missing_sex = TRUE,
                                  add_phantoms = FALSE,
                                  # ---- Clinical Pedigree Styling ----
-                                 affected_fill_value = 1,
-                                 affected_fill_color = "black",
+                                 # -- Affected Fill --
+                                 affected_fill_include = FALSE,
+                                 affected_fill_code_affected = 1,
+                                 affected_fill_code_unaffected = 0,
+                                 affected_fill_label_affected = "Affected",
+                                 affected_fill_label_unaffected = "Unaffected",
+                                 affected_fill_color_affected = "black",
+                                 affected_fill_color_unaffected = NA,
                                  affected_fill_shape_female = 21,
                                  affected_fill_shape_male = 22,
                                  affected_fill_shape_unknown = 23,
+                                 # -- Deceased Overlay --
+                                 deceased_include = FALSE,
+                                 deceased_code_affected = 1,
+                                 deceased_code_unaffected = 0,
+                                 deceased_label_affected = "Deceased",
+                                 deceased_label_unaffected = "Alive",
                                  deceased_marker = "cross",
-                                 deceased_value = 1,
                                  deceased_marker_size = NULL,
                                  deceased_marker_color = "black",
                                  deceased_marker_stroke = 1.5,
-                                 outline_color_value = 1,
-                                 outline_color_highlight = "blue",
-                                 outline_color_default = "black",
+                                 # -- Outline Color --
+                                 outline_color_include = FALSE,
+                                 outline_color_code_affected = 1,
+                                 outline_color_code_unaffected = 0,
+                                 outline_color_label_affected = "Highlighted",
+                                 outline_color_label_unaffected = "Default",
+                                 outline_color_affected = "blue",
+                                 outline_color_unaffected = "black",
+                                 # -- Preset --
                                  preset = NULL,
                                  # ---- Future Extensibility ----
                                  ...) {
@@ -724,19 +754,36 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     add_phantoms = add_phantoms,
     debug = debug,
     # ---- Clinical Pedigree Styling ----
-    affected_fill_value = affected_fill_value,
-    affected_fill_color = affected_fill_color,
+    # -- Affected Fill --
+    affected_fill_include = affected_fill_include,
+    affected_fill_code_affected = affected_fill_code_affected,
+    affected_fill_code_unaffected = affected_fill_code_unaffected,
+    affected_fill_label_affected = affected_fill_label_affected,
+    affected_fill_label_unaffected = affected_fill_label_unaffected,
+    affected_fill_color_affected = affected_fill_color_affected,
+    affected_fill_color_unaffected = affected_fill_color_unaffected,
     affected_fill_shape_female = affected_fill_shape_female,
     affected_fill_shape_male = affected_fill_shape_male,
     affected_fill_shape_unknown = affected_fill_shape_unknown,
+    # -- Deceased Overlay --
+    deceased_include = deceased_include,
+    deceased_code_affected = deceased_code_affected,
+    deceased_code_unaffected = deceased_code_unaffected,
+    deceased_label_affected = deceased_label_affected,
+    deceased_label_unaffected = deceased_label_unaffected,
     deceased_marker = deceased_marker,
-    deceased_value = deceased_value,
     deceased_marker_size = deceased_marker_size,
     deceased_marker_color = deceased_marker_color,
     deceased_marker_stroke = deceased_marker_stroke,
-    outline_color_value = outline_color_value,
-    outline_color_highlight = outline_color_highlight,
-    outline_color_default = outline_color_default,
+    # -- Outline Color --
+    outline_color_include = outline_color_include,
+    outline_color_code_affected = outline_color_code_affected,
+    outline_color_code_unaffected = outline_color_code_unaffected,
+    outline_color_label_affected = outline_color_label_affected,
+    outline_color_label_unaffected = outline_color_label_unaffected,
+    outline_color_affected = outline_color_affected,
+    outline_color_unaffected = outline_color_unaffected,
+    # -- Preset --
     preset = preset
   )
   lc_function_name <- stringr::str_to_lower(function_name)

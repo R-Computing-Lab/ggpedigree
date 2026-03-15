@@ -484,7 +484,7 @@ ggPedigree.core <- function(ped,
   # Handle affected fill column (clinical pedigree conditional fill)
   if (!is.null(affected_fill_column)) {
     # Determine node border color for filled shapes
-    node_border_color <- if (!is.null(config$outline_color_default)) config$outline_color_default else config$outline_color
+    node_border_color <- if (!is.null(config$outline_color_unaffected)) config$outline_color_unaffected else config$outline_color
 
     # Use filled shapes for affected, unfilled for unaffected
     plotObject <- plotObject +
@@ -666,11 +666,11 @@ addOverlay <- .addOverlay
   marker_size <- if (!is.null(config$deceased_marker_size)) config$deceased_marker_size else config$point_size
   marker_color <- config$deceased_marker_color
   marker_stroke <- config$deceased_marker_stroke
-  deceased_value <- config$deceased_value
+  deceased_code <- config$deceased_code_affected
 
   plotObject <- plotObject +
     ggplot2::geom_point(
-      data = function(d) d[d[[deceased_column]] == deceased_value, , drop = FALSE],
+      data = function(d) d[d[[deceased_column]] == deceased_code, , drop = FALSE],
       ggplot2::aes(x = .data$x_pos, y = .data$y_pos),
       shape = marker_shape,
       size = marker_size,
@@ -848,8 +848,8 @@ addSelfSegment <- .addSelfSegment
                        outline_color_column = NULL) {
   # Handle affected fill mode: use fillable shapes and fill scale
   if (!is.null(affected_fill_column)) {
-    affected_fill_value <- config$affected_fill_value
-    fill_color <- config$affected_fill_color
+    affected_fill_code <- config$affected_fill_code_affected
+    fill_color <- config$affected_fill_color_affected
 
     # Use fillable shapes (21=circle, 22=square, 23=diamond) for affected fill mode
     fill_shape_values <- c(
@@ -864,10 +864,10 @@ addSelfSegment <- .addSelfSegment
     plotObject <- plotObject + ggplot2::scale_fill_manual(
       values = stats::setNames(
         c(fill_color, NA),
-        c(as.character(affected_fill_value),
+        c(as.character(affected_fill_code),
           setdiff(
             levels(plotObject$data[[affected_fill_column]]),
-            as.character(affected_fill_value)
+            as.character(affected_fill_code)
           )[1]
         )
       ),
@@ -884,9 +884,9 @@ addSelfSegment <- .addSelfSegment
 
   # Handle outline color column
   if (!is.null(outline_color_column)) {
-    highlight_val <- as.character(config$outline_color_value)
-    highlight_color <- config$outline_color_highlight
-    default_color <- config$outline_color_default
+    highlight_val <- as.character(config$outline_color_code_affected)
+    highlight_color <- config$outline_color_affected
+    default_color <- config$outline_color_unaffected
 
     all_levels <- levels(plotObject$data[[outline_color_column]])
     if (is.null(all_levels)) {

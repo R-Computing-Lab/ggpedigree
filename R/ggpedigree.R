@@ -30,13 +30,13 @@
 #' @param sexVar Character string specifying the column name for sex. Defaults to "sex".
 #' @param focal_fill_column Character string specifying the column name for focal fill color.
 #' @param affected_fill_column Character string specifying the column name for conditional
-#'   affected fill. When provided, individuals matching the `affected_fill_value` config
+#'   affected fill. When provided, individuals matching the `affected_fill_code_affected` config
 #'   will have their symbols filled. Default is NULL.
 #' @param deceased_column Character string specifying the column name for deceased status.
 #'   When provided, a cross (or other marker) overlay is drawn on symbols of deceased
 #'   individuals. Default is NULL.
 #' @param outline_color_column Character string specifying the column name for outline
-#'   color control. When provided, individuals matching `outline_color_value` config
+#'   color control. When provided, individuals matching `outline_color_code_affected` config
 #'   will have colored outlines (e.g., blue for included). Default is NULL.
 #' @param config A list of configuration options for customizing the plot.
 #'        See getDefaultPlotConfig for details of each option. The list can include:
@@ -171,7 +171,7 @@ ggPedigree <- function(ped,
       # Clinical defaults: shape by sex, unfilled by default, blue outline for included
       config$sex_color_include <- FALSE
       config$outline_include <- TRUE
-      config$outline_color <- config$outline_color_default
+      config$outline_color <- config$outline_color_unaffected
     }
 
 

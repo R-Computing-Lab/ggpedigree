@@ -184,19 +184,32 @@ getDefaultPlotConfig(
   recode_missing_ids = TRUE,
   recode_missing_sex = TRUE,
   add_phantoms = FALSE,
-  affected_fill_value = 1,
-  affected_fill_color = "black",
+  affected_fill_include = FALSE,
+  affected_fill_code_affected = 1,
+  affected_fill_code_unaffected = 0,
+  affected_fill_label_affected = "Affected",
+  affected_fill_label_unaffected = "Unaffected",
+  affected_fill_color_affected = "black",
+  affected_fill_color_unaffected = NA,
   affected_fill_shape_female = 21,
   affected_fill_shape_male = 22,
   affected_fill_shape_unknown = 23,
+  deceased_include = FALSE,
+  deceased_code_affected = 1,
+  deceased_code_unaffected = 0,
+  deceased_label_affected = "Deceased",
+  deceased_label_unaffected = "Alive",
   deceased_marker = "cross",
-  deceased_value = 1,
   deceased_marker_size = NULL,
   deceased_marker_color = "black",
   deceased_marker_stroke = 1.5,
-  outline_color_value = 1,
-  outline_color_highlight = "blue",
-  outline_color_default = "black",
+  outline_color_include = FALSE,
+  outline_color_code_affected = 1,
+  outline_color_code_unaffected = 0,
+  outline_color_label_affected = "Highlighted",
+  outline_color_label_unaffected = "Default",
+  outline_color_affected = "blue",
+  outline_color_unaffected = "black",
   preset = NULL,
   ...
 )
@@ -561,9 +574,19 @@ The plot is reversed vertically, so this is needed to nudge labels up instead of
 
 \item{add_phantoms}{Whether to add phantom parents for individuals without parents.}
 
-\item{affected_fill_value}{Value in the affected fill column that triggers filling. Default is 1.}
+\item{affected_fill_include}{Whether to enable affected fill styling. Default is FALSE.}
 
-\item{affected_fill_color}{Color used to fill symbols for affected individuals. Default is "black".}
+\item{affected_fill_code_affected}{Value in the affected fill column that triggers filling. Default is 1.}
+
+\item{affected_fill_code_unaffected}{Value in the affected fill column for unaffected individuals. Default is 0.}
+
+\item{affected_fill_label_affected}{Label for affected individuals in fill legend. Default is "Affected".}
+
+\item{affected_fill_label_unaffected}{Label for unaffected individuals in fill legend. Default is "Unaffected".}
+
+\item{affected_fill_color_affected}{Color used to fill symbols for affected individuals. Default is "black".}
+
+\item{affected_fill_color_unaffected}{Color used to fill symbols for unaffected individuals. Default is NA (transparent).}
 
 \item{affected_fill_shape_female}{Filled shape for affected females. Default is 21 (filled circle).}
 
@@ -571,10 +594,18 @@ The plot is reversed vertically, so this is needed to nudge labels up instead of
 
 \item{affected_fill_shape_unknown}{Filled shape for affected unknown sex. Default is 23 (filled diamond).}
 
+\item{deceased_include}{Whether to enable deceased overlay markers. Default is FALSE.}
+
+\item{deceased_code_affected}{Value in the deceased column that indicates deceased status. Default is 1.}
+
+\item{deceased_code_unaffected}{Value in the deceased column for alive individuals. Default is 0.}
+
+\item{deceased_label_affected}{Label for deceased individuals. Default is "Deceased".}
+
+\item{deceased_label_unaffected}{Label for alive individuals. Default is "Alive".}
+
 \item{deceased_marker}{Character string specifying the type of deceased marker.
 Options: "cross", "slash", "x". Default is "cross".}
-
-\item{deceased_value}{Value in the deceased column that indicates deceased status. Default is 1.}
 
 \item{deceased_marker_size}{Numeric. Size of the deceased marker. Default is NULL (inherits from point_size).}
 
@@ -582,11 +613,19 @@ Options: "cross", "slash", "x". Default is "cross".}
 
 \item{deceased_marker_stroke}{Stroke width for the deceased marker. Default is 1.5.}
 
-\item{outline_color_value}{Value in the outline color column that triggers colored outlines. Default is 1.}
+\item{outline_color_include}{Whether to enable column-based outline coloring. Default is FALSE.}
 
-\item{outline_color_highlight}{Color used for highlighted outlines. Default is "blue".}
+\item{outline_color_code_affected}{Value in the outline color column that triggers colored outlines. Default is 1.}
 
-\item{outline_color_default}{Color used for default (non-highlighted) outlines. Default is "black".}
+\item{outline_color_code_unaffected}{Value in the outline color column for default outlines. Default is 0.}
+
+\item{outline_color_label_affected}{Label for highlighted outline individuals. Default is "Highlighted".}
+
+\item{outline_color_label_unaffected}{Label for default outline individuals. Default is "Default".}
+
+\item{outline_color_affected}{Color used for highlighted outlines. Default is "blue".}
+
+\item{outline_color_unaffected}{Color used for default (non-highlighted) outlines. Default is "black".}
 
 \item{preset}{Optional preset name for default styling combinations.
 Currently supported: "clinical" for standard clinical pedigree styling. Default is NULL.}
