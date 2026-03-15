@@ -72,14 +72,11 @@ plt
 ```
 
 ```{r echo=FALSE}
-# reduce file size for CRAN
-if (interactive()) {
-  # If running interactively, use plotly::partial_bundle
-  # to reduce file size for CRAN
-  plotly::partial_bundle(plt)
-} else {
-  plotly::partial_bundle(plt, local = TRUE)
-}
+# reduce file size for CRAN; fall back gracefully if network is unavailable
+tryCatch(
+  plotly::partial_bundle(plt),
+  error = function(e) plt
+)
 ```
 
 The above code generates an interactive pedigree plot of the Potter family tree. You can zoom in, pan around, and hover over nodes to see more information. You can do much more with the `ggPedigreeInteractive()` function, including customizing labels, colors, and tooltips. To experience the full list of options, refer to the online article.
