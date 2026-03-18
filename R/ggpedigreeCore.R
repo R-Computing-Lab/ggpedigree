@@ -887,7 +887,8 @@ addSelfSegment <- .addSelfSegment
   # Handle affected fill mode: use fillable shapes and fill scale
   if (!is.null(affected_fill_column)) {
     affected_fill_code <- config$affected_fill_code_affected
-    fill_color <- config$affected_fill_color_affected
+    fill_color_affected <- config$affected_fill_color_affected
+    fill_color_unaffected <- config$affected_fill_color_unaffected
 
     # Use fillable shapes (21=circle, 22=square, 23=diamond) for affected fill mode
     fill_shape_values <- c(
@@ -901,10 +902,10 @@ addSelfSegment <- .addSelfSegment
     )
     plotObject <- plotObject + ggplot2::scale_fill_manual(
       values = stats::setNames(
-        c(fill_color, NA),
+        c(fill_color_affected, fill_color_unaffected),
         c(as.character(affected_fill_code),
           setdiff(
-            levels(plotObject$data[[affected_fill_column]]),
+            levels(as.factor(plotObject$data[[affected_fill_column]])),
             as.character(affected_fill_code)
           )[1]
         )

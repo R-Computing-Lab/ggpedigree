@@ -381,3 +381,38 @@ test_that("single overlay_column still works (backward compat)", {
   )
   expect_true(length(p$layers) > length(p_standard$layers))
 })
+
+test_that("affected_fill_color_unaffected is applied in rendered plot", {
+  library(BGmisc)
+  data("potter")
+
+  potter$SEP <- ifelse(potter$personID %% 2 == 0, 1, 0)
+
+  p <- ggPedigree(potter,
+    famID = "famID",
+    personID = "personID",
+    affected_fill_column = "SEP",
+    config = list(
+      sex_color_include = FALSE,
+      affected_fill_code_affected = 1,
+      affected_fill_color_affected = "green",
+      affected_fill_color_unaffected = "yellow"
+    )
+  )
+  expect_s3_class(p, "gg")
+
+  built <- ggplot2::ggplot_build(p)
+  # Find the layer that has 'fill' in its data
+  fill_layer <- NULL
+  for (i in seq_along(built$data)) {
+    if ("fill" %in% names(built$data[[i]])) {
+      fill_layer <- built$data[[i]]
+      break
+    }
+  }
+  expect_false(is.null(fill_layer))
+  # Unaffected individuals should have yellow fill, not NA
+  expect_true("yellow" %in% fill_layer$fill)
+  # Affected individuals should have green fill
+  expect_true("green" %in% fill_layer$fill)
+})
