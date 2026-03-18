@@ -21,13 +21,16 @@ ggPedigree.core <- function(ped,
                             twinID = "twinID",
                             focal_fill_column = NULL,
                             overlay_column = NULL,
+                            overlays = NULL,
                             status_column = NULL,
                             code_male = NULL,
                             config = list(),
                             debug = FALSE,
                             hints = NULL,
                             sexVar = "sex",
-                            function_name = "ggPedigree") {
+                            function_name = "ggPedigree",
+                            affected_fill_column = NULL,
+                            outline_color_column = NULL) {
   # -----
   # STEP 1: Configuration and Preparation
   # -----
@@ -315,14 +318,51 @@ ggPedigree.core <- function(ped,
     plotObject = p,
     config = config,
     focal_fill_column = focal_fill_column,
-    status_column = status_column
+    status_column = status_column,
+    affected_fill_column = affected_fill_column,
+    outline_color_column = outline_color_column
   )
 
   # Add overlay points for affected status if applicable
+  # Normalize overlays: if overlays list is provided, use it; otherwise fall back
+  # to single overlay_column for backward compatibility
+  overlay_specs <- NULL
 
-  if (.should_add_overlay(config, overlay_column, status_column, focal_fill_column)) {
-    # If overlay_column is specified, use it for alpha aesthetic
+  if (!is.null(overlays) && is.list(overlays) && length(overlays) > 0) {
+    overlay_specs <- overlays
+  } else if (!is.null(overlay_column)) {
+    # Wrap single overlay_column into a one-element list using config defaults
+    overlay_specs <- list(list(column = overlay_column))
+  }
 
+  if (!is.null(overlay_specs)) {
+    for (spec in overlay_specs) {
+      spec_column <- spec$column
+      if (is.null(spec_column) || !spec_column %in% names(ds)) next
+
+      spec_mode <- if (!is.null(spec$mode)) spec$mode else config$overlay_mode
+
+      if (spec_mode == "shape") {
+        # Shape-mode overlay: draw a shape (e.g., cross) on matching individuals
+        p <- .addShapeOverlay(
+          plotObject = p,
+          config = config,
+          overlay_column = spec_column,
+          overlay_spec = spec
+        )
+      } else {
+        # Alpha-mode overlay (default): use alpha transparency mapping
+        p <- .addOverlay(
+          plotObject = p,
+          config = config,
+          focal_fill_column = focal_fill_column,
+          status_column = status_column,
+          overlay_column = spec_column
+        )
+      }
+    }
+  } else if (.should_add_overlay(config, overlay_column, status_column, focal_fill_column)) {
+    # Legacy alpha overlay fallback (status/focal_fill driven, no overlay_column)
     p <- .addOverlay(
       plotObject = p,
       config = config,
@@ -398,7 +438,9 @@ ggPedigree.core <- function(ped,
       plotObject = p,
       config = config,
       status_column = status_column,
-      focal_fill_column = focal_fill_column
+      focal_fill_column = focal_fill_column,
+      affected_fill_column = affected_fill_column,
+      outline_color_column = outline_color_column
     )
   }
   # add plot_connections to the plot object
@@ -427,15 +469,33 @@ ggPedigree.core <- function(ped,
 .addNodes <- function(plotObject,
                       config,
                       focal_fill_column = NULL,
-                      status_column = NULL) {
+                      status_column = NULL,
+                      affected_fill_column = NULL,
+                      outline_color_column = NULL) {
   # plot points with appropriate aesthetics
   if (config$debug == TRUE) {
     message("Adding nodes to the plot...")
     message("Focal fill column: ", focal_fill_column)
     message("Status column: ", status_column)
+    message("Affected fill column: ", affected_fill_column)
+    message("Outline color column: ", outline_color_column)
   }
 
-  if (isTRUE(config$outline_include)) {
+  # Handle outline: either column-based or config-based
+  if (!is.null(outline_color_column)) {
+    # Column-based outline coloring (independent from other aesthetics)
+    plotObject <- plotObject +
+      ggplot2::geom_point(
+        ggplot2::aes(
+          shape = as.factor(.data$sex),
+          color = as.factor(!!rlang::sym(outline_color_column))
+        ),
+        size = config$point_size * config$outline_multiplier + config$outline_additional_size,
+        na.rm = TRUE,
+        alpha = config$outline_alpha,
+        stroke = config$segment_linewidth
+      )
+  } else if (isTRUE(config$outline_include)) {
     plotObject <- plotObject +
       ggplot2::geom_point(
         ggplot2::aes(shape = as.factor(.data$sex)),
@@ -447,6 +507,25 @@ ggPedigree.core <- function(ped,
       )
   }
 
+  # Handle affected fill column (clinical pedigree conditional fill)
+  if (!is.null(affected_fill_column)) {
+    # Determine node border color for filled shapes
+    node_border_color <- if (!is.null(config$outline_color_unaffected)) config$outline_color_unaffected else config$outline_color
+
+    # Use filled shapes for affected, unfilled for unaffected
+    plotObject <- plotObject +
+      ggplot2::geom_point(
+        ggplot2::aes(
+          shape = as.factor(.data$sex),
+          fill = as.factor(!!rlang::sym(affected_fill_column))
+        ),
+        size = config$point_size,
+        na.rm = TRUE,
+        color = node_border_color,
+        stroke = config$segment_linewidth * 0.5
+      )
+    return(plotObject)
+  }
 
   # 2) Determine which "node mode" to use (exactly one)
   node_mode <- .pick_first(
@@ -593,6 +672,56 @@ addNodes <- .addNodes
 
 #' @rdname dot-addOverlay
 addOverlay <- .addOverlay
+
+#' @title Add Shape Overlay to ggplot Pedigree Plot
+#' @description Draws a shape (cross, slash, or x) over symbols of matching individuals.
+#'   Used when overlay_mode is "shape" to draw markers on top of pedigree symbols
+#'   (e.g., cross for deceased individuals).
+#' @inheritParams ggPedigree
+#' @param plotObject A ggplot object.
+#' @param overlay_column Character string specifying the column name for overlay status.
+#' @param overlay_spec Optional list of per-overlay settings that override config defaults.
+#'   Recognized keys: \code{shape}, \code{color}, \code{size}, \code{stroke}, \code{code_affected}.
+#' @keywords internal
+#' @return A ggplot object with shape overlay markers added.
+#'
+.addShapeOverlay <- function(plotObject, config, overlay_column, overlay_spec = NULL) {
+  # Per-overlay spec overrides config defaults
+  overlay_shape <- if (!is.null(overlay_spec$shape)) overlay_spec$shape else config$overlay_shape
+  # Support named shape strings for convenience
+  if (is.character(overlay_shape)) {
+    shape_code <- switch(overlay_shape,
+      "cross" = 4L,   # x cross (conventional deceased marker)
+      "slash" = 47L,  # / slash
+      "x"     = 8L,   # asterisk-like x mark
+      4L               # default to cross
+    )
+  } else {
+    shape_code <- as.integer(overlay_shape)
+  }
+  spec_size <- if (!is.null(overlay_spec$size)) overlay_spec$size else config$overlay_size
+  shape_size <- if (!is.null(spec_size)) spec_size else config$point_size
+  shape_color <- if (!is.null(overlay_spec$color)) overlay_spec$color else config$overlay_color
+  shape_stroke <- if (!is.null(overlay_spec$stroke)) overlay_spec$stroke else config$overlay_stroke
+  overlay_code <- if (!is.null(overlay_spec$code_affected)) overlay_spec$code_affected else config$overlay_code_affected
+
+  plotObject <- plotObject +
+    ggplot2::geom_point(
+      data = function(d) d[d[[overlay_column]] == overlay_code, , drop = FALSE],
+      ggplot2::aes(x = .data$x_pos, y = .data$y_pos),
+      shape = shape_code,
+      size = shape_size,
+      color = shape_color,
+      stroke = shape_stroke,
+      na.rm = TRUE,
+      inherit.aes = FALSE
+    )
+
+  plotObject
+}
+
+#' @rdname dot-addShapeOverlay
+addShapeOverlay <- .addShapeOverlay
 
 
 #' @title Add Self Segments to ggplot Pedigree Plot
@@ -751,12 +880,69 @@ addSelfSegment <- .addSelfSegment
 .addScales <- function(plotObject,
                        config,
                        status_column = NULL,
-                       focal_fill_column = NULL) {
-  # Always shape scale
-  plotObject <- plotObject + ggplot2::scale_shape_manual(
-    values = config$sex_shape_values,
-    labels = config$sex_shape_labels
-  )
+                       focal_fill_column = NULL,
+                       affected_fill_column = NULL,
+                       outline_color_column = NULL) {
+  # Handle affected fill mode: use fillable shapes and fill scale
+  if (!is.null(affected_fill_column)) {
+    affected_fill_code <- config$affected_fill_code_affected
+    fill_color_affected <- config$affected_fill_color_affected
+    fill_color_unaffected <- config$affected_fill_color_unaffected
+
+    # Use fillable shapes (21=circle, 22=square, 23=diamond) for affected fill mode
+    fill_shape_values <- c(
+      config$affected_fill_shape_female,
+      config$affected_fill_shape_male,
+      config$affected_fill_shape_unknown
+    )
+    plotObject <- plotObject + ggplot2::scale_shape_manual(
+      values = fill_shape_values,
+      labels = config$sex_shape_labels
+    )
+    plotObject <- plotObject + ggplot2::scale_fill_manual(
+      values = stats::setNames(
+        c(fill_color_affected, fill_color_unaffected),
+        c(as.character(affected_fill_code),
+          setdiff(
+            levels(as.factor(plotObject$data[[affected_fill_column]])),
+            as.character(affected_fill_code)
+          )[1]
+        )
+      ),
+      na.value = NA,
+      guide = "none"
+    )
+  } else {
+    # Standard shape scale
+    plotObject <- plotObject + ggplot2::scale_shape_manual(
+      values = config$sex_shape_values,
+      labels = config$sex_shape_labels
+    )
+  }
+
+  # Handle outline color column
+  if (!is.null(outline_color_column)) {
+    highlight_val <- as.character(config$outline_color_code_affected)
+    highlight_color <- config$outline_color_affected
+    default_color <- config$outline_color_unaffected
+
+    all_levels <- levels(plotObject$data[[outline_color_column]])
+    if (is.null(all_levels)) {
+      all_levels <- unique(as.character(plotObject$data[[outline_color_column]]))
+    }
+    color_vals <- stats::setNames(
+      ifelse(all_levels == highlight_val, highlight_color, default_color),
+      all_levels
+    )
+    plotObject <- plotObject + ggplot2::scale_color_manual(
+      values = color_vals,
+      guide = "none"
+    )
+    plotObject <- plotObject + ggplot2::labs(
+      shape = if (isTRUE(config$sex_legend_show)) config$sex_legend_title else NULL
+    )
+    return(plotObject)
+  }
 
   # Add alpha scale for affected status if applicable
   if (!is.null(status_column) &&

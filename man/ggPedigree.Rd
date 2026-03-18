@@ -19,13 +19,16 @@ ggPedigree(
   focal_fill_column = NULL,
   tooltip_columns = NULL,
   overlay_column = NULL,
+  overlays = NULL,
   return_widget = FALSE,
   config = list(),
   debug = FALSE,
   hints = NULL,
   interactive = FALSE,
   code_male = NULL,
-  sexVar = "sex"
+  sexVar = "sex",
+  affected_fill_column = NULL,
+  outline_color_column = NULL
 )
 
 ggpedigree(
@@ -42,13 +45,16 @@ ggpedigree(
   focal_fill_column = NULL,
   tooltip_columns = NULL,
   overlay_column = NULL,
+  overlays = NULL,
   return_widget = FALSE,
   config = list(),
   debug = FALSE,
   hints = NULL,
   interactive = FALSE,
   code_male = NULL,
-  sexVar = "sex"
+  sexVar = "sex",
+  affected_fill_column = NULL,
+  outline_color_column = NULL
 )
 }
 \arguments{
@@ -79,7 +85,17 @@ Defaults to c("personID", "sex").  Additional columns present in `ped`
 can be supplied – they will be added to the Plotly tooltip text.
 Defaults to NULL, which uses the default tooltip columns.}
 
-\item{overlay_column}{Character string specifying the column name for overlay alpha values.}
+\item{overlay_column}{Character string specifying the column name for overlay alpha values.
+For a single overlay, this is the simplest interface. For multiple overlays, use
+the \code{overlays} parameter instead.}
+
+\item{overlays}{A list of overlay specifications for adding multiple independent overlay
+layers. Each element should be a list with at minimum a \code{column} entry, plus optional
+entries: \code{code_affected}, \code{shape}, \code{color}, \code{size}, \code{stroke},
+\code{mode}. Unspecified entries inherit from the \code{overlay_*} config defaults.
+When \code{overlays} is provided, \code{overlay_column} is ignored.
+Example: \code{overlays = list(list(column = "DECES", shape = "cross"),
+list(column = "PROBAND", shape = 8, color = "red"))}}
 
 \item{return_widget}{Logical; if TRUE (default) returns a plotly htmlwidget.
 If FALSE, returns the underlying plotly object (useful for further
@@ -114,6 +130,14 @@ customization before printing).}
 \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1}
 
 \item{sexVar}{Character string specifying the column name for sex. Defaults to "sex".}
+
+\item{affected_fill_column}{Character string specifying the column name for conditional
+affected fill. When provided, individuals matching the `affected_fill_code_affected` config
+will have their symbols filled. Default is NULL.}
+
+\item{outline_color_column}{Character string specifying the column name for outline
+color control. When provided, individuals matching `outline_color_code_affected` config
+will have colored outlines (e.g., blue for included). Default is NULL.}
 }
 \value{
 A `ggplot` object rendering the pedigree diagram.
