@@ -164,7 +164,7 @@ test_that("shape overlay only renders for matching values", {
   expect_true(any(overlay_layers))
 })
 
-test_that("config defaults for new params follow naming conventions", {
+test_that("config defaults for overlay and affected_fill params follow naming conventions", {
   config <- getDefaultPlotConfig()
 
   # affected_fill uses _code_affected/_code_unaffected pattern
