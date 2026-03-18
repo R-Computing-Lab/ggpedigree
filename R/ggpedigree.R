@@ -115,7 +115,7 @@ ggPedigree <- function(ped,
   }
 
   if (interactive == TRUE &&
-        requireNamespace("plotly", quietly = TRUE)) {
+    requireNamespace("plotly", quietly = TRUE)) {
     # Call the interactive function with the provided arguments
 
     ggPedigreeInteractive(
@@ -141,7 +141,7 @@ ggPedigree <- function(ped,
     )
   } else {
     if (interactive == TRUE &&
-          !requireNamespace("plotly", quietly = TRUE)) {
+      !requireNamespace("plotly", quietly = TRUE)) {
       message("The 'plotly' package is required for interactive plots.")
     }
 

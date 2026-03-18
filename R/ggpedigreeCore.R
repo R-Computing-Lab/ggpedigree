@@ -908,8 +908,8 @@ addSelfSegment <- .addSelfSegment
 
   # Add alpha scale for affected status if applicable
   if (!is.null(status_column) &&
-        config$sex_color_include == TRUE &&
-        config$status_include == TRUE) {
+    config$sex_color_include == TRUE &&
+    config$status_include == TRUE) {
     plotObject <- plotObject + ggplot2::scale_alpha_manual(
       name = if (config$status_legend_show) {
         config$status_legend_title
@@ -1117,7 +1117,7 @@ addScales <- .addScales
 .addLabels <- function(plotObject, config) {
   ggrepel_label_methods <- c("geom_text_repel", "ggrepel", "geom_label_repel")
   if (!requireNamespace("ggrepel", quietly = TRUE) &&
-        config$label_method %in% ggrepel_label_methods) {
+    config$label_method %in% ggrepel_label_methods) {
     warning(
       "The 'ggrepel' package is required for label methods ",
       "'geom_text_repel', 'ggrepel', and 'geom_label_repel'. ",
@@ -1128,7 +1128,7 @@ addScales <- .addScales
   }
 
   if (config$label_method %in% ggrepel_label_methods &&
-        requireNamespace("ggrepel", quietly = TRUE)) {
+    requireNamespace("ggrepel", quietly = TRUE)) {
     # If ggrepel is available, use geom_text_repel or geom_label_repel
     # for better label placement and avoidance of overlaps
     plotObject <- plotObject +
@@ -1234,7 +1234,7 @@ addLabels <- .addLabels
     )
 
   if ("mz" %in% names(plot_connections$twin_coords) &&
-        any(plot_connections$twin_coords$mz == TRUE, na.rm = TRUE)) {
+    any(plot_connections$twin_coords$mz == TRUE, na.rm = TRUE)) {
     plotObject <- plotObject + # horizontal line to twin midpoint for MZ twins
       ggplot2::geom_segment(
         data = plot_connections$twin_coords |>

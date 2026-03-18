@@ -473,11 +473,11 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  ...) {
   # Ensure the color palette is a character vector
   if (!is.character(color_palette_default) ||
-        length(color_palette_default) < 3) {
+    length(color_palette_default) < 3) {
     stop("color_palette_default must be a character vector with at least 3 colors.")
   }
   if (!is.character(segment_default_color) ||
-        length(segment_default_color) != 1) {
+    length(segment_default_color) != 1) {
     stop("segment_default_color must be a single character string.")
   }
 
@@ -806,7 +806,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     core_list$return_widget <- FALSE
     core_list$return_interactive <- FALSE
   } else if (lc_function_name %in%
-               c("ggphenotypebydegree", "phenotypebydegree")) {
+    c("ggphenotypebydegree", "phenotypebydegree")) {
     core_list$point_size <- 1
     core_list$plot_title <- "Phenotypic Correlation vs Genetic Relatedness"
     core_list$return_static <- FALSE

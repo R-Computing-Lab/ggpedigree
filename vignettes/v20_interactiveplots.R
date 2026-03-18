@@ -33,12 +33,9 @@ plt <- ggPedigreeInteractive(
 # plt
 
 ## ----echo=FALSE---------------------------------------------------------------
-# reduce file size for CRAN
-if (interactive()) {
-  # If running interactively, use plotly::partial_bundle
-  # to reduce file size for CRAN
-  plotly::partial_bundle(plt)
-} else {
-  plotly::partial_bundle(plt, local = TRUE)
-}
+# reduce file size for CRAN; fall back gracefully if network is unavailable
+tryCatch(
+  plotly::partial_bundle(plt, local = TRUE),
+  error = function(e) plt
+)
 
