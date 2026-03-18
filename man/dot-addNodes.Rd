@@ -5,9 +5,23 @@
 \alias{addNodes}
 \title{Add Nodes to ggplot Pedigree Plot}
 \usage{
-.addNodes(plotObject, config, focal_fill_column = NULL, status_column = NULL)
+.addNodes(
+  plotObject,
+  config,
+  focal_fill_column = NULL,
+  status_column = NULL,
+  affected_fill_column = NULL,
+  outline_color_column = NULL
+)
 
-addNodes(plotObject, config, focal_fill_column = NULL, status_column = NULL)
+addNodes(
+  plotObject,
+  config,
+  focal_fill_column = NULL,
+  status_column = NULL,
+  affected_fill_column = NULL,
+  outline_color_column = NULL
+)
 }
 \arguments{
 \item{plotObject}{A ggplot object.}
@@ -35,6 +49,14 @@ addNodes(plotObject, config, focal_fill_column = NULL, status_column = NULL)
 \item{focal_fill_column}{Character string specifying the column name for focal fill color.}
 
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
+
+\item{affected_fill_column}{Character string specifying the column name for conditional
+affected fill. When provided, individuals matching the `affected_fill_code_affected` config
+will have their symbols filled. Default is NULL.}
+
+\item{outline_color_column}{Character string specifying the column name for outline
+color control. When provided, individuals matching `outline_color_code_affected` config
+will have colored outlines (e.g., blue for included). Default is NULL.}
 }
 \description{
 Add Nodes to ggplot Pedigree Plot

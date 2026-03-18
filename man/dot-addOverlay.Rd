@@ -50,7 +50,9 @@ addOverlay(
 
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
 
-\item{overlay_column}{Character string specifying the column name for overlay alpha values.}
+\item{overlay_column}{Character string specifying the column name for overlay alpha values.
+For a single overlay, this is the simplest interface. For multiple overlays, use
+the \code{overlays} parameter instead.}
 }
 \value{
 A ggplot object with added overlay.

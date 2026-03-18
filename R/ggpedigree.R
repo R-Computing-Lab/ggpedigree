@@ -19,6 +19,15 @@
 #' @param hints Data frame with hints for layout adjustments. Default: NULL.
 #' @param interactive Logical. If TRUE, generates an interactive plot using `plotly`. Default: FALSE.
 #' @param overlay_column Character string specifying the column name for overlay alpha values.
+#'   For a single overlay, this is the simplest interface. For multiple overlays, use
+#'   the \code{overlays} parameter instead.
+#' @param overlays A list of overlay specifications for adding multiple independent overlay
+#'   layers. Each element should be a list with at minimum a \code{column} entry, plus optional
+#'   entries: \code{code_affected}, \code{shape}, \code{color}, \code{size}, \code{stroke},
+#'   \code{mode}. Unspecified entries inherit from the \code{overlay_*} config defaults.
+#'   When \code{overlays} is provided, \code{overlay_column} is ignored.
+#'   Example: \code{overlays = list(list(column = "DECES", shape = "cross"),
+#'   list(column = "PROBAND", shape = 8, color = "red"))}
 #' @param tooltip_columns Character vector of column names to show when hovering.
 #'        Defaults to c("personID", "sex").  Additional columns present in `ped`
 #'        can be supplied – they will be added to the Plotly tooltip text.
@@ -29,6 +38,12 @@
 #' @param code_male Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1
 #' @param sexVar Character string specifying the column name for sex. Defaults to "sex".
 #' @param focal_fill_column Character string specifying the column name for focal fill color.
+#' @param affected_fill_column Character string specifying the column name for conditional
+#'   affected fill. When provided, individuals matching the `affected_fill_code_affected` config
+#'   will have their symbols filled. Default is NULL.
+#' @param outline_color_column Character string specifying the column name for outline
+#'   color control. When provided, individuals matching `outline_color_code_affected` config
+#'   will have colored outlines (e.g., blue for included). Default is NULL.
 #' @param config A list of configuration options for customizing the plot.
 #'        See getDefaultPlotConfig for details of each option. The list can include:
 #'  \describe{
@@ -79,13 +94,16 @@ ggPedigree <- function(ped,
                        focal_fill_column = NULL,
                        tooltip_columns = NULL,
                        overlay_column = NULL,
+                       overlays = NULL,
                        return_widget = FALSE,
                        config = list(),
                        debug = FALSE,
                        hints = NULL,
                        interactive = FALSE,
                        code_male = NULL,
-                       sexVar = "sex") {
+                       sexVar = "sex",
+                       affected_fill_column = NULL,
+                       outline_color_column = NULL) {
   if (!inherits(ped, "data.frame")) {
     if (rlang::inherits_any(ped, c("ped", "pedigree", "kinship2.pedigree"))) {
       # Convert ped object to data.frame
@@ -154,6 +172,17 @@ ggPedigree <- function(ped,
       code_male <- NULL
     }
 
+    # Apply clinical preset if specified
+    if (identical(config$preset, "clinical")) {
+      # Clinical defaults: shape by sex, unfilled by default, blue outline for included
+      config$sex_color_include <- FALSE
+      config$outline_include <- TRUE
+      config$outline_color <- config$outline_color_unaffected
+      # Configure overlay for shape mode (e.g., cross for deceased markers)
+      config$overlay_include <- TRUE
+      config$overlay_mode <- "shape"
+    }
+
 
     # Call the core function with the provided arguments
     ggPedigree.core(
@@ -166,13 +195,16 @@ ggPedigree <- function(ped,
       matID = matID,
       patID = patID,
       overlay_column = overlay_column,
+      overlays = overlays,
       twinID = twinID,
       status_column = status_column,
       focal_fill_column = focal_fill_column,
       config = config,
       debug = debug,
       hints = hints,
-      sexVar = sexVar
+      sexVar = sexVar,
+      affected_fill_column = affected_fill_column,
+      outline_color_column = outline_color_column
     )
   }
 }

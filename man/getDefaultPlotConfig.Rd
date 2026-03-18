@@ -116,6 +116,9 @@ getDefaultPlotConfig(
   overlay_alpha_unaffected = 0,
   overlay_color = "black",
   overlay_include = FALSE,
+  overlay_mode = "alpha",
+  overlay_size = NULL,
+  overlay_stroke = 1.5,
   overlay_legend_title = "Overlay",
   overlay_legend_show = FALSE,
   focal_fill_include = FALSE,
@@ -184,6 +187,24 @@ getDefaultPlotConfig(
   recode_missing_ids = TRUE,
   recode_missing_sex = TRUE,
   add_phantoms = FALSE,
+  affected_fill_include = FALSE,
+  affected_fill_code_affected = 1,
+  affected_fill_code_unaffected = 0,
+  affected_fill_label_affected = "Affected",
+  affected_fill_label_unaffected = "Unaffected",
+  affected_fill_color_affected = "black",
+  affected_fill_color_unaffected = NA,
+  affected_fill_shape_female = 21,
+  affected_fill_shape_male = 22,
+  affected_fill_shape_unknown = 23,
+  outline_color_include = FALSE,
+  outline_color_code_affected = 1,
+  outline_color_code_unaffected = 0,
+  outline_color_label_affected = "Highlighted",
+  outline_color_label_unaffected = "Default",
+  outline_color_affected = "blue",
+  outline_color_unaffected = "black",
+  preset = NULL,
   ...
 )
 }
@@ -393,7 +414,8 @@ The plot is reversed vertically, so this is needed to nudge labels up instead of
 
 \item{status_legend_show}{Whether to show the status legend.}
 
-\item{overlay_shape}{Shape used for overlaying points in the plot. Default is 4 (cross).}
+\item{overlay_shape}{Shape used for overlaying points in the plot. Default is 4 (cross).
+When overlay_mode is "shape", accepts named strings: "cross", "slash", "x".}
 
 \item{overlay_code_affected}{Code for affected individuals in overlay. Default is 1.}
 
@@ -410,6 +432,16 @@ The plot is reversed vertically, so this is needed to nudge labels up instead of
 \item{overlay_color}{Color for overlay points. Default is "black".}
 
 \item{overlay_include}{Whether to include overlay points in the plot. Default is FALSE.}
+
+\item{overlay_mode}{Character string specifying the overlay rendering mode.
+"alpha" (default) uses alpha transparency mapping; "shape" draws a shape overlay
+on matching individuals (e.g., cross for deceased markers).}
+
+\item{overlay_size}{Numeric. Size of the shape overlay. Default is NULL (inherits from point_size).
+Only used when overlay_mode is "shape".}
+
+\item{overlay_stroke}{Stroke width for the shape overlay. Default is 1.5.
+Only used when overlay_mode is "shape".}
 
 \item{overlay_legend_title}{Title of the overlay legend. Default is "Overlay".}
 
@@ -546,6 +578,43 @@ The plot is reversed vertically, so this is needed to nudge labels up instead of
 \item{recode_missing_sex}{Whether to recode missing sex codes in the pedigree. Default is TRUE.}
 
 \item{add_phantoms}{Whether to add phantom parents for individuals without parents.}
+
+\item{affected_fill_include}{Whether to enable affected fill styling. Default is FALSE.}
+
+\item{affected_fill_code_affected}{Value in the affected fill column that triggers filling. Default is 1.}
+
+\item{affected_fill_code_unaffected}{Value in the affected fill column for unaffected individuals. Default is 0.}
+
+\item{affected_fill_label_affected}{Label for affected individuals in fill legend. Default is "Affected".}
+
+\item{affected_fill_label_unaffected}{Label for unaffected individuals in fill legend. Default is "Unaffected".}
+
+\item{affected_fill_color_affected}{Color used to fill symbols for affected individuals. Default is "black".}
+
+\item{affected_fill_color_unaffected}{Color used to fill symbols for unaffected individuals. Default is NA (transparent).}
+
+\item{affected_fill_shape_female}{Filled shape for affected females. Default is 21 (filled circle).}
+
+\item{affected_fill_shape_male}{Filled shape for affected males. Default is 22 (filled square).}
+
+\item{affected_fill_shape_unknown}{Filled shape for affected unknown sex. Default is 23 (filled diamond).}
+
+\item{outline_color_include}{Whether to enable column-based outline coloring. Default is FALSE.}
+
+\item{outline_color_code_affected}{Value in the outline color column that triggers colored outlines. Default is 1.}
+
+\item{outline_color_code_unaffected}{Value in the outline color column for default outlines. Default is 0.}
+
+\item{outline_color_label_affected}{Label for highlighted outline individuals. Default is "Highlighted".}
+
+\item{outline_color_label_unaffected}{Label for default outline individuals. Default is "Default".}
+
+\item{outline_color_affected}{Color used for highlighted outlines. Default is "blue".}
+
+\item{outline_color_unaffected}{Color used for default (non-highlighted) outlines. Default is "black".}
+
+\item{preset}{Optional preset name for default styling combinations.
+Currently supported: "clinical" for standard clinical pedigree styling. Default is NULL.}
 
 \item{...}{Additional arguments for future extensibility.}
 }
