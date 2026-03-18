@@ -201,11 +201,11 @@
 #' @param deceased_code_unaffected Value in the deceased column for alive individuals. Default is 0.
 #' @param deceased_label_affected Label for deceased individuals. Default is "Deceased".
 #' @param deceased_label_unaffected Label for alive individuals. Default is "Alive".
-#' @param deceased_marker Character string specifying the type of deceased marker.
+#' @param deceased_shape Character string specifying the type of deceased overlay shape.
 #'   Options: "cross", "slash", "x". Default is "cross".
-#' @param deceased_marker_size Numeric. Size of the deceased marker. Default is NULL (inherits from point_size).
-#' @param deceased_marker_color Color for the deceased marker. Default is "black".
-#' @param deceased_marker_stroke Stroke width for the deceased marker. Default is 1.5.
+#' @param deceased_size Numeric. Size of the deceased overlay shape. Default is NULL (inherits from point_size).
+#' @param deceased_color Color for the deceased overlay shape. Default is "black".
+#' @param deceased_stroke Stroke width for the deceased overlay shape. Default is 1.5.
 #' @param outline_color_include Whether to enable column-based outline coloring. Default is FALSE.
 #' @param outline_color_code_affected Value in the outline color column that triggers colored outlines. Default is 1.
 #' @param outline_color_code_unaffected Value in the outline color column for default outlines. Default is 0.
@@ -455,10 +455,10 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  deceased_code_unaffected = 0,
                                  deceased_label_affected = "Deceased",
                                  deceased_label_unaffected = "Alive",
-                                 deceased_marker = "cross",
-                                 deceased_marker_size = NULL,
-                                 deceased_marker_color = "black",
-                                 deceased_marker_stroke = 1.5,
+                                 deceased_shape = "cross",
+                                 deceased_size = NULL,
+                                 deceased_color = "black",
+                                 deceased_stroke = 1.5,
                                  # -- Outline Color --
                                  outline_color_include = FALSE,
                                  outline_color_code_affected = 1,
@@ -771,10 +771,10 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     deceased_code_unaffected = deceased_code_unaffected,
     deceased_label_affected = deceased_label_affected,
     deceased_label_unaffected = deceased_label_unaffected,
-    deceased_marker = deceased_marker,
-    deceased_marker_size = deceased_marker_size,
-    deceased_marker_color = deceased_marker_color,
-    deceased_marker_stroke = deceased_marker_stroke,
+    deceased_shape = deceased_shape,
+    deceased_size = deceased_size,
+    deceased_color = deceased_color,
+    deceased_stroke = deceased_stroke,
     # -- Outline Color --
     outline_color_include = outline_color_include,
     outline_color_code_affected = outline_color_code_affected,

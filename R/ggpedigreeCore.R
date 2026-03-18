@@ -656,26 +656,26 @@ addOverlay <- .addOverlay
 #' @return A ggplot object with deceased overlay markers added.
 #'
 .addDeceasedOverlay <- function(plotObject, config, deceased_column) {
-  marker_type <- config$deceased_marker
-  marker_shape <- switch(marker_type,
+  shape_type <- config$deceased_shape
+  shape_code <- switch(shape_type,
     "cross" = 4L,   # x cross (conventional deceased marker)
     "slash" = 47L,  # / slash
     "x"     = 8L,   # asterisk-like x mark
     4L               # default to cross
   )
-  marker_size <- if (!is.null(config$deceased_marker_size)) config$deceased_marker_size else config$point_size
-  marker_color <- config$deceased_marker_color
-  marker_stroke <- config$deceased_marker_stroke
+  shape_size <- if (!is.null(config$deceased_size)) config$deceased_size else config$point_size
+  shape_color <- config$deceased_color
+  shape_stroke <- config$deceased_stroke
   deceased_code <- config$deceased_code_affected
 
   plotObject <- plotObject +
     ggplot2::geom_point(
       data = function(d) d[d[[deceased_column]] == deceased_code, , drop = FALSE],
       ggplot2::aes(x = .data$x_pos, y = .data$y_pos),
-      shape = marker_shape,
-      size = marker_size,
-      color = marker_color,
-      stroke = marker_stroke,
+      shape = shape_code,
+      size = shape_size,
+      color = shape_color,
+      stroke = shape_stroke,
       na.rm = TRUE,
       inherit.aes = FALSE
     )

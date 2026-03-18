@@ -35,8 +35,8 @@ test_that("deceased_column adds cross overlay", {
     deceased_column = "DECES",
     config = list(
       deceased_code_affected = 1,
-      deceased_marker = "cross",
-      deceased_marker_color = "black"
+      deceased_shape = "cross",
+      deceased_color = "black"
     )
   )
   expect_s3_class(p, "gg")
@@ -119,8 +119,8 @@ test_that("all clinical features compose without error", {
       affected_fill_code_affected = 1,
       affected_fill_color_affected = "black",
       deceased_code_affected = 1,
-      deceased_marker = "cross",
-      deceased_marker_color = "black",
+      deceased_shape = "cross",
+      deceased_color = "black",
       outline_color_code_affected = 1,
       outline_color_affected = "blue",
       outline_color_unaffected = "black"
@@ -179,10 +179,10 @@ test_that("config defaults for clinical params follow naming conventions", {
   expect_equal(config$deceased_code_unaffected, 0)
   expect_equal(config$deceased_label_affected, "Deceased")
   expect_equal(config$deceased_label_unaffected, "Alive")
-  expect_equal(config$deceased_marker, "cross")
-  expect_true(is.null(config$deceased_marker_size))
-  expect_equal(config$deceased_marker_color, "black")
-  expect_equal(config$deceased_marker_stroke, 1.5)
+  expect_equal(config$deceased_shape, "cross")
+  expect_true(is.null(config$deceased_size))
+  expect_equal(config$deceased_color, "black")
+  expect_equal(config$deceased_stroke, 1.5)
 
   # outline_color uses _code_affected/_code_unaffected pattern
   expect_equal(config$outline_color_include, FALSE)
