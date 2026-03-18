@@ -32,9 +32,6 @@
 #' @param affected_fill_column Character string specifying the column name for conditional
 #'   affected fill. When provided, individuals matching the `affected_fill_code_affected` config
 #'   will have their symbols filled. Default is NULL.
-#' @param deceased_column Character string specifying the column name for deceased status.
-#'   When provided, a cross (or other marker) overlay is drawn on symbols of deceased
-#'   individuals. Default is NULL.
 #' @param outline_color_column Character string specifying the column name for outline
 #'   color control. When provided, individuals matching `outline_color_code_affected` config
 #'   will have colored outlines (e.g., blue for included). Default is NULL.
@@ -96,7 +93,6 @@ ggPedigree <- function(ped,
                        code_male = NULL,
                        sexVar = "sex",
                        affected_fill_column = NULL,
-                       deceased_column = NULL,
                        outline_color_column = NULL) {
   if (!inherits(ped, "data.frame")) {
     if (rlang::inherits_any(ped, c("ped", "pedigree", "kinship2.pedigree"))) {
@@ -172,6 +168,9 @@ ggPedigree <- function(ped,
       config$sex_color_include <- FALSE
       config$outline_include <- TRUE
       config$outline_color <- config$outline_color_unaffected
+      # Configure overlay for shape mode (e.g., cross for deceased markers)
+      config$overlay_include <- TRUE
+      config$overlay_mode <- "shape"
     }
 
 
@@ -194,7 +193,6 @@ ggPedigree <- function(ped,
       hints = hints,
       sexVar = sexVar,
       affected_fill_column = affected_fill_column,
-      deceased_column = deceased_column,
       outline_color_column = outline_color_column
     )
   }

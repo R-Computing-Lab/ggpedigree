@@ -27,7 +27,6 @@ ggPedigree(
   code_male = NULL,
   sexVar = "sex",
   affected_fill_column = NULL,
-  deceased_column = NULL,
   outline_color_column = NULL
 )
 
@@ -53,7 +52,6 @@ ggpedigree(
   code_male = NULL,
   sexVar = "sex",
   affected_fill_column = NULL,
-  deceased_column = NULL,
   outline_color_column = NULL
 )
 }
@@ -124,10 +122,6 @@ customization before printing).}
 \item{affected_fill_column}{Character string specifying the column name for conditional
 affected fill. When provided, individuals matching the `affected_fill_code_affected` config
 will have their symbols filled. Default is NULL.}
-
-\item{deceased_column}{Character string specifying the column name for deceased status.
-When provided, a cross (or other marker) overlay is drawn on symbols of deceased
-individuals. Default is NULL.}
 
 \item{outline_color_column}{Character string specifying the column name for outline
 color control. When provided, individuals matching `outline_color_code_affected` config

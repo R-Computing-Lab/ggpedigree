@@ -123,6 +123,7 @@
 #' @param status_color_affected Color for affected individuals.
 #' @param status_color_unaffected Color for unaffected individuals.
 #' @param overlay_shape  Shape used for overlaying points in the plot. Default is 4 (cross).
+#'   When overlay_mode is "shape", accepts named strings: "cross", "slash", "x".
 #' @param overlay_code_affected  Code for affected individuals in overlay. Default is 1.
 #' @param overlay_code_unaffected  Code for unaffected individuals in overlay. Default is 0.
 #' @param overlay_label_affected  Label for affected individuals in overlay. Default is "Affected".
@@ -131,6 +132,13 @@
 #' @param overlay_alpha_unaffected Alpha for unaffected individuals in overlay. Default is 0.
 #' @param overlay_color  Color for overlay points. Default is "black".
 #' @param overlay_include Whether to include overlay points in the plot. Default is FALSE.
+#' @param overlay_mode  Character string specifying the overlay rendering mode.
+#'   "alpha" (default) uses alpha transparency mapping; "shape" draws a shape overlay
+#'   on matching individuals (e.g., cross for deceased markers).
+#' @param overlay_size  Numeric. Size of the shape overlay. Default is NULL (inherits from point_size).
+#'   Only used when overlay_mode is "shape".
+#' @param overlay_stroke  Stroke width for the shape overlay. Default is 1.5.
+#'   Only used when overlay_mode is "shape".
 #' @param overlay_legend_title  Title of the overlay legend. Default is "Overlay".
 #' @param overlay_legend_show  Whether to show the overlay legend. Default is FALSE.
 #' @param focal_fill_include Whether to fill focal individuals. Default is FALSE.
@@ -196,16 +204,6 @@
 #' @param affected_fill_shape_female Filled shape for affected females. Default is 21 (filled circle).
 #' @param affected_fill_shape_male Filled shape for affected males. Default is 22 (filled square).
 #' @param affected_fill_shape_unknown Filled shape for affected unknown sex. Default is 23 (filled diamond).
-#' @param deceased_include Whether to enable deceased overlay markers. Default is FALSE.
-#' @param deceased_code_affected Value in the deceased column that indicates deceased status. Default is 1.
-#' @param deceased_code_unaffected Value in the deceased column for alive individuals. Default is 0.
-#' @param deceased_label_affected Label for deceased individuals. Default is "Deceased".
-#' @param deceased_label_unaffected Label for alive individuals. Default is "Alive".
-#' @param deceased_shape Character string specifying the type of deceased overlay shape.
-#'   Options: "cross", "slash", "x". Default is "cross".
-#' @param deceased_size Numeric. Size of the deceased overlay shape. Default is NULL (inherits from point_size).
-#' @param deceased_color Color for the deceased overlay shape. Default is "black".
-#' @param deceased_stroke Stroke width for the deceased overlay shape. Default is 1.5.
 #' @param outline_color_include Whether to enable column-based outline coloring. Default is FALSE.
 #' @param outline_color_code_affected Value in the outline color column that triggers colored outlines. Default is 1.
 #' @param outline_color_code_unaffected Value in the outline color column for default outlines. Default is 0.
@@ -354,6 +352,9 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  overlay_alpha_unaffected = 0,
                                  overlay_color = "black",
                                  overlay_include = FALSE,
+                                 overlay_mode = "alpha",
+                                 overlay_size = NULL,
+                                 overlay_stroke = 1.5,
                                  overlay_legend_title = "Overlay",
                                  overlay_legend_show = FALSE,
                                  # ---- Focal Fill Settings ----
@@ -449,16 +450,6 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  affected_fill_shape_female = 21,
                                  affected_fill_shape_male = 22,
                                  affected_fill_shape_unknown = 23,
-                                 # -- Deceased Overlay --
-                                 deceased_include = FALSE,
-                                 deceased_code_affected = 1,
-                                 deceased_code_unaffected = 0,
-                                 deceased_label_affected = "Deceased",
-                                 deceased_label_unaffected = "Alive",
-                                 deceased_shape = "cross",
-                                 deceased_size = NULL,
-                                 deceased_color = "black",
-                                 deceased_stroke = 1.5,
                                  # -- Outline Color --
                                  outline_color_include = FALSE,
                                  outline_color_code_affected = 1,
@@ -686,6 +677,9 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     overlay_color = overlay_color,
     overlay_alpha_affected = overlay_alpha_affected,
     overlay_include = overlay_include,
+    overlay_mode = overlay_mode,
+    overlay_size = overlay_size,
+    overlay_stroke = overlay_stroke,
     overlay_legend_title = overlay_legend_title,
     overlay_legend_show = overlay_legend_show,
 
@@ -765,16 +759,6 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     affected_fill_shape_female = affected_fill_shape_female,
     affected_fill_shape_male = affected_fill_shape_male,
     affected_fill_shape_unknown = affected_fill_shape_unknown,
-    # -- Deceased Overlay --
-    deceased_include = deceased_include,
-    deceased_code_affected = deceased_code_affected,
-    deceased_code_unaffected = deceased_code_unaffected,
-    deceased_label_affected = deceased_label_affected,
-    deceased_label_unaffected = deceased_label_unaffected,
-    deceased_shape = deceased_shape,
-    deceased_size = deceased_size,
-    deceased_color = deceased_color,
-    deceased_stroke = deceased_stroke,
     # -- Outline Color --
     outline_color_include = outline_color_include,
     outline_color_code_affected = outline_color_code_affected,

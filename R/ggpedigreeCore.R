@@ -29,7 +29,6 @@ ggPedigree.core <- function(ped,
                             sexVar = "sex",
                             function_name = "ggPedigree",
                             affected_fill_column = NULL,
-                            deceased_column = NULL,
                             outline_color_column = NULL) {
   # -----
   # STEP 1: Configuration and Preparation
@@ -326,25 +325,26 @@ ggPedigree.core <- function(ped,
   # Add overlay points for affected status if applicable
 
   if (.should_add_overlay(config, overlay_column, status_column, focal_fill_column)) {
-    # If overlay_column is specified, use it for alpha aesthetic
-
-    p <- .addOverlay(
-      plotObject = p,
-      config = config,
-      focal_fill_column = focal_fill_column,
-      status_column = status_column,
-      overlay_column = overlay_column
-    )
+    if (isTRUE(config$overlay_include) && !is.null(overlay_column) &&
+        config$overlay_mode == "shape") {
+      # Shape-mode overlay: draw a shape (e.g., cross) on matching individuals
+      p <- .addShapeOverlay(
+        plotObject = p,
+        config = config,
+        overlay_column = overlay_column
+      )
+    } else {
+      # Alpha-mode overlay (default): use alpha transparency mapping
+      p <- .addOverlay(
+        plotObject = p,
+        config = config,
+        focal_fill_column = focal_fill_column,
+        status_column = status_column,
+        overlay_column = overlay_column
+      )
+    }
   }
 
-  # Add deceased overlay marker if applicable
-  if (!is.null(deceased_column) && deceased_column %in% names(ds)) {
-    p <- .addDeceasedOverlay(
-      plotObject = p,
-      config = config,
-      deceased_column = deceased_column
-    )
-  }
   # -----
   # STEP 9: Add Labels
   # -----
@@ -647,30 +647,37 @@ addNodes <- .addNodes
 #' @rdname dot-addOverlay
 addOverlay <- .addOverlay
 
-#' @title Add Deceased Overlay to ggplot Pedigree Plot
-#' @description Draws a marker (cross, slash, or x) over symbols of deceased individuals.
+#' @title Add Shape Overlay to ggplot Pedigree Plot
+#' @description Draws a shape (cross, slash, or x) over symbols of matching individuals.
+#'   Used when overlay_mode is "shape" to draw markers on top of pedigree symbols
+#'   (e.g., cross for deceased individuals).
 #' @inheritParams ggPedigree
 #' @param plotObject A ggplot object.
-#' @param deceased_column Character string specifying the column name for deceased status.
+#' @param overlay_column Character string specifying the column name for overlay status.
 #' @keywords internal
-#' @return A ggplot object with deceased overlay markers added.
+#' @return A ggplot object with shape overlay markers added.
 #'
-.addDeceasedOverlay <- function(plotObject, config, deceased_column) {
-  shape_type <- config$deceased_shape
-  shape_code <- switch(shape_type,
-    "cross" = 4L,   # x cross (conventional deceased marker)
-    "slash" = 47L,  # / slash
-    "x"     = 8L,   # asterisk-like x mark
-    4L               # default to cross
-  )
-  shape_size <- if (!is.null(config$deceased_size)) config$deceased_size else config$point_size
-  shape_color <- config$deceased_color
-  shape_stroke <- config$deceased_stroke
-  deceased_code <- config$deceased_code_affected
+.addShapeOverlay <- function(plotObject, config, overlay_column) {
+  overlay_shape <- config$overlay_shape
+  # Support named shape strings for convenience
+  if (is.character(overlay_shape)) {
+    shape_code <- switch(overlay_shape,
+      "cross" = 4L,   # x cross (conventional deceased marker)
+      "slash" = 47L,  # / slash
+      "x"     = 8L,   # asterisk-like x mark
+      4L               # default to cross
+    )
+  } else {
+    shape_code <- as.integer(overlay_shape)
+  }
+  shape_size <- if (!is.null(config$overlay_size)) config$overlay_size else config$point_size
+  shape_color <- config$overlay_color
+  shape_stroke <- config$overlay_stroke
+  overlay_code <- config$overlay_code_affected
 
   plotObject <- plotObject +
     ggplot2::geom_point(
-      data = function(d) d[d[[deceased_column]] == deceased_code, , drop = FALSE],
+      data = function(d) d[d[[overlay_column]] == overlay_code, , drop = FALSE],
       ggplot2::aes(x = .data$x_pos, y = .data$y_pos),
       shape = shape_code,
       size = shape_size,
@@ -683,8 +690,8 @@ addOverlay <- .addOverlay
   plotObject
 }
 
-#' @rdname dot-addDeceasedOverlay
-addDeceasedOverlay <- .addDeceasedOverlay
+#' @rdname dot-addShapeOverlay
+addShapeOverlay <- .addShapeOverlay
 
 
 #' @title Add Self Segments to ggplot Pedigree Plot

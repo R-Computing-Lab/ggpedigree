@@ -116,6 +116,9 @@ getDefaultPlotConfig(
   overlay_alpha_unaffected = 0,
   overlay_color = "black",
   overlay_include = FALSE,
+  overlay_mode = "alpha",
+  overlay_size = NULL,
+  overlay_stroke = 1.5,
   overlay_legend_title = "Overlay",
   overlay_legend_show = FALSE,
   focal_fill_include = FALSE,
@@ -194,15 +197,6 @@ getDefaultPlotConfig(
   affected_fill_shape_female = 21,
   affected_fill_shape_male = 22,
   affected_fill_shape_unknown = 23,
-  deceased_include = FALSE,
-  deceased_code_affected = 1,
-  deceased_code_unaffected = 0,
-  deceased_label_affected = "Deceased",
-  deceased_label_unaffected = "Alive",
-  deceased_marker = "cross",
-  deceased_marker_size = NULL,
-  deceased_marker_color = "black",
-  deceased_marker_stroke = 1.5,
   outline_color_include = FALSE,
   outline_color_code_affected = 1,
   outline_color_code_unaffected = 0,
@@ -420,7 +414,8 @@ The plot is reversed vertically, so this is needed to nudge labels up instead of
 
 \item{status_legend_show}{Whether to show the status legend.}
 
-\item{overlay_shape}{Shape used for overlaying points in the plot. Default is 4 (cross).}
+\item{overlay_shape}{Shape used for overlaying points in the plot. Default is 4 (cross).
+When overlay_mode is "shape", accepts named strings: "cross", "slash", "x".}
 
 \item{overlay_code_affected}{Code for affected individuals in overlay. Default is 1.}
 
@@ -437,6 +432,16 @@ The plot is reversed vertically, so this is needed to nudge labels up instead of
 \item{overlay_color}{Color for overlay points. Default is "black".}
 
 \item{overlay_include}{Whether to include overlay points in the plot. Default is FALSE.}
+
+\item{overlay_mode}{Character string specifying the overlay rendering mode.
+"alpha" (default) uses alpha transparency mapping; "shape" draws a shape overlay
+on matching individuals (e.g., cross for deceased markers).}
+
+\item{overlay_size}{Numeric. Size of the shape overlay. Default is NULL (inherits from point_size).
+Only used when overlay_mode is "shape".}
+
+\item{overlay_stroke}{Stroke width for the shape overlay. Default is 1.5.
+Only used when overlay_mode is "shape".}
 
 \item{overlay_legend_title}{Title of the overlay legend. Default is "Overlay".}
 
@@ -593,25 +598,6 @@ The plot is reversed vertically, so this is needed to nudge labels up instead of
 \item{affected_fill_shape_male}{Filled shape for affected males. Default is 22 (filled square).}
 
 \item{affected_fill_shape_unknown}{Filled shape for affected unknown sex. Default is 23 (filled diamond).}
-
-\item{deceased_include}{Whether to enable deceased overlay markers. Default is FALSE.}
-
-\item{deceased_code_affected}{Value in the deceased column that indicates deceased status. Default is 1.}
-
-\item{deceased_code_unaffected}{Value in the deceased column for alive individuals. Default is 0.}
-
-\item{deceased_label_affected}{Label for deceased individuals. Default is "Deceased".}
-
-\item{deceased_label_unaffected}{Label for alive individuals. Default is "Alive".}
-
-\item{deceased_marker}{Character string specifying the type of deceased marker.
-Options: "cross", "slash", "x". Default is "cross".}
-
-\item{deceased_marker_size}{Numeric. Size of the deceased marker. Default is NULL (inherits from point_size).}
-
-\item{deceased_marker_color}{Color for the deceased marker. Default is "black".}
-
-\item{deceased_marker_stroke}{Stroke width for the deceased marker. Default is 1.5.}
 
 \item{outline_color_include}{Whether to enable column-based outline coloring. Default is FALSE.}
 
