@@ -12,7 +12,11 @@ test_that("affected_fill_column creates filled/unfilled nodes", {
     config = list(
       sex_color_include = FALSE,
       affected_fill_code_affected = 1,
-      affected_fill_color_affected = "red"
+      affected_fill_code_unaffected = 0,
+      affected_fill_color_affected = "red",
+      affected_fill_color_unaffected = "black"
+
+
     )
   )
   expect_s3_class(p, "gg")
@@ -93,6 +97,10 @@ test_that("clinical preset sets correct defaults", {
     config = list(
       preset = "clinical",
       affected_fill_code_affected = 1,
+      affected_fill_code_unaffected = 0,
+      affected_fill_color_affected = "green",
+      affected_fill_color_unaffected = "yellow",
+      # unaffected = "yellow", is not filling like it should be
       overlay_code_affected = 1,
       outline_color_code_affected = 1,
       outline_color_affected = "blue"
