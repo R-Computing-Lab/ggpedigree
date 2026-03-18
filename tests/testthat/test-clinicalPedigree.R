@@ -262,3 +262,114 @@ test_that("clinical preset enables shape-mode overlay", {
   )
   expect_s3_class(p, "gg")
 })
+
+test_that("overlays parameter adds multiple independent shape overlays", {
+  library(BGmisc)
+  data("potter")
+
+  potter$DECES <- ifelse(potter$personID <= 4, 1, 0)
+  potter$PROBAND <- ifelse(potter$personID == 1, 1, 0)
+
+  p <- ggPedigree(potter,
+    famID = "famID",
+    personID = "personID",
+    overlays = list(
+      list(column = "DECES", code_affected = 1, shape = "cross", color = "black"),
+      list(column = "PROBAND", code_affected = 1, shape = 8, color = "red")
+    ),
+    config = list(
+      overlay_include = TRUE,
+      overlay_mode = "shape"
+    )
+  )
+  expect_s3_class(p, "gg")
+
+  # Should have more layers than a standard plot (two extra overlay layers)
+  p_standard <- ggPedigree(potter,
+    famID = "famID",
+    personID = "personID"
+  )
+  expect_true(length(p$layers) >= length(p_standard$layers) + 2)
+})
+
+test_that("overlays specs override config defaults per-overlay", {
+  library(BGmisc)
+  data("potter")
+
+  potter$STATUS_A <- ifelse(potter$personID %% 2 == 0, 1, 0)
+  potter$STATUS_B <- ifelse(potter$personID %% 3 == 0, 1, 0)
+
+  # Each overlay has different shape and color
+  p <- ggPedigree(potter,
+    famID = "famID",
+    personID = "personID",
+    overlays = list(
+      list(column = "STATUS_A", code_affected = 1, shape = "cross", color = "blue"),
+      list(column = "STATUS_B", code_affected = 1, shape = "slash", color = "red", stroke = 2)
+    ),
+    config = list(
+      overlay_include = TRUE,
+      overlay_mode = "shape"
+    )
+  )
+  expect_s3_class(p, "gg")
+  built <- ggplot2::ggplot_build(p)
+  expect_s3_class(built, "ggplot_built")
+})
+
+test_that("overlays parameter takes precedence over overlay_column", {
+  library(BGmisc)
+  data("potter")
+
+  potter$STATUS_A <- ifelse(potter$personID %% 2 == 0, 1, 0)
+  potter$STATUS_B <- rep(0, nrow(potter))
+
+  # When both overlays and overlay_column are provided, overlays wins
+  p <- ggPedigree(potter,
+    famID = "famID",
+    personID = "personID",
+    overlay_column = "STATUS_B",
+    overlays = list(
+      list(column = "STATUS_A", code_affected = 1, shape = "cross")
+    ),
+    config = list(
+      overlay_include = TRUE,
+      overlay_mode = "shape"
+    )
+  )
+  expect_s3_class(p, "gg")
+
+  # Build and verify the shape overlay matches STATUS_A not STATUS_B
+  built <- ggplot2::ggplot_build(p)
+  overlay_layers <- vapply(built$data, function(d) {
+    "shape" %in% names(d) && any(d$shape == "4" | d$shape == 4)
+  }, logical(1))
+  expect_true(any(overlay_layers))
+})
+
+test_that("single overlay_column still works (backward compat)", {
+  library(BGmisc)
+  data("potter")
+
+  potter$DECES <- ifelse(potter$personID <= 4, 1, 0)
+
+  # Old single-column API should still work
+  p <- ggPedigree(potter,
+    famID = "famID",
+    personID = "personID",
+    overlay_column = "DECES",
+    config = list(
+      overlay_include = TRUE,
+      overlay_mode = "shape",
+      overlay_shape = "cross",
+      overlay_code_affected = 1
+    )
+  )
+  expect_s3_class(p, "gg")
+
+  p_standard <- ggPedigree(potter,
+    famID = "famID",
+    personID = "personID"
+  )
+  expect_true(length(p$layers) > length(p_standard$layers))
+})

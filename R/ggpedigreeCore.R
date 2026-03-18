@@ -21,6 +21,7 @@ ggPedigree.core <- function(ped,
                             twinID = "twinID",
                             focal_fill_column = NULL,
                             overlay_column = NULL,
+                            overlays = NULL,
                             status_column = NULL,
                             code_male = NULL,
                             config = list(),
@@ -324,25 +325,51 @@ ggPedigree.core <- function(ped,
 
   # Add overlay points for affected status if applicable
 
-  if (.should_add_overlay(config, overlay_column, status_column, focal_fill_column)) {
-    if (isTRUE(config$overlay_include) && !is.null(overlay_column) &&
-        config$overlay_mode == "shape") {
-      # Shape-mode overlay: draw a shape (e.g., cross) on matching individuals
-      p <- .addShapeOverlay(
-        plotObject = p,
-        config = config,
-        overlay_column = overlay_column
-      )
-    } else {
-      # Alpha-mode overlay (default): use alpha transparency mapping
-      p <- .addOverlay(
-        plotObject = p,
-        config = config,
-        focal_fill_column = focal_fill_column,
-        status_column = status_column,
-        overlay_column = overlay_column
-      )
+  # Normalize overlays: if overlays list is provided, use it; otherwise fall back
+  # to single overlay_column for backward compatibility
+  overlay_specs <- NULL
+  if (!is.null(overlays) && is.list(overlays) && length(overlays) > 0) {
+    overlay_specs <- overlays
+  } else if (!is.null(overlay_column)) {
+    # Wrap single overlay_column into a one-element list using config defaults
+    overlay_specs <- list(list(column = overlay_column))
+  }
+
+  if (!is.null(overlay_specs)) {
+    for (spec in overlay_specs) {
+      spec_column <- spec$column
+      if (is.null(spec_column) || !spec_column %in% names(ds)) next
+
+      spec_mode <- if (!is.null(spec$mode)) spec$mode else config$overlay_mode
+
+      if (spec_mode == "shape") {
+        # Shape-mode overlay: draw a shape (e.g., cross) on matching individuals
+        p <- .addShapeOverlay(
+          plotObject = p,
+          config = config,
+          overlay_column = spec_column,
+          overlay_spec = spec
+        )
+      } else {
+        # Alpha-mode overlay (default): use alpha transparency mapping
+        p <- .addOverlay(
+          plotObject = p,
+          config = config,
+          focal_fill_column = focal_fill_column,
+          status_column = status_column,
+          overlay_column = spec_column
+        )
+      }
     }
+  } else if (.should_add_overlay(config, overlay_column, status_column, focal_fill_column)) {
+    # Legacy alpha overlay fallback (status/focal_fill driven, no overlay_column)
+    p <- .addOverlay(
+      plotObject = p,
+      config = config,
+      focal_fill_column = focal_fill_column,
+      status_column = status_column,
+      overlay_column = overlay_column
+    )
   }
 
   # -----
@@ -654,11 +681,14 @@ addOverlay <- .addOverlay
 #' @inheritParams ggPedigree
 #' @param plotObject A ggplot object.
 #' @param overlay_column Character string specifying the column name for overlay status.
+#' @param overlay_spec Optional list of per-overlay settings that override config defaults.
+#'   Recognized keys: \code{shape}, \code{color}, \code{size}, \code{stroke}, \code{code_affected}.
 #' @keywords internal
 #' @return A ggplot object with shape overlay markers added.
 #'
-.addShapeOverlay <- function(plotObject, config, overlay_column) {
-  overlay_shape <- config$overlay_shape
+.addShapeOverlay <- function(plotObject, config, overlay_column, overlay_spec = NULL) {
+  # Per-overlay spec overrides config defaults
+  overlay_shape <- if (!is.null(overlay_spec$shape)) overlay_spec$shape else config$overlay_shape
   # Support named shape strings for convenience
   if (is.character(overlay_shape)) {
     shape_code <- switch(overlay_shape,
@@ -670,10 +700,11 @@ addOverlay <- .addOverlay
   } else {
     shape_code <- as.integer(overlay_shape)
   }
-  shape_size <- if (!is.null(config$overlay_size)) config$overlay_size else config$point_size
-  shape_color <- config$overlay_color
-  shape_stroke <- config$overlay_stroke
-  overlay_code <- config$overlay_code_affected
+  spec_size <- if (!is.null(overlay_spec$size)) overlay_spec$size else config$overlay_size
+  shape_size <- if (!is.null(spec_size)) spec_size else config$point_size
+  shape_color <- if (!is.null(overlay_spec$color)) overlay_spec$color else config$overlay_color
+  shape_stroke <- if (!is.null(overlay_spec$stroke)) overlay_spec$stroke else config$overlay_stroke
+  overlay_code <- if (!is.null(overlay_spec$code_affected)) overlay_spec$code_affected else config$overlay_code_affected
 
   plotObject <- plotObject +
     ggplot2::geom_point(

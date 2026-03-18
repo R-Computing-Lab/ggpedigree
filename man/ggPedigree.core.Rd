@@ -16,6 +16,7 @@ ggPedigree.core(
   twinID = "twinID",
   focal_fill_column = NULL,
   overlay_column = NULL,
+  overlays = NULL,
   status_column = NULL,
   code_male = NULL,
   config = list(),
@@ -48,7 +49,17 @@ ggPedigree.core(
 
 \item{focal_fill_column}{Character string specifying the column name for focal fill color.}
 
-\item{overlay_column}{Character string specifying the column name for overlay alpha values.}
+\item{overlay_column}{Character string specifying the column name for overlay alpha values.
+For a single overlay, this is the simplest interface. For multiple overlays, use
+the \code{overlays} parameter instead.}
+
+\item{overlays}{A list of overlay specifications for adding multiple independent overlay
+layers. Each element should be a list with at minimum a \code{column} entry, plus optional
+entries: \code{code_affected}, \code{shape}, \code{color}, \code{size}, \code{stroke},
+\code{mode}. Unspecified entries inherit from the \code{overlay_*} config defaults.
+When \code{overlays} is provided, \code{overlay_column} is ignored.
+Example: \code{overlays = list(list(column = "DECES", shape = "cross"),
+list(column = "PROBAND", shape = 8, color = "red"))}}
 
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
 

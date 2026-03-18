@@ -19,6 +19,7 @@ ggPedigree(
   focal_fill_column = NULL,
   tooltip_columns = NULL,
   overlay_column = NULL,
+  overlays = NULL,
   return_widget = FALSE,
   config = list(),
   debug = FALSE,
@@ -44,6 +45,7 @@ ggpedigree(
   focal_fill_column = NULL,
   tooltip_columns = NULL,
   overlay_column = NULL,
+  overlays = NULL,
   return_widget = FALSE,
   config = list(),
   debug = FALSE,
@@ -83,7 +85,17 @@ Defaults to c("personID", "sex").  Additional columns present in `ped`
 can be supplied – they will be added to the Plotly tooltip text.
 Defaults to NULL, which uses the default tooltip columns.}
 
-\item{overlay_column}{Character string specifying the column name for overlay alpha values.}
+\item{overlay_column}{Character string specifying the column name for overlay alpha values.
+For a single overlay, this is the simplest interface. For multiple overlays, use
+the \code{overlays} parameter instead.}
+
+\item{overlays}{A list of overlay specifications for adding multiple independent overlay
+layers. Each element should be a list with at minimum a \code{column} entry, plus optional
+entries: \code{code_affected}, \code{shape}, \code{color}, \code{size}, \code{stroke},
+\code{mode}. Unspecified entries inherit from the \code{overlay_*} config defaults.
+When \code{overlays} is provided, \code{overlay_column} is ignored.
+Example: \code{overlays = list(list(column = "DECES", shape = "cross"),
+list(column = "PROBAND", shape = 8, color = "red"))}}
 
 \item{return_widget}{Logical; if TRUE (default) returns a plotly htmlwidget.
 If FALSE, returns the underlying plotly object (useful for further

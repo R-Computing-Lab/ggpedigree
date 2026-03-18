@@ -54,7 +54,9 @@ Defaults to NULL, which uses the default tooltip columns.}
 
 \item{focal_fill_column}{Character string specifying the column name for focal fill color.}
 
-\item{overlay_column}{Character string specifying the column name for overlay alpha values.}
+\item{overlay_column}{Character string specifying the column name for overlay alpha values.
+For a single overlay, this is the simplest interface. For multiple overlays, use
+the \code{overlays} parameter instead.}
 
 \item{config}{A list of configuration options for customizing the plot.
       See getDefaultPlotConfig for details of each option. The list can include:

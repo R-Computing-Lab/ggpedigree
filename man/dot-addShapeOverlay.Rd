@@ -5,9 +5,9 @@
 \alias{addShapeOverlay}
 \title{Add Shape Overlay to ggplot Pedigree Plot}
 \usage{
-.addShapeOverlay(plotObject, config, overlay_column)
+.addShapeOverlay(plotObject, config, overlay_column, overlay_spec = NULL)
 
-addShapeOverlay(plotObject, config, overlay_column)
+addShapeOverlay(plotObject, config, overlay_column, overlay_spec = NULL)
 }
 \arguments{
 \item{plotObject}{A ggplot object.}
@@ -33,6 +33,9 @@ addShapeOverlay(plotObject, config, overlay_column)
  }}
 
 \item{overlay_column}{Character string specifying the column name for overlay status.}
+
+\item{overlay_spec}{Optional list of per-overlay settings that override config defaults.
+Recognized keys: \code{shape}, \code{color}, \code{size}, \code{stroke}, \code{code_affected}.}
 }
 \value{
 A ggplot object with shape overlay markers added.
