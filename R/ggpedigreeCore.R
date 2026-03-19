@@ -900,16 +900,21 @@ addSelfSegment <- .addSelfSegment
       values = fill_shape_values,
       labels = config$sex_shape_labels
     )
-    plotObject <- plotObject + ggplot2::scale_fill_manual(
-      values = stats::setNames(
-        c(fill_color_affected, fill_color_unaffected),
-        c(as.character(affected_fill_code),
-          setdiff(
-            levels(as.factor(plotObject$data[[affected_fill_column]])),
-            as.character(affected_fill_code)
-          )[1]
-        )
+    # Build fill scale: affected code gets affected color; all other levels get unaffected color
+    all_levels <- levels(plotObject$data[[affected_fill_column]])
+    if (is.null(all_levels)) {
+      all_levels <- unique(as.character(plotObject$data[[affected_fill_column]]))
+    }
+    fill_vals <- stats::setNames(
+      ifelse(
+        all_levels == as.character(affected_fill_code),
+        fill_color_affected,
+        fill_color_unaffected
       ),
+      all_levels
+    )
+    plotObject <- plotObject + ggplot2::scale_fill_manual(
+      values = fill_vals,
       na.value = NA,
       guide = "none"
     )
