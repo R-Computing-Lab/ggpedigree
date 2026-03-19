@@ -44,6 +44,11 @@ test_that("affected_fill_column creates filled/unfilled nodes", {
   built_coded.svg <- readLines("built_coded.svg")
   built_uncoded.svg <- readLines("built_uncoded.svg")
 
+  # delete svg files after readi
+
+  file.remove("built_coded.svg")
+  file.remove("built_uncoded.svg")
+
   expect_true(any(grepl("fill:\\s*#FF0000", built_coded.svg)))
   expect_true(any(grepl("fill:\\s*#FF0000", built_uncoded.svg)))
 
@@ -299,7 +304,8 @@ test_that("clinical preset enables shape-mode overlay", {
     overlay_column = "DECES",
     config = list(
       preset = "clinical",
-      overlay_code_affected = 1
+      overlay_code_affected = 1,
+       overlay_color = "black"
     )
   )
   expect_s3_class(p, "gg")
@@ -383,7 +389,7 @@ test_that("overlays specs override config defaults per-overlay", {
     ) && any(d$colour == "blue")
   }, logical(1))
   overlay_b <- vapply(built$data, function(d) {
-    "shape" %in% names(d) && any(d$shape == "5"
+    "shape" %in% names(d) && any(d$shape == 47
     ) && any(d$colour == "red") && any(d$stroke == 2
     )
   }, logical(1))

@@ -704,10 +704,11 @@ addOverlay <- .addOverlay
   shape_color <- if (!is.null(overlay_spec$color)) overlay_spec$color else config$overlay_color
   shape_stroke <- if (!is.null(overlay_spec$stroke)) overlay_spec$stroke else config$overlay_stroke
   overlay_code <- if (!is.null(overlay_spec$code_affected)) overlay_spec$code_affected else config$overlay_code_affected
+  col <- overlay_column
 
   plotObject <- plotObject +
     ggplot2::geom_point(
-      data = function(d) d[d[[overlay_column]] == overlay_code, , drop = FALSE],
+      data = function(d) d[d[[col]] == overlay_code, , drop = FALSE],
       ggplot2::aes(x = .data$x_pos, y = .data$y_pos),
       shape = shape_code,
       size = shape_size,
