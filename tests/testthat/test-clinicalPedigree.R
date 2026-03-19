@@ -39,11 +39,15 @@ test_that("affected_fill_column creates filled/unfilled nodes", {
   built_coded <- ggplot2::ggplot_build(p_unaffected_coded)
   built_uncoded <- ggplot2::ggplot_build(p_unaffected_uncoded)
 
-  ggplot2::ggsave("built_coded.svg", plot = p_unaffected_coded)
-  ggplot2::ggsave("built_uncoded.svg", plot = p_unaffected_uncoded)
+  built_coded_path <- tempfile(fileext = ".svg")
+  built_uncoded_path <- tempfile(fileext = ".svg")
+  on.exit(file.remove(built_coded_path), add = TRUE)
+  on.exit(file.remove(built_uncoded_path), add = TRUE)
+  ggplot2::ggsave(built_coded_path, plot = p_unaffected_coded)
+  ggplot2::ggsave(built_uncoded_path, plot = p_unaffected_uncoded)
 
-  built_coded.svg <- readLines("built_coded.svg")
-  built_uncoded.svg <- readLines("built_uncoded.svg")
+  built_coded.svg <- readLines(built_coded_path)
+  built_uncoded.svg <- readLines(built_uncoded_path)
 
   # delete svg files after reading
 
