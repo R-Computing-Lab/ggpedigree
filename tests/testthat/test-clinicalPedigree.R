@@ -53,10 +53,14 @@ test_that("affected_fill_column creates filled/unfilled nodes", {
   expect_true(any(grepl("fill:\\s*#FF0000", built_coded.svg)))
   expect_true(any(grepl("fill:\\s*#FF0000", built_uncoded.svg)))
 
-  fill_colors_coded <- unique(built_coded$data[[8]]$fill)
+  fill_layer_idx_coded <- which(vapply(built_coded$data, function(df) "fill" %in% names(df), logical(1)))[1]
+  expect_true(!is.na(fill_layer_idx_coded))
+  fill_colors_coded <- unique(built_coded$data[[fill_layer_idx_coded]]$fill)
   expect_true("red" %in% fill_colors_coded || "#FF0000" %in% fill_colors_coded)
 
-  fill_colors_uncoded <- unique(built_uncoded$data[[8]]$fill)
+  fill_layer_idx_uncoded <- which(vapply(built_uncoded$data, function(df) "fill" %in% names(df), logical(1)))[1]
+  expect_true(!is.na(fill_layer_idx_uncoded))
+  fill_colors_uncoded <- unique(built_uncoded$data[[fill_layer_idx_uncoded]]$fill)
   expect_true("red" %in% fill_colors_uncoded || "#FF0000" %in% fill_colors_uncoded)
 
   expect_equal(fill_colors_coded, fill_colors_uncoded)
