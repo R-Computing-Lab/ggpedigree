@@ -19,15 +19,15 @@ test_that("affected_fill_column creates filled/unfilled nodes", {
     )
   )
   p_unaffected_uncoded <- ggPedigree(potter,
-                  famID = "famID",
-                  personID = "personID",
-                  affected_fill_column = "SEP",
-                  config = list(
-                    sex_color_include = FALSE,
-                    affected_fill_code_affected = 1,
-                    affected_fill_color_affected = "#FF0000",
-                    affected_fill_color_unaffected = "black"
-                  )
+    famID = "famID",
+    personID = "personID",
+    affected_fill_column = "SEP",
+    config = list(
+      sex_color_include = FALSE,
+      affected_fill_code_affected = 1,
+      affected_fill_color_affected = "#FF0000",
+      affected_fill_color_unaffected = "black"
+    )
   )
 
   p <- p_unaffected_coded
@@ -321,12 +321,9 @@ test_that("clinical preset enables shape-mode overlay", {
   expect_s3_class(built, "ggplot_built")
   # Check that the overlay layer uses shape mode (should have shape aesthetic)
   overlay_layers <- vapply(built$data, function(d) {
-    "shape" %in% names(d) && any(d$shape == "4"
-    )
+    "shape" %in% names(d) && any(d$shape == "4")
   }, logical(1))
   expect_true(any(overlay_layers))
-
-
 })
 
 
@@ -350,9 +347,6 @@ test_that("overlays parameter adds multiple independent shape overlays", {
     )
   )
   expect_s3_class(p, "gg")
-
-
-
 
 
   # Should have more layers than a standard plot (two extra overlay layers)
@@ -387,17 +381,14 @@ test_that("overlays specs override config defaults per-overlay", {
   built <- ggplot2::ggplot_build(p)
   expect_s3_class(built, "ggplot_built")
 
-  #right now both are being applied to status B for some reason
+  # right now both are being applied to status B for some reason
 
   # Check that both overlay layers have the specified shapes and colors
   overlay_a <- vapply(built$data, function(d) {
-    "shape" %in% names(d) && any(d$shape == "4"
-    ) && any(d$colour == "blue")
+    "shape" %in% names(d) && any(d$shape == "4") && any(d$colour == "blue")
   }, logical(1))
   overlay_b <- vapply(built$data, function(d) {
-    "shape" %in% names(d) && any(d$shape == 47
-    ) && any(d$colour == "red") && any(d$stroke == 2
-    )
+    "shape" %in% names(d) && any(d$shape == 47) && any(d$colour == "red") && any(d$stroke == 2)
   }, logical(1))
   expect_true(any(overlay_a))
   expect_true(any(overlay_b))

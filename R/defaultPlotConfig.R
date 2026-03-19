@@ -858,18 +858,18 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     core_list$segment_self_angle <- -75
     core_list$segment_self_curvature <- -0.15
   }
-      # Apply clinical preset if specified
-    if (identical(preset, "clinical")) {
-      # Clinical defaults: shape by sex, unfilled by default, blue outline for included
-      core_list$sex_color_include <- FALSE
-      core_list$sex_shape_include <- TRUE
-      core_list$outline_include <- TRUE
-      core_list$outline_color <- core_list$outline_color_unaffected
-      # Configure overlay for shape mode (e.g., cross for deceased markers)
-      core_list$overlay_include <- TRUE
-      core_list$overlay_mode <- "shape"
-      core_list$overlay_shape <- 4 # Cross shape
-      core_list$overlay_color <-  core_list$color_palette_high
-    }
+  # Apply clinical preset if specified
+  if (identical(preset, "clinical")) {
+    # Clinical defaults: shape by sex, unfilled by default, blue outline for included
+    core_list$sex_color_include <- FALSE
+    core_list$sex_shape_include <- TRUE
+    core_list$outline_include <- TRUE
+    core_list$outline_color <- core_list$outline_color_unaffected
+    # Configure overlay for shape mode (e.g., cross for deceased markers)
+    core_list$overlay_include <- TRUE
+    core_list$overlay_mode <- "shape"
+    core_list$overlay_shape <- 4 # Cross shape
+    core_list$overlay_color <- core_list$color_palette_high
+  }
   core_list
 }

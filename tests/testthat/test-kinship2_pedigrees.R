@@ -71,9 +71,9 @@ test_that("pedigree.sexrepair handles 0-indexed sex (min=0 triggers +1 shift)", 
   # sex=c(0,1,0,1): 0 -> 1="male", 1 -> 2="female" after the +1 shift.
   ped <- ggpedigree:::pedigree(
     id    = 1:4,
-    dadid = c(0, 0, 1, 1),   # dad = subject 1 (sex=0 -> male after shift)
-    momid = c(0, 0, 2, 2),   # mom = subject 2 (sex=1 -> female after shift)
-    sex   = c(0, 1, 0, 1)    # shifted up by 1: 0->1="male", 1->2="female"
+    dadid = c(0, 0, 1, 1), # dad = subject 1 (sex=0 -> male after shift)
+    momid = c(0, 0, 2, 2), # mom = subject 2 (sex=1 -> female after shift)
+    sex   = c(0, 1, 0, 1) # shifted up by 1: 0->1="male", 1->2="female"
   )
   expect_s3_class(ped, "pedigree")
   expect_equal(as.character(ped$sex), c("male", "female", "male", "female"))
@@ -97,7 +97,7 @@ test_that("pedigree.sexrepair warns when more than 25% unknown", {
       id    = 1:8,
       dadid = c(0, 0, 1, 1, 0, 0, 5, 5),
       momid = c(0, 0, 2, 2, 0, 0, 6, 6),
-      sex   = c(1, 2, 1, 3, 1, 2, 3, 3)   # 3/8 = 37.5% unknown, > 25%
+      sex   = c(1, 2, 1, 3, 1, 2, 3, 3) # 3/8 = 37.5% unknown, > 25%
     ),
     "More than 25%"
   )
@@ -120,9 +120,9 @@ test_that("pedigree errors when listed father is not male", {
   expect_error(
     ggpedigree:::pedigree(
       id    = c(1, 2, 3),
-      dadid = c(0, 0, 2),   # subject 2 listed as father but is female
+      dadid = c(0, 0, 2), # subject 2 listed as father but is female
       momid = c(0, 0, 1),
-      sex   = c(2, 2, 1)    # subjects 1 and 2 are female
+      sex   = c(2, 2, 1) # subjects 1 and 2 are female
     ),
     "Id not male, but is a father"
   )
@@ -132,7 +132,7 @@ test_that("pedigree errors when dadid not found in id list", {
   expect_error(
     ggpedigree:::pedigree(
       id    = c(1, 2, 3),
-      dadid = c(0, 0, 99),  # 99 is not in id
+      dadid = c(0, 0, 99), # 99 is not in id
       momid = c(0, 0, 2),
       sex   = c(1, 2, 1)
     ),
@@ -145,7 +145,7 @@ test_that("pedigree errors when listed mother is not female", {
     ggpedigree:::pedigree(
       id    = c(1, 2, 3),
       dadid = c(0, 0, 1),
-      momid = c(0, 0, 3),   # subject 3 listed as mother but is male
+      momid = c(0, 0, 3), # subject 3 listed as mother but is male
       sex   = c(1, 2, 1)
     ),
     "Id not female, but is a mother"
@@ -157,7 +157,7 @@ test_that("pedigree errors when momid not found in id list", {
     ggpedigree:::pedigree(
       id    = c(1, 2, 3),
       dadid = c(0, 0, 1),
-      momid = c(0, 0, 99),  # 99 is not in id
+      momid = c(0, 0, 99), # 99 is not in id
       sex   = c(1, 2, 1)
     ),
     "Value of 'momid' not found in the id list"
@@ -168,7 +168,7 @@ test_that("pedigree errors when subject has only one parent", {
   expect_error(
     ggpedigree:::pedigree(
       id    = c(1, 2, 3),
-      dadid = c(0, 0, 1),   # subject 3 has dad but no mom
+      dadid = c(0, 0, 1), # subject 3 has dad but no mom
       momid = c(0, 0, 0),
       sex   = c(1, 2, 1)
     ),
@@ -233,7 +233,7 @@ test_that("pedigree.process_status errors on wrong length", {
       dadid  = c(0, 0, 1, 1),
       momid  = c(0, 0, 2, 2),
       sex    = c(1, 2, 1, 2),
-      status = c(0, 1)   # length 2 vs n=4
+      status = c(0, 1) # length 2 vs n=4
     ),
     "Wrong length for affected"
   )
@@ -246,7 +246,7 @@ test_that("pedigree.process_status errors on invalid code", {
       dadid  = c(0, 0, 1, 1),
       momid  = c(0, 0, 2, 2),
       sex    = c(1, 2, 1, 2),
-      status = c(0, 1, 2, 0)   # 2 is invalid
+      status = c(0, 1, 2, 0) # 2 is invalid
     ),
     "Invalid status code"
   )
@@ -294,7 +294,7 @@ test_that("pedigree.process_affected errors on wrong length", {
       dadid    = c(0, 0, 1, 1),
       momid    = c(0, 0, 2, 2),
       sex      = c(1, 2, 1, 2),
-      affected = c(0, 1, 0)    # length 3 vs n=4
+      affected = c(0, 1, 0) # length 3 vs n=4
     ),
     "Wrong length for affected"
   )
@@ -307,7 +307,7 @@ test_that("pedigree.process_affected errors on wrong matrix rows", {
       dadid    = c(0, 0, 1, 1),
       momid    = c(0, 0, 2, 2),
       sex      = c(1, 2, 1, 2),
-      affected = matrix(c(0, 1, 0), nrow = 3)   # 3 rows vs n=4
+      affected = matrix(c(0, 1, 0), nrow = 3) # 3 rows vs n=4
     ),
     "Wrong number of rows in affected"
   )
@@ -320,7 +320,7 @@ test_that("pedigree.process_affected errors on invalid code", {
       dadid    = c(0, 0, 1, 1),
       momid    = c(0, 0, 2, 2),
       sex      = c(1, 2, 1, 2),
-      affected = c(0, 1, 0.5, 1)   # 0.5 is invalid
+      affected = c(0, 1, 0.5, 1) # 0.5 is invalid
     ),
     "Invalid code for affected status"
   )
@@ -337,10 +337,10 @@ test_that("pedigree.coerce_relation_code handles factor code input", {
   )
   # Now test with factor code in the relation matrix
   ped2 <- ggpedigree:::pedigree(
-    id       = 1:4,
-    dadid    = c(0, 0, 1, 1),
-    momid    = c(0, 0, 2, 2),
-    sex      = c(1, 2, 1, 1),
+    id = 1:4,
+    dadid = c(0, 0, 1, 1),
+    momid = c(0, 0, 2, 2),
+    sex = c(1, 2, 1, 1),
     relation = data.frame(
       id1  = 3,
       id2  = 4,
@@ -368,7 +368,7 @@ test_that("pedigree.coerce_relation_code errors on invalid numeric code", {
       dadid    = c(0, 0, 1, 1),
       momid    = c(0, 0, 2, 2),
       sex      = c(1, 2, 1, 2),
-      relation = matrix(c(3, 4, 5), ncol = 3)   # code 5 is invalid
+      relation = matrix(c(3, 4, 5), ncol = 3) # code 5 is invalid
     ),
     "Invalid relationship code"
   )
@@ -381,7 +381,7 @@ test_that("pedigree.coerce_relation_code errors on invalid character code", {
       dadid    = c(0, 0, 1, 1),
       momid    = c(0, 0, 2, 2),
       sex      = c(1, 2, 1, 2),
-      relation = data.frame(id1 = 3, id2 = 4, code = "triplet")   # invalid
+      relation = data.frame(id1 = 3, id2 = 4, code = "triplet") # invalid
     ),
     "Invalid relationship code"
   )
@@ -395,7 +395,7 @@ test_that("pedigree.parse_relation errors on matrix with wrong column count", {
       dadid    = c(0, 0, 1, 1),
       momid    = c(0, 0, 2, 2),
       sex      = c(1, 2, 1, 2),
-      relation = matrix(c(3, 4), ncol = 2)   # need 3 columns
+      relation = matrix(c(3, 4), ncol = 2) # need 3 columns
     ),
     "Relation matrix must have 3 columns"
   )
@@ -409,7 +409,7 @@ test_that("pedigree.parse_relation errors on matrix with wrong column count when
       momid    = c(0, 0, 2, 2, 0, 0),
       sex      = c(1, 2, 1, 2, 1, 2),
       famid    = c(1, 1, 1, 1, 2, 2),
-      relation = matrix(c(3, 4, 1), ncol = 3)   # need 4 columns when has_famid
+      relation = matrix(c(3, 4, 1), ncol = 3) # need 4 columns when has_famid
     ),
     "Relation matrix must have 3 columns \\+ famid"
   )
@@ -433,7 +433,7 @@ test_that("pedigree.parse_relation errors on dataframe with missing columns", {
       dadid    = c(0, 0, 1, 1),
       momid    = c(0, 0, 2, 2),
       sex      = c(1, 2, 1, 2),
-      relation = data.frame(id1 = 3, id2 = 4)   # missing code
+      relation = data.frame(id1 = 3, id2 = 4) # missing code
     ),
     "Relation data frame must have id1, id2, and code"
   )
@@ -454,11 +454,11 @@ test_that("pedigree.parse_relation errors when relation is not matrix or datafra
 
 test_that("pedigree.parse_relation works with dataframe input (with famid)", {
   ped_list <- ggpedigree:::pedigree(
-    id       = c(1, 2, 3, 4,  1, 2),
-    dadid    = c(0, 0, 1, 1,  0, 0),
-    momid    = c(0, 0, 2, 2,  0, 0),
-    sex      = c(1, 2, 1, 1,  1, 2),
-    famid    = c(1, 1, 1, 1,  2, 2),
+    id       = c(1, 2, 3, 4, 1, 2),
+    dadid    = c(0, 0, 1, 1, 0, 0),
+    momid    = c(0, 0, 2, 2, 0, 0),
+    sex      = c(1, 2, 1, 1, 1, 2),
+    famid    = c(1, 1, 1, 1, 2, 2),
     relation = data.frame(id1 = 3, id2 = 4, code = 1, famid = 1)
   )
   expect_s3_class(ped_list, "pedigreeList")
@@ -468,12 +468,12 @@ test_that("pedigree.parse_relation works with dataframe input (with famid)", {
 test_that("pedigree.parse_relation errors on dataframe with missing famid column when has_famid", {
   expect_error(
     ggpedigree:::pedigree(
-      id       = c(1, 2, 3, 4,  1, 2),
-      dadid    = c(0, 0, 1, 1,  0, 0),
-      momid    = c(0, 0, 2, 2,  0, 0),
-      sex      = c(1, 2, 1, 1,  1, 2),
-      famid    = c(1, 1, 1, 1,  2, 2),
-      relation = data.frame(id1 = 3, id2 = 4, code = 1)   # missing famid column
+      id       = c(1, 2, 3, 4, 1, 2),
+      dadid    = c(0, 0, 1, 1, 0, 0),
+      momid    = c(0, 0, 2, 2, 0, 0),
+      sex      = c(1, 2, 1, 1, 1, 2),
+      famid    = c(1, 1, 1, 1, 2, 2),
+      relation = data.frame(id1 = 3, id2 = 4, code = 1) # missing famid column
     ),
     "Relation data must have id1, id2, code, and family id"
   )
@@ -482,11 +482,11 @@ test_that("pedigree.parse_relation errors on dataframe with missing famid column
 test_that("pedigree.parse_relation errors when relation is not matrix or dataframe (with famid)", {
   expect_error(
     ggpedigree:::pedigree(
-      id       = c(1, 2, 3, 4,  1, 2),
-      dadid    = c(0, 0, 1, 1,  0, 0),
-      momid    = c(0, 0, 2, 2,  0, 0),
-      sex      = c(1, 2, 1, 1,  1, 2),
-      famid    = c(1, 1, 1, 1,  2, 2),
+      id       = c(1, 2, 3, 4, 1, 2),
+      dadid    = c(0, 0, 1, 1, 0, 0),
+      momid    = c(0, 0, 2, 2, 0, 0),
+      sex      = c(1, 2, 1, 1, 1, 2),
+      famid    = c(1, 1, 1, 1, 2, 2),
       relation = list(id1 = 3, id2 = 4, code = 1, famid = 1)
     ),
     "Relation argument must be a matrix or a dataframe"
@@ -501,7 +501,7 @@ test_that("pedigree.process_relation errors when relation member not in pedigree
       dadid    = c(0, 0, 1, 1),
       momid    = c(0, 0, 2, 2),
       sex      = c(1, 2, 1, 2),
-      relation = matrix(c(3, 99, 4), ncol = 3)   # 99 not in pedigree
+      relation = matrix(c(3, 99, 4), ncol = 3) # 99 not in pedigree
     ),
     "Subjects in relationships that are not in the pedigree"
   )
@@ -514,7 +514,7 @@ test_that("pedigree.process_relation errors when subject is own twin/spouse", {
       dadid    = c(0, 0, 1, 1),
       momid    = c(0, 0, 2, 2),
       sex      = c(1, 2, 1, 2),
-      relation = matrix(c(3, 3, 4), ncol = 3)   # subject 3 is own spouse
+      relation = matrix(c(3, 3, 4), ncol = 3) # subject 3 is own spouse
     ),
     "is their own spouse or twin"
   )
@@ -523,11 +523,11 @@ test_that("pedigree.process_relation errors when subject is own twin/spouse", {
 test_that("pedigree.process_relation errors when twins have different mothers", {
   expect_error(
     ggpedigree:::pedigree(
-      id    = c(1, 2, 3, 4, 5, 6),
+      id = c(1, 2, 3, 4, 5, 6),
       dadid = c(0, 0, 0, 0, 1, 1),
-      momid = c(0, 0, 0, 0, 2, 4),   # subject 5 has mom 2, subject 6 has mom 4
-      sex   = c(1, 2, 1, 2, 1, 1),
-      relation = matrix(c(5, 6, 1), ncol = 3)   # MZ twins with different mothers
+      momid = c(0, 0, 0, 0, 2, 4), # subject 5 has mom 2, subject 6 has mom 4
+      sex = c(1, 2, 1, 2, 1, 1),
+      relation = matrix(c(5, 6, 1), ncol = 3) # MZ twins with different mothers
     ),
     "Twins found with different mothers"
   )
@@ -536,11 +536,11 @@ test_that("pedigree.process_relation errors when twins have different mothers", 
 test_that("pedigree.process_relation errors when twins have different fathers", {
   expect_error(
     ggpedigree:::pedigree(
-      id    = c(1, 2, 3, 4, 5, 6),
-      dadid = c(0, 0, 0, 0, 1, 3),   # subject 5 has dad 1, subject 6 has dad 3
-      momid = c(0, 0, 0, 0, 2, 2),   # both have mom 2
-      sex   = c(1, 2, 1, 1, 1, 1),
-      relation = matrix(c(5, 6, 1), ncol = 3)   # MZ twins with different fathers
+      id = c(1, 2, 3, 4, 5, 6),
+      dadid = c(0, 0, 0, 0, 1, 3), # subject 5 has dad 1, subject 6 has dad 3
+      momid = c(0, 0, 0, 0, 2, 2), # both have mom 2
+      sex = c(1, 2, 1, 1, 1, 1),
+      relation = matrix(c(5, 6, 1), ncol = 3) # MZ twins with different fathers
     ),
     "Twins found with different fathers"
   )
@@ -549,11 +549,11 @@ test_that("pedigree.process_relation errors when twins have different fathers", 
 test_that("pedigree.process_relation errors when MZ twins have different sexes", {
   expect_error(
     ggpedigree:::pedigree(
-      id    = 1:4,
+      id = 1:4,
       dadid = c(0, 0, 1, 1),
       momid = c(0, 0, 2, 2),
-      sex   = c(1, 2, 1, 2),   # subject 3 male, subject 4 female
-      relation = matrix(c(3, 4, 1), ncol = 3)   # MZ twins with different sexes
+      sex = c(1, 2, 1, 2), # subject 3 male, subject 4 female
+      relation = matrix(c(3, 4, 1), ncol = 3) # MZ twins with different sexes
     ),
     "MZ twins with different sexes"
   )
@@ -569,17 +569,16 @@ test_that("pedigreeList subscript with numeric index", {
       affected = cancer, famid = famid
     )
   )
-  ped8_num <- minnped[1]   # first family by position (numeric)
-#  ped8_chr <- minnped["1"]
- # expect_equal(ped8_num$id, ped8_chr$id)
-# ══ Failed tests ════════════════════════════════════════════════════════════════
-#── Error ('test-kinship2_pedigrees.R:573:3'): pedigreeList subscript with numeric index ──
-#Error in ``[.pedigreeList`(minnped, "1")`: Family 1 not found
-#Backtrace:
-#    ▆
-# 1. ├─minnped["1"] at test-kinship2_pedigrees.R:573:3
-# 2. └─ggpedigree:::`[.pedigreeList`(minnped, "1") at test-kinship2_pedigrees.R:573:3
-  
+  ped8_num <- minnped[1] # first family by position (numeric)
+  #  ped8_chr <- minnped["1"]
+  # expect_equal(ped8_num$id, ped8_chr$id)
+  # ══ Failed tests ════════════════════════════════════════════════════════════════
+  # ── Error ('test-kinship2_pedigrees.R:573:3'): pedigreeList subscript with numeric index ──
+  # Error in ``[.pedigreeList`(minnped, "1")`: Family 1 not found
+  # Backtrace:
+  #    ▆
+  # 1. ├─minnped["1"] at test-kinship2_pedigrees.R:573:3
+  # 2. └─ggpedigree:::`[.pedigreeList`(minnped, "1") at test-kinship2_pedigrees.R:573:3
 })
 
 test_that("pedigreeList subscript with factor index", {
@@ -636,17 +635,17 @@ test_that("pedigreeList subscript errors with too many subscripts", {
 test_that("pedigreeList subscript handles matrix affected, status, and relation", {
   # Build a pedigreeList with matrix affected, status, and a relation
   ped_list <- ggpedigree:::pedigree(
-    id       = c(1, 2, 3, 4, 5,  1, 2, 3),
-    dadid    = c(0, 0, 1, 1, 1,  0, 0, 1),
-    momid    = c(0, 0, 2, 2, 2,  0, 0, 2),
-    sex      = c(1, 2, 1, 1, 2,  1, 2, 1),
-    famid    = c(1, 1, 1, 1, 1,  2, 2, 2),
+    id = c(1, 2, 3, 4, 5, 1, 2, 3),
+    dadid = c(0, 0, 1, 1, 1, 0, 0, 1),
+    momid = c(0, 0, 2, 2, 2, 0, 0, 2),
+    sex = c(1, 2, 1, 1, 2, 1, 2, 1),
+    famid = c(1, 1, 1, 1, 1, 2, 2, 2),
     affected = cbind(
-      disease = c(0, 0, 1, 0, 1,  0, 0, 1),
-      smoker  = c(1, 0, 0, 1, 0,  1, 0, 1)
+      disease = c(0, 0, 1, 0, 1, 0, 0, 1),
+      smoker  = c(1, 0, 0, 1, 0, 1, 0, 1)
     ),
-    status   = c(0, 1, 0, 0, 1,  1, 0, 0),
-    relation = matrix(c(3, 4, 1, 1), ncol = 4)   # MZ twins 3&4 in family 1
+    status = c(0, 1, 0, 0, 1, 1, 0, 0),
+    relation = matrix(c(3, 4, 1, 1), ncol = 4) # MZ twins 3&4 in family 1
   )
 
   # Select family 1: relation should be kept, famid removed from relation
@@ -675,7 +674,7 @@ test_that("pedigree subscript errors with too many subscripts", {
 })
 
 test_that("pedigree subscript errors when only one parent is kept", {
-  ped <- .make_simple_ped()  # 1=dad, 2=mom, 3/4/5=children
+  ped <- .make_simple_ped() # 1=dad, 2=mom, 3/4/5=children
   # Keep dad and child 3 but not mom → child 3 has dad but no mom
   expect_error(ped[c(1, 3)], "A subpedigree cannot choose only one parent")
 })
@@ -698,7 +697,7 @@ test_that("pedigree subscript keeps relation when both members retained", {
     dadid    = c(0, 0, 1, 1, 1),
     momid    = c(0, 0, 2, 2, 2),
     sex      = c(1, 2, 1, 1, 2),
-    relation = matrix(c(3, 4, 1), ncol = 3)   # MZ twins 3 and 4
+    relation = matrix(c(3, 4, 1), ncol = 3) # MZ twins 3 and 4
   )
   # Keep all: relation preserved
   sub_all <- ped[1:5]
@@ -727,11 +726,11 @@ test_that("pedigree subscript preserves famid", {
 test_that("pedigree subscript handles hints field", {
   # Build a pedigree with a manually set hints field (order + spouse)
   ped <- ggpedigree:::pedigree(
-    id    = 1:4,
+    id = 1:4,
     dadid = c(0, 0, 1, 0),
     momid = c(0, 0, 2, 0),
-    sex   = c(1, 2, 1, 2),
-    relation = matrix(c(1, 4, 4), ncol = 3)   # 1 and 4 are spouses (code=4)
+    sex = c(1, 2, 1, 2),
+    relation = matrix(c(1, 4, 4), ncol = 3) # 1 and 4 are spouses (code=4)
   )
   # Manually attach a hints structure (as kinship2_autohint would produce)
   ped$hints <- list(
@@ -747,7 +746,7 @@ test_that("pedigree subscript handles hints field", {
   # Keep subjects 1, 2, 3 (drop subject 4 = one spouse member)
   sub_no4 <- ped[c(1, 2, 3)]
   expect_false(is.null(sub_no4$hints))
-  expect_null(sub_no4$hints$spouse)   # spouse entry dropped since subject 4 is not kept
+  expect_null(sub_no4$hints$spouse) # spouse entry dropped since subject 4 is not kept
 })
 
 # ---- print methods ----
