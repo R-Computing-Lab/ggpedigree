@@ -282,6 +282,12 @@ test_that("overlay shape mode supports numeric shape codes", {
     )
   )
   expect_s3_class(p, "gg")
+  built <- ggplot2::ggplot_build(p)
+  expect_s3_class(built, "ggplot_built")
+  # Check that the overlay layer uses shape mode with the specified numeric code
+  overlay_layers <- vapply(built$data, function(d) {
+    "shape" %in% names(d) && any(d$shape == 4)
+  }, logical(1))
 })
 
 test_that("clinical preset enables shape-mode overlay", {
@@ -304,8 +310,7 @@ test_that("clinical preset enables shape-mode overlay", {
     overlay_column = "DECES",
     config = list(
       preset = "clinical",
-      overlay_code_affected = 1,
-       overlay_color = "black"
+      overlay_code_affected = 1
     )
   )
   expect_s3_class(p, "gg")

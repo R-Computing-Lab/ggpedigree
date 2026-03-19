@@ -506,7 +506,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
   }
   color_theme_lower <- stringr::str_to_lower(color_theme)
 
-  if (color_theme_lower %in% c(grey_color_names, black_color_names)) {
+  if (color_theme_lower %in% c(grey_color_names, black_color_names)|  identical(preset, "clinical")) {
     color_palette_default <- greyscale_palette_default
     color_palette_low <- greyscale_low
     color_palette_mid <- greyscale_mid
@@ -862,11 +862,14 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     if (identical(preset, "clinical")) {
       # Clinical defaults: shape by sex, unfilled by default, blue outline for included
       core_list$sex_color_include <- FALSE
+      core_list$sex_shape_include <- TRUE
       core_list$outline_include <- TRUE
       core_list$outline_color <- core_list$outline_color_unaffected
       # Configure overlay for shape mode (e.g., cross for deceased markers)
       core_list$overlay_include <- TRUE
       core_list$overlay_mode <- "shape"
+      core_list$overlay_shape <- 4 # Cross shape
+      core_list$overlay_color <-  core_list$color_palette_high
     }
   core_list
 }
