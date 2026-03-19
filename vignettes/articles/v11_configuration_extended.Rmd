@@ -354,17 +354,17 @@ The `hazard` dataset already contains `deathYr` and `onsetYr`, which map natural
 ```{r}
 # Derive binary flags from columns already present in hazard
 hazard$deceased <- ifelse(!is.na(hazard$deathYr), 1, 0)
-hazard$onset    <- ifelse(!is.na(hazard$onsetYr),  1, 0)
+hazard$onset <- ifelse(!is.na(hazard$onsetYr), 1, 0)
 
 ggPedigree(
   hazard,
-  famID    = "famID",
+  famID = "famID",
   personID = "ID",
-  momID    = "momID",
-  dadID    = "dadID",
+  momID = "momID",
+  dadID = "dadID",
   overlays = list(
     list(column = "deceased", code_affected = 1, shape = "cross", color = "black"),
-    list(column = "onset",    code_affected = 1, shape = "slash", color = "red", stroke = 2)
+    list(column = "onset", code_affected = 1, shape = "slash", color = "red", stroke = 2)
   ),
   config = list(
     code_male       = 0,

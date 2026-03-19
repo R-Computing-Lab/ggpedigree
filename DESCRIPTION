@@ -25,6 +25,7 @@ Imports:
     tidyr
 Suggests:
     selectr (>= 0.5-1),
+    svglite,
     kinship2,
     quadprog,
     ggrepel,

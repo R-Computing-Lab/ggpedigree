@@ -1,5 +1,6 @@
 test_that("affected_fill_column creates filled/unfilled nodes", {
   library(BGmisc)
+  library(svglite)
   data("potter")
 
   # Add an affected fill column

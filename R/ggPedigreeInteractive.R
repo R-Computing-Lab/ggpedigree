@@ -62,8 +62,7 @@ ggPedigreeInteractive <- function(ped,
                                   code_male = NULL,
                                   sexVar = "sex",
                                   affected_fill_column = NULL,
-                                  outline_color_column = NULL
-                                  ) {
+                                  outline_color_column = NULL) {
   if (!requireNamespace("plotly", quietly = TRUE)) {
     stop("The 'plotly' package is required for interactive plots.")
   }

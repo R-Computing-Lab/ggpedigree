@@ -614,7 +614,7 @@ Only used when overlay_mode is "shape".}
 \item{outline_color_unaffected}{Color used for default (non-highlighted) outlines. Default is "black".}
 
 \item{preset}{Optional preset name for default styling combinations.
-Currently supported: "clinical" for standard clinical pedigree styling. Default is NULL.}
+Currently supported: "clinical" for standard clinical pedigree styling. Default is "none" (no preset).}
 
 \item{...}{Additional arguments for future extensibility.}
 }
