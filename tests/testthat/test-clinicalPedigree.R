@@ -289,6 +289,7 @@ test_that("overlay shape mode supports numeric shape codes", {
   overlay_layers <- vapply(built$data, function(d) {
     "shape" %in% names(d) && any(d$shape == 4)
   }, logical(1))
+  expect_true(any(overlay_layers))
 })
 
 test_that("clinical preset enables shape-mode overlay", {
