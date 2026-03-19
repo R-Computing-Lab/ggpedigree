@@ -98,6 +98,7 @@ ggPedigreeInteractive <- function(ped,
   default_config <- getDefaultPlotConfig(
     function_name = "ggPedigreeInteractive",
     personID = personID,
+    preset = if (is.null(config$preset)) "none" else config$preset,
     color_theme = ifelse(is.null(config$color_theme), "color", config$color_theme)
   )
 

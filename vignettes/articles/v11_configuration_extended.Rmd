@@ -345,6 +345,41 @@ ggPedigree(
 )
 ```
 
+### Multiple overlays with per-overlay customization
+
+When a single status marker is not enough, you can pass a **list of overlay specs** to the `overlays` argument. Each element of the list is itself a list that names a column and optionally overrides any overlay config key — `shape`, `color`, `stroke`, `size`, and `code_affected` — for that layer only. Config defaults are used for any key you leave out.
+
+The `hazard` dataset already contains `deathYr` and `onsetYr`, which map naturally onto two independent overlays — deceased individuals (a cross) and those with a recorded disease onset (a slash):
+
+```{r}
+# Derive binary flags from columns already present in hazard
+hazard$deceased <- ifelse(!is.na(hazard$deathYr), 1, 0)
+hazard$onset    <- ifelse(!is.na(hazard$onsetYr),  1, 0)
+
+ggPedigree(
+  hazard,
+  famID    = "famID",
+  personID = "ID",
+  momID    = "momID",
+  dadID    = "dadID",
+  overlays = list(
+    list(column = "deceased", code_affected = 1, shape = "cross", color = "black"),
+    list(column = "onset",    code_affected = 1, shape = "slash", color = "red", stroke = 2)
+  ),
+  config = list(
+    code_male       = 0,
+    overlay_include = TRUE,
+    overlay_mode    = "shape"
+  )
+)
+```
+
+A few things to note:
+
+- **`overlay_mode = "shape"`** must be set in `config` (or via a preset such as `"clinical"`) to activate shape-based rendering. Without it the overlay loop falls back to alpha transparency.
+- Each spec can carry any combination of per-layer overrides. Specs with no override for a key inherit the matching `config$overlay_*` default, so you only need to specify what differs.
+- The specs are rendered as separate `geom_point()` layers in list order, so later specs draw on top of earlier ones for individuals who satisfy both conditions.
+
 ## 6) Focal fill: highlighting relatives of a focal individual
 
 A common analysis task is to pick a focal individual and visually emphasize how strongly other individuals are related to that focal person. In `{ggpedigree}`, this is handled by **focal fill**. When focal fill is enabled, node fill colors are mapped to a focal-based value (for example additive genetic relatedness or another focal-derived scalar).

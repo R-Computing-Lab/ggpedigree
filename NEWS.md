@@ -1,6 +1,14 @@
 # ggpedigree (development version)
 # ==============================
 
+## New features
+* Added more flexibility to overlays, including support for shape-mode overlays with custom numeric codes and colors.
+* Added a new vignette to explain the clinical preset and its features.
+
+## Bug fixes
+* Fixed multi-overlay closure bug where all overlays were filtered on the last column in the list due to R's lazy evaluation of function arguments. Local variable assignment now forces evaluation at the correct loop iteration.
+* Fixed `preset` (e.g., `"clinical"`) not being forwarded to `getDefaultPlotConfig()` in `ggPedigree()` and `ggPedigreeInteractive()`, which meant preset-driven settings like `overlay_mode = "shape"` and `overlay_include = TRUE` were silently ignored.
+
 # ggpedigree Version: 1.1.1.1
 * Hotpatch to fix plotly vignette selectively failing by using tryCatch to catch the error and print a warning instead of failing the whole vignette build.
 * Also increased test coverage of kinship2_pedigree.
