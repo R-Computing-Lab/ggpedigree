@@ -23,7 +23,9 @@ ggPedigreeInteractive(
   return_widget = TRUE,
   hints = NULL,
   code_male = NULL,
-  sexVar = "sex"
+  sexVar = "sex",
+  affected_fill_column = NULL,
+  outline_color_column = NULL
 )
 }
 \arguments{
@@ -89,6 +91,14 @@ customization before printing).}
 \item{code_male}{Integer or string. Value identifying males in the sex column. (typically 0 or 1) Default: 1}
 
 \item{sexVar}{Character string specifying the column name for sex. Defaults to "sex".}
+
+\item{affected_fill_column}{Character string specifying the column name for conditional
+affected fill. When provided, individuals matching the `affected_fill_code_affected` config
+will have their symbols filled. Default is NULL.}
+
+\item{outline_color_column}{Character string specifying the column name for outline
+color control. When provided, individuals matching `outline_color_code_affected` config
+will have colored outlines (e.g., blue for included). Default is NULL.}
 }
 \value{
 A plotly htmlwidget (or plotly object if `return_widget = FALSE`)

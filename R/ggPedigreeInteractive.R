@@ -60,7 +60,10 @@ ggPedigreeInteractive <- function(ped,
                                   return_widget = TRUE,
                                   hints = NULL,
                                   code_male = NULL,
-                                  sexVar = "sex") {
+                                  sexVar = "sex",
+                                  affected_fill_column = NULL,
+                                  outline_color_column = NULL
+                                  ) {
   if (!requireNamespace("plotly", quietly = TRUE)) {
     stop("The 'plotly' package is required for interactive plots.")
   }
@@ -131,7 +134,9 @@ ggPedigreeInteractive <- function(ped,
     debug = config$debug,
     focal_fill_column = focal_fill_column,
     function_name = "ggPedigreeInteractive",
-    sexVar = sexVar
+    sexVar = sexVar,
+    affected_fill_column = affected_fill_column,
+    outline_color_column = outline_color_column
   )
 
   ## 2. Identify data columns for tooltips ----------------------------------
