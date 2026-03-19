@@ -212,7 +212,7 @@
 #' @param outline_color_affected Color used for highlighted outlines. Default is "blue".
 #' @param outline_color_unaffected Color used for default (non-highlighted) outlines. Default is "black".
 #' @param preset Optional preset name for default styling combinations.
-#'   Currently supported: "clinical" for standard clinical pedigree styling. Default is NULL.
+#'   Currently supported: "clinical" for standard clinical pedigree styling. Default is "none" (no preset).
 #' @param ... Additional arguments for future extensibility.
 #' @return A named list of default plotting and layout parameters.
 #' @export
@@ -506,7 +506,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
   }
   color_theme_lower <- stringr::str_to_lower(color_theme)
 
-  if (color_theme_lower %in% c(grey_color_names, black_color_names)|  identical(preset, "clinical")) {
+  if (color_theme_lower %in% c(grey_color_names, black_color_names) || identical(preset, "clinical")) {
     color_palette_default <- greyscale_palette_default
     color_palette_low <- greyscale_low
     color_palette_mid <- greyscale_mid

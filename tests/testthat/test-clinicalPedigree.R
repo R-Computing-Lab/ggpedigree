@@ -44,7 +44,7 @@ test_that("affected_fill_column creates filled/unfilled nodes", {
   built_coded.svg <- readLines("built_coded.svg")
   built_uncoded.svg <- readLines("built_uncoded.svg")
 
-  # delete svg files after readi
+  # delete svg files after reading
 
   file.remove("built_coded.svg")
   file.remove("built_uncoded.svg")
