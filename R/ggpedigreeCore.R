@@ -691,10 +691,10 @@ addOverlay <- .addOverlay
   # Support named shape strings for convenience
   if (is.character(overlay_shape)) {
     shape_code <- switch(overlay_shape,
-      "cross" = 4L,   # x cross (conventional deceased marker)
-      "slash" = 47L,  # / slash
-      "x"     = 8L,   # asterisk-like x mark
-      4L               # default to cross
+      "cross" = 4L, # x cross (conventional deceased marker)
+      "slash" = 47L, # / slash
+      "x"     = 8L, # asterisk-like x mark
+      4L # default to cross
     )
   } else {
     shape_code <- as.integer(overlay_shape)

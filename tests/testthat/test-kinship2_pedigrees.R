@@ -563,12 +563,14 @@ test_that("pedigree.process_relation errors when MZ twins have different sexes",
 test_that("pedigreeList subscript with numeric index", {
   library(kinship2)
   data(minnbreast)
-  minnped <- with(
-    minnbreast,
-    ggpedigree:::pedigree(id, fatherid, motherid, sex,
-      affected = cancer, famid = famid
-    )
-  )
+
+  expect_no_error(minnped <-
+    with(
+      minnbreast,
+      ggpedigree:::pedigree(id, fatherid, motherid, sex,
+        affected = cancer, famid = famid
+      )
+    ))
   ped8_num <- minnped[1] # first family by position (numeric)
   #  ped8_chr <- minnped["1"]
   # expect_equal(ped8_num$id, ped8_chr$id)
