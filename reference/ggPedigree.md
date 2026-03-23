@@ -23,13 +23,16 @@ ggPedigree(
   focal_fill_column = NULL,
   tooltip_columns = NULL,
   overlay_column = NULL,
+  overlays = NULL,
   return_widget = FALSE,
   config = list(),
   debug = FALSE,
   hints = NULL,
   interactive = FALSE,
   code_male = NULL,
-  sexVar = "sex"
+  sexVar = "sex",
+  affected_fill_column = NULL,
+  outline_color_column = NULL
 )
 
 ggpedigree(
@@ -46,13 +49,16 @@ ggpedigree(
   focal_fill_column = NULL,
   tooltip_columns = NULL,
   overlay_column = NULL,
+  overlays = NULL,
   return_widget = FALSE,
   config = list(),
   debug = FALSE,
   hints = NULL,
   interactive = FALSE,
   code_male = NULL,
-  sexVar = "sex"
+  sexVar = "sex",
+  affected_fill_column = NULL,
+  outline_color_column = NULL
 )
 ```
 
@@ -122,6 +128,18 @@ ggpedigree(
 - overlay_column:
 
   Character string specifying the column name for overlay alpha values.
+  For a single overlay, this is the simplest interface. For multiple
+  overlays, use the `overlays` parameter instead.
+
+- overlays:
+
+  A list of overlay specifications for adding multiple independent
+  overlay layers. Each element should be a list with at minimum a
+  `column` entry, plus optional entries: `code_affected`, `shape`,
+  `color`, `size`, `stroke`, `mode`. Unspecified entries inherit from
+  the `overlay_*` config defaults. When `overlays` is provided,
+  `overlay_column` is ignored. Example:
+  `overlays = list(list(column = "DECES", shape = "cross"), list(column = "PROBAND", shape = 8, color = "red"))`
 
 - return_widget:
 
@@ -203,6 +221,20 @@ ggpedigree(
 
   Character string specifying the column name for sex. Defaults to
   "sex".
+
+- affected_fill_column:
+
+  Character string specifying the column name for conditional affected
+  fill. When provided, individuals matching the
+  \`affected_fill_code_affected\` config will have their symbols filled.
+  Default is NULL.
+
+- outline_color_column:
+
+  Character string specifying the column name for outline color control.
+  When provided, individuals matching \`outline_color_code_affected\`
+  config will have colored outlines (e.g., blue for included). Default
+  is NULL.
 
 ## Value
 

@@ -189,6 +189,8 @@ fig1 <- ggPedigree(
 #> Adding nodes to the plot...
 #> Focal fill column:
 #> Status column: proband
+#> Affected fill column:
+#> Outline color column:
 # fig1
 
 fig1$plot + geom_point(aes(x = x_pos, y = y_pos),

@@ -1,27 +1,15 @@
-# Add Scales to ggplot Pedigree Plot
+# Add Shape Overlay to ggplot Pedigree Plot
 
-Add Scales to ggplot Pedigree Plot
+Draws a shape (cross, slash, or x) over symbols of matching individuals.
+Used when overlay_mode is "shape" to draw markers on top of pedigree
+symbols (e.g., cross for deceased individuals).
 
 ## Usage
 
 ``` r
-.addScales(
-  plotObject,
-  config,
-  status_column = NULL,
-  focal_fill_column = NULL,
-  affected_fill_column = NULL,
-  outline_color_column = NULL
-)
+.addShapeOverlay(plotObject, config, overlay_column, overlay_spec = NULL)
 
-addScales(
-  plotObject,
-  config,
-  status_column = NULL,
-  focal_fill_column = NULL,
-  affected_fill_column = NULL,
-  outline_color_column = NULL
-)
+addShapeOverlay(plotObject, config, overlay_column, overlay_spec = NULL)
 ```
 
 ## Arguments
@@ -82,29 +70,15 @@ addScales(
 
   :   Color used for label connector lines.
 
-- status_column:
+- overlay_column:
 
-  Character string specifying the column name for affected status.
-  Defaults to NULL.
+  Character string specifying the column name for overlay status.
 
-- focal_fill_column:
+- overlay_spec:
 
-  Character string specifying the column name for focal fill color.
-
-- affected_fill_column:
-
-  Character string specifying the column name for conditional affected
-  fill. When provided, individuals matching the
-  \`affected_fill_code_affected\` config will have their symbols filled.
-  Default is NULL.
-
-- outline_color_column:
-
-  Character string specifying the column name for outline color control.
-  When provided, individuals matching \`outline_color_code_affected\`
-  config will have colored outlines (e.g., blue for included). Default
-  is NULL.
+  Optional list of per-overlay settings that override config defaults.
+  Recognized keys: `shape`, `color`, `size`, `stroke`, `code_affected`.
 
 ## Value
 
-A ggplot object with added scales.
+A ggplot object with shape overlay markers added.

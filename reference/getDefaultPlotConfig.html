@@ -15,7 +15,7 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior."></h
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1.9</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -175,6 +175,9 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  overlay_alpha_unaffected <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  overlay_color <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>  overlay_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  overlay_mode <span class="op">=</span> <span class="st">"alpha"</span>,</span>
+<span>  overlay_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  overlay_stroke <span class="op">=</span> <span class="fl">1.5</span>,</span>
 <span>  overlay_legend_title <span class="op">=</span> <span class="st">"Overlay"</span>,</span>
 <span>  overlay_legend_show <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  focal_fill_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -243,6 +246,24 @@ Each key corresponds to a configurable plot, layout, or aesthetic behavior.</p>
 <span>  recode_missing_ids <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  recode_missing_sex <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  add_phantoms <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  affected_fill_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  affected_fill_code_affected <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  affected_fill_code_unaffected <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  affected_fill_label_affected <span class="op">=</span> <span class="st">"Affected"</span>,</span>
+<span>  affected_fill_label_unaffected <span class="op">=</span> <span class="st">"Unaffected"</span>,</span>
+<span>  affected_fill_color_affected <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>  affected_fill_color_unaffected <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  affected_fill_shape_female <span class="op">=</span> <span class="fl">21</span>,</span>
+<span>  affected_fill_shape_male <span class="op">=</span> <span class="fl">22</span>,</span>
+<span>  affected_fill_shape_unknown <span class="op">=</span> <span class="fl">23</span>,</span>
+<span>  outline_color_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  outline_color_code_affected <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  outline_color_code_unaffected <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  outline_color_label_affected <span class="op">=</span> <span class="st">"Highlighted"</span>,</span>
+<span>  outline_color_label_unaffected <span class="op">=</span> <span class="st">"Default"</span>,</span>
+<span>  outline_color_affected <span class="op">=</span> <span class="st">"blue"</span>,</span>
+<span>  outline_color_unaffected <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>  preset <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -661,7 +682,8 @@ The plot is reversed vertically, so this is needed to nudge labels up instead of
 
 
 <dt id="arg-overlay-shape">overlay_shape<a class="anchor" aria-label="anchor" href="#arg-overlay-shape"></a></dt>
-<dd><p>Shape used for overlaying points in the plot. Default is 4 (cross).</p></dd>
+<dd><p>Shape used for overlaying points in the plot. Default is 4 (cross).
+When overlay_mode is "shape", accepts named strings: "cross", "slash", "x".</p></dd>
 
 
 <dt id="arg-overlay-code-affected">overlay_code_affected<a class="anchor" aria-label="anchor" href="#arg-overlay-code-affected"></a></dt>
@@ -694,6 +716,22 @@ The plot is reversed vertically, so this is needed to nudge labels up instead of
 
 <dt id="arg-overlay-include">overlay_include<a class="anchor" aria-label="anchor" href="#arg-overlay-include"></a></dt>
 <dd><p>Whether to include overlay points in the plot. Default is FALSE.</p></dd>
+
+
+<dt id="arg-overlay-mode">overlay_mode<a class="anchor" aria-label="anchor" href="#arg-overlay-mode"></a></dt>
+<dd><p>Character string specifying the overlay rendering mode.
+"alpha" (default) uses alpha transparency mapping; "shape" draws a shape overlay
+on matching individuals (e.g., cross for deceased markers).</p></dd>
+
+
+<dt id="arg-overlay-size">overlay_size<a class="anchor" aria-label="anchor" href="#arg-overlay-size"></a></dt>
+<dd><p>Numeric. Size of the shape overlay. Default is NULL (inherits from point_size).
+Only used when overlay_mode is "shape".</p></dd>
+
+
+<dt id="arg-overlay-stroke">overlay_stroke<a class="anchor" aria-label="anchor" href="#arg-overlay-stroke"></a></dt>
+<dd><p>Stroke width for the shape overlay. Default is 1.5.
+Only used when overlay_mode is "shape".</p></dd>
 
 
 <dt id="arg-overlay-legend-title">overlay_legend_title<a class="anchor" aria-label="anchor" href="#arg-overlay-legend-title"></a></dt>
@@ -964,6 +1002,79 @@ The plot is reversed vertically, so this is needed to nudge labels up instead of
 
 <dt id="arg-add-phantoms">add_phantoms<a class="anchor" aria-label="anchor" href="#arg-add-phantoms"></a></dt>
 <dd><p>Whether to add phantom parents for individuals without parents.</p></dd>
+
+
+<dt id="arg-affected-fill-include">affected_fill_include<a class="anchor" aria-label="anchor" href="#arg-affected-fill-include"></a></dt>
+<dd><p>Whether to enable affected fill styling. Default is FALSE.</p></dd>
+
+
+<dt id="arg-affected-fill-code-affected">affected_fill_code_affected<a class="anchor" aria-label="anchor" href="#arg-affected-fill-code-affected"></a></dt>
+<dd><p>Value in the affected fill column that triggers filling. Default is 1.</p></dd>
+
+
+<dt id="arg-affected-fill-code-unaffected">affected_fill_code_unaffected<a class="anchor" aria-label="anchor" href="#arg-affected-fill-code-unaffected"></a></dt>
+<dd><p>Value in the affected fill column for unaffected individuals. Default is 0.</p></dd>
+
+
+<dt id="arg-affected-fill-label-affected">affected_fill_label_affected<a class="anchor" aria-label="anchor" href="#arg-affected-fill-label-affected"></a></dt>
+<dd><p>Label for affected individuals in fill legend. Default is "Affected".</p></dd>
+
+
+<dt id="arg-affected-fill-label-unaffected">affected_fill_label_unaffected<a class="anchor" aria-label="anchor" href="#arg-affected-fill-label-unaffected"></a></dt>
+<dd><p>Label for unaffected individuals in fill legend. Default is "Unaffected".</p></dd>
+
+
+<dt id="arg-affected-fill-color-affected">affected_fill_color_affected<a class="anchor" aria-label="anchor" href="#arg-affected-fill-color-affected"></a></dt>
+<dd><p>Color used to fill symbols for affected individuals. Default is "black".</p></dd>
+
+
+<dt id="arg-affected-fill-color-unaffected">affected_fill_color_unaffected<a class="anchor" aria-label="anchor" href="#arg-affected-fill-color-unaffected"></a></dt>
+<dd><p>Color used to fill symbols for unaffected individuals. Default is NA (transparent).</p></dd>
+
+
+<dt id="arg-affected-fill-shape-female">affected_fill_shape_female<a class="anchor" aria-label="anchor" href="#arg-affected-fill-shape-female"></a></dt>
+<dd><p>Filled shape for affected females. Default is 21 (filled circle).</p></dd>
+
+
+<dt id="arg-affected-fill-shape-male">affected_fill_shape_male<a class="anchor" aria-label="anchor" href="#arg-affected-fill-shape-male"></a></dt>
+<dd><p>Filled shape for affected males. Default is 22 (filled square).</p></dd>
+
+
+<dt id="arg-affected-fill-shape-unknown">affected_fill_shape_unknown<a class="anchor" aria-label="anchor" href="#arg-affected-fill-shape-unknown"></a></dt>
+<dd><p>Filled shape for affected unknown sex. Default is 23 (filled diamond).</p></dd>
+
+
+<dt id="arg-outline-color-include">outline_color_include<a class="anchor" aria-label="anchor" href="#arg-outline-color-include"></a></dt>
+<dd><p>Whether to enable column-based outline coloring. Default is FALSE.</p></dd>
+
+
+<dt id="arg-outline-color-code-affected">outline_color_code_affected<a class="anchor" aria-label="anchor" href="#arg-outline-color-code-affected"></a></dt>
+<dd><p>Value in the outline color column that triggers colored outlines. Default is 1.</p></dd>
+
+
+<dt id="arg-outline-color-code-unaffected">outline_color_code_unaffected<a class="anchor" aria-label="anchor" href="#arg-outline-color-code-unaffected"></a></dt>
+<dd><p>Value in the outline color column for default outlines. Default is 0.</p></dd>
+
+
+<dt id="arg-outline-color-label-affected">outline_color_label_affected<a class="anchor" aria-label="anchor" href="#arg-outline-color-label-affected"></a></dt>
+<dd><p>Label for highlighted outline individuals. Default is "Highlighted".</p></dd>
+
+
+<dt id="arg-outline-color-label-unaffected">outline_color_label_unaffected<a class="anchor" aria-label="anchor" href="#arg-outline-color-label-unaffected"></a></dt>
+<dd><p>Label for default outline individuals. Default is "Default".</p></dd>
+
+
+<dt id="arg-outline-color-affected">outline_color_affected<a class="anchor" aria-label="anchor" href="#arg-outline-color-affected"></a></dt>
+<dd><p>Color used for highlighted outlines. Default is "blue".</p></dd>
+
+
+<dt id="arg-outline-color-unaffected">outline_color_unaffected<a class="anchor" aria-label="anchor" href="#arg-outline-color-unaffected"></a></dt>
+<dd><p>Color used for default (non-highlighted) outlines. Default is "black".</p></dd>
+
+
+<dt id="arg-preset">preset<a class="anchor" aria-label="anchor" href="#arg-preset"></a></dt>
+<dd><p>Optional preset name for default styling combinations.
+Currently supported: "clinical" for standard clinical pedigree styling. Default is "none" (no preset).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

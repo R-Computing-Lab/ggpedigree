@@ -94,6 +94,8 @@ addOverlay(
 - overlay_column:
 
   Character string specifying the column name for overlay alpha values.
+  For a single overlay, this is the simplest interface. For multiple
+  overlays, use the `overlays` parameter instead.
 
 ## Value
 

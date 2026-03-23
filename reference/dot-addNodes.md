@@ -5,9 +5,23 @@ Add Nodes to ggplot Pedigree Plot
 ## Usage
 
 ``` r
-.addNodes(plotObject, config, focal_fill_column = NULL, status_column = NULL)
+.addNodes(
+  plotObject,
+  config,
+  focal_fill_column = NULL,
+  status_column = NULL,
+  affected_fill_column = NULL,
+  outline_color_column = NULL
+)
 
-addNodes(plotObject, config, focal_fill_column = NULL, status_column = NULL)
+addNodes(
+  plotObject,
+  config,
+  focal_fill_column = NULL,
+  status_column = NULL,
+  affected_fill_column = NULL,
+  outline_color_column = NULL
+)
 ```
 
 ## Arguments
@@ -76,3 +90,17 @@ addNodes(plotObject, config, focal_fill_column = NULL, status_column = NULL)
 
   Character string specifying the column name for affected status.
   Defaults to NULL.
+
+- affected_fill_column:
+
+  Character string specifying the column name for conditional affected
+  fill. When provided, individuals matching the
+  \`affected_fill_code_affected\` config will have their symbols filled.
+  Default is NULL.
+
+- outline_color_column:
+
+  Character string specifying the column name for outline color control.
+  When provided, individuals matching \`outline_color_code_affected\`
+  config will have colored outlines (e.g., blue for included). Default
+  is NULL.

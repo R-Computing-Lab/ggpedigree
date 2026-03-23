@@ -384,6 +384,56 @@ ggPedigree(
 
 ![](v11_configuration_extended_files/figure-html/unnamed-chunk-11-1.png)
 
+#### Multiple overlays with per-overlay customization
+
+When a single status marker is not enough, you can pass a **list of
+overlay specs** to the `overlays` argument. Each element of the list is
+itself a list that names a column and optionally overrides any overlay
+config key — `shape`, `color`, `stroke`, `size`, and `code_affected` —
+for that layer only. Config defaults are used for any key you leave out.
+
+The `hazard` dataset already contains `deathYr` and `onsetYr`, which map
+naturally onto two independent overlays — deceased individuals (a cross)
+and those with a recorded disease onset (a slash):
+
+``` r
+# Derive binary flags from columns already present in hazard
+hazard$deceased <- ifelse(!is.na(hazard$deathYr), 1, 0)
+hazard$onset <- ifelse(!is.na(hazard$onsetYr), 1, 0)
+
+ggPedigree(
+  hazard,
+  famID = "famID",
+  personID = "ID",
+  momID = "momID",
+  dadID = "dadID",
+  overlays = list(
+    list(column = "deceased", code_affected = 1, shape = "cross", color = "black"),
+    list(column = "onset", code_affected = 1, shape = "slash", color = "red", stroke = 2)
+  ),
+  config = list(
+    code_male       = 0,
+    overlay_include = TRUE,
+    overlay_mode    = "shape"
+  )
+)
+```
+
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-12-1.png)
+
+A few things to note:
+
+- **`overlay_mode = "shape"`** must be set in `config` (or via a preset
+  such as `"clinical"`) to activate shape-based rendering. Without it
+  the overlay loop falls back to alpha transparency.
+- Each spec can carry any combination of per-layer overrides. Specs with
+  no override for a key inherit the matching `config$overlay_*` default,
+  so you only need to specify what differs.
+- The specs are rendered as separate
+  [`geom_point()`](https://ggplot2.tidyverse.org/reference/geom_point.html)
+  layers in list order, so later specs draw on top of earlier ones for
+  individuals who satisfy both conditions.
+
 ### 6) Focal fill: highlighting relatives of a focal individual
 
 A common analysis task is to pick a focal individual and visually
@@ -430,7 +480,7 @@ ggPedigree(
 )
 ```
 
-![](v11_configuration_extended_files/figure-html/unnamed-chunk-12-1.png)
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-13-1.png)
 
 If the plot is dense, it is often helpful to turn labels off or reduce
 their prominence, so the focal fill pattern reads cleanly. Note we can
@@ -456,7 +506,7 @@ ggPedigree(
 )
 ```
 
-![](v11_configuration_extended_files/figure-html/unnamed-chunk-13-1.png)
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-14-1.png)
 
 #### Choosing the focal fill scale and colors
 
@@ -488,7 +538,7 @@ ggPedigree(
 )
 ```
 
-![](v11_configuration_extended_files/figure-html/unnamed-chunk-14-1.png)
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-15-1.png)
 
 #### Discrete focal fill palettes
 
@@ -515,7 +565,7 @@ ggPedigree(
 )
 ```
 
-![](v11_configuration_extended_files/figure-html/unnamed-chunk-15-1.png)
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-16-1.png)
 
 #### Handling missing and zero values
 
@@ -542,7 +592,7 @@ ggPedigree(
 )
 ```
 
-![](v11_configuration_extended_files/figure-html/unnamed-chunk-16-1.png)
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-17-1.png)
 
 #### Using viridis-based focal fill
 
@@ -582,7 +632,7 @@ ggPedigree(
 )
 ```
 
-![](v11_configuration_extended_files/figure-html/unnamed-chunk-17-1.png)
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-18-1.png)
 
 ### 7) Global greyscale / black-and-white switch
 
@@ -612,7 +662,7 @@ ggPedigree(
 )
 ```
 
-![](v11_configuration_extended_files/figure-html/unnamed-chunk-18-1.png)
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-19-1.png)
 
 ### 8) Interactive pedigrees: `ggPedigreeInteractive()`
 
@@ -667,7 +717,7 @@ ggPedigree(
 )
 ```
 
-![](v11_configuration_extended_files/figure-html/unnamed-chunk-20-1.png)
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-21-1.png)
 
 ## Config reference
 
@@ -684,174 +734,195 @@ tibble::tibble(Config_Key = cfg_names) %>%
   knitr::kable()
 ```
 
-| Config_Key                    |
-|:------------------------------|
-| add_phantoms                  |
-| alpha                         |
-| annotate_include              |
-| annotate_x_shift              |
-| annotate_y_shift              |
-| apply_default_scales          |
-| apply_default_theme           |
-| axis_text_angle_x             |
-| axis_text_angle_y             |
-| axis_text_color               |
-| axis_text_family              |
-| axis_text_size                |
-| axis_x_label                  |
-| axis_y_label                  |
-| ci_include                    |
-| ci_ribbon_alpha               |
-| code_female                   |
-| code_male                     |
-| code_na                       |
-| code_unknown                  |
-| color_palette_default         |
-| color_palette_high            |
-| color_palette_low             |
-| color_palette_mid             |
-| color_scale_midpoint          |
-| color_scale_theme             |
-| color_theme                   |
-| debug                         |
-| drop_classic_kin              |
-| drop_non_classic_sibs         |
-| filter_degree_max             |
-| filter_degree_min             |
-| filter_n_pairs                |
-| focal_fill_chroma             |
-| focal_fill_component          |
-| focal_fill_force_zero         |
-| focal_fill_high_color         |
-| focal_fill_hue_direction      |
-| focal_fill_hue_range          |
-| focal_fill_include            |
-| focal_fill_legend_show        |
-| focal_fill_legend_title       |
-| focal_fill_lightness          |
-| focal_fill_low_color          |
-| focal_fill_method             |
-| focal_fill_mid_color          |
-| focal_fill_n_breaks           |
-| focal_fill_na_value           |
-| focal_fill_personID           |
-| focal_fill_scale_midpoint     |
-| focal_fill_shape              |
-| focal_fill_use_log            |
-| focal_fill_viridis_begin      |
-| focal_fill_viridis_direction  |
-| focal_fill_viridis_end        |
-| focal_fill_viridis_option     |
-| generation_height             |
-| generation_width              |
-| group_by_kin                  |
-| grouping_column               |
-| hints                         |
-| label_column                  |
-| label_include                 |
-| label_max_overlaps            |
-| label_method                  |
-| label_nudge_x                 |
-| label_nudge_y                 |
-| label_nudge_y_flip            |
-| label_scale_by_pedigree       |
-| label_segment_color           |
-| label_text_angle              |
-| label_text_color              |
-| label_text_family             |
-| label_text_size               |
-| match_threshold_percent       |
-| matrix_diagonal_include       |
-| matrix_isChild_method         |
-| matrix_lower_triangle_include |
-| matrix_sparse                 |
-| matrix_upper_triangle_include |
-| max_degree_levels             |
-| optimize_plotly               |
-| outline_additional_size       |
-| outline_alpha                 |
-| outline_color                 |
-| outline_include               |
-| outline_multiplier            |
-| overlay_alpha_affected        |
-| overlay_alpha_unaffected      |
-| overlay_code_affected         |
-| overlay_code_unaffected       |
-| overlay_color                 |
-| overlay_include               |
-| overlay_label_affected        |
-| overlay_label_unaffected      |
-| overlay_legend_show           |
-| overlay_legend_title          |
-| overlay_shape                 |
-| override_many2many            |
-| ped_align                     |
-| ped_packed                    |
-| ped_width                     |
-| plot_subtitle                 |
-| plot_title                    |
-| point_scale_by_pedigree       |
-| point_size                    |
-| recode_missing_ids            |
-| recode_missing_sex            |
-| relation                      |
-| return_interactive            |
-| return_mid_parent             |
-| return_static                 |
-| return_widget                 |
-| segment_default_color         |
-| segment_lineend               |
-| segment_linejoin              |
-| segment_linetype              |
-| segment_linewidth             |
-| segment_mz_alpha              |
-| segment_mz_color              |
-| segment_mz_linetype           |
-| segment_mz_t                  |
-| segment_offspring_color       |
-| segment_parent_color          |
-| segment_scale_by_pedigree     |
-| segment_self_alpha            |
-| segment_self_angle            |
-| segment_self_color            |
-| segment_self_curvature        |
-| segment_self_linetype         |
-| segment_self_linewidth        |
-| segment_sibling_color         |
-| segment_spouse_color          |
-| sex_color_include             |
-| sex_color_palette             |
-| sex_legend_show               |
-| sex_legend_title              |
-| sex_shape_female              |
-| sex_shape_include             |
-| sex_shape_labels              |
-| sex_shape_male                |
-| sex_shape_unknown             |
-| status_alpha_affected         |
-| status_alpha_unaffected       |
-| status_code_affected          |
-| status_code_unaffected        |
-| status_color_affected         |
-| status_color_palette          |
-| status_color_unaffected       |
-| status_include                |
-| status_label_affected         |
-| status_label_unaffected       |
-| status_legend_show            |
-| status_legend_title           |
-| status_shape_affected         |
-| tile_cluster                  |
-| tile_color_border             |
-| tile_color_palette            |
-| tile_geom                     |
-| tile_interpolate              |
-| tile_linejoin                 |
-| tile_na_rm                    |
-| tooltip_columns               |
-| tooltip_include               |
-| use_only_classic_kin          |
-| use_relative_degree           |
-| value_rounding_digits         |
+| Config_Key                     |
+|:-------------------------------|
+| add_phantoms                   |
+| affected_fill_code_affected    |
+| affected_fill_code_unaffected  |
+| affected_fill_color_affected   |
+| affected_fill_color_unaffected |
+| affected_fill_include          |
+| affected_fill_label_affected   |
+| affected_fill_label_unaffected |
+| affected_fill_shape_female     |
+| affected_fill_shape_male       |
+| affected_fill_shape_unknown    |
+| alpha                          |
+| annotate_include               |
+| annotate_x_shift               |
+| annotate_y_shift               |
+| apply_default_scales           |
+| apply_default_theme            |
+| axis_text_angle_x              |
+| axis_text_angle_y              |
+| axis_text_color                |
+| axis_text_family               |
+| axis_text_size                 |
+| axis_x_label                   |
+| axis_y_label                   |
+| ci_include                     |
+| ci_ribbon_alpha                |
+| code_female                    |
+| code_male                      |
+| code_na                        |
+| code_unknown                   |
+| color_palette_default          |
+| color_palette_high             |
+| color_palette_low              |
+| color_palette_mid              |
+| color_scale_midpoint           |
+| color_scale_theme              |
+| color_theme                    |
+| debug                          |
+| drop_classic_kin               |
+| drop_non_classic_sibs          |
+| filter_degree_max              |
+| filter_degree_min              |
+| filter_n_pairs                 |
+| focal_fill_chroma              |
+| focal_fill_component           |
+| focal_fill_force_zero          |
+| focal_fill_high_color          |
+| focal_fill_hue_direction       |
+| focal_fill_hue_range           |
+| focal_fill_include             |
+| focal_fill_legend_show         |
+| focal_fill_legend_title        |
+| focal_fill_lightness           |
+| focal_fill_low_color           |
+| focal_fill_method              |
+| focal_fill_mid_color           |
+| focal_fill_n_breaks            |
+| focal_fill_na_value            |
+| focal_fill_personID            |
+| focal_fill_scale_midpoint      |
+| focal_fill_shape               |
+| focal_fill_use_log             |
+| focal_fill_viridis_begin       |
+| focal_fill_viridis_direction   |
+| focal_fill_viridis_end         |
+| focal_fill_viridis_option      |
+| generation_height              |
+| generation_width               |
+| group_by_kin                   |
+| grouping_column                |
+| hints                          |
+| label_column                   |
+| label_include                  |
+| label_max_overlaps             |
+| label_method                   |
+| label_nudge_x                  |
+| label_nudge_y                  |
+| label_nudge_y_flip             |
+| label_scale_by_pedigree        |
+| label_segment_color            |
+| label_text_angle               |
+| label_text_color               |
+| label_text_family              |
+| label_text_size                |
+| match_threshold_percent        |
+| matrix_diagonal_include        |
+| matrix_isChild_method          |
+| matrix_lower_triangle_include  |
+| matrix_sparse                  |
+| matrix_upper_triangle_include  |
+| max_degree_levels              |
+| optimize_plotly                |
+| outline_additional_size        |
+| outline_alpha                  |
+| outline_color                  |
+| outline_color_affected         |
+| outline_color_code_affected    |
+| outline_color_code_unaffected  |
+| outline_color_include          |
+| outline_color_label_affected   |
+| outline_color_label_unaffected |
+| outline_color_unaffected       |
+| outline_include                |
+| outline_multiplier             |
+| overlay_alpha_affected         |
+| overlay_alpha_unaffected       |
+| overlay_code_affected          |
+| overlay_code_unaffected        |
+| overlay_color                  |
+| overlay_include                |
+| overlay_label_affected         |
+| overlay_label_unaffected       |
+| overlay_legend_show            |
+| overlay_legend_title           |
+| overlay_mode                   |
+| overlay_shape                  |
+| overlay_size                   |
+| overlay_stroke                 |
+| override_many2many             |
+| ped_align                      |
+| ped_packed                     |
+| ped_width                      |
+| plot_subtitle                  |
+| plot_title                     |
+| point_scale_by_pedigree        |
+| point_size                     |
+| preset                         |
+| recode_missing_ids             |
+| recode_missing_sex             |
+| relation                       |
+| return_interactive             |
+| return_mid_parent              |
+| return_static                  |
+| return_widget                  |
+| segment_default_color          |
+| segment_lineend                |
+| segment_linejoin               |
+| segment_linetype               |
+| segment_linewidth              |
+| segment_mz_alpha               |
+| segment_mz_color               |
+| segment_mz_linetype            |
+| segment_mz_t                   |
+| segment_offspring_color        |
+| segment_parent_color           |
+| segment_scale_by_pedigree      |
+| segment_self_alpha             |
+| segment_self_angle             |
+| segment_self_color             |
+| segment_self_curvature         |
+| segment_self_linetype          |
+| segment_self_linewidth         |
+| segment_sibling_color          |
+| segment_spouse_color           |
+| sex_color_include              |
+| sex_color_palette              |
+| sex_legend_show                |
+| sex_legend_title               |
+| sex_shape_female               |
+| sex_shape_include              |
+| sex_shape_labels               |
+| sex_shape_male                 |
+| sex_shape_unknown              |
+| status_alpha_affected          |
+| status_alpha_unaffected        |
+| status_code_affected           |
+| status_code_unaffected         |
+| status_color_affected          |
+| status_color_palette           |
+| status_color_unaffected        |
+| status_include                 |
+| status_label_affected          |
+| status_label_unaffected        |
+| status_legend_show             |
+| status_legend_title            |
+| status_shape_affected          |
+| tile_cluster                   |
+| tile_color_border              |
+| tile_color_palette             |
+| tile_geom                      |
+| tile_interpolate               |
+| tile_linejoin                  |
+| tile_na_rm                     |
+| tooltip_columns                |
+| tooltip_include                |
+| use_only_classic_kin           |
+| use_relative_degree            |
+| value_rounding_digits          |
 
 **Show all config keys with defaults**
