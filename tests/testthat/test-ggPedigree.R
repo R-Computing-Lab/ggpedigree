@@ -286,6 +286,31 @@ test_that("focal fill works with ID", {
   expect_true(all(p3$data$focal_fill[p3$data$personID == 8] == 1))
 })
 
+test_that("focal fill works with non-standard personID column name", {
+  library(BGmisc)
+  data("potter") # load example data from BGmisc
+
+  # Rename personID column to a non-standard name
+  potter_renamed <- potter
+  names(potter_renamed)[names(potter_renamed) == "personID"] <- "ID"
+
+  p <- ggPedigree(potter_renamed,
+    famID = "famID",
+    personID = "ID",
+    config = list(
+      focal_fill_include = TRUE,
+      sex_color_include = FALSE,
+      focal_fill_personID = 8
+    )
+  )
+  expect_s3_class(p, "gg") # Should return a ggplot object
+  expect_true("focal_fill" %in% names(p$data)) # focal_fill column should be present
+  expect_true(all(p$data$focal_fill >= 0 & p$data$focal_fill <= 1)) # focal_fill values should be between 0 and 1
+
+  # focal_fill for ID 8 should be 1
+  expect_true(all(p$data$focal_fill[p$data$ID == 8] == 1))
+})
+
 test_that("focal fill works with ID and different methods", {
   library(BGmisc)
   data("potter") # load example data from BGmisc

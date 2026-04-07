@@ -168,7 +168,7 @@ createFillColumn <- function(ped,
     stop(paste(
       "focal_fill_personID",
       focal_fill_personID,
-      "not found in ped$personID."
+      paste0("not found in ped$", personID, ".")
     ))
   }
   fill_df <- data.frame(
@@ -177,8 +177,8 @@ createFillColumn <- function(ped,
   ) # needs to match the same data type
 
   remove(com_mat) # remove the focal_fill_personID column
-  # Ensure fill_df$personID is of the same type as ped$personID
-  if (is.numeric(ped$personID)) {
+  # Ensure fill_df$personID is of the same type as ped[[personID]]
+  if (is.numeric(ped[[personID]])) {
     fill_df$personID <- as.numeric(fill_df$personID)
   }
   if (config$focal_fill_force_zero == TRUE) {
@@ -377,7 +377,7 @@ addFocalFillColumn <- function(ds_ped,
             component = config$focal_fill_component,
             config = config
           ),
-          by = dplyr::join_by(personID == !!rlang::sym(personID))
+          by = dplyr::join_by(!!rlang::sym(personID) == personID)
         )
 
       # -----
