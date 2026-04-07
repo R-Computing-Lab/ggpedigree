@@ -51,8 +51,8 @@ test_that("affected_fill_column creates filled/unfilled nodes", {
 
   # delete svg files after reading
 
-  file.remove("built_coded.svg")
-  file.remove("built_uncoded.svg")
+ # file.remove("built_coded.svg")
+#  file.remove("built_uncoded.svg")
 
   expect_true(any(grepl("fill:\\s*#FF0000", built_coded.svg)))
   expect_true(any(grepl("fill:\\s*#FF0000", built_uncoded.svg)))
@@ -158,6 +158,29 @@ test_that("clinical preset sets correct defaults", {
     )
   )
   expect_s3_class(p, "gg")
+
+
+  # expect_equal(as_label(p$layers[[?]]$mapping$fill), "as.factor(SEP)")
+  # could by any of the layers that has fill mapping, but should be the same in both plots since unaffected_fill_color just fills in NA values in the data
+  fill_mappings <- vapply(
+    p$layers,
+    function(layer) {
+      fill <- layer$mapping$fill
+      if (rlang::is_missing(fill) || is.null(fill)) NA_character_ else as_label(fill)
+    },
+    character(1)
+  )
+  colnames_mappings <- vapply(
+    p$layers,
+    function(layer) {
+      color <- layer$mapping$colour
+      if (rlang::is_missing(color) || is.null(color)) NA_character_ else as_label(color)
+    },
+    character(1)
+  )
+
+  expect_true("as.factor(SEP)" %in% fill_mappings)
+  expect_true("as.factor(INCLUS)" %in% colnames_mappings)
 })
 
 test_that("all features compose without error", {
