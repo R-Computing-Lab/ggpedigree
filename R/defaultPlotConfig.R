@@ -176,6 +176,7 @@
 #' @param tile_cluster Whether to sort by clusters the matrix.
 #' @param tile_na_rm Whether to remove NA values in matrix tiles. Default is FALSE.
 #' @param tile_linejoin Line join type for matrix tiles. Default is "mitre".
+#' @param matrix_fill_legend_title Title for the fill legend in matrix plots. Default is "Relatedness".
 #' @param matrix_diagonal_include Whether to include diagonal in matrix plots. Default is TRUE.
 #' @param matrix_upper_triangle_include Whether to include upper triangle in matrix plots.
 #' @param matrix_lower_triangle_include Whether to include lower triangle in matrix plots.
@@ -418,6 +419,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  tile_na_rm = FALSE,
                                  tile_linejoin = "mitre",
                                  # ---- matrix settings ----
+                                 matrix_fill_legend_title = "Relatedness",
                                  matrix_diagonal_include = TRUE,
                                  matrix_upper_triangle_include = FALSE,
                                  matrix_lower_triangle_include = TRUE,
@@ -745,6 +747,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     tile_linejoin = tile_linejoin,
 
     # ---- matrix settings ----
+    matrix_fill_legend_title = matrix_fill_legend_title,
     matrix_sparse = matrix_sparse,
     matrix_isChild_method = matrix_isChild_method,
     matrix_diagonal_include = matrix_diagonal_include,

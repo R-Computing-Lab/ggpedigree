@@ -170,6 +170,7 @@ getDefaultPlotConfig(
   tile_geom = "geom_tile",
   tile_na_rm = FALSE,
   tile_linejoin = "mitre",
+  matrix_fill_legend_title = "Relatedness",
   matrix_diagonal_include = TRUE,
   matrix_upper_triangle_include = FALSE,
   matrix_lower_triangle_include = TRUE,
@@ -543,6 +544,8 @@ Only used when overlay_mode is "shape".}
 \item{tile_na_rm}{Whether to remove NA values in matrix tiles. Default is FALSE.}
 
 \item{tile_linejoin}{Line join type for matrix tiles. Default is "mitre".}
+
+\item{matrix_fill_legend_title}{Title for the fill legend in matrix plots. Default is "Relatedness".}
 
 \item{matrix_diagonal_include}{Whether to include diagonal in matrix plots. Default is TRUE.}
 
