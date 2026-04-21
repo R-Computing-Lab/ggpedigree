@@ -36,7 +36,7 @@ Plots a relatedness matrix using ggplot2 with config options.
 \details{
 Config options include:
  \describe{
-  \item{matrix_color_palette}{A vector of colors for the heatmap (default: Reds scale)}
+  \item{tile_color_palette}{A vector of colors for the heatmap (default: Reds scale)}
   \item{color_scale_midpoint}{Numeric midpoint for diverging color scale (default: 0.25)}
   \item{plot_title}{Plot title}
   \item{matrix_cluster}{Logical; should rows/cols be clustered (default: TRUE)}

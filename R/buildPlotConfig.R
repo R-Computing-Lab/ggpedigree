@@ -152,8 +152,8 @@ buildPlotConfig <- function(default_config,
   } else if (stringr::str_to_lower(function_name) %in%
     c("ggrelatednessmatrix", "relatednessmatrix")) {
     # No additional processing needed currently
-    if ("matrix_color_palette" %in% names(built_config) == FALSE) {
-      built_config$matrix_color_palette <- c("white", "blue", "red")
+    if ("tile_color_palette" %in% names(built_config) == FALSE) {
+      built_config$tile_color_palette <- c("white", "blue", "red")
     }
     if (built_config$label_scale_by_pedigree == TRUE) {
       if (is.null(pedigree_size) || pedigree_size <= 0) {

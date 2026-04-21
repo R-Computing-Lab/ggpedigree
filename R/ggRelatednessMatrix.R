@@ -13,7 +13,7 @@
 #' @details
 #' Config options include:
 #'  \describe{
-#'   \item{matrix_color_palette}{A vector of colors for the heatmap (default: Reds scale)}
+#'   \item{tile_color_palette}{A vector of colors for the heatmap (default: Reds scale)}
 #'   \item{color_scale_midpoint}{Numeric midpoint for diverging color scale (default: 0.25)}
 #'   \item{plot_title}{Plot title}
 #'   \item{matrix_cluster}{Logical; should rows/cols be clustered (default: TRUE)}
@@ -79,7 +79,8 @@ ggRelatednessMatrix <- function(
   # Core plot
   p_list <- ggRelatednessMatrix.core(
     mat = mat,
-    config = config, ...
+    config = config,
+    ...
   )
 
   static_plot <- p_list$plot
@@ -95,7 +96,9 @@ ggRelatednessMatrix <- function(
       #   When ggplotly is called, it creates a single data frame that merges all
       #   layer data.  We therefore build a 'text' aesthetic ahead of time so that
       #   it survives the conversion.
-      config$tooltip_columns <- intersect(config$tooltip_columns, names(ped)) # guard against typos
+      config$tooltip_columns <- intersect(config$tooltip_columns,
+                                          names(ped)) # guard against typos
+
       if (length(config$tooltip_columns) == 0L) {
         stop("None of the specified tooltip_columns found in `ped`.")
       }
@@ -180,7 +183,9 @@ ggRelatednessMatrix.core <- function(
   if (is.null(cnames)) {
     cnames <- seq_len(ncol(mat_plot))
   }
-  df_melted <- expand.grid(ID1 = rnames, ID2 = cnames, stringsAsFactors = FALSE)
+  df_melted <- expand.grid(ID1 = rnames,
+                           ID2 = cnames,
+                           stringsAsFactors = FALSE)
   df_melted$value <- as.vector(mat_plot)
 
   colnames(df_melted) <- c("ID1", "ID2", "value")

@@ -501,12 +501,20 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     "black"
   )
 
+  wfu_color_names <- c(
+    "wfu",
+    "wfu_color",
+    "wfu colors",
+    "wfu color palette"
+  )
+
   if (!is.character(color_theme) || length(color_theme) != 1L || is.na(color_theme)) {
     stop("`color_theme` must be a non-missing character string.")
   }
   color_theme_lower <- stringr::str_to_lower(color_theme)
 
-  if (color_theme_lower %in% c(grey_color_names, black_color_names) || identical(preset, "clinical")) {
+  if (color_theme_lower %in% c(grey_color_names, black_color_names) ||
+      identical(preset, "clinical")) {
     color_palette_default <- greyscale_palette_default
     color_palette_low <- greyscale_low
     color_palette_mid <- greyscale_mid
@@ -532,6 +540,20 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
 
     focal_fill_color_values <- c("grey10", "grey50", "grey85")
   }
+
+  if (color_theme_lower %in% c(wfu_color_names) ||
+      identical(preset, "wfu")) {
+
+    color_pallete_default <- c("gold", "#CFB53B", "#F1E5AC")
+    color_theme  <-  "#b58900"
+    color_palatte_low  <-  "#F1E5AC"
+    color_palette_mid  <-  "#CFB53B"
+    color_palette_high  <-  "gold"
+    color_scale_theme  <-  "Tableau 20"
+    tile_color_palette <-  c("gold", "#CFB53B", "#F1E5AC")
+
+}
+
   core_list <- list(
     # ---- General Appearance ----
     apply_default_scales = apply_default_scales,
