@@ -18,7 +18,8 @@ ggPedigreeInteractive(
   tooltip_columns = NULL,
   focal_fill_column = NULL,
   overlay_column = NULL,
-  config = list(optimize_plotly = TRUE),
+  overlays = NULL,
+  config = list(),
   debug = FALSE,
   return_widget = TRUE,
   hints = NULL,
@@ -59,6 +60,14 @@ Defaults to NULL, which uses the default tooltip columns.}
 \item{overlay_column}{Character string specifying the column name for overlay alpha values.
 For a single overlay, this is the simplest interface. For multiple overlays, use
 the \code{overlays} parameter instead.}
+
+\item{overlays}{A list of overlay specifications for adding multiple independent overlay
+layers. Each element should be a list with at minimum a \code{column} entry, plus optional
+entries: \code{code_affected}, \code{shape}, \code{color}, \code{size}, \code{stroke},
+\code{mode}. Unspecified entries inherit from the \code{overlay_*} config defaults.
+When \code{overlays} is provided, \code{overlay_column} is ignored.
+Example: \code{overlays = list(list(column = "DECES", shape = "cross"),
+list(column = "PROBAND", shape = 8, color = "red"))}}
 
 \item{config}{A list of configuration options for customizing the plot.
       See getDefaultPlotConfig for details of each option. The list can include:
@@ -127,7 +136,7 @@ ggPedigreeInteractive(
     status_column = "affected",
     label_nudge_y = .25,
     label_include = TRUE,
-    include_tooltip = TRUE,
+    tooltip_include = TRUE,
     label_method = "geom_text",
     sex_color_include = TRUE
   ),
