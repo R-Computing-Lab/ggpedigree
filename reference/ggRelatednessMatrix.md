@@ -51,7 +51,7 @@ A ggplot object displaying the relatedness matrix as a heatmap.
 
 Config options include:
 
-- matrix_color_palette:
+- tile_color_palette:
 
   A vector of colors for the heatmap (default: Reds scale)
 
