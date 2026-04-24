@@ -556,13 +556,20 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
   if (color_theme_lower %in% c(wfu_color_names) ||
       identical(preset, "wfu")) {
 
-    color_pallete_default <- c("gold", "#CFB53B", "#F1E5AC")
-    color_theme  <-  "#b58900"
+    color_pallete_default <- c("#53565A", "#FDC314", "#CEB888")
+    color_theme  <-  "#9E7E38"
     color_palatte_low  <-  "#F1E5AC"
     color_palette_mid  <-  "#CFB53B"
-    color_palette_high  <-  "gold"
+    color_palette_high  <-  "#9E7E38"
     color_scale_theme  <-  "Tableau 20"
-    tile_color_palette <-  c("gold", "#CFB53B", "#F1E5AC")
+    tile_color_palette <-  c("white", "#FDC314", "#53565A")
+     status_color_palette <- c("#FDC314", "#53565A")
+     status_color_affected <- "#FDC314"
+     status_color_unaffected <- "#53565A"
+     focal_fill_high_color <- "#9E7E38"
+     focal_fill_mid_color <- "#CFB53B"
+     focal_fill_low_color <- "#F1E5AC"
+     focal_fill_na_value <- "#222222"
 
 }
 
