@@ -160,14 +160,6 @@ adjustSpacing <- .adjustSpacing
    ds$x_pos <- ds$x_pos * (1 + (y_order_max/ds$y_order ))
   }
 
-  if (FALSE & all(c("x_fam", "y_fam") %in% names(ds))) {
-    valid_fam  <- !is.na(ds$x_fam) & !is.na(ds$y_fam)
-    angle_fam  <- .to_angle(ifelse(valid_fam, ds$x_fam, ds$x_pos))
-    radius_fam <- .to_radius(ifelse(valid_fam, ds$y_fam, ds$y_pos))
-    ds$x_fam   <- ifelse(valid_fam, radius_fam * cos(angle_fam), NA_real_)
-    ds$y_fam   <- ifelse(valid_fam, radius_fam * sin(angle_fam), NA_real_)
-  }
-
   ds
 }
 
