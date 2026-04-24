@@ -73,6 +73,12 @@ ggPedigree.core <- function(ped,
     # names(ped)[names(ped) == sexVar] <- "sex"
     ped$sex <- ped[[sexVar]]
   }
+
+  if(config$coord_layout == "radial"){
+    # In radial layout, the generation axis is reversed (older generations have higher y values)
+    config$generation_height <- -1 * config$generation_height
+  }
+
   # -----
   # STEP 2+3: Pedigree Data Transformation and Data Cleaning and Recoding
   # -----
@@ -170,11 +176,14 @@ ggPedigree.core <- function(ped,
 
   # In radial mode stubs are meaningless (y is no longer the generation axis)
   config$gap_hoff <- if (isTRUE(config$coord_layout == "radial")){
-    0} else {
+    0
+  #  0.5 *config$generation_height
+    } else {
       0.5 * config$generation_height
       }
   config$gap_woff <- if (isTRUE(config$coord_layout == "radial")){
-    0
+  #  0
+    0.5 *config$generation_width
   }else {0.5 * config$generation_width
       }
 
@@ -449,6 +458,11 @@ ggPedigree.core <- function(ped,
       outline_color_column = outline_color_column
     )
   }
+  if (isTRUE(config$coord_layout == "radial")){
+    p <- p + ggplot2::coord_polar()
+  }
+
+
   # add plot_connections to the plot object
   attr(p, "connections") <- plot_connections
   if (config$debug == TRUE) {

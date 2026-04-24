@@ -50,11 +50,11 @@ tempgg <- ggPedigree(
   momID = "momID",
   dadID = "dadID",
   config=list(
-    generation_height = -1,
-    #    generation_width = -1,
-    coord_layout = "radial"#,
-   # coord_radial_start_angle = -8
-    )) + ggplot2::coord_polar()
+   # generation_height = -1,
+      #  generation_width = -2,
+    coord_layout = "radial",
+    coord_radial_start_angle = -8
+    )) #+ ggplot2::coord_polar()
 
 tempgg
 ```

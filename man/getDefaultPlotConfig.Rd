@@ -65,6 +65,10 @@ getDefaultPlotConfig(
   ped_packed = TRUE,
   ped_align = TRUE,
   ped_width = 15,
+  coord_layout = "cartesian",
+  coord_radial_start_angle = -90,
+  coord_radial_end_angle = 270,
+  coord_radial_scale = 1.5,
   segment_linewidth = 0.8,
   segment_linetype = 1,
   segment_lineend = "round",
@@ -330,6 +334,16 @@ The plot is reversed vertically, so this is needed to nudge labels up instead of
 \item{ped_align}{Whether to align pedigree generations.}
 
 \item{ped_width}{Plot width of the pedigree block.}
+
+\item{coord_layout}{Layout mode for the pedigree. Options: "cartesian" (default) or "radial".}
+
+\item{coord_radial_start_angle}{Start angle in degrees for the radial layout (default: -90, placing
+the first generation at the top).}
+
+\item{coord_radial_end_angle}{End angle in degrees for the radial layout (default: 270, completing
+a full circle back to the top).}
+
+\item{coord_radial_scale}{Radius increment per generation unit in the radial layout (default: 1.5).}
 
 \item{segment_linewidth}{Line width for segments. Default is 0.80.}
 
