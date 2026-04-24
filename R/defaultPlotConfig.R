@@ -80,6 +80,12 @@
 #' @param ped_packed Whether the pedigree should use packed layout.
 #' @param ped_align Whether to align pedigree generations.
 #' @param ped_width Plot width of the pedigree block.
+#' @param coord_layout Layout mode for the pedigree. Options: "cartesian" (default) or "radial".
+#' @param coord_radial_start_angle Start angle in degrees for the radial layout (default: -90, placing
+#'   the first generation at the top).
+#' @param coord_radial_end_angle End angle in degrees for the radial layout (default: 270, completing
+#'   a full circle back to the top).
+#' @param coord_radial_scale Radius increment per generation unit in the radial layout (default: 1.5).
 #' @param segment_linewidth Line width for segments. Default is 0.80.
 #' @param segment_linetype Line type for segments. Default is 1 (solid).
 #' @param segment_lineend Line end type for segments. Default is "round".
@@ -297,6 +303,10 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  ped_packed = TRUE,
                                  ped_align = TRUE,
                                  ped_width = 15,
+                                 coord_layout = "cartesian",
+                                 coord_radial_start_angle = -90,
+                                 coord_radial_end_angle = 270,
+                                 coord_radial_scale = 1.5,
                                  # ---- Segment Drawing Options ----
                                  segment_linewidth = .80,
                                  segment_linetype = 1,
@@ -763,6 +773,10 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     ped_packed = ped_packed,
     ped_align = ped_align,
     ped_width = ped_width,
+    coord_layout = coord_layout,
+    coord_radial_start_angle = coord_radial_start_angle,
+    coord_radial_end_angle = coord_radial_end_angle,
+    coord_radial_scale = coord_radial_scale,
     hints = hints,
     relation = relation,
     # ---- Debugging Options ----

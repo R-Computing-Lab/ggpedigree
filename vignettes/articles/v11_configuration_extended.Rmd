@@ -43,13 +43,20 @@ data("potter")
 A basic pedigree plot uses defaults:
 
 ```{r}
-ggPedigree(
+tempgg <- ggPedigree(
   potter,
   famID = "famID",
   personID = "personID",
   momID = "momID",
-  dadID = "dadID"
-)
+  dadID = "dadID",
+  config=list(
+    generation_height = -1,
+    #    generation_width = -1,
+    coord_layout = "radial"#,
+   # coord_radial_start_angle = -8
+    )) + ggplot2::coord_polar()
+
+tempgg
 ```
 
 ## Sex coding: `code_male` and `code_female`

@@ -123,7 +123,6 @@ ggPedigree.core <- function(ped,
   # Apply spacing factors
   ds <- .adjustSpacing(ds = ds, config = config)
 
-
   # -----
   # STEP 5: Compute Relationship Connections
   # -----
@@ -169,8 +168,15 @@ ggPedigree.core <- function(ped,
   # STEP 6: Initialize Plot
   # -----
 
-  config$gap_hoff <- 0.5 * config$generation_height # single constant for all “stub” offsets
-  config$gap_woff <- 0.5 * config$generation_width # single constant for all “stub” offsets
+  # In radial mode stubs are meaningless (y is no longer the generation axis)
+  config$gap_hoff <- if (isTRUE(config$coord_layout == "radial")){
+    0} else {
+      0.5 * config$generation_height
+      }
+  config$gap_woff <- if (isTRUE(config$coord_layout == "radial")){
+    0
+  }else {0.5 * config$generation_width
+      }
 
   # recode missing sex to "unknown"
   if (config$recode_missing_sex == TRUE && any(is.na(ds$sex))) {

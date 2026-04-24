@@ -118,6 +118,62 @@ computeCurvedMidpoint <- .computeCurvedMidpoint
 #' @rdname dot-adjustSpacing
 adjustSpacing <- .adjustSpacing
 
+#' @title Apply radial layout transformation to pedigree coordinates
+#' @description
+#' Transforms Cartesian pedigree coordinates (x_pos = horizontal slot,
+#' y_pos = generation) into Cartesian coordinates derived from a polar mapping,
+#' producing a circular or fan-shaped layout. The transformation maps x_pos to
+#' an angular position and y_pos to a radial distance, then converts back to
+#' (x, y) via standard polar-to-Cartesian conversion.
+#' Family bar positions (x_fam, y_fam) are transformed using the same mapping.
+#' @param ds A data frame containing at minimum x_pos, y_pos, x_fam, and y_fam columns,
+#'   as produced by calculateCoordinates and .adjustSpacing.
+#' @inheritParams ggPedigree
+#' @return The input data frame with x_pos, y_pos, x_fam, and y_fam replaced by
+#'   their radially transformed equivalents.
+#' @keywords internal
+.applyRadialLayout <- function(ds, config) {
+  start_rad <- config$coord_radial_start_angle * pi / 180
+  end_rad   <- config$coord_radial_end_angle   * pi / 180
+
+  x_range <- range(ds$x_pos, na.rm = TRUE)
+  y_range <- range(ds$y_pos, na.rm = TRUE)
+
+  y_order_range <- range(ds$y_order, na.rm = TRUE)
+  y_order_max <- y_order_range[2]
+
+  .to_angle <- function(x) {
+    if (diff(x_range) == 0) return(rep((start_rad + end_rad) / 2, length(x)))
+    start_rad + (x - x_range[1]) / diff(x_range) * (end_rad - start_rad)
+  }
+
+  .to_radius <- function(y) (y - y_range[1] + 1) * config$coord_radial_scale
+
+  angle  <- .to_angle(ds$x_pos)
+  radius <- .to_radius(ds$y_pos)
+  ds$x_pos <- radius * cos(angle)
+  ds$y_pos <- radius * sin(angle)
+
+  # spread out the distance as we radiate outwards y_order tells you what generation you're in, so you can use that to spread out the
+  # adjust x positions by multiplying by a factor that increases with y_order
+  if(config$spread_out_generations == TRUE) {
+   ds$x_pos <- ds$x_pos * (1 + (y_order_max/ds$y_order ))
+  }
+
+  if (FALSE & all(c("x_fam", "y_fam") %in% names(ds))) {
+    valid_fam  <- !is.na(ds$x_fam) & !is.na(ds$y_fam)
+    angle_fam  <- .to_angle(ifelse(valid_fam, ds$x_fam, ds$x_pos))
+    radius_fam <- .to_radius(ifelse(valid_fam, ds$y_fam, ds$y_pos))
+    ds$x_fam   <- ifelse(valid_fam, radius_fam * cos(angle_fam), NA_real_)
+    ds$y_fam   <- ifelse(valid_fam, radius_fam * sin(angle_fam), NA_real_)
+  }
+
+  ds
+}
+
+#' @rdname dot-applyRadialLayout
+applyRadialLayout <- .applyRadialLayout
+
 #' @title Restore user-specified column names in a connections data frame
 #' @description
 #'
