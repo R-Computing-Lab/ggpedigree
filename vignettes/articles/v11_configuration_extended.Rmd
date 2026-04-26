@@ -43,20 +43,14 @@ data("potter")
 A basic pedigree plot uses defaults:
 
 ```{r}
-tempgg <- ggPedigree(
+ggPedigree(
   potter,
   famID = "famID",
   personID = "personID",
   momID = "momID",
-  dadID = "dadID",
-  config=list(
-   # generation_height = -1,
-      #  generation_width = -2,
-    coord_layout = "radial",
-    coord_radial_start_angle = -8
-    )) #+ ggplot2::coord_polar()
+  dadID = "dadID"
+)
 
-tempgg
 ```
 
 ## Sex coding: `code_male` and `code_female`
@@ -595,6 +589,25 @@ ggPedigreeInteractive(
 ```
 
 
+## 9) Layout and coordinate system
+
+```{r}
+tempgg <- ggPedigree(
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config=list(
+    coord_radial_min_radius = 1,
+    coord_layout = "radial"#,
+    ))
+
+tempgg
+```
+
+
+
 # Saving and loading a config file
 
 If you want to reuse the same overrides across scripts or share them with collaborators, save your config list.
@@ -622,6 +635,8 @@ ggPedigree(
   config = cfg
 )
 ```
+
+
 
 # Config reference
 

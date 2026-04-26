@@ -8,13 +8,26 @@
 #' @keywords internal
 
 .adjustSpacing <- function(ds, config) {
+  # In radial mode, shift y so the innermost generation ring sits at
+  # coord_radial_min_radius rather than zero (the center of coord_polar).
+  # Without this, the innermost generation collapses to a point with near-zero
+  # circumference, causing visible node pile-up at the center.
+
+
   # set shift y to have min at zero
   min_y <- min(ds$y_pos, na.rm = TRUE)
+
+   if (isTRUE(config$coord_layout == "radial")) {
+    offset <- config$coord_radial_min_radius - min_y
+    ds$y_pos <- ds$y_pos + offset
+    ds$y_fam <- ds$y_fam + offset
+  } else {
+
   if (min_y > 0) {
     ds$y_pos <- ds$y_pos - min_y
     ds$y_fam <- ds$y_fam - min_y
   }
-
+}
   # Adjust vertical spacing factor if generation_height ≠ 1
   if (!isTRUE(all.equal(config$generation_height, 1))) {
     ds$y_pos <- ds$y_pos * config$generation_height # expand/contract generations
@@ -25,6 +38,7 @@
     ds$x_pos <- ds$x_pos * config$generation_width # expand/contract generations
     ds$x_fam <- ds$x_fam * config$generation_width
   }
+
   ds
 }
 
@@ -57,29 +71,37 @@ adjustSpacing <- .adjustSpacing
 
   # how many in gen 0, gen 1, gen 2, etc. use that to spread out the distance as we radiate outwards
 
-
-
   .to_angle <- function(x) {
     if (diff(x_range) == 0) return(rep((start_rad + end_rad) / 2, length(x)))
     start_rad + (x - x_range[1]) / diff(x_range) * (end_rad - start_rad)
   }
 
-  .to_radius <- function(y) (y_range[1]-y + 1) * config$coord_radial_scale
+  # Normalize y across its range then map linearly to [min_radius, min_radius + span*scale].
+  # The old formula (y_range[1]-y+1)*scale produced radius=0 for y=y_range[1]+1 and
+  # negative radii beyond that, causing node pile-up at the origin.
+  .to_radius <- function(y) {
+    y_span <- diff(y_range)
+    if (y_span == 0) {
+      return(rep(config$coord_radial_min_radius + config$coord_radial_scale, length(y)))
+    }
+    y_norm <- (y - y_range[1]) / y_span
+    config$coord_radial_min_radius + y_norm * y_span * config$coord_radial_scale
+  }
 
   angle  <- .to_angle(ds$x_pos)
   radius <- .to_radius(ds$y_pos)
   ds$x_pos <- radius * cos(angle)
   ds$y_pos <- radius * sin(angle)
-  ds$y_pos[ds$y_pos==0] <- 0.001 # avoid zero y positions to prevent issues with family bars
-  ds$x_pos[ds$x_pos==0] <- 0.001 # avoid zero x positions to prevent issues with family bars
+  ds$y_pos[ds$y_pos == 0] <- 0.001
+  ds$x_pos[ds$x_pos == 0] <- 0.001
   # spread out the distance as we radiate outwards y_order tells you what generation you're in, so you can use that to spread out the
   # adjust x positions by multiplying by a factor that increases with y_order
 #  if(config$spread_out_generations == TRUE) {
 
  # if (config$spread_out_generations == TRUE) {
-    spread_factor <- 1 + (ds$y_order / y_order_max) * config$spread_out_generations_factor
-    ds$x_pos <- ds$x_pos * spread_factor
-    ds$y_pos <- ds$y_pos * spread_factor
+ #   spread_factor <- 1 + (ds$y_order / y_order_max) * config$spread_out_generations_factor
+#    ds$x_pos <- ds$x_pos * spread_factor
+  #  ds$y_pos <- ds$y_pos * spread_factor
 #  }
 
 #  }

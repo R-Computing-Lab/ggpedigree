@@ -176,14 +176,14 @@ ggPedigree.core <- function(ped,
 
   # In radial mode stubs are meaningless (y is no longer the generation axis)
   config$gap_hoff <- if (isTRUE(config$coord_layout == "radial")){
-    0
-  #  0.5 *config$generation_height
+  #  0
+    0.125 *config$generation_height
     } else {
       0.5 * config$generation_height
       }
   config$gap_woff <- if (isTRUE(config$coord_layout == "radial")){
   #  0
-    0.5 *config$generation_width
+    0.125 *config$generation_width
   }else {0.5 * config$generation_width
       }
 
@@ -421,6 +421,13 @@ ggPedigree.core <- function(ped,
     )
     p <- p +
       ggplot2::scale_y_reverse()
+  } else if(isTRUE(config$coord_layout == "radial")){
+    p <- p +
+      ggplot2::scale_y_reverse(limits = c(
+        0,
+        min(ds$y_pos, na.rm = TRUE)
+
+      ))
   } else {
     p <- p +
       ggplot2::scale_y_reverse(limits = c(
@@ -459,7 +466,8 @@ ggPedigree.core <- function(ped,
     )
   }
   if (isTRUE(config$coord_layout == "radial")){
-    p <- p + ggplot2::coord_polar()
+    p <- p + ggplot2::coord_polar()# +
+     # ggplot2::scale_x_continuous(limits = c(0, 360))
   }
 
 

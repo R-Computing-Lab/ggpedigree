@@ -69,6 +69,8 @@ getDefaultPlotConfig(
   coord_radial_start_angle = -90,
   coord_radial_end_angle = 270,
   coord_radial_scale = 1.5,
+  coord_radial_min_radius = 2,
+  spread_out_generations_factor = 0.5,
   segment_linewidth = 0.8,
   segment_linetype = 1,
   segment_lineend = "round",
@@ -344,6 +346,13 @@ the first generation at the top).}
 a full circle back to the top).}
 
 \item{coord_radial_scale}{Radius increment per generation unit in the radial layout (default: 1.5).}
+
+\item{coord_radial_min_radius}{Minimum radius offset for the innermost generation ring in radial
+layout (default: 2). Prevents the innermost generation from collapsing to the center of the
+circle where nodes would overlap. Increase this value to add more space at the center.}
+
+\item{spread_out_generations_factor}{Multiplicative spread factor used in \code{.applyRadialLayout}
+to push outer generations further from the center (default: 0.5).}
 
 \item{segment_linewidth}{Line width for segments. Default is 0.80.}
 
