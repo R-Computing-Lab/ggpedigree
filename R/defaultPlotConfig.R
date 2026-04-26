@@ -87,8 +87,9 @@
 #'   a full circle back to the top).
 #' @param coord_radial_scale Radius increment per generation unit in the radial layout (default: 1.5).
 #' @param coord_radial_min_radius Minimum radius offset for the innermost generation ring in radial
-#'   layout (default: 2). Prevents the innermost generation from collapsing to the center of the
+#'   layout (default: .75). Prevents the innermost generation from collapsing to the center of the
 #'   circle where nodes would overlap. Increase this value to add more space at the center.
+#' @param spread_out_generations Whether to apply a multiplicative spread factor to generation spacing in radial layout. Default is TRUE.
 #' @param spread_out_generations_factor Multiplicative spread factor used in \code{.applyRadialLayout}
 #'   to push outer generations further from the center (default: 0.5).
 #' @param segment_linewidth Line width for segments. Default is 0.80.
@@ -312,7 +313,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  coord_radial_start_angle = -90,
                                  coord_radial_end_angle = 270,
                                  coord_radial_scale = 1.5,
-                                 coord_radial_min_radius = 2,
+                                 coord_radial_min_radius = .75,
+                                 spread_out_generations = TRUE,
                                  spread_out_generations_factor = 0.5,
                                  # ---- Segment Drawing Options ----
                                  segment_linewidth = .80,
@@ -792,6 +794,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     coord_radial_end_angle = coord_radial_end_angle,
     coord_radial_scale = coord_radial_scale,
     coord_radial_min_radius = coord_radial_min_radius,
+    spread_out_generations = spread_out_generations,
     spread_out_generations_factor = spread_out_generations_factor,
     hints = hints,
     relation = relation,

@@ -17,17 +17,18 @@
   # set shift y to have min at zero
   min_y <- min(ds$y_pos, na.rm = TRUE)
 
+  if (min_y < 0) {
+    min_y <- 0
+  }
    if (isTRUE(config$coord_layout == "radial")) {
     offset <- config$coord_radial_min_radius - min_y
     ds$y_pos <- ds$y_pos + offset
     ds$y_fam <- ds$y_fam + offset
   } else {
-
-  if (min_y > 0) {
     ds$y_pos <- ds$y_pos - min_y
     ds$y_fam <- ds$y_fam - min_y
   }
-}
+
   # Adjust vertical spacing factor if generation_height ≠ 1
   if (!isTRUE(all.equal(config$generation_height, 1))) {
     ds$y_pos <- ds$y_pos * config$generation_height # expand/contract generations
@@ -98,11 +99,12 @@ adjustSpacing <- .adjustSpacing
   # adjust x positions by multiplying by a factor that increases with y_order
 #  if(config$spread_out_generations == TRUE) {
 
- # if (config$spread_out_generations == TRUE) {
- #   spread_factor <- 1 + (ds$y_order / y_order_max) * config$spread_out_generations_factor
-#    ds$x_pos <- ds$x_pos * spread_factor
-  #  ds$y_pos <- ds$y_pos * spread_factor
-#  }
+  if (config$spread_out_generations == TRUE) {
+    spread_factor <- 1 + ds$y_order / y_order_max *
+      config$spread_out_generations_factor
+   ds$x_pos <- ds$x_pos * spread_factor
+   ds$y_pos <- ds$y_pos * spread_factor
+  }
 
 #  }
 

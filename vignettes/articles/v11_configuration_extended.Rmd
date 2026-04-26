@@ -591,19 +591,26 @@ ggPedigreeInteractive(
 
 ## 9) Layout and coordinate system
 
+In addition to the above options, layout and coordinate system are also configurable via `config`. 
+For example if you are interested in a circular layout, you can set `coord_layout = "radial"` and adjust the minimum radius with `coord_radial_min_radius`. This plot uses polar coordinates to create a circular pedigree layout. 
+
 ```{r}
-tempgg <- ggPedigree(
+ggPedigree(
   potter,
   famID = "famID",
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
   config=list(
-    coord_radial_min_radius = 1,
-    coord_layout = "radial"#,
-    ))
+    coord_radial_min_radius = 1.1,
+  #  coord_radial_scale = 15,
+    coord_layout = "radial",
+    point_scale_by_pedigree = FALSE,
+    label_include = FALSE,
+    spread_out_generations_factor = 1
+    )) +theme_classic()
 
-tempgg
+
 ```
 
 
