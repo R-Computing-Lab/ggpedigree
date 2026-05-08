@@ -176,8 +176,7 @@ ggPedigree.core <- function(ped,
 
   # In radial mode stubs are meaningless (y is no longer the generation axis)
   config$gap_hoff <- if (isTRUE(config$coord_layout == "radial")){
-  #  0
-    0.125 *config$generation_height
+    0.125 * config$generation_height * config$coord_radial_scale
     } else {
       0.5 * config$generation_height
       }
@@ -426,7 +425,6 @@ ggPedigree.core <- function(ped,
       ggplot2::scale_y_reverse(limits = c(
         0,
         min(ds$y_pos, na.rm = TRUE)
-
       ))
   } else {
     p <- p +

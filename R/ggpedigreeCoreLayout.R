@@ -21,9 +21,8 @@
     min_y <- 0
   }
    if (isTRUE(config$coord_layout == "radial")) {
-    offset <- config$coord_radial_min_radius - min_y
-    ds$y_pos <- ds$y_pos + offset
-    ds$y_fam <- ds$y_fam + offset
+    ds$y_pos <- (ds$y_pos - min_y) * config$coord_radial_scale + config$coord_radial_min_radius
+    ds$y_fam <- (ds$y_fam - min_y) * config$coord_radial_scale + config$coord_radial_min_radius
   } else {
     ds$y_pos <- ds$y_pos - min_y
     ds$y_fam <- ds$y_fam - min_y
