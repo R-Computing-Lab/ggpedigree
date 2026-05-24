@@ -16,7 +16,7 @@ test_that("getDefaultPlotConfig returns expected defaults", {
   config <- getDefaultPlotConfig()
 
   expect_true(is.list(config))
-  expect_equal(length(config), 189) # Check number of default parameters
+  expect_equal(length(config), 196) # Check number of default parameters
 
   expect_equal(config$apply_default_scales, TRUE)
   expect_equal(config$apply_default_theme, TRUE)
@@ -141,7 +141,7 @@ test_that("buildPlotConfig handles scaling correctly", {
 
   pedigree_size <- 51
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
-  expect_equal(result$point_size, 0.750, # custom$point_size / sqrt(pedigree_size),
+  expect_equal(result$point_size, 0.850, # custom$point_size / sqrt(pedigree_size),
     tolerance = .05
   )
   expect_equal(result$segment_linewidth, custom$segment_linewidth / sqrt(pedigree_size), tolerance = 1e-8)
@@ -149,13 +149,13 @@ test_that("buildPlotConfig handles scaling correctly", {
 
   pedigree_size <- 300
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
-  expect_equal(result$point_size, max(custom$point_size / sqrt(pedigree_size) * 1.5, .75), tolerance = 1e-8)
+  expect_equal(result$point_size, max(custom$point_size / sqrt(pedigree_size) * 1.5, .85), tolerance = 1e-8)
   expect_equal(result$segment_linewidth, custom$segment_linewidth / sqrt(pedigree_size) * 1.5, tolerance = 1e-8)
   expect_equal(result$segment_self_linewidth, max(custom$segment_self_linewidth / sqrt(pedigree_size) * 1.5, .25), tolerance = 1e-8)
 
   pedigree_size <- 501
   result <- buildPlotConfig(default_config, custom, pedigree_size = pedigree_size)
-  expect_equal(result$point_size, max(custom$point_size / sqrt(pedigree_size) * 2.5, .75), tolerance = 1e-8)
+  expect_equal(result$point_size, max(custom$point_size / sqrt(pedigree_size) * 2.5, .85), tolerance = 1e-8)
   expect_equal(result$segment_linewidth, custom$segment_linewidth / sqrt(pedigree_size) * 2.5, tolerance = 1e-8)
   expect_equal(result$segment_self_linewidth, max(custom$segment_self_linewidth / sqrt(pedigree_size) * 2.5, .25), tolerance = 1e-8)
 })
