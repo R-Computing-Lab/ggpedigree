@@ -602,13 +602,13 @@ ggPedigree(
   momID = "momID",
   dadID = "dadID",
   config=list(
-    coord_radial_min_radius = 1.1,
-  #  coord_radial_scale = 15,
     coord_layout = "radial",
     point_scale_by_pedigree = FALSE,
+    coord_radial_min_radius = 1,
     label_include = FALSE,
-    spread_out_generations_factor = 1
-    )) +theme_classic()
+    spread_out_generations_factor = 12.5,
+    spread_out_generations = TRUE
+    )) #+theme_classic()
 
 
 ```
