@@ -19,5 +19,10 @@ Useful links:
 \author{
 \strong{Maintainer}: S. Mason Garrison \email{garrissm@wfu.edu} (\href{https://orcid.org/0000-0002-4804-6003}{ORCID}) [copyright holder]
 
+Authors:
+\itemize{
+  \item S. Mason Garrison \email{garrissm@wfu.edu} (\href{https://orcid.org/0000-0002-4804-6003}{ORCID}) [copyright holder]
+}
+
 }
 \keyword{internal}

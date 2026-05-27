@@ -2,6 +2,8 @@
 
 S3method("[",pedigree)
 S3method("[",pedigreeList)
+S3method(print,pedigree)
+S3method(print,pedigreeList)
 export(calculateConnections)
 export(calculateCoordinates)
 export(countOffspring)

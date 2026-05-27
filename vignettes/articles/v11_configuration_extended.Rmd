@@ -50,6 +50,7 @@ ggPedigree(
   momID = "momID",
   dadID = "dadID"
 )
+
 ```
 
 ## Sex coding: `code_male` and `code_female`
@@ -588,6 +589,32 @@ ggPedigreeInteractive(
 ```
 
 
+## 9) Layout and coordinate system
+
+In addition to the above options, layout and coordinate system are also configurable via `config`. 
+For example if you are interested in a circular layout, you can set `coord_layout = "radial"` and adjust the minimum radius with `coord_radial_min_radius`. This plot uses polar coordinates to create a circular pedigree layout. 
+
+```{r}
+ggPedigree(
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config=list(
+    coord_layout = "radial",
+    point_scale_by_pedigree = FALSE,
+    coord_radial_min_radius = 1,
+    label_include = FALSE,
+    spread_out_generations_factor = 12.5,
+    spread_out_generations = TRUE
+    )) #+theme_classic()
+
+
+```
+
+
+
 # Saving and loading a config file
 
 If you want to reuse the same overrides across scripts or share them with collaborators, save your config list.
@@ -615,6 +642,8 @@ ggPedigree(
   config = cfg
 )
 ```
+
+
 
 # Config reference
 

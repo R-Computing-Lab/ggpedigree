@@ -85,38 +85,6 @@
 computeCurvedMidpoint <- .computeCurvedMidpoint
 
 
-#' @title Adjust spacing in ggPedigree coordinate columns
-#' @description
-#' Uniformly expands or contracts the horizontal (`x_*`) and vertical (`y_*`)
-#' configuration settings for generation height and width.
-#' @param ds A data frame containing the ggPedigree data.
-#' @inheritParams ggPedigree
-#' @return A data frame with adjusted x and y positions.
-#' @keywords internal
-
-.adjustSpacing <- function(ds, config) {
-  # set shift y to have min at zero
-  min_y <- min(ds$y_pos, na.rm = TRUE)
-  if (min_y > 0) {
-    ds$y_pos <- ds$y_pos - min_y
-    ds$y_fam <- ds$y_fam - min_y
-  }
-
-  # Adjust vertical spacing factor if generation_height ≠ 1
-  if (!isTRUE(all.equal(config$generation_height, 1))) {
-    ds$y_pos <- ds$y_pos * config$generation_height # expand/contract generations
-    ds$y_fam <- ds$y_fam * config$generation_height
-  }
-  # Adjust horizontal spacing factor if generation_width ≠ 1
-  if (!isTRUE(all.equal(config$generation_width, 1))) {
-    ds$x_pos <- ds$x_pos * config$generation_width # expand/contract generations
-    ds$x_fam <- ds$x_fam * config$generation_width
-  }
-  ds
-}
-
-#' @rdname dot-adjustSpacing
-adjustSpacing <- .adjustSpacing
 
 #' @title Restore user-specified column names in a connections data frame
 #' @description

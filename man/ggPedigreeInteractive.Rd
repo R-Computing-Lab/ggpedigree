@@ -10,16 +10,16 @@ ggPedigreeInteractive(
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
-  patID = "patID",
-  matID = "matID",
-  twinID = "twinID",
   spouseID = "spouseID",
+  matID = "matID",
+  patID = "patID",
+  twinID = "twinID",
   status_column = NULL,
   tooltip_columns = NULL,
   focal_fill_column = NULL,
   overlay_column = NULL,
   overlays = NULL,
-  config = list(),
+  config = list(optimize_plotly = TRUE),
   debug = FALSE,
   return_widget = TRUE,
   hints = NULL,
@@ -40,13 +40,13 @@ ggPedigreeInteractive(
 
 \item{dadID}{Character string specifying the column name for father IDs. Defaults to "dadID".}
 
-\item{patID}{Character string specifying the column name for paternal lines Defaults to "patID".}
+\item{spouseID}{Character string specifying the column name for spouse IDs. Defaults to "spouseID".}
 
 \item{matID}{Character string specifying the column name for maternal lines Defaults to "matID".}
 
-\item{twinID}{Character string specifying the column name for twin IDs. Defaults to "twinID".}
+\item{patID}{Character string specifying the column name for paternal lines Defaults to "patID".}
 
-\item{spouseID}{Character string specifying the column name for spouse IDs. Defaults to "spouseID".}
+\item{twinID}{Character string specifying the column name for twin IDs. Defaults to "twinID".}
 
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
 

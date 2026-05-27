@@ -80,6 +80,18 @@
 #' @param ped_packed Whether the pedigree should use packed layout.
 #' @param ped_align Whether to align pedigree generations.
 #' @param ped_width Plot width of the pedigree block.
+#' @param coord_layout Layout mode for the pedigree. Options: "cartesian" (default) or "radial".
+#' @param coord_radial_start_angle Start angle in degrees for the radial layout (default: -90, placing
+#'   the first generation at the top).
+#' @param coord_radial_end_angle End angle in degrees for the radial layout (default: 270, completing
+#'   a full circle back to the top).
+#' @param coord_radial_scale Radius increment per generation unit in the radial layout (default: 1.5).
+#' @param coord_radial_min_radius Minimum radius offset for the innermost generation ring in radial
+#'   layout (default: .85). Prevents the innermost generation from collapsing to the center of the
+#'   circle where nodes would overlap. Increase this value to add more space at the center.
+#' @param spread_out_generations Whether to apply a multiplicative spread factor to generation spacing in radial layout. Default is TRUE.
+#' @param spread_out_generations_factor Multiplicative spread factor used in \code{.applyRadialLayout}
+#'   to push outer generations further from the center (default: 0.5).
 #' @param segment_linewidth Line width for segments. Default is 0.80.
 #' @param segment_linetype Line type for segments. Default is 1 (solid).
 #' @param segment_lineend Line end type for segments. Default is "round".
@@ -297,6 +309,13 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  ped_packed = TRUE,
                                  ped_align = TRUE,
                                  ped_width = 15,
+                                 coord_layout = "cartesian",
+                                 coord_radial_start_angle = -90,
+                                 coord_radial_end_angle = 270,
+                                 coord_radial_scale = 1.5,
+                                 coord_radial_min_radius = .75,
+                                 spread_out_generations = TRUE,
+                                 spread_out_generations_factor = 0.5,
                                  # ---- Segment Drawing Options ----
                                  segment_linewidth = .80,
                                  segment_linetype = 1,
@@ -546,13 +565,20 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
   if (color_theme_lower %in% c(wfu_color_names) ||
       identical(preset, "wfu")) {
 
-    color_pallete_default <- c("gold", "#CFB53B", "#F1E5AC")
-    color_theme  <-  "#b58900"
+    color_pallete_default <- c("#53565A", "#FDC314", "#CEB888")
+    color_theme  <-  "#9E7E38"
     color_palatte_low  <-  "#F1E5AC"
     color_palette_mid  <-  "#CFB53B"
-    color_palette_high  <-  "gold"
+    color_palette_high  <-  "#9E7E38"
     color_scale_theme  <-  "Tableau 20"
-    tile_color_palette <-  c("gold", "#CFB53B", "#F1E5AC")
+    tile_color_palette <-  c("white", "#FDC314", "#53565A")
+     status_color_palette <- c("#FDC314", "#53565A")
+     status_color_affected <- "#FDC314"
+     status_color_unaffected <- "#53565A"
+     focal_fill_high_color <- "#9E7E38"
+     focal_fill_mid_color <- "#CFB53B"
+     focal_fill_low_color <- "#F1E5AC"
+     focal_fill_na_value <- "#222222"
 
 }
 
@@ -763,6 +789,13 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     ped_packed = ped_packed,
     ped_align = ped_align,
     ped_width = ped_width,
+    coord_layout = coord_layout,
+    coord_radial_start_angle = coord_radial_start_angle,
+    coord_radial_end_angle = coord_radial_end_angle,
+    coord_radial_scale = coord_radial_scale,
+    coord_radial_min_radius = coord_radial_min_radius,
+    spread_out_generations = spread_out_generations,
+    spread_out_generations_factor = spread_out_generations_factor,
     hints = hints,
     relation = relation,
     # ---- Debugging Options ----
