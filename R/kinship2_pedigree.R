@@ -564,6 +564,7 @@ pedigree.coerce_relation_code <- function(code) {
 }
 #' @rdname pedigree
 #' @method print pedigree
+#' @exportS3Method print pedigree
 print.pedigree <- function(x, ...) {
   cat("Pedigree object with", length(x$id), "subjects")
   if (!is.null(x$famid)) {
@@ -576,6 +577,7 @@ print.pedigree <- function(x, ...) {
 
 #' @rdname pedigree
 #' @method print pedigreeList
+#' @exportS3Method print pedigreeList
 print.pedigreeList <- function(x, ...) {
   cat(
     "Pedigree list with", length(x$id), "total subjects in",
