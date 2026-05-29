@@ -1,6 +1,7 @@
 # Extended: Plotting pedigrees with ggPedigree()
 
 ``` r
+
 library(ggpedigree) # ggPedigree lives here
 library(BGmisc) # helper utilities & example data
 library(ggplot2) # ggplot2 for plotting
@@ -50,6 +51,7 @@ in family 1 to avoid ID collisions across families.
 Click to expand pedigree setup
 
 ``` r
+
 library(tibble)
 library(dplyr)
 pedigree_df <- tribble(
@@ -154,6 +156,7 @@ is enabled to facilitate fine-tuning of the layout as well as to extract
 coordinates for overlaying additional information.
 
 ``` r
+
 fig1 <- ggPedigree(
   df_fig1,
   famID = "famID",
@@ -213,6 +216,7 @@ fig1$plot + geom_point(aes(x = x_pos, y = y_pos),
 ![](v01_plots_extended_files/figure-html/unnamed-chunk-2-1.png)
 
 ``` r
+
 p2 <- ggPedigree(
   pedigree_df,
   famID = "famID",
@@ -243,6 +247,7 @@ p2 <- ggPedigree(
 We finish by adjusting the legend and shape scale for visual clarity:
 
 ``` r
+
 p2 + scale_shape_manual(
   values = c(16, 15, 14),
   labels = c("Female", "Male", "Unknown")
@@ -273,6 +278,7 @@ marriages. Here the colors are set to be the same for all segments,
 except for self-loops, which are colored purple.
 
 ``` r
+
 library(BGmisc) # helper utilities & example data
 
 data("inbreeding")
@@ -323,6 +329,7 @@ the Dursley and Evans families, while panel (b) shows the full pedigree
 with Molly Weasley’s mitochondrial descendants in gold.
 
 ``` r
+
 library(ggpedigree)
 library(BGmisc) # helper utilities & example data
 library(tidyverse)
@@ -424,6 +431,7 @@ m2 <- ggPedigree(potter,
 ```
 
 ``` r
+
 showtext_auto()
 
 result <- m1 + m2 +

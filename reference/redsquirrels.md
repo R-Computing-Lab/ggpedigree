@@ -110,6 +110,7 @@ Dryad. \<https://doi.org/10.5061/dryad.n5q05\>
 ## Examples
 
 ``` r
+
 # Load the red squirrels datasets
 data(redsquirrels)
 data(redsquirrels_full)

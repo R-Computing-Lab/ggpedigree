@@ -14,6 +14,7 @@ degrees of relatedness.
 Click to expand pedigree setup
 
 ``` r
+
 library(ggpedigree)
 library(BGmisc)
 library(data.table)
@@ -44,6 +45,7 @@ df_links <- com2links(
 ```
 
 ``` r
+
 dataRelatedPair_merge <- df_links %>%
   left_join(ped_filtered %>% select(personID, lrs, ars_n),
     by = c("ID1" = "personID")
@@ -151,6 +153,7 @@ for lifetime reproductive success (LRS) and annual reproductive success
 intervals and p-values.
 
 ``` r
+
 head(result)
 #> # A tibble: 6 × 20
 #>   addRel_factor mtdna   cnu n_pairs addRel_mean addRel_sd addRel_min addRel_max
@@ -170,6 +173,7 @@ head(result)
 ## Phenotypic Correlation by Degree of Relatedness
 
 ``` r
+
 ggPhenotypeByDegree(
   df = result,
   y_var = "cor_lrs",
@@ -195,6 +199,7 @@ ggPhenotypeByDegree(
 Click to expand pedigree setup
 
 ``` r
+
 library(tibble)
 library(dplyr)
 library(ggpedigree)
@@ -235,6 +240,7 @@ df <- pedigree_df <- tribble(
 ```
 
 ``` r
+
 ggPhenotypeByDegree(
   df = df,
   y_var = "USA_flag_10_polychorFunction_rho",

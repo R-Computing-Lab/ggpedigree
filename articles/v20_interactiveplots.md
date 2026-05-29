@@ -14,6 +14,7 @@ Customizing the interactive plot - Adding tooltips for additional
 information
 
 ``` r
+
 # Load required packages
 library(BGmisc) # ships the sample 'potter' pedigree
 library(ggplot2) # used internally by ggPedigree*
@@ -39,6 +40,7 @@ library(ggpedigree) # the package itself
 The package includes a small toy pedigree for the Harry Potter universe:
 
 ``` r
+
 # Load the example data
 data("potter")
 # Display the first few rows of the dataset
@@ -64,6 +66,7 @@ head(potter)
 A minimal call is just:
 
 ``` r
+
 ggPedigreeInteractive(potter)
 ```
 
@@ -71,6 +74,7 @@ ggPedigreeInteractive(potter)
 advance:
 
 ``` r
+
 plt <- ggPedigreeInteractive(
   potter,
   famID    = "famID",
@@ -81,6 +85,7 @@ plt <- ggPedigreeInteractive(
 ```
 
 ``` r
+
 plt
 ```
 

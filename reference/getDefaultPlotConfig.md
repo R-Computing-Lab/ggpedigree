@@ -71,6 +71,13 @@ getDefaultPlotConfig(
   ped_packed = TRUE,
   ped_align = TRUE,
   ped_width = 15,
+  coord_layout = "cartesian",
+  coord_radial_start_angle = -90,
+  coord_radial_end_angle = 270,
+  coord_radial_scale = 1.5,
+  coord_radial_min_radius = 0.75,
+  spread_out_generations = TRUE,
+  spread_out_generations_factor = 0.5,
   segment_linewidth = 0.8,
   segment_linetype = 1,
   segment_lineend = "round",
@@ -176,6 +183,7 @@ getDefaultPlotConfig(
   tile_geom = "geom_tile",
   tile_na_rm = FALSE,
   tile_linejoin = "mitre",
+  matrix_fill_legend_title = "Relatedness",
   matrix_diagonal_include = TRUE,
   matrix_upper_triangle_include = FALSE,
   matrix_lower_triangle_include = TRUE,
@@ -185,6 +193,7 @@ getDefaultPlotConfig(
   return_widget = FALSE,
   return_interactive = FALSE,
   return_mid_parent = FALSE,
+  reduce_variables = TRUE,
   hints = NULL,
   relation = NULL,
   debug = FALSE,
@@ -463,6 +472,43 @@ getDefaultPlotConfig(
 - ped_width:
 
   Plot width of the pedigree block.
+
+- coord_layout:
+
+  Layout mode for the pedigree. Options: "cartesian" (default) or
+  "radial".
+
+- coord_radial_start_angle:
+
+  Start angle in degrees for the radial layout (default: -90, placing
+  the first generation at the top).
+
+- coord_radial_end_angle:
+
+  End angle in degrees for the radial layout (default: 270, completing a
+  full circle back to the top).
+
+- coord_radial_scale:
+
+  Radius increment per generation unit in the radial layout (default:
+  1.5).
+
+- coord_radial_min_radius:
+
+  Minimum radius offset for the innermost generation ring in radial
+  layout (default: .85). Prevents the innermost generation from
+  collapsing to the center of the circle where nodes would overlap.
+  Increase this value to add more space at the center.
+
+- spread_out_generations:
+
+  Whether to apply a multiplicative spread factor to generation spacing
+  in radial layout. Default is TRUE.
+
+- spread_out_generations_factor:
+
+  Multiplicative spread factor used in `.applyRadialLayout` to push
+  outer generations further from the center (default: 0.5).
 
 - segment_linewidth:
 
@@ -892,6 +938,10 @@ getDefaultPlotConfig(
 
   Line join type for matrix tiles. Default is "mitre".
 
+- matrix_fill_legend_title:
+
+  Title for the fill legend in matrix plots. Default is "Relatedness".
+
 - matrix_diagonal_include:
 
   Whether to include diagonal in matrix plots. Default is TRUE.
@@ -928,6 +978,11 @@ getDefaultPlotConfig(
 - return_mid_parent:
 
   Whether to return mid_parent values in the plot.
+
+- reduce_variables:
+
+  Whether to reduce the number of variables passed to the plot for
+  performance optimization. Default is TRUE.
 
 - hints:
 

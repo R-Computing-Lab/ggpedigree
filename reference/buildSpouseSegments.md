@@ -5,7 +5,7 @@ Build spouse segments
 ## Usage
 
 ``` r
-buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
+buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE, config = list())
 ```
 
 ## Arguments
@@ -24,6 +24,11 @@ buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
 
   Logical. If TRUE, use the parent_hash to build segments. If FALSE, use
   the spouseID.
+
+- config:
+
+  List of configuration parameters. Currently unused but passed through
+  to internal helpers.
 
 ## Value
 

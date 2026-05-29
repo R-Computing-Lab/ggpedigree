@@ -33,6 +33,7 @@ You can install the released version of ggpedigree from
 [CRAN](https://cran.r-project.org/) with:
 
 ``` r
+
 install.packages("ggpedigree")
 ```
 
@@ -40,6 +41,7 @@ To install the development version of `ggpedigree` from
 [GitHub](https://github.com/) use:
 
 ``` r
+
 # install.packages("devtools")
 devtools::install_github("R-Computing-Lab/ggpedigree")
 ```
@@ -51,6 +53,7 @@ pedigree structure. The `potter` dataset contains simulated pedigree
 data for the Weasley family from the Harry Potter series.
 
 ``` r
+
 library(ggpedigree) # ggPedigree lives here
 library(BGmisc) # helper utilities & example data
 potter <- BGmisc::potter # load example data
@@ -63,6 +66,7 @@ ggPedigree(potter,
 ![](reference/figures/README-basic-usage-1.png)
 
 ``` r
+
 ggPedigree(potter,
   famID = "famID",
   personID = "personID",

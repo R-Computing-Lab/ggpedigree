@@ -1,6 +1,7 @@
 # Extended: More Complex Pedigree Plots with ggPedigreeInteractive
 
 ``` r
+
 library(ggpedigree) # ggPedigree lives here
 library(BGmisc) # helper utilities & example data
 library(ggplot2) # ggplot2 for plotting
@@ -24,6 +25,7 @@ labels, nudge them upward a little, color by sex, and show both the
 `personID` and name fields in the hover:
 
 ``` r
+
 plt <- ggPedigreeInteractive(
   potter,
   famID = "famID",
@@ -41,6 +43,7 @@ plt <- ggPedigreeInteractive(
 ```
 
 ``` r
+
 plt
 ```
 
@@ -52,6 +55,7 @@ Because the function returns a Plotly object, you can layer additional
 modifications on top:
 
 ``` r
+
 plt2 <- plt %>%
   plotly::layout(
     title = "The Potter Family Tree (interactive)",
@@ -62,12 +66,14 @@ plt2 <- plt %>%
 ```
 
 ``` r
+
 plt2
 ```
 
 You can also save the widget as standalone HTML:
 
 ``` r
+
 htmlwidgets::saveWidget(
   plt,
   file = "potter_interactive.html",
@@ -86,6 +92,7 @@ customized using ggplot2 functions. It can also be plotted using
 retain interactivity.
 
 ``` r
+
 static <- ggPedigreeInteractive(
   potter,
   famID = "famID",
@@ -106,6 +113,7 @@ static <- ggPedigreeInteractive(
 The static plot can be further customized using ggplot2 functions.
 
 ``` r
+
 static_plot <- static +
   ggplot2::labs(
     title = "The Potter Family Tree (static)",
@@ -140,6 +148,7 @@ You can also convert the static plot back to an interactive plot using
 [`plotly::ggplotly()`](https://rdrr.io/pkg/plotly/man/ggplotly.html):
 
 ``` r
+
 plt2 <- plotly::ggplotly(static_plot,
   tooltip = "text",
   width   = NULL,
@@ -148,6 +157,7 @@ plt2 <- plotly::ggplotly(static_plot,
 ```
 
 ``` r
+
 plt2
 ```
 
@@ -159,6 +169,7 @@ function allows you to set various layout options such as title,
 margins, and hover label styles.
 
 ``` r
+
 library(BGmisc)
 data(hazard)
 

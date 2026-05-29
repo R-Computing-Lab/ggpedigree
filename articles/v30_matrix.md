@@ -25,6 +25,7 @@ squirrels from the Kluane Red Squirrel Project (1987–present). See the
 redsquirrels data documentation for more details.
 
 ``` r
+
 library(ggpedigree)
 # Load the example data
 data("redsquirrels")
@@ -37,6 +38,7 @@ relatedness matrices for a target family, as in the red squirrel
 analysis.
 
 ``` r
+
 # sumped <- summarizePedigrees(redsquirrels,
 #  famID = "famID",
 #  personID = "personID",
@@ -65,6 +67,7 @@ show how to create a static plot of the additive genetic relatedness
 matrix.
 
 ``` r
+
 p_add <- ggRelatednessMatrix(
   add_mat,
   interactive = FALSE,
@@ -93,6 +96,7 @@ Here we plot the mitochondrial relatedness matrix with a custom color
 palette and interactive features.
 
 ``` r
+
 p_mit <- ggRelatednessMatrix(
   mit_mat,
   interactive = TRUE,
@@ -115,6 +119,7 @@ each pair of individuals. You can also zoom in and out using the mouse
 wheel or by clicking and dragging.
 
 ``` r
+
 p_mit
 ```
 
@@ -124,6 +129,7 @@ You can adjust clustering, color scales, labels, and more using the
 config list. For example, to turn off clustering:
 
 ``` r
+
 p_add_noclust <- ggRelatednessMatrix(
   add_mat,
   config = list(
@@ -145,6 +151,7 @@ For comparison, here is how the same matrix would be plotted in
 corrplot, as in earlier squirrel analyses:
 
 ``` r
+
 if (requireNamespace("corrplot", quietly = TRUE)) {
   corrplot::corrplot(
     as.matrix(add_mat),

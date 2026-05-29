@@ -18,6 +18,7 @@ showcasing the capabilities of
 ## Basic usage
 
 ``` r
+
 # Install your package from GitHub
 
 library(ggpedigree) # ggPedigree lives here
@@ -33,6 +34,7 @@ We begin by loading the required libraries and examining the structure
 of the built-in `ASOIAF` pedigree.
 
 ``` r
+
 data(ASOIAF)
 ```
 
@@ -41,6 +43,7 @@ and parent identifiers for a subset of characters drawn from the *A Song
 of Ice and Fire* canon.
 
 ``` r
+
 head(ASOIAF)
 #>   id famID momID dadID          name sex
 #> 1  1     1   566   564   Walder Frey   M
@@ -61,6 +64,7 @@ head(ASOIAF)
 ## Data Cleaning
 
 ``` r
+
 df_got <- checkSex(ASOIAF,
   code_male = "M",
   code_female = "F",
@@ -85,6 +89,7 @@ still part of the pedigree structure. This is useful for visualizing
 complex relationships, such as half-siblings or step-siblings.
 
 ``` r
+
 df_repaired <- checkParentIDs(df_got,
   addphantoms = TRUE,
   repair = TRUE,
@@ -111,6 +116,7 @@ serves as a wrapper function from {kinship2} and is useful for quickly
 checking the pedigree structure.
 
 ``` r
+
 library(kinship2)
 kinship2_plotPedigree(df_repaired,
   affected = df_repaired$affected,
@@ -132,6 +138,7 @@ customizable way to visualize pedigrees, allowing for easy integration
 with other `ggplot2` functions.
 
 ``` r
+
 df_repaired <- df_repaired %>% mutate(
   famID = famID_mulit
 )
@@ -165,10 +172,12 @@ pltstatic
 
 ``` r
 
+
 # pltstatic+ facet_wrap(~famID_mulit, drop=TRUE,scales = "free")
 ```
 
 ``` r
+
 df_repaired_renamed <- df_repaired %>% rename(
   personID = ID
 )
@@ -215,6 +224,7 @@ plt
 ```
 
 ``` r
+
 htmlwidgets::saveWidget(plt, "ggpedigreeinteractive_aegon.html", selfcontained = TRUE)
 
 plt <- ggPedigreeInteractive(df_repaired_renamed,
@@ -260,5 +270,6 @@ plt
 ```
 
 ``` r
+
 htmlwidgets::saveWidget(plt, "ggpedigreeinteractive_rh.html", selfcontained = TRUE)
 ```

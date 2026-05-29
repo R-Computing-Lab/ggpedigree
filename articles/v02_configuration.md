@@ -1,6 +1,7 @@
 # Using config to control ggpedigree plots
 
 ``` r
+
 library(ggpedigree) # ggPedigree lives here
 library(BGmisc) # helper utilities & example data
 library(ggplot2) # ggplot2 for plotting
@@ -33,6 +34,7 @@ We will use the `potter` pedigree dataset bundled in
 [BGmisc](https://github.com/R-Computing-Lab/BGmisc/).
 
 ``` r
+
 library(BGmisc)
 data("potter")
 ```
@@ -40,6 +42,7 @@ data("potter")
 A basic pedigree plot uses defaults:
 
 ``` r
+
 ggPedigree(
   potter,
   famID = "famID",
@@ -69,6 +72,7 @@ If your dataset uses different codes (for example `1/2` or `"M"/"F"`),
 override these in `config`.
 
 ``` r
+
 # Example: sex coded as 1 = male, 2 = female
 ggPedigree(
   ped,

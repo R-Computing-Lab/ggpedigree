@@ -63,7 +63,7 @@ Config options include:
 
   Plot title
 
-- matrix_cluster:
+- tile_cluster:
 
   Logical; should rows/cols be clustered (default: TRUE)
 
@@ -91,14 +91,13 @@ colnames(mat) <- paste0("ID", 1:10)
 # Plot the relatedness matrix
 ggRelatednessMatrix(mat,
   config = list(
-    matrix_color_palette = c("white", "gold", "red"),
+    tile_color_palette = c("white", "gold", "red"),
     color_scale_midpoint = 0.5,
-    matrix_cluster = TRUE,
+    tile_cluster = TRUE,
     plot_title = "Relatedness Matrix",
     axis_x_label = "Individuals",
     axis_y_label = "Individuals",
     axis_text_size = 8
   )
 )
-#> Warning: The following config values are not recognized by getDefaultPlotConfig(): matrix_color_palette, matrix_cluster
 ```

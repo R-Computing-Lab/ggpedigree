@@ -1,6 +1,7 @@
 # Extended: More uses of \`config\` to control ggpedigree plots
 
 ``` r
+
 library(ggpedigree) # ggPedigree lives here
 library(BGmisc) # helper utilities & example data
 library(ggplot2) # ggplot2 for plotting
@@ -29,6 +30,7 @@ As before, we will use the `potter` pedigree dataset bundled in
 [BGmisc](https://github.com/R-Computing-Lab/BGmisc/).
 
 ``` r
+
 library(BGmisc)
 data("potter")
 ```
@@ -36,6 +38,7 @@ data("potter")
 A basic pedigree plot uses defaults:
 
 ``` r
+
 ggPedigree(
   potter,
   famID = "famID",
@@ -65,6 +68,7 @@ If your dataset uses different codes (for example `1/2` or `"M"/"F"`),
 override these in `config`.
 
 ``` r
+
 # Example: sex coded as 1 = male, 2 = female
 ggPedigree(
   ped,
@@ -120,6 +124,7 @@ This example customizes labels. Here we label individuals by
 `first_name`, enlarge label text, and nudge the labels down slightly.
 
 ``` r
+
 ggPedigree(
   potter,
   famID = "famID",
@@ -140,6 +145,7 @@ ggPedigree(
 To turn labels off completely:
 
 ``` r
+
 ggPedigree(
   potter,
   famID = "famID",
@@ -155,6 +161,7 @@ ggPedigree(
 You can also use repelled labels to avoid overlaps:
 
 ``` r
+
 ggPedigree(
   potter,
   famID = "famID",
@@ -195,6 +202,7 @@ This example disables automatic point scaling and adds black outlines to
 points.
 
 ``` r
+
 ggPedigree(
   potter,
   famID = "famID",
@@ -228,6 +236,7 @@ This example thickens relationship segments and changes the spouse
 segment color.
 
 ``` r
+
 ggPedigree(
   potter,
   famID = "famID",
@@ -248,6 +257,7 @@ ggPedigree(
 Self-loop geometry is also configurable:
 
 ``` r
+
 ggPedigree(
   inbreeding %>% filter(famID %in% 5),
   famID = "famID",
@@ -287,6 +297,7 @@ shapes from the `ggplot2` shape palette (e.g., 21-25 for filled shapes).
 Here I also disable sex coloring to focus on shapes alone.
 
 ``` r
+
 ggPedigree(
   potter,
   famID = "famID",
@@ -309,6 +320,7 @@ Below, I use a custom color palette for sex as well as emoji shapes for
 fun.
 
 ``` r
+
 plot_ped <- ggPedigree(
   potter,
   famID = "famID",
@@ -361,6 +373,7 @@ Below is a template showing the relevant config keys. Here I use the
 column uses 1 for affected and 0 for unaffected.
 
 ``` r
+
 ggPedigree(
   hazard,
   famID = "famID",
@@ -397,6 +410,7 @@ naturally onto two independent overlays — deceased individuals (a cross)
 and those with a recorded disease onset (a slash):
 
 ``` r
+
 # Derive binary flags from columns already present in hazard
 hazard$deceased <- ifelse(!is.na(hazard$deathYr), 1, 0)
 hazard$onset <- ifelse(!is.na(hazard$onsetYr), 1, 0)
@@ -408,13 +422,15 @@ ggPedigree(
   momID = "momID",
   dadID = "dadID",
   overlays = list(
-    list(column = "deceased", code_affected = 1, shape = "cross", color = "black"),
+    list(column = "deceased", code_affected = 1, shape = "cross", color = "purple"),
     list(column = "onset", code_affected = 1, shape = "slash", color = "red", stroke = 2)
   ),
   config = list(
     code_male       = 0,
     overlay_include = TRUE,
-    overlay_mode    = "shape"
+    overlay_mode    = "shape",
+    reduce_variables  = F,
+    sex_color_include = FALSE
   )
 )
 ```
@@ -433,6 +449,136 @@ A few things to note:
   [`geom_point()`](https://ggplot2.tidyverse.org/reference/geom_point.html)
   layers in list order, so later specs draw on top of earlier ones for
   individuals who satisfy both conditions.
+
+This means that when we have multiple conditions to show, they can be
+layered on top of each other with different shapes and colors. In the
+example above, we have two overlays: one for deceased individuals (a
+purple cross) and another for disease onset (a red slash). Individuals
+who are both deceased and have a recorded disease onset will have both
+shapes drawn on top of their node, allowing us to visually distinguish
+between different combinations of conditions.
+
+Building on the previous example, we can also leverage other config
+options to further customize the plot. For instance we can facet by
+family ID to separate the pedigrees, and we can add labels for maternal
+IDs with custom colors. Here I use
+[`ped2maternal()`](https://r-computing-lab.github.io/BGmisc/reference/ped2maternal.html)
+to add a `matID` column to the `hazard` dataset, which identifies each
+individual’s maternal lineage. Then I use
+[`geom_text()`](https://ggplot2.tidyverse.org/reference/geom_text.html)
+to label each individual with their `matID`, coloring the labels
+randomly in grey or black for visual interest.
+
+``` r
+
+hazard <- ped2maternal(hazard, 
+                       famID = "famID", 
+                       personID = "ID", 
+                       momID = "momID", 
+                       dadID = "dadID")
+hazard$label_color  <- sample(c("grey", "black"), nrow(hazard), replace = TRUE)
+
+
+ggPedigree(
+  hazard,
+  famID = "famID",
+  personID = "ID",
+  momID = "momID",
+  dadID = "dadID",
+  overlays = list(
+    list(column = "deceased", code_affected = 1, shape = "cross", color = "purple"),
+    list(column = "onset", code_affected = 1, shape = "slash", color = "red", stroke = 2)
+  ),
+  config = list(
+    code_male       = 0,
+    overlay_include = TRUE,
+    overlay_mode    = "shape",
+    reduce_variables  = F,
+    sex_color_palette = c("steelblue", "salmon", "grey50")
+  )
+) +
+  facet_wrap(~famID,
+             scales = "free_x") +
+  geom_text(aes(label = matID),
+            color = hazard$label_color,
+            nudge_x = 0.15,
+            nudge_y = 0.15, size = 3)
+#> Warning: Removed 4 rows containing missing values or values outside the scale range
+#> (`geom_text()`).
+```
+
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-13-1.png)
+
+If you want to use standard `ggplot2` geoms such as
+[`geom_text()`](https://ggplot2.tidyverse.org/reference/geom_text.html)
+to add labels, I recommend setting `reduce_variables = FALSE` in
+`config` to prevent the automatic reduction of variables. This allows
+you to retain the all the columns for labeling and faceting. In this
+example, we use
+[`geom_text()`](https://ggplot2.tidyverse.org/reference/geom_text.html)
+to label each individual with their `matID`, and we color the labels
+randomly in grey or black for visual interest.
+
+To illustrate the effect of `reduce_variables`, let us facet by
+generation instead of family ID. With `reduce_variables = FALSE`, the
+black segments connecting individuals follow the nodes to the correct
+panel. In contrast, when `reduce_variables = TRUE`, the segments are
+drawn on all the panels because the generation variable isn’t present in
+the dataframe used for segment drawing.
+
+``` r
+
+
+ggPedigree(
+  hazard,
+  famID = "famID",
+  personID = "ID",
+  momID = "momID",
+  dadID = "dadID",
+  overlays = list(
+    list(column = "deceased", code_affected = 1, shape = "cross", color = "purple"),
+    list(column = "onset", code_affected = 1, shape = "slash", color = "red", stroke = 2)
+  ),
+  config = list(
+    code_male       = 0,
+    overlay_include = TRUE,
+    overlay_mode    = "shape",
+    reduce_variables  = F,
+    sex_color_palette = c("steelblue", "salmon", "grey50")
+  )
+) +
+  facet_wrap(~gen,
+             scales = "free_x")
+```
+
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-14-1.png)
+
+``` r
+
+
+ggPedigree(
+  hazard,
+  famID = "famID",
+  personID = "ID",
+  momID = "momID",
+  dadID = "dadID",
+  overlays = list(
+    list(column = "deceased", code_affected = 1, shape = "cross", color = "purple"),
+    list(column = "onset", code_affected = 1, shape = "slash", color = "red", stroke = 2)
+  ),
+  config = list(
+    code_male       = 0,
+    overlay_include = TRUE,
+    overlay_mode    = "shape",
+    reduce_variables  = T,
+    sex_color_palette = c("steelblue", "salmon", "grey50")
+  )
+) +
+  facet_wrap(~gen,
+             scales = "free_x")
+```
+
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-14-2.png)
 
 ### 6) Focal fill: highlighting relatives of a focal individual
 
@@ -463,6 +609,7 @@ The exact person identifier must match the `personID` column used in the
 plot.
 
 ``` r
+
 ggPedigree(
   potter,
   famID = "famID",
@@ -480,7 +627,7 @@ ggPedigree(
 )
 ```
 
-![](v11_configuration_extended_files/figure-html/unnamed-chunk-13-1.png)
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-15-1.png)
 
 If the plot is dense, it is often helpful to turn labels off or reduce
 their prominence, so the focal fill pattern reads cleanly. Note we can
@@ -488,6 +635,7 @@ also choose different focal components such as `"mitochondrial"`, which
 traces matrilineal relatedness.
 
 ``` r
+
 ggPedigree(
   potter,
   famID = "famID",
@@ -506,7 +654,7 @@ ggPedigree(
 )
 ```
 
-![](v11_configuration_extended_files/figure-html/unnamed-chunk-14-1.png)
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-16-1.png)
 
 #### Choosing the focal fill scale and colors
 
@@ -518,6 +666,7 @@ You can explicitly set the low/mid/high colors used by the focal
 gradient:
 
 ``` r
+
 ggPedigree(
   potter,
   famID = "famID",
@@ -538,7 +687,7 @@ ggPedigree(
 )
 ```
 
-![](v11_configuration_extended_files/figure-html/unnamed-chunk-15-1.png)
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-17-1.png)
 
 #### Discrete focal fill palettes
 
@@ -548,6 +697,7 @@ step-based methods, `focal_fill_n_breaks` controls the number of
 discrete breaks.
 
 ``` r
+
 ggPedigree(
   potter,
   famID = "famID",
@@ -565,7 +715,7 @@ ggPedigree(
 )
 ```
 
-![](v11_configuration_extended_files/figure-html/unnamed-chunk-16-1.png)
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-18-1.png)
 
 #### Handling missing and zero values
 
@@ -576,6 +726,7 @@ used for missing values with `focal_fill_na_value`. The
 missing so they can be filled in using `focal_fill_na_value`.
 
 ``` r
+
 ggPedigree(
   potter,
   famID = "famID",
@@ -592,7 +743,7 @@ ggPedigree(
 )
 ```
 
-![](v11_configuration_extended_files/figure-html/unnamed-chunk-17-1.png)
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-19-1.png)
 
 #### Using viridis-based focal fill
 
@@ -611,6 +762,7 @@ individual’s fill color indicates which patriline they belong to,
 colored using a discrete viridis palette.
 
 ``` r
+
 ggPedigree(
   potter,
   famID = "famID",
@@ -632,7 +784,7 @@ ggPedigree(
 )
 ```
 
-![](v11_configuration_extended_files/figure-html/unnamed-chunk-18-1.png)
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-20-1.png)
 
 ### 7) Global greyscale / black-and-white switch
 
@@ -644,6 +796,7 @@ This triggers coordinated adjustments so the plot remains coherent
 without manually changing multiple palettes.
 
 ``` r
+
 ggPedigree(
   potter,
   famID = "famID",
@@ -662,7 +815,7 @@ ggPedigree(
 )
 ```
 
-![](v11_configuration_extended_files/figure-html/unnamed-chunk-19-1.png)
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-21-1.png)
 
 ### 8) Interactive pedigrees: `ggPedigreeInteractive()`
 
@@ -672,6 +825,7 @@ tooltip selection. Tooltips are controlled primarily through
 `config`.
 
 ``` r
+
 ggPedigreeInteractive(
   potter,
   famID = "famID",
@@ -688,12 +842,41 @@ ggPedigreeInteractive(
 )
 ```
 
+### 9) Layout and coordinate system
+
+In addition to the above options, layout and coordinate system are also
+configurable via `config`. For example if you are interested in a
+circular layout, you can set `coord_layout = "radial"` and adjust the
+minimum radius with `coord_radial_min_radius`. This plot uses polar
+coordinates to create a circular pedigree layout.
+
+``` r
+
+ggPedigree(
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config=list(
+    coord_layout = "radial",
+    point_scale_by_pedigree = FALSE,
+    coord_radial_min_radius = 1,
+    label_include = FALSE,
+    spread_out_generations_factor = 12.5,
+    spread_out_generations = TRUE
+    )) #+theme_classic()
+```
+
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-23-1.png)
+
 ## Saving and loading a config file
 
 If you want to reuse the same overrides across scripts or share them
 with collaborators, save your config list.
 
 ``` r
+
 cfg <- list(
   point_scale_by_pedigree = FALSE,
   point_size = 6,
@@ -717,7 +900,7 @@ ggPedigree(
 )
 ```
 
-![](v11_configuration_extended_files/figure-html/unnamed-chunk-21-1.png)
+![](v11_configuration_extended_files/figure-html/unnamed-chunk-24-1.png)
 
 ## Config reference
 
@@ -728,6 +911,7 @@ programmatically.
 **Show all config keys (names only)**
 
 ``` r
+
 cfg_names <- sort(names(getDefaultPlotConfig("ggPedigree")))
 
 tibble::tibble(Config_Key = cfg_names) %>%
@@ -773,6 +957,11 @@ tibble::tibble(Config_Key = cfg_names) %>%
 | color_scale_midpoint           |
 | color_scale_theme              |
 | color_theme                    |
+| coord_layout                   |
+| coord_radial_end_angle         |
+| coord_radial_min_radius        |
+| coord_radial_scale             |
+| coord_radial_start_angle       |
 | debug                          |
 | drop_classic_kin               |
 | drop_non_classic_sibs          |
@@ -822,6 +1011,7 @@ tibble::tibble(Config_Key = cfg_names) %>%
 | label_text_size                |
 | match_threshold_percent        |
 | matrix_diagonal_include        |
+| matrix_fill_legend_title       |
 | matrix_isChild_method          |
 | matrix_lower_triangle_include  |
 | matrix_sparse                  |
@@ -865,6 +1055,7 @@ tibble::tibble(Config_Key = cfg_names) %>%
 | preset                         |
 | recode_missing_ids             |
 | recode_missing_sex             |
+| reduce_variables               |
 | relation                       |
 | return_interactive             |
 | return_mid_parent              |
@@ -899,6 +1090,8 @@ tibble::tibble(Config_Key = cfg_names) %>%
 | sex_shape_labels               |
 | sex_shape_male                 |
 | sex_shape_unknown              |
+| spread_out_generations         |
+| spread_out_generations_factor  |
 | status_alpha_affected          |
 | status_alpha_unaffected        |
 | status_code_affected           |
@@ -926,3 +1119,219 @@ tibble::tibble(Config_Key = cfg_names) %>%
 | value_rounding_digits          |
 
 **Show all config keys with defaults**
+
+``` r
+
+df<-getDefaultPlotConfig("ggPedigree") %>%
+ # is a list
+  unlist() %>%
+   as.data.frame() %>%
+  rownames_to_column(var = "Config_Key") %>%
+  rename(Default_Value = ".")
+df %>%
+  knitr::kable()
+```
+
+| Config_Key                     | Default_Value  |
+|:-------------------------------|:---------------|
+| apply_default_scales           | TRUE           |
+| segment_default_color          | black          |
+| apply_default_theme            | TRUE           |
+| color_theme                    | color          |
+| color_palette_default1         | \#440154FF     |
+| color_palette_default2         | \#7fd34e       |
+| color_palette_default3         | \#f1e51d       |
+| color_palette_low              | \#000004FF     |
+| color_palette_mid              | \#56106EFF     |
+| color_palette_high             | \#FCFDBFFF     |
+| color_scale_midpoint           | 0.5            |
+| color_scale_theme              | ggthemes::calc |
+| alpha                          | 1              |
+| value_rounding_digits          | 3              |
+| code_male                      | 1              |
+| code_na                        | NA             |
+| code_female                    | 0              |
+| code_unknown                   | NA             |
+| filter_n_pairs                 | 500            |
+| filter_degree_min              | 0              |
+| filter_degree_max              | 7              |
+| drop_classic_kin               | FALSE          |
+| drop_non_classic_sibs          | TRUE           |
+| use_only_classic_kin           | TRUE           |
+| use_relative_degree            | TRUE           |
+| group_by_kin                   | TRUE           |
+| match_threshold_percent        | 10             |
+| max_degree_levels              | 12             |
+| grouping_column                | mtdna_factor   |
+| annotate_include               | TRUE           |
+| annotate_x_shift               | -0.1           |
+| annotate_y_shift               | 0.005          |
+| label_include                  | TRUE           |
+| label_column                   | personID       |
+| label_method                   | geom_text      |
+| label_max_overlaps             | 25             |
+| label_nudge_x                  | 0              |
+| label_nudge_y                  | 0.15           |
+| label_nudge_y_flip             | TRUE           |
+| label_segment_color            | NA             |
+| label_text_angle               | 0              |
+| label_text_size                | 3              |
+| label_text_color               | black          |
+| label_text_family              | sans           |
+| label_scale_by_pedigree        | TRUE           |
+| point_size                     | 6              |
+| point_scale_by_pedigree        | TRUE           |
+| outline_include                | FALSE          |
+| outline_multiplier             | 1.25           |
+| outline_color                  | black          |
+| outline_additional_size        | 0              |
+| outline_alpha                  | 1              |
+| tooltip_include                | TRUE           |
+| tooltip_columns1               | ID1            |
+| tooltip_columns2               | ID2            |
+| tooltip_columns3               | value          |
+| axis_text_angle_x              | 90             |
+| axis_text_angle_y              | 0              |
+| axis_text_size                 | 9              |
+| axis_text_color                | black          |
+| axis_text_family               | sans           |
+| generation_height              | 1              |
+| generation_width               | 1              |
+| segment_linewidth              | 0.8            |
+| segment_linetype               | 1              |
+| segment_lineend                | round          |
+| segment_linejoin               | round          |
+| segment_scale_by_pedigree      | FALSE          |
+| segment_offspring_color        | black          |
+| segment_parent_color           | black          |
+| segment_self_color             | black          |
+| segment_sibling_color          | black          |
+| segment_spouse_color           | black          |
+| segment_mz_color               | black          |
+| segment_mz_linetype            | 1              |
+| segment_mz_alpha               | 1              |
+| segment_mz_t                   | 0.6            |
+| segment_self_linetype          | dotdash        |
+| segment_self_alpha             | 0.5            |
+| segment_self_angle             | 90             |
+| segment_self_curvature         | -0.2           |
+| segment_self_linewidth         | 0.4            |
+| sex_color_include              | TRUE           |
+| sex_legend_title               | Sex            |
+| sex_shape_labels1              | Female         |
+| sex_shape_labels2              | Male           |
+| sex_shape_labels3              | Unknown        |
+| sex_color_palette1             | \#440154FF     |
+| sex_color_palette2             | \#7fd34e       |
+| sex_color_palette3             | \#f1e51d       |
+| sex_shape_female               | 16             |
+| sex_shape_male                 | 15             |
+| sex_shape_unknown              | 18             |
+| sex_legend_show                | FALSE          |
+| sex_shape_include              | TRUE           |
+| status_include                 | TRUE           |
+| status_code_affected           | 1              |
+| status_code_unaffected         | 0              |
+| status_label_affected          | Affected       |
+| status_label_unaffected        | Unaffected     |
+| status_alpha_affected          | 1              |
+| status_alpha_unaffected        | 0              |
+| status_color_palette1          | \#440154FF     |
+| status_color_palette2          | \#7fd34e       |
+| status_color_affected          | black          |
+| status_color_unaffected        | \#7fd34e       |
+| status_shape_affected          | 4              |
+| status_legend_title            | Affected       |
+| status_legend_show             | FALSE          |
+| overlay_shape                  | 4              |
+| overlay_code_affected          | 1              |
+| overlay_code_unaffected        | 0              |
+| overlay_label_affected         | Affected       |
+| overlay_label_unaffected       | Unaffected     |
+| overlay_alpha_unaffected       | 0              |
+| overlay_color                  | black          |
+| overlay_alpha_affected         | 1              |
+| overlay_include                | FALSE          |
+| overlay_mode                   | alpha          |
+| overlay_stroke                 | 1.5            |
+| overlay_legend_title           | Overlay        |
+| overlay_legend_show            | FALSE          |
+| focal_fill_include             | FALSE          |
+| focal_fill_legend_show         | TRUE           |
+| focal_fill_personID            | 1              |
+| focal_fill_legend_title        | Focal Fill     |
+| focal_fill_high_color          | \#FDE725FF     |
+| focal_fill_mid_color           | \#9F2A63FF     |
+| focal_fill_low_color           | \#0D082AFF     |
+| focal_fill_scale_midpoint      | 0.5            |
+| focal_fill_method              | gradient       |
+| focal_fill_component           | additive       |
+| focal_fill_shape               | 21             |
+| focal_fill_na_value            | black          |
+| focal_fill_use_log             | FALSE          |
+| focal_fill_force_zero          | FALSE          |
+| focal_fill_hue_range1          | 0              |
+| focal_fill_hue_range2          | 360            |
+| focal_fill_chroma              | 50             |
+| focal_fill_lightness           | 50             |
+| focal_fill_hue_direction       | horizontal     |
+| focal_fill_viridis_option      | D              |
+| focal_fill_viridis_begin       | 0              |
+| focal_fill_viridis_end         | 1              |
+| focal_fill_viridis_direction   | 1              |
+| ci_include                     | TRUE           |
+| ci_ribbon_alpha                | 0.3            |
+| tile_color_palette1            | white          |
+| tile_color_palette2            | gold           |
+| tile_color_palette3            | red            |
+| tile_color_border              | NA             |
+| tile_cluster                   | TRUE           |
+| tile_interpolate               | TRUE           |
+| tile_geom                      | geom_tile      |
+| tile_na_rm                     | FALSE          |
+| tile_linejoin                  | mitre          |
+| matrix_fill_legend_title       | Relatedness    |
+| matrix_sparse                  | FALSE          |
+| matrix_isChild_method          | partialparent  |
+| matrix_diagonal_include        | TRUE           |
+| matrix_upper_triangle_include  | FALSE          |
+| matrix_lower_triangle_include  | TRUE           |
+| return_static                  | FALSE          |
+| return_widget                  | FALSE          |
+| return_interactive             | FALSE          |
+| return_mid_parent              | FALSE          |
+| reduce_variables               | TRUE           |
+| ped_packed                     | TRUE           |
+| ped_align                      | TRUE           |
+| ped_width                      | 15             |
+| coord_layout                   | cartesian      |
+| coord_radial_start_angle       | -90            |
+| coord_radial_end_angle         | 270            |
+| coord_radial_scale             | 1.5            |
+| coord_radial_min_radius        | 0.75           |
+| spread_out_generations         | TRUE           |
+| spread_out_generations_factor  | 0.5            |
+| override_many2many             | FALSE          |
+| optimize_plotly                | TRUE           |
+| recode_missing_ids             | TRUE           |
+| recode_missing_sex             | TRUE           |
+| add_phantoms                   | FALSE          |
+| debug                          | FALSE          |
+| affected_fill_include          | FALSE          |
+| affected_fill_code_affected    | 1              |
+| affected_fill_code_unaffected  | 0              |
+| affected_fill_label_affected   | Affected       |
+| affected_fill_label_unaffected | Unaffected     |
+| affected_fill_color_affected   | black          |
+| affected_fill_color_unaffected | NA             |
+| affected_fill_shape_female     | 21             |
+| affected_fill_shape_male       | 22             |
+| affected_fill_shape_unknown    | 23             |
+| outline_color_include          | FALSE          |
+| outline_color_code_affected    | 1              |
+| outline_color_code_unaffected  | 0              |
+| outline_color_label_affected   | Highlighted    |
+| outline_color_label_unaffected | Default        |
+| outline_color_affected         | blue           |
+| outline_color_unaffected       | black          |
+| preset                         | none           |

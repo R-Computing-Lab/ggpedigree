@@ -34,6 +34,7 @@ plotting package `ggpedigree`, helper utilities from `BGmisc`, and
 supporting tools for aesthetic and data manipulation.
 
 ``` r
+
 library(ggpedigree) # ggPedigree lives here
 library(BGmisc) # helper utilities & example data
 library(ggplot2) # ggplot2 for plotting
@@ -45,6 +46,7 @@ The simplest usage requires a data frame and column names for family and
 individual IDs. Here’s a basic pedigree plot using the `potter` data:
 
 ``` r
+
 ggPedigree(potter,
   famID = "famID",
   personID = "personID"
@@ -81,6 +83,7 @@ fill color and assign specific colors to connection segments, while also
 changing the shapes of individuals in the pedigree:
 
 ``` r
+
 ggPedigree(
   potter,
   famID = "famID",
@@ -112,6 +115,7 @@ As with any `ggplot2` object, further theming and labeling can be
 applied using layers or themes. For instance:
 
 ``` r
+
 ggPedigree(potter,
   famID = "famID",
   personID = "personID"
@@ -138,6 +142,7 @@ for text rotation, `label_nudge_y` for vertical adjustment, and
 `label_nudge_x` for horizontal adjustment.
 
 ``` r
+
 ggPedigree(
   potter,
   famID = "famID",
@@ -164,6 +169,7 @@ affected/unaffected status. To incorporate this, use the `status_column`
 argument to point to a column containing the relevant variable.
 
 ``` r
+
 data("hazard")
 
 p <- ggPedigree(
@@ -206,6 +212,7 @@ You can control how values are interpreted via the `affected` and
 affected and `FALSE` unaffected.
 
 ``` r
+
 ggPedigree(
   hazard,
   famID = "famID",
@@ -242,6 +249,7 @@ star shape (8) and use the `status_column` argument to indicate the
 probands.
 
 ``` r
+
 df <- potter
 
 df <- df %>%
@@ -283,6 +291,7 @@ component, such as “additive”, which will highlight the additive genetic
 relatives of the focal person.
 
 ``` r
+
 ggPedigree(potter,
   famID = "famID",
   personID = "personID",
@@ -318,6 +327,7 @@ highlight X-linked relatives. The `focal_fill_method` can be set to
 breaks.
 
 ``` r
+
 m1 <- ggPedigree(potter,
   famID = "famID",
   personID = "personID",
@@ -367,6 +377,7 @@ m1 + m2 + plot_layout(ncol = 2) +
 ![](v00_plots_files/figure-html/focal_fill_mitochondrial-1.png)
 
 ``` r
+
 ggPedigree(potter,
   famID = "famID",
   personID = "personID",
@@ -401,6 +412,7 @@ side by side. Note that you can use `scales = "free_x"` to allow each
 family to have its own x-axis scale.
 
 ``` r
+
 p +
   facet_wrap(~famID, scales = "free_x")
 ```
@@ -415,6 +427,7 @@ elements. This doesn’t change the pedigree structure but helps declutter
 the visualization.
 
 ``` r
+
 p +
   theme_bw(base_size = 12) +
   theme(
