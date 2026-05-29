@@ -364,13 +364,15 @@ ggPedigree(
   momID = "momID",
   dadID = "dadID",
   overlays = list(
-    list(column = "deceased", code_affected = 1, shape = "cross", color = "black"),
+    list(column = "deceased", code_affected = 1, shape = "cross", color = "purple"),
     list(column = "onset", code_affected = 1, shape = "slash", color = "red", stroke = 2)
   ),
   config = list(
     code_male       = 0,
     overlay_include = TRUE,
-    overlay_mode    = "shape"
+    overlay_mode    = "shape",
+    reduce_variables  = F,
+    sex_color_include = FALSE
   )
 )
 ```
@@ -380,6 +382,97 @@ A few things to note:
 - **`overlay_mode = "shape"`** must be set in `config` (or via a preset such as `"clinical"`) to activate shape-based rendering. Without it the overlay loop falls back to alpha transparency.
 - Each spec can carry any combination of per-layer overrides. Specs with no override for a key inherit the matching `config$overlay_*` default, so you only need to specify what differs.
 - The specs are rendered as separate `geom_point()` layers in list order, so later specs draw on top of earlier ones for individuals who satisfy both conditions.
+
+This means that when we have multiple conditions to show, they can be layered on top of each other with different shapes and colors. In the example above, we have two overlays: one for deceased individuals (a purple cross) and another for disease onset (a red slash). Individuals who are both deceased and have a recorded disease onset will have both shapes drawn on top of their node, allowing us to visually distinguish between different combinations of conditions.
+
+
+Building on the previous example, we can also leverage other config options to further customize the plot. For instance we can facet by family ID to separate the pedigrees, and we can add labels for maternal IDs with custom colors. Here I use `ped2maternal()` to add a `matID` column to the `hazard` dataset, which identifies each individual's maternal lineage. Then I use `geom_text()` to label each individual with their `matID`, coloring the labels randomly in grey or black for visual interest.
+
+
+```{r}
+hazard <- ped2maternal(hazard, 
+                       famID = "famID", 
+                       personID = "ID", 
+                       momID = "momID", 
+                       dadID = "dadID")
+hazard$label_color  <- sample(c("grey", "black"), nrow(hazard), replace = TRUE)
+
+
+ggPedigree(
+  hazard,
+  famID = "famID",
+  personID = "ID",
+  momID = "momID",
+  dadID = "dadID",
+  overlays = list(
+    list(column = "deceased", code_affected = 1, shape = "cross", color = "purple"),
+    list(column = "onset", code_affected = 1, shape = "slash", color = "red", stroke = 2)
+  ),
+  config = list(
+    code_male       = 0,
+    overlay_include = TRUE,
+    overlay_mode    = "shape",
+    reduce_variables  = F,
+    sex_color_palette = c("steelblue", "salmon", "grey50")
+  )
+) +
+  facet_wrap(~famID,
+             scales = "free_x") +
+  geom_text(aes(label = matID),
+                color = hazard$label_color,
+            nudge_x = 0.15,
+                , nudge_y = 0.15, size = 3)
+```
+
+If you want to use standard `ggplot2` geoms such as `geom_text()` to add labels, I recommend setting `reduce_variables = FALSE` in `config` to prevent the automatic reduction of variables. This allows you to retain the all the columns for labeling and faceting. In this example, we use `geom_text()` to label each individual with their `matID`, and we color the labels randomly in grey or black for visual interest.
+
+To illustrate the effect of `reduce_variables`, let us facet by generation instead of family ID. With `reduce_variables = FALSE`, the black segments connecting individuals follow the nodes to the correct panel. 
+In contrast, when `reduce_variables = TRUE`, the segments are drawn on all the panels because the generation variable isn't present in the dataframe used for segment drawing. 
+
+```{r}
+
+ggPedigree(
+  hazard,
+  famID = "famID",
+  personID = "ID",
+  momID = "momID",
+  dadID = "dadID",
+  overlays = list(
+    list(column = "deceased", code_affected = 1, shape = "cross", color = "purple"),
+    list(column = "onset", code_affected = 1, shape = "slash", color = "red", stroke = 2)
+  ),
+  config = list(
+    code_male       = 0,
+    overlay_include = TRUE,
+    overlay_mode    = "shape",
+    reduce_variables  = F,
+    sex_color_palette = c("steelblue", "salmon", "grey50")
+  )
+) +
+  facet_wrap(~gen,
+             scales = "free_x")
+
+ggPedigree(
+  hazard,
+  famID = "famID",
+  personID = "ID",
+  momID = "momID",
+  dadID = "dadID",
+  overlays = list(
+    list(column = "deceased", code_affected = 1, shape = "cross", color = "purple"),
+    list(column = "onset", code_affected = 1, shape = "slash", color = "red", stroke = 2)
+  ),
+  config = list(
+    code_male       = 0,
+    overlay_include = TRUE,
+    overlay_mode    = "shape",
+    reduce_variables  = T,
+    sex_color_palette = c("steelblue", "salmon", "grey50")
+  )
+) +
+  facet_wrap(~gen,
+             scales = "free_x")
+```
 
 ## 6) Focal fill: highlighting relatives of a focal individual
 
@@ -666,4 +759,15 @@ tibble::tibble(Config_Key = cfg_names) %>%
 
 <summary><strong>Show all config keys with defaults</strong></summary>
 
+
+```{r paged.print=TRUE}
+df<-getDefaultPlotConfig("ggPedigree") %>%
+ # is a list
+  unlist() %>%
+   as.data.frame() %>%
+  rownames_to_column(var = "Config_Key") %>%
+  rename(Default_Value = ".")
+df %>%
+  knitr::kable()
+```
 </details>

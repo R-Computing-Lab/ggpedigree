@@ -3,8 +3,10 @@
 
 ## New features
 * Added more flexibility to overlays, including support for shape-mode overlays with custom numeric codes and colors.
-* Added a new vignette to explain the clinical preset and its features.
+* Added a new vignette section to explain the clinical preset and its features.
 * Add polar coordinates option to ggPedigree and ggPedigreeInteractive
+* Enable support for adding variables to segments in ggPedigree and ggPedigreeInteractive with the config setting of "reduce_variables". Setting this to FALSE allows for custom coloring, styling of segments, and use of ggplot2's aesthetics for segments. (Note: this is an advanced feature that requires familiarity with ggplot2's aesthetics and may not be suitable for all users or datasets. It can be used to create more customized and informative pedigree plots, but may require additional configuration and testing to ensure that the segments are displayed correctly. Use with caution and reach out to the maintainers if you have questions or need assistance with this feature.)
+
 ## Bug fixes
 * Fixed multi-overlay closure bug where all overlays were filtered on the last column in the list due to R's lazy evaluation of function arguments. Local variable assignment now forces evaluation at the correct loop iteration.
 * Fixed `preset` (e.g., `"clinical"`) not being forwarded to `getDefaultPlotConfig()` in `ggPedigree()` and `ggPedigreeInteractive()`, which meant preset-driven settings like `overlay_mode = "shape"` and `overlay_include = TRUE` were silently ignored.

@@ -4,7 +4,7 @@
 \alias{buildSpouseSegments}
 \title{Build spouse segments}
 \usage{
-buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
+buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE, config = list())
 }
 \arguments{
 \item{ped}{A data frame containing the pedigree data. Needs personID, momID, dadID, and sex columns.}
@@ -12,6 +12,8 @@ buildSpouseSegments(ped, connections_for_FOO, use_hash = TRUE)
 \item{connections_for_FOO}{A data frame containing the connections for the spouse segments from parent connections}
 
 \item{use_hash}{Logical. If TRUE, use the parent_hash to build segments. If FALSE, use the spouseID.}
+
+\item{config}{List of configuration parameters. Currently unused but passed through to internal helpers.}
 }
 \value{
 A data frame with the spouse segments

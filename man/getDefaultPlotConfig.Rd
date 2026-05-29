@@ -187,6 +187,7 @@ getDefaultPlotConfig(
   return_widget = FALSE,
   return_interactive = FALSE,
   return_mid_parent = FALSE,
+  reduce_variables = TRUE,
   hints = NULL,
   relation = NULL,
   debug = FALSE,
@@ -591,6 +592,8 @@ Only used when overlay_mode is "shape".}
 \item{return_interactive}{Whether to return an interactive plot.}
 
 \item{return_mid_parent}{Whether to return mid_parent values in the plot.}
+
+\item{reduce_variables}{Whether to reduce the number of variables passed to the plot for performance optimization. Default is TRUE.}
 
 \item{hints}{Optional hints to pass along to kinship2::autohint}
 
