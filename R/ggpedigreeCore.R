@@ -464,12 +464,13 @@ ggPedigree.core <- function(ped,
   if (isTRUE(config$coord_layout == "radial")){
    # p <- p + ggplot2::coord_polar()# +
      # ggplot2::scale_x_continuous(limits = c(0, 360))
-    p <- p + ggplot2::coord_radial(theta = "x",
-                                  # start = -0.4 * pi,
-                                  # end = 2*pi,
-                                   rotate.angle = F,
-                                   inner.radius = .01
-                                   ) #+
+    p <- p + ggplot2::coord_radial(
+      theta = "x",
+      start = config$coord_radial_start_angle * pi / 180,
+      end = config$coord_radial_end_angle * pi / 180,
+      rotate.angle = FALSE,
+      inner.radius = .01
+    )
     # ggplot2::scale_x_continuous(limits = c(0, 360))
   }
 

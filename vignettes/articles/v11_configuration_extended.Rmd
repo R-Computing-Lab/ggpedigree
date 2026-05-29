@@ -419,9 +419,9 @@ ggPedigree(
   facet_wrap(~famID,
              scales = "free_x") +
   geom_text(aes(label = matID),
-                color = hazard$label_color,
+            color = hazard$label_color,
             nudge_x = 0.15,
-                , nudge_y = 0.15, size = 3)
+            nudge_y = 0.15, size = 3)
 ```
 
 If you want to use standard `ggplot2` geoms such as `geom_text()` to add labels, I recommend setting `reduce_variables = FALSE` in `config` to prevent the automatic reduction of variables. This allows you to retain the all the columns for labeling and faceting. In this example, we use `geom_text()` to label each individual with their `matID`, and we color the labels randomly in grey or black for visual interest.

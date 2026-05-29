@@ -87,7 +87,7 @@
 #'   a full circle back to the top).
 #' @param coord_radial_scale Radius increment per generation unit in the radial layout (default: 1.5).
 #' @param coord_radial_min_radius Minimum radius offset for the innermost generation ring in radial
-#'   layout (default: .85). Prevents the innermost generation from collapsing to the center of the
+#'   layout (default: .75). Prevents the innermost generation from collapsing to the center of the
 #'   circle where nodes would overlap. Increase this value to add more space at the center.
 #' @param spread_out_generations Whether to apply a multiplicative spread factor to generation spacing in radial layout. Default is TRUE.
 #' @param spread_out_generations_factor Multiplicative spread factor used in \code{.applyRadialLayout}
@@ -567,9 +567,9 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
   if (color_theme_lower %in% c(wfu_color_names) ||
       identical(preset, "wfu")) {
 
-    color_pallete_default <- c("#53565A", "#FDC314", "#CEB888")
+    color_palette_default <- c("#53565A", "#FDC314", "#CEB888")
     color_theme  <-  "#9E7E38"
-    color_palatte_low  <-  "#F1E5AC"
+    color_palette_low  <-  "#F1E5AC"
     color_palette_mid  <-  "#CFB53B"
     color_palette_high  <-  "#9E7E38"
     color_scale_theme  <-  "Tableau 20"

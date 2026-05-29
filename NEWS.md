@@ -10,7 +10,7 @@
 ## Bug fixes
 * Fixed multi-overlay closure bug where all overlays were filtered on the last column in the list due to R's lazy evaluation of function arguments. Local variable assignment now forces evaluation at the correct loop iteration.
 * Fixed `preset` (e.g., `"clinical"`) not being forwarded to `getDefaultPlotConfig()` in `ggPedigree()` and `ggPedigreeInteractive()`, which meant preset-driven settings like `overlay_mode = "shape"` and `overlay_include = TRUE` were silently ignored.
-* Fixed tile_color_palette not being applied to ggRelatednessMatrix. Instructions were out of data.
+* Fixed tile_color_palette not being applied to ggRelatednessMatrix. Instructions were out of date.
 * Fixed minor issues with ggRelatednessMatrix documentation and examples.
 * Fixed minor issues with ggPhenotypebyDegree documentation and examples.
 
