@@ -80,6 +80,18 @@
 #' @param ped_packed Whether the pedigree should use packed layout.
 #' @param ped_align Whether to align pedigree generations.
 #' @param ped_width Plot width of the pedigree block.
+#' @param coord_layout Layout mode for the pedigree. Options: "cartesian" (default) or "radial".
+#' @param coord_radial_start_angle Start angle in degrees for the radial layout (default: -90, placing
+#'   the first generation at the top).
+#' @param coord_radial_end_angle End angle in degrees for the radial layout (default: 270, completing
+#'   a full circle back to the top).
+#' @param coord_radial_scale Radius increment per generation unit in the radial layout (default: 1.5).
+#' @param coord_radial_min_radius Minimum radius offset for the innermost generation ring in radial
+#'   layout (default: .75). Prevents the innermost generation from collapsing to the center of the
+#'   circle where nodes would overlap. Increase this value to add more space at the center.
+#' @param spread_out_generations Whether to apply a multiplicative spread factor to generation spacing in radial layout. Default is TRUE.
+#' @param spread_out_generations_factor Multiplicative spread factor used in \code{.applyRadialLayout}
+#'   to push outer generations further from the center (default: 0.5).
 #' @param segment_linewidth Line width for segments. Default is 0.80.
 #' @param segment_linetype Line type for segments. Default is 1 (solid).
 #' @param segment_lineend Line end type for segments. Default is "round".
@@ -176,6 +188,7 @@
 #' @param tile_cluster Whether to sort by clusters the matrix.
 #' @param tile_na_rm Whether to remove NA values in matrix tiles. Default is FALSE.
 #' @param tile_linejoin Line join type for matrix tiles. Default is "mitre".
+#' @param matrix_fill_legend_title Title for the fill legend in matrix plots. Default is "Relatedness".
 #' @param matrix_diagonal_include Whether to include diagonal in matrix plots. Default is TRUE.
 #' @param matrix_upper_triangle_include Whether to include upper triangle in matrix plots.
 #' @param matrix_lower_triangle_include Whether to include lower triangle in matrix plots.
@@ -184,6 +197,7 @@
 #'   "partialparent", "fullparent", "anyparent".
 #' @param return_static Whether to return a static plot.
 #' @param return_widget Whether to return a widget object.
+#' @param reduce_variables Whether to reduce the number of variables passed to the plot for performance optimization. Default is TRUE.
 #' @param return_interactive Whether to return an interactive plot.
 #' @param return_mid_parent Whether to return mid_parent values in the plot.
 #' @param optimize_plotly Whether to optimize the plotly output for speed.
@@ -296,6 +310,13 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  ped_packed = TRUE,
                                  ped_align = TRUE,
                                  ped_width = 15,
+                                 coord_layout = "cartesian",
+                                 coord_radial_start_angle = -90,
+                                 coord_radial_end_angle = 270,
+                                 coord_radial_scale = 1.5,
+                                 coord_radial_min_radius = .75,
+                                 spread_out_generations = TRUE,
+                                 spread_out_generations_factor = 0.5,
                                  # ---- Segment Drawing Options ----
                                  segment_linewidth = .80,
                                  segment_linetype = 1,
@@ -418,6 +439,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  tile_na_rm = FALSE,
                                  tile_linejoin = "mitre",
                                  # ---- matrix settings ----
+                                 matrix_fill_legend_title = "Relatedness",
                                  matrix_diagonal_include = TRUE,
                                  matrix_upper_triangle_include = FALSE,
                                  matrix_lower_triangle_include = TRUE,
@@ -428,6 +450,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  return_widget = FALSE,
                                  return_interactive = FALSE,
                                  return_mid_parent = FALSE,
+                                 reduce_variables = TRUE,
                                  # ---- Kinship2 Options ----
                                  hints = NULL,
                                  relation = NULL,
@@ -544,13 +567,20 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
   if (color_theme_lower %in% c(wfu_color_names) ||
       identical(preset, "wfu")) {
 
-    color_pallete_default <- c("gold", "#CFB53B", "#F1E5AC")
-    color_theme  <-  "#b58900"
-    color_palatte_low  <-  "#F1E5AC"
+    color_palette_default <- c("#53565A", "#FDC314", "#CEB888")
+    color_theme  <-  "#9E7E38"
+    color_palette_low  <-  "#F1E5AC"
     color_palette_mid  <-  "#CFB53B"
-    color_palette_high  <-  "gold"
+    color_palette_high  <-  "#9E7E38"
     color_scale_theme  <-  "Tableau 20"
-    tile_color_palette <-  c("gold", "#CFB53B", "#F1E5AC")
+    tile_color_palette <-  c("white", "#FDC314", "#53565A")
+     status_color_palette <- c("#FDC314", "#53565A")
+     status_color_affected <- "#FDC314"
+     status_color_unaffected <- "#53565A"
+     focal_fill_high_color <- "#9E7E38"
+     focal_fill_mid_color <- "#CFB53B"
+     focal_fill_low_color <- "#F1E5AC"
+     focal_fill_na_value <- "#222222"
 
 }
 
@@ -745,6 +775,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     tile_linejoin = tile_linejoin,
 
     # ---- matrix settings ----
+    matrix_fill_legend_title = matrix_fill_legend_title,
     matrix_sparse = matrix_sparse,
     matrix_isChild_method = matrix_isChild_method,
     matrix_diagonal_include = matrix_diagonal_include,
@@ -756,10 +787,18 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     return_widget = return_widget,
     return_interactive = return_interactive,
     return_mid_parent = return_mid_parent,
+    reduce_variables = reduce_variables,
     # ---- Kinship2 Options ----
     ped_packed = ped_packed,
     ped_align = ped_align,
     ped_width = ped_width,
+    coord_layout = coord_layout,
+    coord_radial_start_angle = coord_radial_start_angle,
+    coord_radial_end_angle = coord_radial_end_angle,
+    coord_radial_scale = coord_radial_scale,
+    coord_radial_min_radius = coord_radial_min_radius,
+    spread_out_generations = spread_out_generations,
+    spread_out_generations_factor = spread_out_generations_factor,
     hints = hints,
     relation = relation,
     # ---- Debugging Options ----

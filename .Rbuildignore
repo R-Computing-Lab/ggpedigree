@@ -23,3 +23,6 @@ CITATION.cff$
 \.X$
 \.imgbotconfig$
 ^revdep$
+^codecov\.yaml
+^\.positai$
+^\.claude$

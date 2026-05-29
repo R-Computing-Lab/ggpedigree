@@ -10,14 +10,15 @@ ggPedigreeInteractive(
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
-  patID = "patID",
-  matID = "matID",
-  twinID = "twinID",
   spouseID = "spouseID",
+  matID = "matID",
+  patID = "patID",
+  twinID = "twinID",
   status_column = NULL,
   tooltip_columns = NULL,
   focal_fill_column = NULL,
   overlay_column = NULL,
+  overlays = NULL,
   config = list(optimize_plotly = TRUE),
   debug = FALSE,
   return_widget = TRUE,
@@ -39,13 +40,13 @@ ggPedigreeInteractive(
 
 \item{dadID}{Character string specifying the column name for father IDs. Defaults to "dadID".}
 
-\item{patID}{Character string specifying the column name for paternal lines Defaults to "patID".}
+\item{spouseID}{Character string specifying the column name for spouse IDs. Defaults to "spouseID".}
 
 \item{matID}{Character string specifying the column name for maternal lines Defaults to "matID".}
 
-\item{twinID}{Character string specifying the column name for twin IDs. Defaults to "twinID".}
+\item{patID}{Character string specifying the column name for paternal lines Defaults to "patID".}
 
-\item{spouseID}{Character string specifying the column name for spouse IDs. Defaults to "spouseID".}
+\item{twinID}{Character string specifying the column name for twin IDs. Defaults to "twinID".}
 
 \item{status_column}{Character string specifying the column name for affected status. Defaults to NULL.}
 
@@ -59,6 +60,14 @@ Defaults to NULL, which uses the default tooltip columns.}
 \item{overlay_column}{Character string specifying the column name for overlay alpha values.
 For a single overlay, this is the simplest interface. For multiple overlays, use
 the \code{overlays} parameter instead.}
+
+\item{overlays}{A list of overlay specifications for adding multiple independent overlay
+layers. Each element should be a list with at minimum a \code{column} entry, plus optional
+entries: \code{code_affected}, \code{shape}, \code{color}, \code{size}, \code{stroke},
+\code{mode}. Unspecified entries inherit from the \code{overlay_*} config defaults.
+When \code{overlays} is provided, \code{overlay_column} is ignored.
+Example: \code{overlays = list(list(column = "DECES", shape = "cross"),
+list(column = "PROBAND", shape = 8, color = "red"))}}
 
 \item{config}{A list of configuration options for customizing the plot.
       See getDefaultPlotConfig for details of each option. The list can include:
@@ -127,7 +136,7 @@ ggPedigreeInteractive(
     status_column = "affected",
     label_nudge_y = .25,
     label_include = TRUE,
-    include_tooltip = TRUE,
+    tooltip_include = TRUE,
     label_method = "geom_text",
     sex_color_include = TRUE
   ),

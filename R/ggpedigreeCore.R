@@ -73,6 +73,12 @@ ggPedigree.core <- function(ped,
     # names(ped)[names(ped) == sexVar] <- "sex"
     ped$sex <- ped[[sexVar]]
   }
+
+  if(config$coord_layout == "radial"){
+    # In radial layout, the generation axis is reversed (older generations have higher y values)
+    config$generation_height <- -1 * config$generation_height
+  }
+
   # -----
   # STEP 2+3: Pedigree Data Transformation and Data Cleaning and Recoding
   # -----
@@ -123,7 +129,6 @@ ggPedigree.core <- function(ped,
   # Apply spacing factors
   ds <- .adjustSpacing(ds = ds, config = config)
 
-
   # -----
   # STEP 5: Compute Relationship Connections
   # -----
@@ -163,14 +168,21 @@ ggPedigree.core <- function(ped,
     famID = famID # ,
     #   sexVar = sexVar
   )
-
-
   # -----
   # STEP 6: Initialize Plot
   # -----
 
-  config$gap_hoff <- 0.5 * config$generation_height # single constant for all “stub” offsets
-  config$gap_woff <- 0.5 * config$generation_width # single constant for all “stub” offsets
+  # In radial mode stubs are meaningless (y is no longer the generation axis)
+  config$gap_hoff <- if (isTRUE(config$coord_layout == "radial")){
+    0.125 * config$generation_height * config$coord_radial_scale
+    } else {
+      0.5 * config$generation_height
+      }
+  config$gap_woff <- if (isTRUE(config$coord_layout == "radial")){
+  #  0
+    0.125 *config$generation_width
+  }else {0.5 * config$generation_width
+      }
 
   # recode missing sex to "unknown"
   if (config$recode_missing_sex == TRUE && any(is.na(ds$sex))) {
@@ -406,6 +418,12 @@ ggPedigree.core <- function(ped,
     )
     p <- p +
       ggplot2::scale_y_reverse()
+  } else if(isTRUE(config$coord_layout == "radial")){
+    p <- p +
+      ggplot2::scale_y_reverse(limits = c(
+        0,
+        min(ds$y_pos, na.rm = TRUE)
+      ))
   } else {
     p <- p +
       ggplot2::scale_y_reverse(limits = c(
@@ -443,6 +461,20 @@ ggPedigree.core <- function(ped,
       outline_color_column = outline_color_column
     )
   }
+  if (isTRUE(config$coord_layout == "radial")){
+   # p <- p + ggplot2::coord_polar()# +
+     # ggplot2::scale_x_continuous(limits = c(0, 360))
+    p <- p + ggplot2::coord_radial(
+      theta = "x",
+      start = config$coord_radial_start_angle * pi / 180,
+      end = config$coord_radial_end_angle * pi / 180,
+      rotate.angle = FALSE,
+      inner.radius = .01
+    )
+    # ggplot2::scale_x_continuous(limits = c(0, 360))
+  }
+
+
   # add plot_connections to the plot object
   attr(p, "connections") <- plot_connections
   if (config$debug == TRUE) {
@@ -723,583 +755,3 @@ addOverlay <- .addOverlay
 
 #' @rdname dot-addShapeOverlay
 addShapeOverlay <- .addShapeOverlay
-
-
-#' @title Add Self Segments to ggplot Pedigree Plot
-#' @inheritParams ggPedigree
-#' @param plotObject A ggplot object.
-#' @keywords internal
-#' @return A ggplot object with added scales.
-
-.addSelfSegment <- function(plotObject, config, plot_connections) {
-  otherself <- plot_connections$self_coords |>
-    dplyr::filter(!is.na(.data$x_otherself)) |>
-    dplyr::mutate(otherself_xkey = .makeSymmetricKey(.data$x_otherself, .data$x_pos)) |>
-    # unique combinations of x_otherself and x_pos and y_otherself and y_pos
-    dplyr::distinct(.data$otherself_xkey, .keep_all = TRUE) |>
-    unique()
-  if (config$return_interactive == FALSE) {
-    plotObject <- plotObject + ggplot2::geom_curve(
-      data = otherself,
-      ggplot2::aes(
-        x = .data$x_otherself,
-        xend = .data$x_pos,
-        y = .data$y_otherself,
-        yend = .data$y_pos
-      ),
-      linewidth = config$segment_self_linewidth,
-      color = config$segment_self_color,
-      lineend = config$segment_lineend,
-      #  linejoin = config$segment_linejoin,
-      linetype = config$segment_self_linetype,
-      angle = config$segment_self_angle,
-      curvature = config$segment_self_curvature,
-      alpha = config$segment_self_alpha,
-      na.rm = TRUE
-    )
-  } else if (config$return_interactive == TRUE) {
-    # For interactive plots, use geom_segment instead of geom_curve
-    # to avoid issues with plotly rendering curves
-
-    otherself <- otherself |>
-      dplyr::mutate(
-        midpoint = .computeCurvedMidpoint(
-          x0 = .data$x_otherself,
-          y0 = .data$y_otherself,
-          x1 = .data$x_pos,
-          y1 = .data$y_pos,
-          curvature = config$segment_self_curvature,
-          angle = config$segment_self_angle,
-          t = .35
-        ),
-        x_1midpoint = .data$midpoint$x,
-        y_1midpoint = .data$midpoint$y
-      ) |>
-      dplyr::mutate(
-        midpoint = .computeCurvedMidpoint(
-          x0 = .data$x_otherself,
-          y0 = .data$y_otherself,
-          x1 = .data$x_pos,
-          y1 = .data$y_pos,
-          curvature = config$segment_self_curvature,
-          angle = config$segment_self_angle,
-          t = .5
-        ),
-        x_2midpoint = .data$midpoint$x,
-        y_2midpoint = .data$midpoint$y
-      ) |>
-      dplyr::mutate(
-        midpoint = .computeCurvedMidpoint(
-          x0 = .data$x_otherself,
-          y0 = .data$y_otherself,
-          x1 = .data$x_pos,
-          y1 = .data$y_pos,
-          curvature = config$segment_self_curvature,
-          angle = config$segment_self_angle,
-          t = .7
-        ),
-        x_3midpoint = .data$midpoint$x,
-        y_3midpoint = .data$midpoint$y
-      ) |>
-      dplyr::select(-"midpoint")
-
-    # Add segments in four parts to approximate a curve
-    plotObject <- plotObject + ggplot2::geom_segment(
-      data = otherself,
-      ggplot2::aes(
-        x = .data$x_otherself,
-        xend = .data$x_1midpoint,
-        y = .data$y_otherself,
-        yend = .data$y_1midpoint
-      ),
-      linewidth = config$segment_self_linewidth,
-      color = config$segment_self_color,
-      lineend = config$segment_lineend,
-      linejoin = config$segment_linejoin,
-      linetype = config$segment_self_linetype,
-      alpha = config$segment_self_alpha,
-      na.rm = TRUE
-    ) + ggplot2::geom_segment(
-      data = otherself,
-      ggplot2::aes(
-        xend = .data$x_2midpoint,
-        x = .data$x_1midpoint,
-        yend = .data$y_2midpoint,
-        y = .data$y_1midpoint
-      ),
-      linewidth = config$segment_self_linewidth,
-      color = config$segment_self_color,
-      lineend = config$segment_lineend,
-      linejoin = config$segment_linejoin,
-      linetype = config$segment_self_linetype,
-      alpha = config$segment_self_alpha,
-      na.rm = TRUE
-    ) + ggplot2::geom_segment(
-      data = otherself,
-      ggplot2::aes(
-        xend = .data$x_3midpoint,
-        x = .data$x_2midpoint,
-        yend = .data$y_3midpoint,
-        y = .data$y_2midpoint
-      ),
-      linewidth = config$segment_self_linewidth,
-      color = config$segment_self_color,
-      lineend = config$segment_lineend,
-      linejoin = config$segment_linejoin,
-      linetype = config$segment_self_linetype,
-      alpha = config$segment_self_alpha,
-      na.rm = TRUE
-    ) + ggplot2::geom_segment(
-      data = otherself,
-      ggplot2::aes(
-        x = .data$x_3midpoint,
-        xend = .data$x_pos,
-        y = .data$y_3midpoint,
-        yend = .data$y_pos
-      ),
-      linewidth = config$segment_self_linewidth,
-      color = config$segment_self_color,
-      lineend = config$segment_lineend,
-      linejoin = config$segment_linejoin,
-      linetype = config$segment_self_linetype,
-      alpha = config$segment_self_alpha,
-      na.rm = TRUE
-    )
-  }
-  plotObject
-}
-
-#' @rdname dot-addSelfSegment
-addSelfSegment <- .addSelfSegment
-
-#' @title Add Scales to ggplot Pedigree Plot
-#' @inheritParams ggPedigree
-#' @param plotObject A ggplot object.
-#' @keywords internal
-#' @return A ggplot object with added scales.
-
-.addScales <- function(plotObject,
-                       config,
-                       status_column = NULL,
-                       focal_fill_column = NULL,
-                       affected_fill_column = NULL,
-                       outline_color_column = NULL) {
-  # Handle affected fill mode: use fillable shapes and fill scale
-  if (!is.null(affected_fill_column)) {
-    affected_fill_code <- config$affected_fill_code_affected
-    fill_color_affected <- config$affected_fill_color_affected
-    fill_color_unaffected <- config$affected_fill_color_unaffected
-
-    # Use fillable shapes (21=circle, 22=square, 23=diamond) for affected fill mode
-    fill_shape_values <- c(
-      config$affected_fill_shape_female,
-      config$affected_fill_shape_male,
-      config$affected_fill_shape_unknown
-    )
-    plotObject <- plotObject + ggplot2::scale_shape_manual(
-      values = fill_shape_values,
-      labels = config$sex_shape_labels
-    )
-    # Build fill scale: affected code gets affected color; all other levels get unaffected color
-    all_levels <- levels(plotObject$data[[affected_fill_column]])
-    if (is.null(all_levels)) {
-      all_levels <- unique(as.character(plotObject$data[[affected_fill_column]]))
-    }
-    fill_vals <- stats::setNames(
-      ifelse(
-        all_levels == as.character(affected_fill_code),
-        fill_color_affected,
-        fill_color_unaffected
-      ),
-      all_levels
-    )
-    plotObject <- plotObject + ggplot2::scale_fill_manual(
-      values = fill_vals,
-      na.value = NA,
-      guide = "none"
-    )
-  } else {
-    # Standard shape scale
-    plotObject <- plotObject + ggplot2::scale_shape_manual(
-      values = config$sex_shape_values,
-      labels = config$sex_shape_labels
-    )
-  }
-
-  # Handle outline color column
-  if (!is.null(outline_color_column)) {
-    highlight_val <- as.character(config$outline_color_code_affected)
-    highlight_color <- config$outline_color_affected
-    default_color <- config$outline_color_unaffected
-
-    all_levels <- levels(plotObject$data[[outline_color_column]])
-    if (is.null(all_levels)) {
-      all_levels <- unique(as.character(plotObject$data[[outline_color_column]]))
-    }
-    color_vals <- stats::setNames(
-      ifelse(all_levels == highlight_val, highlight_color, default_color),
-      all_levels
-    )
-    plotObject <- plotObject + ggplot2::scale_color_manual(
-      values = color_vals,
-      guide = "none"
-    )
-    plotObject <- plotObject + ggplot2::labs(
-      shape = if (isTRUE(config$sex_legend_show)) config$sex_legend_title else NULL
-    )
-    return(plotObject)
-  }
-
-  # Add alpha scale for affected status if applicable
-  if (!is.null(status_column) &&
-    config$sex_color_include == TRUE &&
-    config$status_include == TRUE) {
-    plotObject <- plotObject + ggplot2::scale_alpha_manual(
-      name = if (config$status_legend_show) {
-        config$status_legend_title
-      } else {
-        NULL
-      },
-      values = config$status_alpha_values,
-      na.translate = FALSE
-    )
-    if (config$status_legend_show == FALSE) {
-      plotObject <- plotObject + ggplot2::guides(alpha = "none")
-    }
-  }
-
-
-  color_mode <- .get_color_mode(config, status_column, focal_fill_column)
-
-  plotObject <- switch(color_mode,
-    sex = .add_sex_scales(plotObject, config),
-    focal_fill = .add_focal_fill_scales(plotObject, config),
-    status = .add_status_scales(plotObject, config),
-    none = {
-      plotObject + ggplot2::labs(
-        shape = if (isTRUE(config$sex_legend_show)) config$sex_legend_title else NULL
-      )
-    }
-  )
-
-  plotObject
-}
-
-
-.add_sex_scales <- function(p, config) {
-  if (!is.null(config$sex_color_palette)) {
-    p <- p + ggplot2::scale_color_manual(
-      values = config$sex_color_palette,
-      labels = config$sex_shape_labels
-    )
-  } else {
-    p <- p + ggplot2::scale_color_discrete(labels = config$sex_shape_labels)
-  }
-
-  p <- p + ggplot2::labs(
-    color = config$sex_legend_title,
-    shape = config$sex_legend_title
-  )
-
-  if (isFALSE(config$sex_legend_show)) {
-    p <- p + ggplot2::guides(color = "none", shape = "none")
-  }
-  p
-}
-
-.add_status_scales <- function(p, config) {
-  if (!is.null(config$status_color_palette)) {
-    p <- p + ggplot2::scale_color_manual(
-      values = config$status_color_values,
-      labels = config$status_labels
-    )
-  } else {
-    p <- p + ggplot2::scale_color_discrete(labels = config$status_labels)
-  }
-
-  p <- p + ggplot2::labs(
-    color = config$status_legend_title,
-    shape = if (isTRUE(config$sex_legend_show)) config$sex_legend_title else NULL
-  )
-  p
-}
-
-.add_focal_fill_scales <- function(p, config) {
-  method <- config$focal_fill_method
-
-  scale_fun <- .pick_first(
-    rules = list(
-      list(
-        when = function() method %in% c("steps", "steps2", "step", "step2"),
-        do = function() {
-          ggplot2::scale_colour_steps2(
-            low = config$focal_fill_low_color,
-            mid = config$focal_fill_mid_color,
-            high = config$focal_fill_high_color,
-            midpoint = config$focal_fill_scale_midpoint,
-            n.breaks = config$focal_fill_n_breaks,
-            na.value = config$focal_fill_na_value,
-            transform = ifelse(config$focal_fill_use_log, "log2", "identity")
-          )
-        }
-      ),
-      list(
-        when = function() method %in% c("gradient2", "gradient"),
-        do = function() {
-          ggplot2::scale_colour_gradient2(
-            low = config$focal_fill_low_color,
-            mid = config$focal_fill_mid_color,
-            high = config$focal_fill_high_color,
-            midpoint = config$focal_fill_scale_midpoint,
-            n.breaks = config$focal_fill_n_breaks,
-            na.value = config$focal_fill_na_value,
-            transform = ifelse(config$focal_fill_use_log, "log2", "identity")
-          )
-        }
-      ),
-      list(
-        when = function() method %in% c("hue"),
-        do = function() {
-          ggplot2::scale_color_hue(
-            h = config$focal_fill_hue_range,
-            c = config$focal_fill_chroma,
-            l = config$focal_fill_lightness,
-            direction = config$focal_fill_hue_direction,
-            na.value = config$focal_fill_na_value
-          )
-        }
-      ),
-      list(
-        when = function() method %in% c("viridis_c"),
-        do = function() {
-          ggplot2::scale_colour_viridis_c(
-            option = config$focal_fill_viridis_option,
-            begin = config$focal_fill_viridis_begin,
-            end = config$focal_fill_viridis_end,
-            direction = config$focal_fill_viridis_direction,
-            na.value = config$focal_fill_na_value,
-            transform = ifelse(config$focal_fill_use_log, "log2", "identity")
-          )
-        }
-      ),
-      list(
-        when = function() method %in% c("viridis_d"),
-        do = function() {
-          ggplot2::scale_colour_viridis_d(
-            option = config$focal_fill_viridis_option,
-            begin = config$focal_fill_viridis_begin,
-            end = config$focal_fill_viridis_end,
-            direction = config$focal_fill_viridis_direction,
-            na.value = config$focal_fill_na_value
-          )
-        }
-      ),
-      list(
-        when = function() method %in% c("viridis_b"),
-        do = function() {
-          ggplot2::scale_colour_viridis_b(
-            option = config$focal_fill_viridis_option,
-            begin = config$focal_fill_viridis_begin,
-            end = config$focal_fill_viridis_end,
-            direction = config$focal_fill_viridis_direction,
-            na.value = config$focal_fill_na_value,
-            transform = ifelse(config$focal_fill_use_log, "log2", "identity")
-          )
-        }
-      ),
-      list(
-        when = function() method %in% c("manual"),
-        do = function() {
-          ggplot2::scale_color_manual(
-            values = config$focal_fill_color_values,
-            labels = config$focal_fill_labels
-          )
-        }
-      )
-    ),
-    default = NULL
-  )
-
-  if (is.null(scale_fun)) {
-    focal_fill_methods <- c(
-      "steps", "steps2", "step", "step2",
-      "viridis_c", "viridis_d", "viridis_b",
-      "manual",
-      "hue",
-      "gradient2", "gradient"
-    )
-    stop(paste("focal_fill_method must be one of", paste(focal_fill_methods, collapse = ", ")))
-  }
-
-  p <- p + scale_fun()
-
-  p <- p + ggplot2::labs(
-    color = if (isTRUE(config$focal_fill_legend_show)) config$focal_fill_legend_title else NULL,
-    shape = if (isTRUE(config$sex_legend_show)) config$sex_legend_title else NULL
-  )
-
-  if (isFALSE(config$focal_fill_legend_show)) {
-    p <- p + ggplot2::guides(color = "none")
-  }
-  if (isFALSE(config$sex_legend_show)) {
-    p <- p + ggplot2::guides(shape = "none")
-  }
-  p
-}
-
-
-#' @rdname dot-addScales
-addScales <- .addScales
-
-#' @title Add Labels to ggplot Pedigree Plot
-#' @inheritParams ggPedigree
-#' @inheritParams .addScales
-#'
-#' @return A ggplot object with added labels.
-#' @keywords internal
-#'
-.addLabels <- function(plotObject, config) {
-  ggrepel_label_methods <- c("geom_text_repel", "ggrepel", "geom_label_repel")
-  if (!requireNamespace("ggrepel", quietly = TRUE) &&
-    config$label_method %in% ggrepel_label_methods) {
-    warning(
-      "The 'ggrepel' package is required for label methods ",
-      "'geom_text_repel', 'ggrepel', and 'geom_label_repel'. ",
-      "Please install it using install.packages('ggrepel')."
-    )
-
-    config$label_method <- "geom_text" # fallback to geom_text if ggrepel is not available
-  }
-
-  if (config$label_method %in% ggrepel_label_methods &&
-    requireNamespace("ggrepel", quietly = TRUE)) {
-    # If ggrepel is available, use geom_text_repel or geom_label_repel
-    # for better label placement and avoidance of overlaps
-    plotObject <- plotObject +
-      ggrepel::geom_text_repel(
-        ggplot2::aes(label = !!rlang::sym(config$label_column)),
-        nudge_y = config$label_nudge_y * config$generation_height,
-        nudge_x = config$label_nudge_x * config$generation_width,
-        size = config$label_text_size,
-        color = config$label_text_color,
-        na.rm = TRUE,
-        max.overlaps = config$label_max_overlaps,
-        segment.size = config$segment_linewidth * .5,
-        angle = config$label_text_angle,
-        family = config$label_text_family,
-        segment.color = config$label_segment_color
-      )
-  } else if (config$label_method == "geom_label") {
-    plotObject <- plotObject +
-      ggplot2::geom_label(
-        ggplot2::aes(label = !!rlang::sym(config$label_column)),
-        nudge_y = config$label_nudge_y * config$generation_height,
-        nudge_x = config$label_nudge_x * config$generation_width,
-        color = config$label_text_color,
-        size = config$label_text_size,
-        family = config$label_text_family,
-        angle = config$label_text_angle,
-        na.rm = TRUE
-      )
-  } else if (config$label_method == "geom_text") {
-    plotObject <- plotObject +
-      ggplot2::geom_text(
-        ggplot2::aes(label = !!rlang::sym(config$label_column)),
-        nudge_y = config$label_nudge_y * config$generation_height,
-        nudge_x = config$label_nudge_x * config$generation_width,
-        color = config$label_text_color,
-        family = config$label_text_family,
-        size = config$label_text_size,
-        angle = config$label_text_angle,
-        na.rm = TRUE
-      )
-  } else {
-    warning(
-      "Invalid label_method specified in config. Must be one of ",
-      "'geom_text_repel', 'ggrepel', 'geom_label_repel', 'geom_label', or 'geom_text'."
-    )
-  }
-  plotObject
-}
-
-#' @rdname dot-addLabels
-addLabels <- .addLabels
-
-
-#' @title Add Twins to ggplot Pedigree Plot
-#' @description
-#' Adds twin connections to the ggplot pedigree plot.
-#' This function modifies the `plotObject` by adding segments
-#' to represent twin relationships.
-#' @inheritParams ggPedigree
-#' @param plotObject A ggplot object to which twin segments will be added.
-#' @param connections A data frame containing twin connection coordinates.
-#' @param plot_connections A data frame containing the coordinates for twin segments.
-#' @keywords internal
-#' @return A ggplot object with twin segments added.
-
-.addTwins <- function(plotObject,
-                      connections,
-                      config,
-                      plot_connections,
-                      personID = "personID") {
-  # Sibling vertical drop line
-  # special handling for twin sibling
-
-  plotObject <- plotObject + ggplot2::geom_segment(
-    data = plot_connections$twin_coords,
-    ggplot2::aes(
-      x = .data$x_mid_twin,
-      xend = .data$x_mid_sib,
-      y = .data$y_mid_twin - config$gap_hoff,
-      yend = .data$y_mid_sib - config$gap_hoff
-    ),
-    linewidth = config$segment_linewidth,
-    lineend = config$segment_lineend,
-    linejoin = config$segment_linejoin,
-    linetype = config$segment_linetype,
-    color = config$segment_offspring_color,
-    na.rm = TRUE
-  ) +
-    ggplot2::geom_segment(
-      data = plot_connections$twin_coords,
-      ggplot2::aes(
-        x = .data$x_pos,
-        xend = .data$x_mid_twin,
-        y = .data$y_pos,
-        yend = .data$y_mid_twin - config$gap_hoff
-      ),
-      linewidth = config$segment_linewidth,
-      lineend = config$segment_lineend,
-      linejoin = config$segment_linejoin,
-      linetype = config$segment_linetype,
-      color = config$segment_sibling_color,
-      na.rm = TRUE
-    )
-
-  if ("mz" %in% names(plot_connections$twin_coords) &&
-    any(plot_connections$twin_coords$mz == TRUE, na.rm = TRUE)) {
-    plotObject <- plotObject + # horizontal line to twin midpoint for MZ twins
-      ggplot2::geom_segment(
-        data = plot_connections$twin_coords |>
-          dplyr::filter(.data$mz == TRUE),
-        ggplot2::aes(
-          x = .data$x_start,
-          xend = .data$x_end,
-          y = .data$y_start,
-          yend = .data$y_end
-        ),
-        linewidth = config$segment_linewidth,
-        lineend = config$segment_lineend,
-        linejoin = config$segment_linejoin,
-        linetype = config$segment_mz_linetype,
-        color = config$segment_mz_color,
-        alpha = config$segment_mz_alpha,
-        na.rm = TRUE
-      )
-  }
-
-  plotObject
-}
-#' @rdname dot-addTwins
-addTwins <- .addTwins

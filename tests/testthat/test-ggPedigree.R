@@ -498,3 +498,24 @@ test_that("behaves with kinship 2 pedigree object", {
     )
   )
 })
+
+
+test_that("reduce_variables reduces object size", {
+  library(BGmisc)
+
+  data("potter") # load example data from BGmisc
+  # Stub requireNamespace inside ggPedigree to simulate plotly not installed
+
+  p_reduced <- ggPedigree(potter, config = list(reduce_variables = FALSE))
+  p <- ggPedigree(potter, config = list(reduce_variables = TRUE))
+
+  expect_s3_class(p, "gg") # Should return a ggplot object
+  expect_s3_class(p_reduced, "gg") # Should return a ggplot object
+
+
+  p_build <- ggplot2::ggplot_build(p)
+  p_reduced_build <- ggplot2::ggplot_build(p_reduced)
+  # get file size of ggplot objects
+  expect_true(object.size(p_build) < object.size(p_reduced_build)) # reduced plot should be smaller in size
+
+})

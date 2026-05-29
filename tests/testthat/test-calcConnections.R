@@ -1,11 +1,30 @@
+
+abcdx_ped <- data.frame(
+  personID = c("A", "B", "C", "D", "X"),
+  momID = c(NA, "A", "A", "C", NA),
+  dadID = c(NA, "X", "X", "B", NA),
+  spouseID = c("X", "C", "B", NA, "A"),
+  sex = c("F", "M", "F", "F", "M")
+)
+
+abc_ped <- data.frame(
+  personID = c("A", "B", "C"),
+  momID = c(NA, NA, "A"),
+  dadID = c(NA, NA, "B"),
+  spouseID = c("B", "A", NA),
+  sex = c("F", "M", "F")
+)
+
+ab_ped <- abc_ped[1:2, ]
+
+abc_ped_pos <- abc_ped
+abc_ped_pos$x_pos = c(1, 3, 2)
+abc_ped_pos$y_pos = c(1, 1, 2)
+
+
+
 test_that("calculateConnections returns expected columns and structure", {
-  ped <- data.frame(
-    personID = c("A", "B", "C", "D", "X"),
-    momID = c(NA, "A", "A", "C", NA),
-    dadID = c(NA, "X", "X", "B", NA),
-    spouseID = c("X", "C", "B", NA, "A"),
-    sex = c("F", "M", "F", "F", "M")
-  )
+  ped <- abcdx_ped
 
   ped <- calculateCoordinates(ped,
     personID = "personID",
@@ -38,13 +57,9 @@ test_that("calculateConnections returns expected columns and structure", {
 })
 
 test_that("calculateConnections returns expected columns and structure with no spouses", {
-  ped <- data.frame(
-    personID = c("A", "B", "C", "D", "X"),
-    momID = c(NA, "A", "A", "C", NA),
-    dadID = c(NA, "X", "X", "B", NA),
-    #   spouseID = c("X", "C", "B", NA, "A"),
-    sex = c("F", "M", "F", "F", "M")
-  )
+  ped <- abcdx_ped
+  # Remove spouseID column to test behavior when it's missing
+  ped$spouseID <- NULL
 
   ped <- calculateCoordinates(ped,
     personID = "personID",
@@ -79,14 +94,11 @@ test_that("calculateConnections returns expected columns and structure with no s
 
 test_that("calculateConnections returns correct parent coordinates", {
   # A is mother of C and D; X is father of C and D
-  ped <- data.frame(
-    personID = c("A", "B", "C", "D", "X"),
-    momID = c(NA, "A", "A", "A", NA),
-    dadID = c(NA, "X", "X", "X", NA),
-    spouseID = c("X", NA, NA, NA, "A"),
-    sex = c("F", "M", "F", "M", "M"),
-    stringsAsFactors = FALSE
-  )
+  ped <- abcdx_ped
+
+  ped$momID <- c(NA, "A", "A", "A", NA)
+  ped$dadID <- c(NA, "X", "X", "X", NA)
+
 
   ped <- calculateCoordinates(ped,
     personID = "personID",
@@ -112,13 +124,7 @@ test_that("calculateConnections returns correct parent coordinates", {
 })
 
 test_that("mid_parent coordinates are correct", {
-  ped <- data.frame(
-    personID = c("A", "B", "C"),
-    momID = c(NA, NA, "A"),
-    dadID = c(NA, NA, "B"),
-    spouseID = c("B", "A", NA),
-    sex = c("F", "M", "F")
-  )
+  ped <- abc_ped
 
   ped <- calculateCoordinates(ped,
     personID = "personID",
@@ -145,13 +151,7 @@ test_that("mid_parent coordinates are correct", {
 })
 
 test_that("spouse midpoint is correctly calculated", {
-  ped <- data.frame(
-    personID = c("A", "B"),
-    momID = c(NA_character_, NA_character_),
-    dadID = c(NA_character_, NA_character_),
-    spouseID = c("B", "A"),
-    sex = c("F", "M")
-  )
+  ped <- ab_ped
 
   ped <- calculateCoordinates(ped,
     code_male = "M",
@@ -160,7 +160,8 @@ test_that("spouse midpoint is correctly calculated", {
     dadID = "dadID",
     spouseID = "spouseID"
   )
-  conn_out <- calculateConnections(ped, config = list(debug = TRUE))
+  conn_out <- calculateConnections(ped, config = list(debug = TRUE,
+                                                      reduce_variables = TRUE))
   conns <- conn_out$connections
 
   A_coords <- ped[ped$personID == "A", ]
@@ -175,13 +176,7 @@ test_that("spouse midpoint is correctly calculated", {
 })
 
 test_that("calculateConnections respects duplicated appearances (extra)", {
-  ped <- data.frame(
-    personID = c("A", "B", "C", "D", "X"),
-    momID = c(NA, "A", "A", "C", NA),
-    dadID = c(NA, "X", "X", "B", NA),
-    spouseID = c("X", "C", "B", NA, "A"),
-    sex = c("F", "M", "F", "F", "M")
-  )
+  ped <- abcdx_ped
 
   ped <- calculateCoordinates(ped,
     code_male = "M", personID = "personID",
@@ -350,21 +345,9 @@ test_that("buildSpouseSegments with use_hash=TRUE creates correct segments", {
 
 test_that("buildSpouseSegments with use_hash=FALSE creates correct segments", {
   # Create test data with spouseID
-  ped <- data.frame(
-    personID = c("A", "B", "C"),
-    spouseID = c("B", "A", NA),
-    x_pos = c(1, 3, 2),
-    y_pos = c(1, 1, 2),
-    stringsAsFactors = FALSE
-  )
+  ped <- abc_ped_pos
 
-  connections_for_FOO <- data.frame(
-    personID = c("A", "B", "C"),
-    spouseID = c("B", "A", NA),
-    x_pos = c(1, 3, 2),
-    y_pos = c(1, 1, 2),
-    stringsAsFactors = FALSE
-  )
+  connections_for_FOO <- abc_ped_pos
 
   result <- buildSpouseSegments(ped, connections_for_FOO, use_hash = FALSE)
 
@@ -388,13 +371,7 @@ test_that("buildSpouseSegments with use_hash=FALSE filters out NA spouseID", {
     stringsAsFactors = FALSE
   )
 
-  connections_for_FOO <- data.frame(
-    personID = c("A", "B", "C", "D"),
-    spouseID = c("B", "A", NA, NA),
-    x_pos = c(1, 3, 2, 4),
-    y_pos = c(1, 1, 2, 2),
-    stringsAsFactors = FALSE
-  )
+  connections_for_FOO <- ped
 
   result <- buildSpouseSegments(ped, connections_for_FOO, use_hash = FALSE)
 
@@ -435,13 +412,7 @@ test_that("buildSpouseSegments with use_hash=FALSE correctly maps spouse coordin
     stringsAsFactors = FALSE
   )
 
-  connections_for_FOO <- data.frame(
-    personID = c("A", "B"),
-    spouseID = c("B", "A"),
-    x_pos = c(1, 5),
-    y_pos = c(2, 3),
-    stringsAsFactors = FALSE
-  )
+  connections_for_FOO <- ped
 
   result <- buildSpouseSegments(ped, connections_for_FOO, use_hash = FALSE)
 
@@ -498,13 +469,7 @@ test_that("buildSpouseSegments removes intermediate columns correctly", {
     stringsAsFactors = FALSE
   )
 
-  connections_for_FOO <- data.frame(
-    personID = c("A", "B"),
-    spouseID = c("B", "A"),
-    x_pos = c(1, 3),
-    y_pos = c(1, 1),
-    stringsAsFactors = FALSE
-  )
+  connections_for_FOO <- ped
 
   result <- buildSpouseSegments(ped, connections_for_FOO, use_hash = FALSE)
 

@@ -92,12 +92,6 @@ ggPhenotypeByDegree <- function(df,
     function_name = "ggphenotypebydegree"
   )
 
-  # Set default styling and layout parameters
-
-
-  # Merge user config with defaults
-  config <- utils::modifyList(default_config, config)
-
   # ----- Data preparation -----
   if (data_prep == TRUE) {
     df <- .preparePhenotypeByDegreeData(
@@ -281,12 +275,12 @@ ggPhenotypeByDegree.core <- function(df,
   }
 
   if (config$use_relative_degree == TRUE) {
-    core_plot <- core_plot + scale_x_continuous(
+    core_plot <- core_plot + ggplot2::scale_x_continuous(
       trans = scales::compose_trans("log2", "reverse"),
       breaks = scales::trans_breaks("log2", function(x) 2^x),
       labels = scales::trans_format("log2", scales::label_math(.5^.x, format = abs))
     ) +
-      labs(
+      ggplot2::labs(
         x = config$axis_x_label, # "Degree of Relatedness",
         y = config$axis_y_label,
         title = config$plot_title,
@@ -298,13 +292,13 @@ ggPhenotypeByDegree.core <- function(df,
         fill = config$grouping_name
       )
   } else {
-    core_plot <- core_plot + scale_x_continuous(
+    core_plot <- core_plot + ggplot2::scale_x_continuous(
       trans = scales::compose_trans("log2", "reverse"),
       breaks = scales::trans_breaks("log2", function(x) 2^x),
       labels = scales::label_parse()
     ) +
-      labs(
-        x = config$axis_x_label, # "Coefficient of Genetic Variation",
+      ggplot2::labs(
+        x = config$axis_x_label,  # "Coefficient of Genetic Variation",
         y = config$axis_y_label,
         title = config$plot_title,
         subtitle = config$plot_subtitle,
@@ -384,17 +378,17 @@ ggPhenotypeByDegree.core <- function(df,
 
   if (is.null(y_ci_lb) && !paste0(y_stem_se, "_minusse") %in% names(df)) {
     df <- df |>
-      mutate(!!sym(paste0(y_stem_se, "_minusse")) :=
+      dplyr::mutate(!!rlang::sym(paste0(y_stem_se, "_minusse")) :=
         .data[[y_se]] - 1.96 * (.data[[y_se]] / sqrt(.data$n_pairs)))
   }
   if (is.null(y_ci_ub) && !paste0(y_stem_se, "_plusse") %in% names(df)) {
     df <- df |>
-      mutate(!!sym(paste0(y_stem_se, "_plusse")) :=
+      dplyr::mutate(!!rlang::sym(paste0(y_stem_se, "_plusse")) :=
         .data[[y_se]] + 1.96 * (.data[[y_se]] / sqrt(.data$n_pairs)))
   }
   if (!"mtdna_factor" %in% names(df)) {
     df <- df |>
-      mutate(mtdna_factor = factor(.data$mtdna, levels = c(0, 1)))
+      dplyr::mutate(mtdna_factor = factor(.data$mtdna, levels = c(0, 1)))
   }
   df
 }
