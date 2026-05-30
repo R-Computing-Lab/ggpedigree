@@ -298,7 +298,7 @@ ggPhenotypeByDegree.core <- function(df,
       labels = scales::label_parse()
     ) +
       ggplot2::labs(
-        x = config$axis_x_label,  # "Coefficient of Genetic Variation",
+        x = config$axis_x_label, # "Coefficient of Genetic Variation",
         y = config$axis_y_label,
         title = config$plot_title,
         subtitle = config$plot_subtitle,

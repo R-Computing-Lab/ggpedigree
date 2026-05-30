@@ -74,7 +74,7 @@ ggPedigree.core <- function(ped,
     ped$sex <- ped[[sexVar]]
   }
 
-  if(config$coord_layout == "radial"){
+  if (config$coord_layout == "radial") {
     # In radial layout, the generation axis is reversed (older generations have higher y values)
     config$generation_height <- -1 * config$generation_height
   }
@@ -173,16 +173,17 @@ ggPedigree.core <- function(ped,
   # -----
 
   # In radial mode stubs are meaningless (y is no longer the generation axis)
-  config$gap_hoff <- if (isTRUE(config$coord_layout == "radial")){
+  config$gap_hoff <- if (isTRUE(config$coord_layout == "radial")) {
     0.125 * config$generation_height * config$coord_radial_scale
-    } else {
-      0.5 * config$generation_height
-      }
-  config$gap_woff <- if (isTRUE(config$coord_layout == "radial")){
-  #  0
-    0.125 *config$generation_width
-  }else {0.5 * config$generation_width
-      }
+  } else {
+    0.5 * config$generation_height
+  }
+  config$gap_woff <- if (isTRUE(config$coord_layout == "radial")) {
+    #  0
+    0.125 * config$generation_width
+  } else {
+    0.5 * config$generation_width
+  }
 
   # recode missing sex to "unknown"
   if (config$recode_missing_sex == TRUE && any(is.na(ds$sex))) {
@@ -418,7 +419,7 @@ ggPedigree.core <- function(ped,
     )
     p <- p +
       ggplot2::scale_y_reverse()
-  } else if(isTRUE(config$coord_layout == "radial")){
+  } else if (isTRUE(config$coord_layout == "radial")) {
     p <- p +
       ggplot2::scale_y_reverse(limits = c(
         0,
@@ -461,9 +462,9 @@ ggPedigree.core <- function(ped,
       outline_color_column = outline_color_column
     )
   }
-  if (isTRUE(config$coord_layout == "radial")){
-   # p <- p + ggplot2::coord_polar()# +
-     # ggplot2::scale_x_continuous(limits = c(0, 360))
+  if (isTRUE(config$coord_layout == "radial")) {
+    # p <- p + ggplot2::coord_polar()# +
+    # ggplot2::scale_x_continuous(limits = c(0, 360))
     p <- p + ggplot2::coord_radial(
       theta = "x",
       start = config$coord_radial_start_angle * pi / 180,

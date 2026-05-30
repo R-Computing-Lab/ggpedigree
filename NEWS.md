@@ -1,6 +1,7 @@
 # ggpedigree (development version)
 # ==============================
 
+# ggpedigree Version: 1.2.0
 ## New features
 * Added more flexibility to overlays, including support for shape-mode overlays with custom numeric codes and colors.
 * Added a new vignette section to explain the clinical preset and its features.

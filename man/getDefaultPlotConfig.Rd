@@ -350,7 +350,7 @@ a full circle back to the top).}
 \item{coord_radial_scale}{Radius increment per generation unit in the radial layout (default: 1.5).}
 
 \item{coord_radial_min_radius}{Minimum radius offset for the innermost generation ring in radial
-layout (default: .85). Prevents the innermost generation from collapsing to the center of the
+layout (default: .75). Prevents the innermost generation from collapsing to the center of the
 circle where nodes would overlap. Increase this value to add more space at the center.}
 
 \item{spread_out_generations}{Whether to apply a multiplicative spread factor to generation spacing in radial layout. Default is TRUE.}

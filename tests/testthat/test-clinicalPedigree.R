@@ -51,8 +51,8 @@ test_that("affected_fill_column creates filled/unfilled nodes", {
 
   # delete svg files after reading
 
- # file.remove("built_coded.svg")
-#  file.remove("built_uncoded.svg")
+  # file.remove("built_coded.svg")
+  #  file.remove("built_uncoded.svg")
 
   expect_true(any(grepl("fill:\\s*#FF0000", built_coded.svg)))
   expect_true(any(grepl("fill:\\s*#FF0000", built_uncoded.svg)))

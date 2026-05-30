@@ -96,8 +96,10 @@ ggRelatednessMatrix <- function(
       #   When ggplotly is called, it creates a single data frame that merges all
       #   layer data.  We therefore build a 'text' aesthetic ahead of time so that
       #   it survives the conversion.
-      config$tooltip_columns <- intersect(config$tooltip_columns,
-                                          names(ped)) # guard against typos
+      config$tooltip_columns <- intersect(
+        config$tooltip_columns,
+        names(ped)
+      ) # guard against typos
 
       if (length(config$tooltip_columns) == 0L) {
         stop("None of the specified tooltip_columns found in `ped`.")
@@ -183,9 +185,11 @@ ggRelatednessMatrix.core <- function(
   if (is.null(cnames)) {
     cnames <- seq_len(ncol(mat_plot))
   }
-  df_melted <- expand.grid(ID1 = rnames,
-                           ID2 = cnames,
-                           stringsAsFactors = FALSE)
+  df_melted <- expand.grid(
+    ID1 = rnames,
+    ID2 = cnames,
+    stringsAsFactors = FALSE
+  )
   df_melted$value <- as.vector(mat_plot)
 
   colnames(df_melted) <- c("ID1", "ID2", "value")

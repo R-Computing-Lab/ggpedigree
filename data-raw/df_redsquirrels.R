@@ -161,10 +161,11 @@ ds_grouped <- ds %>%
       TRUE ~ ars_n
     )
   ) %>% # repair
-  mutate(sex= case_when(personID == 7457 ~ "F",
-                        personID == 8162 ~ NA_character_,
-                        TRUE ~ sex)
-  )
+  mutate(sex = case_when(
+    personID == 7457 ~ "F",
+    personID == 8162 ~ NA_character_,
+    TRUE ~ sex
+  ))
 redsquirrels_full <- ds_grouped %>%
   arrange(personID)
 

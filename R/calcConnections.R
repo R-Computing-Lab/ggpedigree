@@ -350,30 +350,32 @@ calculateConnections <- function(ped,
     plot_connections$twin_coords <- FALSE
   }
 
-if(config$reduce_variables == FALSE) {
-join_by_vars <- c("personID",
-                  "x_pos", "y_pos",
-                  "x_fam", "y_fam",
-                  "dadID", "momID",
-                  "spouseID", "famID",
-                  "parent_hash", "couple_hash",
-                  "extra")
-
-if ("twinID" %in% names(ped)) {
-  join_by_vars <- c(join_by_vars, "twinID")
-}
-if ("zygosity" %in% names(ped)) {
-  join_by_vars <- c(join_by_vars, "zygosity")
-}
-# merge back in all the other columns that we need for plotting, but don't need for calculating connections
-  plot_connections$connections <- plot_connections$connections |>
-    dplyr::left_join(
-      ped,
-      by = join_by_vars
+  if (config$reduce_variables == FALSE) {
+    join_by_vars <- c(
+      "personID",
+      "x_pos", "y_pos",
+      "x_fam", "y_fam",
+      "dadID", "momID",
+      "spouseID", "famID",
+      "parent_hash", "couple_hash",
+      "extra"
     )
-}
 
- #   assign("DEBUG_plot_connections", plot_connections, envir = .GlobalEnv)
+    if ("twinID" %in% names(ped)) {
+      join_by_vars <- c(join_by_vars, "twinID")
+    }
+    if ("zygosity" %in% names(ped)) {
+      join_by_vars <- c(join_by_vars, "zygosity")
+    }
+    # merge back in all the other columns that we need for plotting, but don't need for calculating connections
+    plot_connections$connections <- plot_connections$connections |>
+      dplyr::left_join(
+        ped,
+        by = join_by_vars
+      )
+  }
+
+  #   assign("DEBUG_plot_connections", plot_connections, envir = .GlobalEnv)
   return(plot_connections)
 }
 
@@ -388,8 +390,7 @@ if ("zygosity" %in% names(ped)) {
 #'
 #'
 buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE,
-                                  config = list()) {
-
+                                config = list()) {
   # Default configuration placeholder
   default_config <- list(
     debug = FALSE,
@@ -432,17 +433,17 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE,
         y_start = .data$y_pos,
         y_end = .data$y_pos_parent2
       )
-    if(config$reduce_variables == TRUE) {
+    if (config$reduce_variables == TRUE) {
       parent_connections <- parent_connections |>
-      dplyr::select(
-        -"parent_hash",
-        -"parent1",
-        -"parent2",
-        -"x_pos",
-        -"y_pos",
-        -"x_pos_parent2",
-        -"y_pos_parent2"
-      )
+        dplyr::select(
+          -"parent_hash",
+          -"parent1",
+          -"parent2",
+          -"x_pos",
+          -"y_pos",
+          -"x_pos_parent2",
+          -"y_pos_parent2"
+        )
     }
   } else {
     # spouses
@@ -470,19 +471,18 @@ buildSpouseSegments <- function(ped, connections_for_FOO, use_hash = TRUE,
         y_end = .data$y_pos
       )
 
-    if(config$reduce_variables == TRUE) {
+    if (config$reduce_variables == TRUE) {
       parent_connections <- parent_connections |>
-      dplyr::select(
-        -"spouseID_spouse"
-      )
+        dplyr::select(
+          -"spouseID_spouse"
+        )
     }
   }
   return(parent_connections)
 }
 
 buildTwinSegments <- function(ped, connections_for_FOO,
-                        config = list()
-                              ) {
+                              config = list()) {
   # Get twin coordinates
   if (!"twinID" %in% names(ped)) {
     stop("ped must contain twinID column to build twin segments")

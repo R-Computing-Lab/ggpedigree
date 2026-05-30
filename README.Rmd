@@ -50,8 +50,8 @@ install.packages("ggpedigree")
 To install the development version of `ggpedigree` from [GitHub](https://github.com/) use:
 
 ```r
-# install.packages("devtools")
-devtools::install_github("R-Computing-Lab/ggpedigree")
+# install.packages("pak")
+pak::pkg_install("R-Computing-Lab/ggpedigree")
 ```
 
 ## Demonstration

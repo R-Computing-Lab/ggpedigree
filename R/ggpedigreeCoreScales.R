@@ -78,8 +78,8 @@
 
   # Add alpha scale for affected status if applicable
   if (!is.null(status_column) &&
-      config$sex_color_include == TRUE &&
-      config$status_include == TRUE) {
+    config$sex_color_include == TRUE &&
+    config$status_include == TRUE) {
     plotObject <- plotObject + ggplot2::scale_alpha_manual(
       name = if (config$status_legend_show) {
         config$status_legend_title
@@ -98,14 +98,14 @@
   color_mode <- .get_color_mode(config, status_column, focal_fill_column)
 
   plotObject <- switch(color_mode,
-                       sex = .add_sex_scales(plotObject, config),
-                       focal_fill = .add_focal_fill_scales(plotObject, config),
-                       status = .add_status_scales(plotObject, config),
-                       none = {
-                         plotObject + ggplot2::labs(
-                           shape = if (isTRUE(config$sex_legend_show)) config$sex_legend_title else NULL
-                         )
-                       }
+    sex = .add_sex_scales(plotObject, config),
+    focal_fill = .add_focal_fill_scales(plotObject, config),
+    status = .add_status_scales(plotObject, config),
+    none = {
+      plotObject + ggplot2::labs(
+        shape = if (isTRUE(config$sex_legend_show)) config$sex_legend_title else NULL
+      )
+    }
   )
 
   plotObject

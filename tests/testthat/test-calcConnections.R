@@ -1,4 +1,3 @@
-
 abcdx_ped <- data.frame(
   personID = c("A", "B", "C", "D", "X"),
   momID = c(NA, "A", "A", "C", NA),
@@ -18,9 +17,8 @@ abc_ped <- data.frame(
 ab_ped <- abc_ped[1:2, ]
 
 abc_ped_pos <- abc_ped
-abc_ped_pos$x_pos = c(1, 3, 2)
-abc_ped_pos$y_pos = c(1, 1, 2)
-
+abc_ped_pos$x_pos <- c(1, 3, 2)
+abc_ped_pos$y_pos <- c(1, 1, 2)
 
 
 test_that("calculateConnections returns expected columns and structure", {
@@ -160,8 +158,10 @@ test_that("spouse midpoint is correctly calculated", {
     dadID = "dadID",
     spouseID = "spouseID"
   )
-  conn_out <- calculateConnections(ped, config = list(debug = TRUE,
-                                                      reduce_variables = TRUE))
+  conn_out <- calculateConnections(ped, config = list(
+    debug = TRUE,
+    reduce_variables = TRUE
+  ))
   conns <- conn_out$connections
 
   A_coords <- ped[ped$personID == "A", ]

@@ -20,7 +20,7 @@
   if (min_y < 0) {
     min_y <- 0
   }
-   if (isTRUE(config$coord_layout == "radial")) {
+  if (isTRUE(config$coord_layout == "radial")) {
     ds$y_pos <- (ds$y_pos - min_y) * config$coord_radial_scale + config$coord_radial_min_radius
     ds$y_fam <- (ds$y_fam - min_y) * config$coord_radial_scale + config$coord_radial_min_radius
   } else {
@@ -61,7 +61,7 @@ adjustSpacing <- .adjustSpacing
 #' @keywords internal
 .applyRadialLayout <- function(ds, config) {
   start_rad <- config$coord_radial_start_angle * pi / 180
-  end_rad   <- config$coord_radial_end_angle   * pi / 180
+  end_rad <- config$coord_radial_end_angle * pi / 180
 
   x_range <- range(ds$x_pos, na.rm = TRUE)
   y_range <- range(ds$y_pos, na.rm = TRUE)
@@ -72,7 +72,9 @@ adjustSpacing <- .adjustSpacing
   # how many in gen 0, gen 1, gen 2, etc. use that to spread out the distance as we radiate outwards
 
   .to_angle <- function(x) {
-    if (diff(x_range) == 0) return(rep((start_rad + end_rad) / 2, length(x)))
+    if (diff(x_range) == 0) {
+      return(rep((start_rad + end_rad) / 2, length(x)))
+    }
     start_rad + (x - x_range[1]) / diff(x_range) * (end_rad - start_rad)
   }
 
@@ -88,7 +90,7 @@ adjustSpacing <- .adjustSpacing
     config$coord_radial_min_radius + y_norm * y_span * config$coord_radial_scale
   }
 
-  angle  <- .to_angle(ds$x_pos)
+  angle <- .to_angle(ds$x_pos)
   radius <- .to_radius(ds$y_pos)
   ds$x_pos <- radius * cos(angle)
   ds$y_pos <- radius * sin(angle)
@@ -96,16 +98,16 @@ adjustSpacing <- .adjustSpacing
   ds$x_pos[ds$x_pos == 0] <- 0.001
   # spread out the distance as we radiate outwards y_order tells you what generation you're in, so you can use that to spread out the
   # adjust x positions by multiplying by a factor that increases with y_order
-#  if(config$spread_out_generations == TRUE) {
+  #  if(config$spread_out_generations == TRUE) {
 
   if (config$spread_out_generations == TRUE) {
     spread_factor <- 1 + ds$y_order / y_order_max *
       config$spread_out_generations_factor
-   ds$x_pos <- ds$x_pos * spread_factor
-   ds$y_pos <- ds$y_pos * spread_factor
+    ds$x_pos <- ds$x_pos * spread_factor
+    ds$y_pos <- ds$y_pos * spread_factor
   }
 
-#  }
+  #  }
 
   ds
 }

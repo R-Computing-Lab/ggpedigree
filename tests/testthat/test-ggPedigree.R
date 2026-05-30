@@ -517,5 +517,4 @@ test_that("reduce_variables reduces object size", {
   p_reduced_build <- ggplot2::ggplot_build(p_reduced)
   # get file size of ggplot objects
   expect_true(object.size(p_build) < object.size(p_reduced_build)) # reduced plot should be smaller in size
-
 })

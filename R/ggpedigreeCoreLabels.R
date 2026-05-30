@@ -1,4 +1,3 @@
-
 #' @title Add Labels to ggplot Pedigree Plot
 #' @inheritParams ggPedigree
 #' @inheritParams .addScales
@@ -9,7 +8,7 @@
 .addLabels <- function(plotObject, config) {
   ggrepel_label_methods <- c("geom_text_repel", "ggrepel", "geom_label_repel")
   if (!requireNamespace("ggrepel", quietly = TRUE) &&
-      config$label_method %in% ggrepel_label_methods) {
+    config$label_method %in% ggrepel_label_methods) {
     warning(
       "The 'ggrepel' package is required for label methods ",
       "'geom_text_repel', 'ggrepel', and 'geom_label_repel'. ",
@@ -20,7 +19,7 @@
   }
 
   if (config$label_method %in% ggrepel_label_methods &&
-      requireNamespace("ggrepel", quietly = TRUE)) {
+    requireNamespace("ggrepel", quietly = TRUE)) {
     # If ggrepel is available, use geom_text_repel or geom_label_repel
     # for better label placement and avoidance of overlaps
     plotObject <- plotObject +

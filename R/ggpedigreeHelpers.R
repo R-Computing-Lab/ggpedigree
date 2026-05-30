@@ -85,7 +85,6 @@
 computeCurvedMidpoint <- .computeCurvedMidpoint
 
 
-
 #' @title Restore user-specified column names in a connections data frame
 #' @description
 #'
