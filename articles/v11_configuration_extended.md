@@ -426,10 +426,10 @@ ggPedigree(
     list(column = "onset", code_affected = 1, shape = "slash", color = "red", stroke = 2)
   ),
   config = list(
-    code_male       = 0,
+    code_male = 0,
     overlay_include = TRUE,
-    overlay_mode    = "shape",
-    reduce_variables  = F,
+    overlay_mode = "shape",
+    reduce_variables = F,
     sex_color_include = FALSE
   )
 )
@@ -471,12 +471,13 @@ randomly in grey or black for visual interest.
 
 ``` r
 
-hazard <- ped2maternal(hazard, 
-                       famID = "famID", 
-                       personID = "ID", 
-                       momID = "momID", 
-                       dadID = "dadID")
-hazard$label_color  <- sample(c("grey", "black"), nrow(hazard), replace = TRUE)
+hazard <- ped2maternal(hazard,
+  famID = "famID",
+  personID = "ID",
+  momID = "momID",
+  dadID = "dadID"
+)
+hazard$label_color <- sample(c("grey", "black"), nrow(hazard), replace = TRUE)
 
 
 ggPedigree(
@@ -490,19 +491,21 @@ ggPedigree(
     list(column = "onset", code_affected = 1, shape = "slash", color = "red", stroke = 2)
   ),
   config = list(
-    code_male       = 0,
+    code_male = 0,
     overlay_include = TRUE,
-    overlay_mode    = "shape",
-    reduce_variables  = F,
+    overlay_mode = "shape",
+    reduce_variables = F,
     sex_color_palette = c("steelblue", "salmon", "grey50")
   )
 ) +
   facet_wrap(~famID,
-             scales = "free_x") +
+    scales = "free_x"
+  ) +
   geom_text(aes(label = matID),
-            color = hazard$label_color,
-            nudge_x = 0.15,
-            nudge_y = 0.15, size = 3)
+    color = hazard$label_color,
+    nudge_x = 0.15,
+    nudge_y = 0.15, size = 3
+  )
 #> Warning: Removed 4 rows containing missing values or values outside the scale range
 #> (`geom_text()`).
 ```
@@ -528,7 +531,6 @@ the dataframe used for segment drawing.
 
 ``` r
 
-
 ggPedigree(
   hazard,
   famID = "famID",
@@ -540,15 +542,16 @@ ggPedigree(
     list(column = "onset", code_affected = 1, shape = "slash", color = "red", stroke = 2)
   ),
   config = list(
-    code_male       = 0,
+    code_male = 0,
     overlay_include = TRUE,
-    overlay_mode    = "shape",
-    reduce_variables  = F,
+    overlay_mode = "shape",
+    reduce_variables = F,
     sex_color_palette = c("steelblue", "salmon", "grey50")
   )
 ) +
   facet_wrap(~gen,
-             scales = "free_x")
+    scales = "free_x"
+  )
 ```
 
 ![](v11_configuration_extended_files/figure-html/unnamed-chunk-14-1.png)
@@ -567,15 +570,16 @@ ggPedigree(
     list(column = "onset", code_affected = 1, shape = "slash", color = "red", stroke = 2)
   ),
   config = list(
-    code_male       = 0,
+    code_male = 0,
     overlay_include = TRUE,
-    overlay_mode    = "shape",
-    reduce_variables  = T,
+    overlay_mode = "shape",
+    reduce_variables = T,
     sex_color_palette = c("steelblue", "salmon", "grey50")
   )
 ) +
   facet_wrap(~gen,
-             scales = "free_x")
+    scales = "free_x"
+  )
 ```
 
 ![](v11_configuration_extended_files/figure-html/unnamed-chunk-14-2.png)
@@ -858,14 +862,15 @@ ggPedigree(
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
-  config=list(
+  config = list(
     coord_layout = "radial",
     point_scale_by_pedigree = FALSE,
     coord_radial_min_radius = 1,
     label_include = FALSE,
     spread_out_generations_factor = 12.5,
     spread_out_generations = TRUE
-    )) #+theme_classic()
+  )
+) #+theme_classic()
 ```
 
 ![](v11_configuration_extended_files/figure-html/unnamed-chunk-23-1.png)
@@ -1122,10 +1127,10 @@ tibble::tibble(Config_Key = cfg_names) %>%
 
 ``` r
 
-df<-getDefaultPlotConfig("ggPedigree") %>%
- # is a list
+df <- getDefaultPlotConfig("ggPedigree") %>%
+  # is a list
   unlist() %>%
-   as.data.frame() %>%
+  as.data.frame() %>%
   rownames_to_column(var = "Config_Key") %>%
   rename(Default_Value = ".")
 df %>%

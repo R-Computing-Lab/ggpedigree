@@ -496,7 +496,7 @@ getDefaultPlotConfig(
 - coord_radial_min_radius:
 
   Minimum radius offset for the innermost generation ring in radial
-  layout (default: .85). Prevents the innermost generation from
+  layout (default: .75). Prevents the innermost generation from
   collapsing to the center of the circle where nodes would overlap.
   Increase this value to add more space at the center.
 

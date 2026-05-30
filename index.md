@@ -42,8 +42,8 @@ To install the development version of `ggpedigree` from
 
 ``` r
 
-# install.packages("devtools")
-devtools::install_github("R-Computing-Lab/ggpedigree")
+# install.packages("pak")
+pak::pkg_install("R-Computing-Lab/ggpedigree")
 ```
 
 ## Demonstration
@@ -89,7 +89,7 @@ citation(package = "ggpedigree")
 
 Garrison, S. Mason (2026). “ggpedigree: Visualizing Pedigrees with
 ‘ggplot2’ and ‘plotly’.” *Journal of Open Source Software*, *11*(9434).
-<doi:10.21105/joss.09434> <https://doi.org/10.21105/joss.09434>,
+<doi:10.21105/joss.09434> <https://doi.org/10.21105/joss.09434>.
 <https://joss.theoj.org/papers/10.21105/joss.09434>.
 
 A BibTeX entry for LaTeX users is
