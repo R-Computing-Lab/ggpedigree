@@ -4,7 +4,16 @@
 \alias{kinship2_alignped1}
 \title{Align pedigree - Process a single subject and their spouses}
 \usage{
-kinship2_alignped1(x, dad, mom, level, horder, packed, spouselist)
+kinship2_alignped1(
+  x,
+  dad,
+  mom,
+  level,
+  horder,
+  packed,
+  spouselist,
+  classic = TRUE
+)
 }
 \arguments{
 \item{x}{Integer vector of subject ID(s) to process}
@@ -20,6 +29,8 @@ kinship2_alignped1(x, dad, mom, level, horder, packed, spouselist)
 \item{packed}{Logical, if TRUE uses compact packing algorithm}
 
 \item{spouselist}{Matrix defining spouse relationships}
+
+\item{classic}{Logical, if TRUE uses classic alignment method (default TRUE)}
 }
 \value{
 A list containing:

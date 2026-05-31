@@ -3,9 +3,9 @@ library(Matrix)
 library(tidyverse)
 library(BGmisc)
 
-
+core_seed <- 123
 # make big data
-set.seed(15)
+set.seed(core_seed+15)
 Ngen <- 5
 kpc <- 5
 sexR <- .50
@@ -16,7 +16,7 @@ ped <- simulatePedigree(kpc = kpc, Ngen = Ngen, sexR = sexR, marR = marR) %>%
     fam = "fam 1"
   )
 
-set.seed(151)
+set.seed(core_seed+151)
 Ngen <- 5
 marR <- .8
 id_offset <- max(ped$ID, na.rm = TRUE)
@@ -30,8 +30,8 @@ ped2 <- simulatePedigree(kpc = kpc, Ngen = Ngen, sexR = sexR, marR = marR) %>%
     spouseID = if_else(is.na(spouseID) | spouseID == 0, spouseID, spouseID + id_offset)
   )
 
-set.seed(1151)
-kpc <- 8
+set.seed(core_seed+1151)
+kpc <- 7
 Ngen <- 6
 id_offset <- max(ped2$ID, na.rm = TRUE)
 
@@ -57,7 +57,7 @@ ped3b <- ped3 %>%
 
 #ped3 <- rbind(ped3b, ped3)
 
-set.seed(11513)
+set.seed(core_seed+11513)
 kpc <- 2
 Ngen <- 10
 id_offset <- max(ped3$ID, na.rm = TRUE)
@@ -83,7 +83,6 @@ ped_small_obj <- with(ped2, ggpedigree:::pedigree(ID, dadID, momID, sex))
 ped_big_obj <- with(ped_big, ggpedigree:::pedigree(ID, dadID, momID, sex, famid = fam))
 ped_mega_obj <- with(ped_mega, ggpedigree:::pedigree(ID, dadID, momID, sex, famid = fam))
 
-if (TRUE) {
   # Define parameters
   packed <- TRUE
   align <- TRUE
@@ -168,7 +167,7 @@ if (TRUE) {
                     "optimized_mega") ~ "optimized"
 
       ),
-      time_seconds = time / 1e9
+     time_seconds = time / 1e9
     )
 
   df_plot$method <- factor(df_plot$method, levels = c("classic", "optimized"))
@@ -197,64 +196,5 @@ if (TRUE) {
     row.names = FALSE
   )
   # Print benchmark
-}
 
-if (FALSE) {
-  verbose <- FALSE
-  ad_ped_matrix <- ped2com(ped,
-                           component = "additive",
-                           adjacency_method = "direct", sparse = TRUE
-  )
-  mit_ped_matrix <- ped2com(ped,
-                            component = "mitochondrial",
-                            adjacency_method = "direct", sparse = TRUE
-  )
-  cn_ped_matrix <- ped2com(ped,
-                           component = "common nuclear",
-                           adjacency_method = "indexed", sparse = TRUE
-  )
-  benchmark_results <- microbenchmark(
-    beta = {
-      com2links.beta(
-        ad_ped_matrix = ad_ped_matrix,
-        mit_ped_matrix = mit_ped_matrix,
-        cn_ped_matrix = cn_ped_matrix,
-        writetodisk = TRUE,
-        verbose = verbose
-      )
-      file.remove("dataRelatedPairs.csv")
-    }, regular = {
-      com2links(
-        ad_ped_matrix = ad_ped_matrix,
-        mit_ped_matrix = mit_ped_matrix,
-        cn_ped_matrix = cn_ped_matrix,
-        writetodisk = TRUE,
-        verbose = verbose
-      )
-      file.remove("dataRelatedPairs.csv")
-    }, legacy = {
-      com2links(
-        ad_ped_matrix = ad_ped_matrix,
-        mit_ped_matrix = mit_ped_matrix,
-        cn_ped_matrix = cn_ped_matrix,
-        verbose = verbose,
-        legacy = TRUE
-      )
-      file.remove("dataRelatedPairs.csv")
-    },
-    times = 100 # Run each method 100 times
-  )
 
-  summary(benchmark_results)
-
-  lm(benchmark_results$time ~ benchmark_results$expr) %>%
-    summary()
-  # Print benchmark results
-  print(benchmark_results)
-
-  # Optional: Save results to CSV for later analysis
-  write.csv(summary(benchmark_results),
-            "benchmark_results.csv",
-            row.names = FALSE
-  )
-}

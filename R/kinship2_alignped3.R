@@ -18,7 +18,7 @@
 #'   \item{fam}{Matrix of family indices}
 #' @keywords internal
 kinship2_alignped3 <- function(x1, x2, packed, space = 1,
-                                classic = TRUE) {
+                                classic = FALSE) {
   maxcol <- max(x1$n + x2$n)
   maxlev <- length(x1$n)
   n1 <- max(x1$n) # These are always >1

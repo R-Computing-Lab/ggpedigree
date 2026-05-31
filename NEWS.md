@@ -1,6 +1,9 @@
 # ggpedigree (development version)
 # ==============================
 
+* Optimizing implemention of pedigree alignment functions from kinship2
+* Added unit tests for the pedigree alignment functions
+
 # ggpedigree Version: 1.2.0
 ## New features
 * Added more flexibility to overlays, including support for shape-mode overlays with custom numeric codes and colors.

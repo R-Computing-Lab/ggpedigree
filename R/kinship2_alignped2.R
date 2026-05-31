@@ -11,7 +11,7 @@
 #' @param horder Numeric vector of hint order for positioning subjects
 #' @param packed Logical, if TRUE uses compact packing algorithm
 #' @param spouselist Matrix defining spouse relationships
-#' @param classic Logical, if TRUE uses classic alignment method (default TRUE)
+#' @param classic Logical, if TRUE uses classic alignment method (default FALSE)
 #' @return A list containing the aligned pedigree structure for the sibling group:
 #'   \item{nid}{Matrix of subject IDs at each level and position}
 #'   \item{pos}{Matrix of horizontal positions}
@@ -21,7 +21,7 @@
 #' @keywords internal
 kinship2_alignped2 <- function(x, dad, mom, level, horder, packed,
                                spouselist,
-                               classic = TRUE) {
+                               classic = FALSE) {
   x <- x[order(horder[x])] # Use the hints to order the sibs
   rval <- kinship2_alignped1(
     x[1], dad, mom, level, horder, packed,

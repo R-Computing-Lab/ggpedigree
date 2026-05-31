@@ -18,7 +18,7 @@
 #' @return Matrix of optimized horizontal positions for each subject
 #' @keywords internal
 kinship2_alignped4 <- function(rval, spouse, level, width, align,
-                               classic = TRUE
+                               classic = FALSE
                                ) {
   if(classic != TRUE){
     return(kinship2_alignped4_optimized(rval=rval,
