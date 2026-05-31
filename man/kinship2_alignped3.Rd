@@ -2,9 +2,12 @@
 % Please edit documentation in R/kinship2_alignped3.R
 \name{kinship2_alignped3}
 \alias{kinship2_alignped3}
+\alias{kinship2_alignped3_optimized}
 \title{Merge two aligned pedigree structures}
 \usage{
 kinship2_alignped3(x1, x2, packed, space = 1, classic = FALSE)
+
+kinship2_alignped3_optimized(x1, x2, packed, space = 1)
 }
 \arguments{
 \item{x1}{First aligned pedigree structure (list)}
@@ -15,7 +18,7 @@ kinship2_alignped3(x1, x2, packed, space = 1, classic = FALSE)
 
 \item{space}{Numeric, horizontal spacing between structures when packed=FALSE (default 1)}
 
-\item{classic}{Logical, if TRUE uses classic alignment method (default TRUE)}
+\item{classic}{Logical, if TRUE uses classic alignment method (default FALSE)}
 }
 \value{
 A list containing the merged pedigree structure:

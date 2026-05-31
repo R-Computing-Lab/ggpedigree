@@ -22,6 +22,12 @@
 kinship2_alignped2 <- function(x, dad, mom, level, horder, packed,
                                spouselist,
                                classic = FALSE) {
+  if (classic != TRUE) {
+    return(kinship2_alignped2_optimized(x = x, dad = dad, mom = mom,
+                                        level = level, horder = horder,
+                                        packed = packed,
+                                        spouselist = spouselist))
+  }
   x <- x[order(horder[x])] # Use the hints to order the sibs
   rval <- kinship2_alignped1(
     x[1], dad, mom, level, horder, packed,
@@ -45,6 +51,30 @@ kinship2_alignped2 <- function(x, dad, mom, level, horder, packed,
         (is.na(match(x[i], floor(rval$nid[mylev, ]))))) {
         rval <- kinship2_alignped3(rval, rval2, packed,
                                    classic = classic)
+      }
+    }
+    rval$spouselist <- spouselist
+  }
+  rval
+}
+
+#' @rdname kinship2_alignped2
+kinship2_alignped2_optimized <- function(x, dad, mom, level, horder,
+                                          packed, spouselist) {
+  x    <- x[order(horder[x])]
+  rval <- kinship2_alignped1(x[1L], dad, mom, level, horder, packed,
+                              spouselist, classic = FALSE)
+  spouselist <- rval$spouselist
+
+  if (length(x) > 1L) {
+    mylev <- level[x[1L]]
+    for (i in seq(2L, length(x))) {
+      rval2      <- kinship2_alignped1(x[i], dad, mom, level, horder,
+                                       packed, spouselist, classic = FALSE)
+      spouselist <- rval2$spouselist
+      if ((rval2$n[mylev] > 1L) ||
+            is.na(match(x[i], floor(rval$nid[mylev, ])))) {
+        rval <- kinship2_alignped3(rval, rval2, packed, classic = FALSE)
       }
     }
     rval$spouselist <- spouselist

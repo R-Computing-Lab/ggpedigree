@@ -10,6 +10,8 @@ Ngen <- 5
 kpc <- 5
 sexR <- .50
 marR <- .7
+n_reps <- 15
+
 
 ped <- simulatePedigree(kpc = kpc, Ngen = Ngen, sexR = sexR, marR = marR) %>%
   mutate(
@@ -31,7 +33,7 @@ ped2 <- simulatePedigree(kpc = kpc, Ngen = Ngen, sexR = sexR, marR = marR) %>%
   )
 
 set.seed(core_seed+1151)
-kpc <- 7
+kpc <- 6
 Ngen <- 6
 id_offset <- max(ped2$ID, na.rm = TRUE)
 
@@ -145,7 +147,7 @@ ped_mega_obj <- with(ped_mega, ggpedigree:::pedigree(ID, dadID, momID, sex, fami
         classic = FALSE
       )
     },
-    times = 15
+    times = n_reps
   )
 
   summary(benchmark_results)
