@@ -14,6 +14,7 @@
 #' @param horder Numeric vector of hint order for positioning subjects
 #' @param packed Logical, if TRUE uses compact packing algorithm
 #' @param spouselist Matrix defining spouse relationships
+#' @param classic Logical, if TRUE uses classic alignment method (default TRUE)
 #' @return A list containing:
 #'   \item{nid}{Matrix of subject IDs at each level and position}
 #'   \item{pos}{Matrix of horizontal positions}
@@ -27,7 +28,8 @@ kinship2_alignped1 <- function(x,
                                mom, level,
                                horder,
                                packed,
-                               spouselist) {
+                               spouselist,
+                               classic = TRUE) {
   # Set a few constants
   maxlev <- max(level)
   lev <- level[x]
@@ -97,7 +99,8 @@ kinship2_alignped1 <- function(x,
     if (length(children) > 0) {
       rval1 <- kinship2_alignped2(
         children, dad, mom, level, horder,
-        packed, spouselist
+        packed, spouselist,
+        classic = classic
       )
       spouselist <- rval1$spouselist
       # set the parentage for any kids
@@ -136,7 +139,8 @@ kinship2_alignped1 <- function(x,
         rval <- rval1
         nokids <- FALSE
       } else {
-        rval <- kinship2_alignped3(rval, rval1, packed)
+        rval <- kinship2_alignped3(rval, rval1, packed,
+                                   classic = classic)
       }
     }
   }
