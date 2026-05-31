@@ -4,7 +4,16 @@
 \alias{kinship2_alignped2}
 \title{Align pedigree - Process a set of siblings}
 \usage{
-kinship2_alignped2(x, dad, mom, level, horder, packed, spouselist)
+kinship2_alignped2(
+  x,
+  dad,
+  mom,
+  level,
+  horder,
+  packed,
+  spouselist,
+  classic = FALSE
+)
 }
 \arguments{
 \item{x}{Integer vector of sibling IDs to process}
@@ -20,6 +29,8 @@ kinship2_alignped2(x, dad, mom, level, horder, packed, spouselist)
 \item{packed}{Logical, if TRUE uses compact packing algorithm}
 
 \item{spouselist}{Matrix defining spouse relationships}
+
+\item{classic}{Logical, if TRUE uses classic alignment method (default TRUE)}
 }
 \value{
 A list containing the aligned pedigree structure for the sibling group:

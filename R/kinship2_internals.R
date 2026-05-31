@@ -15,6 +15,8 @@
 #'   If numeric, a vector c(a1, a2) controlling alignment penalties (default TRUE)
 #' @param hints Optional list with `order` and `spouse` components to guide alignment.
 #'   If NULL, kinship2_autohint is called to generate hints
+#' @param classic Logical, if TRUE uses classic alignment method (default FALSE). If FALSE, uses an optimized method.
+#'
 #' @return For a single pedigree, a list containing:
 #'   \item{n}{Vector of counts per generation level}
 #'   \item{nid}{Matrix of subject IDs at each position}
@@ -34,12 +36,18 @@
 #'   \item Optimizes horizontal spacing using kinship2_alignped4
 #'   \item Identifies inbreeding loops and twin relationships
 #' }
-kinship2_align.pedigree <- function(ped, packed = TRUE, width = 10, align = TRUE, hints = ped$hints) {
+kinship2_align.pedigree <- function(ped,
+                                    packed = TRUE,
+                                    width = 10,
+                                    align = TRUE,
+                                    hints = ped$hints,
+                                    classic=FALSE) {
   if ("pedigreeList" %in% class(ped)) {
     nped <- length(unique(ped$famid))
     alignment <- vector("list", nped)
     for (i in 1:nped) {
-      temp <- kinship2_align.pedigree(ped[i], packed, width, align)
+      temp <- kinship2_align.pedigree(ped[i], packed, width, align,
+                                      classic=classic)
       alignment[[i]] <- temp$alignment
     }
     ped$alignment <- alignment
@@ -122,7 +130,8 @@ kinship2_align.pedigree <- function(ped, packed = TRUE, width = 10, align = TRUE
   founders <- unique(c(dupmom, dupdad, foundmom))
   founders <- founders[order(horder[founders])] # use the hints to order them
   rval <- kinship2_alignped1(founders[1], dad, mom, level, horder,
-    packed = packed, spouselist = spouselist
+    packed = packed, spouselist = spouselist,
+    classic =classic
   )
 
   if (length(founders) > 1) {
@@ -130,10 +139,12 @@ kinship2_align.pedigree <- function(ped, packed = TRUE, width = 10, align = TRUE
     for (i in 2:length(founders)) {
       rval2 <- kinship2_alignped1(
         founders[i], dad, mom,
-        level, horder, packed, spouselist
+        level, horder, packed, spouselist,
+        classic =classic
       )
       spouselist <- rval2$spouselist
-      rval <- kinship2_alignped3(rval, rval2, packed)
+      rval <- kinship2_alignped3(rval, rval2, packed,
+                                 classic = classic)
     }
   }
   ## Doc: finish-align (1)
@@ -168,7 +179,11 @@ kinship2_align.pedigree <- function(ped, packed = TRUE, width = 10, align = TRUE
   }
   ## Doc: finish align(3)
   if ((is.numeric(align) || align) && max(level) > 1) {
-    pos <- kinship2_alignped4(rval, spouse > 0, level, width, align)
+    pos <- kinship2_alignped4(rval=rval, spouse = spouse > 0,
+                              level=level,
+                              width=width,
+                              align=align,
+                              classic = classic)
   } else {
     pos <- rval$pos
   }
