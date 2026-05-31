@@ -12,7 +12,6 @@
 #' @param packed Logical, if TRUE uses compact packing algorithm (default TRUE)
 #' @param width Numeric, maximum width of the pedigree plot (default 10)
 #' @param align Logical or numeric. If TRUE, attempts to align spouses on same level.
-#' @param classic Logical, if TRUE uses classic alignment method (default TRUE). If FALSE, uses an optimized method.
 #'   If numeric, a vector c(a1, a2) controlling alignment penalties (default TRUE)
 #' @param hints Optional list with `order` and `spouse` components to guide alignment.
 #'   If NULL, kinship2_autohint is called to generate hints
