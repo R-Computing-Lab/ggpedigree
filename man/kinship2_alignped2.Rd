@@ -30,7 +30,7 @@ kinship2_alignped2(
 
 \item{spouselist}{Matrix defining spouse relationships}
 
-\item{classic}{Logical, if TRUE uses classic alignment method (default TRUE)}
+\item{classic}{Logical, if TRUE uses classic alignment method (default FALSE)}
 }
 \value{
 A list containing the aligned pedigree structure for the sibling group:
