@@ -2,6 +2,7 @@
 % Please edit documentation in R/kinship2_alignped2.R
 \name{kinship2_alignped2}
 \alias{kinship2_alignped2}
+\alias{kinship2_alignped2_optimized}
 \title{Align pedigree - Process a set of siblings}
 \usage{
 kinship2_alignped2(
@@ -14,6 +15,8 @@ kinship2_alignped2(
   spouselist,
   classic = FALSE
 )
+
+kinship2_alignped2_optimized(x, dad, mom, level, horder, packed, spouselist)
 }
 \arguments{
 \item{x}{Integer vector of sibling IDs to process}
@@ -30,7 +33,7 @@ kinship2_alignped2(
 
 \item{spouselist}{Matrix defining spouse relationships}
 
-\item{classic}{Logical, if TRUE uses classic alignment method (default TRUE)}
+\item{classic}{Logical, if TRUE uses classic alignment method (default FALSE)}
 }
 \value{
 A list containing the aligned pedigree structure for the sibling group:
