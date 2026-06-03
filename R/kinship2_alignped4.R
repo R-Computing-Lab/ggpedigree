@@ -199,7 +199,13 @@ kinship2_alignped4_optimized <- function(rval, spouse, level, width, align
 
   if (requireNamespace("quadprog", quietly = TRUE)) {
     pp <- pp + 1e-8 * diag(n)
-    fit <- quadprog::solve.QP(pp, rep(0., n), t(cmat), dvec)
+    fit <- tryCatch(
+    quadprog::solve.QP(pp, rep(0., n), t(cmat), dvec),
+    error = function(e) {
+      warning("Quadratic programming failed, returning unoptimized positions: ", conditionMessage(e))
+      return(list(solution = rval$pos[myid]))
+    }
+    )
   } else {
     stop("Need the quadprog package")
   }
