@@ -200,14 +200,28 @@ kinship2_alignped4_optimized <- function(rval, spouse, level, width, align
   if (requireNamespace("quadprog", quietly = TRUE)) {
     pp <- pp + 1e-8 * diag(n)
     fit <- tryCatch(
-    quadprog::solve.QP(pp, rep(0., n), t(cmat), dvec),
+    quadprog::solve.QP(Dmat = pp,
+                       dvec = rep(0., n),
+                       Amat = t(cmat),
+                       bvec = dvec),
     error = function(e) {
       warning("Quadratic programming failed, returning unoptimized positions: ", conditionMessage(e))
-      return(list(solution = rval$pos[myid]))
+      return(list(solution = kinship2_alignped4_fallback_solution(
+  rval = rval,
+  myid = myid,
+  width = width,
+  n = n
+)))
     }
     )
   } else {
-    stop("Need the quadprog package")
+  fit <-list(solution = kinship2_alignped4_fallback_solution(
+    rval = rval,
+    myid = myid,
+    width = width,
+    n = n
+  ))
+    warning("Need the quadprog package for optimized alignment, returning unoptimized positions")
   }
 
   newpos <- rval$pos
@@ -215,4 +229,29 @@ kinship2_alignped4_optimized <- function(rval, spouse, level, width, align
   # newpos[myid>0] <- fit$X[myid]
   newpos[myid > 0] <- fit$solution[myid]
   newpos
+}
+
+#' @rdname kinship2_alignped4
+#' @keywords internal
+
+
+kinship2_alignped4_fallback_solution <- function(rval, myid, width, n) {
+  solution <- numeric(n)
+  maxlev <- nrow(rval$nid)
+
+  for (lev in seq_len(maxlev)) {
+    nn <- rval$n[lev]
+    ids <- myid[lev, seq_len(nn)]
+
+    row_pos <- seq.int(0, nn - 1)
+
+    extra_space <- (width - 1) - max(row_pos)
+    if (is.finite(extra_space) && extra_space > 0) {
+      row_pos <- row_pos + extra_space / 2
+    }
+
+    solution[ids] <- row_pos
+  }
+
+  solution
 }

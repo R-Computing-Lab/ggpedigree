@@ -134,6 +134,7 @@ pltstatic <- ggPedigree(df_repaired,
     label_method = "geom_text",
     #  segment_self_color = "purple",
     #   label_segment_color = "gray",
+    reduce_variables = F,
     tooltip_columns = c("ID", "name")
   )
 )

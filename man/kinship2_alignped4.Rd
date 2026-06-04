@@ -3,11 +3,14 @@
 \name{kinship2_alignped4}
 \alias{kinship2_alignped4}
 \alias{kinship2_alignped4_optimized}
+\alias{kinship2_alignped4_fallback_solution}
 \title{Compute optimal horizontal spacing for pedigree alignment}
 \usage{
 kinship2_alignped4(rval, spouse, level, width, align, classic = FALSE)
 
 kinship2_alignped4_optimized(rval, spouse, level, width, align)
+
+kinship2_alignped4_fallback_solution(rval, myid, width, n)
 }
 \arguments{
 \item{rval}{Aligned pedigree structure from previous alignment steps}
