@@ -65,6 +65,7 @@ getDefaultPlotConfig(
   ped_packed = TRUE,
   ped_align = TRUE,
   ped_width = 15,
+  fast_threshold = 300,
   coord_layout = "cartesian",
   coord_radial_start_angle = -90,
   coord_radial_end_angle = 270,
@@ -338,6 +339,8 @@ The plot is reversed vertically, so this is needed to nudge labels up instead of
 \item{ped_align}{Whether to align pedigree generations.}
 
 \item{ped_width}{Plot width of the pedigree block.}
+
+\item{fast_threshold}{Threshold for switching to piecewise layout algorithms for large pedigrees.}
 
 \item{coord_layout}{Layout mode for the pedigree. Options: "cartesian" (default) or "radial".}
 
