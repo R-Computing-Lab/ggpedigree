@@ -65,7 +65,7 @@ getDefaultPlotConfig(
   ped_packed = TRUE,
   ped_align = TRUE,
   ped_width = 15,
-  fast_threshold = 300,
+  fast_threshold = 1000,
   coord_layout = "cartesian",
   coord_radial_start_angle = -90,
   coord_radial_end_angle = 270,

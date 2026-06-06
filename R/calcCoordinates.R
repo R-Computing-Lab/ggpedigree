@@ -272,7 +272,7 @@ calculateCoordinates <- function(ped,
     ped_component$x_fam <- base::rowMeans(cbind(
       ped_component$parent_left,
       ped_component$parent_right
-    ), na.rm = FALSE)
+    ), na.rm = TRUE)
 
     ped_component$x_fam[ped_component$parent_fam == 0] <- NA
     ped_component[[momID]][ped_component$parent_fam == 0] <- NA
@@ -284,7 +284,7 @@ calculateCoordinates <- function(ped,
     return(ped_component)
   }
 
-  alignAndExtractComponent <- function(ped_component) {
+  alignAndExtractComponent <- function(ped_component, config) {
     # use relations if provided, otherwise use default settings
     ped_ped <- alignPedigreeWithRelations(
       ped = ped_component,
@@ -324,7 +324,7 @@ calculateCoordinates <- function(ped,
         idx <- components[[i]]
         ped_component <- ped[idx, , drop = FALSE]
 
-        component_df <- alignAndExtractComponent(ped_component)
+        component_df <- alignAndExtractComponent(ped_component, config=config)
         component_df$.component <- i
 
         component_df
@@ -337,7 +337,7 @@ calculateCoordinates <- function(ped,
     }
   }
 
-  ped_out <- alignAndExtractComponent(ped)
+  ped_out <- alignAndExtractComponent(ped,config=config)
   rownames(ped_out) <- NULL
 
   return(ped_out)
@@ -484,14 +484,14 @@ alignPedigreeWithHints <- function(ped_ped, config) {
 splitPedigreeComponents <- function(ped, personID, momID, dadID) {
   ped_fam <- BGmisc::ped2fam(
     ped,
-    famID    = ".comp",
+    famID    = "famID",
     personID = personID,
     momID    = momID,
     dadID    = dadID
   )
-  if(length(unique(ped_fam[[".comp"]])) == 1L) return(list(seq_len(nrow(ped))))
+  if(length(unique(ped_fam[["famID"]])) == 1L) return(list(seq_len(nrow(ped))))
   # ped2fam may reorder rows via merge(); match back to original order
-  comp_ids <- ped_fam[[".comp"]][match(ped[[personID]], ped_fam[[personID]])]
+  comp_ids <- ped_fam[["famID"]][match(ped[[personID]], ped_fam[[personID]])]
   unname(split(seq_len(nrow(ped)), comp_ids))
 }
 
