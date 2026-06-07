@@ -285,11 +285,9 @@ ggPedigree.core <- function(ped,
 
   # Spouse link between two parents
   p <- .addSegmentLayer(
-    p,
-    data = connections,
-    mapping = ggplot2::aes(
-      x = .data$x_spouse,
-      xend = .data$x_pos,
+    data = connections |>
+      dplyr::filter(!is.na(.data$x_spouse)) |>
+      dplyr::distinct(.data$couple_hash, .keep_all = TRUE),
       y = .data$y_spouse,
       yend = .data$y_pos
     ),

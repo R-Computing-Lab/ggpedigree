@@ -520,10 +520,9 @@ addSegmentLineageColumn <- function(ds_ped,
   if (use_continuous) {
     # Resolve the reference person: explicit > focal-fill default > first person
     resolved_focal <- focal_id
+    if (!is.null(resolved_focal) && !resolved_focal %in% ds_ped[[personID]]) stop(paste0("segment_lineage_focal_personID ", resolved_focal, " not found in ds_ped$", personID, "."))
     if (is.null(resolved_focal)) resolved_focal <- config$focal_fill_personID
-    if (is.null(resolved_focal) || !resolved_focal %in% ds_ped[[personID]]) {
-      resolved_focal <- ds_ped[[personID]][1]
-    }
+    if (is.null(resolved_focal) || !resolved_focal %in% ds_ped[[personID]]) resolved_focal <- ds_ped[[personID]][1]
     if (is.null(focal_id)) {
       message(
         "segment_lineage_component '", component, "' is a continuous relatedness ",
