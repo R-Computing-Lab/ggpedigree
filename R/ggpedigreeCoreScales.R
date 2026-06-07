@@ -285,6 +285,7 @@
 #' @param config A configuration list.
 #' @keywords internal
 #' @return A ggplot object with the segment lineage color scale added.
+
 .add_segment_lineage_scales <- function(p, config) {
   method <- config$segment_lineage_method
 
@@ -299,16 +300,17 @@
     (!is.null(focal_id) && component %in% c("mitochondrial", "mtdna", "mitochondria"))
 
   if (is_continuous_component && method %in% discrete_methods) {
-    warn("Continuous segment_lineage_component requires a continuous segment_lineage_method (e.g., viridis_c, viridis_b, gradient, gradient2, steps).")
+    warning("Continuous segment_lineage_component requires a continuous segment_lineage_method (e.g., viridis_c, viridis_b, gradient, gradient2, steps).")
   }
   if (!is_continuous_component && method %in% continuous_methods) {
-    warn("Discrete lineage groups require a discrete segment_lineage_method (e.g., viridis_d, hue, manual).")
+    warning("Discrete lineage groups require a discrete segment_lineage_method (e.g., viridis_d, hue, manual).")
   }
   if (identical(method, "manual") && is.null(config$segment_lineage_palette)) {
-    warn("segment_lineage_method = 'manual' requires segment_lineage_palette to be provided.")
+    warning("segment_lineage_method = 'manual' requires segment_lineage_palette to be provided.")
   }
 
   na_color <- config$segment_lineage_na_color
+
   title <- if (isTRUE(config$segment_lineage_legend_show)) {
     config$segment_lineage_legend_title
   } else {
@@ -382,16 +384,15 @@
     segment_lineage_methods <- c(
       "viridis_d", "viridis_c", "viridis_b",
       "hue", "manual",
-      "gradient", "gradient2", "steps"
+      "gradient", "gradient2", "steps", "steps2", "step", "step2"
     )
-    warn(paste(
+    warning(paste(
       "segment_lineage_method must be one of",
       paste(segment_lineage_methods, collapse = ", ")
     ))
+  } else {
+    p <- p + scale_fun()
   }
-
-  p <- p + scale_fun()
-
   if (isFALSE(config$segment_lineage_legend_show)) {
     p <- p + ggplot2::guides(colour = "none")
   }

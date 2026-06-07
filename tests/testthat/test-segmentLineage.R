@@ -117,11 +117,11 @@ test_that("node focal_fill and segment lineage combine when ggnewscale is availa
   )
 })
 
-test_that("invalid segment_lineage_method raises an informative error", {
+test_that("invalid segment_lineage_method raises an informative warning", {
   library(BGmisc)
   data("inbreeding")
 
-  expect_error(
+  expect_warning(
     ggPedigree(
       inbreeding,
       famID = "famID", personID = "ID",

@@ -207,7 +207,7 @@ ggPedigree.core <- function(ped,
     }
   }
 
-  if (lineage_active==TRUE) {
+  if (lineage_active == TRUE) {
     lineage_lookup <- ds |>
       dplyr::distinct(!!rlang::sym(personID), .data$segment_lineage)
 
@@ -284,7 +284,8 @@ ggPedigree.core <- function(ped,
   # -----
 
   # Spouse link between two parents
-  p <- .addSegmentLayer(plotObject = p,
+  p <- .addSegmentLayer(
+    plotObject = p,
     data = connections,
     mapping = ggplot2::aes(
       x = .data$x_spouse,
