@@ -92,8 +92,7 @@ calculateCoordinates <- function(ped,
                                  sexVar = "sex",
                                  twinID = "twinID",
                                  code_male = NULL,
-                                 config = list(
-                                   )) {
+                                 config = list()) {
   if (!inherits(ped, "data.frame")) {
     stop("ped should be a data.frame or inherit to a data.frame")
   }
@@ -129,7 +128,7 @@ calculateCoordinates <- function(ped,
                                                     personID,
                                                     momID,
                                                     dadID,
-                                                    config=NULL) {
+                                                    config = NULL) {
     # Extract layout information
     nid_vector <- as.vector(pos$nid)
     nid_vector <- nid_vector[nid_vector != 0] # Remove zero entries (empty cells)
@@ -314,17 +313,19 @@ calculateCoordinates <- function(ped,
 
   # Construct a pedigree object to compute layout coordinates
   if (nrow(ped) > config$fast_threshold) {
-    components <- splitPedigreeComponents(ped =ped,
-                                           personID = personID,
-                                           momID = momID,
-                                           dadID = dadID)
+    components <- splitPedigreeComponents(
+      ped = ped,
+      personID = personID,
+      momID = momID,
+      dadID = dadID
+    )
 
     if (length(components) > 1L) {
       component_dfs <- lapply(seq_along(components), function(i) {
         idx <- components[[i]]
         ped_component <- ped[idx, , drop = FALSE]
 
-        component_df <- alignAndExtractComponent(ped_component, config=config)
+        component_df <- alignAndExtractComponent(ped_component, config = config)
         component_df$.component <- i
 
         component_df
@@ -337,7 +338,7 @@ calculateCoordinates <- function(ped,
     }
   }
 
-  ped_out <- alignAndExtractComponent(ped,config=config)
+  ped_out <- alignAndExtractComponent(ped, config = config)
   rownames(ped_out) <- NULL
 
   return(ped_out)
@@ -489,7 +490,9 @@ splitPedigreeComponents <- function(ped, personID, momID, dadID) {
     momID    = momID,
     dadID    = dadID
   )
-  if(length(unique(ped_fam[["famID"]])) == 1L) return(list(seq_len(nrow(ped))))
+  if (length(unique(ped_fam[["famID"]])) == 1L) {
+    return(list(seq_len(nrow(ped))))
+  }
   # ped2fam may reorder rows via merge(); match back to original order
   comp_ids <- ped_fam[["famID"]][match(ped[[personID]], ped_fam[[personID]])]
   unname(split(seq_len(nrow(ped)), comp_ids))
@@ -503,17 +506,18 @@ splitPedigreeComponents <- function(ped, personID, momID, dadID) {
 #' @return Single data frame with x positions shifted to prevent overlap.
 #' @keywords internal
 stitchComponents <- function(component_dfs,
-                            x_offset = 0
-                             ) {
-  if (length(component_dfs) == 1L) return(component_dfs[[1L]])
+                             x_offset = 0) {
+  if (length(component_dfs) == 1L) {
+    return(component_dfs[[1L]])
+  }
 
   for (i in seq_along(component_dfs)) {
     df <- component_dfs[[i]]
-    component_dfs[[i]]$x_pos   <- df$x_pos + x_offset
+    component_dfs[[i]]$x_pos <- df$x_pos + x_offset
     component_dfs[[i]]$x_order <- df$x_order + as.integer(floor(x_offset))
-    component_dfs[[i]]$x_fam   <- df$x_fam + x_offset  # NA + number = NA, safe
+    component_dfs[[i]]$x_fam <- df$x_fam + x_offset # NA + number = NA, safe
     x_max <- max(df$x_pos, na.rm = TRUE)
-    if (!is.finite(x_max)) x_max <- 1.0  # isolated individual with NA x_pos
+    if (!is.finite(x_max)) x_max <- 1.0 # isolated individual with NA x_pos
     x_offset <- x_offset + x_max + 2.0
   }
 
