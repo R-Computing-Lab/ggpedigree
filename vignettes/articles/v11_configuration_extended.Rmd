@@ -727,9 +727,9 @@ ggPedigree(
     focal_fill_include = FALSE,
     segment_lineage_include = TRUE,
     segment_lineage_component = "paternal",
-    segment_lineage_types = c("parent", "offspring", "sibling", "mz", "spouse"
+    segment_lineage_types = c("parent", "offspring", "sibling", "mz", "spouse")
   )
-))
+)
 ```
 
 ### Combining node focal fill with segment lineage

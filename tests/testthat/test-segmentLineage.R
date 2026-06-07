@@ -20,10 +20,12 @@ test_that("segment lineage coloring is off by default and preserves fixed colors
   p <- ggPedigree(
     inbreeding,
     famID = "famID", personID = "ID",
-    config = list(code_male = 0,
-                  code_female = 1,
-                  sex_color_include = FALSE,
-                  override_many2many = TRUE)
+    config = list(
+      code_male = 0,
+      code_female = 1,
+      sex_color_include = FALSE,
+      override_many2many = TRUE
+    )
   )
   expect_s3_class(p, "gg")
   # With no lineage coloring, segments use the single fixed default color

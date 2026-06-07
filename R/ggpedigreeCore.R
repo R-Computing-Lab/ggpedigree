@@ -177,6 +177,7 @@ ggPedigree.core <- function(ped,
   # independently requires a second color scale via {ggnewscale}.
   node_uses_color <- .get_color_mode(config, status_column, focal_fill_column) != "none"
   have_ggnewscale <- requireNamespace("ggnewscale", quietly = TRUE)
+
   is_interactive <- isTRUE(config$return_interactive)
 
   lineage_active <- isTRUE(config$segment_lineage_include) &&
@@ -206,7 +207,7 @@ ggPedigree.core <- function(ped,
     }
   }
 
-  if (lineage_active) {
+  if (lineage_active==TRUE) {
     lineage_lookup <- ds |>
       dplyr::distinct(!!rlang::sym(personID), .data$segment_lineage)
 
@@ -392,7 +393,7 @@ ggPedigree.core <- function(ped,
   # Apply the segment lineage color scale before drawing nodes. When nodes also
   # use a color scale, start a fresh color scale (via {ggnewscale}) so node and
   # segment colors get independent legends.
-  if (lineage_active) {
+  if (lineage_active == TRUE) {
     p <- .add_segment_lineage_scales(p, config)
     if (node_uses_color && have_ggnewscale && !is_interactive) {
       p <- p + ggnewscale::new_scale_colour()

@@ -41,13 +41,14 @@ kinship2_align.pedigree <- function(ped,
                                     width = 10,
                                     align = TRUE,
                                     hints = ped$hints,
-                                    classic=FALSE) {
+                                    classic = FALSE) {
   if ("pedigreeList" %in% class(ped)) {
     nped <- length(unique(ped$famid))
     alignment <- vector("list", nped)
     for (i in 1:nped) {
       temp <- kinship2_align.pedigree(ped[i], packed, width, align,
-                                      classic=classic)
+        classic = classic
+      )
       alignment[[i]] <- temp$alignment
     }
     ped$alignment <- alignment
@@ -131,7 +132,7 @@ kinship2_align.pedigree <- function(ped,
   founders <- founders[order(horder[founders])] # use the hints to order them
   rval <- kinship2_alignped1(founders[1], dad, mom, level, horder,
     packed = packed, spouselist = spouselist,
-    classic =classic
+    classic = classic
   )
 
   if (length(founders) > 1) {
@@ -140,11 +141,12 @@ kinship2_align.pedigree <- function(ped,
       rval2 <- kinship2_alignped1(
         founders[i], dad, mom,
         level, horder, packed, spouselist,
-        classic =classic
+        classic = classic
       )
       spouselist <- rval2$spouselist
       rval <- kinship2_alignped3(rval, rval2, packed,
-                                 classic = classic)
+        classic = classic
+      )
     }
   }
   ## Doc: finish-align (1)
@@ -179,11 +181,13 @@ kinship2_align.pedigree <- function(ped,
   }
   ## Doc: finish align(3)
   if ((is.numeric(align) || align) && max(level) > 1) {
-    pos <- kinship2_alignped4(rval=rval, spouse = spouse > 0,
-                              level=level,
-                              width=width,
-                              align=align,
-                              classic = classic)
+    pos <- kinship2_alignped4(
+      rval = rval, spouse = spouse > 0,
+      level = level,
+      width = width,
+      align = align,
+      classic = classic
+    )
   } else {
     pos <- rval$pos
   }

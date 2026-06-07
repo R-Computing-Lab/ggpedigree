@@ -1,4 +1,3 @@
-
 .align_with_alignped_stages <- function(ped,
                                         packed = TRUE,
                                         width = 10,
@@ -216,8 +215,6 @@ expect_align_stage_equal <- function(classic, optimized, tolerance = 1e-8) {
 }
 
 
-
-
 test_that("align.pedigree works with sample ped", {
   skip_if_not_installed("kinship2")
   library(kinship2)
@@ -275,7 +272,6 @@ test_that("align.pedigree works with ASOIAF", {
 
 
 test_that("test autohint works with ASOIAF", {
-
   data("ASOIAF")
   df_ASOIAF <- BGmisc::checkParentIDs(ASOIAF,
     addphantoms = TRUE,
@@ -328,7 +324,6 @@ test_that("test autohint works when packed false", {
   expect_equal(dim(plist$pos), c(4, 22))
   expect_equal(dim(plist$fam), c(4, 22))
 })
-
 
 
 test_that("classic option passes through kinship2_alignped stages with sample.ped", {
@@ -577,26 +572,30 @@ test_that("classic option passes through kinship2_alignped stages with autohint 
     hints <- kinship2_check.hint(hints, ped$sex)
   }
 
-  n      <- length(ped$id)
-  dad    <- ped$findex
-  mom    <- ped$mindex
-  level  <- 1 + kinship2_kindepth(ped, align = TRUE)
+  n <- length(ped$id)
+  dad <- ped$findex
+  mom <- ped$mindex
+  level <- 1 + kinship2_kindepth(ped, align = TRUE)
   horder <- hints$order
 
   if (is.null(ped$relation)) {
     relation <- NULL
   } else {
-    relation <- cbind(as.matrix(ped$relation[, 1:2]),
-                      as.numeric(ped$relation[, 3]))
+    relation <- cbind(
+      as.matrix(ped$relation[, 1:2]),
+      as.numeric(ped$relation[, 3])
+    )
   }
 
   if (!is.null(hints$spouse)) {
-    tsex       <- ped$sex[hints$spouse[, 1]]
+    tsex <- ped$sex[hints$spouse[, 1]]
     spouselist <- cbind(0, 0, 1 + (tsex != "male"), hints$spouse[, 3])
     spouselist[, 1] <- ifelse(tsex == "male",
-                               hints$spouse[, 1], hints$spouse[, 2])
+      hints$spouse[, 1], hints$spouse[, 2]
+    )
     spouselist[, 2] <- ifelse(tsex == "male",
-                               hints$spouse[, 2], hints$spouse[, 1])
+      hints$spouse[, 2], hints$spouse[, 1]
+    )
   } else {
     spouselist <- matrix(0L, nrow = 0L, ncol = 4L)
   }
@@ -609,24 +608,26 @@ test_that("classic option passes through kinship2_alignped stages with autohint 
   }
 
   if (any(dad > 0 & mom > 0)) {
-    who        <- which(dad > 0 & mom > 0)
+    who <- which(dad > 0 & mom > 0)
     spouselist <- rbind(spouselist, cbind(dad[who], mom[who], 0, 0))
   }
 
-  hash       <- spouselist[, 1] * n + spouselist[, 2]
+  hash <- spouselist[, 1] * n + spouselist[, 2]
   spouselist <- spouselist[!duplicated(hash), , drop = FALSE]
 
   noparents <- dad[spouselist[, 1]] == 0 & dad[spouselist[, 2]] == 0
-  dupmom    <- spouselist[noparents, 2][duplicated(spouselist[noparents, 2])]
-  dupdad    <- spouselist[noparents, 1][duplicated(spouselist[noparents, 1])]
-  foundmom  <- spouselist[
+  dupmom <- spouselist[noparents, 2][duplicated(spouselist[noparents, 2])]
+  dupdad <- spouselist[noparents, 1][duplicated(spouselist[noparents, 1])]
+  foundmom <- spouselist[
     noparents & !(spouselist[, 1] %in% c(dupmom, dupdad)), 2
   ]
-  founders  <- unique(c(dupmom, dupdad, foundmom))
-  founders  <- founders[order(horder[founders])]
+  founders <- unique(c(dupmom, dupdad, foundmom))
+  founders <- founders[order(horder[founders])]
 
-  list(dad = dad, mom = mom, level = level, horder = horder,
-       spouselist = spouselist, founders = founders)
+  list(
+    dad = dad, mom = mom, level = level, horder = horder,
+    spouselist = spouselist, founders = founders
+  )
 }
 
 
@@ -648,10 +649,10 @@ test_that("kinship2_alignped3 classic and optimized are equivalent (packed=TRUE,
     fam = matrix(c(0L, 0L, 1L, 1L), nrow = 2L, byrow = TRUE)
   )
 
-  classic   <- kinship2_alignped3(x1, x2, packed = TRUE,  classic = TRUE)
-  optimized <- kinship2_alignped3(x1, x2, packed = TRUE,  classic = FALSE)
+  classic <- kinship2_alignped3(x1, x2, packed = TRUE, classic = TRUE)
+  optimized <- kinship2_alignped3(x1, x2, packed = TRUE, classic = FALSE)
 
-  expect_equal(optimized$n,   classic$n)
+  expect_equal(optimized$n, classic$n)
   expect_equal(optimized$nid, classic$nid)
   expect_equal(optimized$fam, classic$fam)
   expect_equal(optimized$pos, classic$pos)
@@ -672,10 +673,10 @@ test_that("kinship2_alignped3 classic and optimized are equivalent (packed=FALSE
     fam = matrix(c(0L, 0L, 1L, 1L), nrow = 2L, byrow = TRUE)
   )
 
-  classic   <- kinship2_alignped3(x1, x2, packed = FALSE, classic = TRUE)
+  classic <- kinship2_alignped3(x1, x2, packed = FALSE, classic = TRUE)
   optimized <- kinship2_alignped3(x1, x2, packed = FALSE, classic = FALSE)
 
-  expect_equal(optimized$n,   classic$n)
+  expect_equal(optimized$n, classic$n)
   expect_equal(optimized$nid, classic$nid)
   expect_equal(optimized$fam, classic$fam)
   expect_equal(optimized$pos, classic$pos)
@@ -699,10 +700,10 @@ test_that("kinship2_alignped3 classic and optimized are equivalent (packed=TRUE,
     fam = matrix(c(0L, 0L, 1L, 1L), nrow = 2L, byrow = TRUE)
   )
 
-  classic   <- kinship2_alignped3(x1, x2, packed = TRUE,  classic = TRUE)
-  optimized <- kinship2_alignped3(x1, x2, packed = TRUE,  classic = FALSE)
+  classic <- kinship2_alignped3(x1, x2, packed = TRUE, classic = TRUE)
+  optimized <- kinship2_alignped3(x1, x2, packed = TRUE, classic = FALSE)
 
-  expect_equal(optimized$n,   classic$n)
+  expect_equal(optimized$n, classic$n)
   expect_equal(optimized$nid, classic$nid)
   expect_equal(optimized$fam, classic$fam)
   expect_equal(optimized$pos, classic$pos)
@@ -723,10 +724,10 @@ test_that("kinship2_alignped3 classic and optimized are equivalent (packed=FALSE
     fam = matrix(c(0L, 0L, 1L, 1L), nrow = 2L, byrow = TRUE)
   )
 
-  classic   <- kinship2_alignped3(x1, x2, packed = FALSE, classic = TRUE)
+  classic <- kinship2_alignped3(x1, x2, packed = FALSE, classic = TRUE)
   optimized <- kinship2_alignped3(x1, x2, packed = FALSE, classic = FALSE)
 
-  expect_equal(optimized$n,   classic$n)
+  expect_equal(optimized$n, classic$n)
   expect_equal(optimized$nid, classic$nid)
   expect_equal(optimized$fam, classic$fam)
   expect_equal(optimized$pos, classic$pos)
@@ -737,18 +738,20 @@ test_that("kinship2_alignped3 classic and optimized are equivalent (packed=FALSE
 
 test_that("kinship2_alignped1 classic and optimized are equivalent on minimal pedigree (packed=TRUE)", {
   # 4-subject pedigree: father(1) + mother(2) -> child(3) + child(4)
-  dad        <- c(0L, 0L, 1L, 1L)
-  mom        <- c(0L, 0L, 2L, 2L)
-  level      <- c(1L, 1L, 2L, 2L)
-  horder     <- c(1.0, 2.0, 1.0, 2.0)
+  dad <- c(0L, 0L, 1L, 1L)
+  mom <- c(0L, 0L, 2L, 2L)
+  level <- c(1L, 1L, 2L, 2L)
+  horder <- c(1.0, 2.0, 1.0, 2.0)
   spouselist <- matrix(c(1L, 2L, 0L, 0L), nrow = 1L, ncol = 4L)
 
-  classic   <- kinship2_alignped1(1L, dad, mom, level, horder,
-                                   packed = TRUE, spouselist, classic = TRUE)
+  classic <- kinship2_alignped1(1L, dad, mom, level, horder,
+    packed = TRUE, spouselist, classic = TRUE
+  )
   optimized <- kinship2_alignped1(1L, dad, mom, level, horder,
-                                   packed = TRUE, spouselist, classic = FALSE)
+    packed = TRUE, spouselist, classic = FALSE
+  )
 
-  expect_equal(optimized$n,   classic$n)
+  expect_equal(optimized$n, classic$n)
   expect_equal(optimized$nid, classic$nid)
   expect_equal(optimized$fam, classic$fam)
   expect_equal(optimized$pos, classic$pos, tolerance = 1e-8)
@@ -757,18 +760,20 @@ test_that("kinship2_alignped1 classic and optimized are equivalent on minimal pe
 
 
 test_that("kinship2_alignped1 classic and optimized are equivalent on minimal pedigree (packed=FALSE)", {
-  dad        <- c(0L, 0L, 1L, 1L)
-  mom        <- c(0L, 0L, 2L, 2L)
-  level      <- c(1L, 1L, 2L, 2L)
-  horder     <- c(1.0, 2.0, 1.0, 2.0)
+  dad <- c(0L, 0L, 1L, 1L)
+  mom <- c(0L, 0L, 2L, 2L)
+  level <- c(1L, 1L, 2L, 2L)
+  horder <- c(1.0, 2.0, 1.0, 2.0)
   spouselist <- matrix(c(1L, 2L, 0L, 0L), nrow = 1L, ncol = 4L)
 
-  classic   <- kinship2_alignped1(1L, dad, mom, level, horder,
-                                   packed = FALSE, spouselist, classic = TRUE)
+  classic <- kinship2_alignped1(1L, dad, mom, level, horder,
+    packed = FALSE, spouselist, classic = TRUE
+  )
   optimized <- kinship2_alignped1(1L, dad, mom, level, horder,
-                                   packed = FALSE, spouselist, classic = FALSE)
+    packed = FALSE, spouselist, classic = FALSE
+  )
 
-  expect_equal(optimized$n,   classic$n)
+  expect_equal(optimized$n, classic$n)
   expect_equal(optimized$nid, classic$nid)
   expect_equal(optimized$fam, classic$fam)
   expect_equal(optimized$pos, classic$pos, tolerance = 1e-8)
@@ -778,18 +783,22 @@ test_that("kinship2_alignped1 classic and optimized are equivalent on minimal pe
 test_that("kinship2_alignped1 classic and optimized are equivalent on sample.ped (packed=TRUE)", {
   library(kinship2)
   data("sample.ped")
-  ped    <- with(sample.ped, ggpedigree:::pedigree(id, father, mother, sex))
+  ped <- with(sample.ped, ggpedigree:::pedigree(id, father, mother, sex))
   inputs <- .make_align_inputs(ped)
-  f1     <- inputs$founders[1]
+  f1 <- inputs$founders[1]
 
-  classic   <- kinship2_alignped1(f1, inputs$dad, inputs$mom, inputs$level,
-                                   inputs$horder, packed = TRUE,
-                                   inputs$spouselist, classic = TRUE)
+  classic <- kinship2_alignped1(f1, inputs$dad, inputs$mom, inputs$level,
+    inputs$horder,
+    packed = TRUE,
+    inputs$spouselist, classic = TRUE
+  )
   optimized <- kinship2_alignped1(f1, inputs$dad, inputs$mom, inputs$level,
-                                   inputs$horder, packed = TRUE,
-                                   inputs$spouselist, classic = FALSE)
+    inputs$horder,
+    packed = TRUE,
+    inputs$spouselist, classic = FALSE
+  )
 
-  expect_equal(optimized$n,   classic$n)
+  expect_equal(optimized$n, classic$n)
   expect_equal(optimized$nid, classic$nid)
   expect_equal(optimized$fam, classic$fam)
   expect_equal(optimized$pos, classic$pos, tolerance = 1e-8)
@@ -800,18 +809,22 @@ test_that("kinship2_alignped1 classic and optimized are equivalent on sample.ped
 test_that("kinship2_alignped1 classic and optimized are equivalent on sample.ped (packed=FALSE)", {
   library(kinship2)
   data("sample.ped")
-  ped    <- with(sample.ped, ggpedigree:::pedigree(id, father, mother, sex))
+  ped <- with(sample.ped, ggpedigree:::pedigree(id, father, mother, sex))
   inputs <- .make_align_inputs(ped)
-  f1     <- inputs$founders[1]
+  f1 <- inputs$founders[1]
 
-  classic   <- kinship2_alignped1(f1, inputs$dad, inputs$mom, inputs$level,
-                                   inputs$horder, packed = FALSE,
-                                   inputs$spouselist, classic = TRUE)
+  classic <- kinship2_alignped1(f1, inputs$dad, inputs$mom, inputs$level,
+    inputs$horder,
+    packed = FALSE,
+    inputs$spouselist, classic = TRUE
+  )
   optimized <- kinship2_alignped1(f1, inputs$dad, inputs$mom, inputs$level,
-                                   inputs$horder, packed = FALSE,
-                                   inputs$spouselist, classic = FALSE)
+    inputs$horder,
+    packed = FALSE,
+    inputs$spouselist, classic = FALSE
+  )
 
-  expect_equal(optimized$n,   classic$n)
+  expect_equal(optimized$n, classic$n)
   expect_equal(optimized$nid, classic$nid)
   expect_equal(optimized$fam, classic$fam)
   expect_equal(optimized$pos, classic$pos, tolerance = 1e-8)
@@ -822,18 +835,20 @@ test_that("kinship2_alignped1 classic and optimized are equivalent on sample.ped
 
 test_that("kinship2_alignped2 classic and optimized are equivalent on minimal pedigree (packed=TRUE)", {
   # 5-subject pedigree: father(1) + mother(2) -> three siblings (3,4,5)
-  dad        <- c(0L, 0L, 1L, 1L, 1L)
-  mom        <- c(0L, 0L, 2L, 2L, 2L)
-  level      <- c(1L, 1L, 2L, 2L, 2L)
-  horder     <- c(1.0, 2.0, 1.0, 2.0, 3.0)
+  dad <- c(0L, 0L, 1L, 1L, 1L)
+  mom <- c(0L, 0L, 2L, 2L, 2L)
+  level <- c(1L, 1L, 2L, 2L, 2L)
+  horder <- c(1.0, 2.0, 1.0, 2.0, 3.0)
   spouselist <- matrix(c(1L, 2L, 0L, 0L), nrow = 1L, ncol = 4L)
 
-  classic   <- kinship2_alignped2(c(3L, 4L, 5L), dad, mom, level, horder,
-                                   packed = TRUE, spouselist, classic = TRUE)
+  classic <- kinship2_alignped2(c(3L, 4L, 5L), dad, mom, level, horder,
+    packed = TRUE, spouselist, classic = TRUE
+  )
   optimized <- kinship2_alignped2(c(3L, 4L, 5L), dad, mom, level, horder,
-                                   packed = TRUE, spouselist, classic = FALSE)
+    packed = TRUE, spouselist, classic = FALSE
+  )
 
-  expect_equal(optimized$n,   classic$n)
+  expect_equal(optimized$n, classic$n)
   expect_equal(optimized$nid, classic$nid)
   expect_equal(optimized$fam, classic$fam)
   expect_equal(optimized$pos, classic$pos, tolerance = 1e-8)
@@ -841,18 +856,20 @@ test_that("kinship2_alignped2 classic and optimized are equivalent on minimal pe
 
 
 test_that("kinship2_alignped2 classic and optimized are equivalent on minimal pedigree (packed=FALSE)", {
-  dad        <- c(0L, 0L, 1L, 1L, 1L)
-  mom        <- c(0L, 0L, 2L, 2L, 2L)
-  level      <- c(1L, 1L, 2L, 2L, 2L)
-  horder     <- c(1.0, 2.0, 1.0, 2.0, 3.0)
+  dad <- c(0L, 0L, 1L, 1L, 1L)
+  mom <- c(0L, 0L, 2L, 2L, 2L)
+  level <- c(1L, 1L, 2L, 2L, 2L)
+  horder <- c(1.0, 2.0, 1.0, 2.0, 3.0)
   spouselist <- matrix(c(1L, 2L, 0L, 0L), nrow = 1L, ncol = 4L)
 
-  classic   <- kinship2_alignped2(c(3L, 4L, 5L), dad, mom, level, horder,
-                                   packed = FALSE, spouselist, classic = TRUE)
+  classic <- kinship2_alignped2(c(3L, 4L, 5L), dad, mom, level, horder,
+    packed = FALSE, spouselist, classic = TRUE
+  )
   optimized <- kinship2_alignped2(c(3L, 4L, 5L), dad, mom, level, horder,
-                                   packed = FALSE, spouselist, classic = FALSE)
+    packed = FALSE, spouselist, classic = FALSE
+  )
 
-  expect_equal(optimized$n,   classic$n)
+  expect_equal(optimized$n, classic$n)
   expect_equal(optimized$nid, classic$nid)
   expect_equal(optimized$fam, classic$fam)
   expect_equal(optimized$pos, classic$pos, tolerance = 1e-8)
@@ -862,25 +879,31 @@ test_that("kinship2_alignped2 classic and optimized are equivalent on minimal pe
 test_that("kinship2_alignped2 classic and optimized are equivalent on sample.ped (packed=TRUE)", {
   library(kinship2)
   data("sample.ped")
-  ped    <- with(sample.ped, ggpedigree:::pedigree(id, father, mother, sex))
+  ped <- with(sample.ped, ggpedigree:::pedigree(id, father, mother, sex))
   inputs <- .make_align_inputs(ped)
-  f1     <- inputs$founders[1]
+  f1 <- inputs$founders[1]
 
-  r1   <- kinship2_alignped1(f1, inputs$dad, inputs$mom, inputs$level,
-                              inputs$horder, packed = TRUE,
-                              inputs$spouselist, classic = TRUE)
+  r1 <- kinship2_alignped1(f1, inputs$dad, inputs$mom, inputs$level,
+    inputs$horder,
+    packed = TRUE,
+    inputs$spouselist, classic = TRUE
+  )
   sibs <- which((inputs$dad == f1 | inputs$mom == f1) &
-                  inputs$level == inputs$level[f1] + 1L)
+    inputs$level == inputs$level[f1] + 1L)
   skip_if(length(sibs) == 0L, "No children found for first founder")
 
-  classic   <- kinship2_alignped2(sibs, inputs$dad, inputs$mom, inputs$level,
-                                   inputs$horder, packed = TRUE,
-                                   r1$spouselist, classic = TRUE)
+  classic <- kinship2_alignped2(sibs, inputs$dad, inputs$mom, inputs$level,
+    inputs$horder,
+    packed = TRUE,
+    r1$spouselist, classic = TRUE
+  )
   optimized <- kinship2_alignped2(sibs, inputs$dad, inputs$mom, inputs$level,
-                                   inputs$horder, packed = TRUE,
-                                   r1$spouselist, classic = FALSE)
+    inputs$horder,
+    packed = TRUE,
+    r1$spouselist, classic = FALSE
+  )
 
-  expect_equal(optimized$n,   classic$n)
+  expect_equal(optimized$n, classic$n)
   expect_equal(optimized$nid, classic$nid)
   expect_equal(optimized$fam, classic$fam)
   expect_equal(optimized$pos, classic$pos, tolerance = 1e-8)
@@ -890,25 +913,31 @@ test_that("kinship2_alignped2 classic and optimized are equivalent on sample.ped
 test_that("kinship2_alignped2 classic and optimized are equivalent on sample.ped (packed=FALSE)", {
   library(kinship2)
   data("sample.ped")
-  ped    <- with(sample.ped, ggpedigree:::pedigree(id, father, mother, sex))
+  ped <- with(sample.ped, ggpedigree:::pedigree(id, father, mother, sex))
   inputs <- .make_align_inputs(ped)
-  f1     <- inputs$founders[1]
+  f1 <- inputs$founders[1]
 
-  r1   <- kinship2_alignped1(f1, inputs$dad, inputs$mom, inputs$level,
-                              inputs$horder, packed = FALSE,
-                              inputs$spouselist, classic = TRUE)
+  r1 <- kinship2_alignped1(f1, inputs$dad, inputs$mom, inputs$level,
+    inputs$horder,
+    packed = FALSE,
+    inputs$spouselist, classic = TRUE
+  )
   sibs <- which((inputs$dad == f1 | inputs$mom == f1) &
-                  inputs$level == inputs$level[f1] + 1L)
+    inputs$level == inputs$level[f1] + 1L)
   skip_if(length(sibs) == 0L, "No children found for first founder")
 
-  classic   <- kinship2_alignped2(sibs, inputs$dad, inputs$mom, inputs$level,
-                                   inputs$horder, packed = FALSE,
-                                   r1$spouselist, classic = TRUE)
+  classic <- kinship2_alignped2(sibs, inputs$dad, inputs$mom, inputs$level,
+    inputs$horder,
+    packed = FALSE,
+    r1$spouselist, classic = TRUE
+  )
   optimized <- kinship2_alignped2(sibs, inputs$dad, inputs$mom, inputs$level,
-                                   inputs$horder, packed = FALSE,
-                                   r1$spouselist, classic = FALSE)
+    inputs$horder,
+    packed = FALSE,
+    r1$spouselist, classic = FALSE
+  )
 
-  expect_equal(optimized$n,   classic$n)
+  expect_equal(optimized$n, classic$n)
   expect_equal(optimized$nid, classic$nid)
   expect_equal(optimized$fam, classic$fam)
   expect_equal(optimized$pos, classic$pos, tolerance = 1e-8)
@@ -920,7 +949,7 @@ test_that("kinship2_alignped2 classic and optimized are equivalent on sample.ped
 test_that("kinship2_alignped3 classic and optimized agree on real pedigree-derived x1/x2 (sample.ped)", {
   library(kinship2)
   data("sample.ped")
-  ped    <- with(sample.ped, ggpedigree:::pedigree(id, father, mother, sex))
+  ped <- with(sample.ped, ggpedigree:::pedigree(id, father, mother, sex))
   inputs <- .make_align_inputs(ped)
 
   skip_if(length(inputs$founders) < 2L, "Need at least two founder groups")
@@ -928,16 +957,20 @@ test_that("kinship2_alignped3 classic and optimized agree on real pedigree-deriv
   # Build x1 and x2 via the classic path so both merge calls start from
   # identical inputs, isolating alignped3 behaviour.
   x1 <- kinship2_alignped1(inputs$founders[1], inputs$dad, inputs$mom,
-                             inputs$level, inputs$horder, packed = TRUE,
-                             inputs$spouselist, classic = TRUE)
+    inputs$level, inputs$horder,
+    packed = TRUE,
+    inputs$spouselist, classic = TRUE
+  )
   x2 <- kinship2_alignped1(inputs$founders[2], inputs$dad, inputs$mom,
-                             inputs$level, inputs$horder, packed = TRUE,
-                             x1$spouselist, classic = TRUE)
+    inputs$level, inputs$horder,
+    packed = TRUE,
+    x1$spouselist, classic = TRUE
+  )
 
-  classic   <- kinship2_alignped3(x1, x2, packed = TRUE,  classic = TRUE)
-  optimized <- kinship2_alignped3(x1, x2, packed = TRUE,  classic = FALSE)
+  classic <- kinship2_alignped3(x1, x2, packed = TRUE, classic = TRUE)
+  optimized <- kinship2_alignped3(x1, x2, packed = TRUE, classic = FALSE)
 
-  expect_equal(optimized$n,   classic$n)
+  expect_equal(optimized$n, classic$n)
   expect_equal(optimized$nid, classic$nid)
   expect_equal(optimized$fam, classic$fam)
   expect_equal(optimized$pos, classic$pos, tolerance = 1e-8)

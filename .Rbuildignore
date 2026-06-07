@@ -26,3 +26,4 @@ CITATION.cff$
 ^codecov\.yaml
 ^\.positai$
 ^\.claude$
+benchmark_alignment_results\.csv
