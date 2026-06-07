@@ -636,7 +636,131 @@ ggPedigree(
 
 
 
-## 7) Global greyscale / black-and-white switch
+## 7) Lineage-colored segments: tracing family lines
+
+Focal fill (Section 6) colors the **nodes**. You can instead—or additionally—color the **connecting segments** by family lineage, which makes it easy to trace a paternal line, a maternal line, or a mitochondrial (matrilineal) line through the tree.
+
+This is controlled by the `segment_lineage_*` options. The minimal ingredients are:
+
+-   `segment_lineage_include = TRUE`
+-   `segment_lineage_component = <line to trace>`. Uses the same vocabulary as focal fill: `"mitochondrial"` / `"mtdna"`, `"maternal"`, `"paternal"`, `"family"`, `"additive"`, or `"common nuclear"`.
+-   `segment_lineage_focal_personID = <ID>` (optional). When supplied, segments are colored by their relationship *to that focal person*, so off-line segments fade to grey and only the lines connected to that individual are highlighted.
+
+Each segment inherits the lineage value of the person it is anchored to, so the coloring is unambiguous even where a spouse link bridges two different lines.
+
+### Coloring every line
+
+With no focal person, each lineage group gets its own color. Here every matriline (mitochondrial line) is drawn in a distinct color. We disable sex coloring so the segment colors read cleanly.
+
+```{r}
+ggPedigree(
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
+    sex_color_include = FALSE,
+    focal_fill_include = FALSE,
+    segment_lineage_include = TRUE,
+    segment_lineage_component = "mitochondrial",
+    segment_lineage_legend_title = "Matriline"
+  )
+)
+```
+
+Switching `segment_lineage_component` to `"paternal"` traces the patrilines instead—useful for following surname lines.
+
+```{r}
+ggPedigree(
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
+    sex_color_include = FALSE,
+    focal_fill_include = FALSE,
+    segment_lineage_include = TRUE,
+    segment_lineage_component = "paternal",
+    segment_lineage_legend_title = "Patriline"
+  )
+)
+```
+
+### Tracing the lines connected to one person
+
+Supply `segment_lineage_focal_personID` to highlight only the lineage that runs through a chosen individual. With the mitochondrial component, this lights up that person's matrilineal chain and greys out everything else.
+
+```{r}
+ggPedigree(
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
+    sex_color_include = FALSE,
+    focal_fill_include = FALSE,
+    segment_lineage_include = TRUE,
+    segment_lineage_component = "mitochondrial",
+    segment_lineage_focal_personID = 8,
+    segment_lineage_method = "viridis_c",
+    segment_lineage_na_color = "grey85"
+  )
+)
+```
+
+### Choosing which segments participate
+
+By default the inheritance-bearing segments are colored (`segment_lineage_types = c("parent", "offspring", "sibling", "mz")`). You can broaden or narrow this—for example, add `"spouse"` to also color spouse links, or restrict to just the parent stubs.
+
+```{r}
+ggPedigree(
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
+    sex_color_include = FALSE,
+    focal_fill_include = FALSE,
+    segment_lineage_include = TRUE,
+    segment_lineage_component = "paternal",
+    segment_lineage_types = c("parent", "offspring", "sibling", "mz", "spouse"
+  )
+))
+```
+
+### Combining node focal fill with segment lineage
+
+The most expressive use is to color **nodes by focal relatedness** and **segments by lineage** at the same time. Because nodes and segments then need two independent color scales, this requires the suggested [`ggnewscale`](https://cran.r-project.org/package=ggnewscale) package. If it is not installed, the segments fall back to their fixed colors with a warning.
+
+```{r, eval = requireNamespace("ggnewscale", quietly = TRUE)}
+ggPedigree(
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
+    sex_color_include = FALSE,
+    # nodes: additive relatedness to the focal person
+    focal_fill_include = TRUE,
+    focal_fill_component = "additive",
+    focal_fill_personID = 8,
+    focal_fill_legend_title = "Relatedness",
+    # segments: paternal line membership
+    segment_lineage_include = TRUE,
+    segment_lineage_component = "paternal",
+    segment_lineage_legend_title = "Patriline"
+  )
+)
+```
+
+> **Interactive plots.** The combined node + segment coloring relies on `ggnewscale`, whose second color scale does not convert to `plotly`. In `ggPedigreeInteractive()`, single-scale lineage coloring (segments only, nodes uncolored) works as shown above; if you also enable node coloring, the interactive plot warns and falls back to fixed segment colors. Use the static `ggPedigree()` for the combined view.
+
+## 8) Global greyscale / black-and-white switch
 
 If you want a black-and-white plot, you can request it using:
 
@@ -663,7 +787,7 @@ ggPedigree(
 )
 ```
 
-## 8) Interactive pedigrees: `ggPedigreeInteractive()`
+## 9) Interactive pedigrees: `ggPedigreeInteractive()`
 
 Interactive pedigrees usually require thinner segments and careful tooltip selection. Tooltips are controlled primarily through `tooltip_columns`, while most drawing options are still handled by `config`.
 
@@ -685,7 +809,7 @@ ggPedigreeInteractive(
 ```
 
 
-## 9) Layout and coordinate system
+## 10) Layout and coordinate system
 
 In addition to the above options, layout and coordinate system are also configurable via `config`. 
 For example if you are interested in a circular layout, you can set `coord_layout = "radial"` and adjust the minimum radius with `coord_radial_min_radius`. This plot uses polar coordinates to create a circular pedigree layout. 

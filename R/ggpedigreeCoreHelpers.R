@@ -122,6 +122,21 @@ preparePedigreeData <- function(ped,
     fill_group_paternal = fill_group_paternal
   )
 
+  # Add segment lineage column if requested (drives lineage-colored segments)
+  ds_ped <- addSegmentLineageColumn(
+    ds_ped = ds_ped,
+    config = config,
+    famID = famID,
+    matID = matID,
+    patID = patID,
+    momID = momID,
+    dadID = dadID,
+    personID = personID,
+    fill_group_family = fill_group_family,
+    fill_group_maternal = fill_group_maternal,
+    fill_group_paternal = fill_group_paternal
+  )
+
   ds_ped
 }
 
@@ -428,6 +443,185 @@ addFocalFillColumn <- function(ds_ped,
   # -----
   ds_ped
 }
+
+#' @title Add Segment Lineage Column to Pedigree Data
+#' @description
+#' Adds a `segment_lineage` column to the pedigree data when
+#' `config$segment_lineage_include` is `TRUE`. This column drives lineage-based
+#' coloring of connecting segments (e.g., paternal, maternal, or mitochondrial
+#' lines). Each person receives a lineage value; segments later inherit the value
+#' of the person they are anchored to. Two modes are supported:
+#' \itemize{
+#'   \item \strong{Focal/continuous}: when `segment_lineage_focal_personID` is
+#'     supplied and the component is relatedness-based (additive, common nuclear,
+#'     mitochondrial), values come from `ped2com()` relative to the focal person.
+#'   \item \strong{Group}: otherwise, the value is a discrete lineage-group factor
+#'     (`matID` for maternal/mitochondrial, `patID` for paternal, `famID` for
+#'     family). If a focal person is supplied in group mode, only that person's
+#'     group is colored and all others become `NA`.
+#' }
+#' @inheritParams ggPedigree
+#' @inheritParams addFocalFillColumn
+#' @param ds_ped A data frame already processed by `transformPed()`.
+#' @param fill_group_mito Character vector of `segment_lineage_component` values
+#'   that map to the maternal/mitochondrial line (`matID`).
+#' @return A data frame with a `segment_lineage` column added when applicable.
+#' @keywords internal
+addSegmentLineageColumn <- function(ds_ped,
+                                    config,
+                                    famID = "famID",
+                                    matID = "matID",
+                                    patID = "patID",
+                                    momID = "momID",
+                                    dadID = "dadID",
+                                    personID = "personID",
+                                    fill_group_family = c(
+                                      "famID", "family", "family lineages",
+                                      "family lines", "family line"
+                                    ),
+                                    fill_group_maternal = c(
+                                      "maternal", "matID", "maternal line",
+                                      "maternal lineages", "maternal lines"
+                                    ),
+                                    fill_group_paternal = c(
+                                      "paternal", "patID", "paternal line",
+                                      "paternal lineages", "paternal lines"
+                                    ),
+                                    fill_group_mito = c(
+                                      "mitochondrial", "mtdna", "mitochondria",
+                                      "mitochondrial line", "mitochondrial lines"
+                                    )) {
+  if (!isTRUE(config$segment_lineage_include)) {
+    return(ds_ped)
+  }
+
+  component <- config$segment_lineage_component
+  focal_id <- config$segment_lineage_focal_personID
+
+  # Relatedness-based components are continuous: they color segments relative to a
+  # reference individual rather than partitioning people into lineage groups.
+  continuous_components <- c(
+    "additive", "common nuclear",
+    "mitochondrial", "mtdna", "mitochondria"
+  )
+  # These have no discrete partition at all, so they always need a reference
+  # person (like focal fill). When none is supplied we fall back to the focal
+  # fill default, mirroring how `focal_fill_component = "additive"` behaves.
+  reference_only_components <- c("additive", "common nuclear")
+
+  # -----
+  # MODE 1: Continuous relatedness relative to a reference individual
+  # -----
+  # Used when (a) an explicit focal person is supplied for any continuous
+  # component, or (b) the component has no partition (additive / common nuclear).
+  use_continuous <- (component %in% continuous_components && !is.null(focal_id)) ||
+    component %in% reference_only_components
+
+  if (use_continuous) {
+    # Resolve the reference person: explicit > focal-fill default > first person
+    resolved_focal <- focal_id
+    if (is.null(resolved_focal)) resolved_focal <- config$focal_fill_personID
+    if (is.null(resolved_focal) || !resolved_focal %in% ds_ped[[personID]]) {
+      resolved_focal <- ds_ped[[personID]][1]
+    }
+    if (is.null(focal_id)) {
+      message(
+        "segment_lineage_component '", component, "' is a continuous relatedness ",
+        "measure; coloring segments relative to reference person '",
+        resolved_focal, "'. Set segment_lineage_focal_personID to change it."
+      )
+    }
+
+    # Reuse createFillColumn, but honor segment-specific force-zero behavior
+    seg_config <- config
+    seg_config$focal_fill_force_zero <- isTRUE(config$segment_lineage_force_zero)
+
+    lineage_df <- createFillColumn(
+      ped = ds_ped,
+      focal_fill_personID = resolved_focal,
+      personID = personID,
+      component = component,
+      config = seg_config
+    )
+    # createFillColumn returns columns `focal_fill` and `personID`
+    lineage_df <- lineage_df |>
+      dplyr::rename(segment_lineage = "focal_fill")
+
+    ds_ped <- ds_ped |>
+      dplyr::left_join(
+        lineage_df,
+        by = dplyr::join_by(!!rlang::sym(personID) == personID)
+      )
+    return(ds_ped)
+  }
+
+  # -----
+  # MODE 2: Discrete lineage group membership
+  # -----
+  # Pick the lineage-ID column for the requested component
+  id_col <- NULL
+  if (component %in% c(fill_group_maternal, fill_group_mito, matID)) {
+    id_col <- matID
+  } else if (component %in% c(fill_group_paternal, patID)) {
+    id_col <- patID
+  } else if (component %in% c(fill_group_family, famID)) {
+    id_col <- famID
+  }
+
+  if (is.null(id_col)) {
+    warning(
+      "Unrecognized segment_lineage_component '", component, "'. Use one of ",
+      "'additive', 'common nuclear', 'mitochondrial', 'maternal', 'paternal', ",
+      "or 'family'. Skipping segment lineage coloring."
+    )
+    return(ds_ped)
+  }
+
+  # Ensure the lineage-ID column exists (mirrors transformPed)
+  if (!id_col %in% names(ds_ped)) {
+    if (id_col == matID) {
+      ds_ped <- BGmisc::ped2maternal(
+        ds_ped,
+        matID = matID, personID = personID, momID = momID, dadID = dadID
+      )
+    } else if (id_col == patID) {
+      ds_ped <- BGmisc::ped2paternal(
+        ds_ped,
+        patID = patID, personID = personID, momID = momID, dadID = dadID
+      )
+    } else if (id_col == famID) {
+      ds_ped <- BGmisc::ped2fam(
+        ds_ped,
+        famID = famID, personID = personID, momID = momID, dadID = dadID
+      )
+    }
+  }
+
+  ds_ped <- ds_ped |>
+    dplyr::mutate(segment_lineage = as.factor(.data[[id_col]]))
+
+  # If a focal person is given in group mode, keep only their lineage group
+  if (!is.null(focal_id)) {
+    focal_group <- ds_ped[[id_col]][ds_ped[[personID]] == focal_id]
+    if (length(focal_group) == 0) {
+      stop(paste0(
+        "segment_lineage_focal_personID ", focal_id,
+        " not found in ds_ped$", personID, "."
+      ))
+    }
+    focal_group <- focal_group[1]
+    ds_ped <- ds_ped |>
+      dplyr::mutate(segment_lineage = dplyr::if_else(
+        .data[[id_col]] == focal_group,
+        as.character(.data[[id_col]]),
+        NA_character_
+      )) |>
+      dplyr::mutate(segment_lineage = as.factor(.data$segment_lineage))
+  }
+
+  ds_ped
+}
+
 #' @title Pick First Matching Rule
 #' @description
 #' This function evaluates a list of rules and returns the action associated with the first rule that matches.
