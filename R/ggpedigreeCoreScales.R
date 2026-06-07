@@ -290,6 +290,8 @@
 
   discrete_methods <- c("viridis_d", "hue", "manual")
   continuous_methods <- c("viridis_c", "viridis_b", "gradient", "gradient2", "steps")
+
+
   component <- config$segment_lineage_component
   focal_id <- config$segment_lineage_focal_personID
 
@@ -297,13 +299,13 @@
     (!is.null(focal_id) && component %in% c("mitochondrial", "mtdna", "mitochondria"))
 
   if (is_continuous_component && method %in% discrete_methods) {
-    stop("Continuous segment_lineage_component requires a continuous segment_lineage_method (e.g., viridis_c, viridis_b, gradient, gradient2, steps).")
+    warn("Continuous segment_lineage_component requires a continuous segment_lineage_method (e.g., viridis_c, viridis_b, gradient, gradient2, steps).")
   }
   if (!is_continuous_component && method %in% continuous_methods) {
-    stop("Discrete lineage groups require a discrete segment_lineage_method (e.g., viridis_d, hue, manual).")
+    warn("Discrete lineage groups require a discrete segment_lineage_method (e.g., viridis_d, hue, manual).")
   }
   if (identical(method, "manual") && is.null(config$segment_lineage_palette)) {
-    stop("segment_lineage_method = 'manual' requires segment_lineage_palette to be provided.")
+    warn("segment_lineage_method = 'manual' requires segment_lineage_palette to be provided.")
   }
 
   na_color <- config$segment_lineage_na_color
@@ -382,7 +384,7 @@
       "hue", "manual",
       "gradient", "gradient2", "steps"
     )
-    stop(paste(
+    warn(paste(
       "segment_lineage_method must be one of",
       paste(segment_lineage_methods, collapse = ", ")
     ))

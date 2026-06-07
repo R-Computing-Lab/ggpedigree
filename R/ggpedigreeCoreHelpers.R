@@ -177,7 +177,7 @@ createFillColumn <- function(ped,
     )
     com_mat <- as.matrix(com_mat)
   }
-  # find the row index of  ped that matches focal_fill_personID
+  # find the row index of ped that matches focal_fill_personID
   row_index <- which(ped[[personID]] == focal_fill_personID)
   if (length(row_index) == 0) {
     stop(paste(
@@ -517,7 +517,7 @@ addSegmentLineageColumn <- function(ds_ped,
   use_continuous <- (component %in% continuous_components && !is.null(focal_id)) ||
     component %in% reference_only_components
 
-  if (use_continuous) {
+  if (use_continuous == TRUE) {
     # Resolve the reference person: explicit > focal-fill default > first person
     resolved_focal <- focal_id
     if (!is.null(resolved_focal) && !resolved_focal %in% ds_ped[[personID]]) stop(paste0("segment_lineage_focal_personID ", resolved_focal, " not found in ds_ped$", personID, "."))

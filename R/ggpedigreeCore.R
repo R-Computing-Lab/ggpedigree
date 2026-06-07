@@ -284,10 +284,11 @@ ggPedigree.core <- function(ped,
   # -----
 
   # Spouse link between two parents
-  p <- .addSegmentLayer(
-    data = connections |>
-      dplyr::filter(!is.na(.data$x_spouse)) |>
-      dplyr::distinct(.data$couple_hash, .keep_all = TRUE),
+  p <- .addSegmentLayer(plotObject = p,
+    data = connections,
+    mapping = ggplot2::aes(
+      x = .data$x_spouse,
+      xend = .data$x_pos,
       y = .data$y_spouse,
       yend = .data$y_pos
     ),
@@ -303,7 +304,7 @@ ggPedigree.core <- function(ped,
 
   # Parent-child stub (child to mid-sibling point)
   p <- .addSegmentLayer(
-    p,
+    plotObject = p,
     data = connections,
     mapping = ggplot2::aes(
       x = .data$x_mid_sib,
@@ -323,7 +324,7 @@ ggPedigree.core <- function(ped,
 
   # Mid-sibling to parents midpoint
   p <- .addSegmentLayer(
-    p,
+    plotObject = p,
     data = connections |>
       dplyr::filter(.data$link_as_twin == FALSE),
     mapping = ggplot2::aes(
