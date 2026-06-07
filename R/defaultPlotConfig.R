@@ -80,6 +80,7 @@
 #' @param ped_packed Whether the pedigree should use packed layout.
 #' @param ped_align Whether to align pedigree generations.
 #' @param ped_width Plot width of the pedigree block.
+#' @param fast_threshold Threshold for switching to piecewise layout algorithms for large pedigrees.
 #' @param coord_layout Layout mode for the pedigree. Options: "cartesian" (default) or "radial".
 #' @param coord_radial_start_angle Start angle in degrees for the radial layout (default: -90, placing
 #'   the first generation at the top).
@@ -310,6 +311,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  ped_packed = TRUE,
                                  ped_align = TRUE,
                                  ped_width = 15,
+                                 fast_threshold = 1000, # threshold for switching to faster layout algorithms
                                  coord_layout = "cartesian",
                                  coord_radial_start_angle = -90,
                                  coord_radial_end_angle = 270,
@@ -790,6 +792,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     ped_packed = ped_packed,
     ped_align = ped_align,
     ped_width = ped_width,
+    fast_threshold = fast_threshold,
     coord_layout = coord_layout,
     coord_radial_start_angle = coord_radial_start_angle,
     coord_radial_end_angle = coord_radial_end_angle,

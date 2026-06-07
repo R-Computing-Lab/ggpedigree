@@ -18,10 +18,12 @@
 #'   \item{fam}{Matrix of family indices}
 #' @keywords internal
 kinship2_alignped3 <- function(x1, x2, packed, space = 1,
-                                classic = FALSE) {
+                               classic = FALSE) {
   if (classic != TRUE) {
-    return(kinship2_alignped3_optimized(x1 = x1, x2 = x2,
-                                        packed = packed, space = space))
+    return(kinship2_alignped3_optimized(
+      x1 = x1, x2 = x2,
+      packed = packed, space = space
+    ))
   }
   maxcol <- max(x1$n + x2$n)
   maxlev <- length(x1$n)
@@ -108,7 +110,7 @@ kinship2_alignped3_optimized <- function(x1, x2, packed, space = 1) {
   maxcol <- max(x1$n + x2$n)
   maxlev <- length(x1$n)
   n1_max <- max(x1$n)
-  n      <- x1$n + x2$n
+  n <- x1$n + x2$n
   n1_vec <- x1$n
   n2_vec <- x2$n
 
@@ -135,9 +137,9 @@ kinship2_alignped3_optimized <- function(x1, x2, packed, space = 1) {
     if (length(active) > 0L) {
       last_pos <- pos[cbind(active, n1_vec[active])]
       last_nid <- nid[cbind(active, n1_vec[active])]
-      same     <- last_nid == x2_nid1[active]
-      temps    <- last_pos - x2_pos1[active] + ifelse(same, 0, space)
-      slide    <- max(0, temps)
+      same <- last_nid == x2_nid1[active]
+      temps <- last_pos - x2_pos1[active] + ifelse(same, 0, space)
+      slide <- max(0, temps)
     }
   }
 
@@ -167,14 +169,14 @@ kinship2_alignped3_optimized <- function(x1, x2, packed, space = 1) {
         slide <- if (n1 == 0L) 0 else pos[i, n1] + space - overlap
       }
 
-      zz   <- seq(from = overlap + 1L, length.out = n2 - overlap)
+      zz <- seq(from = overlap + 1L, length.out = n2 - overlap)
       dest <- n1 + zz - overlap
       nid[i, dest] <- x2$nid[i, zz]
       fam[i, dest] <- fam2[i, zz]
       pos[i, dest] <- x2$pos[i, zz] + slide
 
       if (i < maxlev) {
-        temp           <- fam2[i + 1L, ]
+        temp <- fam2[i + 1L, ]
         fam2[i + 1L, ] <- ifelse(temp == 0L, 0L, temp + n1 - overlap)
       }
     }

@@ -109,6 +109,7 @@ calculateCoordinates <- function(ped,
   if (!is.null(code_male)) {
     config$code_male <- code_male
   }
+
   # Fill missing configuration values with defaults
   default_config <- list(
     code_male = 1,
@@ -116,189 +117,232 @@ calculateCoordinates <- function(ped,
     ped_packed = TRUE,
     ped_align = TRUE,
     ped_width = 15,
-    return_mid_parent = FALSE
+    return_mid_parent = FALSE,
+    fast_threshold = 1000
   )
   config <- utils::modifyList(default_config, config)
 
-  # Construct a pedigree object to compute layout coordinates
+  extractCoordinatesFromAlignedPedigree <- function(ped_component,
+                                                    ped_ped,
+                                                    pos,
+                                                    personID,
+                                                    momID,
+                                                    dadID,
+                                                    config = NULL) {
+    # Extract layout information
+    nid_vector <- as.vector(pos$nid)
+    nid_vector <- nid_vector[nid_vector != 0] # Remove zero entries (empty cells)
 
+    # Initialize coordinate columns in the data frame
+    ped_component$nid <- NA
+    ped_component$x_pos <- NA
+    ped_component$x_order <- NA
+    ped_component$y_order <- NA
 
-  # use relations if provided, otherwise use default settings
-  ped_ped <- alignPedigreeWithRelations(
-    ped = ped,
-    personID = personID,
-    dadID = dadID,
-    momID = momID,
-    code_male = config$code_male,
-    sexVar = sexVar,
-    config = config
-  )
+    # Determine matrix indices for all non-zero entries
+    nid_pos <- which(pos$nid != 0, arr.ind = TRUE)
 
+    # Allocate coordinate vectors
+    n_coords <- length(nid_vector)
+    base_vector <- rep(NA_real_, n_coords)
 
-  # use hints if provided
-  pos <- alignPedigreeWithHints(
-    ped_ped = ped_ped,
-    config = config
-  )
+    x_pos <- base_vector
+    y_coords <- base_vector
+    x_coords <- base_vector
+    spouse_vector <- base_vector
+    parent_fam <- base_vector
+    parent_right_vector <- base_vector
+    parent_left_vector <- base_vector
+    y_fam <- base_vector
 
-  #  assign("DEBUG_pos", pos, envir = .GlobalEnv)
+    # A matrix with values
+    # 1 = subject plotted to the immediate right is a spouse
+    # 2 = subject plotted to the immediate right is an inbred spouse
+    # 0 = not a spouse
 
-  # Extract layout information
-  nid_vector <- as.vector(pos$nid)
-  nid_vector <- nid_vector[nid_vector != 0] # Remove zero entries (empty cells)
+    # Populate coordinates from nid positions
+    y_coords <- nid_pos[, "row"]
+    x_coords <- nid_pos[, "col"]
+    x_pos <- pos$pos[cbind(y_coords, x_coords)]
 
-  # Initialize coordinate columns in the data frame
-  ped$nid <- NA
-  ped$x_pos <- NA
-  ped$x_order <- NA
-  ped$y_order <- NA
+    # Spouse information
+    spouse_vector <- pos$spouse[cbind(y_coords, x_coords)]
 
-  # Determine matrix indices for all non-zero entries
-  nid_pos <- which(pos$nid != 0, arr.ind = TRUE)
+    # Parent information
+    parent_fam <- pos$fam[cbind(y_coords, x_coords)]
+    y_fam <- y_coords - 1
 
-  # Allocate coordinate vectors
-  n_coords <- length(nid_vector)
-  base_vector <- rep(NA_real_, n_coords)
+    parent_row <- y_coords - 1
+    parent_col_left <- parent_fam
+    parent_col_right <- parent_fam + 1
 
-  x_pos <- base_vector
-  y_coords <- base_vector
-  x_coords <- base_vector
-  spouse_vector <- base_vector
-  parent_fam <- base_vector
-  parent_right_vector <- base_vector
-  parent_left_vector <- base_vector
-  y_fam <- base_vector
+    # Ensure parent columns are within bounds
+    valid_parent <- parent_row >= 1 &
+      parent_col_left >= 1 &
+      parent_col_right <= ncol(pos$pos)
 
-  # A matrix with values
-  # 1 = subject plotted to the immediate right is a spouse
-  # 2 = subject plotted to the immediate right is an inbred spouse
-  # 0 = not a spouse
+    parent_left_vector[valid_parent] <- pos$pos[cbind(
+      parent_row[valid_parent],
+      parent_col_left[valid_parent]
+    )]
 
-  # Populate coordinates from nid positions
-  y_coords <- nid_pos[, "row"]
-  x_coords <- nid_pos[, "col"]
-  x_pos <- pos$pos[cbind(y_coords, x_coords)]
+    parent_right_vector[valid_parent] <- pos$pos[cbind(
+      parent_row[valid_parent],
+      parent_col_right[valid_parent]
+    )]
 
+    # -----
+    # Fill in the data frame with coordinates
+    # -----
+    # Match each individual to their primary layout position
+    tmp <- match(seq_along(ped_ped$id), nid_vector)
 
-  # Spouse information
-  spouse_vector <- pos$spouse[cbind(y_coords, x_coords)]
+    # Fill the nid, pos, x, and y columns in ped_ped based on the mapping
+    ped_component$nid <- nid_vector[tmp]
+    ped_component$x_order <- x_coords[tmp]
+    ped_component$y_order <- y_coords[tmp]
+    ped_component$x_pos <- x_pos[tmp]
+    ped_component$y_pos <- y_coords[tmp]
+    ped_component$parent_fam <- parent_fam[tmp]
+    ped_component$spousehint <- spouse_vector[tmp]
+    ped_component$parent_left <- parent_left_vector[tmp]
+    ped_component$parent_right <- parent_right_vector[tmp]
+    ped_component$y_fam <- y_fam[tmp]
 
-  # Parent information
-  parent_fam <- pos$fam[cbind(y_coords, x_coords)]
-  y_fam <- y_coords - 1
+    # Detect multiple layout positions for the same individual
+    # This can happen if the same individual appears multiple times in the pedigree
 
-  parent_row <- y_coords - 1
-  parent_col_left <- parent_fam
-  parent_col_right <- parent_fam + 1
+    # For each nid, count how many times it appears
+    appearance_counts <- table(nid_vector)
 
-  # Ensure parent columns are within bounds
-  valid_parent <- parent_row >= 1 &
-    parent_col_left >= 1 &
-    parent_col_right <= ncol(pos$pos)
+    duplicate_nids <- names(appearance_counts[appearance_counts > 1]) |>
+      as.integer()
 
-  parent_left_vector[valid_parent] <- pos$pos[cbind(
-    parent_row[valid_parent],
-    parent_col_left[valid_parent]
-  )]
+    # Prepare flat list of (nid_val, idx) for all extra appearances
+    extra_info <- list()
 
-  parent_right_vector[valid_parent] <- pos$pos[cbind(
-    parent_row[valid_parent],
-    parent_col_right[valid_parent]
-  )]
+    # Create duplicate rows for extra appearances
 
+    # All appearance positions
+    appearance_indices <- which(nid_vector %in% duplicate_nids)
 
-  # -----
-  # Fill in the data frame with coordinates
-  # -----
-  # Match each individual to their primary layout position
-  tmp <- match(seq_along(ped_ped$id), nid_vector)
+    # Find which index was already used in tmp
+    # tmp is a mapping from person index to nid_vector position
+    used_indices <- tmp[duplicate_nids]
 
-  # Fill the nid, pos, x, and y columns in ped_ped based on the mapping
-  ped$nid <- nid_vector[tmp]
-  ped$x_order <- x_coords[tmp]
-  ped$y_order <- y_coords[tmp]
-  ped$x_pos <- x_pos[tmp]
-  ped$y_pos <- y_coords[tmp]
-  ped$parent_fam <- parent_fam[tmp]
-  ped$spousehint <- spouse_vector[tmp]
-  ped$parent_left <- parent_left_vector[tmp]
-  ped$parent_right <- parent_right_vector[tmp]
-  ped$y_fam <- y_fam[tmp]
+    # Extra indices are the appearances NOT used by match()
+    extra_indices <- setdiff(appearance_indices, used_indices)
 
+    # If there are extra indices, we need to create additional rows
+    if (length(extra_indices) > 0) {
+      extra_df <- data.frame(
+        nid = nid_vector[extra_indices],
+        idx = extra_indices
+      )
 
-  # Detect multiple layout positions for the same individual
-  # This can happen if the same individual appears multiple times in the pedigree
+      # directly matching each nid to ped_ped$id and then to ped
+      matched_personID <- ped_ped$id[extra_df$nid]
+      ped_rows_idx <- match(matched_personID, ped_component[[personID]])
 
-  # For each nid, count how many times it appears
-  appearance_counts <- table(nid_vector)
+      extra_rows <- ped_component[ped_rows_idx, , drop = FALSE]
 
-  duplicate_nids <- names(appearance_counts[appearance_counts > 1]) |>
-    as.integer()
+      # Assign coordinates explicitly
+      extra_rows$nid <- extra_df$nid
+      extra_rows$x_order <- x_coords[extra_df$idx]
+      extra_rows$y_order <- y_coords[extra_df$idx]
+      extra_rows$x_pos <- x_pos[extra_df$idx]
+      extra_rows$y_pos <- y_coords[extra_df$idx]
+      extra_rows$spousehint <- spouse_vector[extra_df$idx]
+      extra_rows$parent_fam <- parent_fam[extra_df$idx]
+      extra_rows$parent_left <- parent_left_vector[extra_df$idx]
+      extra_rows$parent_right <- parent_right_vector[extra_df$idx]
+      extra_rows$y_fam <- y_fam[extra_df$idx]
 
-  # Prepare flat list of (nid_val, idx) for all extra appearances
-  extra_info <- list()
+      ped_component$extra <- FALSE
+      extra_rows$extra <- TRUE
 
-  # Create duplicate rows for extra appearances
+      ped_component <- rbind(ped_component, extra_rows)
+    } else {
+      ped_component$extra <- FALSE
+    }
 
-  # All appearance positions
-  appearance_indices <- which(nid_vector %in% duplicate_nids)
+    # clean up
+    ## assumes that there are two parents
+    ped_component$x_fam <- base::rowMeans(cbind(
+      ped_component$parent_left,
+      ped_component$parent_right
+    ), na.rm = TRUE)
 
-  # Find which index was already used in tmp
-  # tmp is a mapping from person index to nid_vector position
-  used_indices <- tmp[duplicate_nids]
+    ped_component$x_fam[ped_component$parent_fam == 0] <- NA
+    ped_component[[momID]][ped_component$parent_fam == 0] <- NA
+    ped_component[[dadID]][ped_component$parent_fam == 0] <- NA
+    ped_component$y_fam[ped_component$parent_fam == 0] <- NA
+    ped_component$parent_left <- NULL
+    ped_component$parent_right <- NULL
 
-  # Extra indices are the appearances NOT used by match()
-  extra_indices <- setdiff(appearance_indices, used_indices)
-
-  # If there are extra indices, we need to create additional rows
-  if (length(extra_indices) > 0) {
-    extra_df <- data.frame(
-      nid = nid_vector[extra_indices],
-      idx = extra_indices
-    )
-
-    # directly matching each nid to ped_ped$id and then to ped
-    matched_personID <- ped_ped$id[extra_df$nid]
-    ped_rows_idx <- match(matched_personID, ped[[personID]])
-
-    extra_rows <- ped[ped_rows_idx, , drop = FALSE]
-
-    # Assign coordinates explicitly
-    extra_rows$nid <- extra_df$nid
-    extra_rows$x_order <- x_coords[extra_df$idx]
-    extra_rows$y_order <- y_coords[extra_df$idx]
-    extra_rows$x_pos <- x_pos[extra_df$idx]
-    extra_rows$y_pos <- y_coords[extra_df$idx]
-    extra_rows$spousehint <- spouse_vector[extra_df$idx]
-    extra_rows$parent_fam <- parent_fam[extra_df$idx]
-    extra_rows$parent_left <- parent_left_vector[extra_df$idx]
-    extra_rows$parent_right <- parent_right_vector[extra_df$idx]
-    extra_rows$y_fam <- y_fam[extra_df$idx]
-
-    ped$extra <- FALSE
-    extra_rows$extra <- TRUE
-
-    ped <- rbind(ped, extra_rows)
-  } else {
-    ped$extra <- FALSE
+    return(ped_component)
   }
 
-  # clean up
-  ## assumes that there are two parents
-  ped$x_fam <- base::rowMeans(cbind(
-    ped$parent_left,
-    ped$parent_right
-  ), na.rm = FALSE)
-  ped$x_fam[ped$parent_fam == 0] <- NA
-  ped[[momID]][ped$parent_fam == 0] <- NA
-  ped[[dadID]][ped$parent_fam == 0] <- NA
-  ped$y_fam[ped$parent_fam == 0] <- NA
-  ped$parent_left <- NULL
-  ped$parent_right <- NULL
-  #  assign("DEBUG_ped_withextras", ped, envir = .GlobalEnv)
-  return(ped)
-}
+  alignAndExtractComponent <- function(ped_component, config) {
+    # use relations if provided, otherwise use default settings
+    ped_ped <- alignPedigreeWithRelations(
+      ped = ped_component,
+      personID = personID,
+      dadID = dadID,
+      momID = momID,
+      code_male = config$code_male,
+      sexVar = sexVar,
+      config = config
+    )
 
+    # use hints if provided
+    pos <- alignPedigreeWithHints(
+      ped_ped = ped_ped,
+      config = config
+    )
+
+    extractCoordinatesFromAlignedPedigree(
+      ped_component = ped_component,
+      ped_ped = ped_ped,
+      pos = pos,
+      personID = personID,
+      momID = momID,
+      dadID = dadID
+    )
+  }
+
+  # Construct a pedigree object to compute layout coordinates
+  if (nrow(ped) > config$fast_threshold) {
+    components <- splitPedigreeComponents(
+      ped = ped,
+      personID = personID,
+      momID = momID,
+      dadID = dadID
+    )
+
+    if (length(components) > 1L) {
+      component_dfs <- lapply(seq_along(components), function(i) {
+        idx <- components[[i]]
+        ped_component <- ped[idx, , drop = FALSE]
+
+        component_df <- alignAndExtractComponent(ped_component, config = config)
+        component_df$.component <- i
+
+        component_df
+      })
+
+      ped_out <- stitchComponents(component_dfs)
+      rownames(ped_out) <- NULL
+
+      return(ped_out)
+    }
+  }
+
+  ped_out <- alignAndExtractComponent(ped, config = config)
+  rownames(ped_out) <- NULL
+
+  return(ped_out)
+}
 #' Align pedigree with additional relations
 #'
 #' This function aligns a pedigree object using relations if provided, or
@@ -313,7 +357,7 @@ alignPedigreeWithRelations <- function(ped,
                                        momID,
                                        code_male = NULL,
                                        sexVar = "sex",
-                                       config) {
+                                       config = NULL) {
   # recodeSex <- function(
   #  ped, verbose = FALSE, code_male = NULL, code_na = NULL, code_female = NULL,
   #   recode_male = "M", recode_female = "F", recode_na = NA_character_)
@@ -427,4 +471,55 @@ alignPedigreeWithHints <- function(ped_ped, config) {
     )
   }
   return(pos)
+}
+
+
+#' Split pedigree rows into connected-component index lists
+#'
+#' Delegates to [BGmisc::ped2fam()], which uses `igraph::components()` on the
+#' parent-child graph. Returns row indices per component in original `ped` order.
+#'
+#' @inheritParams calculateCoordinates
+#' @return Unnamed list of integer row-index vectors, one per component.
+#' @keywords internal
+splitPedigreeComponents <- function(ped, personID, momID, dadID) {
+  ped_fam <- BGmisc::ped2fam(
+    ped,
+    famID    = "famID",
+    personID = personID,
+    momID    = momID,
+    dadID    = dadID
+  )
+  if (length(unique(ped_fam[["famID"]])) == 1L) {
+    return(list(seq_len(nrow(ped))))
+  }
+  # ped2fam may reorder rows via merge(); match back to original order
+  comp_ids <- ped_fam[["famID"]][match(ped[[personID]], ped_fam[[personID]])]
+  unname(split(seq_len(nrow(ped)), comp_ids))
+}
+
+
+#' Offset x positions across components and combine into one data frame
+#'
+#' @param component_dfs List of data frames, one per component.
+#' @param x_offset Numeric, initial offset to apply to the first component (default 0).
+#' @return Single data frame with x positions shifted to prevent overlap.
+#' @keywords internal
+stitchComponents <- function(component_dfs,
+                             x_offset = 0) {
+  if (length(component_dfs) == 1L) {
+    return(component_dfs[[1L]])
+  }
+
+  for (i in seq_along(component_dfs)) {
+    df <- component_dfs[[i]]
+    component_dfs[[i]]$x_pos <- df$x_pos + x_offset
+    component_dfs[[i]]$x_order <- df$x_order + as.integer(floor(x_offset))
+    component_dfs[[i]]$x_fam <- df$x_fam + x_offset # NA + number = NA, safe
+    x_max <- max(df$x_pos, na.rm = TRUE)
+    if (!is.finite(x_max)) x_max <- 1.0 # isolated individual with NA x_pos
+    x_offset <- x_offset + x_max + 2.0
+  }
+
+  do.call(rbind, component_dfs)
 }
