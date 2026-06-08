@@ -99,7 +99,7 @@ getDefaultPlotConfig(
   segment_lineage_focal_personID = NULL,
   segment_lineage_types = c("parent", "offspring", "sibling", "mz"),
   segment_lineage_method = "viridis_d",
-  segment_lineage_palette = NULL,
+  segment_lineage_palette = focal_fill_color_values,
   segment_lineage_na_color = "grey80",
   segment_lineage_force_zero = TRUE,
   segment_lineage_legend_show = TRUE,

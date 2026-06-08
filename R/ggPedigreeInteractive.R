@@ -269,7 +269,14 @@ formatTooltip <- function(df, tooltip_columns, sep = ": ") {
 optimizePedigree <- function(p, config = list(), plot_type = c("plotly", "static")) {
   plot_type <- match.arg(plot_type)
   if (plot_type == "plotly") {
-    p <- optimizePlotlyPedigree(p, config = config)
+    p <- tryCatch(
+      optimizePlotlyPedigree(p, config = config),
+      error = function(e) {
+        warning("Error optimizing plotly pedigree: ", e$message)
+        message("Returning unoptimized plotly object instead.")
+        p
+      }
+    )
   } else if (plot_type == "static") {
     p <- optimizeStaticPedigree(p, config = config)
   } else {

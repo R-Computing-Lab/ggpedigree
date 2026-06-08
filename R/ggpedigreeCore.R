@@ -195,7 +195,13 @@ ggPedigree.core <- function(ped,
         "segment colors. Use the static ggPedigree() for combined node + segment ",
         "coloring, or disable node coloring."
       )
-      lineage_active <- FALSE
+      if(isTRUE(config$debug)) {
+        message("Debug note: segment_lineage_include = TRUE with node color mapping is not supported in interactive mode. Consider setting return_interactive = FALSE for combined node + segment coloring.")
+
+      } else {
+        lineage_active <- FALSE
+      }
+
     } else if (!have_ggnewscale) {
       warning(
         "segment_lineage_include = TRUE together with node color mapping requires ",
@@ -203,7 +209,15 @@ ggPedigree.core <- function(ped,
         "or disable node coloring (sex_color_include / focal_fill_include = FALSE). ",
         "Falling back to fixed segment colors."
       )
-      lineage_active <- FALSE
+      if(isTRUE(config$debug)) {
+        message("Debug note: ",
+          "segment_lineage_include = TRUE with node color mapping ",
+          "requires the 'ggnewscale' package. ",
+          "Install ggnewscale, or disable node coloring")
+      } else {
+        lineage_active <- FALSE
+      }
+
     }
   }
 
@@ -393,9 +407,13 @@ ggPedigree.core <- function(ped,
   # Apply the segment lineage color scale before drawing nodes. When nodes also
   # use a color scale, start a fresh color scale (via {ggnewscale}) so node and
   # segment colors get independent legends.
-  if (lineage_active == TRUE) {
+  if (lineage_active == TRUE||(config$segment_lineage_include == TRUE
+                               && isTRUE(config$debug)
+                               )
+      ) {
     p <- .add_segment_lineage_scales(p, config)
-    if (node_uses_color && have_ggnewscale && !is_interactive) {
+    if (node_uses_color && have_ggnewscale
+        && !is_interactive) {
       p <- p + ggnewscale::new_scale_colour()
     }
   }
@@ -642,18 +660,17 @@ ggPedigree.core <- function(ped,
   node_mode <- .pick_first(
     rules = list(
       list(
-        when = function() isTRUE(config$sex_color_include),
-        do   = "sex_color"
-      ),
-      list(
         when = function() isTRUE(config$focal_fill_include),
         do   = "focal_fill"
       ),
       list(
         when = function() isTRUE(config$status_include) && !is.null(status_column),
         do   = "status"
-      )
-    ),
+      ),
+       list(
+        when = function() isTRUE(config$sex_color_include), # have later because this defaults to TRUE if any of the other modes are active, and we want it to be overridden by them
+        do   = "sex_color"
+      )),
     default = "shape_only"
   )
 
@@ -803,8 +820,11 @@ addOverlay <- .addOverlay
   if (is.character(overlay_shape)) {
     shape_code <- switch(overlay_shape,
       "cross" = 4L, # x cross (conventional deceased marker)
+      "x" = 4L, # x cross
       "slash" = 47L, # / slash
-      "x"     = 8L, # asterisk-like x mark
+      "star"     = 8L, # asterisk-like x mark
+      "plus" = 3L, # + plus sign
+      "dot" = 20L, # filled square
       4L # default to cross
     )
   } else {

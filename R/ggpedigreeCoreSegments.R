@@ -20,6 +20,10 @@
   use_lineage <- isTRUE(lineage_active) &&
     type %in% config$segment_lineage_types &&
     "segment_lineage" %in% names(data)
+  use_backwards_compat <- isTRUE(config$segment_lineage_include) &&
+    type %in% config$segment_lineage_types &&
+    "segment_lineage" %in% names(data)
+
 
   if (isTRUE(use_lineage)) {
     mapping <- utils::modifyList(
@@ -30,7 +34,43 @@
       ggplot2::geom_segment,
       c(list(data = data, mapping = mapping), dots)
     )
-  } else {
+  } else if (isTRUE(use_backwards_compat)  && config$debug == TRUE && "segment_lineage" %in% names(data) && length(unique(data$segment_lineage)) > 0
+             ) {
+     if(config$debug == TRUE){
+    message("Using segment_lineage for coloring segments, but segment_lineage_include is TRUE. This is a legacy option that may be removed in the future. Consider setting segment_lineage_include to FALSE and segment_lineage_active to TRUE for better performance and more consistent behavior.")
+     }
+    segment_lineage_levels <- unique(data$segment_lineage)
+    needed_colors <- length(segment_lineage_levels)
+    if(is.null(config$segment_lineage_palette)) {
+     segment_lineage_palette_colors <- RColorBrewer::brewer.pal(needed_colors
+       , "Set1")
+    } else if (is.character(config$segment_lineage_palette && length(config$segment_lineage_palette) == 1)) {
+
+      segment_lineage_palette_colors <- paletteer::paletteer_d(config$segment_lineage_palette)
+    } else if (is.character(config$segment_lineage_palette) && length(config$segment_lineage_palette) >= needed_colors) {
+      segment_lineage_palette_colors <- config$segment_lineage_palette
+    } else {
+      stop("Invalid segment_lineage_palette configuration. Must be NULL, a single palette name, or a character vector of colors with length >= number of unique segment lineages.")
+    }
+ # should only be relevant when lineage active was set to false because of a know issue with plotly and aesthetics
+      # If there are unique lineages, hardcod the colors for each lineage
+
+
+      segment_lineage_colors <- setNames(
+      segment_lineage_palette_colors[1:needed_colors],
+      segment_lineage_levels)
+
+    data <- data |> dplyr::mutate(segment_lineage_colors = segment_lineage_colors[.data$segment_lineage])
+
+          layer <- do.call(
+      ggplot2::geom_segment,
+      c(list(data = data, mapping = mapping, colour = data$segment_lineage_colors), dots)
+    )
+
+   } else {
+ if(config$debug == TRUE){
+         message("Using fixed color for segments. To enable lineage coloring for this segment type, ensure that segment_lineage_include is FALSE, segment_lineage_active is TRUE, and that the data includes a segment_lineage column with appropriate values.")
+}
     fixed_color <- config[[paste0("segment_", type, "_color")]]
     layer <- do.call(
       ggplot2::geom_segment,
@@ -55,9 +95,7 @@
   segment_self_linetype = "solid",
   segment_self_angle = 90,
   segment_self_curvature = 0.5,
-  segment_self_alpha = 1
-
-  )
+  segment_self_alpha = 1)
                             , plot_connections) {
   otherself <- plot_connections$self_coords |>
     dplyr::filter(!is.na(.data$x_otherself)) |>
