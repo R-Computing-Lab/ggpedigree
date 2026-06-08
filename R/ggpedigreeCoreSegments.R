@@ -21,7 +21,7 @@
     type %in% config$segment_lineage_types &&
     "segment_lineage" %in% names(data)
 
-  if (use_lineage) {
+  if (isTRUE(use_lineage)) {
     mapping <- utils::modifyList(
       mapping,
       ggplot2::aes(colour = .data$segment_lineage)
@@ -46,7 +46,19 @@
 #' @keywords internal
 #' @return A ggplot object with added scales.
 
-.addSelfSegment <- function(plotObject, config, plot_connections) {
+.addSelfSegment <- function(plotObject, config = list(
+  return_interactive = FALSE,
+  segment_self_linewidth = 0.5,
+  segment_self_color = "grey50",
+  segment_lineend = "round",
+  segment_linejoin = "round",
+  segment_self_linetype = "solid",
+  segment_self_angle = 90,
+  segment_self_curvature = 0.5,
+  segment_self_alpha = 1
+
+  )
+                            , plot_connections) {
   otherself <- plot_connections$self_coords |>
     dplyr::filter(!is.na(.data$x_otherself)) |>
     dplyr::mutate(otherself_xkey = .makeSymmetricKey(.data$x_otherself, .data$x_pos)) |>
@@ -72,7 +84,7 @@
       alpha = config$segment_self_alpha,
       na.rm = TRUE
     )
-  } else if (config$return_interactive == TRUE) {
+  } else if (isTRUE(config$return_interactive)) {
     # For interactive plots, use geom_segment instead of geom_curve
     # to avoid issues with plotly rendering curves
 
@@ -85,10 +97,23 @@
           y1 = .data$y_pos,
           curvature = config$segment_self_curvature,
           angle = config$segment_self_angle,
-          t = .35
+          t = .15
         ),
         x_1midpoint = .data$midpoint$x,
         y_1midpoint = .data$midpoint$y
+      ) |>
+            dplyr::mutate(
+        midpoint = .computeCurvedMidpoint(
+          x0 = .data$x_otherself,
+          y0 = .data$y_otherself,
+          x1 = .data$x_pos,
+          y1 = .data$y_pos,
+          curvature = config$segment_self_curvature,
+          angle = config$segment_self_angle,
+          t = .30
+        ),
+        x_2midpoint = .data$midpoint$x,
+        y_2midpoint = .data$midpoint$y
       ) |>
       dplyr::mutate(
         midpoint = .computeCurvedMidpoint(
@@ -100,8 +125,8 @@
           angle = config$segment_self_angle,
           t = .5
         ),
-        x_2midpoint = .data$midpoint$x,
-        y_2midpoint = .data$midpoint$y
+        x_3midpoint = .data$midpoint$x,
+        y_3midpoint = .data$midpoint$y
       ) |>
       dplyr::mutate(
         midpoint = .computeCurvedMidpoint(
@@ -115,6 +140,20 @@
         ),
         x_3midpoint = .data$midpoint$x,
         y_3midpoint = .data$midpoint$y
+      ) |>
+      dplyr::select(-"midpoint")  |>
+      dplyr::mutate(
+        midpoint = .computeCurvedMidpoint(
+          x0 = .data$x_otherself,
+          y0 = .data$y_otherself,
+          x1 = .data$x_pos,
+          y1 = .data$y_pos,
+          curvature = config$segment_self_curvature,
+          angle = config$segment_self_angle,
+          t = .85
+        ),
+        x_4midpoint = .data$midpoint$x,
+        y_4midpoint = .data$midpoint$y
       ) |>
       dplyr::select(-"midpoint")
 
@@ -168,8 +207,23 @@
       data = otherself,
       ggplot2::aes(
         x = .data$x_3midpoint,
-        xend = .data$x_pos,
+        xend = .data$x_4midpoint,
         y = .data$y_3midpoint,
+        yend = .data$y_4midpoint
+      ),
+      linewidth = config$segment_self_linewidth,
+      color = config$segment_self_color,
+      lineend = config$segment_lineend,
+      linejoin = config$segment_linejoin,
+      linetype = config$segment_self_linetype,
+      alpha = config$segment_self_alpha,
+      na.rm = TRUE
+    )  + ggplot2::geom_segment(
+      data = otherself,
+      ggplot2::aes(
+        x = .data$x_4midpoint,
+        xend = .data$x_pos,
+        y = .data$y_4midpoint,
         yend = .data$y_pos
       ),
       linewidth = config$segment_self_linewidth,
