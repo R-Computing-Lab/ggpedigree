@@ -202,10 +202,9 @@ checkis_acyclic <- checkPedigreeNetwork(redsquirrels,
 checkis_acyclic
 if (checkis_acyclic$is_acyclic) {
   message("The pedigree is acyclic.")
-write_csv(redsquirrels, here("data-raw", "redsquirrels.csv"), na = "")
+  write_csv(redsquirrels, here("data-raw", "redsquirrels.csv"), na = "")
 
-usethis::use_data(redsquirrels, overwrite = TRUE, compress = "xz")
+  usethis::use_data(redsquirrels, overwrite = TRUE, compress = "xz")
 } else {
   message("The pedigree contains cyclic relationships.")
 }
-

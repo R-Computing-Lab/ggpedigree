@@ -195,13 +195,11 @@ ggPedigree.core <- function(ped,
         "segment colors. Use the static ggPedigree() for combined node + segment ",
         "coloring, or disable node coloring."
       )
-      if(isTRUE(config$debug)) {
+      if (isTRUE(config$debug)) {
         message("Debug note: segment_lineage_include = TRUE with node color mapping is not supported in interactive mode. Consider setting return_interactive = FALSE for combined node + segment coloring.")
-
       } else {
         lineage_active <- FALSE
       }
-
     } else if (!have_ggnewscale) {
       warning(
         "segment_lineage_include = TRUE together with node color mapping requires ",
@@ -209,15 +207,16 @@ ggPedigree.core <- function(ped,
         "or disable node coloring (sex_color_include / focal_fill_include = FALSE). ",
         "Falling back to fixed segment colors."
       )
-      if(isTRUE(config$debug)) {
-        message("Debug note: ",
+      if (isTRUE(config$debug)) {
+        message(
+          "Debug note: ",
           "segment_lineage_include = TRUE with node color mapping ",
           "requires the 'ggnewscale' package. ",
-          "Install ggnewscale, or disable node coloring")
+          "Install ggnewscale, or disable node coloring"
+        )
       } else {
         lineage_active <- FALSE
       }
-
     }
   }
 
@@ -407,13 +406,13 @@ ggPedigree.core <- function(ped,
   # Apply the segment lineage color scale before drawing nodes. When nodes also
   # use a color scale, start a fresh color scale (via {ggnewscale}) so node and
   # segment colors get independent legends.
-  if (lineage_active == TRUE||(config$segment_lineage_include == TRUE
-                               && isTRUE(config$debug)
-                               )
-      ) {
+  if (lineage_active == TRUE || (config$segment_lineage_include == TRUE &&
+    isTRUE(config$debug)
+  )
+  ) {
     p <- .add_segment_lineage_scales(p, config)
-    if (node_uses_color && have_ggnewscale
-        && !is_interactive) {
+    if (node_uses_color && have_ggnewscale &&
+      !is_interactive) {
       p <- p + ggnewscale::new_scale_colour()
     }
   }
@@ -667,10 +666,11 @@ ggPedigree.core <- function(ped,
         when = function() isTRUE(config$status_include) && !is.null(status_column),
         do   = "status"
       ),
-       list(
+      list(
         when = function() isTRUE(config$sex_color_include), # have later because this defaults to TRUE if any of the other modes are active, and we want it to be overridden by them
         do   = "sex_color"
-      )),
+      )
+    ),
     default = "shape_only"
   )
 
@@ -822,7 +822,7 @@ addOverlay <- .addOverlay
       "cross" = 4L, # x cross (conventional deceased marker)
       "x" = 4L, # x cross
       "slash" = 47L, # / slash
-      "star"     = 8L, # asterisk-like x mark
+      "star" = 8L, # asterisk-like x mark
       "plus" = 3L, # + plus sign
       "dot" = 20L, # filled square
       4L # default to cross
