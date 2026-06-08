@@ -92,6 +92,16 @@ getDefaultPlotConfig(
   segment_self_alpha = 0.5,
   segment_self_angle = 90,
   segment_self_curvature = -0.2,
+  segment_lineage_include = FALSE,
+  segment_lineage_component = "mitochondrial",
+  segment_lineage_focal_personID = NULL,
+  segment_lineage_types = c("parent", "offspring", "sibling", "mz"),
+  segment_lineage_method = "viridis_d",
+  segment_lineage_palette = NULL,
+  segment_lineage_na_color = "grey80",
+  segment_lineage_force_zero = TRUE,
+  segment_lineage_legend_show = TRUE,
+  segment_lineage_legend_title = "Lineage",
   sex_color_include = TRUE,
   sex_legend_title = "Sex",
   sex_shape_labels = c("Female", "Male", "Unknown"),
@@ -398,6 +408,45 @@ to push outer generations further from the center (default: 0.5).}
 \item{segment_self_angle}{Angle of self-loop segment. Default is 90 degrees.}
 
 \item{segment_self_curvature}{Curvature of self-loop segment. Default is -0.2.}
+
+\item{segment_lineage_include}{Whether to color segments by family lineage (e.g.,
+paternal, maternal, or mitochondrial lines). When `FALSE` (default), segments use
+the fixed per-type colors. When `TRUE`, participating segments are colored by a
+`segment_lineage` value derived from `segment_lineage_component`.}
+
+\item{segment_lineage_component}{Which lineage to trace. Uses the same vocabulary as
+`focal_fill_component`: `"mitochondrial"`/`"mtdna"`, `"additive"`, `"common nuclear"`,
+`"maternal"`, `"paternal"`, or `"family"`. Default is `"mitochondrial"`.}
+
+\item{segment_lineage_focal_personID}{Optional ID of a focal person. When supplied,
+segments are colored by their lineage relationship *to that person* (off-line
+segments become `NA`/grey), letting you trace the lines connected to one node.
+When `NULL` (default), partition components (`maternal`, `paternal`, `family`,
+`mitochondrial`) color segments by their own lineage group, while continuous
+relatedness components (`additive`, `common nuclear`) color relative to a
+default reference person (`focal_fill_personID`).}
+
+\item{segment_lineage_types}{Character vector of segment types that participate in
+lineage coloring. Any of `"spouse"`, `"parent"`, `"offspring"`, `"sibling"`,
+`"mz"`. Default is `c("parent", "offspring", "sibling", "mz")` (the
+inheritance-bearing segments). Self-loop segments always keep their fixed color.}
+
+\item{segment_lineage_method}{Scale method for the segment lineage color aesthetic.
+One of `"viridis_d"`, `"viridis_c"`, `"viridis_b"`, `"hue"`, `"manual"`,
+`"gradient"`, `"gradient2"`, `"steps"`. Default is `"viridis_d"`.}
+
+\item{segment_lineage_palette}{Optional vector of colors for `segment_lineage_method = "manual"`.}
+
+\item{segment_lineage_na_color}{Color used for segments with no lineage value
+(off-line or non-participating). Default is `"grey80"`.}
+
+\item{segment_lineage_force_zero}{When using a focal person with a continuous
+component (e.g., mitochondrial/additive), replace `0` relationships with `NA` so
+off-line segments are greyed out. Default is `TRUE`.}
+
+\item{segment_lineage_legend_show}{Whether to show the segment lineage legend. Default is TRUE.}
+
+\item{segment_lineage_legend_title}{Title for the segment lineage legend. Default is "Lineage".}
 
 \item{sex_color_include}{Whether to color nodes by sex. Default is TRUE.}
 

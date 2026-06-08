@@ -274,5 +274,131 @@
 }
 
 
+#' @title Add Segment Lineage Color Scale
+#' @description
+#' Builds and appends the color scale used for lineage-colored segments. The
+#' scale type is chosen by `config$segment_lineage_method`. Discrete methods
+#' (`"viridis_d"`, `"hue"`, `"manual"`) suit lineage-group coloring; continuous
+#' methods (`"viridis_c"`, `"viridis_b"`, `"gradient"`, `"gradient2"`, `"steps"`)
+#' suit focal/relatedness-based coloring.
+#' @param p A ggplot object.
+#' @param config A configuration list.
+#' @keywords internal
+#' @return A ggplot object with the segment lineage color scale added.
+
+.add_segment_lineage_scales <- function(p, config) {
+  method <- config$segment_lineage_method
+
+  discrete_methods <- c("viridis_d", "hue", "manual")
+  continuous_methods <- c("viridis_c", "viridis_b", "gradient", "gradient2", "steps")
+
+
+  component <- config$segment_lineage_component
+  focal_id <- config$segment_lineage_focal_personID
+
+  is_continuous_component <- component %in% c("additive", "common nuclear") ||
+    (!is.null(focal_id) && component %in% c("mitochondrial", "mtdna", "mitochondria"))
+
+  if (is_continuous_component && method %in% discrete_methods) {
+    warning("Continuous segment_lineage_component requires a continuous segment_lineage_method (e.g., viridis_c, viridis_b, gradient, gradient2, steps).")
+  }
+  if (!is_continuous_component && method %in% continuous_methods) {
+    warning("Discrete lineage groups require a discrete segment_lineage_method (e.g., viridis_d, hue, manual).")
+  }
+  if (identical(method, "manual") && is.null(config$segment_lineage_palette)) {
+    warning("segment_lineage_method = 'manual' requires segment_lineage_palette to be provided.")
+  }
+
+  na_color <- config$segment_lineage_na_color
+
+  title <- if (isTRUE(config$segment_lineage_legend_show)) {
+    config$segment_lineage_legend_title
+  } else {
+    NULL
+  }
+
+  scale_fun <- .pick_first(
+    rules = list(
+      list(
+        when = function() method %in% c("viridis_d"),
+        do = function() {
+          ggplot2::scale_colour_viridis_d(
+            na.value = na_color, name = title
+          )
+        }
+      ),
+      list(
+        when = function() method %in% c("viridis_c"),
+        do = function() {
+          ggplot2::scale_colour_viridis_c(
+            na.value = na_color, name = title
+          )
+        }
+      ),
+      list(
+        when = function() method %in% c("viridis_b"),
+        do = function() {
+          ggplot2::scale_colour_viridis_b(
+            na.value = na_color, name = title
+          )
+        }
+      ),
+      list(
+        when = function() method %in% c("hue"),
+        do = function() {
+          ggplot2::scale_colour_hue(na.value = na_color, name = title)
+        }
+      ),
+      list(
+        when = function() method %in% c("manual"),
+        do = function() {
+          ggplot2::scale_colour_manual(
+            values = config$segment_lineage_palette,
+            na.value = na_color, name = title
+          )
+        }
+      ),
+      list(
+        when = function() method %in% c("gradient"),
+        do = function() {
+          ggplot2::scale_colour_gradient(na.value = na_color, name = title)
+        }
+      ),
+      list(
+        when = function() method %in% c("gradient2"),
+        do = function() {
+          ggplot2::scale_colour_gradient2(na.value = na_color, name = title)
+        }
+      ),
+      list(
+        when = function() method %in% c("steps", "steps2", "step", "step2"),
+        do = function() {
+          ggplot2::scale_colour_steps(na.value = na_color, name = title)
+        }
+      )
+    ),
+    default = NULL
+  )
+
+  if (is.null(scale_fun)) {
+    segment_lineage_methods <- c(
+      "viridis_d", "viridis_c", "viridis_b",
+      "hue", "manual",
+      "gradient", "gradient2", "steps", "steps2", "step", "step2"
+    )
+    warning(paste(
+      "segment_lineage_method must be one of",
+      paste(segment_lineage_methods, collapse = ", ")
+    ))
+  } else {
+    p <- p + scale_fun()
+  }
+  if (isFALSE(config$segment_lineage_legend_show)) {
+    p <- p + ggplot2::guides(colour = "none")
+  }
+  p
+}
+
+
 #' @rdname dot-addScales
 addScales <- .addScales

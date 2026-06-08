@@ -1,6 +1,7 @@
 # ggpedigree (development version)
 # ==============================
 
+* Added `segment_lineage_*` config options to color connecting segments by family lineage (e.g., paternal, maternal, or mitochondrial lines). Set `segment_lineage_include = TRUE` and choose a `segment_lineage_component`. Supplying `segment_lineage_focal_personID` traces the lines connected to one focal individual. Lineage-colored segments can be combined with node `focal_fill` via the suggested `ggnewscale` package (independent color scales); without it, the plot falls back to fixed segment colors with a warning.
 * Optimizing implemention of pedigree alignment functions from kinship2
 * Added unit tests for the pedigree alignment functions
 

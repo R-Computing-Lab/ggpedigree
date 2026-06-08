@@ -112,6 +112,35 @@
 #' @param segment_self_curvature Curvature of self-loop segment. Default is -0.2.
 #' @param segment_self_linewidth Width of self-loop segment lines. Default is half of segment_linewidth.
 #' @param segment_scale_by_pedigree Whether to scale segment sizes by pedigree size. Default is FALSE.
+#' @param segment_lineage_include Whether to color segments by family lineage (e.g.,
+#'   paternal, maternal, or mitochondrial lines). When `FALSE` (default), segments use
+#'   the fixed per-type colors. When `TRUE`, participating segments are colored by a
+#'   `segment_lineage` value derived from `segment_lineage_component`.
+#' @param segment_lineage_component Which lineage to trace. Uses the same vocabulary as
+#'   `focal_fill_component`: `"mitochondrial"`/`"mtdna"`, `"additive"`, `"common nuclear"`,
+#'   `"maternal"`, `"paternal"`, or `"family"`. Default is `"mitochondrial"`.
+#' @param segment_lineage_focal_personID Optional ID of a focal person. When supplied,
+#'   segments are colored by their lineage relationship *to that person* (off-line
+#'   segments become `NA`/grey), letting you trace the lines connected to one node.
+#'   When `NULL` (default), partition components (`maternal`, `paternal`, `family`,
+#'   `mitochondrial`) color segments by their own lineage group, while continuous
+#'   relatedness components (`additive`, `common nuclear`) color relative to a
+#'   default reference person (`focal_fill_personID`).
+#' @param segment_lineage_types Character vector of segment types that participate in
+#'   lineage coloring. Any of `"spouse"`, `"parent"`, `"offspring"`, `"sibling"`,
+#'   `"mz"`. Default is `c("parent", "offspring", "sibling", "mz")` (the
+#'   inheritance-bearing segments). Self-loop segments always keep their fixed color.
+#' @param segment_lineage_method Scale method for the segment lineage color aesthetic.
+#'   One of `"viridis_d"`, `"viridis_c"`, `"viridis_b"`, `"hue"`, `"manual"`,
+#'   `"gradient"`, `"gradient2"`, `"steps"`. Default is `"viridis_d"`.
+#' @param segment_lineage_palette Optional vector of colors for `segment_lineage_method = "manual"`.
+#' @param segment_lineage_na_color Color used for segments with no lineage value
+#'   (off-line or non-participating). Default is `"grey80"`.
+#' @param segment_lineage_force_zero When using a focal person with a continuous
+#'   component (e.g., mitochondrial/additive), replace `0` relationships with `NA` so
+#'   off-line segments are greyed out. Default is `TRUE`.
+#' @param segment_lineage_legend_show Whether to show the segment lineage legend. Default is TRUE.
+#' @param segment_lineage_legend_title Title for the segment lineage legend. Default is "Lineage".
 #' @param sex_color_include Whether to color nodes by sex. Default is TRUE.
 #' @param sex_color_palette A character vector of colors for sex. Default uses color_palette_default.
 #' @param sex_legend_title Title of the sex legend.
@@ -339,6 +368,22 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  segment_self_alpha = 0.5,
                                  segment_self_angle = 90,
                                  segment_self_curvature = -0.2,
+                                 # ---- Segment Lineage Coloring ----
+                                 segment_lineage_include = FALSE,
+                                 segment_lineage_component = "mitochondrial",
+                                 segment_lineage_focal_personID = NULL,
+                                 segment_lineage_types = c(
+                                   "parent",
+                                   "offspring",
+                                   "sibling",
+                                   "mz"
+                                 ),
+                                 segment_lineage_method = "viridis_d",
+                                 segment_lineage_palette = NULL,
+                                 segment_lineage_na_color = "grey80",
+                                 segment_lineage_force_zero = TRUE,
+                                 segment_lineage_legend_show = TRUE,
+                                 segment_lineage_legend_title = "Lineage",
                                  # ---- Sex Legend and Appearance ----
                                  sex_color_include = TRUE,
                                  sex_legend_title = "Sex",
@@ -692,6 +737,18 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     segment_self_angle = segment_self_angle,
     segment_self_curvature = segment_self_curvature,
     segment_self_linewidth = segment_self_linewidth,
+
+    # ---- Segment Lineage Coloring ----
+    segment_lineage_include = segment_lineage_include,
+    segment_lineage_component = segment_lineage_component,
+    segment_lineage_focal_personID = segment_lineage_focal_personID,
+    segment_lineage_types = segment_lineage_types,
+    segment_lineage_method = segment_lineage_method,
+    segment_lineage_palette = segment_lineage_palette,
+    segment_lineage_na_color = segment_lineage_na_color,
+    segment_lineage_force_zero = segment_lineage_force_zero,
+    segment_lineage_legend_show = segment_lineage_legend_show,
+    segment_lineage_legend_title = segment_lineage_legend_title,
 
     # ---- Sex Legend and Appearance ----
     sex_color_include = sex_color_include,

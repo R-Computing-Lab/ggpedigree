@@ -10,7 +10,8 @@
   connections,
   config,
   plot_connections,
-  personID = "personID"
+  personID = "personID",
+  lineage_active = FALSE
 )
 
 addTwins(
@@ -18,7 +19,8 @@ addTwins(
   connections,
   config,
   plot_connections,
-  personID = "personID"
+  personID = "personID",
+  lineage_active = FALSE
 )
 }
 \arguments{
@@ -49,6 +51,8 @@ addTwins(
 \item{plot_connections}{A data frame containing the coordinates for twin segments.}
 
 \item{personID}{Character string specifying the column name for individual IDs. Defaults to "personID".}
+
+\item{lineage_active}{Logical; whether lineage coloring is in effect for this plot.}
 }
 \value{
 A ggplot object with twin segments added.
