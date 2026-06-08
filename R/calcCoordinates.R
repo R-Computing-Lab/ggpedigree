@@ -390,13 +390,19 @@ calculateCoordinates <- function(ped,
     )
   }
 
-  # Identify the id column: prefer the personID name, then "id", else first column
+  # Identify the id column: prefer the personID name, then "id"/"ID".
   id_col <- if (personID %in% names(fp)) {
     personID
   } else if ("id" %in% names(fp)) {
     "id"
+  } else if ("ID" %in% names(fp)) {
+    "ID"
   } else {
     names(fp)[1]
+    warning(
+      "config$fixed_positions must include an ID column named ",
+      shQuote(personID), " (or 'id'/'ID'). Using the first column '", names(fp)[1], "' as ID."
+    )
   }
 
   has_x <- "x" %in% names(fp)
