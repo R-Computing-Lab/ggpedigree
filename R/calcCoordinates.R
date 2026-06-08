@@ -334,6 +334,10 @@ calculateCoordinates <- function(ped,
       ped_out <- stitchComponents(component_dfs)
       rownames(ped_out) <- NULL
 
+      ped_out <- .applyFixedPositions(
+        ds = ped_out, config = config,
+        personID = personID, momID = momID, dadID = dadID
+      )
       return(ped_out)
     }
   }
@@ -341,7 +345,110 @@ calculateCoordinates <- function(ped,
   ped_out <- alignAndExtractComponent(ped, config = config)
   rownames(ped_out) <- NULL
 
+  ped_out <- .applyFixedPositions(
+    ds = ped_out, config = config,
+    personID = personID, momID = momID, dadID = dadID
+  )
   return(ped_out)
+}
+
+#' @title Pin individuals to fixed layout positions
+#' @description
+#' Overrides the computed layout coordinates for specific individuals, using the
+#' `config$fixed_positions` data frame. Positions are interpreted in raw
+#' layout-slot units (the units produced by `calculateCoordinates()`, before
+#' spacing and radial transforms), so pins compose with `generation_width` /
+#' `generation_height` scaling and radial layout. Because all downstream
+#' connection anchors are derived from `x_pos`/`y_pos`, pinning automatically
+#' propagates to the connecting segments. When a pinned individual is a parent,
+#' the family anchor (`x_fam`/`y_fam`) of their children is recomputed as the
+#' midpoint of the (pinned) parent positions, unless
+#' `config$fixed_positions_update_family` is `FALSE`.
+#' @param ds A data frame of layout coordinates with at least `x_pos`, `y_pos`,
+#'   and the `personID` column.
+#' @param config A configuration list. Uses `fixed_positions` and
+#'   `fixed_positions_update_family`.
+#' @param personID Name of the individual ID column.
+#' @param momID Name of the mother ID column.
+#' @param dadID Name of the father ID column.
+#' @return The input data frame with pinned coordinates applied.
+#' @keywords internal
+.applyFixedPositions <- function(ds, config,
+                                 personID = "personID",
+                                 momID = "momID",
+                                 dadID = "dadID") {
+  # Use [[ ]] (exact match) rather than $ to avoid partial matching against
+  # the sibling key `fixed_positions_update_family`.
+  fp <- config[["fixed_positions"]]
+  if (is.null(fp)) {
+    return(ds)
+  }
+  if (!is.data.frame(fp)) {
+    stop(
+      "config$fixed_positions must be a data.frame with an id column and ",
+      "'x' and/or 'y' columns."
+    )
+  }
+
+  # Identify the id column: prefer the personID name, then "id", else first column
+  id_col <- if (personID %in% names(fp)) {
+    personID
+  } else if ("id" %in% names(fp)) {
+    "id"
+  } else {
+    names(fp)[1]
+  }
+
+  has_x <- "x" %in% names(fp)
+  has_y <- "y" %in% names(fp)
+  if (!has_x && !has_y) {
+    warning(
+      "config$fixed_positions has no 'x' or 'y' column; no positions pinned."
+    )
+    return(ds)
+  }
+
+  unmatched <- setdiff(fp[[id_col]], ds[[personID]])
+  if (length(unmatched) > 0) {
+    warning(
+      "fixed_positions IDs not found in pedigree and ignored: ",
+      paste(unmatched, collapse = ", ")
+    )
+  }
+
+  # Apply absolute overrides (all layout appearances of a matched ID)
+  pinned_ids <- vector(mode = class(fp[[id_col]]))
+  for (i in seq_len(nrow(fp))) {
+    rows <- which(ds[[personID]] == fp[[id_col]][i])
+    if (length(rows) == 0) next
+    if (has_x && !is.na(fp$x[i])) ds$x_pos[rows] <- fp$x[i]
+    if (has_y && !is.na(fp$y[i])) ds$y_pos[rows] <- fp$y[i]
+    pinned_ids <- c(pinned_ids, fp[[id_col]][i])
+  }
+
+  # Optionally recompute the family anchor for children of pinned parents so the
+  # parent-to-children connector follows the pinned parent. NULL (unset) -> TRUE.
+  if (!isFALSE(config[["fixed_positions_update_family"]]) &&
+    length(pinned_ids) > 0 &&
+    all(c("x_fam", "y_fam") %in% names(ds))) {
+    affected <- which(ds[[momID]] %in% pinned_ids | ds[[dadID]] %in% pinned_ids)
+    if (length(affected) > 0) {
+      xp <- stats::setNames(ds$x_pos, as.character(ds[[personID]]))
+      yp <- stats::setNames(ds$y_pos, as.character(ds[[personID]]))
+      for (r in affected) {
+        parents <- c(ds[[momID]][r], ds[[dadID]][r])
+        parents <- as.character(parents[!is.na(parents)])
+        px <- xp[parents]
+        py <- yp[parents]
+        px <- px[!is.na(px)]
+        py <- py[!is.na(py)]
+        if (length(px) > 0) ds$x_fam[r] <- mean(px)
+        if (length(py) > 0) ds$y_fam[r] <- mean(py)
+      }
+    }
+  }
+
+  ds
 }
 #' Align pedigree with additional relations
 #'

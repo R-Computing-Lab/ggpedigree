@@ -1,6 +1,8 @@
 # ggpedigree (development version)
 # ==============================
 
+* Added `fixed_positions` config option to pin specific individuals to exact layout slots, overriding the computed layout. Pass a data frame with an ID column (matching `personID`) plus `x` and/or `y` columns; positions are in raw layout-slot units so they compose with `generation_width`/`generation_height` scaling and radial layouts. Because connection anchors are derived from the (possibly pinned) coordinates, segments follow automatically. `fixed_positions_update_family` (default `TRUE`) controls whether pinning a parent also moves their children's parent-connector.
+
 * Added `segment_lineage_*` config options to color connecting segments by family lineage (e.g., paternal, maternal, or mitochondrial lines). Set `segment_lineage_include = TRUE` and choose a `segment_lineage_component`. Supplying `segment_lineage_focal_personID` traces the lines connected to one focal individual. Lineage-colored segments can be combined with node `focal_fill` via the suggested `ggnewscale` package (independent color scales); without it, the plot falls back to fixed segment colors with a warning.
 * Optimizing implemention of pedigree alignment functions from kinship2
 * Added unit tests for the pedigree alignment functions
