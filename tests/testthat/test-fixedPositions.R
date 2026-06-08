@@ -27,6 +27,12 @@ test_that("pinning a person sets an absolute x position", {
   expect_equal(d$x_pos[d$personID == 8], -3)
 })
 
+test_that("pinning works when the ID column is named 'ID'", {
+  potter <- get_potter()
+  d <- cc(potter, list(fixed_positions = data.frame(ID = 8, x = -3)))
+  expect_equal(d$x_pos[d$personID == 8], -3)
+})
+
 test_that("pinning controls both x and y", {
   potter <- get_potter()
   d <- cc(potter, list(fixed_positions = data.frame(personID = 8, x = 1.5, y = 4)))
