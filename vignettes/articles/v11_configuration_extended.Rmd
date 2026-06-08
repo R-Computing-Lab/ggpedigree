@@ -862,7 +862,7 @@ ggPedigree(
   config = list(
     fixed_positions = data.frame(
       personID = 8,
-      x = -4
+      x = -1.5
     )
   )
 )
@@ -879,9 +879,9 @@ ggPedigree(
   dadID = "dadID",
   config = list(
     fixed_positions = data.frame(
-      personID = c(8, 3),
-      x = c(-1, 9),
-      y = c(NA, 2) # person 8 keeps its generation; person 3 also shifts in y
+      personID = c(106, 105),
+      x = c(11, 13), # person 106 is shifted right; person 105 also shifts in x
+      y = c(NA, 1.80) # person 106 keeps its generation; person 105 also shifts in y
     )
   )
 )
