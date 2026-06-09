@@ -80,6 +80,7 @@
 #' @param ped_packed Whether the pedigree should use packed layout.
 #' @param ped_align Whether to align pedigree generations.
 #' @param ped_width Plot width of the pedigree block.
+#' @param reposition_founders Whether to reposition founders in the layout. Default is FALSE, which moves founders to the top of the plot and centers them over their descendants. When FALSE, founders are placed according to their original generation assignment, which may be more appropriate for certain types of pedigrees (e.g., those with many generations or non-traditional structures).
 #' @param fast_threshold Threshold for switching to piecewise layout algorithms for large pedigrees.
 #' @param fixed_positions Optional data frame for pinning specific individuals to
 #'   exact layout slots, overriding the computed layout. It must contain an ID
@@ -513,6 +514,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  return_interactive = FALSE,
                                  return_mid_parent = FALSE,
                                  reduce_variables = TRUE,
+                                 reposition_founders = FALSE,
                                  # ---- Kinship2 Options ----
                                  hints = NULL,
                                  relation = NULL,
@@ -860,6 +862,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     return_interactive = return_interactive,
     return_mid_parent = return_mid_parent,
     reduce_variables = reduce_variables,
+    reposition_founders = reposition_founders,
     # ---- Kinship2 Options ----
     ped_packed = ped_packed,
     ped_align = ped_align,

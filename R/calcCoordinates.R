@@ -118,6 +118,7 @@ calculateCoordinates <- function(ped,
     ped_align = TRUE,
     ped_width = 15,
     return_mid_parent = FALSE,
+    reposition_founders = FALSE,
     fast_threshold = 1000
   )
   config <- utils::modifyList(default_config, config)
@@ -336,6 +337,12 @@ calculateCoordinates <- function(ped,
       ped_out <- stitchComponents(component_dfs)
       rownames(ped_out) <- NULL
 
+      if(config$reposition_founders == TRUE) {
+      ped_out <- .repositionCrossGenerationSpouses(
+        ds = ped_out, ped = ped, personID = personID, momID = momID, dadID = dadID
+      )
+      }
+
       ped_out <- .applyFixedPositions(
         ds = ped_out, config = config,
         personID = personID, momID = momID, dadID = dadID
@@ -346,12 +353,106 @@ calculateCoordinates <- function(ped,
 
   ped_out <- alignAndExtractComponent(ped, config = config)
   rownames(ped_out) <- NULL
-
+  if(config$reposition_founders == TRUE) {
+  ped_out <- .repositionCrossGenerationSpouses(
+    ds = ped_out,
+    ped = ped,
+    personID = personID, momID = momID, dadID = dadID
+  )
+  }
   ped_out <- .applyFixedPositions(
     ds = ped_out, config = config,
     personID = personID, momID = momID, dadID = dadID
   )
   return(ped_out)
+}
+
+#' @keywords internal
+.nearestFreeSlot <- function(anchor, taken, step = 1, max_search = 10) {
+  # Search outward from anchor in both directions for the nearest integer-step
+  # position not already occupied (within step/2 tolerance).
+  is_taken <- function(x) any(abs(taken - x) < step / 2, na.rm = TRUE)
+  for (i in seq_len(max_search)) {
+    left  <- anchor - i * step
+    right <- anchor + i * step
+    if (!is_taken(left))  return(left)
+    if (!is_taken(right)) return(right)
+  }
+  NA_real_
+}
+
+#' @title Reposition founders placed in the wrong generation
+#' @description
+#' kinship2 assigns a founder's generation row based on its placed descendants.
+#' When a founder's only shared child with their spouse is unplaced (nid = NA),
+#' kinship2 has no generation constraint for that founder and may place them in a
+#' different row from their spouse. The result is a long diagonal spouse segment
+#' instead of the expected short horizontal one.
+#'
+#' This function detects that pattern and repositions affected founders adjacent
+#' to their spouse at the spouse's generation. Only founders with zero placed
+#' children are eligible — moving a founder whose descendants are already laid out
+#' would misalign the parent-stub segments for those children.
+#' @param ds A data frame of layout coordinates (output of
+#'   `extractCoordinatesFromAlignedPedigree`).
+#' @param personID Name of the individual ID column.
+#' @param momID Name of the mother ID column.
+#' @param dadID Name of the father ID column.
+#' @return The input data frame with eligible founders repositioned.
+#' @keywords internal
+.repositionCrossGenerationSpouses <- function(ds, ped, personID, momID, dadID) {
+  placed <- !is.na(ds$x_pos) & !isTRUE(ds$extra)
+  founders <- placed & (is.na(ds$parent_fam) | ds$parent_fam == 0)
+  founder_rows <- which(founders)
+  if (length(founder_rows) == 0) return(ds)
+
+  placed_df <- ds[placed, ]
+  xp  <- stats::setNames(placed_df$x_pos,   as.character(placed_df[[personID]]))
+  yp  <- stats::setNames(placed_df$y_pos,   as.character(placed_df[[personID]]))
+  yor <- stats::setNames(placed_df$y_order, as.character(placed_df[[personID]]))
+
+  # Use original ped (not ds) to find parent relationships: ds has momID/dadID
+  # cleared for unplaced individuals, so shared children of cross-generation
+  # spouses would be invisible if we searched ds instead.
+  pid_ped <- as.character(ped[[personID]])
+  mom_ped <- as.character(ped[[momID]])
+  dad_ped <- as.character(ped[[dadID]])
+
+  for (r in founder_rows) {
+    pid <- as.character(ds[[personID]][r])
+    py  <- ds$y_pos[r]
+
+    # Locate spouses via any shared child in the original ped
+    spouse_via_mom <- dad_ped[!is.na(mom_ped) & mom_ped == pid]
+    spouse_via_dad <- mom_ped[!is.na(dad_ped) & dad_ped == pid]
+    spouse_ids <- unique(c(spouse_via_mom, spouse_via_dad))
+    spouse_ids <- spouse_ids[!is.na(spouse_ids) & nchar(spouse_ids) > 0 & spouse_ids != pid]
+    if (length(spouse_ids) == 0) next
+
+    for (sid in spouse_ids) {
+      sy <- yp[sid]
+      if (is.na(sy) || sy == py) next  # Same generation or spouse unplaced
+
+      # Only reposition if this founder has no placed children at all
+      children_as_mom <- pid_ped[!is.na(mom_ped) & mom_ped == pid]
+      children_as_dad <- pid_ped[!is.na(dad_ped) & dad_ped == pid]
+      all_children    <- unique(c(children_as_mom, children_as_dad))
+      placed_children <- all_children[all_children %in% as.character(placed_df[[personID]])]
+      if (length(placed_children) > 0) next
+
+      # Move to spouse's generation; pick the nearest unoccupied slot
+      sx  <- xp[sid]
+      # x positions already used at the spouse's y level (±0.6 tolerance)
+      taken <- xp[abs(yp - sy) < 0.6]
+      new_x <- .nearestFreeSlot(sx, taken)
+      if (is.na(new_x)) next  # no free slot found; leave as-is
+      ds$y_pos[r]   <- sy
+      ds$y_order[r] <- yor[sid]
+      ds$x_pos[r]   <- new_x
+      break
+    }
+  }
+  ds
 }
 
 #' @title Pin individuals to fixed layout positions

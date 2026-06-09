@@ -7,6 +7,11 @@
 * Optimizing implemention of pedigree alignment functions from kinship2
 * Added unit tests for the pedigree alignment functions
 
+## Bug fixes
+* Fixed `reduce_variables = FALSE` breaking lineage-colored segments. When all pedigree columns were carried forward through `calculateConnections()`, a subsequent join in `ggpedigreeCore.R` created `.x`/`.y` suffix duplicates of `segment_lineage`, causing `.addSegmentLayer()` to silently skip lineage coloring. The join is now guarded, and `calculateConnections()` uses `union()` to expand the selected columns once rather than re-joining at the end.
+* Fixed `x_fam = NaN` for unplaced individuals (`nid = NA`). kinship2 returns a `NaN` position for individuals it cannot place; the condition that zeros out family coordinates now also catches `parent_fam = NA` (in addition to `parent_fam == 0`).
+* Fixed long diagonal spouse segments caused by kinship2 placing a founder in the wrong generation row. This happens when a couple's only shared child is unplaced (`nid = NA`), so kinship2 has no generation constraint for one parent and assigns them to a different row than their spouse. A new post-processing step (`.repositionCrossGenerationSpouses()`) detects this pattern and moves the misplaced founder to be adjacent to their spouse, producing a short horizontal spouse segment instead of a long diagonal one. Founders with placed descendants are never moved.
+
 # ggpedigree Version: 1.2.0
 ## New features
 * Added more flexibility to overlays, including support for shape-mode overlays with custom numeric codes and colors.

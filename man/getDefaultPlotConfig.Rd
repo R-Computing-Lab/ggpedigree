@@ -201,6 +201,7 @@ getDefaultPlotConfig(
   return_interactive = FALSE,
   return_mid_parent = FALSE,
   reduce_variables = TRUE,
+  reposition_founders = FALSE,
   hints = NULL,
   relation = NULL,
   debug = FALSE,
@@ -663,6 +664,8 @@ Only used when overlay_mode is "shape".}
 \item{return_mid_parent}{Whether to return mid_parent values in the plot.}
 
 \item{reduce_variables}{Whether to reduce the number of variables passed to the plot for performance optimization. Default is TRUE.}
+
+\item{reposition_founders}{Whether to reposition founders in the layout. Default is FALSE, which moves founders to the top of the plot and centers them over their descendants. When FALSE, founders are placed according to their original generation assignment, which may be more appropriate for certain types of pedigrees (e.g., those with many generations or non-traditional structures).}
 
 \item{hints}{Optional hints to pass along to kinship2::autohint}
 
