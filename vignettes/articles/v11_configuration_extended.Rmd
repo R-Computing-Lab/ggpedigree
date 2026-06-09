@@ -999,21 +999,21 @@ data.frame(seed = 0:9, score = round(scores, 2)) |>
 
 If you don't want to inspect scores by hand, set `founder_order_tries` to a larger number and let `{ggpedigree}` pick the best seed automatically.  The function evaluates that many shufflings and returns the most compact result. 
 
-```{r fig.height=4}
+```{r fig.width=7}
 ggPedigree(
   potter,
   famID = "famID", personID = "personID",
   momID = "momID", dadID = "dadID",
   config = list(
     founder_order_seed  = 1L,   # start search from seed 1
-    founder_order_tries = 155L,  # try seeds 1 through 155
+    founder_order_tries = 10L,  # try seeds 1 through 155
     label_include = TRUE, label_text_size = 2.5,
     return_best_seed = TRUE # return the winning seed in the plot attributes for reference
   )
-) + ggplot2::ggtitle("Best of seeds 1–155")
+) + ggplot2::ggtitle("Best of seeds 1–10")
 
 
-ggPedigree(
+p1 <- ggPedigree(
   potter,
   famID = "famID", personID = "personID",
   momID = "momID", dadID = "dadID",
@@ -1022,8 +1022,22 @@ ggPedigree(
     label_include = TRUE, label_text_size = 2.5
   )
 )
-
-
+p2 <- ggPedigree(
+  potter,
+  famID = "famID", personID = "personID",
+  momID = "momID", dadID = "dadID",
+  config = list(
+    label_include = TRUE, label_text_size = 2.5
+  )
+)
+cowplot::plot_grid(p1 + ggplot2::ggtitle("Seed 5") + theme_linedraw()
+                   , NULL, 
+                   p2 + ggplot2::ggtitle("Default")+ theme_linedraw() 
+                   , NULL,
+  ncol = 2,
+  byrow = T,
+  rel_widths = c(1, .1, 1, .1)
+) 
 ```
 
 To make the result reproducible, always pair `founder_order_tries` with an explicit `founder_order_seed`.  Without a seed, the function tries seeds `1, 2, …, N`—still deterministic, but recording the seed in your config makes the intent explicit.
