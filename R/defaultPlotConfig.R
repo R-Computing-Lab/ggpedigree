@@ -80,8 +80,36 @@
 #' @param ped_packed Whether the pedigree should use packed layout.
 #' @param ped_align Whether to align pedigree generations.
 #' @param ped_width Plot width of the pedigree block.
-#' @param reposition_founders Whether to reposition founders in the layout. Default is FALSE, which moves founders to the top of the plot and centers them over their descendants. When FALSE, founders are placed according to their original generation assignment, which may be more appropriate for certain types of pedigrees (e.g., those with many generations or non-traditional structures).
+#' @param reposition_founders Whether to reposition founders in the layout. Default is TRUE, which moves founders to the top of the plot and centers them over their descendants. When FALSE, founders are placed according to their original generation assignment, which may be more appropriate for certain types of pedigrees (e.g., those with many generations or non-traditional structures).
 #' @param fast_threshold Threshold for switching to piecewise layout algorithms for large pedigrees.
+#' @param founder_order_seed Integer seed used to shuffle the pedigree row order
+#'   before passing to kinship2. Because kinship2 processes founders in the
+#'   order they appear, different shufflings produce different lateral placements.
+#'   Set to an integer (e.g. `42`) to get a specific alternative layout.
+#'   `NULL` (default) uses the original row order.  Combine with
+#'   `founder_order_tries` to search automatically for a compact layout.
+#' @param founder_order_tries Integer number of row-order shufflings to evaluate.
+#'   When greater than 1, the function tries seeds
+#'   \code{founder_order_seed + 0, founder_order_seed + 1, \ldots} (or
+#'   \code{1, 2, \ldots} when \code{founder_order_seed} is \code{NULL}), scores
+#'   each layout with `layout_score_method`, and returns the best result.
+#'   Default is \code{1} (no search).
+#' @param layout_score_method Scoring method used to rank candidate layouts when
+#'   `founder_order_tries > 1`. One of:
+#'   \describe{
+#'     \item{`"parent_stub"`}{(default) Sum of `|x_fam - x_pos|`. Total
+#'       diagonal parent-stub length.}
+#'     \item{`"crossings"`}{Count of crossing parent-stub segment pairs within
+#'       each generation.}
+#'     \item{`"duplications"`}{Count of extra kinship2 duplicate placements
+#'       (`extra = TRUE` rows).}
+#'     \item{`"twin_penalty"`}{Sum of intruder positions separating co-twins
+#'       within their generation row. Twins placed in different generation rows
+#'       receive a heavy flat penalty.}
+#'     \item{`"composite"`}{Weighted sum:
+#'       `parent_stub + 10*crossings + 20*twin_penalty + 100*duplications`.}
+#'   }
+#'   Lower scores are better in all cases.
 #' @param fixed_positions Optional data frame for pinning specific individuals to
 #'   exact layout slots, overriding the computed layout. It must contain an ID
 #'   column named to match `personID` (e.g., `"personID"` or `"ID"`) plus an `x`
@@ -355,6 +383,9 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  ped_align = TRUE,
                                  ped_width = 15,
                                  fast_threshold = 1000, # threshold for switching to faster layout algorithms
+                                 founder_order_seed = NULL,
+                                 founder_order_tries = 1L,
+                                 layout_score_method = "composite",
                                  fixed_positions = NULL,
                                  fixed_positions_update_family = TRUE,
                                  coord_layout = "cartesian",
@@ -514,7 +545,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  return_interactive = FALSE,
                                  return_mid_parent = FALSE,
                                  reduce_variables = TRUE,
-                                 reposition_founders = FALSE,
+                                 reposition_founders = TRUE,
+                                 return_best_seed = FALSE,
                                  # ---- Kinship2 Options ----
                                  hints = NULL,
                                  relation = NULL,
@@ -868,6 +900,10 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     ped_align = ped_align,
     ped_width = ped_width,
     fast_threshold = fast_threshold,
+    founder_order_seed = founder_order_seed,
+    founder_order_tries = founder_order_tries,
+    layout_score_method = layout_score_method,
+    return_best_seed = return_best_seed,
     fixed_positions = fixed_positions,
     fixed_positions_update_family = fixed_positions_update_family,
     coord_layout = coord_layout,

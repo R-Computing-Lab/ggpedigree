@@ -7,6 +7,16 @@
 * Optimizing implemention of pedigree alignment functions from kinship2
 * Added unit tests for the pedigree alignment functions
 
+## New features
+* Added `founder_order_seed` config option to shuffle the pedigree row order before passing to kinship2. Because kinship2 processes founders in the order they appear, different shufflings produce different lateral placements. Set to an integer (e.g. `42`) to get a specific reproducible alternative layout; `NULL` (default) preserves the original order.
+* Added `founder_order_tries` config option (default `1`) to automatically search for a compact layout. When greater than 1, the function evaluates that many row-order shufflings (using seeds `founder_order_seed + 0, 1, …` or `1, 2, …` when no seed is given), scores each layout, and returns the best result.
+* Added `layout_score_method` config option to control how candidate layouts are scored during a `founder_order_tries` search. Four methods are available — all lower-is-better:
+  * `"parent_stub"` (default): sum of `|x_fam - x_pos|` across all placed individuals. Fast O(n) measure of total diagonal parent-stub length.
+  * `"crossings"`: count of crossing parent-stub segment pairs within each generation. Two stubs cross when the lateral order of children is reversed relative to their parent midpoints. O(n²) per generation but fast for typical pedigree sizes.
+  * `"duplications"`: number of individuals kinship2 had to place twice (`extra = TRUE` rows). Each duplication creates a self-loop connection in the plot; fewer duplications is better.
+  * `"twin_penalty"`: sum of intruder positions separating co-twins within their generation row. If N twins are all adjacent the penalty is 0; each non-twin slot placed between them adds 1. Twins in different generation rows receive a heavy flat penalty.
+  * `"composite"`: weighted combination `parent_stub + 10 × crossings + 20 × twin_penalty + 100 × duplications`. Penalises duplications most heavily, then twin separation, then crossings, then stub length. Good default when you have no strong preference about which aspect to optimise.
+
 ## Bug fixes
 * Fixed `reduce_variables = FALSE` breaking lineage-colored segments. When all pedigree columns were carried forward through `calculateConnections()`, a subsequent join in `ggpedigreeCore.R` created `.x`/`.y` suffix duplicates of `segment_lineage`, causing `.addSegmentLayer()` to silently skip lineage coloring. The join is now guarded, and `calculateConnections()` uses `union()` to expand the selected columns once rather than re-joining at the end.
 * Fixed `x_fam = NaN` for unplaced individuals (`nid = NA`). kinship2 returns a `NaN` position for individuals it cannot place; the condition that zeros out family coordinates now also catches `parent_fam = NA` (in addition to `parent_fam == 0`).

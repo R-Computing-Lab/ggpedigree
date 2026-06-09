@@ -913,6 +913,123 @@ ggPedigree(
 
 Pinning only repositions the people you name; everyone else stays where the layout placed them, so it is up to you to choose positions that do not overlap. IDs that are not found in the pedigree are ignored with a warning.
 
+## 12) Trying different founder orderings
+
+### Why row order matters
+
+The layout engine (kinship2) processes individuals in the order they appear in your data.  For founders—people with no parents in the pedigree—this row order determines their initial left-to-right placement.  Different orderings can move a couple from one side of the tree to the other, shorten long diagonal connectors, or reduce visual crossing of branches.
+
+By default `{ggpedigree}` does not shuffle the rows, so the layout is determined by whatever order the data happen to arrive in.  Two config options let you explore alternatives:
+
+| Option | Default | Purpose |
+|---|---|---|
+| `founder_order_seed` | `NULL` | Shuffle row order with this integer seed before layout |
+| `founder_order_tries` | `1` | Try this many random shuffles; return the most compact one |
+
+### Comparing two layouts with `founder_order_seed`
+
+The easiest way to explore is to try a few integer seeds and compare the plots.  Here we look at the default layout, seed 7, and seed 42 for the `potter` pedigree.
+
+```{r fig.height=4}
+p_default <- ggPedigree(
+  potter,
+  famID = "famID", personID = "personID",
+  momID = "momID", dadID = "dadID",
+  config = list(label_include = TRUE, label_text_size = 2.5)
+) + ggplot2::ggtitle("Default ordering")
+
+p_seed7 <- ggPedigree(
+  potter,
+  famID = "famID", personID = "personID",
+  momID = "momID", dadID = "dadID",
+  config = list(
+    founder_order_seed = 7L,
+   
+    label_include = TRUE, label_text_size = 2.5
+  )
+) + ggplot2::ggtitle("founder_order_seed = 7")
+
+p_seed42 <- ggPedigree(
+  potter,
+  famID = "famID", personID = "personID",
+  momID = "momID", dadID = "dadID",
+  config = list(
+    founder_order_seed = 42L,
+    label_include = TRUE, label_text_size = 2.5
+  )
+) + ggplot2::ggtitle("founder_order_seed = 42")
+```
+
+```{r fig.height=4}
+p_default
+```
+
+```{r fig.height=4}
+p_seed7
+```
+
+```{r fig.height=4}
+p_seed42
+```
+
+The same seed always produces the same plot, so results are fully reproducible once you have chosen a preferred layout.
+
+### Measuring layout quality
+
+`calculateCoordinates()` returns the raw layout data frame.  You can compute a *layout score* (total parent-stub offset — lower means children sit closer to the midpoint of their parents) to compare candidates numerically before plotting:
+
+```{r}
+scores <- sapply(0:9, function(s) {
+  coords <- calculateCoordinates(
+    potter,
+    personID = "personID", momID = "momID", dadID = "dadID",
+    config = list(founder_order_seed = s,
+                  debug = FALSE,
+                  return_best_seed = FALSE,
+                  layout_score_method = "parent_stub"
+  ))
+  ggpedigree:::.layoutScore(coords)
+})
+
+data.frame(seed = 0:9, score = round(scores, 2)) |>
+  knitr::kable(caption = "Layout score for seeds 0–9 (lower = more compact)")
+```
+
+### Automatic search with `founder_order_tries`
+
+If you don't want to inspect scores by hand, set `founder_order_tries` to a larger number and let `{ggpedigree}` pick the best seed automatically.  The function evaluates that many shufflings and returns the most compact result. 
+
+```{r fig.height=4}
+ggPedigree(
+  potter,
+  famID = "famID", personID = "personID",
+  momID = "momID", dadID = "dadID",
+  config = list(
+    founder_order_seed  = 1L,   # start search from seed 1
+    founder_order_tries = 155L,  # try seeds 1 through 155
+    label_include = TRUE, label_text_size = 2.5,
+    return_best_seed = TRUE # return the winning seed in the plot attributes for reference
+  )
+) + ggplot2::ggtitle("Best of seeds 1–155")
+
+
+ggPedigree(
+  potter,
+  famID = "famID", personID = "personID",
+  momID = "momID", dadID = "dadID",
+  config = list(
+    founder_order_seed  = 5L, 
+    label_include = TRUE, label_text_size = 2.5
+  )
+)
+
+
+```
+
+To make the result reproducible, always pair `founder_order_tries` with an explicit `founder_order_seed`.  Without a seed, the function tries seeds `1, 2, …, N`—still deterministic, but recording the seed in your config makes the intent explicit.
+
+> **Tip:** For very large pedigrees the search can be slow because each trial reruns the full layout calculation.  Start with a small `founder_order_tries` (5–10) to identify a good region, then fix the winning seed for production plots.
+
 # Saving and loading a config file
 
 If you want to reuse the same overrides across scripts or share them with collaborators, save your config list.

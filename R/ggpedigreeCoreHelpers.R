@@ -205,7 +205,7 @@ createFillColumn <- function(ped,
     fill_df$focal_fill_x[fill_df$focal_fill_x == 0] <- NA_real_
   }
 
-   if(segment == TRUE) {
+  if (segment == TRUE) {
     fill_df <- fill_df |>
       dplyr::rename(segment_lineage = "focal_fill_x")
   } else {

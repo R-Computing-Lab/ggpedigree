@@ -317,7 +317,7 @@ recodeMissingIDs <- function(ped, momID = "momID", dadID = "dadID",
   ped[[momID]] <- as.numeric(ped[[momID]])
   ped[[dadID]] <- as.numeric(ped[[dadID]])
 
-    if (twinID %in% names(ped)) {
+  if (twinID %in% names(ped)) {
     ped[[twinID]] <- unname(id_lookup[as.character(ped[[twinID]])])
     ped[[twinID]] <- as.numeric(ped[[twinID]])
   }

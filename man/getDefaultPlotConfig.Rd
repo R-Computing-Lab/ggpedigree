@@ -66,6 +66,9 @@ getDefaultPlotConfig(
   ped_align = TRUE,
   ped_width = 15,
   fast_threshold = 1000,
+  founder_order_seed = NULL,
+  founder_order_tries = 1L,
+  layout_score_method = "composite",
   fixed_positions = NULL,
   fixed_positions_update_family = TRUE,
   coord_layout = "cartesian",
@@ -201,7 +204,8 @@ getDefaultPlotConfig(
   return_interactive = FALSE,
   return_mid_parent = FALSE,
   reduce_variables = TRUE,
-  reposition_founders = FALSE,
+  reposition_founders = TRUE,
+  return_best_seed = FALSE,
   hints = NULL,
   relation = NULL,
   debug = FALSE,
@@ -354,6 +358,37 @@ The plot is reversed vertically, so this is needed to nudge labels up instead of
 \item{ped_width}{Plot width of the pedigree block.}
 
 \item{fast_threshold}{Threshold for switching to piecewise layout algorithms for large pedigrees.}
+
+\item{founder_order_seed}{Integer seed used to shuffle the pedigree row order
+before passing to kinship2. Because kinship2 processes founders in the
+order they appear, different shufflings produce different lateral placements.
+Set to an integer (e.g. `42`) to get a specific alternative layout.
+`NULL` (default) uses the original row order.  Combine with
+`founder_order_tries` to search automatically for a compact layout.}
+
+\item{founder_order_tries}{Integer number of row-order shufflings to evaluate.
+When greater than 1, the function tries seeds
+\code{founder_order_seed + 0, founder_order_seed + 1, \ldots} (or
+\code{1, 2, \ldots} when \code{founder_order_seed} is \code{NULL}), scores
+each layout with `layout_score_method`, and returns the best result.
+Default is \code{1} (no search).}
+
+\item{layout_score_method}{Scoring method used to rank candidate layouts when
+`founder_order_tries > 1`. One of:
+\describe{
+  \item{`"parent_stub"`}{(default) Sum of `|x_fam - x_pos|`. Total
+    diagonal parent-stub length.}
+  \item{`"crossings"`}{Count of crossing parent-stub segment pairs within
+    each generation.}
+  \item{`"duplications"`}{Count of extra kinship2 duplicate placements
+    (`extra = TRUE` rows).}
+  \item{`"twin_penalty"`}{Sum of intruder positions separating co-twins
+    within their generation row. Twins placed in different generation rows
+    receive a heavy flat penalty.}
+  \item{`"composite"`}{Weighted sum:
+    `parent_stub + 10*crossings + 20*twin_penalty + 100*duplications`.}
+}
+Lower scores are better in all cases.}
 
 \item{fixed_positions}{Optional data frame for pinning specific individuals to
 exact layout slots, overriding the computed layout. It must contain an ID
@@ -665,7 +700,7 @@ Only used when overlay_mode is "shape".}
 
 \item{reduce_variables}{Whether to reduce the number of variables passed to the plot for performance optimization. Default is TRUE.}
 
-\item{reposition_founders}{Whether to reposition founders in the layout. Default is FALSE, which moves founders to the top of the plot and centers them over their descendants. When FALSE, founders are placed according to their original generation assignment, which may be more appropriate for certain types of pedigrees (e.g., those with many generations or non-traditional structures).}
+\item{reposition_founders}{Whether to reposition founders in the layout. Default is TRUE, which moves founders to the top of the plot and centers them over their descendants. When FALSE, founders are placed according to their original generation assignment, which may be more appropriate for certain types of pedigrees (e.g., those with many generations or non-traditional structures).}
 
 \item{hints}{Optional hints to pass along to kinship2::autohint}
 

@@ -99,7 +99,7 @@ ggPedigree.core <- function(ped,
     status_column = status_column,
     focal_fill_column = focal_fill_column
   )
- # reduce_variables = FALSE, # is what breaks the focal segment fill
+  # reduce_variables = FALSE, # is what breaks the focal segment fill
   if (config$debug == TRUE) {
     message("Pedigree data prepared. Number of individuals: ", nrow(ds_ped))
 

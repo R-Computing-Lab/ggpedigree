@@ -119,7 +119,10 @@ calculateCoordinates <- function(ped,
     ped_width = 15,
     return_mid_parent = FALSE,
     reposition_founders = FALSE,
-    fast_threshold = 1000
+    fast_threshold = 1000,
+    founder_order_seed = NULL,
+    founder_order_tries = 1L,
+    layout_score_method = "parent_stub"
   )
   config <- utils::modifyList(default_config, config)
 
@@ -314,57 +317,231 @@ calculateCoordinates <- function(ped,
     )
   }
 
-  # Construct a pedigree object to compute layout coordinates
-  if (nrow(ped) > config$fast_threshold) {
-    components <- splitPedigreeComponents(
-      ped = ped,
-      personID = personID,
-      momID = momID,
-      dadID = dadID
-    )
-
-    if (length(components) > 1L) {
-      component_dfs <- lapply(seq_along(components), function(i) {
-        idx <- components[[i]]
-        ped_component <- ped[idx, , drop = FALSE]
-
-        component_df <- alignAndExtractComponent(ped_component, config = config)
-        component_df$.component <- i
-
-        component_df
-      })
-
-      ped_out <- stitchComponents(component_dfs)
-      rownames(ped_out) <- NULL
-
-      if(config$reposition_founders == TRUE) {
-      ped_out <- .repositionCrossGenerationSpouses(
-        ds = ped_out, ped = ped, personID = personID, momID = momID, dadID = dadID
+  # Local helper: run the full layout pipeline for one pedigree row ordering.
+  # Handles both the multi-component (large pedigree) and single-component paths.
+  .doOneLayout <- function(ped_input) {
+    if (nrow(ped_input) > config$fast_threshold) {
+      components <- splitPedigreeComponents(
+        ped = ped_input, personID = personID, momID = momID, dadID = dadID
       )
+      if (length(components) > 1L) {
+        component_dfs <- lapply(seq_along(components), function(i) {
+          ped_component <- ped_input[components[[i]], , drop = FALSE]
+          component_df <- alignAndExtractComponent(ped_component, config = config)
+          component_df$.component <- i
+          component_df
+        })
+        return(stitchComponents(component_dfs))
       }
-
-      ped_out <- .applyFixedPositions(
-        ds = ped_out, config = config,
-        personID = personID, momID = momID, dadID = dadID
-      )
-      return(ped_out)
     }
+    alignAndExtractComponent(ped_input, config = config)
   }
 
-  ped_out <- alignAndExtractComponent(ped, config = config)
-  rownames(ped_out) <- NULL
-  if(config$reposition_founders == TRUE) {
-  ped_out <- .repositionCrossGenerationSpouses(
-    ds = ped_out,
-    ped = ped,
-    personID = personID, momID = momID, dadID = dadID
-  )
+  # ---- Founder-order search -----------------------------------------------
+  # kinship2 processes founders in row order, so different row shufflings
+  # produce different layouts.  When founder_order_seed or founder_order_tries
+  # is set, try each seed, score the resulting layout, and keep the best one.
+  founder_seed <- config[["founder_order_seed"]]
+  founder_tries <- max(1L, as.integer(config[["founder_order_tries"]]))
+
+  if (!is.null(founder_seed) || founder_tries > 1L) {
+    seeds <- if (!is.null(founder_seed)) {
+      founder_seed + seq(0L, founder_tries - 1L)
+    } else {
+      seq_len(founder_tries)
+    }
+
+    best_out <- NULL
+    best_score <- Inf
+
+    for (s in seeds) {
+      set.seed(s)
+      ped_shuffled <- ped[sample(nrow(ped)), , drop = FALSE]
+      rownames(ped_shuffled) <- NULL
+      candidate <- .doOneLayout(ped_shuffled)
+      rownames(candidate) <- NULL
+      score <- .layoutScore(candidate,
+                            method  = config[["layout_score_method"]],
+                            twinID  = twinID)
+      if (score < best_score) {
+        best_score <- score
+        best_out <- candidate
+        best_seed <- s
+      }
+    }
+    ped_out <- best_out
+    if(config$debug|config$return_best_seed) {
+      message(
+        "Best founder order seed: ", best_seed,
+        " with layout score: ", best_score
+      )
+    }
+  } else {
+    ped_out <- .doOneLayout(ped)
+    rownames(ped_out) <- NULL
   }
+
+  if (isTRUE(config$reposition_founders)) {
+    ped_out <- .repositionCrossGenerationSpouses(
+      ds = ped_out, ped = ped, personID = personID, momID = momID, dadID = dadID
+    )
+  }
+
   ped_out <- .applyFixedPositions(
     ds = ped_out, config = config,
     personID = personID, momID = momID, dadID = dadID
   )
   return(ped_out)
+}
+
+#' @title Count crossed parent-stub segments in a pedigree layout
+#' @description
+#' Within each generation row, counts pairs of individuals whose parent-stub
+#' segments cross: individual i is to the left of j in their generation, but
+#' i's parent midpoint (`x_fam`) is to the right of j's parent midpoint, or
+#' vice versa.  This is an inversion count — equivalent to counting bubble-sort
+#' swaps needed to restore a monotone parent-midpoint ordering.  Only
+#' non-extra, placed individuals with a known `x_fam` are considered.
+#' @param ds Data frame produced by `calculateCoordinates`.
+#' @return A non-negative integer.
+#' @keywords internal
+.layoutScoreCrossings <- function(ds) {
+  placed <- ds[
+    !is.na(ds$x_pos) & !is.na(ds$x_fam) & (is.na(ds$extra) | !ds$extra),
+  ]
+  if (nrow(placed) < 2L) return(0L)
+
+  count <- 0L
+  for (g in unique(placed$y_pos)) {
+    gr <- placed[!is.na(placed$y_pos) & placed$y_pos == g, ]
+    n  <- nrow(gr)
+    if (n < 2L) next
+    xc <- gr$x_pos
+    xp <- gr$x_fam
+    for (i in seq_len(n - 1L)) {
+      for (j in seq.int(i + 1L, n)) {
+        if (!is.na(xp[i]) && !is.na(xp[j]) &&
+            ((xc[i] < xc[j]) != (xp[i] < xp[j]))) {
+          count <- count + 1L
+        }
+      }
+    }
+  }
+  count
+}
+
+#' @title Penalise layouts that split twins apart
+#' @description
+#' For each group of co-twins (individuals sharing the same value of the
+#' `twinID` column), computes the number of "intruder" layout positions that
+#' sit between the first and last twin in their generation row.  If N twins are
+#' all adjacent the penalty is 0; if one non-twin is placed between them the
+#' penalty is 1; and so on.
+#'
+#' Twins placed in *different* generation rows receive a flat penalty of 10 per
+#' cross-generation twin pair (a structural anomaly, not just sub-optimal
+#' positioning).
+#'
+#' Only placed, non-extra individuals are considered.  Returns 0 silently when
+#' `twinID` is not a column in `ds` or when no twin groups exist.
+#'
+#' @param ds Data frame produced by `calculateCoordinates`.
+#' @param twinID Character name of the twin-group ID column in `ds`.
+#'   Defaults to `"twinID"`.
+#' @return A non-negative numeric value.
+#' @keywords internal
+.layoutScoreTwinPenalty <- function(ds, twinID = "twinID") {
+  if (!twinID %in% names(ds)) return(0)
+
+  placed <- ds[
+    !is.na(ds[[twinID]]) &
+      !is.na(ds$x_pos) &
+      (is.na(ds$extra) | !ds$extra),
+  ]
+  if (nrow(placed) < 2L) return(0)
+
+  penalty <- 0
+  twin_groups <- split(placed, placed[[twinID]])
+
+  for (grp in twin_groups) {
+    n <- nrow(grp)
+    if (n < 2L) next
+
+    unique_rows <- unique(grp$y_pos[!is.na(grp$y_pos)])
+    if (length(unique_rows) > 1L) {
+      # Twins in different generation rows — structural problem, heavy penalty
+      penalty <- penalty + 10 * (n * (n - 1L) / 2L)
+      next
+    }
+
+    # Same row: penalise intruder positions between first and last twin
+    # Minimum span for N adjacent twins = N - 1 position units
+    x_span <- max(grp$x_pos) - min(grp$x_pos)
+    penalty <- penalty + max(0, x_span - (n - 1L))
+  }
+
+  penalty
+}
+
+#' @title Score a pedigree layout
+#' @description
+#' Returns a single non-negative number summarising layout quality; **lower is
+#' better**.  Five methods are available, controlled by `method`:
+#'
+#' \describe{
+#'   \item{`"parent_stub"`}{Sum of `|x_fam - x_pos|` over all placed
+#'     individuals.  Measures total diagonal parent-stub length: children
+#'     ideally sit directly below their parent midpoint.  Fast, O(n).}
+#'   \item{`"crossings"`}{Count of parent-stub inversion pairs within each
+#'     generation: two stubs cross when the lateral order of children is
+#'     reversed relative to the order of their parent midpoints.  O(n²) per
+#'     generation but still fast for typical pedigree sizes.}
+#'   \item{`"duplications"`}{Number of individuals kinship2 had to place
+#'     twice (`extra = TRUE` rows).  Each duplication produces a self-loop
+#'     in the plot; fewer is better.}
+#'   \item{`"twin_penalty"`}{Sum of intruder positions separating co-twins
+#'     within their generation row.  For N twins placed adjacently the penalty
+#'     is 0; each non-twin slot that separates them adds 1.  Twins in different
+#'     generation rows receive a heavy flat penalty.}
+#'   \item{`"composite"`}{Weighted sum:
+#'     `parent_stub + 10 * crossings + 20 * twin_penalty + 100 * duplications`.
+#'     Penalises duplications most heavily, then twin separation, then
+#'     crossings, then stub length.  Good default when you have no strong
+#'     preference.}
+#' }
+#'
+#' Used by the `founder_order_tries` search to rank candidate layouts when
+#' `founder_order_tries > 1` or `founder_order_seed` is set.
+#'
+#' @param ds Data frame produced by `calculateCoordinates`.
+#' @param method One of `"parent_stub"` (default), `"crossings"`,
+#'   `"duplications"`, `"twin_penalty"`, or `"composite"`.
+#' @param twinID Character name of the twin-group ID column in `ds`.
+#'   Passed to `.layoutScoreTwinPenalty()`.  Defaults to `"twinID"`.
+#' @return A single numeric value (≥ 0).
+#' @keywords internal
+.layoutScore <- function(ds,
+                         method = c(
+                           "parent_stub", "crossings",
+                           "duplications", "twin_penalty", "composite",
+                           "parent_offset", "minimal_duplicates"
+                         ),
+                         twinID = "twinID") {
+  method <- match.arg(method)
+  switch(method,
+    parent_stub      = ,
+    parent_offset    = sum(abs(ds$x_fam - ds$x_pos), na.rm = TRUE),
+    crossings        = .layoutScoreCrossings(ds),
+    duplications     = ,
+    minimal_duplicates = sum(duplicated(ds$nid[!is.na(ds$nid)])),
+    twin_penalty     = .layoutScoreTwinPenalty(ds, twinID = twinID),
+    composite        = {
+      sum(abs(ds$x_fam - ds$x_pos), na.rm = TRUE) +
+        10L  * .layoutScoreCrossings(ds) +
+        20L  * .layoutScoreTwinPenalty(ds, twinID = twinID) +
+        100L * sum(duplicated(ds$nid[!is.na(ds$nid)]))
+    }
+  )
 }
 
 #' @keywords internal
@@ -373,10 +550,14 @@ calculateCoordinates <- function(ped,
   # position not already occupied (within step/2 tolerance).
   is_taken <- function(x) any(abs(taken - x) < step / 2, na.rm = TRUE)
   for (i in seq_len(max_search)) {
-    left  <- anchor - i * step
+    left <- anchor - i * step
     right <- anchor + i * step
-    if (!is_taken(left))  return(left)
-    if (!is_taken(right)) return(right)
+    if (!is_taken(left)) {
+      return(left)
+    }
+    if (!is_taken(right)) {
+      return(right)
+    }
   }
   NA_real_
 }
@@ -404,11 +585,13 @@ calculateCoordinates <- function(ped,
   placed <- !is.na(ds$x_pos) & !isTRUE(ds$extra)
   founders <- placed & (is.na(ds$parent_fam) | ds$parent_fam == 0)
   founder_rows <- which(founders)
-  if (length(founder_rows) == 0) return(ds)
+  if (length(founder_rows) == 0) {
+    return(ds)
+  }
 
   placed_df <- ds[placed, ]
-  xp  <- stats::setNames(placed_df$x_pos,   as.character(placed_df[[personID]]))
-  yp  <- stats::setNames(placed_df$y_pos,   as.character(placed_df[[personID]]))
+  xp <- stats::setNames(placed_df$x_pos, as.character(placed_df[[personID]]))
+  yp <- stats::setNames(placed_df$y_pos, as.character(placed_df[[personID]]))
   yor <- stats::setNames(placed_df$y_order, as.character(placed_df[[personID]]))
 
   # Use original ped (not ds) to find parent relationships: ds has momID/dadID
@@ -420,7 +603,7 @@ calculateCoordinates <- function(ped,
 
   for (r in founder_rows) {
     pid <- as.character(ds[[personID]][r])
-    py  <- ds$y_pos[r]
+    py <- ds$y_pos[r]
 
     # Locate spouses via any shared child in the original ped
     spouse_via_mom <- dad_ped[!is.na(mom_ped) & mom_ped == pid]
@@ -431,24 +614,24 @@ calculateCoordinates <- function(ped,
 
     for (sid in spouse_ids) {
       sy <- yp[sid]
-      if (is.na(sy) || sy == py) next  # Same generation or spouse unplaced
+      if (is.na(sy) || sy == py) next # Same generation or spouse unplaced
 
       # Only reposition if this founder has no placed children at all
       children_as_mom <- pid_ped[!is.na(mom_ped) & mom_ped == pid]
       children_as_dad <- pid_ped[!is.na(dad_ped) & dad_ped == pid]
-      all_children    <- unique(c(children_as_mom, children_as_dad))
+      all_children <- unique(c(children_as_mom, children_as_dad))
       placed_children <- all_children[all_children %in% as.character(placed_df[[personID]])]
       if (length(placed_children) > 0) next
 
       # Move to spouse's generation; pick the nearest unoccupied slot
-      sx  <- xp[sid]
+      sx <- xp[sid]
       # x positions already used at the spouse's y level (±0.6 tolerance)
       taken <- xp[abs(yp - sy) < 0.6]
       new_x <- .nearestFreeSlot(sx, taken)
-      if (is.na(new_x)) next  # no free slot found; leave as-is
-      ds$y_pos[r]   <- sy
+      if (is.na(new_x)) next # no free slot found; leave as-is
+      ds$y_pos[r] <- sy
       ds$y_order[r] <- yor[sid]
-      ds$x_pos[r]   <- new_x
+      ds$x_pos[r] <- new_x
       break
     }
   }
