@@ -518,3 +518,273 @@ test_that("reduce_variables reduces object size", {
   # get file size of ggplot objects
   expect_true(object.size(p_build) < object.size(p_reduced_build)) # reduced plot should be smaller in size
 })
+
+
+make_renumber_df <- function(person_ids,
+                             mom_ids,
+                             dad_ids,
+                             sex = NULL) {
+  df <- data.frame(
+    personID = person_ids,
+    momID = mom_ids,
+    dadID = dad_ids
+  )
+
+  if (!is.null(sex)) {
+    df$sex <- sex
+  }
+
+  df
+}
+
+expect_ids_consistent <- function(original,
+                                  renumbered,
+                                  personID = "personID",
+                                  momID = "momID",
+                                  dadID = "dadID",
+                                  sort_ids = TRUE,
+                                  info = NULL) {
+  old_ids <- unique(original[[personID]])
+  old_ids <- old_ids[!is.na(old_ids)]
+
+  if (sort_ids) {
+    old_ids <- sort(old_ids)
+  }
+
+  id_key <- data.frame(
+    oldID = old_ids,
+    newID = seq_along(old_ids),
+    stringsAsFactors = FALSE
+  )
+
+  lookup <- stats::setNames(id_key$newID, as.character(id_key$oldID))
+
+  expected <- original
+  expected[[personID]] <- as.integer(unname(lookup[as.character(original[[personID]])]))
+  expected[[momID]] <- as.integer(unname(lookup[as.character(original[[momID]])]))
+  expected[[dadID]] <- as.integer(unname(lookup[as.character(original[[dadID]])]))
+
+  expect_equal(
+    renumbered[, c(personID, momID, dadID), drop = FALSE],
+    expected[, c(personID, momID, dadID), drop = FALSE],
+    ignore_attr = TRUE,
+    info = info
+  )
+
+  expect_equal(nrow(renumbered), nrow(original), info = info)
+  expect_equal(names(renumbered), names(original), info = info)
+
+  expect_true(is.integer(renumbered[[personID]]), info = info)
+  expect_true(is.integer(renumbered[[momID]]), info = info)
+  expect_true(is.integer(renumbered[[dadID]]), info = info)
+
+  invisible(NULL)
+}
+
+test_that("renumberPedigreeIDs renumbers numeric IDs consistently", {
+  df <- make_renumber_df(
+    person_ids = c(100, 200, 300),
+    mom_ids = c(NA, NA, 100),
+    dad_ids = c(NA, NA, 200),
+    sex = c(2, 1, 2)
+  )
+
+  out <- renumberPedigreeIDs(df)
+
+  expected <- data.frame(
+    personID = c(1L, 2L, 3L),
+    momID = c(NA_integer_, NA_integer_, 1L),
+    dadID = c(NA_integer_, NA_integer_, 2L),
+    sex = c(2, 1, 2)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+  expect_ids_consistent(df, out)
+})
+
+test_that("renumberPedigreeIDs renumbers character IDs consistently", {
+  df <- make_renumber_df(
+    person_ids = c("alpha", "beta", "gamma"),
+    mom_ids = c(NA, NA, "alpha"),
+    dad_ids = c(NA, NA, "beta"),
+    sex = c(2, 1, 2)
+  )
+
+  out <- renumberPedigreeIDs(df)
+
+  expected <- data.frame(
+    personID = c(1L, 2L, 3L),
+    momID = c(NA_integer_, NA_integer_, 1L),
+    dadID = c(NA_integer_, NA_integer_, 2L),
+    sex = c(2, 1, 2)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+  expect_ids_consistent(df, out)
+})
+
+test_that("renumberPedigreeIDs preserves non-ID columns", {
+  df <- data.frame(
+    personID = c(10, 20, 30),
+    momID = c(NA, NA, 10),
+    dadID = c(NA, NA, 20),
+    sex = c(2, 1, 2),
+    name = c("mother", "father", "child"),
+    birth_year = c(1950, 1948, 1980)
+  )
+
+  out <- renumberPedigreeIDs(df)
+
+  expect_equal(out$sex, df$sex)
+  expect_equal(out$name, df$name)
+  expect_equal(out$birth_year, df$birth_year)
+
+  expect_ids_consistent(df, out)
+})
+
+test_that("renumberPedigreeIDs can use order of first appearance", {
+  df <- make_renumber_df(
+    person_ids = c(300, 100, 200),
+    mom_ids = c(NA, NA, 100),
+    dad_ids = c(NA, NA, 300)
+  )
+
+  out <- renumberPedigreeIDs(df, sort_ids = FALSE)
+
+  expected <- data.frame(
+    personID = c(1L, 2L, 3L),
+    momID = c(NA_integer_, NA_integer_, 2L),
+    dadID = c(NA_integer_, NA_integer_, 1L)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+  expect_ids_consistent(df, out, sort_ids = FALSE)
+})
+
+test_that("renumberPedigreeIDs sorts IDs by default", {
+  df <- make_renumber_df(
+    person_ids = c(300, 100, 200),
+    mom_ids = c(NA, NA, 100),
+    dad_ids = c(NA, NA, 300)
+  )
+
+  out <- renumberPedigreeIDs(df)
+
+  expected <- data.frame(
+    personID = c(3L, 1L, 2L),
+    momID = c(NA_integer_, NA_integer_, 1L),
+    dadID = c(NA_integer_, NA_integer_, 3L)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+  expect_ids_consistent(df, out, sort_ids = TRUE)
+})
+
+test_that("renumberPedigreeIDs returns key when requested", {
+  df <- make_renumber_df(
+    person_ids = c(10, 20, 30),
+    mom_ids = c(NA, NA, 10),
+    dad_ids = c(NA, NA, 20)
+  )
+
+  out <- renumberPedigreeIDs(df, return_key = TRUE)
+
+  expect_type(out, "list")
+  expect_named(out, c("ped", "id_key"))
+
+  expected_key <- data.frame(
+    oldID = c(10, 20, 30),
+    newID = c(1L, 2L, 3L),
+    stringsAsFactors = FALSE
+  )
+
+  expect_equal(out$id_key, expected_key, ignore_attr = TRUE)
+  expect_ids_consistent(df, out$ped)
+})
+
+test_that("renumberPedigreeIDs recodes unknown parent references to NA", {
+  df <- make_renumber_df(
+    person_ids = c(10, 20, 30),
+    mom_ids = c(NA, NA, 999),
+    dad_ids = c(NA, NA, 20)
+  )
+
+  out <- renumberPedigreeIDs(df)
+
+  expected <- data.frame(
+    personID = c(1L, 2L, 3L),
+    momID = c(NA_integer_, NA_integer_, NA_integer_),
+    dadID = c(NA_integer_, NA_integer_, 2L)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+  expect_ids_consistent(df, out)
+})
+
+test_that("renumberPedigreeIDs supports user-specified ID column names", {
+  df <- data.frame(
+    id = c("p3", "p1", "p2"),
+    mother = c(NA, NA, "p1"),
+    father = c(NA, NA, "p3"),
+    sex = c(2, 1, 2)
+  )
+
+  out <- renumberPedigreeIDs(
+    df,
+    personID = "id",
+    momID = "mother",
+    dadID = "father",
+    sort_ids = FALSE
+  )
+
+  expected <- data.frame(
+    id = c(1L, 2L, 3L),
+    mother = c(NA_integer_, NA_integer_, 2L),
+    father = c(NA_integer_, NA_integer_, 1L),
+    sex = c(2, 1, 2)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+
+  expect_ids_consistent(
+    df,
+    out,
+    personID = "id",
+    momID = "mother",
+    dadID = "father",
+    sort_ids = FALSE
+  )
+})
+
+test_that("renumberPedigreeIDs errors on invalid inputs", {
+  expect_error(
+    renumberPedigreeIDs(list(personID = 1:3)),
+    regexp = "ped must be a data frame"
+  )
+
+  df <- data.frame(
+    personID = 1:3,
+    momID = c(NA, NA, 1),
+    dadID = c(NA, NA, 2)
+  )
+
+  expect_error(
+    renumberPedigreeIDs(df, personID = c("personID", "id")),
+    regexp = "personID must be a character scalar"
+  )
+
+  expect_error(
+    renumberPedigreeIDs(df, momID = c("momID", "mother")),
+    regexp = "momID must be a character scalar"
+  )
+
+  expect_error(
+    renumberPedigreeIDs(df, dadID = c("dadID", "father")),
+    regexp = "dadID must be a character scalar"
+  )
+
+  expect_error(
+    renumberPedigreeIDs(df[, c("personID", "momID")]),
+    regexp = "ped is missing required column"
+  )
+})

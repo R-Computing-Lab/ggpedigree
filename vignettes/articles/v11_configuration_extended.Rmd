@@ -809,11 +809,7 @@ ggPedigreeInteractive(
     focal_fill_include = TRUE,
     focal_fill_component = "additive",
     focal_fill_personID = 8,
-    focal_fill_legend_title = "Relatedness",
-    # segments: paternal line membership
-    segment_lineage_include = TRUE,
-    segment_lineage_component = "paternal",
-    segment_lineage_legend_title = "Patriline"
+    focal_fill_legend_title = "Relatedness"
   )
 )
 ```

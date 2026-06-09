@@ -199,3 +199,146 @@ recodeMissingIDs <- function(ped, momID = "momID", dadID = "dadID",
 
   ped
 }
+
+#' @title Renumber Pedigree IDs
+#' @description
+#' Renumber pedigree identifiers to short sequential integer values while
+#' preserving parent-child references.
+#'
+#' The function constructs a crosswalk from the original person identifiers to
+#' new integer identifiers beginning at 1. The same crosswalk is then applied to
+#' the person, mother, and father identifier columns, ensuring that references
+#' remain internally consistent. For example, if an original `personID` is
+#' recoded to 1, then any matching value in the mother or father identifier
+#' columns is also recoded to 1.
+#'
+#' @param ped A data frame containing pedigree identifiers.
+#' @param personID Character scalar. Name of the column containing unique person
+#'   identifiers. Default is `"personID"`.
+#' @param momID Character scalar. Name of the column containing maternal
+#'   identifiers. Default is `"momID"`.
+#' @param dadID Character scalar. Name of the column containing paternal
+#'   identifiers. Default is `"dadID"`.
+#' @param sort_ids Logical scalar. If `TRUE`, original identifiers are sorted
+#'   before assigning new IDs. If `FALSE`, new IDs follow the order of first
+#'   appearance in `ped[[personID]]`. Default is `TRUE`.
+#' @param return_key Logical scalar. If `TRUE`, returns a list containing both
+#'   the renumbered pedigree data frame and the ID crosswalk. If `FALSE`,
+#'   returns only the renumbered pedigree data frame. Default is `FALSE`.
+#' @keywords internal
+#'
+#' @return
+#' If `return_key = FALSE`, a data frame with renumbered person, mother, and
+#' father identifiers.
+#'
+#' If `return_key = TRUE`, a list with two elements:
+#' \describe{
+#'   \item{ped}{The renumbered pedigree data frame.}
+#'   \item{id_key}{A data frame mapping original IDs to new IDs.}
+#' }
+#'
+#' @details
+#' * Only values appearing in the person identifier column are used to construct
+#'   the ID crosswalk.
+#' * Parent identifiers that do not appear in the person identifier column are
+#'   recoded to `NA`, because they cannot be matched to a known individual in
+#'   the data.
+#' * Existing `NA` values in the mother and father identifier columns remain
+#'   `NA`.
+#' * The returned ID columns are integer vectors.
+#'
+#' @seealso
+#' Related pedigree-cleaning helpers such as `recodeMissingIDs()`.
+.renumberPedigreeIDs <- function(ped,
+                                 personID = "personID",
+                                 momID = "momID",
+                                 dadID = "dadID",
+                                 twinID = "twinID",
+                                 spouseID = "spouseID",
+                                 sort_ids = TRUE,
+                                 return_key = FALSE) {
+  # Check that ped is a data frame
+  if (!is.data.frame(ped)) {
+    stop("ped must be a data frame.")
+  }
+
+  # Check that column names are character scalars
+  if (!is.character(personID) || length(personID) != 1) {
+    stop("personID must be a character scalar.")
+  }
+  if (!is.character(momID) || length(momID) != 1) {
+    stop("momID must be a character scalar.")
+  }
+  if (!is.character(dadID) || length(dadID) != 1) {
+    stop("dadID must be a character scalar.")
+  }
+
+  # Check that required columns are present
+  required_cols <- c(personID, momID, dadID)
+  missing_cols <- required_cols[!required_cols %in% names(ped)]
+
+  if (length(missing_cols) > 0) {
+    stop(
+      "ped is missing required column(s): ",
+      paste(missing_cols, collapse = ", ")
+    )
+  }
+
+  # Extract original person identifiers
+  old_ids <- unique(ped[[personID]])
+
+  # Remove missing person identifiers from the crosswalk
+  old_ids <- old_ids[!is.na(old_ids)]
+
+  # Optionally sort original identifiers before assigning new IDs
+  if (sort_ids) {
+    old_ids <- sort(old_ids)
+  }
+
+  # Construct the ID crosswalk
+  id_key <- data.frame(
+    oldID = old_ids,
+    newID = seq_along(old_ids),
+    stringsAsFactors = FALSE
+  )
+
+  # Construct a named lookup vector
+  id_lookup <- stats::setNames(id_key$newID, as.character(id_key$oldID))
+
+  # Apply the same lookup to person, mother, and father identifiers
+  ped[[personID]] <- unname(id_lookup[as.character(ped[[personID]])])
+  ped[[momID]] <- unname(id_lookup[as.character(ped[[momID]])])
+  ped[[dadID]] <- unname(id_lookup[as.character(ped[[dadID]])])
+
+
+  # Coerce recoded identifiers to integer
+  ped[[personID]] <- as.integer(ped[[personID]])
+  ped[[momID]] <- as.integer(ped[[momID]])
+  ped[[dadID]] <- as.integer(ped[[dadID]])
+
+    if (twinID %in% names(ped)) {
+    ped[[twinID]] <- unname(id_lookup[as.character(ped[[twinID]])])
+    ped[[twinID]] <- as.integer(ped[[twinID]])
+  }
+  if (spouseID %in% names(ped)) {
+    ped[[spouseID]] <- unname(id_lookup[as.character(ped[[spouseID]])])
+    ped[[spouseID]] <- as.integer(ped[[spouseID]])
+  }
+
+
+  # Return the crosswalk if requested
+  if (return_key) {
+    return(
+      list(
+        ped = ped,
+        id_key = id_key
+      )
+    )
+  }
+
+  # Return the modified pedigree data frame
+  ped
+}
+
+#' @rdname dot-renumberPedigreeIDs
+renumberPedigreeIDs <- .renumberPedigreeIDs

@@ -55,6 +55,7 @@ ggPedigree.core <- function(ped,
   fill_group_paternal <- c(
     "paternal",
     "patID",
+    "Pat ID",
     "pat ID",
     "paternal line",
     "paternal lineages",
