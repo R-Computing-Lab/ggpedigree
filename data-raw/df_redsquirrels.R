@@ -189,6 +189,22 @@ redsquirrels <- ds_grouped %>%
   select(-year_first, -year_last, -ars_sd, -ars_n, -ars_min, -ars_med, -ars_max) %>%
   arrange(personID)
 
-write_csv(redsquirrels, here("data-raw", "redsquirrels.csv"), na = "")
+if (any(redsquirrels$personID %>% duplicated())) {
+  stop("There are duplicated personIDs in the dataset.")
+}
 
-usethis::use_data(redsquirrels, overwrite = TRUE, compress = "xz")
+checkis_acyclic <- checkPedigreeNetwork(redsquirrels,
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  verbose = TRUE
+)
+checkis_acyclic
+if (checkis_acyclic$is_acyclic) {
+  message("The pedigree is acyclic.")
+  write_csv(redsquirrels, here("data-raw", "redsquirrels.csv"), na = "")
+
+  usethis::use_data(redsquirrels, overwrite = TRUE, compress = "xz")
+} else {
+  message("The pedigree contains cyclic relationships.")
+}

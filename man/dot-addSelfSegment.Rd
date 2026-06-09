@@ -5,9 +5,23 @@
 \alias{addSelfSegment}
 \title{Add Self Segments to ggplot Pedigree Plot}
 \usage{
-.addSelfSegment(plotObject, config, plot_connections)
+.addSelfSegment(
+  plotObject,
+  config = list(return_interactive = FALSE, segment_self_linewidth = 0.5,
+    segment_self_color = "grey50", segment_lineend = "round", segment_linejoin = "round",
+    segment_self_linetype = "solid", segment_self_angle = 90, segment_self_curvature =
+    0.5, segment_self_alpha = 1),
+  plot_connections
+)
 
-addSelfSegment(plotObject, config, plot_connections)
+addSelfSegment(
+  plotObject,
+  config = list(return_interactive = FALSE, segment_self_linewidth = 0.5,
+    segment_self_color = "grey50", segment_lineend = "round", segment_linejoin = "round",
+    segment_self_linetype = "solid", segment_self_angle = 90, segment_self_curvature =
+    0.5, segment_self_alpha = 1),
+  plot_connections
+)
 }
 \arguments{
 \item{plotObject}{A ggplot object.}

@@ -81,6 +81,19 @@
 #' @param ped_align Whether to align pedigree generations.
 #' @param ped_width Plot width of the pedigree block.
 #' @param fast_threshold Threshold for switching to piecewise layout algorithms for large pedigrees.
+#' @param fixed_positions Optional data frame for pinning specific individuals to
+#'   exact layout slots, overriding the computed layout. It must contain an ID
+#'   column named to match `personID` (e.g., `"personID"` or `"ID"`) plus an `x`
+#'   and/or `y` column. Each row sets that person's absolute position in raw
+#'   layout-slot units (the units `calculateCoordinates()` emits, before
+#'   `generation_width`/`generation_height` scaling and any radial transform).
+#'   A missing or `NA` axis leaves the computed value unchanged. IDs not found in
+#'   the pedigree are ignored with a warning. Default is `NULL` (no pinning).
+#' @param fixed_positions_update_family When pinning a parent, whether to recompute
+#'   the family anchor (`x_fam`/`y_fam`) of that parent's children so the
+#'   parent-to-children connector follows the pinned parent. `TRUE` (default) keeps
+#'   connectors attached; `FALSE` moves only the node and spouse link, leaving the
+#'   down-connector at the original location. Has no effect when nothing is pinned.
 #' @param coord_layout Layout mode for the pedigree. Options: "cartesian" (default) or "radial".
 #' @param coord_radial_start_angle Start angle in degrees for the radial layout (default: -90, placing
 #'   the first generation at the top).
@@ -341,6 +354,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  ped_align = TRUE,
                                  ped_width = 15,
                                  fast_threshold = 1000, # threshold for switching to faster layout algorithms
+                                 fixed_positions = NULL,
+                                 fixed_positions_update_family = TRUE,
                                  coord_layout = "cartesian",
                                  coord_radial_start_angle = -90,
                                  coord_radial_end_angle = 270,
@@ -379,7 +394,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                    "mz"
                                  ),
                                  segment_lineage_method = "viridis_d",
-                                 segment_lineage_palette = NULL,
+                                 segment_lineage_palette = focal_fill_color_values,
                                  segment_lineage_na_color = "grey80",
                                  segment_lineage_force_zero = TRUE,
                                  segment_lineage_legend_show = TRUE,
@@ -850,6 +865,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     ped_align = ped_align,
     ped_width = ped_width,
     fast_threshold = fast_threshold,
+    fixed_positions = fixed_positions,
+    fixed_positions_update_family = fixed_positions_update_family,
     coord_layout = coord_layout,
     coord_radial_start_angle = coord_radial_start_angle,
     coord_radial_end_angle = coord_radial_end_angle,

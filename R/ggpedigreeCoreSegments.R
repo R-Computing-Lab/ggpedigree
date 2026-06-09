@@ -20,8 +20,12 @@
   use_lineage <- isTRUE(lineage_active) &&
     type %in% config$segment_lineage_types &&
     "segment_lineage" %in% names(data)
+  use_backwards_compat <- isTRUE(config$segment_lineage_include) &&
+    type %in% config$segment_lineage_types &&
+    "segment_lineage" %in% names(data)
 
-  if (use_lineage) {
+
+  if (isTRUE(use_lineage)) {
     mapping <- utils::modifyList(
       mapping,
       ggplot2::aes(colour = .data$segment_lineage)
@@ -30,7 +34,41 @@
       ggplot2::geom_segment,
       c(list(data = data, mapping = mapping), dots)
     )
+  } else if (isTRUE(use_backwards_compat) && config$debug == TRUE && "segment_lineage" %in% names(data) && length(unique(data$segment_lineage)) > 0
+  ) {
+    if (config$debug == TRUE) {
+      message("Using segment_lineage for coloring segments, but segment_lineage_include is TRUE. This is a legacy option that may be removed in the future. Consider setting segment_lineage_include to FALSE and segment_lineage_active to TRUE for better performance and more consistent behavior.")
+    }
+    segment_lineage_levels <- unique(data$segment_lineage)
+    needed_colors <- length(segment_lineage_levels)
+    if (is.null(config$segment_lineage_palette)) {
+      segment_lineage_palette_colors <- paletteer::paletteer_d("khroma::bam") # default palette with good colorblind accessibility
+    } else if (is.character(config$segment_lineage_palette && length(config$segment_lineage_palette) == 1)) {
+      segment_lineage_palette_colors <- paletteer::paletteer_d(config$segment_lineage_palette)
+    } else if (is.character(config$segment_lineage_palette) && length(config$segment_lineage_palette) >= needed_colors) {
+      segment_lineage_palette_colors <- config$segment_lineage_palette
+    } else {
+      stop("Invalid segment_lineage_palette configuration. Must be NULL, a single palette name, or a character vector of colors with length >= number of unique segment lineages.")
+    }
+    # should only be relevant when lineage active was set to false because of a know issue with plotly and aesthetics
+    # If there are unique lineages, hardcod the colors for each lineage
+
+
+    segment_lineage_colors <- setNames(
+      segment_lineage_palette_colors[1:needed_colors],
+      segment_lineage_levels
+    )
+
+    data <- data |> dplyr::mutate(segment_lineage_colors = segment_lineage_colors[.data$segment_lineage])
+
+    layer <- do.call(
+      ggplot2::geom_segment,
+      c(list(data = data, mapping = mapping, colour = data$segment_lineage_colors), dots)
+    )
   } else {
+    if (config$debug == TRUE) {
+      message("Using fixed color for segments. To enable lineage coloring for this segment type, ensure that segment_lineage_include is FALSE, segment_lineage_active is TRUE, and that the data includes a segment_lineage column with appropriate values.")
+    }
     fixed_color <- config[[paste0("segment_", type, "_color")]]
     layer <- do.call(
       ggplot2::geom_segment,
@@ -46,7 +84,20 @@
 #' @keywords internal
 #' @return A ggplot object with added scales.
 
-.addSelfSegment <- function(plotObject, config, plot_connections) {
+.addSelfSegment <- function(
+  plotObject, config = list(
+    return_interactive = FALSE,
+    segment_self_linewidth = 0.5,
+    segment_self_color = "grey50",
+    segment_lineend = "round",
+    segment_linejoin = "round",
+    segment_self_linetype = "solid",
+    segment_self_angle = 90,
+    segment_self_curvature = 0.5,
+    segment_self_alpha = 1
+  ),
+  plot_connections
+) {
   otherself <- plot_connections$self_coords |>
     dplyr::filter(!is.na(.data$x_otherself)) |>
     dplyr::mutate(otherself_xkey = .makeSymmetricKey(.data$x_otherself, .data$x_pos)) |>
@@ -72,7 +123,7 @@
       alpha = config$segment_self_alpha,
       na.rm = TRUE
     )
-  } else if (config$return_interactive == TRUE) {
+  } else if (isTRUE(config$return_interactive)) {
     # For interactive plots, use geom_segment instead of geom_curve
     # to avoid issues with plotly rendering curves
 
@@ -85,7 +136,7 @@
           y1 = .data$y_pos,
           curvature = config$segment_self_curvature,
           angle = config$segment_self_angle,
-          t = .35
+          t = .15
         ),
         x_1midpoint = .data$midpoint$x,
         y_1midpoint = .data$midpoint$y
@@ -98,10 +149,23 @@
           y1 = .data$y_pos,
           curvature = config$segment_self_curvature,
           angle = config$segment_self_angle,
-          t = .5
+          t = .30
         ),
         x_2midpoint = .data$midpoint$x,
         y_2midpoint = .data$midpoint$y
+      ) |>
+      dplyr::mutate(
+        midpoint = .computeCurvedMidpoint(
+          x0 = .data$x_otherself,
+          y0 = .data$y_otherself,
+          x1 = .data$x_pos,
+          y1 = .data$y_pos,
+          curvature = config$segment_self_curvature,
+          angle = config$segment_self_angle,
+          t = .5
+        ),
+        x_3midpoint = .data$midpoint$x,
+        y_3midpoint = .data$midpoint$y
       ) |>
       dplyr::mutate(
         midpoint = .computeCurvedMidpoint(
@@ -115,6 +179,20 @@
         ),
         x_3midpoint = .data$midpoint$x,
         y_3midpoint = .data$midpoint$y
+      ) |>
+      dplyr::select(-"midpoint") |>
+      dplyr::mutate(
+        midpoint = .computeCurvedMidpoint(
+          x0 = .data$x_otherself,
+          y0 = .data$y_otherself,
+          x1 = .data$x_pos,
+          y1 = .data$y_pos,
+          curvature = config$segment_self_curvature,
+          angle = config$segment_self_angle,
+          t = .85
+        ),
+        x_4midpoint = .data$midpoint$x,
+        y_4midpoint = .data$midpoint$y
       ) |>
       dplyr::select(-"midpoint")
 
@@ -168,8 +246,23 @@
       data = otherself,
       ggplot2::aes(
         x = .data$x_3midpoint,
-        xend = .data$x_pos,
+        xend = .data$x_4midpoint,
         y = .data$y_3midpoint,
+        yend = .data$y_4midpoint
+      ),
+      linewidth = config$segment_self_linewidth,
+      color = config$segment_self_color,
+      lineend = config$segment_lineend,
+      linejoin = config$segment_linejoin,
+      linetype = config$segment_self_linetype,
+      alpha = config$segment_self_alpha,
+      na.rm = TRUE
+    ) + ggplot2::geom_segment(
+      data = otherself,
+      ggplot2::aes(
+        x = .data$x_4midpoint,
+        xend = .data$x_pos,
+        y = .data$y_4midpoint,
         yend = .data$y_pos
       ),
       linewidth = config$segment_self_linewidth,

@@ -66,6 +66,8 @@ getDefaultPlotConfig(
   ped_align = TRUE,
   ped_width = 15,
   fast_threshold = 1000,
+  fixed_positions = NULL,
+  fixed_positions_update_family = TRUE,
   coord_layout = "cartesian",
   coord_radial_start_angle = -90,
   coord_radial_end_angle = 270,
@@ -97,7 +99,7 @@ getDefaultPlotConfig(
   segment_lineage_focal_personID = NULL,
   segment_lineage_types = c("parent", "offspring", "sibling", "mz"),
   segment_lineage_method = "viridis_d",
-  segment_lineage_palette = NULL,
+  segment_lineage_palette = focal_fill_color_values,
   segment_lineage_na_color = "grey80",
   segment_lineage_force_zero = TRUE,
   segment_lineage_legend_show = TRUE,
@@ -351,6 +353,21 @@ The plot is reversed vertically, so this is needed to nudge labels up instead of
 \item{ped_width}{Plot width of the pedigree block.}
 
 \item{fast_threshold}{Threshold for switching to piecewise layout algorithms for large pedigrees.}
+
+\item{fixed_positions}{Optional data frame for pinning specific individuals to
+exact layout slots, overriding the computed layout. It must contain an ID
+column named to match `personID` (e.g., `"personID"` or `"ID"`) plus an `x`
+and/or `y` column. Each row sets that person's absolute position in raw
+layout-slot units (the units `calculateCoordinates()` emits, before
+`generation_width`/`generation_height` scaling and any radial transform).
+A missing or `NA` axis leaves the computed value unchanged. IDs not found in
+the pedigree are ignored with a warning. Default is `NULL` (no pinning).}
+
+\item{fixed_positions_update_family}{When pinning a parent, whether to recompute
+the family anchor (`x_fam`/`y_fam`) of that parent's children so the
+parent-to-children connector follows the pinned parent. `TRUE` (default) keeps
+connectors attached; `FALSE` moves only the node and spouse link, leaving the
+down-connector at the original location. Has no effect when nothing is pinned.}
 
 \item{coord_layout}{Layout mode for the pedigree. Options: "cartesian" (default) or "radial".}
 

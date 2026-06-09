@@ -803,7 +803,17 @@ ggPedigreeInteractive(
     label_include = FALSE,
     point_scale_by_pedigree = FALSE,
     point_size = 7,
-    segment_linewidth = 0.5
+    segment_linewidth = 0.5,
+    sex_color_include = FALSE,
+    # nodes: additive relatedness to the focal person
+    focal_fill_include = TRUE,
+    focal_fill_component = "additive",
+    focal_fill_personID = 8,
+    focal_fill_legend_title = "Relatedness",
+    # segments: paternal line membership
+    segment_lineage_include = TRUE,
+    segment_lineage_component = "paternal",
+    segment_lineage_legend_title = "Patriline"
   )
 )
 ```
@@ -833,6 +843,79 @@ ggPedigree(
 ```
 
 
+
+## 11) Pinning individuals to fixed positions
+
+Normally the horizontal position of each person is decided by the layout engine. If you want to override that for specific individuals---to slide one person to a particular spot, separate two overlapping branches, or line up a person with a feature elsewhere in the plot---use `fixed_positions`.
+
+`fixed_positions` is a data frame with an ID column (named to match your `personID`) plus an `x` and/or `y` column. Each row pins that person to an absolute position. A missing or `NA` entry leaves that axis as computed.
+
+Positions are given in **raw layout-slot units**: the same units `calculateCoordinates()` produces, *before* `generation_width`/`generation_height` scaling and any radial transform. The easiest way to discover sensible values is to inspect the computed layout first:
+
+```{r}
+coords <- calculateCoordinates(
+  potter,
+  personID = "personID", momID = "momID", dadID = "dadID"
+)
+head(coords[, c("personID", "x_pos", "y_pos")])
+```
+
+Here we pin one person far to the left of their generation. Because all connecting segments are derived from these coordinates, the lines follow the pinned node automatically---no other configuration needed.
+
+```{r}
+ggPedigree(
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
+    fixed_positions = data.frame(
+      personID = 8,
+      x = -1.5
+    )
+  )
+)
+```
+
+You can pin several people at once, and set `x`, `y`, or both. Use `NA` to leave one axis untouched:
+
+```{r}
+ggPedigree(
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
+    fixed_positions = data.frame(
+      personID = c(106, 105),
+      x = c(11, 13), # person 106 is shifted right; person 105 also shifts in x
+      y = c(NA, 1.80) # person 106 keeps its generation; person 105 also shifts in y
+    )
+  )
+)
+```
+
+### Pinning a parent
+
+When you pin a **parent**, the connector running down to their children is re-anchored to the pinned position by default, so it stays attached. If you would rather move only the parent node and its spouse link---leaving the child connector where it was---set `fixed_positions_update_family = FALSE`.
+
+```{r}
+ggPedigree(
+  potter,
+  famID = "famID",
+  personID = "personID",
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
+    fixed_positions = data.frame(personID = 101, x = 8, y = 1.5),
+    fixed_positions_update_family = FALSE
+  )
+)
+```
+
+Pinning only repositions the people you name; everyone else stays where the layout placed them, so it is up to you to choose positions that do not overlap. IDs that are not found in the pedigree are ignored with a warning.
 
 # Saving and loading a config file
 

@@ -353,7 +353,12 @@
         when = function() method %in% c("manual"),
         do = function() {
           ggplot2::scale_colour_manual(
-            values = config$segment_lineage_palette,
+            values = if (length(config$segment_lineage_palette) > 1) {
+              config$segment_lineage_palette
+            } else {
+              stats::setNames(config$segment_lineage_palette, "lineage")
+            },
+            config$segment_lineage_palette,
             na.value = na_color, name = title
           )
         }
