@@ -42,7 +42,7 @@
     segment_lineage_levels <- unique(data$segment_lineage)
     needed_colors <- length(segment_lineage_levels)
     if (is.null(config$segment_lineage_palette)) {
-      segment_lineage_palette_colors <- paletteer::paletteer_d("ggsci::default_jco") # default palette with good colorblind accessibility
+      segment_lineage_palette_colors <- paletteer::paletteer_d("khroma::bam") # default palette with good colorblind accessibility
     } else if (is.character(config$segment_lineage_palette && length(config$segment_lineage_palette) == 1)) {
       segment_lineage_palette_colors <- paletteer::paletteer_d(config$segment_lineage_palette)
     } else if (is.character(config$segment_lineage_palette) && length(config$segment_lineage_palette) >= needed_colors) {

@@ -414,7 +414,7 @@ calculateCoordinates <- function(ped,
     return(ds)
   }
 
-  unmatched <- setdiff(fp[[id_col]], ds[[personID]])
+  unmatched <- setdiff(stats::na.omit(as.character(fp[[id_col]])), as.character(ds[[personID]]))
   if (length(unmatched) > 0) {
     warning(
       "fixed_positions IDs not found in pedigree and ignored: ",
@@ -423,13 +423,13 @@ calculateCoordinates <- function(ped,
   }
 
   # Apply absolute overrides (all layout appearances of a matched ID)
-  pinned_ids <- vector(mode = class(fp[[id_col]]))
+  pinned_ids <- character()
   for (i in seq_len(nrow(fp))) {
-    rows <- which(ds[[personID]] == fp[[id_col]][i])
+    rows <- which(as.character(ds[[personID]]) == as.character(fp[[id_col]][i]))
     if (length(rows) == 0) next
     if (has_x && !is.na(fp$x[i])) ds$x_pos[rows] <- fp$x[i]
     if (has_y && !is.na(fp$y[i])) ds$y_pos[rows] <- fp$y[i]
-    pinned_ids <- c(pinned_ids, fp[[id_col]][i])
+    pinned_ids <- c(pinned_ids, as.character(fp[[id_col]][i]))
   }
 
   # Optionally recompute the family anchor for children of pinned parents so the
@@ -437,7 +437,7 @@ calculateCoordinates <- function(ped,
   if (!isFALSE(config[["fixed_positions_update_family"]]) &&
     length(pinned_ids) > 0 &&
     all(c("x_fam", "y_fam") %in% names(ds))) {
-    affected <- which(ds[[momID]] %in% pinned_ids | ds[[dadID]] %in% pinned_ids)
+    affected <- which(as.character(ds[[momID]]) %in% pinned_ids | as.character(ds[[dadID]]) %in% pinned_ids)
     if (length(affected) > 0) {
       xp <- stats::setNames(ds$x_pos, as.character(ds[[personID]]))
       yp <- stats::setNames(ds$y_pos, as.character(ds[[personID]]))
