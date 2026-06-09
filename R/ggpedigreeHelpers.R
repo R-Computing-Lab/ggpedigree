@@ -249,6 +249,7 @@ recodeMissingIDs <- function(ped, momID = "momID", dadID = "dadID",
 #'
 #' @seealso
 #' Related pedigree-cleaning helpers such as `recodeMissingIDs()`.
+#'
 .renumberPedigreeIDs <- function(ped,
                                  personID = "personID",
                                  momID = "momID",
@@ -312,17 +313,17 @@ recodeMissingIDs <- function(ped, momID = "momID", dadID = "dadID",
 
 
   # Coerce recoded identifiers to integer
-  ped[[personID]] <- as.integer(ped[[personID]])
-  ped[[momID]] <- as.integer(ped[[momID]])
-  ped[[dadID]] <- as.integer(ped[[dadID]])
+  ped[[personID]] <- as.numeric(ped[[personID]])
+  ped[[momID]] <- as.numeric(ped[[momID]])
+  ped[[dadID]] <- as.numeric(ped[[dadID]])
 
     if (twinID %in% names(ped)) {
     ped[[twinID]] <- unname(id_lookup[as.character(ped[[twinID]])])
-    ped[[twinID]] <- as.integer(ped[[twinID]])
+    ped[[twinID]] <- as.numeric(ped[[twinID]])
   }
   if (spouseID %in% names(ped)) {
     ped[[spouseID]] <- unname(id_lookup[as.character(ped[[spouseID]])])
-    ped[[spouseID]] <- as.integer(ped[[spouseID]])
+    ped[[spouseID]] <- as.numeric(ped[[spouseID]])
   }
 
 
@@ -341,4 +342,5 @@ recodeMissingIDs <- function(ped, momID = "momID", dadID = "dadID",
 }
 
 #' @rdname dot-renumberPedigreeIDs
+#' @export
 renumberPedigreeIDs <- .renumberPedigreeIDs

@@ -520,15 +520,28 @@ test_that("reduce_variables reduces object size", {
 })
 
 
+# Tests for renumberPedigreeIDs
+
+
 make_renumber_df <- function(person_ids,
                              mom_ids,
                              dad_ids,
+                             twin_ids = NULL,
+                             spouse_ids = NULL,
                              sex = NULL) {
   df <- data.frame(
     personID = person_ids,
     momID = mom_ids,
     dadID = dad_ids
   )
+
+  if (!is.null(twin_ids)) {
+    df$twinID <- twin_ids
+  }
+
+  if (!is.null(spouse_ids)) {
+    df$spouseID <- spouse_ids
+  }
 
   if (!is.null(sex)) {
     df$sex <- sex
@@ -542,6 +555,8 @@ expect_ids_consistent <- function(original,
                                   personID = "personID",
                                   momID = "momID",
                                   dadID = "dadID",
+                                  twinID = "twinID",
+                                  spouseID = "spouseID",
                                   sort_ids = TRUE,
                                   info = NULL) {
   old_ids <- unique(original[[personID]])
@@ -564,9 +579,21 @@ expect_ids_consistent <- function(original,
   expected[[momID]] <- as.integer(unname(lookup[as.character(original[[momID]])]))
   expected[[dadID]] <- as.integer(unname(lookup[as.character(original[[dadID]])]))
 
+  cols_to_check <- c(personID, momID, dadID)
+
+  if (twinID %in% names(original)) {
+    expected[[twinID]] <- as.integer(unname(lookup[as.character(original[[twinID]])]))
+    cols_to_check <- c(cols_to_check, twinID)
+  }
+
+  if (spouseID %in% names(original)) {
+    expected[[spouseID]] <- as.integer(unname(lookup[as.character(original[[spouseID]])]))
+    cols_to_check <- c(cols_to_check, spouseID)
+  }
+
   expect_equal(
-    renumbered[, c(personID, momID, dadID), drop = FALSE],
-    expected[, c(personID, momID, dadID), drop = FALSE],
+    renumbered[, cols_to_check, drop = FALSE],
+    expected[, cols_to_check, drop = FALSE],
     ignore_attr = TRUE,
     info = info
   )
@@ -574,9 +601,17 @@ expect_ids_consistent <- function(original,
   expect_equal(nrow(renumbered), nrow(original), info = info)
   expect_equal(names(renumbered), names(original), info = info)
 
-  expect_true(is.integer(renumbered[[personID]]), info = info)
-  expect_true(is.integer(renumbered[[momID]]), info = info)
-  expect_true(is.integer(renumbered[[dadID]]), info = info)
+  expect_true(is.numeric(renumbered[[personID]]), info = info)
+  expect_true(is.numeric(renumbered[[momID]]), info = info)
+  expect_true(is.numeric(renumbered[[dadID]]), info = info)
+
+  if (twinID %in% names(renumbered)) {
+    expect_true(is.numeric(renumbered[[twinID]]), info = info)
+  }
+
+  if (spouseID %in% names(renumbered)) {
+    expect_true(is.numeric(renumbered[[spouseID]]), info = info)
+  }
 
   invisible(NULL)
 }
@@ -592,9 +627,9 @@ test_that("renumberPedigreeIDs renumbers numeric IDs consistently", {
   out <- renumberPedigreeIDs(df)
 
   expected <- data.frame(
-    personID = c(1L, 2L, 3L),
-    momID = c(NA_integer_, NA_integer_, 1L),
-    dadID = c(NA_integer_, NA_integer_, 2L),
+    personID = c(1, 2, 3),
+    momID = c(NA_real_, NA_real_, 1),
+    dadID = c(NA_real_, NA_real_, 2),
     sex = c(2, 1, 2)
   )
 
@@ -613,10 +648,104 @@ test_that("renumberPedigreeIDs renumbers character IDs consistently", {
   out <- renumberPedigreeIDs(df)
 
   expected <- data.frame(
-    personID = c(1L, 2L, 3L),
-    momID = c(NA_integer_, NA_integer_, 1L),
-    dadID = c(NA_integer_, NA_integer_, 2L),
+    personID = c(1, 2, 3),
+    momID = c(NA_real_, NA_real_, 1),
+    dadID = c(NA_real_, NA_real_, 2),
     sex = c(2, 1, 2)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+  expect_ids_consistent(df, out)
+})
+
+test_that("renumberPedigreeIDs renumbers twin IDs consistently when present", {
+  df <- make_renumber_df(
+    person_ids = c(100, 200, 300, 400),
+    mom_ids = c(NA, NA, 100, 100),
+    dad_ids = c(NA, NA, 200, 200),
+    twin_ids = c(NA, NA, 400, 300),
+    sex = c(2, 1, 2, 2)
+  )
+
+  out <- renumberPedigreeIDs(df)
+
+  expected <- data.frame(
+    personID = c(1, 2, 3, 4),
+    momID = c(NA_real_, NA_real_, 1, 1),
+    dadID = c(NA_real_, NA_real_, 2, 2),
+    twinID = c(NA_real_, NA_real_, 4, 3),
+    sex = c(2, 1, 2, 2)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+  expect_ids_consistent(df, out)
+})
+
+test_that("renumberPedigreeIDs renumbers spouse IDs consistently when present", {
+  df <- make_renumber_df(
+    person_ids = c(100, 200, 300),
+    mom_ids = c(NA, NA, 100),
+    dad_ids = c(NA, NA, 200),
+    spouse_ids = c(200, 100, NA),
+    sex = c(2, 1, 2)
+  )
+
+  out <- renumberPedigreeIDs(df)
+
+  expected <- data.frame(
+    personID = c(1, 2, 3),
+    momID = c(NA_real_, NA_real_, 1),
+    dadID = c(NA_real_, NA_real_, 2),
+    spouseID = c(2, 1, NA_real_),
+    sex = c(2, 1, 2)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+  expect_ids_consistent(df, out)
+})
+
+test_that("renumberPedigreeIDs renumbers twin and spouse IDs together", {
+  df <- make_renumber_df(
+    person_ids = c("a", "b", "c", "d"),
+    mom_ids = c(NA, NA, "a", "a"),
+    dad_ids = c(NA, NA, "b", "b"),
+    twin_ids = c(NA, NA, "d", "c"),
+    spouse_ids = c("b", "a", NA, NA),
+    sex = c(2, 1, 2, 2)
+  )
+
+  out <- renumberPedigreeIDs(df)
+
+  expected <- data.frame(
+    personID = c(1, 2, 3, 4),
+    momID = c(NA_real_, NA_real_, 1, 1),
+    dadID = c(NA_real_, NA_real_, 2, 2),
+    twinID = c(NA_real_, NA_real_, 4, 3),
+    spouseID = c(2, 1, NA_real_, NA_real_),
+    sex = c(2, 1, 2, 2)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+  expect_ids_consistent(df, out)
+})
+
+test_that("renumberPedigreeIDs recodes unknown twin and spouse references to NA", {
+  df <- make_renumber_df(
+    person_ids = c(10, 20, 30),
+    mom_ids = c(NA, NA, 10),
+    dad_ids = c(NA, NA, 20),
+    twin_ids = c(NA, NA, 999),
+    spouse_ids = c(20, 999, NA)
+  )
+
+  out <- renumberPedigreeIDs(df)
+
+  expected <- data.frame(
+    personID = c(1, 2, 3),
+    momID = c(NA_real_, NA_real_, 1),
+    dadID = c(NA_real_, NA_real_, 2),
+    twinID = c(NA_real_, NA_real_, NA_real_),
+    spouseID = c(2, NA_real_, NA_real_)
   )
 
   expect_equal(out, expected, ignore_attr = TRUE)
@@ -628,6 +757,8 @@ test_that("renumberPedigreeIDs preserves non-ID columns", {
     personID = c(10, 20, 30),
     momID = c(NA, NA, 10),
     dadID = c(NA, NA, 20),
+    twinID = c(NA, NA, NA),
+    spouseID = c(20, 10, NA),
     sex = c(2, 1, 2),
     name = c("mother", "father", "child"),
     birth_year = c(1950, 1948, 1980)
@@ -646,15 +777,17 @@ test_that("renumberPedigreeIDs can use order of first appearance", {
   df <- make_renumber_df(
     person_ids = c(300, 100, 200),
     mom_ids = c(NA, NA, 100),
-    dad_ids = c(NA, NA, 300)
+    dad_ids = c(NA, NA, 300),
+    spouse_ids = c(100, 300, NA)
   )
 
   out <- renumberPedigreeIDs(df, sort_ids = FALSE)
 
   expected <- data.frame(
-    personID = c(1L, 2L, 3L),
-    momID = c(NA_integer_, NA_integer_, 2L),
-    dadID = c(NA_integer_, NA_integer_, 1L)
+    personID = c(1, 2, 3),
+    momID = c(NA_real_, NA_real_, 2),
+    dadID = c(NA_real_, NA_real_, 1),
+    spouseID = c(2, 1, NA_real_)
   )
 
   expect_equal(out, expected, ignore_attr = TRUE)
@@ -665,15 +798,17 @@ test_that("renumberPedigreeIDs sorts IDs by default", {
   df <- make_renumber_df(
     person_ids = c(300, 100, 200),
     mom_ids = c(NA, NA, 100),
-    dad_ids = c(NA, NA, 300)
+    dad_ids = c(NA, NA, 300),
+    spouse_ids = c(100, 300, NA)
   )
 
   out <- renumberPedigreeIDs(df)
 
   expected <- data.frame(
-    personID = c(3L, 1L, 2L),
-    momID = c(NA_integer_, NA_integer_, 1L),
-    dadID = c(NA_integer_, NA_integer_, 3L)
+    personID = c(3, 1, 2),
+    momID = c(NA_real_, NA_real_, 1),
+    dadID = c(NA_real_, NA_real_, 3),
+    spouseID = c(1, 3, NA_real_)
   )
 
   expect_equal(out, expected, ignore_attr = TRUE)
@@ -684,7 +819,8 @@ test_that("renumberPedigreeIDs returns key when requested", {
   df <- make_renumber_df(
     person_ids = c(10, 20, 30),
     mom_ids = c(NA, NA, 10),
-    dad_ids = c(NA, NA, 20)
+    dad_ids = c(NA, NA, 20),
+    spouse_ids = c(20, 10, NA)
   )
 
   out <- renumberPedigreeIDs(df, return_key = TRUE)
@@ -694,7 +830,7 @@ test_that("renumberPedigreeIDs returns key when requested", {
 
   expected_key <- data.frame(
     oldID = c(10, 20, 30),
-    newID = c(1L, 2L, 3L),
+    newID = c(1, 2, 3),
     stringsAsFactors = FALSE
   )
 
@@ -712,16 +848,16 @@ test_that("renumberPedigreeIDs recodes unknown parent references to NA", {
   out <- renumberPedigreeIDs(df)
 
   expected <- data.frame(
-    personID = c(1L, 2L, 3L),
-    momID = c(NA_integer_, NA_integer_, NA_integer_),
-    dadID = c(NA_integer_, NA_integer_, 2L)
+    personID = c(1, 2, 3),
+    momID = c(NA_real_, NA_real_, NA_real_),
+    dadID = c(NA_real_, NA_real_, 2)
   )
 
   expect_equal(out, expected, ignore_attr = TRUE)
   expect_ids_consistent(df, out)
 })
 
-test_that("renumberPedigreeIDs supports user-specified ID column names", {
+test_that("renumberPedigreeIDs supports user-specified parent ID column names", {
   df <- data.frame(
     id = c("p3", "p1", "p2"),
     mother = c(NA, NA, "p1"),
@@ -738,9 +874,9 @@ test_that("renumberPedigreeIDs supports user-specified ID column names", {
   )
 
   expected <- data.frame(
-    id = c(1L, 2L, 3L),
-    mother = c(NA_integer_, NA_integer_, 2L),
-    father = c(NA_integer_, NA_integer_, 1L),
+    id = c(1, 2, 3),
+    mother = c(NA_real_, NA_real_, 2),
+    father = c(NA_real_, NA_real_, 1),
     sex = c(2, 1, 2)
   )
 
@@ -752,6 +888,49 @@ test_that("renumberPedigreeIDs supports user-specified ID column names", {
     personID = "id",
     momID = "mother",
     dadID = "father",
+    sort_ids = FALSE
+  )
+})
+
+test_that("renumberPedigreeIDs supports user-specified twin and spouse ID column names", {
+  df <- data.frame(
+    id = c("p1", "p2", "p3", "p4"),
+    mother = c(NA, NA, "p1", "p1"),
+    father = c(NA, NA, "p2", "p2"),
+    co_twin = c(NA, NA, "p4", "p3"),
+    partner = c("p2", "p1", NA, NA),
+    sex = c(2, 1, 2, 2)
+  )
+
+  out <- renumberPedigreeIDs(
+    df,
+    personID = "id",
+    momID = "mother",
+    dadID = "father",
+    twinID = "co_twin",
+    spouseID = "partner",
+    sort_ids = FALSE
+  )
+
+  expected <- data.frame(
+    id = c(1, 2, 3, 4),
+    mother = c(NA_real_, NA_real_, 1, 1),
+    father = c(NA_real_, NA_real_, 2, 2),
+    co_twin = c(NA_real_, NA_real_, 4, 3),
+    partner = c(2, 1, NA_real_, NA_real_),
+    sex = c(2, 1, 2, 2)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+
+  expect_ids_consistent(
+    df,
+    out,
+    personID = "id",
+    momID = "mother",
+    dadID = "father",
+    twinID = "co_twin",
+    spouseID = "partner",
     sort_ids = FALSE
   )
 })

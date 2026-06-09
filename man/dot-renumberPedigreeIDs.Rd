@@ -10,6 +10,8 @@
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
+  twinID = "twinID",
+  spouseID = "spouseID",
   sort_ids = TRUE,
   return_key = FALSE
 )
@@ -19,6 +21,8 @@ renumberPedigreeIDs(
   personID = "personID",
   momID = "momID",
   dadID = "dadID",
+  twinID = "twinID",
+  spouseID = "spouseID",
   sort_ids = TRUE,
   return_key = FALSE
 )
