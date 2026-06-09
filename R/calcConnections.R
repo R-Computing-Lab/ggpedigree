@@ -150,6 +150,13 @@ calculateConnections <- function(ped,
   if ("zygosity" %in% names(ped)) {
     select_vars <- c(select_vars, "zygosity")
   }
+  # When reduce_variables = FALSE, carry ALL extra ped columns forward so they
+  # ride through the computation naturally. This avoids a join-back at the end
+  # that would create .x/.y suffix conflicts for any column already present in
+  # connections when ggpedigreeCore.R later re-joins the same columns.
+  if (!isTRUE(config$reduce_variables)) {
+    select_vars <- union(select_vars, names(ped))
+  }
 
   connections <- dplyr::select(ped, dplyr::all_of(select_vars)) |> unique()
 
@@ -350,30 +357,6 @@ calculateConnections <- function(ped,
     plot_connections$twin_coords <- FALSE
   }
 
-  if (config$reduce_variables == FALSE) {
-    join_by_vars <- c(
-      "personID",
-      "x_pos", "y_pos",
-      "x_fam", "y_fam",
-      "dadID", "momID",
-      "spouseID", "famID",
-      "parent_hash", "couple_hash",
-      "extra"
-    )
-
-    if ("twinID" %in% names(ped)) {
-      join_by_vars <- c(join_by_vars, "twinID")
-    }
-    if ("zygosity" %in% names(ped)) {
-      join_by_vars <- c(join_by_vars, "zygosity")
-    }
-    # merge back in all the other columns that we need for plotting, but don't need for calculating connections
-    plot_connections$connections <- plot_connections$connections |>
-      dplyr::left_join(
-        ped,
-        by = join_by_vars
-      )
-  }
 
   #   assign("DEBUG_plot_connections", plot_connections, envir = .GlobalEnv)
   return(plot_connections)

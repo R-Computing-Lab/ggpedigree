@@ -99,7 +99,7 @@ ggPedigree.core <- function(ped,
     status_column = status_column,
     focal_fill_column = focal_fill_column
   )
-
+ # reduce_variables = FALSE, # is what breaks the focal segment fill
   if (config$debug == TRUE) {
     message("Pedigree data prepared. Number of individuals: ", nrow(ds_ped))
 
@@ -225,8 +225,14 @@ ggPedigree.core <- function(ped,
     lineage_lookup <- ds |>
       dplyr::distinct(!!rlang::sym(personID), .data$segment_lineage)
 
-    connections <- connections |>
-      dplyr::left_join(lineage_lookup, by = personID)
+    # When reduce_variables = FALSE, calculateConnections already pulled
+    # segment_lineage from ped into connections via the broad left_join.
+    # Joining again would create segment_lineage.x / segment_lineage.y,
+    # breaking the name check in .addSegmentLayer.
+    if (!"segment_lineage" %in% names(connections)) {
+      connections <- connections |>
+        dplyr::left_join(lineage_lookup, by = personID)
+    }
 
     # Twin coordinate table keys on the literal "personID" column
     twin_lookup <- lineage_lookup |>

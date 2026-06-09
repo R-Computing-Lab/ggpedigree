@@ -152,13 +152,15 @@ preparePedigreeData <- function(ped,
 #' @param personID Character string specifying the column name for individual IDs.
 #' @param component Character string specifying the component type (e.g., "additive").
 #' @param config A list of configuration options for customizing the fill column.
+#' @param segment Logical indicating whether the fill column is for segment lineage (TRUE) or focal fill (FALSE). This affects the column name and force-zero behavior.
 #' @return A data frame with two columns: `fill` and `personID`.
 #' @keywords internal
 createFillColumn <- function(ped,
                              focal_fill_personID = 2,
                              personID = "personID",
                              component = "additive",
-                             config = list()) {
+                             config = list(),
+                             segment = FALSE) {
   default_config <- getDefaultPlotConfig()
 
   config <- utils::modifyList(default_config, config)
@@ -189,7 +191,7 @@ createFillColumn <- function(ped,
     ))
   }
   fill_df <- data.frame(
-    focal_fill = round(com_mat[row_index, ], digits = config$value_rounding_digits),
+    focal_fill_x = round(com_mat[row_index, ], digits = config$value_rounding_digits),
     personID = rownames(com_mat)
   ) # needs to match the same data type
 
@@ -200,7 +202,15 @@ createFillColumn <- function(ped,
   }
   if (config$focal_fill_force_zero == TRUE) {
     # If focal_fill_force_zero is TRUE, replace 0 with NA
-    fill_df$focal_fill[fill_df$focal_fill == 0] <- NA_real_
+    fill_df$focal_fill_x[fill_df$focal_fill_x == 0] <- NA_real_
+  }
+
+   if(segment == TRUE) {
+    fill_df <- fill_df |>
+      dplyr::rename(segment_lineage = "focal_fill_x")
+  } else {
+    fill_df <- fill_df |>
+      dplyr::rename(focal_fill = "focal_fill_x")
   }
   fill_df
 }
@@ -542,11 +552,10 @@ addSegmentLineageColumn <- function(ds_ped,
       focal_fill_personID = resolved_focal,
       personID = personID,
       component = component,
-      config = seg_config
+      config = seg_config,
+      segment = TRUE
     )
-    # createFillColumn returns columns `focal_fill` and `personID`
-    lineage_df <- lineage_df |>
-      dplyr::rename(segment_lineage = "focal_fill")
+
 
     ds_ped <- ds_ped |>
       dplyr::left_join(

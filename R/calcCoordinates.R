@@ -266,17 +266,19 @@ calculateCoordinates <- function(ped,
       ped_component$extra <- FALSE
     }
 
-    # clean up
     ## assumes that there are two parents
     ped_component$x_fam <- base::rowMeans(cbind(
       ped_component$parent_left,
       ped_component$parent_right
-    ), na.rm = TRUE)
+    ), na.rm = FALSE)
 
-    ped_component$x_fam[ped_component$parent_fam == 0] <- NA
-    ped_component[[momID]][ped_component$parent_fam == 0] <- NA
-    ped_component[[dadID]][ped_component$parent_fam == 0] <- NA
-    ped_component$y_fam[ped_component$parent_fam == 0] <- NA
+    # Unplaced individuals (nid = NA, parent_fam = NA) can produce NaN from
+    # kinship2's position matrix; also clear the parent_fam == 0 entries.
+    no_parents <- is.na(ped_component$parent_fam) | ped_component$parent_fam == 0
+    ped_component$x_fam[no_parents] <- NA
+    ped_component[[momID]][no_parents] <- NA
+    ped_component[[dadID]][no_parents] <- NA
+    ped_component$y_fam[no_parents] <- NA
     ped_component$parent_left <- NULL
     ped_component$parent_right <- NULL
 
