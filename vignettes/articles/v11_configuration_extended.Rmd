@@ -161,7 +161,9 @@ ggPedigree(
 )
 ```
 
-Note that short labels are less likely to overlap, so consider abbreviating labels if your pedigree is dense. In this example, I enlarged the text size to demonstrate repulsion more clearly.
+Note that short labels are less likely to overlap, so consider abbreviating labels if your pedigree is dense. In this example, I enlarged the text size to demonstrate repulsion more clearly. There is a helper function called `renumberPedigreeIDs()` that can be helpful in creating shorter IDs. 
+
+
 
 ## 2) Points and outlines
 
@@ -247,14 +249,14 @@ ggPedigree(
 
 ## 4) Sex appearance
 
-Sex is controlled by:
+Sex is controlled by settings such as:
 
 -   `sex_color_include`
 -   `sex_color_palette`
 -   `sex_shape_female`, `sex_shape_male`, `sex_shape_unknown`
 -   `sex_legend_show`, `sex_legend_title`
 
-This example shows sex legend and customizes shapes.
+This example shows the sex legend and customizes shapes.
 
 Here I use shapes 17 (triangle) for males, 18 (diamond) for females, and 16 (circle) for unknown. You can find a full list of shape codes in the `pch` documentation (`?points`). You can also use shapes from the `ggplot2` shape palette (e.g., 21-25 for filled shapes). Here I also disable sex coloring to focus on shapes alone.
 
@@ -303,7 +305,7 @@ ggplot2::ggsave(
 
 ![](emoji_preview.png){width="7in" height="5in"}
 
-Note that when using emoji shapes, it is best to use `ggsave()` to save the plot to a file, as some R graphics devices may  render emoji differently. Notice how the emoji shapes appear in the saved PNG file below compares to the image rendered during the preview above. These may vary because of differences in font rendering.
+Note that when using emoji shapes, it is best to use `ggsave()` to save the plot to a file, as some R graphics devices may  render emoji differently. Notice how the emoji shapes appear in the saved PNG file below compares to the image rendered during the preview above. These images may vary because of differences in font rendering.
 
 ![](custom_sex_emoji_pedigree.png){width="7in" height="5in"}
 
@@ -311,7 +313,7 @@ Note that when using emoji shapes, it is best to use `ggsave()` to save the plot
 
 ## 5) Affected status overlay
 
-Affected status behavior is controlled by keys such as:
+Affected status behavior is controlled by config keys such as:
 
 -   `status_include`
 -   `status_code_affected`, `status_code_unaffected`
@@ -479,6 +481,7 @@ ggPedigree(
 
 ## 6) Focal fill: highlighting relatives of a focal individual
 
+<!-- TODO: combine sections 6 and 7 because they both are about visualizing relationships -->
 A common analysis task is to pick a focal individual and visually emphasize how strongly other individuals are related to that focal person. In `{ggpedigree}`, this is handled by **focal fill**. When focal fill is enabled, node fill colors are mapped to a focal-based value (for example additive genetic relatedness or another focal-derived scalar).
 
 Focal fill is controlled entirely through `config`. The minimal ingredients are:
