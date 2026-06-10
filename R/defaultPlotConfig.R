@@ -974,36 +974,6 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     core_list$label_nudge_y_flip <- FALSE
     core_list$axis_y_label <- "Phenotypic Correlation"
     core_list$axis_x_label <- "Coefficient of Genetic Variation"
-    #  default_config <- list(
-    #    apply_default_scales = TRUE,
-    #    apply_default_theme = TRUE,
-    #   point_size = 1,
-    #    ci_ribbon_alpha = 0.3,
-
-    # Filter parameters
-    #   filter_n_pairs = 500,
-    #  filter_degree_min = 0,
-    #  filter_degree_max = 7,
-    # Plotting parameters
-    #    plot_title = "Phenotypic Correlation vs Genetic Relatedness",
-    #    subtitle = NULL,
-    #    color_scale = "ggthemes::calc",
-
-    # Configuration parameters
-    #   use_only_classic_kin = TRUE,
-    #  group_by_kin = TRUE,
-    #   drop_classic_kin = FALSE,
-    #  drop_non_classic_sibs = TRUE,
-    # Annotation parameters
-
-
-    # Grouping and scaling parameters
-    #  use_relative_degree = TRUE,
-    #   grouping_column = "mtdna_factor",
-    #    value_rounding_digits = 2,
-    #   match_threshold_percent = 10,
-    #    max_degree_levels = 12
-    #  )
   }
   if (lc_function_name %in% c(
     "ggpedigree",

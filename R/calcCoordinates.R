@@ -448,9 +448,10 @@ calculateCoordinates <- function(ped,
 #' @param ds Data frame produced by `calculateCoordinates`.
 #' @param twinID Character name of the twin-group ID column in `ds`.
 #'   Defaults to `"twinID"`.
+#'   @param cross_gen_penalty Numeric penalty for twins in different generation rows.
 #' @return A non-negative numeric value.
 #' @keywords internal
-.layoutScoreTwinPenalty <- function(ds, twinID = "twinID") {
+.layoutScoreTwinPenalty <- function(ds, twinID = "twinID", cross_gen_penalty = 10) {
   if (!twinID %in% names(ds)) return(0)
 
   placed <- ds[
@@ -470,7 +471,7 @@ calculateCoordinates <- function(ped,
     unique_rows <- unique(grp$y_pos[!is.na(grp$y_pos)])
     if (length(unique_rows) > 1L) {
       # Twins in different generation rows — structural problem, heavy penalty
-      penalty <- penalty + 10 * (n * (n - 1L) / 2L)
+      penalty <- penalty + cross_gen_penalty * (n * (n - 1L) / 2L)
       next
     }
 
@@ -518,6 +519,10 @@ calculateCoordinates <- function(ped,
 #'   `"duplications"`, `"twin_penalty"`, or `"composite"`.
 #' @param twinID Character name of the twin-group ID column in `ds`.
 #'   Passed to `.layoutScoreTwinPenalty()`.  Defaults to `"twinID"`.
+#' @param cross_gen_penalty Numeric penalty for twins in different generation rows.
+#'   Passed to `.layoutScoreTwinPenalty()`.  Default is 10.
+#' @param twin_penalty_weight Numeric weight for the twin penalty in the composite score. Default is 20.
+#' @param duplication_weight Numeric weight for the duplication count in the composite score. Default is 100.
 #' @return A single numeric value (≥ 0).
 #' @keywords internal
 .layoutScore <- function(ds,
@@ -526,7 +531,11 @@ calculateCoordinates <- function(ped,
                            "duplications", "twin_penalty", "composite",
                            "parent_offset", "minimal_duplicates"
                          ),
-                         twinID = "twinID") {
+                         twinID = "twinID",
+                         cross_gen_penalty = 10L,
+                         twin_penalty_weight = 20L,
+                         duplication_weight = 100L
+                         ) {
   method <- match.arg(method)
   switch(method,
     parent_stub      = ,
@@ -534,12 +543,12 @@ calculateCoordinates <- function(ped,
     crossings        = .layoutScoreCrossings(ds),
     duplications     = ,
     minimal_duplicates = sum(duplicated(ds$nid[!is.na(ds$nid)])),
-    twin_penalty     = .layoutScoreTwinPenalty(ds, twinID = twinID),
+    twin_penalty     = .layoutScoreTwinPenalty(ds, twinID = twinID,cross_gen_penalty = cross_gen_penalty),
     composite        = {
       sum(abs(ds$x_fam - ds$x_pos), na.rm = TRUE) +
-        10L  * .layoutScoreCrossings(ds) +
-        20L  * .layoutScoreTwinPenalty(ds, twinID = twinID) +
-        100L * sum(duplicated(ds$nid[!is.na(ds$nid)]))
+        cross_gen_penalty  * .layoutScoreCrossings(ds) +
+        twin_penalty_weight  * .layoutScoreTwinPenalty(ds, twinID = twinID) +
+        duplication_weight * sum(duplicated(ds$nid[!is.na(ds$nid)]))
     }
   )
 }
