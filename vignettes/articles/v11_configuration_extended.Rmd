@@ -1,5 +1,5 @@
 ---
-title: "Extended: More uses of `config` to control ggpedigree plots"
+title: "Extended: More uses of config to control ggpedigree plots"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Extended: More uses of config to control ggpedigree plots}
