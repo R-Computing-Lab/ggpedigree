@@ -164,7 +164,7 @@
             high = config$focal_fill_high_color,
             midpoint = config$focal_fill_scale_midpoint,
             n.breaks = config$focal_fill_n_breaks,
-            na.value = config$focal_fill_na_value,
+            na.value = config$focal_fill_na_color,
             transform = ifelse(config$focal_fill_use_log, "log2", "identity")
           )
         }
@@ -178,7 +178,7 @@
             high = config$focal_fill_high_color,
             midpoint = config$focal_fill_scale_midpoint,
             n.breaks = config$focal_fill_n_breaks,
-            na.value = config$focal_fill_na_value,
+            na.value = config$focal_fill_na_color,
             transform = ifelse(config$focal_fill_use_log, "log2", "identity")
           )
         }
@@ -191,7 +191,7 @@
             c = config$focal_fill_chroma,
             l = config$focal_fill_lightness,
             direction = config$focal_fill_hue_direction,
-            na.value = config$focal_fill_na_value
+            na.value = config$focal_fill_na_color
           )
         }
       ),
@@ -203,7 +203,7 @@
             begin = config$focal_fill_viridis_begin,
             end = config$focal_fill_viridis_end,
             direction = config$focal_fill_viridis_direction,
-            na.value = config$focal_fill_na_value,
+            na.value = config$focal_fill_na_color,
             transform = ifelse(config$focal_fill_use_log, "log2", "identity")
           )
         }
@@ -216,7 +216,7 @@
             begin = config$focal_fill_viridis_begin,
             end = config$focal_fill_viridis_end,
             direction = config$focal_fill_viridis_direction,
-            na.value = config$focal_fill_na_value
+            na.value = config$focal_fill_na_color
           )
         }
       ),
@@ -228,7 +228,7 @@
             begin = config$focal_fill_viridis_begin,
             end = config$focal_fill_viridis_end,
             direction = config$focal_fill_viridis_direction,
-            na.value = config$focal_fill_na_value,
+            na.value = config$focal_fill_na_color,
             transform = ifelse(config$focal_fill_use_log, "log2", "identity")
           )
         }

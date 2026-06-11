@@ -2,7 +2,6 @@
 # ==============================
 * Added renumberPedigreeIDs function to renumber pedigree IDs in a consistent way. This can help with plotting and analysis when IDs are non-numeric or not in a convenient order. The function also updates the parent-child relationships accordingly.
 * Added `fixed_positions` config option to pin specific individuals to exact layout slots, overriding the computed layout. Pass a data frame with an ID column (matching `personID`) plus `x` and/or `y` columns; positions are in raw layout-slot units so they compose with `generation_width`/`generation_height` scaling and radial layouts. Because connection anchors are derived from the (possibly pinned) coordinates, segments follow automatically. `fixed_positions_update_family` (default `TRUE`) controls whether pinning a parent also moves their children's parent-connector.
-
 * Added `segment_lineage_*` config options to color connecting segments by family lineage (e.g., paternal, maternal, or mitochondrial lines). Set `segment_lineage_include = TRUE` and choose a `segment_lineage_component`. Supplying `segment_lineage_focal_personID` traces the lines connected to one focal individual. Lineage-colored segments can be combined with node `focal_fill` via the suggested `ggnewscale` package (independent color scales); without it, the plot falls back to fixed segment colors with a warning.
 * Optimizing implemention of pedigree alignment functions from kinship2
 * Added unit tests for the pedigree alignment functions
@@ -21,6 +20,7 @@
 * Fixed `reduce_variables = FALSE` breaking lineage-colored segments. When all pedigree columns were carried forward through `calculateConnections()`, a subsequent join in `ggpedigreeCore.R` created `.x`/`.y` suffix duplicates of `segment_lineage`, causing `.addSegmentLayer()` to silently skip lineage coloring. The join is now guarded, and `calculateConnections()` uses `union()` to expand the selected columns once rather than re-joining at the end.
 * Fixed `x_fam = NaN` for unplaced individuals (`nid = NA`). kinship2 returns a `NaN` position for individuals it cannot place; the condition that zeros out family coordinates now also catches `parent_fam = NA` (in addition to `parent_fam == 0`).
 * Fixed long diagonal spouse segments caused by kinship2 placing a founder in the wrong generation row. This happens when a couple's only shared child is unplaced (`nid = NA`), so kinship2 has no generation constraint for one parent and assigns them to a different row than their spouse. A new post-processing step (`.repositionCrossGenerationSpouses()`) detects this pattern and moves the misplaced founder to be adjacent to their spouse, producing a short horizontal spouse segment instead of a long diagonal one. Founders with placed descendants are never moved.
+* renamed `FOO_na_value` to `FOO_na_color` to reflect that it is to provide the color used for NA values in the plot, rather than a value to replace NAs in the data. This is more consistent with ggplot2's naming conventions and avoids confusion about whether the function is modifying the data or just the plot aesthetics.
 
 # ggpedigree Version: 1.2.0
 ## New features

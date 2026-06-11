@@ -238,7 +238,7 @@
 #' @param focal_fill_component Component type for focal fill.
 #' @param focal_fill_shape Shape used for focal fill points.
 #' @param focal_fill_n_breaks Number of breaks in focal fill scale.
-#' @param focal_fill_na_value Color for NA values in focal fill.
+#' @param focal_fill_na_color Color for NA values in focal fill.
 #' @param focal_fill_use_log Whether to use log scale for focal fill.
 #' @param focal_fill_force_zero Whether to force zero to NA in focal fill.
 #' @param focal_fill_hue_range Hue range for focal fill colors.
@@ -427,7 +427,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  ),
                                  segment_lineage_method = "viridis_d",
                                  segment_lineage_palette = focal_fill_color_values,
-                                 segment_lineage_na_color = "grey80",
+                                 segment_lineage_na_color = focal_fill_na_color,
                                  segment_lineage_force_zero = TRUE,
                                  segment_lineage_legend_show = TRUE,
                                  segment_lineage_legend_title = "Lineage",
@@ -484,7 +484,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  focal_fill_method = "gradient",
                                  focal_fill_component = "additive",
                                  focal_fill_n_breaks = NULL,
-                                 focal_fill_na_value = "black",
+                                 focal_fill_na_color = "black",
                                  focal_fill_shape = 21, # shape for focal fill points
                                  # work around that sets zero to NA so you can distinguish from low values
                                  focal_fill_force_zero = FALSE,
@@ -651,13 +651,14 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     focal_fill_high_color <- "grey80"
     focal_fill_mid_color <- "grey50"
     focal_fill_low_color <- "grey10"
-    focal_fill_na_value <- "black"
+    focal_fill_na_color <- "black"
     tile_color_palette <- c("white", "grey74", "black")
 
     # Make sex palette greyscale too
     sex_color_palette <- rep("black", length(sex_color_palette))
 
     focal_fill_color_values <- c("grey10", "grey50", "grey85")
+    s
   }
 
   if (color_theme_lower %in% c(wfu_color_names) ||
@@ -675,7 +676,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     focal_fill_high_color <- "#9E7E38"
     focal_fill_mid_color <- "#CFB53B"
     focal_fill_low_color <- "#F1E5AC"
-    focal_fill_na_value <- "#222222"
+    focal_fill_na_color <- "#222222"
   }
 
   core_list <- list(
@@ -854,7 +855,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     focal_fill_component = focal_fill_component,
     focal_fill_n_breaks = focal_fill_n_breaks,
     focal_fill_shape = focal_fill_shape, # shape for focal fill points
-    focal_fill_na_value = focal_fill_na_value,
+    focal_fill_na_color = focal_fill_na_color,
     focal_fill_use_log = focal_fill_use_log, # use log scale for focal fill
     # work around that sets zero to NA so you can distinguish from low values
     focal_fill_force_zero = focal_fill_force_zero,

@@ -585,7 +585,7 @@ ggPedigree(
 
 ### Handling missing and zero values
 
-When focal fill is computed, some individuals can have missing focal values (for example if they are disconnected). You can control the color used for missing values with `focal_fill_na_value`. The `focal_fill_force_zero` option forces exact zeros to be treated as missing so they can be filled in using `focal_fill_na_value`.
+When focal fill is computed, some individuals can have missing focal values (for example if they are disconnected). You can control the color used for missing values with `focal_fill_na_color`. The `focal_fill_force_zero` option forces exact zeros to be treated as missing so they can be filled in using `focal_fill_na_color`.
 
 ```{r}
 ggPedigree(

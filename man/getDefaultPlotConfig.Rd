@@ -103,7 +103,7 @@ getDefaultPlotConfig(
   segment_lineage_types = c("parent", "offspring", "sibling", "mz"),
   segment_lineage_method = "viridis_d",
   segment_lineage_palette = focal_fill_color_values,
-  segment_lineage_na_color = "grey80",
+  segment_lineage_na_color = focal_fill_na_color,
   segment_lineage_force_zero = TRUE,
   segment_lineage_legend_show = TRUE,
   segment_lineage_legend_title = "Lineage",
@@ -155,7 +155,7 @@ getDefaultPlotConfig(
   focal_fill_method = "gradient",
   focal_fill_component = "additive",
   focal_fill_n_breaks = NULL,
-  focal_fill_na_value = "black",
+  focal_fill_na_color = "black",
   focal_fill_shape = 21,
   focal_fill_force_zero = FALSE,
   focal_fill_use_log = FALSE,
@@ -603,7 +603,7 @@ Only used when overlay_mode is "shape".}
 
 \item{focal_fill_n_breaks}{Number of breaks in focal fill scale.}
 
-\item{focal_fill_na_value}{Color for NA values in focal fill.}
+\item{focal_fill_na_color}{Color for NA values in focal fill.}
 
 \item{focal_fill_shape}{Shape used for focal fill points.}
 
