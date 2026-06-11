@@ -94,6 +94,8 @@
 #'   \code{1, 2, \ldots} when \code{founder_order_seed} is \code{NULL}), scores
 #'   each layout with `layout_score_method`, and returns the best result.
 #'   Default is \code{1} (no search).
+#' @param return_best_seed Whether to return the seed that produced the best layout when
+#'  `founder_order_tries > 1`. Default is `FALSE`. When `TRUE`, the output includes a `best_seed` attribute with the integer seed that produced the best layout.
 #' @param layout_score_method Scoring method used to rank candidate layouts when
 #'   `founder_order_tries > 1`. One of:
 #'   \describe{
