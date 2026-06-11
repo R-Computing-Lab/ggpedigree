@@ -33,7 +33,7 @@ missing_parent_num <- list(
 
 config_map <- list(
   #  cfg_skip = "cfg_skip",
-  cfg_dbg = list(debug = TRUE, recode_missing_sex = FALSE),
+#  cfg_dbg = list(debug = TRUE, recode_missing_sex = FALSE),
   cfg_m2 = list(code_male = 2, recode_missing_sex = FALSE),
   cfg_m1 = list(code_male = 1, recode_missing_sex = FALSE),
   cfg_m0 = list(code_male = 0, recode_missing_sex = FALSE)
@@ -70,7 +70,8 @@ grid <- grid %>% mutate(
     TRUE ~ expect_warnings
   ),
   expect_errors = case_when(
-    config_case %in% c("cfg_skip", "cfg_dbg", "cfg_m1") &
+    config_case %in% c("cfg_skip", "cfg_dbg",
+                       "cfg_m1") &
       sex_case %in% c("s121", "s101", "s10NA", "s12NA") ~ TRUE,
     # cfg_m2 fixes 1/2 but not 0/1
     config_case == "cfg_m2" &
@@ -191,6 +192,17 @@ test_that("sexVar ne sex", {
   )
   #  p <- ggPedigree(df, config = cfg)
   expect_s3_class(p, "ggplot")
+})
+
+test_that("debug=TRUE returns list with plot and data slots", {
+  df <- make_df_char(sex = c(2, 1, 2), missing_parent = NA_character_)
+  result <- expect_no_warning(
+    ggPedigree(df, config = list(debug = TRUE, recode_missing_sex = FALSE))
+  )
+  expect_type(result, "list")
+  expect_true(all(c("plot", "data") %in% names(result)))
+  expect_s3_class(result[["plot"]], "gg")
+  expect_equal(nrow(result[["data"]]), nrow(df))
 })
 
 test_that("full cross: strict expectations + roundtrip invariant", {
