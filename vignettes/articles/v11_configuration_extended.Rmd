@@ -599,7 +599,7 @@ ggPedigree(
     sex_color_include = FALSE,
     focal_fill_personID = 4,
     focal_fill_force_zero = TRUE,
-    focal_fill_na_value = "grey75"
+    focal_fill_na_color = "grey75"
   )
 )
 ```

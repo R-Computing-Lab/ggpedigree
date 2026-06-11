@@ -427,7 +427,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  ),
                                  segment_lineage_method = "viridis_d",
                                  segment_lineage_palette = focal_fill_color_values,
-                                 segment_lineage_na_color = focal_fill_na_color,
+                                 segment_lineage_na_color =  "grey80",
                                  segment_lineage_force_zero = TRUE,
                                  segment_lineage_legend_show = TRUE,
                                  segment_lineage_legend_title = "Lineage",
@@ -626,6 +626,10 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     "wfu colors",
     "wfu color palette"
   )
+#  backwards compatibility with older versions that used focal_fill_na_value
+ if(exists("focal_fill_na_value") && !is.null(focal_fill_na_value)){
+   focal_fill_na_color <- focal_fill_na_value
+   }
 
   if (!is.character(color_theme) || length(color_theme) != 1L || is.na(color_theme)) {
     stop("`color_theme` must be a non-missing character string.")
@@ -658,7 +662,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     sex_color_palette <- rep("black", length(sex_color_palette))
 
     focal_fill_color_values <- c("grey10", "grey50", "grey85")
-    s
+
   }
 
   if (color_theme_lower %in% c(wfu_color_names) ||
