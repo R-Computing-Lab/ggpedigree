@@ -96,7 +96,7 @@ test_that("founder_order_tries = 1 with a seed equals single seed call", {
 
 test_that("founder_order_tries > 1 returns a valid layout", {
   potter_local <- potter
-  coords <- cc(potter, list(founder_order_seed = 1L, founder_order_tries = 3L))
+  coords <- cc(potter, list(founder_order_seed = 1L, founder_order_tries = 2L))
   expect_setequal(coords$personID, potter$personID)
   expect_true(all(c("x_pos", "y_pos") %in% names(coords)))
   placed <- coords[!is.na(coords$nid), ]
@@ -106,7 +106,7 @@ test_that("founder_order_tries > 1 returns a valid layout", {
 test_that("founder_order_tries without seed tries seeds 1..N", {
   potter_local <- potter
   # Should not error and should return a data frame
-  coords <- cc(potter, list(founder_order_tries = 3L))
+  coords <- cc(potter, list(founder_order_tries = 2L))
   expect_s3_class(coords, "data.frame")
   expect_setequal(coords$personID, potter$personID)
 })

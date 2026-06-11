@@ -304,6 +304,7 @@
 #' @export
 #' @seealso buildPlotConfig, vignette("v10_configuration")
 
+utils::globalVariables(c("focal_fill_na_value")) # to avoid R CMD check NOTE, it it to ensure backwards compatibility with older versions of ggPedigree that used focal_fill_na_value instead of focal_fill_na_color
 
 getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  personID = "personID",
