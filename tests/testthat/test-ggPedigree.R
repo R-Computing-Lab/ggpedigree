@@ -1,7 +1,12 @@
+library(BGmisc)
+library(tidyverse)
+library(mockery)
+
+data("potter")
+data("inbreeding")
+
+
 test_that("broken hints doesn't cause a fatal error", {
-  library(BGmisc)
-  library(tidyverse)
-  data("potter") # load example data from BGmisc
   if ("twinID" %in% names(potter) && "zygosity" %in% names(potter)) {
     # Remove twinID and zygosity columns for this test
     potter <- potter %>%
@@ -60,8 +65,6 @@ test_that("broken hints doesn't cause a fatal error", {
 })
 
 test_that("ggPedigree returns a ggplot object", {
-  library(BGmisc)
-  data("potter") # load example data from BGmisc
   if ("twinID" %in% names(potter) && "zygosity" %in% names(potter)) {
     # Remove twinID and zygosity columns for this test
     potter <- potter %>%
@@ -97,9 +100,6 @@ test_that("ggPedigree errors when ped not df", {
 
 
 test_that("give static plot when plotly fails", {
-  library(BGmisc)
-  library(mockery)
-  data("potter") # load example data from BGmisc
   # Stub requireNamespace inside ggPedigree to simulate plotly not installed
   stub(ggPedigree, "requireNamespace", FALSE)
 
@@ -111,10 +111,6 @@ test_that("give static plot when plotly fails", {
 #  Apply vertical spacing factor if generation_height ≠ 1
 
 test_that("vertical spacing factor if generation_height ≠ 1", {
-  library(BGmisc)
-
-  data("potter") # load example data from BGmisc
-  # Stub requireNamespace inside ggPedigree to simulate plotly not installed
 
   p <- ggPedigree(potter, config = list(generation_width = 1))
   p_2 <- ggPedigree(potter, config = list(generation_width = 2))
@@ -131,19 +127,12 @@ test_that("vertical spacing factor if generation_height ≠ 1", {
 })
 
 test_that("config$outline_include works", {
-  library(BGmisc)
-
-  data("potter") # load example data from BGmisc
   p <- ggPedigree(potter, config = list(outline_include = TRUE))
   expect_s3_class(p, "gg") # Should return a ggplot object
 })
 
 # handle non-standard names
 test_that("ggPedigree handles non-standard names", {
-  library(BGmisc)
-  library(tidyverse)
-  data("potter") # load example data from BGmisc
-
   # Rename columns to non-standard names
   potter <- potter %>%
     rename(
@@ -171,9 +160,6 @@ test_that("ggPedigree handles non-standard names", {
 
 #  # Self-segment (for duplicate layout appearances of same person)
 test_that("ggPedigree handles self-segment", {
-  library(BGmisc)
-  data("inbreeding") # load example data from BGmisc
-
   # Add a duplicate appearance for a person
   df <- inbreeding
 
@@ -228,9 +214,6 @@ test_that("ggPedigree handles self-segment", {
 })
 
 test_that("focal fill works with ID", {
-  library(BGmisc)
-  data("potter") # load example data from BGmisc
-
   p <- ggPedigree(potter,
     famID = "famID",
     personID = "personID",
@@ -287,9 +270,6 @@ test_that("focal fill works with ID", {
 })
 
 test_that("focal fill works with non-standard personID column name", {
-  library(BGmisc)
-  data("potter") # load example data from BGmisc
-
   # Rename personID column to a non-standard name
   potter_renamed <- potter
   names(potter_renamed)[names(potter_renamed) == "personID"] <- "ID"
@@ -312,9 +292,6 @@ test_that("focal fill works with non-standard personID column name", {
 })
 
 test_that("focal fill works with ID and different methods", {
-  library(BGmisc)
-  data("potter") # load example data from BGmisc
-
   # Test with greyscale theme
   p <- ggPedigree(potter,
     famID = "famID",
@@ -383,9 +360,6 @@ test_that("focal fill works with ID and different methods", {
 })
 
 test_that("fill works with fill_column", {
-  library(BGmisc)
-  data("potter")
-
   p <- ggPedigree(potter,
     famID = "famID",
     personID = "personID",
@@ -406,9 +380,6 @@ test_that("fill works with fill_column", {
 })
 
 test_that("debug", {
-  library(BGmisc)
-  data("potter")
-
   expect_message(ggPedigree(potter,
     famID = "famID",
     personID = "personID",
@@ -501,11 +472,6 @@ test_that("behaves with kinship 2 pedigree object", {
 
 
 test_that("reduce_variables reduces object size", {
-  library(BGmisc)
-
-  data("potter") # load example data from BGmisc
-  # Stub requireNamespace inside ggPedigree to simulate plotly not installed
-
   p_reduced <- ggPedigree(potter, config = list(reduce_variables = FALSE))
   p <- ggPedigree(potter, config = list(reduce_variables = TRUE))
 

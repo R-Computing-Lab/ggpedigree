@@ -113,13 +113,12 @@ expect_roundtrip <- function(
   }
 
   if (expect_warnings) {
-    expect_warning(run_ped(), info = info)
-    ped_df <- suppressWarnings(run_ped())[["data"]]
+    suppressWarnings(expect_warning(ped_result <- run_ped(), info = info))
   } else {
-    expect_no_warning(run_ped())
-    ped_df <- run_ped()[["data"]]
+    ped_result <- expect_no_warning(run_ped())
   }
 
+  ped_df <- ped_result[["data"]]
 
   if (!is.na(NA_id_value)) {
     df$momID[df$momID == NA_id_value] <- NA

@@ -7,10 +7,8 @@ cc <- function(ped, cfg = list()) {
   )
 }
 
-get_potter <- function() {
-  data("potter", package = "BGmisc", envir = environment())
-  potter[, !names(potter) %in% c("twinID", "zygosity")]
-}
+data("potter", package = "BGmisc", envir = environment())
+potter <- potter[, !names(potter) %in% c("twinID", "zygosity")]
 
 # ---------------------------------------------------------------------------
 # .layoutScore
@@ -32,7 +30,6 @@ test_that(".layoutScore sums absolute parent-stub offsets", {
 # ---------------------------------------------------------------------------
 
 test_that("same seed produces identical layout on repeated calls", {
-  potter <- get_potter()
   r1 <- cc(potter, list(founder_order_seed = 7L))
   r2 <- cc(potter, list(founder_order_seed = 7L))
   expect_equal(r1$x_pos, r2$x_pos)
@@ -40,7 +37,6 @@ test_that("same seed produces identical layout on repeated calls", {
 })
 
 test_that("different seeds can produce different layouts", {
-  potter <- get_potter()
   r1 <- cc(potter, list(founder_order_seed = 1L))
   r2 <- cc(potter, list(founder_order_seed = 2L))
   # They might coincidentally be identical for a simple pedigree, but for
@@ -56,7 +52,7 @@ test_that("different seeds can produce different layouts", {
 })
 
 test_that("NULL seed (default) produces the same result as no seed arg", {
-  potter <- get_potter()
+  potter_local <- potter
   base <- cc(potter)
   nulls <- cc(potter, list(founder_order_seed = NULL))
   expect_equal(base$x_pos, nulls$x_pos)
@@ -68,19 +64,19 @@ test_that("NULL seed (default) produces the same result as no seed arg", {
 # ---------------------------------------------------------------------------
 
 test_that("seeded layout retains all individuals", {
-  potter <- get_potter()
+  potter_local <- potter
   coords <- cc(potter, list(founder_order_seed = 42L))
   expect_setequal(coords$personID, potter$personID)
 })
 
 test_that("seeded layout has valid coordinate columns", {
-  potter <- get_potter()
+  potter_local <- potter
   coords <- cc(potter, list(founder_order_seed = 42L))
   expect_true(all(c("x_pos", "y_pos", "x_order", "y_order", "nid") %in% names(coords)))
 })
 
 test_that("seeded layout has no NA x_pos for placed individuals", {
-  potter <- get_potter()
+  potter_local <- potter
   coords <- cc(potter, list(founder_order_seed = 42L))
   # All potter individuals should be placed (nid non-NA → x_pos non-NA)
   placed <- coords[!is.na(coords$nid), ]
@@ -92,14 +88,14 @@ test_that("seeded layout has no NA x_pos for placed individuals", {
 # ---------------------------------------------------------------------------
 
 test_that("founder_order_tries = 1 with a seed equals single seed call", {
-  potter <- get_potter()
+  potter_local <- potter
   r_seed <- cc(potter, list(founder_order_seed = 5L, founder_order_tries = 1L))
   r_tries <- cc(potter, list(founder_order_seed = 5L))
   expect_equal(r_seed$x_pos, r_tries$x_pos)
 })
 
 test_that("founder_order_tries > 1 returns a valid layout", {
-  potter <- get_potter()
+  potter_local <- potter
   coords <- cc(potter, list(founder_order_seed = 1L, founder_order_tries = 3L))
   expect_setequal(coords$personID, potter$personID)
   expect_true(all(c("x_pos", "y_pos") %in% names(coords)))
@@ -108,7 +104,7 @@ test_that("founder_order_tries > 1 returns a valid layout", {
 })
 
 test_that("founder_order_tries without seed tries seeds 1..N", {
-  potter <- get_potter()
+  potter_local <- potter
   # Should not error and should return a data frame
   coords <- cc(potter, list(founder_order_tries = 3L))
   expect_s3_class(coords, "data.frame")
@@ -116,7 +112,7 @@ test_that("founder_order_tries without seed tries seeds 1..N", {
 })
 
 test_that("multi-try score is <= single-try score (search improves or matches)", {
-  potter <- get_potter()
+  potter_local <- potter
   single <- cc(potter, list(founder_order_seed = 1L, founder_order_tries = 1L))
   multi <- cc(potter, list(founder_order_seed = 1L, founder_order_tries = 5L))
   score_single <- ggpedigree:::.layoutScore(single)
@@ -129,7 +125,7 @@ test_that("multi-try score is <= single-try score (search improves or matches)",
 # ---------------------------------------------------------------------------
 
 test_that("fixed_positions override still applies after seed shuffle", {
-  potter <- get_potter()
+  potter_local <- potter
   coords <- cc(potter, list(
     founder_order_seed = 42L,
     fixed_positions = data.frame(personID = 8, x = 99)
@@ -369,7 +365,7 @@ test_that(".layoutScore 'composite' includes twin penalty", {
 })
 
 test_that("layout_score_method config flows through calculateCoordinates", {
-  potter <- get_potter()
+  potter_local <- potter
   # Should not error regardless of method
   for (m in c("parent_stub", "crossings", "duplications", "twin_penalty", "composite")) {
     coords <- cc(potter, list(
