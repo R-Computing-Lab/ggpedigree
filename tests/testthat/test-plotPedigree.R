@@ -1,6 +1,7 @@
+library(BGmisc)
+library(kinship2)
+
 test_that("simulated pedigree plots correctly", {
-  library(BGmisc)
-  library(kinship2)
   set.seed(5)
   Ngen <- 4
   kpc <- 4
@@ -20,7 +21,6 @@ test_that("simulated pedigree plots correctly", {
 
 
 test_that("pedigree plots correctly with affected variables", {
-  library(BGmisc)
   set.seed(5)
   Ngen <- 4
   kpc <- 4
@@ -42,7 +42,6 @@ test_that("pedigree plots correctly with affected variables", {
 # file.remove("Rplots.pdf")
 
 test_that("pedigree errs when affected variables named", {
-  library(BGmisc)
   data(inbreeding)
 
   expect_error(kinship2_plotPedigree(data, verbose = TRUE, affected = "affected"))
@@ -50,7 +49,6 @@ test_that("pedigree errs when affected variables named", {
 
 
 test_that("pedigree plots multiple families", {
-  library(BGmisc)
   data(inbreeding)
   expect_warning(plotPedigree(inbreeding, verbose = TRUE))
   expect_message(kinship2_plotPedigree(inbreeding, verbose = TRUE))

@@ -80,6 +80,51 @@
 #' @param ped_packed Whether the pedigree should use packed layout.
 #' @param ped_align Whether to align pedigree generations.
 #' @param ped_width Plot width of the pedigree block.
+#' @param reposition_founders Whether to reposition founders in the layout. Default is TRUE, which moves founders to the top of the plot and centers them over their descendants. When FALSE, founders are placed according to their original generation assignment, which may be more appropriate for certain types of pedigrees (e.g., those with many generations or non-traditional structures).
+#' @param fast_threshold Threshold for switching to piecewise layout algorithms for large pedigrees.
+#' @param founder_order_seed Integer seed used to shuffle the pedigree row order
+#'   before passing to kinship2. Because kinship2 processes founders in the
+#'   order they appear, different shufflings produce different lateral placements.
+#'   Set to an integer (e.g. `42`) to get a specific alternative layout.
+#'   `NULL` (default) uses the original row order.  Combine with
+#'   `founder_order_tries` to search automatically for a compact layout.
+#' @param founder_order_tries Integer number of row-order shufflings to evaluate.
+#'   When greater than 1, the function tries seeds
+#'   \code{founder_order_seed + 0, founder_order_seed + 1, \ldots} (or
+#'   \code{1, 2, \ldots} when \code{founder_order_seed} is \code{NULL}), scores
+#'   each layout with `layout_score_method`, and returns the best result.
+#'   Default is \code{1} (no search).
+#' @param return_best_seed Whether to return the seed that produced the best layout when
+#'  `founder_order_tries > 1`. Default is `FALSE`. When `TRUE`, the output includes a `best_seed` attribute with the integer seed that produced the best layout.
+#' @param layout_score_method Scoring method used to rank candidate layouts when
+#'   `founder_order_tries > 1`. One of:
+#'   \describe{
+#'     \item{`"parent_stub"`}{(default) Sum of `|x_fam - x_pos|`. Total
+#'       diagonal parent-stub length.}
+#'     \item{`"crossings"`}{Count of crossing parent-stub segment pairs within
+#'       each generation.}
+#'     \item{`"duplications"`}{Count of extra kinship2 duplicate placements
+#'       (`extra = TRUE` rows).}
+#'     \item{`"twin_penalty"`}{Sum of intruder positions separating co-twins
+#'       within their generation row. Twins placed in different generation rows
+#'       receive a heavy flat penalty.}
+#'     \item{`"composite"`}{Weighted sum:
+#'       `parent_stub + 10*crossings + 20*twin_penalty + 100*duplications`.}
+#'   }
+#'   Lower scores are better in all cases.
+#' @param fixed_positions Optional data frame for pinning specific individuals to
+#'   exact layout slots, overriding the computed layout. It must contain an ID
+#'   column named to match `personID` (e.g., `"personID"` or `"ID"`) plus an `x`
+#'   and/or `y` column. Each row sets that person's absolute position in raw
+#'   layout-slot units (the units `calculateCoordinates()` emits, before
+#'   `generation_width`/`generation_height` scaling and any radial transform).
+#'   A missing or `NA` axis leaves the computed value unchanged. IDs not found in
+#'   the pedigree are ignored with a warning. Default is `NULL` (no pinning).
+#' @param fixed_positions_update_family When pinning a parent, whether to recompute
+#'   the family anchor (`x_fam`/`y_fam`) of that parent's children so the
+#'   parent-to-children connector follows the pinned parent. `TRUE` (default) keeps
+#'   connectors attached; `FALSE` moves only the node and spouse link, leaving the
+#'   down-connector at the original location. Has no effect when nothing is pinned.
 #' @param coord_layout Layout mode for the pedigree. Options: "cartesian" (default) or "radial".
 #' @param coord_radial_start_angle Start angle in degrees for the radial layout (default: -90, placing
 #'   the first generation at the top).
@@ -111,6 +156,35 @@
 #' @param segment_self_curvature Curvature of self-loop segment. Default is -0.2.
 #' @param segment_self_linewidth Width of self-loop segment lines. Default is half of segment_linewidth.
 #' @param segment_scale_by_pedigree Whether to scale segment sizes by pedigree size. Default is FALSE.
+#' @param segment_lineage_include Whether to color segments by family lineage (e.g.,
+#'   paternal, maternal, or mitochondrial lines). When `FALSE` (default), segments use
+#'   the fixed per-type colors. When `TRUE`, participating segments are colored by a
+#'   `segment_lineage` value derived from `segment_lineage_component`.
+#' @param segment_lineage_component Which lineage to trace. Uses the same vocabulary as
+#'   `focal_fill_component`: `"mitochondrial"`/`"mtdna"`, `"additive"`, `"common nuclear"`,
+#'   `"maternal"`, `"paternal"`, or `"family"`. Default is `"mitochondrial"`.
+#' @param segment_lineage_focal_personID Optional ID of a focal person. When supplied,
+#'   segments are colored by their lineage relationship *to that person* (off-line
+#'   segments become `NA`/grey), letting you trace the lines connected to one node.
+#'   When `NULL` (default), partition components (`maternal`, `paternal`, `family`,
+#'   `mitochondrial`) color segments by their own lineage group, while continuous
+#'   relatedness components (`additive`, `common nuclear`) color relative to a
+#'   default reference person (`focal_fill_personID`).
+#' @param segment_lineage_types Character vector of segment types that participate in
+#'   lineage coloring. Any of `"spouse"`, `"parent"`, `"offspring"`, `"sibling"`,
+#'   `"mz"`. Default is `c("parent", "offspring", "sibling", "mz")` (the
+#'   inheritance-bearing segments). Self-loop segments always keep their fixed color.
+#' @param segment_lineage_method Scale method for the segment lineage color aesthetic.
+#'   One of `"viridis_d"`, `"viridis_c"`, `"viridis_b"`, `"hue"`, `"manual"`,
+#'   `"gradient"`, `"gradient2"`, `"steps"`. Default is `"viridis_d"`.
+#' @param segment_lineage_palette Optional vector of colors for `segment_lineage_method = "manual"`.
+#' @param segment_lineage_na_color Color used for segments with no lineage value
+#'   (off-line or non-participating). Default is `"grey80"`.
+#' @param segment_lineage_force_zero When using a focal person with a continuous
+#'   component (e.g., mitochondrial/additive), replace `0` relationships with `NA` so
+#'   off-line segments are greyed out. Default is `TRUE`.
+#' @param segment_lineage_legend_show Whether to show the segment lineage legend. Default is TRUE.
+#' @param segment_lineage_legend_title Title for the segment lineage legend. Default is "Lineage".
 #' @param sex_color_include Whether to color nodes by sex. Default is TRUE.
 #' @param sex_color_palette A character vector of colors for sex. Default uses color_palette_default.
 #' @param sex_legend_title Title of the sex legend.
@@ -166,7 +240,7 @@
 #' @param focal_fill_component Component type for focal fill.
 #' @param focal_fill_shape Shape used for focal fill points.
 #' @param focal_fill_n_breaks Number of breaks in focal fill scale.
-#' @param focal_fill_na_value Color for NA values in focal fill.
+#' @param focal_fill_na_color Color for NA values in focal fill.
 #' @param focal_fill_use_log Whether to use log scale for focal fill.
 #' @param focal_fill_force_zero Whether to force zero to NA in focal fill.
 #' @param focal_fill_hue_range Hue range for focal fill colors.
@@ -232,6 +306,7 @@
 #' @export
 #' @seealso buildPlotConfig, vignette("v10_configuration")
 
+utils::globalVariables(c("focal_fill_na_value")) # to avoid R CMD check NOTE, it it to ensure backwards compatibility with older versions of ggPedigree that used focal_fill_na_value instead of focal_fill_na_color
 
 getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  personID = "personID",
@@ -310,6 +385,12 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  ped_packed = TRUE,
                                  ped_align = TRUE,
                                  ped_width = 15,
+                                 fast_threshold = 1000, # threshold for switching to faster layout algorithms
+                                 founder_order_seed = NULL,
+                                 founder_order_tries = 1L,
+                                 layout_score_method = "composite",
+                                 fixed_positions = NULL,
+                                 fixed_positions_update_family = TRUE,
                                  coord_layout = "cartesian",
                                  coord_radial_start_angle = -90,
                                  coord_radial_end_angle = 270,
@@ -337,6 +418,22 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  segment_self_alpha = 0.5,
                                  segment_self_angle = 90,
                                  segment_self_curvature = -0.2,
+                                 # ---- Segment Lineage Coloring ----
+                                 segment_lineage_include = FALSE,
+                                 segment_lineage_component = "mitochondrial",
+                                 segment_lineage_focal_personID = NULL,
+                                 segment_lineage_types = c(
+                                   "parent",
+                                   "offspring",
+                                   "sibling",
+                                   "mz"
+                                 ),
+                                 segment_lineage_method = "viridis_d",
+                                 segment_lineage_palette = focal_fill_color_values,
+                                 segment_lineage_na_color =  "grey80",
+                                 segment_lineage_force_zero = TRUE,
+                                 segment_lineage_legend_show = TRUE,
+                                 segment_lineage_legend_title = "Lineage",
                                  # ---- Sex Legend and Appearance ----
                                  sex_color_include = TRUE,
                                  sex_legend_title = "Sex",
@@ -390,7 +487,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  focal_fill_method = "gradient",
                                  focal_fill_component = "additive",
                                  focal_fill_n_breaks = NULL,
-                                 focal_fill_na_value = "black",
+                                 focal_fill_na_color = "black",
                                  focal_fill_shape = 21, # shape for focal fill points
                                  # work around that sets zero to NA so you can distinguish from low values
                                  focal_fill_force_zero = FALSE,
@@ -451,6 +548,8 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  return_interactive = FALSE,
                                  return_mid_parent = FALSE,
                                  reduce_variables = TRUE,
+                                 reposition_founders = TRUE,
+                                 return_best_seed = FALSE,
                                  # ---- Kinship2 Options ----
                                  hints = NULL,
                                  relation = NULL,
@@ -530,6 +629,10 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     "wfu colors",
     "wfu color palette"
   )
+#  backwards compatibility with older versions that used focal_fill_na_value
+ if(exists("focal_fill_na_value") && !is.null(focal_fill_na_value)){
+   focal_fill_na_color <- focal_fill_na_value
+   }
 
   if (!is.character(color_theme) || length(color_theme) != 1L || is.na(color_theme)) {
     stop("`color_theme` must be a non-missing character string.")
@@ -555,13 +658,14 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     focal_fill_high_color <- "grey80"
     focal_fill_mid_color <- "grey50"
     focal_fill_low_color <- "grey10"
-    focal_fill_na_value <- "black"
+    focal_fill_na_color <- "black"
     tile_color_palette <- c("white", "grey74", "black")
 
     # Make sex palette greyscale too
     sex_color_palette <- rep("black", length(sex_color_palette))
 
     focal_fill_color_values <- c("grey10", "grey50", "grey85")
+
   }
 
   if (color_theme_lower %in% c(wfu_color_names) ||
@@ -579,7 +683,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     focal_fill_high_color <- "#9E7E38"
     focal_fill_mid_color <- "#CFB53B"
     focal_fill_low_color <- "#F1E5AC"
-    focal_fill_na_value <- "#222222"
+    focal_fill_na_color <- "#222222"
   }
 
   core_list <- list(
@@ -691,6 +795,18 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     segment_self_curvature = segment_self_curvature,
     segment_self_linewidth = segment_self_linewidth,
 
+    # ---- Segment Lineage Coloring ----
+    segment_lineage_include = segment_lineage_include,
+    segment_lineage_component = segment_lineage_component,
+    segment_lineage_focal_personID = segment_lineage_focal_personID,
+    segment_lineage_types = segment_lineage_types,
+    segment_lineage_method = segment_lineage_method,
+    segment_lineage_palette = segment_lineage_palette,
+    segment_lineage_na_color = segment_lineage_na_color,
+    segment_lineage_force_zero = segment_lineage_force_zero,
+    segment_lineage_legend_show = segment_lineage_legend_show,
+    segment_lineage_legend_title = segment_lineage_legend_title,
+
     # ---- Sex Legend and Appearance ----
     sex_color_include = sex_color_include,
     sex_legend_title = sex_legend_title,
@@ -746,7 +862,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     focal_fill_component = focal_fill_component,
     focal_fill_n_breaks = focal_fill_n_breaks,
     focal_fill_shape = focal_fill_shape, # shape for focal fill points
-    focal_fill_na_value = focal_fill_na_value,
+    focal_fill_na_color = focal_fill_na_color,
     focal_fill_use_log = focal_fill_use_log, # use log scale for focal fill
     # work around that sets zero to NA so you can distinguish from low values
     focal_fill_force_zero = focal_fill_force_zero,
@@ -786,10 +902,18 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     return_interactive = return_interactive,
     return_mid_parent = return_mid_parent,
     reduce_variables = reduce_variables,
+    reposition_founders = reposition_founders,
     # ---- Kinship2 Options ----
     ped_packed = ped_packed,
     ped_align = ped_align,
     ped_width = ped_width,
+    fast_threshold = fast_threshold,
+    founder_order_seed = founder_order_seed,
+    founder_order_tries = founder_order_tries,
+    layout_score_method = layout_score_method,
+    return_best_seed = return_best_seed,
+    fixed_positions = fixed_positions,
+    fixed_positions_update_family = fixed_positions_update_family,
     coord_layout = coord_layout,
     coord_radial_start_angle = coord_radial_start_angle,
     coord_radial_end_angle = coord_radial_end_angle,
@@ -858,36 +982,6 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     core_list$label_nudge_y_flip <- FALSE
     core_list$axis_y_label <- "Phenotypic Correlation"
     core_list$axis_x_label <- "Coefficient of Genetic Variation"
-    #  default_config <- list(
-    #    apply_default_scales = TRUE,
-    #    apply_default_theme = TRUE,
-    #   point_size = 1,
-    #    ci_ribbon_alpha = 0.3,
-
-    # Filter parameters
-    #   filter_n_pairs = 500,
-    #  filter_degree_min = 0,
-    #  filter_degree_max = 7,
-    # Plotting parameters
-    #    plot_title = "Phenotypic Correlation vs Genetic Relatedness",
-    #    subtitle = NULL,
-    #    color_scale = "ggthemes::calc",
-
-    # Configuration parameters
-    #   use_only_classic_kin = TRUE,
-    #  group_by_kin = TRUE,
-    #   drop_classic_kin = FALSE,
-    #  drop_non_classic_sibs = TRUE,
-    # Annotation parameters
-
-
-    # Grouping and scaling parameters
-    #  use_relative_degree = TRUE,
-    #   grouping_column = "mtdna_factor",
-    #    value_rounding_digits = 2,
-    #   match_threshold_percent = 10,
-    #    max_degree_levels = 12
-    #  )
   }
   if (lc_function_name %in% c(
     "ggpedigree",

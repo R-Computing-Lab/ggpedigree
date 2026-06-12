@@ -1,7 +1,7 @@
-test_that("calculateCoordinates assigns correct layout for unique individuals", {
-  library(BGmisc)
-  data("potter")
+library(BGmisc)
+data("potter")
 
+test_that("calculateCoordinates assigns correct layout for unique individuals", {
   ped <- potter
 
   coords <- calculateCoordinates(ped, code_male = 1, personID = "personID")

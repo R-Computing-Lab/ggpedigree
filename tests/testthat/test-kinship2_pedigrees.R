@@ -1,4 +1,12 @@
 # Sourced from kinship2 package tests
+library(kinship2)
+library(vdiffr)
+data(minnbreast)
+data(sample.ped)
+minnped <- with(
+  minnbreast,
+  ggpedigree:::pedigree(id, fatherid, motherid, sex, affected = cancer, famid = famid)
+)
 
 # ---- Helper: minimal pedigree data ----
 .make_simple_ped <- function() {
@@ -561,9 +569,6 @@ test_that("pedigree.process_relation errors when MZ twins have different sexes",
 
 # ---- pedigreeList subscripting extended ----
 test_that("pedigreeList subscript with numeric index", {
-  library(kinship2)
-  data(minnbreast)
-
   expect_no_error(minnped <-
     with(
       minnbreast,
@@ -584,53 +589,21 @@ test_that("pedigreeList subscript with numeric index", {
 })
 
 test_that("pedigreeList subscript with factor index", {
-  library(kinship2)
-  data(minnbreast)
-  minnped <- with(
-    minnbreast,
-    ggpedigree:::pedigree(id, fatherid, motherid, sex,
-      affected = cancer, famid = famid
-    )
-  )
   ped8_fac <- minnped[factor("8")]
   ped8_chr <- minnped["8"]
   expect_equal(ped8_fac$id, ped8_chr$id)
 })
 
 test_that("pedigreeList subscript selecting multiple families returns pedigreeList", {
-  library(kinship2)
-  data(minnbreast)
-  minnped <- with(
-    minnbreast,
-    ggpedigree:::pedigree(id, fatherid, motherid, sex,
-      affected = cancer, famid = famid
-    )
-  )
   two_fams <- minnped[c("8", "9")]
   expect_s3_class(two_fams, "pedigreeList")
 })
 
 test_that("pedigreeList subscript errors when family not found", {
-  library(kinship2)
-  data(minnbreast)
-  minnped <- with(
-    minnbreast,
-    ggpedigree:::pedigree(id, fatherid, motherid, sex,
-      affected = cancer, famid = famid
-    )
-  )
   expect_error(minnped["99999"], "not found")
 })
 
 test_that("pedigreeList subscript errors with too many subscripts", {
-  library(kinship2)
-  data(minnbreast)
-  minnped <- with(
-    minnbreast,
-    ggpedigree:::pedigree(id, fatherid, motherid, sex,
-      affected = cancer, famid = famid
-    )
-  )
   expect_error(minnped["8", "extra"], "Only 1 subscript allowed")
 })
 
@@ -711,14 +684,6 @@ test_that("pedigree subscript keeps relation when both members retained", {
 })
 
 test_that("pedigree subscript preserves famid", {
-  library(kinship2)
-  data(minnbreast)
-  minnped <- with(
-    minnbreast,
-    ggpedigree:::pedigree(id, fatherid, motherid, sex,
-      affected = cancer, famid = famid
-    )
-  )
   ped8 <- minnped["8"]
   # ped8 has famid; further subscript should preserve famid
   sub <- ped8[1:3]
@@ -759,14 +724,6 @@ test_that("print.pedigree works without famid", {
 })
 
 test_that("print.pedigree works with famid", {
-  library(kinship2)
-  data(minnbreast)
-  minnped <- with(
-    minnbreast,
-    ggpedigree:::pedigree(id, fatherid, motherid, sex,
-      affected = cancer, famid = famid
-    )
-  )
   ped8 <- minnped["8"]
   out <- capture.output(print(ped8))
   expect_true(any(grepl("Pedigree object", out)))
@@ -774,23 +731,12 @@ test_that("print.pedigree works with famid", {
 })
 
 test_that("print.pedigreeList works", {
-  library(kinship2)
-  data(minnbreast)
-  minnped <- with(
-    minnbreast,
-    ggpedigree:::pedigree(id, fatherid, motherid, sex,
-      affected = cancer, famid = famid
-    )
-  )
   out <- capture.output(print(minnped))
   expect_true(any(grepl("Pedigree list", out)))
 })
 
 test_that("pedigree fails to line up", {
   # Here is a case where the levels fail to line up properly
-  library(kinship2)
-  library(vdiffr)
-  data(sample.ped)
   df1 <- sample.ped[sample.ped$ped == 1, ]
   ped1 <- with(df1, ggpedigree:::pedigree(id, father, mother, sex, affected))
   vdiffr::expect_doppelganger("ped1", plot(ped1))
@@ -805,20 +751,6 @@ test_that("pedigree fails to line up", {
 })
 
 test_that("pedigree subscripting", {
-  library(kinship2)
-
-  data(minnbreast)
-
-  minnped <- with(
-    minnbreast,
-    ggpedigree:::pedigree(id,
-      fatherid,
-      motherid,
-      sex,
-      affected = cancer,
-      famid = famid
-    )
-  )
   ped8 <- minnped["8"] # a modest sized family
 
   # Subjects 150, 152, 154, 158 are children,
@@ -840,7 +772,6 @@ test_that("pedigree subscripting", {
 })
 
 test_that("pedigree other test", {
-  library(vdiffr)
   ped2mat <- matrix(c(
     1, 1, 0, 0, 1,
     1, 2, 0, 0, 2,

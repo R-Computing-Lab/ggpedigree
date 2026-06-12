@@ -9,7 +9,8 @@ kinship2_align.pedigree(
   packed = TRUE,
   width = 10,
   align = TRUE,
-  hints = ped$hints
+  hints = ped$hints,
+  classic = FALSE
 )
 }
 \arguments{
@@ -24,6 +25,8 @@ If numeric, a vector c(a1, a2) controlling alignment penalties (default TRUE)}
 
 \item{hints}{Optional list with `order` and `spouse` components to guide alignment.
 If NULL, kinship2_autohint is called to generate hints}
+
+\item{classic}{Logical, if TRUE uses classic alignment method (default FALSE). If FALSE, uses an optimized method.}
 }
 \value{
 For a single pedigree, a list containing:

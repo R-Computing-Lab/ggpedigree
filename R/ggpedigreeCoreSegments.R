@@ -1,10 +1,103 @@
+#' @title Add a single (possibly lineage-colored) segment layer
+#' @description
+#' Internal helper that appends a `geom_segment` layer to a ggplot object. When
+#' `lineage_active` is `TRUE` and the segment `type` participates in lineage
+#' coloring (and the data carries a `segment_lineage` column), the layer maps the
+#' `colour` aesthetic to `segment_lineage`. Otherwise it uses the fixed per-type
+#' color `config[["segment_<type>_color"]]`, preserving the original behavior.
+#' @param plotObject A ggplot object.
+#' @param data A data frame supplying the segment endpoints.
+#' @param mapping An `aes()` mapping for the segment geometry (x/xend/y/yend).
+#' @param type Segment type, one of "spouse", "parent", "offspring", "sibling", "mz".
+#' @param config A configuration list.
+#' @param lineage_active Logical; whether lineage coloring is in effect for this plot.
+#' @param ... Additional arguments passed to `ggplot2::geom_segment()`.
+#' @keywords internal
+#' @return A ggplot object with the segment layer added.
+.addSegmentLayer <- function(plotObject, data, mapping, type, config,
+                             lineage_active = FALSE, ...) {
+  dots <- list(...)
+  use_lineage <- isTRUE(lineage_active) &&
+    type %in% config$segment_lineage_types &&
+    "segment_lineage" %in% names(data)
+  use_backwards_compat <- isTRUE(config$segment_lineage_include) &&
+    type %in% config$segment_lineage_types &&
+    "segment_lineage" %in% names(data)
+
+
+  if (isTRUE(use_lineage)) {
+    mapping <- utils::modifyList(
+      mapping,
+      ggplot2::aes(colour = .data$segment_lineage)
+    )
+    layer <- do.call(
+      ggplot2::geom_segment,
+      c(list(data = data, mapping = mapping), dots)
+    )
+  } else if (isTRUE(use_backwards_compat) && config$debug == TRUE && "segment_lineage" %in% names(data) && length(unique(data$segment_lineage)) > 0
+  ) {
+    if (config$debug == TRUE) {
+      message("Using segment_lineage for coloring segments, but segment_lineage_include is TRUE. This is a legacy option that may be removed in the future. Consider setting segment_lineage_include to FALSE and segment_lineage_active to TRUE for better performance and more consistent behavior.")
+    }
+    segment_lineage_levels <- unique(data$segment_lineage)
+    needed_colors <- length(segment_lineage_levels)
+    if (is.null(config$segment_lineage_palette)) {
+      segment_lineage_palette_colors <- paletteer::paletteer_d("khroma::bam") # default palette with good colorblind accessibility
+    } else if (is.character(config$segment_lineage_palette && length(config$segment_lineage_palette) == 1)) {
+      segment_lineage_palette_colors <- paletteer::paletteer_d(config$segment_lineage_palette)
+    } else if (is.character(config$segment_lineage_palette) && length(config$segment_lineage_palette) >= needed_colors) {
+      segment_lineage_palette_colors <- config$segment_lineage_palette
+    } else {
+      stop("Invalid segment_lineage_palette configuration. Must be NULL, a single palette name, or a character vector of colors with length >= number of unique segment lineages.")
+    }
+    # should only be relevant when lineage active was set to false because of a know issue with plotly and aesthetics
+    # If there are unique lineages, hardcod the colors for each lineage
+
+
+    segment_lineage_colors <- setNames(
+      segment_lineage_palette_colors[1:needed_colors],
+      segment_lineage_levels
+    )
+
+    data <- data |> dplyr::mutate(segment_lineage_colors = segment_lineage_colors[.data$segment_lineage])
+
+    layer <- do.call(
+      ggplot2::geom_segment,
+      c(list(data = data, mapping = mapping, colour = data$segment_lineage_colors), dots)
+    )
+  } else {
+    if (config$debug == TRUE) {
+      message("Using fixed color for segments. To enable lineage coloring for this segment type, ensure that segment_lineage_include is FALSE, segment_lineage_active is TRUE, and that the data includes a segment_lineage column with appropriate values.")
+    }
+    fixed_color <- config[[paste0("segment_", type, "_color")]]
+    layer <- do.call(
+      ggplot2::geom_segment,
+      c(list(data = data, mapping = mapping, colour = fixed_color), dots)
+    )
+  }
+  plotObject + layer
+}
+
 #' @title Add Self Segments to ggplot Pedigree Plot
 #' @inheritParams ggPedigree
 #' @param plotObject A ggplot object.
 #' @keywords internal
 #' @return A ggplot object with added scales.
 
-.addSelfSegment <- function(plotObject, config, plot_connections) {
+.addSelfSegment <- function(
+  plotObject, config = list(
+    return_interactive = FALSE,
+    segment_self_linewidth = 0.5,
+    segment_self_color = "grey50",
+    segment_lineend = "round",
+    segment_linejoin = "round",
+    segment_self_linetype = "solid",
+    segment_self_angle = 90,
+    segment_self_curvature = 0.5,
+    segment_self_alpha = 1
+  ),
+  plot_connections
+) {
   otherself <- plot_connections$self_coords |>
     dplyr::filter(!is.na(.data$x_otherself)) |>
     dplyr::mutate(otherself_xkey = .makeSymmetricKey(.data$x_otherself, .data$x_pos)) |>
@@ -30,7 +123,7 @@
       alpha = config$segment_self_alpha,
       na.rm = TRUE
     )
-  } else if (config$return_interactive == TRUE) {
+  } else if (isTRUE(config$return_interactive)) {
     # For interactive plots, use geom_segment instead of geom_curve
     # to avoid issues with plotly rendering curves
 
@@ -43,7 +136,7 @@
           y1 = .data$y_pos,
           curvature = config$segment_self_curvature,
           angle = config$segment_self_angle,
-          t = .35
+          t = .15
         ),
         x_1midpoint = .data$midpoint$x,
         y_1midpoint = .data$midpoint$y
@@ -56,10 +149,23 @@
           y1 = .data$y_pos,
           curvature = config$segment_self_curvature,
           angle = config$segment_self_angle,
-          t = .5
+          t = .30
         ),
         x_2midpoint = .data$midpoint$x,
         y_2midpoint = .data$midpoint$y
+      ) |>
+      dplyr::mutate(
+        midpoint = .computeCurvedMidpoint(
+          x0 = .data$x_otherself,
+          y0 = .data$y_otherself,
+          x1 = .data$x_pos,
+          y1 = .data$y_pos,
+          curvature = config$segment_self_curvature,
+          angle = config$segment_self_angle,
+          t = .5
+        ),
+        x_3midpoint = .data$midpoint$x,
+        y_3midpoint = .data$midpoint$y
       ) |>
       dplyr::mutate(
         midpoint = .computeCurvedMidpoint(
@@ -73,6 +179,20 @@
         ),
         x_3midpoint = .data$midpoint$x,
         y_3midpoint = .data$midpoint$y
+      ) |>
+      dplyr::select(-"midpoint") |>
+      dplyr::mutate(
+        midpoint = .computeCurvedMidpoint(
+          x0 = .data$x_otherself,
+          y0 = .data$y_otherself,
+          x1 = .data$x_pos,
+          y1 = .data$y_pos,
+          curvature = config$segment_self_curvature,
+          angle = config$segment_self_angle,
+          t = .85
+        ),
+        x_4midpoint = .data$midpoint$x,
+        y_4midpoint = .data$midpoint$y
       ) |>
       dplyr::select(-"midpoint")
 
@@ -126,8 +246,23 @@
       data = otherself,
       ggplot2::aes(
         x = .data$x_3midpoint,
-        xend = .data$x_pos,
+        xend = .data$x_4midpoint,
         y = .data$y_3midpoint,
+        yend = .data$y_4midpoint
+      ),
+      linewidth = config$segment_self_linewidth,
+      color = config$segment_self_color,
+      lineend = config$segment_lineend,
+      linejoin = config$segment_linejoin,
+      linetype = config$segment_self_linetype,
+      alpha = config$segment_self_alpha,
+      na.rm = TRUE
+    ) + ggplot2::geom_segment(
+      data = otherself,
+      ggplot2::aes(
+        x = .data$x_4midpoint,
+        xend = .data$x_pos,
+        y = .data$y_4midpoint,
         yend = .data$y_pos
       ),
       linewidth = config$segment_self_linewidth,
@@ -154,6 +289,7 @@ addSelfSegment <- .addSelfSegment
 #' @param plotObject A ggplot object to which twin segments will be added.
 #' @param connections A data frame containing twin connection coordinates.
 #' @param plot_connections A data frame containing the coordinates for twin segments.
+#' @param lineage_active Logical; whether lineage coloring is in effect for this plot.
 #' @keywords internal
 #' @return A ggplot object with twin segments added.
 
@@ -161,61 +297,71 @@ addSelfSegment <- .addSelfSegment
                       connections,
                       config,
                       plot_connections,
-                      personID = "personID") {
+                      personID = "personID",
+                      lineage_active = FALSE) {
   # Sibling vertical drop line
   # special handling for twin sibling
 
-  plotObject <- plotObject + ggplot2::geom_segment(
+  plotObject <- .addSegmentLayer(
+    plotObject,
     data = plot_connections$twin_coords,
-    ggplot2::aes(
+    mapping = ggplot2::aes(
       x = .data$x_mid_twin,
       xend = .data$x_mid_sib,
       y = .data$y_mid_twin - config$gap_hoff,
       yend = .data$y_mid_sib - config$gap_hoff
     ),
+    type = "offspring",
+    config = config,
+    lineage_active = lineage_active,
     linewidth = config$segment_linewidth,
     lineend = config$segment_lineend,
     linejoin = config$segment_linejoin,
     linetype = config$segment_linetype,
-    color = config$segment_offspring_color,
     na.rm = TRUE
-  ) +
-    ggplot2::geom_segment(
-      data = plot_connections$twin_coords,
-      ggplot2::aes(
-        x = .data$x_pos,
-        xend = .data$x_mid_twin,
-        y = .data$y_pos,
-        yend = .data$y_mid_twin - config$gap_hoff
-      ),
-      linewidth = config$segment_linewidth,
-      lineend = config$segment_lineend,
-      linejoin = config$segment_linejoin,
-      linetype = config$segment_linetype,
-      color = config$segment_sibling_color,
-      na.rm = TRUE
-    )
+  )
+
+  plotObject <- .addSegmentLayer(
+    plotObject,
+    data = plot_connections$twin_coords,
+    mapping = ggplot2::aes(
+      x = .data$x_pos,
+      xend = .data$x_mid_twin,
+      y = .data$y_pos,
+      yend = .data$y_mid_twin - config$gap_hoff
+    ),
+    type = "sibling",
+    config = config,
+    lineage_active = lineage_active,
+    linewidth = config$segment_linewidth,
+    lineend = config$segment_lineend,
+    linejoin = config$segment_linejoin,
+    linetype = config$segment_linetype,
+    na.rm = TRUE
+  )
 
   if ("mz" %in% names(plot_connections$twin_coords) &&
     any(plot_connections$twin_coords$mz == TRUE, na.rm = TRUE)) {
-    plotObject <- plotObject + # horizontal line to twin midpoint for MZ twins
-      ggplot2::geom_segment(
-        data = plot_connections$twin_coords |>
-          dplyr::filter(.data$mz == TRUE),
-        ggplot2::aes(
-          x = .data$x_start,
-          xend = .data$x_end,
-          y = .data$y_start,
-          yend = .data$y_end
-        ),
-        linewidth = config$segment_linewidth,
-        lineend = config$segment_lineend,
-        linejoin = config$segment_linejoin,
-        linetype = config$segment_mz_linetype,
-        color = config$segment_mz_color,
-        alpha = config$segment_mz_alpha,
-        na.rm = TRUE
-      )
+    plotObject <- .addSegmentLayer(
+      plotObject,
+      data = plot_connections$twin_coords |>
+        dplyr::filter(.data$mz == TRUE),
+      mapping = ggplot2::aes(
+        x = .data$x_start,
+        xend = .data$x_end,
+        y = .data$y_start,
+        yend = .data$y_end
+      ),
+      type = "mz",
+      config = config,
+      lineage_active = lineage_active,
+      linewidth = config$segment_linewidth,
+      lineend = config$segment_lineend,
+      linejoin = config$segment_linejoin,
+      linetype = config$segment_mz_linetype,
+      alpha = config$segment_mz_alpha,
+      na.rm = TRUE
+    )
   }
 
   plotObject

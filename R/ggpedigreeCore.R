@@ -55,6 +55,7 @@ ggPedigree.core <- function(ped,
   fill_group_paternal <- c(
     "paternal",
     "patID",
+    "Pat ID",
     "pat ID",
     "paternal line",
     "paternal lineages",
@@ -98,7 +99,7 @@ ggPedigree.core <- function(ped,
     status_column = status_column,
     focal_fill_column = focal_fill_column
   )
-
+  # reduce_variables = FALSE, # is what breaks the focal segment fill
   if (config$debug == TRUE) {
     message("Pedigree data prepared. Number of individuals: ", nrow(ds_ped))
 
@@ -169,6 +170,82 @@ ggPedigree.core <- function(ped,
     #   sexVar = sexVar
   )
   # -----
+  # STEP 5.5: Resolve segment lineage coloring
+  # -----
+  # Determine whether segments should be colored by family lineage, and join the
+  # per-person `segment_lineage` value onto the connection tables. Because nodes
+  # already consume the single ggplot `color` scale, coloring segments
+  # independently requires a second color scale via {ggnewscale}.
+  node_uses_color <- .get_color_mode(config, status_column, focal_fill_column) != "none"
+  have_ggnewscale <- requireNamespace("ggnewscale", quietly = TRUE)
+
+  is_interactive <- isTRUE(config$return_interactive)
+
+  lineage_active <- isTRUE(config$segment_lineage_include) &&
+    "segment_lineage" %in% names(ds)
+
+  # A second, independent color scale (node color + segment lineage) needs
+  # {ggnewscale}. That second scale does not survive conversion to plotly, so in
+  # interactive mode we fall back to fixed segment colors when nodes are colored.
+  if (lineage_active && node_uses_color) {
+    if (is_interactive) {
+      warning(
+        "Combining node color mapping with segment lineage coloring is not ",
+        "supported in interactive (plotly) plots, because the second color scale ",
+        "(via 'ggnewscale') does not convert to plotly. Falling back to fixed ",
+        "segment colors. Use the static ggPedigree() for combined node + segment ",
+        "coloring, or disable node coloring."
+      )
+      if (isTRUE(config$debug)) {
+        message("Debug note: segment_lineage_include = TRUE with node color mapping is not supported in interactive mode. Consider setting return_interactive = FALSE for combined node + segment coloring.")
+      } else {
+        lineage_active <- FALSE
+      }
+    } else if (!have_ggnewscale) {
+      warning(
+        "segment_lineage_include = TRUE together with node color mapping requires ",
+        "the 'ggnewscale' package for independent color scales. Install ggnewscale, ",
+        "or disable node coloring (sex_color_include / focal_fill_include = FALSE). ",
+        "Falling back to fixed segment colors."
+      )
+      if (isTRUE(config$debug)) {
+        message(
+          "Debug note: ",
+          "segment_lineage_include = TRUE with node color mapping ",
+          "requires the 'ggnewscale' package. ",
+          "Install ggnewscale, or disable node coloring"
+        )
+      } else {
+        lineage_active <- FALSE
+      }
+    }
+  }
+
+  if (lineage_active == TRUE) {
+    lineage_lookup <- ds |>
+      dplyr::distinct(!!rlang::sym(personID), .data$segment_lineage)
+
+    # When reduce_variables = FALSE, calculateConnections already pulled
+    # segment_lineage from ped into connections via the broad left_join.
+    # Joining again would create segment_lineage.x / segment_lineage.y,
+    # breaking the name check in .addSegmentLayer.
+    if (!"segment_lineage" %in% names(connections)) {
+      connections <- connections |>
+        dplyr::left_join(lineage_lookup, by = personID)
+    }
+
+    # Twin coordinate table keys on the literal "personID" column
+    twin_lookup <- lineage_lookup |>
+      dplyr::rename(personID = !!rlang::sym(personID))
+    if (inherits(plot_connections$twin_coords, "data.frame") &&
+      "personID" %in% names(plot_connections$twin_coords) &&
+      !"segment_lineage" %in% names(plot_connections$twin_coords)) {
+      plot_connections$twin_coords <- plot_connections$twin_coords |>
+        dplyr::left_join(twin_lookup, by = "personID")
+    }
+  }
+
+  # -----
   # STEP 6: Initialize Plot
   # -----
 
@@ -227,57 +304,65 @@ ggPedigree.core <- function(ped,
   # -----
 
   # Spouse link between two parents
-  p <- p +
-    ggplot2::geom_segment(
-      data = connections,
-      ggplot2::aes(
-        x = .data$x_spouse,
-        xend = .data$x_pos,
-        y = .data$y_spouse,
-        yend = .data$y_pos
-      ),
-      linewidth = config$segment_linewidth,
-      lineend = config$segment_lineend,
-      linejoin = config$segment_linejoin,
-      color = config$segment_spouse_color,
-      linetype = config$segment_linetype,
-      na.rm = TRUE
-    )
+  p <- .addSegmentLayer(
+    plotObject = p,
+    data = connections,
+    mapping = ggplot2::aes(
+      x = .data$x_spouse,
+      xend = .data$x_pos,
+      y = .data$y_spouse,
+      yend = .data$y_pos
+    ),
+    type = "spouse",
+    config = config,
+    lineage_active = lineage_active,
+    linewidth = config$segment_linewidth,
+    lineend = config$segment_lineend,
+    linejoin = config$segment_linejoin,
+    linetype = config$segment_linetype,
+    na.rm = TRUE
+  )
 
   # Parent-child stub (child to mid-sibling point)
-
-  p <- p + ggplot2::geom_segment(
+  p <- .addSegmentLayer(
+    plotObject = p,
     data = connections,
-    ggplot2::aes(
+    mapping = ggplot2::aes(
       x = .data$x_mid_sib,
       xend = .data$x_fam,
       y = .data$y_mid_sib - config$gap_hoff,
       yend = .data$y_fam
     ),
+    type = "parent",
+    config = config,
+    lineage_active = lineage_active,
     linewidth = config$segment_linewidth,
     linetype = config$segment_linetype,
     lineend = config$segment_lineend,
     linejoin = config$segment_linejoin,
-    color = config$segment_parent_color,
     na.rm = TRUE
-  ) +
-    # Mid-sibling to parents midpoint
-    ggplot2::geom_segment(
-      data = connections |>
-        dplyr::filter(.data$link_as_twin == FALSE),
-      ggplot2::aes(
-        x = .data$x_pos,
-        xend = .data$x_mid_sib,
-        y = .data$y_pos - config$gap_hoff,
-        yend = .data$y_mid_sib - config$gap_hoff
-      ),
-      linewidth = config$segment_linewidth,
-      lineend = config$segment_lineend,
-      linejoin = config$segment_linejoin,
-      linetype = config$segment_linetype,
-      color = config$segment_offspring_color,
-      na.rm = TRUE
-    )
+  )
+
+  # Mid-sibling to parents midpoint
+  p <- .addSegmentLayer(
+    plotObject = p,
+    data = connections |>
+      dplyr::filter(.data$link_as_twin == FALSE),
+    mapping = ggplot2::aes(
+      x = .data$x_pos,
+      xend = .data$x_mid_sib,
+      y = .data$y_pos - config$gap_hoff,
+      yend = .data$y_mid_sib - config$gap_hoff
+    ),
+    type = "offspring",
+    config = config,
+    lineage_active = lineage_active,
+    linewidth = config$segment_linewidth,
+    lineend = config$segment_lineend,
+    linejoin = config$segment_linejoin,
+    linetype = config$segment_linetype,
+    na.rm = TRUE
+  )
 
   # if twins
   if (inherits(plot_connections$twin_coords, "data.frame")) {
@@ -300,27 +385,44 @@ ggPedigree.core <- function(ped,
       connections = connections,
       config = config,
       plot_connections = plot_connections,
-      personID = personID
+      personID = personID,
+      lineage_active = lineage_active
     )
   }
 
-  p <- p +
-    ggplot2::geom_segment(
-      data = connections |>
-        dplyr::filter(.data$link_as_twin == FALSE),
-      ggplot2::aes(
-        x = .data$x_pos,
-        xend = .data$x_pos,
-        y = .data$y_mid_sib - config$gap_hoff,
-        yend = .data$y_pos
-      ),
-      linewidth = config$segment_linewidth,
-      lineend = config$segment_lineend,
-      linejoin = config$segment_linejoin,
-      linetype = config$segment_linetype,
-      color = config$segment_sibling_color,
-      na.rm = TRUE
-    )
+  p <- .addSegmentLayer(
+    p,
+    data = connections |>
+      dplyr::filter(.data$link_as_twin == FALSE),
+    mapping = ggplot2::aes(
+      x = .data$x_pos,
+      xend = .data$x_pos,
+      y = .data$y_mid_sib - config$gap_hoff,
+      yend = .data$y_pos
+    ),
+    type = "sibling",
+    config = config,
+    lineage_active = lineage_active,
+    linewidth = config$segment_linewidth,
+    lineend = config$segment_lineend,
+    linejoin = config$segment_linejoin,
+    linetype = config$segment_linetype,
+    na.rm = TRUE
+  )
+
+  # Apply the segment lineage color scale before drawing nodes. When nodes also
+  # use a color scale, start a fresh color scale (via {ggnewscale}) so node and
+  # segment colors get independent legends.
+  if (lineage_active == TRUE || (config$segment_lineage_include == TRUE &&
+    isTRUE(config$debug)
+  )
+  ) {
+    p <- .add_segment_lineage_scales(p, config)
+    if (node_uses_color && have_ggnewscale &&
+      !is_interactive) {
+      p <- p + ggnewscale::new_scale_colour()
+    }
+  }
 
   # -----
   # STEP 8: Add Points (nodes)
@@ -564,16 +666,16 @@ ggPedigree.core <- function(ped,
   node_mode <- .pick_first(
     rules = list(
       list(
-        when = function() isTRUE(config$sex_color_include),
-        do   = "sex_color"
-      ),
-      list(
         when = function() isTRUE(config$focal_fill_include),
         do   = "focal_fill"
       ),
       list(
         when = function() isTRUE(config$status_include) && !is.null(status_column),
         do   = "status"
+      ),
+      list(
+        when = function() isTRUE(config$sex_color_include), # have later because this defaults to TRUE if any of the other modes are active, and we want it to be overridden by them
+        do   = "sex_color"
       )
     ),
     default = "shape_only"
@@ -725,8 +827,11 @@ addOverlay <- .addOverlay
   if (is.character(overlay_shape)) {
     shape_code <- switch(overlay_shape,
       "cross" = 4L, # x cross (conventional deceased marker)
+      "x" = 4L, # x cross
       "slash" = 47L, # / slash
-      "x"     = 8L, # asterisk-like x mark
+      "star" = 8L, # asterisk-like x mark
+      "plus" = 3L, # + plus sign
+      "dot" = 20L, # filled square
       4L # default to cross
     )
   } else {

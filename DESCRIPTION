@@ -1,6 +1,6 @@
 Package: ggpedigree
 Title: Visualizing Pedigrees with 'ggplot2' and 'plotly'
-Version: 1.2.0
+Version: 1.2.0.90
 Date/Publication: 2026
 Authors@R: c(
     person("S. Mason", "Garrison", email= "garrissm@wfu.edu", role = c("aut", "cre", "cph"),
@@ -25,6 +25,7 @@ Imports:
     tidyr
 Suggests:
     selectr (>= 0.5-1),
+    ggnewscale,
     svglite,
     kinship2,
     quadprog,
@@ -38,11 +39,13 @@ Suggests:
     purrr,
     data.table,
     discord,
+    mockery,
     OpenMx,
     NlsyLinks,
     rmarkdown,
     tibble,
     corrplot,
+    cowplot,
     showtext,
     sysfonts,
     withr,
@@ -52,6 +55,7 @@ Suggests:
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3
+Config/testthat/parallel: true
 Encoding: UTF-8
 Language: en-US
 LazyData: true

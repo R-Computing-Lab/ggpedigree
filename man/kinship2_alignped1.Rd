@@ -2,9 +2,21 @@
 % Please edit documentation in R/kinship2_alignped1.R
 \name{kinship2_alignped1}
 \alias{kinship2_alignped1}
+\alias{kinship2_alignped1_optimized}
 \title{Align pedigree - Process a single subject and their spouses}
 \usage{
-kinship2_alignped1(x, dad, mom, level, horder, packed, spouselist)
+kinship2_alignped1(
+  x,
+  dad,
+  mom,
+  level,
+  horder,
+  packed,
+  spouselist,
+  classic = FALSE
+)
+
+kinship2_alignped1_optimized(x, dad, mom, level, horder, packed, spouselist)
 }
 \arguments{
 \item{x}{Integer vector of subject ID(s) to process}
@@ -20,6 +32,8 @@ kinship2_alignped1(x, dad, mom, level, horder, packed, spouselist)
 \item{packed}{Logical, if TRUE uses compact packing algorithm}
 
 \item{spouselist}{Matrix defining spouse relationships}
+
+\item{classic}{Logical, if TRUE uses classic alignment method (default FALSE)}
 }
 \value{
 A list containing:

@@ -14,6 +14,7 @@
 #' @param horder Numeric vector of hint order for positioning subjects
 #' @param packed Logical, if TRUE uses compact packing algorithm
 #' @param spouselist Matrix defining spouse relationships
+#' @param classic Logical, if TRUE uses classic alignment method (default FALSE)
 #' @return A list containing:
 #'   \item{nid}{Matrix of subject IDs at each level and position}
 #'   \item{pos}{Matrix of horizontal positions}
@@ -27,7 +28,16 @@ kinship2_alignped1 <- function(x,
                                mom, level,
                                horder,
                                packed,
-                               spouselist) {
+                               spouselist,
+                               classic = FALSE) {
+  if (classic != TRUE) {
+    return(kinship2_alignped1_optimized(
+      x = x, dad = dad, mom = mom,
+      level = level, horder = horder,
+      packed = packed,
+      spouselist = spouselist
+    ))
+  }
   # Set a few constants
   maxlev <- max(level)
   lev <- level[x]
@@ -97,7 +107,8 @@ kinship2_alignped1 <- function(x,
     if (length(children) > 0) {
       rval1 <- kinship2_alignped2(
         children, dad, mom, level, horder,
-        packed, spouselist
+        packed, spouselist,
+        classic = classic
       )
       spouselist <- rval1$spouselist
       # set the parentage for any kids
@@ -136,7 +147,9 @@ kinship2_alignped1 <- function(x,
         rval <- rval1
         nokids <- FALSE
       } else {
-        rval <- kinship2_alignped3(rval, rval1, packed)
+        rval <- kinship2_alignped3(rval, rval1, packed,
+          classic = classic
+        )
       }
     }
   }
@@ -162,6 +175,141 @@ kinship2_alignped1 <- function(x,
     indx <- seq_len(ncol(rval$nid)) #
 
     rows <- (lev + 1):maxlev
+    n[rows] <- rval$n[rows]
+    nid[rows, indx] <- rval$nid[rows, ]
+    pos[rows, indx] <- rval$pos[rows, ]
+    fam[rows, indx] <- rval$fam[rows, ]
+    rval <- list(nid = nid, pos = pos, fam = fam, n = n)
+  }
+  rval$spouselist <- spouselist
+  rval
+}
+
+#' @rdname kinship2_alignped1
+kinship2_alignped1_optimized <- function(x, dad, mom, level, horder,
+                                         packed, spouselist) {
+  maxlev <- max(level)
+  lev <- level[x]
+  n <- integer(maxlev)
+
+  if (length(spouselist) == 0L) {
+    spouse <- NULL
+  } else {
+    if (any(spouselist[, 1L] == x)) {
+      sex <- 1L
+      sprows <- spouselist[, 1L] == x &
+        (spouselist[, 4L] == spouselist[, 3L] | spouselist[, 4L] == 0L)
+      spouse <- spouselist[sprows, 2L]
+    } else {
+      sex <- 2L
+      sprows <- spouselist[, 2L] == x &
+        (spouselist[, 4L] != spouselist[, 3L] | spouselist[, 4L] == 0L)
+      spouse <- spouselist[sprows, 1L]
+    }
+  }
+
+  if (length(spouse)) {
+    keep <- level[spouse] <= lev
+    spouse <- spouse[keep]
+    sprows <- (which(sprows))[keep]
+  }
+  nspouse <- length(spouse)
+
+  nid <- fam <- matrix(0L, maxlev, nspouse + 1L)
+  pos <- matrix(0.0, maxlev, nspouse + 1L)
+  n[lev] <- nspouse + 1L
+  pos[lev, ] <- 0:nspouse
+
+  if (nspouse == 0L) {
+    nid[lev, 1L] <- x
+    return(list(
+      nid = nid, pos = pos, fam = fam, n = n,
+      spouselist = spouselist
+    ))
+  }
+
+  lspouse <- spouse[spouselist[sprows, 3L] == 3L - sex]
+  rspouse <- spouse[spouselist[sprows, 3L] == sex]
+
+  if (any(spouselist[sprows, 3L] == 0L)) {
+    indx <- which(spouselist[sprows, 3L] == 0L)
+    nleft <- floor((length(sprows) + (sex == 2L)) / 2L)
+    nleft <- nleft - length(lspouse)
+    if (nleft > 0L) {
+      take <- seq_len(min(nleft, length(indx)))
+      lspouse <- c(lspouse, spouse[indx[take]])
+      indx <- indx[-take]
+    }
+    if (length(indx)) rspouse <- c(spouse[indx], rspouse)
+  }
+
+  nid[lev, ] <- c(lspouse, x, rspouse)
+  nid[lev, seq_len(nspouse)] <- nid[lev, seq_len(nspouse)] + .5
+
+  spouselist <- spouselist[-sprows, , drop = FALSE]
+
+  # Pre-compute once: subjects for which x is a parent (avoids re-scanning
+  # the full subject vector for every spouse pair in the loop below)
+  is_parent_x <- (dad == x | mom == x)
+
+  nokids <- TRUE
+  spouse <- c(lspouse, rspouse)
+
+  for (i in seq_len(nspouse)) {
+    ispouse <- spouse[i]
+    children <- which(is_parent_x & (dad == ispouse | mom == ispouse))
+    if (length(children) > 0L) {
+      rval1 <- kinship2_alignped2(children, dad, mom, level, horder,
+        packed, spouselist,
+        classic = FALSE
+      )
+      spouselist <- rval1$spouselist
+
+      temp <- floor(rval1$nid[lev + 1L, ])
+      indx <- seq_along(temp)[match(temp, children, nomatch = 0L) > 0L]
+      rval1$fam[lev + 1L, indx] <- i
+
+      if (!packed) {
+        kidmean <- mean(rval1$pos[lev + 1L, indx])
+        parmean <- mean(pos[lev, i + 0L:1L])
+        if (kidmean > parmean) {
+          indx <- i:(nspouse + 1L)
+          pos[lev, indx] <- pos[lev, indx] + (kidmean - parmean)
+        } else {
+          shift <- parmean - kidmean
+          for (j in seq(lev + 1L, maxlev)) {
+            jn <- rval1$n[j]
+            if (jn > 0L) {
+              rval1$pos[j, seq_len(jn)] <- rval1$pos[j, seq_len(jn)] + shift
+            }
+          }
+        }
+      }
+
+      if (nokids == TRUE) {
+        rval <- rval1
+        nokids <- FALSE
+      } else {
+        rval <- kinship2_alignped3(rval, rval1, packed, classic = FALSE)
+      }
+    }
+  }
+
+  if (nokids == TRUE) {
+    return(list(
+      nid = nid, pos = pos, fam = fam, n = n,
+      spouselist = spouselist
+    ))
+  }
+
+  if (ncol(rval$nid) >= 1L + nspouse) {
+    rval$n[lev] <- n[lev]
+    indx <- seq_len(nspouse + 1L)
+    rval$nid[lev, indx] <- nid[lev, ]
+    rval$pos[lev, indx] <- pos[lev, ]
+  } else {
+    indx <- seq_len(ncol(rval$nid))
+    rows <- seq(lev + 1L, maxlev)
     n[rows] <- rval$n[rows]
     nid[rows, indx] <- rval$nid[rows, ]
     pos[rows, indx] <- rval$pos[rows, ]

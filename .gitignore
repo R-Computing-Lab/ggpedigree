@@ -30,3 +30,4 @@ vignettes/articles/ggpedigree_config.rds
 *DESKTOP-16M0RPI's conflicted*
 /.claude
 .positai
+*.tmp.*

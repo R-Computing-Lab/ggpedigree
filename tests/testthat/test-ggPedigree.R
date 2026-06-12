@@ -1,7 +1,12 @@
+library(BGmisc)
+library(tidyverse)
+library(mockery)
+
+data("potter")
+data("inbreeding")
+
+
 test_that("broken hints doesn't cause a fatal error", {
-  library(BGmisc)
-  library(tidyverse)
-  data("potter") # load example data from BGmisc
   if ("twinID" %in% names(potter) && "zygosity" %in% names(potter)) {
     # Remove twinID and zygosity columns for this test
     potter <- potter %>%
@@ -60,8 +65,6 @@ test_that("broken hints doesn't cause a fatal error", {
 })
 
 test_that("ggPedigree returns a ggplot object", {
-  library(BGmisc)
-  data("potter") # load example data from BGmisc
   if ("twinID" %in% names(potter) && "zygosity" %in% names(potter)) {
     # Remove twinID and zygosity columns for this test
     potter <- potter %>%
@@ -97,9 +100,6 @@ test_that("ggPedigree errors when ped not df", {
 
 
 test_that("give static plot when plotly fails", {
-  library(BGmisc)
-  library(mockery)
-  data("potter") # load example data from BGmisc
   # Stub requireNamespace inside ggPedigree to simulate plotly not installed
   stub(ggPedigree, "requireNamespace", FALSE)
 
@@ -111,10 +111,6 @@ test_that("give static plot when plotly fails", {
 #  Apply vertical spacing factor if generation_height ≠ 1
 
 test_that("vertical spacing factor if generation_height ≠ 1", {
-  library(BGmisc)
-
-  data("potter") # load example data from BGmisc
-  # Stub requireNamespace inside ggPedigree to simulate plotly not installed
 
   p <- ggPedigree(potter, config = list(generation_width = 1))
   p_2 <- ggPedigree(potter, config = list(generation_width = 2))
@@ -131,19 +127,12 @@ test_that("vertical spacing factor if generation_height ≠ 1", {
 })
 
 test_that("config$outline_include works", {
-  library(BGmisc)
-
-  data("potter") # load example data from BGmisc
   p <- ggPedigree(potter, config = list(outline_include = TRUE))
   expect_s3_class(p, "gg") # Should return a ggplot object
 })
 
 # handle non-standard names
 test_that("ggPedigree handles non-standard names", {
-  library(BGmisc)
-  library(tidyverse)
-  data("potter") # load example data from BGmisc
-
   # Rename columns to non-standard names
   potter <- potter %>%
     rename(
@@ -171,9 +160,6 @@ test_that("ggPedigree handles non-standard names", {
 
 #  # Self-segment (for duplicate layout appearances of same person)
 test_that("ggPedigree handles self-segment", {
-  library(BGmisc)
-  data("inbreeding") # load example data from BGmisc
-
   # Add a duplicate appearance for a person
   df <- inbreeding
 
@@ -228,9 +214,6 @@ test_that("ggPedigree handles self-segment", {
 })
 
 test_that("focal fill works with ID", {
-  library(BGmisc)
-  data("potter") # load example data from BGmisc
-
   p <- ggPedigree(potter,
     famID = "famID",
     personID = "personID",
@@ -287,9 +270,6 @@ test_that("focal fill works with ID", {
 })
 
 test_that("focal fill works with non-standard personID column name", {
-  library(BGmisc)
-  data("potter") # load example data from BGmisc
-
   # Rename personID column to a non-standard name
   potter_renamed <- potter
   names(potter_renamed)[names(potter_renamed) == "personID"] <- "ID"
@@ -312,9 +292,6 @@ test_that("focal fill works with non-standard personID column name", {
 })
 
 test_that("focal fill works with ID and different methods", {
-  library(BGmisc)
-  data("potter") # load example data from BGmisc
-
   # Test with greyscale theme
   p <- ggPedigree(potter,
     famID = "famID",
@@ -383,9 +360,6 @@ test_that("focal fill works with ID and different methods", {
 })
 
 test_that("fill works with fill_column", {
-  library(BGmisc)
-  data("potter")
-
   p <- ggPedigree(potter,
     famID = "famID",
     personID = "personID",
@@ -406,9 +380,6 @@ test_that("fill works with fill_column", {
 })
 
 test_that("debug", {
-  library(BGmisc)
-  data("potter")
-
   expect_message(ggPedigree(potter,
     famID = "famID",
     personID = "personID",
@@ -501,11 +472,6 @@ test_that("behaves with kinship 2 pedigree object", {
 
 
 test_that("reduce_variables reduces object size", {
-  library(BGmisc)
-
-  data("potter") # load example data from BGmisc
-  # Stub requireNamespace inside ggPedigree to simulate plotly not installed
-
   p_reduced <- ggPedigree(potter, config = list(reduce_variables = FALSE))
   p <- ggPedigree(potter, config = list(reduce_variables = TRUE))
 
@@ -517,4 +483,453 @@ test_that("reduce_variables reduces object size", {
   p_reduced_build <- ggplot2::ggplot_build(p_reduced)
   # get file size of ggplot objects
   expect_true(object.size(p_build) < object.size(p_reduced_build)) # reduced plot should be smaller in size
+})
+
+
+# Tests for renumberPedigreeIDs
+
+
+make_renumber_df <- function(person_ids,
+                             mom_ids,
+                             dad_ids,
+                             twin_ids = NULL,
+                             spouse_ids = NULL,
+                             sex = NULL) {
+  df <- data.frame(
+    personID = person_ids,
+    momID = mom_ids,
+    dadID = dad_ids
+  )
+
+  if (!is.null(twin_ids)) {
+    df$twinID <- twin_ids
+  }
+
+  if (!is.null(spouse_ids)) {
+    df$spouseID <- spouse_ids
+  }
+
+  if (!is.null(sex)) {
+    df$sex <- sex
+  }
+
+  df
+}
+
+expect_ids_consistent <- function(original,
+                                  renumbered,
+                                  personID = "personID",
+                                  momID = "momID",
+                                  dadID = "dadID",
+                                  twinID = "twinID",
+                                  spouseID = "spouseID",
+                                  sort_ids = TRUE,
+                                  info = NULL) {
+  old_ids <- unique(original[[personID]])
+  old_ids <- old_ids[!is.na(old_ids)]
+
+  if (sort_ids) {
+    old_ids <- sort(old_ids)
+  }
+
+  id_key <- data.frame(
+    oldID = old_ids,
+    newID = seq_along(old_ids),
+    stringsAsFactors = FALSE
+  )
+
+  lookup <- stats::setNames(id_key$newID, as.character(id_key$oldID))
+
+  expected <- original
+  expected[[personID]] <- as.integer(unname(lookup[as.character(original[[personID]])]))
+  expected[[momID]] <- as.integer(unname(lookup[as.character(original[[momID]])]))
+  expected[[dadID]] <- as.integer(unname(lookup[as.character(original[[dadID]])]))
+
+  cols_to_check <- c(personID, momID, dadID)
+
+  if (twinID %in% names(original)) {
+    expected[[twinID]] <- as.integer(unname(lookup[as.character(original[[twinID]])]))
+    cols_to_check <- c(cols_to_check, twinID)
+  }
+
+  if (spouseID %in% names(original)) {
+    expected[[spouseID]] <- as.integer(unname(lookup[as.character(original[[spouseID]])]))
+    cols_to_check <- c(cols_to_check, spouseID)
+  }
+
+  expect_equal(
+    renumbered[, cols_to_check, drop = FALSE],
+    expected[, cols_to_check, drop = FALSE],
+    ignore_attr = TRUE,
+    info = info
+  )
+
+  expect_equal(nrow(renumbered), nrow(original), info = info)
+  expect_equal(names(renumbered), names(original), info = info)
+
+  expect_true(is.numeric(renumbered[[personID]]), info = info)
+  expect_true(is.numeric(renumbered[[momID]]), info = info)
+  expect_true(is.numeric(renumbered[[dadID]]), info = info)
+
+  if (twinID %in% names(renumbered)) {
+    expect_true(is.numeric(renumbered[[twinID]]), info = info)
+  }
+
+  if (spouseID %in% names(renumbered)) {
+    expect_true(is.numeric(renumbered[[spouseID]]), info = info)
+  }
+
+  invisible(NULL)
+}
+
+test_that("renumberPedigreeIDs renumbers numeric IDs consistently", {
+  df <- make_renumber_df(
+    person_ids = c(100, 200, 300),
+    mom_ids = c(NA, NA, 100),
+    dad_ids = c(NA, NA, 200),
+    sex = c(2, 1, 2)
+  )
+
+  out <- renumberPedigreeIDs(df)
+
+  expected <- data.frame(
+    personID = c(1, 2, 3),
+    momID = c(NA_real_, NA_real_, 1),
+    dadID = c(NA_real_, NA_real_, 2),
+    sex = c(2, 1, 2)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+  expect_ids_consistent(df, out)
+})
+
+test_that("renumberPedigreeIDs renumbers character IDs consistently", {
+  df <- make_renumber_df(
+    person_ids = c("alpha", "beta", "gamma"),
+    mom_ids = c(NA, NA, "alpha"),
+    dad_ids = c(NA, NA, "beta"),
+    sex = c(2, 1, 2)
+  )
+
+  out <- renumberPedigreeIDs(df)
+
+  expected <- data.frame(
+    personID = c(1, 2, 3),
+    momID = c(NA_real_, NA_real_, 1),
+    dadID = c(NA_real_, NA_real_, 2),
+    sex = c(2, 1, 2)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+  expect_ids_consistent(df, out)
+})
+
+test_that("renumberPedigreeIDs renumbers twin IDs consistently when present", {
+  df <- make_renumber_df(
+    person_ids = c(100, 200, 300, 400),
+    mom_ids = c(NA, NA, 100, 100),
+    dad_ids = c(NA, NA, 200, 200),
+    twin_ids = c(NA, NA, 400, 300),
+    sex = c(2, 1, 2, 2)
+  )
+
+  out <- renumberPedigreeIDs(df)
+
+  expected <- data.frame(
+    personID = c(1, 2, 3, 4),
+    momID = c(NA_real_, NA_real_, 1, 1),
+    dadID = c(NA_real_, NA_real_, 2, 2),
+    twinID = c(NA_real_, NA_real_, 4, 3),
+    sex = c(2, 1, 2, 2)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+  expect_ids_consistent(df, out)
+})
+
+test_that("renumberPedigreeIDs renumbers spouse IDs consistently when present", {
+  df <- make_renumber_df(
+    person_ids = c(100, 200, 300),
+    mom_ids = c(NA, NA, 100),
+    dad_ids = c(NA, NA, 200),
+    spouse_ids = c(200, 100, NA),
+    sex = c(2, 1, 2)
+  )
+
+  out <- renumberPedigreeIDs(df)
+
+  expected <- data.frame(
+    personID = c(1, 2, 3),
+    momID = c(NA_real_, NA_real_, 1),
+    dadID = c(NA_real_, NA_real_, 2),
+    spouseID = c(2, 1, NA_real_),
+    sex = c(2, 1, 2)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+  expect_ids_consistent(df, out)
+})
+
+test_that("renumberPedigreeIDs renumbers twin and spouse IDs together", {
+  df <- make_renumber_df(
+    person_ids = c("a", "b", "c", "d"),
+    mom_ids = c(NA, NA, "a", "a"),
+    dad_ids = c(NA, NA, "b", "b"),
+    twin_ids = c(NA, NA, "d", "c"),
+    spouse_ids = c("b", "a", NA, NA),
+    sex = c(2, 1, 2, 2)
+  )
+
+  out <- renumberPedigreeIDs(df)
+
+  expected <- data.frame(
+    personID = c(1, 2, 3, 4),
+    momID = c(NA_real_, NA_real_, 1, 1),
+    dadID = c(NA_real_, NA_real_, 2, 2),
+    twinID = c(NA_real_, NA_real_, 4, 3),
+    spouseID = c(2, 1, NA_real_, NA_real_),
+    sex = c(2, 1, 2, 2)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+  expect_ids_consistent(df, out)
+})
+
+test_that("renumberPedigreeIDs recodes unknown twin and spouse references to NA", {
+  df <- make_renumber_df(
+    person_ids = c(10, 20, 30),
+    mom_ids = c(NA, NA, 10),
+    dad_ids = c(NA, NA, 20),
+    twin_ids = c(NA, NA, 999),
+    spouse_ids = c(20, 999, NA)
+  )
+
+  out <- renumberPedigreeIDs(df)
+
+  expected <- data.frame(
+    personID = c(1, 2, 3),
+    momID = c(NA_real_, NA_real_, 1),
+    dadID = c(NA_real_, NA_real_, 2),
+    twinID = c(NA_real_, NA_real_, NA_real_),
+    spouseID = c(2, NA_real_, NA_real_)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+  expect_ids_consistent(df, out)
+})
+
+test_that("renumberPedigreeIDs preserves non-ID columns", {
+  df <- data.frame(
+    personID = c(10, 20, 30),
+    momID = c(NA, NA, 10),
+    dadID = c(NA, NA, 20),
+    twinID = c(NA, NA, NA),
+    spouseID = c(20, 10, NA),
+    sex = c(2, 1, 2),
+    name = c("mother", "father", "child"),
+    birth_year = c(1950, 1948, 1980)
+  )
+
+  out <- renumberPedigreeIDs(df)
+
+  expect_equal(out$sex, df$sex)
+  expect_equal(out$name, df$name)
+  expect_equal(out$birth_year, df$birth_year)
+
+  expect_ids_consistent(df, out)
+})
+
+test_that("renumberPedigreeIDs can use order of first appearance", {
+  df <- make_renumber_df(
+    person_ids = c(300, 100, 200),
+    mom_ids = c(NA, NA, 100),
+    dad_ids = c(NA, NA, 300),
+    spouse_ids = c(100, 300, NA)
+  )
+
+  out <- renumberPedigreeIDs(df, sort_ids = FALSE)
+
+  expected <- data.frame(
+    personID = c(1, 2, 3),
+    momID = c(NA_real_, NA_real_, 2),
+    dadID = c(NA_real_, NA_real_, 1),
+    spouseID = c(2, 1, NA_real_)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+  expect_ids_consistent(df, out, sort_ids = FALSE)
+})
+
+test_that("renumberPedigreeIDs sorts IDs by default", {
+  df <- make_renumber_df(
+    person_ids = c(300, 100, 200),
+    mom_ids = c(NA, NA, 100),
+    dad_ids = c(NA, NA, 300),
+    spouse_ids = c(100, 300, NA)
+  )
+
+  out <- renumberPedigreeIDs(df)
+
+  expected <- data.frame(
+    personID = c(3, 1, 2),
+    momID = c(NA_real_, NA_real_, 1),
+    dadID = c(NA_real_, NA_real_, 3),
+    spouseID = c(1, 3, NA_real_)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+  expect_ids_consistent(df, out, sort_ids = TRUE)
+})
+
+test_that("renumberPedigreeIDs returns key when requested", {
+  df <- make_renumber_df(
+    person_ids = c(10, 20, 30),
+    mom_ids = c(NA, NA, 10),
+    dad_ids = c(NA, NA, 20),
+    spouse_ids = c(20, 10, NA)
+  )
+
+  out <- renumberPedigreeIDs(df, return_key = TRUE)
+
+  expect_type(out, "list")
+  expect_named(out, c("ped", "id_key"))
+
+  expected_key <- data.frame(
+    oldID = c(10, 20, 30),
+    newID = c(1, 2, 3),
+    stringsAsFactors = FALSE
+  )
+
+  expect_equal(out$id_key, expected_key, ignore_attr = TRUE)
+  expect_ids_consistent(df, out$ped)
+})
+
+test_that("renumberPedigreeIDs recodes unknown parent references to NA", {
+  df <- make_renumber_df(
+    person_ids = c(10, 20, 30),
+    mom_ids = c(NA, NA, 999),
+    dad_ids = c(NA, NA, 20)
+  )
+
+  out <- renumberPedigreeIDs(df)
+
+  expected <- data.frame(
+    personID = c(1, 2, 3),
+    momID = c(NA_real_, NA_real_, NA_real_),
+    dadID = c(NA_real_, NA_real_, 2)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+  expect_ids_consistent(df, out)
+})
+
+test_that("renumberPedigreeIDs supports user-specified parent ID column names", {
+  df <- data.frame(
+    id = c("p3", "p1", "p2"),
+    mother = c(NA, NA, "p1"),
+    father = c(NA, NA, "p3"),
+    sex = c(2, 1, 2)
+  )
+
+  out <- renumberPedigreeIDs(
+    df,
+    personID = "id",
+    momID = "mother",
+    dadID = "father",
+    sort_ids = FALSE
+  )
+
+  expected <- data.frame(
+    id = c(1, 2, 3),
+    mother = c(NA_real_, NA_real_, 2),
+    father = c(NA_real_, NA_real_, 1),
+    sex = c(2, 1, 2)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+
+  expect_ids_consistent(
+    df,
+    out,
+    personID = "id",
+    momID = "mother",
+    dadID = "father",
+    sort_ids = FALSE
+  )
+})
+
+test_that("renumberPedigreeIDs supports user-specified twin and spouse ID column names", {
+  df <- data.frame(
+    id = c("p1", "p2", "p3", "p4"),
+    mother = c(NA, NA, "p1", "p1"),
+    father = c(NA, NA, "p2", "p2"),
+    co_twin = c(NA, NA, "p4", "p3"),
+    partner = c("p2", "p1", NA, NA),
+    sex = c(2, 1, 2, 2)
+  )
+
+  out <- renumberPedigreeIDs(
+    df,
+    personID = "id",
+    momID = "mother",
+    dadID = "father",
+    twinID = "co_twin",
+    spouseID = "partner",
+    sort_ids = FALSE
+  )
+
+  expected <- data.frame(
+    id = c(1, 2, 3, 4),
+    mother = c(NA_real_, NA_real_, 1, 1),
+    father = c(NA_real_, NA_real_, 2, 2),
+    co_twin = c(NA_real_, NA_real_, 4, 3),
+    partner = c(2, 1, NA_real_, NA_real_),
+    sex = c(2, 1, 2, 2)
+  )
+
+  expect_equal(out, expected, ignore_attr = TRUE)
+
+  expect_ids_consistent(
+    df,
+    out,
+    personID = "id",
+    momID = "mother",
+    dadID = "father",
+    twinID = "co_twin",
+    spouseID = "partner",
+    sort_ids = FALSE
+  )
+})
+
+test_that("renumberPedigreeIDs errors on invalid inputs", {
+  expect_error(
+    renumberPedigreeIDs(list(personID = 1:3)),
+    regexp = "ped must be a data frame"
+  )
+
+  df <- data.frame(
+    personID = 1:3,
+    momID = c(NA, NA, 1),
+    dadID = c(NA, NA, 2)
+  )
+
+  expect_error(
+    renumberPedigreeIDs(df, personID = c("personID", "id")),
+    regexp = "personID must be a character scalar"
+  )
+
+  expect_error(
+    renumberPedigreeIDs(df, momID = c("momID", "mother")),
+    regexp = "momID must be a character scalar"
+  )
+
+  expect_error(
+    renumberPedigreeIDs(df, dadID = c("dadID", "father")),
+    regexp = "dadID must be a character scalar"
+  )
+
+  expect_error(
+    renumberPedigreeIDs(df[, c("personID", "momID")]),
+    regexp = "ped is missing required column"
+  )
 })
