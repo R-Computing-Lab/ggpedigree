@@ -1100,11 +1100,11 @@ tibble::tibble(Config_Key = cfg_names) %>%
 
 
 ```{r paged.print=TRUE}
-df <- getDefaultPlotConfig("ggPedigree") %>%
+df <- ggpedigree:::getDefaultPlotConfig("ggPedigree") %>%
   # is a list
   unlist() %>%
   as.data.frame() %>%
-  rownames_to_column(var = "Config_Key") %>%
+  tibble::rownames_to_column(var = "Config_Key") %>%
   rename(Default_Value = ".")
 df %>%
   knitr::kable()
