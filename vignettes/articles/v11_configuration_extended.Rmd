@@ -1086,7 +1086,7 @@ The `config` argument accepts many options. Most users will only change a small 
 <summary><strong>Show all config keys (names only)</strong></summary>
 
 ```{r}
-cfg_names <- sort(names(getDefaultPlotConfig("ggPedigree")))
+cfg_names <- sort(names(ggpedigree:::getDefaultPlotConfig("ggPedigree")))
 
 tibble::tibble(Config_Key = cfg_names) %>%
   knitr::kable()
