@@ -320,6 +320,7 @@ ggPedigree.core <- function(ped,
     lineend = config$segment_lineend,
     linejoin = config$segment_linejoin,
     linetype = config$segment_linetype,
+    alpha = config$segment_spouse_alpha,
     na.rm = TRUE
   )
 
