@@ -189,6 +189,10 @@ fig1 <- ggPedigree(
 #> Pedigree data prepared. Number of individuals: 14
 #> Coordinates calculated. Number of individuals: 14
 #> Connections calculated. Number of connections: 14
+#> Using fixed color for segments. To enable lineage coloring for this segment type, ensure that segment_lineage_include is FALSE, segment_lineage_active is TRUE, and that the data includes a segment_lineage column with appropriate values.
+#> Using fixed color for segments. To enable lineage coloring for this segment type, ensure that segment_lineage_include is FALSE, segment_lineage_active is TRUE, and that the data includes a segment_lineage column with appropriate values.
+#> Using fixed color for segments. To enable lineage coloring for this segment type, ensure that segment_lineage_include is FALSE, segment_lineage_active is TRUE, and that the data includes a segment_lineage column with appropriate values.
+#> Using fixed color for segments. To enable lineage coloring for this segment type, ensure that segment_lineage_include is FALSE, segment_lineage_active is TRUE, and that the data includes a segment_lineage column with appropriate values.
 #> Adding nodes to the plot...
 #> Focal fill column:
 #> Status column: proband
@@ -376,7 +380,7 @@ m1 <- ggPedigree(potter %>% filter(personID %in% c(1:7, 101:104)),
     focal_fill_color_values = focal_fill_color_values_wfu,
     focal_fill_force_zero = TRUE,
     label_method = "geom_text",
-    focal_fill_na_value = text_color_wfu,
+    focal_fill_na_color = text_color_wfu,
     focal_fill_scale_midpoint = 0.40,
     focal_fill_component = "matID",
     focal_fill_labels = NULL,
@@ -414,7 +418,7 @@ m2 <- ggPedigree(potter,
     focal_fill_component = "mitochondrial",
     focal_fill_force_zero = TRUE,
     label_method = "ggrepel",
-    focal_fill_na_value = text_color_wfu,
+    focal_fill_na_color = text_color_wfu,
     label_text_angle = -30,
     sex_legend_show = FALSE,
     sex_color_include = FALSE

@@ -162,9 +162,6 @@ file.
 - [`generateSpouseList()`](https://r-computing-lab.github.io/ggpedigree/reference/generateSpouseList.md)
   : Generate a spouselist matrix
 
-- [`getDefaultPlotConfig()`](https://r-computing-lab.github.io/ggpedigree/reference/getDefaultPlotConfig.md)
-  : Shared Default Plotting Configuration
-
 - [`ggPedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/ggPedigree.md)
   [`ggpedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/ggPedigree.md)
   : Plot a custom pedigree diagram
@@ -219,7 +216,7 @@ file.
   ggPedigree()](https://r-computing-lab.github.io/ggpedigree/articles/v01_plots_extended.md):
 - [Using config to control ggpedigree
   plots](https://r-computing-lab.github.io/ggpedigree/articles/v02_configuration.md):
-- [Extended: More uses of \`config\` to control ggpedigree
+- [Extended: More uses of config to control ggpedigree
   plots](https://r-computing-lab.github.io/ggpedigree/articles/v11_configuration_extended.md):
 - [Interactive Pedigree Plotting with
   ggPedigreeInteractive](https://r-computing-lab.github.io/ggpedigree/articles/v20_interactiveplots.md):

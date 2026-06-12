@@ -11,7 +11,7 @@ of individuals (marked as `extra`) to ensure relational accuracy."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.90</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +25,7 @@ of individuals (marked as `extra`) to ensure relational accuracy."></head><body>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/v00_plots.html">Plotting pedigrees with ggPedigree()</a></li>
     <li><a class="dropdown-item" href="../articles/v01_plots_extended.html">Extended: Plotting pedigrees with ggPedigree()</a></li>
     <li><a class="dropdown-item" href="../articles/v02_configuration.html">Using config to control ggpedigree plots</a></li>
-    <li><a class="dropdown-item" href="../articles/v11_configuration_extended.html">Extended: More uses of `config` to control ggpedigree plots</a></li>
+    <li><a class="dropdown-item" href="../articles/v11_configuration_extended.html">Extended: More uses of config to control ggpedigree plots</a></li>
     <li><a class="dropdown-item" href="../articles/v20_interactiveplots.html">Interactive Pedigree Plotting with ggPedigreeInteractive</a></li>
     <li><a class="dropdown-item" href="../articles/v21_extendedinteractiveplots.html">Extended: More Complex Pedigree Plots with ggPedigreeInteractive</a></li>
     <li><a class="dropdown-item" href="../articles/v22_plots_morecomplexity.html">Extended: Plotting more complicated pedigrees with `ggPedigree()`</a></li>
@@ -45,7 +45,7 @@ of individuals (marked as `extra`) to ensure relational accuracy."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Calculate connections for a pedigree dataset</h1>
-      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/v1.2.0/R/calcConnections.R" class="external-link"><code>R/calcConnections.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/main/R/calcConnections.R" class="external-link"><code>R/calcConnections.R</code></a></small>
       <div class="d-none name"><code>calculateConnections.Rd</code></div>
     </div>
 
@@ -136,7 +136,7 @@ of individuals (marked as `extra`) to ensure relational accuracy.</p>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">conns</span><span class="op">$</span><span class="va">connections</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   personID        x_pos y_pos dadID momID x_fam y_fam parent_hash couple_hash</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1        A 1.000000e+00     1  &lt;NA&gt;  &lt;NA&gt;    NA    NA        &lt;NA&gt;         A.X</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        B 2.237231e-20     2     X     A   0.5     1         A.X         B.C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        B 2.886429e-19     2     X     A   0.5     1         A.X         B.C</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3        C 1.000000e+00     2     X     A   0.5     1         A.X         B.C</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4        D 5.000000e-01     3     B     C   0.5     2         B.C        &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5        X 0.000000e+00     1  &lt;NA&gt;  &lt;NA&gt;    NA    NA        &lt;NA&gt;         A.X</span>
@@ -149,8 +149,8 @@ of individuals (marked as `extra`) to ensure relational accuracy.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          x_dad y_dad     x_spouse y_spouse x_mid_spouse y_mid_spouse x_mid_sib</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1           NA    NA 0.000000e+00        1          0.5            1        NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.000000e+00     1 1.000000e+00        2          0.5            2       0.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.000000e+00     1 2.237231e-20        2          0.5            2       0.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2.237231e-20     2           NA       NA           NA           NA       0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.000000e+00     1 2.886429e-19        2          0.5            2       0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2.886429e-19     2           NA       NA           NA           NA       0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5           NA    NA 1.000000e+00        1          0.5            1        NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   y_mid_sib</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1        NA</span>

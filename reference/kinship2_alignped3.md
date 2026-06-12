@@ -8,7 +8,9 @@ appropriately.
 ## Usage
 
 ``` r
-kinship2_alignped3(x1, x2, packed, space = 1)
+kinship2_alignped3(x1, x2, packed, space = 1, classic = FALSE)
+
+kinship2_alignped3_optimized(x1, x2, packed, space = 1)
 ```
 
 ## Arguments
@@ -29,6 +31,10 @@ kinship2_alignped3(x1, x2, packed, space = 1)
 
   Numeric, horizontal spacing between structures when packed=FALSE
   (default 1)
+
+- classic:
+
+  Logical, if TRUE uses classic alignment method (default FALSE)
 
 ## Value
 

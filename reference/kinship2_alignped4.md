@@ -9,7 +9,11 @@ quadprog package.
 ## Usage
 
 ``` r
-kinship2_alignped4(rval, spouse, level, width, align)
+kinship2_alignped4(rval, spouse, level, width, align, classic = FALSE)
+
+kinship2_alignped4_optimized(rval, spouse, level, width, align)
+
+kinship2_alignped4_fallback_solution(rval, myid, width, n)
 ```
 
 ## Arguments
@@ -35,6 +39,10 @@ kinship2_alignped4(rval, spouse, level, width, align)
   Logical or numeric vector. If logical, uses default alignment
   parameters. If numeric, should be a vector c(a1, a2) where a1 controls
   parent-child penalties and a2 controls spouse penalties
+
+- classic:
+
+  Logical, if TRUE uses classic alignment method (default TRUE)
 
 ## Value
 

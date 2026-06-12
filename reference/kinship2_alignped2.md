@@ -8,7 +8,18 @@ using kinship2_alignped3.
 ## Usage
 
 ``` r
-kinship2_alignped2(x, dad, mom, level, horder, packed, spouselist)
+kinship2_alignped2(
+  x,
+  dad,
+  mom,
+  level,
+  horder,
+  packed,
+  spouselist,
+  classic = FALSE
+)
+
+kinship2_alignped2_optimized(x, dad, mom, level, horder, packed, spouselist)
 ```
 
 ## Arguments
@@ -40,6 +51,10 @@ kinship2_alignped2(x, dad, mom, level, horder, packed, spouselist)
 - spouselist:
 
   Matrix defining spouse relationships
+
+- classic:
+
+  Logical, if TRUE uses classic alignment method (default FALSE)
 
 ## Value
 

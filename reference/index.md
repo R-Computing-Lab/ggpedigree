@@ -23,9 +23,6 @@
 - [`generateSpouseList()`](https://r-computing-lab.github.io/ggpedigree/reference/generateSpouseList.md)
   : Generate a spouselist matrix
 
-- [`getDefaultPlotConfig()`](https://r-computing-lab.github.io/ggpedigree/reference/getDefaultPlotConfig.md)
-  : Shared Default Plotting Configuration
-
 - [`ggPedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/ggPedigree.md)
   [`ggpedigree()`](https://r-computing-lab.github.io/ggpedigree/reference/ggPedigree.md)
   : Plot a custom pedigree diagram

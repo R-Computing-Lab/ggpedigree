@@ -8,7 +8,18 @@ kinship2_align.pedigree to construct the entire pedigree layout.
 ## Usage
 
 ``` r
-kinship2_alignped1(x, dad, mom, level, horder, packed, spouselist)
+kinship2_alignped1(
+  x,
+  dad,
+  mom,
+  level,
+  horder,
+  packed,
+  spouselist,
+  classic = FALSE
+)
+
+kinship2_alignped1_optimized(x, dad, mom, level, horder, packed, spouselist)
 ```
 
 ## Arguments
@@ -40,6 +51,10 @@ kinship2_alignped1(x, dad, mom, level, horder, packed, spouselist)
 - spouselist:
 
   Matrix defining spouse relationships
+
+- classic:
+
+  Logical, if TRUE uses classic alignment method (default FALSE)
 
 ## Value
 

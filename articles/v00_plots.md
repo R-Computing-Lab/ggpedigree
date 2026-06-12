@@ -302,7 +302,7 @@ ggPedigree(potter,
     #  focal_fill_mid_color = "red",
     #   focal_fill_low_color = "#0D082AFF",
     focal_fill_force_zero = TRUE,
-    focal_fill_na_value = "black",
+    focal_fill_na_color = "black",
     focal_fill_scale_midpoint = 0.25,
     focal_fill_component = "additive",
     focal_fill_method = "gradient",
@@ -460,4 +460,4 @@ the package file size reasonable. These are provided as articles that
 demonstrate more complex pedigree plots. You can find these on the
 [ggpedigree website](https://r-computing-lab.github.io/ggpedigree/).
 These articles cover advanced topics such as: multiple families,
-self-loops, and other advanced features.
+self-loops, multiple status overlays, and more.

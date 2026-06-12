@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Extended: More uses of `config` to control ggpedigree plots • ggpedigree</title>
+<title>Extended: More uses of config to control ggpedigree plots • ggpedigree</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Extended: More uses of `config` to control ggpedigree plots">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Extended: More uses of config to control ggpedigree plots">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.90</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,7 @@
 <li><a class="dropdown-item" href="../articles/v00_plots.html">Plotting pedigrees with ggPedigree()</a></li>
     <li><a class="dropdown-item" href="../articles/v01_plots_extended.html">Extended: Plotting pedigrees with ggPedigree()</a></li>
     <li><a class="dropdown-item" href="../articles/v02_configuration.html">Using config to control ggpedigree plots</a></li>
-    <li><a class="dropdown-item" href="../articles/v11_configuration_extended.html">Extended: More uses of `config` to control ggpedigree plots</a></li>
+    <li><a class="dropdown-item" href="../articles/v11_configuration_extended.html">Extended: More uses of config to control ggpedigree plots</a></li>
     <li><a class="dropdown-item" href="../articles/v20_interactiveplots.html">Interactive Pedigree Plotting with ggPedigreeInteractive</a></li>
     <li><a class="dropdown-item" href="../articles/v21_extendedinteractiveplots.html">Extended: More Complex Pedigree Plots with ggPedigreeInteractive</a></li>
     <li><a class="dropdown-item" href="../articles/v22_plots_morecomplexity.html">Extended: Plotting more complicated pedigrees with `ggPedigree()`</a></li>
@@ -66,10 +66,10 @@
 <script src="v11_configuration_extended_files/plotly-main-2.25.2/plotly-latest.min.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Extended: More uses of `config` to control ggpedigree plots</h1>
+      <h1>Extended: More uses of config to control ggpedigree plots</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/v1.2.0/vignettes/articles/v11_configuration_extended.Rmd" class="external-link"><code>vignettes/articles/v11_configuration_extended.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/main/vignettes/articles/v11_configuration_extended.Rmd" class="external-link"><code>vignettes/articles/v11_configuration_extended.Rmd</code></a></small>
       <div class="d-none name"><code>v11_configuration_extended.Rmd</code></div>
     </div>
 
@@ -92,7 +92,7 @@ values.</p>
 you want to change. Any options you do not specify will use the package
 defaults. You can see a full list of supported options and their
 defaults by reviewing the documentation for
-<code><a href="../reference/getDefaultPlotConfig.html">getDefaultPlotConfig()</a></code>.</p>
+<code>getDefaultPlotConfig()</code>.</p>
 <div class="section level2">
 <h2 id="basic-usage-of-config-in-ggpedigree">Basic usage of <code>config</code> in <code>ggPedigree()</code><a class="anchor" aria-label="anchor" href="#basic-usage-of-config-in-ggpedigree"></a>
 </h2>
@@ -232,7 +232,9 @@ slightly.</p>
 <p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="672"></p>
 <p>Note that short labels are less likely to overlap, so consider
 abbreviating labels if your pedigree is dense. In this example, I
-enlarged the text size to demonstrate repulsion more clearly.</p>
+enlarged the text size to demonstrate repulsion more clearly. There is a
+helper function called <code><a href="../reference/dot-renumberPedigreeIDs.html">renumberPedigreeIDs()</a></code> that can be
+helpful in creating shorter IDs.</p>
 </div>
 <div class="section level3">
 <h3 id="points-and-outlines">2) Points and outlines<a class="anchor" aria-label="anchor" href="#points-and-outlines"></a>
@@ -328,7 +330,7 @@ segment color.</p>
 <div class="section level3">
 <h3 id="sex-appearance">4) Sex appearance<a class="anchor" aria-label="anchor" href="#sex-appearance"></a>
 </h3>
-<p>Sex is controlled by:</p>
+<p>Sex is controlled by settings such as:</p>
 <ul>
 <li><code>sex_color_include</code></li>
 <li><code>sex_color_palette</code></li>
@@ -340,7 +342,7 @@ segment color.</p>
 <code>sex_legend_show</code>, <code>sex_legend_title</code>
 </li>
 </ul>
-<p>This example shows sex legend and customizes shapes.</p>
+<p>This example shows the sex legend and customizes shapes.</p>
 <p>Here I use shapes 17 (triangle) for males, 18 (diamond) for females,
 and 16 (circle) for unknown. You can find a full list of shape codes in
 the <code>pch</code> documentation (<code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">?points</a></code>). You can also
@@ -391,14 +393,14 @@ for fun.</p>
 <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggsave()</a></code> to save the plot to a file, as some R graphics
 devices may render emoji differently. Notice how the emoji shapes appear
 in the saved PNG file below compares to the image rendered during the
-preview above. These may vary because of differences in font
+preview above. These images may vary because of differences in font
 rendering.</p>
 <p><img src="custom_sex_emoji_pedigree.png" style="width:7in;height:5in"></p>
 </div>
 <div class="section level3">
 <h3 id="affected-status-overlay">5) Affected status overlay<a class="anchor" aria-label="anchor" href="#affected-status-overlay"></a>
 </h3>
-<p>Affected status behavior is controlled by keys such as:</p>
+<p>Affected status behavior is controlled by config keys such as:</p>
 <ul>
 <li><code>status_include</code></li>
 <li>
@@ -617,6 +619,7 @@ used for segment drawing.</p>
 <div class="section level3">
 <h3 id="focal-fill-highlighting-relatives-of-a-focal-individual">6) Focal fill: highlighting relatives of a focal individual<a class="anchor" aria-label="anchor" href="#focal-fill-highlighting-relatives-of-a-focal-individual"></a>
 </h3>
+<!-- TODO: combine sections 6 and 7 because they both are about visualizing relationships -->
 <p>A common analysis task is to pick a focal individual and visually
 emphasize how strongly other individuals are related to that focal
 person. In <a href="https://github.com/R-Computing-Lab/ggpedigree/" class="external-link">ggpedigree</a>, this is handled by <strong>focal
@@ -746,10 +749,10 @@ breaks.</p>
 </h4>
 <p>When focal fill is computed, some individuals can have missing focal
 values (for example if they are disconnected). You can control the color
-used for missing values with <code>focal_fill_na_value</code>. The
+used for missing values with <code>focal_fill_na_color</code>. The
 <code>focal_fill_force_zero</code> option forces exact zeros to be
 treated as missing so they can be filled in using
-<code>focal_fill_na_value</code>.</p>
+<code>focal_fill_na_color</code>.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
 <span>  <span class="va">potter</span>,</span>
@@ -762,7 +765,7 @@ treated as missing so they can be filled in using
 <span>    sex_color_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    focal_fill_personID <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>    focal_fill_force_zero <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    focal_fill_na_value <span class="op">=</span> <span class="st">"grey75"</span></span>
+<span>    focal_fill_na_color <span class="op">=</span> <span class="st">"grey75"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" alt="" width="672"></p>
@@ -807,7 +810,168 @@ colored using a discrete viridis palette.</p>
 </div>
 </div>
 <div class="section level3">
-<h3 id="global-greyscale-black-and-white-switch">7) Global greyscale / black-and-white switch<a class="anchor" aria-label="anchor" href="#global-greyscale-black-and-white-switch"></a>
+<h3 id="lineage-colored-segments-tracing-family-lines">7) Lineage-colored segments: tracing family lines<a class="anchor" aria-label="anchor" href="#lineage-colored-segments-tracing-family-lines"></a>
+</h3>
+<p>Focal fill (Section 6) colors the <strong>nodes</strong>. You can
+instead—or additionally—color the <strong>connecting segments</strong>
+by family lineage, which makes it easy to trace a paternal line, a
+maternal line, or a mitochondrial (matrilineal) line through the
+tree.</p>
+<p>This is controlled by the <code>segment_lineage_*</code> options. The
+minimal ingredients are:</p>
+<ul>
+<li><code>segment_lineage_include = TRUE</code></li>
+<li>
+<code>segment_lineage_component = &lt;line to trace&gt;</code>. Uses
+the same vocabulary as focal fill: <code>"mitochondrial"</code> /
+<code>"mtdna"</code>, <code>"maternal"</code>, <code>"paternal"</code>,
+<code>"family"</code>, <code>"additive"</code>, or
+<code>"common nuclear"</code>.</li>
+<li>
+<code>segment_lineage_focal_personID = &lt;ID&gt;</code> (optional).
+When supplied, segments are colored by their relationship <em>to that
+focal person</em>, so off-line segments fade to grey and only the lines
+connected to that individual are highlighted.</li>
+</ul>
+<p>Each segment inherits the lineage value of the person it is anchored
+to, so the coloring is unambiguous even where a spouse link bridges two
+different lines.</p>
+<div class="section level4">
+<h4 id="coloring-every-line">Coloring every line<a class="anchor" aria-label="anchor" href="#coloring-every-line"></a>
+</h4>
+<p>With no focal person, each lineage group gets its own color. Here
+every matriline (mitochondrial line) is drawn in a distinct color. We
+disable sex coloring so the segment colors read cleanly.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    sex_color_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    focal_fill_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    segment_lineage_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    segment_lineage_component <span class="op">=</span> <span class="st">"mitochondrial"</span>,</span>
+<span>    segment_lineage_legend_title <span class="op">=</span> <span class="st">"Matriline"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-21-1.png" class="r-plt" alt="" width="672"></p>
+<p>Switching <code>segment_lineage_component</code> to
+<code>"paternal"</code> traces the patrilines instead—useful for
+following surname lines.</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    sex_color_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    focal_fill_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    segment_lineage_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    segment_lineage_component <span class="op">=</span> <span class="st">"paternal"</span>,</span>
+<span>    segment_lineage_legend_title <span class="op">=</span> <span class="st">"Patriline"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" alt="" width="672"></p>
+</div>
+<div class="section level4">
+<h4 id="tracing-the-lines-connected-to-one-person">Tracing the lines connected to one person<a class="anchor" aria-label="anchor" href="#tracing-the-lines-connected-to-one-person"></a>
+</h4>
+<p>Supply <code>segment_lineage_focal_personID</code> to highlight only
+the lineage that runs through a chosen individual. With the
+mitochondrial component, this lights up that person’s matrilineal chain
+and greys out everything else.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    sex_color_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    focal_fill_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    segment_lineage_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    segment_lineage_component <span class="op">=</span> <span class="st">"mitochondrial"</span>,</span>
+<span>    segment_lineage_focal_personID <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>    segment_lineage_method <span class="op">=</span> <span class="st">"viridis_c"</span>,</span>
+<span>    segment_lineage_na_color <span class="op">=</span> <span class="st">"grey85"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-23-1.png" class="r-plt" alt="" width="672"></p>
+</div>
+<div class="section level4">
+<h4 id="choosing-which-segments-participate">Choosing which segments participate<a class="anchor" aria-label="anchor" href="#choosing-which-segments-participate"></a>
+</h4>
+<p>By default the inheritance-bearing segments are colored
+(<code>segment_lineage_types = c("parent", "offspring", "sibling", "mz")</code>).
+You can broaden or narrow this—for example, add <code>"spouse"</code> to
+also color spouse links, or restrict to just the parent stubs.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    sex_color_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    focal_fill_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    segment_lineage_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    segment_lineage_component <span class="op">=</span> <span class="st">"paternal"</span>,</span>
+<span>    segment_lineage_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"parent"</span>, <span class="st">"offspring"</span>, <span class="st">"sibling"</span>, <span class="st">"mz"</span>, <span class="st">"spouse"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-24-1.png" class="r-plt" alt="" width="672"></p>
+</div>
+<div class="section level4">
+<h4 id="combining-node-focal-fill-with-segment-lineage">Combining node focal fill with segment lineage<a class="anchor" aria-label="anchor" href="#combining-node-focal-fill-with-segment-lineage"></a>
+</h4>
+<p>The most expressive use is to color <strong>nodes by focal
+relatedness</strong> and <strong>segments by lineage</strong> at the
+same time. Because nodes and segments then need two independent color
+scales, this requires the suggested <a href="https://cran.r-project.org/package=ggnewscale" class="external-link"><code>ggnewscale</code></a>
+package. If it is not installed, the segments fall back to their fixed
+colors with a warning.</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    sex_color_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    <span class="co"># nodes: additive relatedness to the focal person</span></span>
+<span>    focal_fill_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    focal_fill_component <span class="op">=</span> <span class="st">"additive"</span>,</span>
+<span>    focal_fill_personID <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>    focal_fill_legend_title <span class="op">=</span> <span class="st">"Relatedness"</span>,</span>
+<span>    <span class="co"># segments: paternal line membership</span></span>
+<span>    segment_lineage_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    segment_lineage_component <span class="op">=</span> <span class="st">"paternal"</span>,</span>
+<span>    segment_lineage_legend_title <span class="op">=</span> <span class="st">"Patriline"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-25-1.png" class="r-plt" alt="" width="672"></p>
+<blockquote>
+<p><strong>Interactive plots.</strong> The combined node + segment
+coloring relies on <code>ggnewscale</code>, whose second color scale
+does not convert to <code>plotly</code>. In
+<code><a href="../reference/ggPedigreeInteractive.html">ggPedigreeInteractive()</a></code>, single-scale lineage coloring
+(segments only, nodes uncolored) works as shown above; if you also
+enable node coloring, the interactive plot warns and falls back to fixed
+segment colors. Use the static <code><a href="../reference/ggPedigree.html">ggPedigree()</a></code> for the
+combined view.</p>
+</blockquote>
+</div>
+</div>
+<div class="section level3">
+<h3 id="global-greyscale-black-and-white-switch">8) Global greyscale / black-and-white switch<a class="anchor" aria-label="anchor" href="#global-greyscale-black-and-white-switch"></a>
 </h3>
 <p>If you want a black-and-white plot, you can request it using:</p>
 <ul>
@@ -817,7 +981,7 @@ colored using a discrete viridis palette.</p>
 </ul>
 <p>This triggers coordinated adjustments so the plot remains coherent
 without manually changing multiple palettes.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
 <span>  <span class="va">potter</span>,</span>
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
@@ -834,16 +998,16 @@ without manually changing multiple palettes.</p>
 <span>    point_size <span class="op">=</span> <span class="fl">6</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-21-1.png" class="r-plt" alt="" width="672"></p>
+<p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-26-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level3">
-<h3 id="interactive-pedigrees-ggpedigreeinteractive">8) Interactive pedigrees: <code>ggPedigreeInteractive()</code><a class="anchor" aria-label="anchor" href="#interactive-pedigrees-ggpedigreeinteractive"></a>
+<h3 id="interactive-pedigrees-ggpedigreeinteractive">9) Interactive pedigrees: <code>ggPedigreeInteractive()</code><a class="anchor" aria-label="anchor" href="#interactive-pedigrees-ggpedigreeinteractive"></a>
 </h3>
 <p>Interactive pedigrees usually require thinner segments and careful
 tooltip selection. Tooltips are controlled primarily through
 <code>tooltip_columns</code>, while most drawing options are still
 handled by <code>config</code>.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigreeInteractive.html">ggPedigreeInteractive</a></span><span class="op">(</span></span>
 <span>  <span class="va">potter</span>,</span>
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
@@ -855,14 +1019,20 @@ handled by <code>config</code>.</p>
 <span>    label_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    point_scale_by_pedigree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    point_size <span class="op">=</span> <span class="fl">7</span>,</span>
-<span>    segment_linewidth <span class="op">=</span> <span class="fl">0.5</span></span>
+<span>    segment_linewidth <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    sex_color_include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    <span class="co"># nodes: additive relatedness to the focal person</span></span>
+<span>    focal_fill_include <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    focal_fill_component <span class="op">=</span> <span class="st">"additive"</span>,</span>
+<span>    focal_fill_personID <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>    focal_fill_legend_title <span class="op">=</span> <span class="st">"Relatedness"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="plotly html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"data":[{"x":[2,1,null,null,0,null,1,2,null,3,4,null,4,3,null,null,1.5,null,4,3,null,3,4,null,8.5,7.5,null,7.5,8.5,null,6,5,null,null,7,null,null,8,null,10,9,null,null,11,null,13,12,null,5,6,null,12,13,null,null,14,null,9,10,null,null,2.2250000000000001,null,null,3.2250000000000001,null,null,4.2249999999999996,null,null,5.2249999999999996,null,null,6.2249999999999996,null,null,11.5,null,null,12.5,null,null,13.5,null,null,9,null,null,10,null,-0,1,null,1,-0,null,3.5,2.5,null,2.5,3.5,null,14,13,null,13,14],"y":[-1,-1,null,null,-1,null,-1,-1,null,-1,-1,null,-1,-1,null,null,-2,null,-2,-2,null,-2,-2,null,-1,-1,null,-1,-1,null,-2,-2,null,null,-2,null,null,-2,null,-2,-2,null,null,-2,null,-2,-2,null,-2,-2,null,-2,-2,null,null,-2,null,-2,-2,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,0,0,null,0,0,null,0,0,null,0,0,null,-1,-1,null,-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.5,0.5,null,0.5,0.5,null,3,3,null,3,3,null,null,null,null,1.5,1.5,null,3,3.5,null,8,8,null,null,null,null,null,null,null,8,8,null,8,8,null,8,8,null,8,8,null,8,8,null,8,8,null,null,null,null,13.5,13.5,null,13.5,13.5,null,null,null,null,3.2250000000000001,3.5,null,3.2250000000000001,3.5,null,3.2250000000000001,3.5,null,5.7249999999999996,5.5,null,5.7249999999999996,5.5,null,12.5,12.5,null,12.5,12.5,null,12.5,12.5,null,9.5,9.5,null,9.5,9.5,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"y":[-0.5,-0,null,-0.5,-0,null,-0.5,-0,null,-0.5,-0,null,null,null,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,null,null,null,null,null,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,null,null,null,-1.5,-1,null,-1.5,-1,null,null,null,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,0.5,null,0,0.5,null,2,3,null,4,3,null,3,null,null,1.5,1.5,null,3,3,null,4,8,null,7.5,null,null,8.5,null,null,5,8,null,9,8,null,11,8,null,12,8,null,6,null,null,13,13.5,null,14,13.5,null,10,null,null,2.2250000000000001,3.2250000000000001,null,3.2250000000000001,3.2250000000000001,null,4.2249999999999996,3.2250000000000001,null,5.2249999999999996,5.7249999999999996,null,6.2249999999999996,5.7249999999999996,null,11.5,12.5,null,12.5,12.5,null,13.5,12.5,null,9,9.5,null,10,9.5,null,1,null,null,-0,null,null,2.5,null,null,3.5,null,null,13,null,null,14,null],"y":[-0.5,-0.5,null,-0.5,-0.5,null,-0.5,-0.5,null,-0.5,-0.5,null,-0.5,null,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,-1.5,null,-0.5,null,null,-0.5,null,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,null,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,null,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,null,null,null,null,null,null,null,null,null,null,null,null,-0.5,null,null,-0.5,null],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7.5,8,null,7.5,8],"y":[-1.5,-1.5,null,-1.5,-1.5],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7,7.5,null,8,7.5],"y":[-2,-1.5,null,-2,-1.5],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7.2999999999999998,7.7000000000000002,null,7.7000000000000002,7.2999999999999998],"y":[-1.7,-1.7,null,-1.7,-1.7],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,1,null,0,0,null,2,2,null,4,4,null,3,3,null,1.5,1.5,null,3,3,null,4,4,null,7.5,7.5,null,8.5,8.5,null,5,5,null,9,9,null,11,11,null,12,12,null,6,6,null,13,13,null,14,14,null,10,10,null,2.2250000000000001,2.2250000000000001,null,3.2250000000000001,3.2250000000000001,null,4.2249999999999996,4.2249999999999996,null,5.2249999999999996,5.2249999999999996,null,6.2249999999999996,6.2249999999999996,null,11.5,11.5,null,12.5,12.5,null,13.5,13.5,null,9,9,null,10,10,null,1,1,null,-0,-0,null,2.5,2.5,null,3.5,3.5,null,13,13,null,14,14],"y":[-0.5,-1,null,-0.5,-1,null,-0.5,-1,null,-0.5,-1,null,null,-1,null,-1.5,-2,null,-1.5,-2,null,-1.5,-2,null,null,-1,null,null,-1,null,-1.5,-2,null,-1.5,-2,null,-1.5,-2,null,-1.5,-2,null,null,-2,null,-1.5,-2,null,-1.5,-2,null,null,-2,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,null,0,null,null,0,null,null,0,null,null,0,null,null,-1,null,null,-1],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,2,4,4,8.5,6,13,14,10,4.2249999999999996,5.2249999999999996,11.5,12.5,9,10,1,3.5,14],"y":[-1,-1,-1,-2,-1,-2,-2,-2,-2,-3,-3,-3,-3,-3,-3,-0,-0,-1],"text":["personID:   2<br>first_name: Marjorie<br>sex: 0","personID:   3<br>first_name: Petunia<br>sex: 0","personID:   4<br>first_name: Lily<br>sex: 0","personID:   8<br>first_name: Ginny<br>sex: 0","personID:  10<br>first_name: Molly<br>sex: 0","personID:  17<br>first_name: Hermione<br>sex: 0","personID:  18<br>first_name: Fleur<br>sex: 0","personID:  19<br>first_name: Gabrielle<br>sex: 0","personID:  20<br>first_name: Audrey<br>sex: 0","personID:  23<br>first_name: Lily<br>sex: 0","personID:  24<br>first_name: Rose<br>sex: 0","personID:  26<br>first_name: Victoire<br>sex: 0","personID:  27<br>first_name: Dominique<br>sex: 0","personID:  29<br>first_name: Molly<br>sex: 0","personID:  30<br>first_name: Lucy<br>sex: 0","personID: 101<br>first_name: Mother<br>sex: 0","personID: 103<br>first_name: Mother<br>sex: 0","personID: 105<br>first_name: Mother<br>sex: 0"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(68,1,84,1)","opacity":1,"size":26.45669291338583,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(68,1,84,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,3,1.5,3,7.5,5,7,8,9,11,12,2.2250000000000001,3.2250000000000001,6.2249999999999996,13.5,-0,2.5,13],"y":[-1,-1,-2,-2,-1,-2,-2,-2,-2,-2,-2,-3,-3,-3,-3,-0,-0,-1],"text":["personID:   1<br>first_name: Vernon<br>sex: 1","personID:   5<br>first_name: James<br>sex: 1","personID:   6<br>first_name: Dudley<br>sex: 1","personID:   7<br>first_name: Harry<br>sex: 1","personID:   9<br>first_name: Arthur<br>sex: 1","personID:  11<br>first_name: Ron<br>sex: 1","personID:  12<br>first_name: Fred<br>sex: 1","personID:  13<br>first_name: George<br>sex: 1","personID:  14<br>first_name: Percy<br>sex: 1","personID:  15<br>first_name: Charlie<br>sex: 1","personID:  16<br>first_name: Bill<br>sex: 1","personID:  21<br>first_name: James<br>sex: 1","personID:  22<br>first_name: Albus<br>sex: 1","personID:  25<br>first_name: Hugo<br>sex: 1","personID:  28<br>first_name: Louis<br>sex: 1","personID: 102<br>first_name: Father<br>sex: 1","personID: 104<br>first_name: Father<br>sex: 1","personID: 106<br>first_name: Father<br>sex: 1"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(127,211,78,1)","opacity":1,"size":26.45669291338583,"symbol":"square","line":{"width":1.8897637795275593,"color":"rgba(127,211,78,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":23.305936073059364,"r":7.3059360730593621,"b":10.958904109589042,"l":10.958904109589042},"paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.70000000647490612,14.700000000308329],"tickmode":"array","ticktext":["0","5","10"],"tickvals":[0,5,10],"categoryorder":"array","categoryarray":["0","5","10"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-3.1499999999999999,0.15000000000000002],"tickmode":"array","ticktext":["0","1","2","3"],"tickvals":[0,-1,-2,-3],"categoryorder":"array","categoryarray":["0","1","2","3"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"shapes":[],"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"1f2426df4163":{"x":{},"y":{},"xend":{},"yend":{},"type":"scatter"},"1f24697aca58":{"x":{},"y":{},"xend":{},"yend":{}},"1f24669cc507":{"x":{},"y":{},"xend":{},"yend":{}},"1f246f86b648":{"x":{},"y":{},"xend":{},"yend":{}},"1f24496b4b0f":{"x":{},"y":{},"xend":{},"yend":{}},"1f244d6377ef":{"x":{},"y":{},"xend":{},"yend":{}},"1f247f471365":{"x":{},"y":{},"xend":{},"yend":{}},"1f2418cb60f0":{"x":{},"y":{},"colour":{},"shape":{},"text":{}}},"cur_data":"1f2426df4163","visdat":{"1f2426df4163":["function (y) ","x"],"1f24697aca58":["function (y) ","x"],"1f24669cc507":["function (y) ","x"],"1f246f86b648":["function (y) ","x"],"1f24496b4b0f":["function (y) ","x"],"1f244d6377ef":["function (y) ","x"],"1f247f471365":["function (y) ","x"],"1f2418cb60f0":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"data":[{"x":[2,1,null,null,0,null,1,2,null,3,4,null,4,3,null,null,1.5,null,4,3,null,3,4,null,8.5,7.5,null,7.5,8.5,null,6,5,null,null,7,null,null,8,null,10,9,null,null,11,null,13,12,null,5,6,null,12,13,null,null,14,null,9,10,null,null,2.2250000000000001,null,null,3.2250000000000001,null,null,4.2249999999999996,null,null,5.2249999999999996,null,null,6.2249999999999996,null,null,11.5,null,null,12.5,null,null,13.5,null,null,9,null,null,10,null,-0,1,null,1,-0,null,3.5,2.5,null,2.5,3.5,null,14,13,null,13,14],"y":[-1,-1,null,null,-1,null,-1,-1,null,-1,-1,null,-1,-1,null,null,-2,null,-2,-2,null,-2,-2,null,-1,-1,null,-1,-1,null,-2,-2,null,null,-2,null,null,-2,null,-2,-2,null,null,-2,null,-2,-2,null,-2,-2,null,-2,-2,null,null,-2,null,-2,-2,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,0,0,null,0,0,null,0,0,null,0,0,null,-1,-1,null,-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.5,0.5,null,0.5,0.5,null,3,3,null,3,3,null,null,null,null,1.5,1.5,null,3,3.5,null,8,8,null,null,null,null,null,null,null,8,8,null,8,8,null,8,8,null,8,8,null,8,8,null,8,8,null,null,null,null,13.5,13.5,null,13.5,13.5,null,null,null,null,3.2250000000000001,3.5,null,3.2250000000000001,3.5,null,3.2250000000000001,3.5,null,5.7249999999999996,5.5,null,5.7249999999999996,5.5,null,12.5,12.5,null,12.5,12.5,null,12.5,12.5,null,9.5,9.5,null,9.5,9.5,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"y":[-0.5,-0,null,-0.5,-0,null,-0.5,-0,null,-0.5,-0,null,null,null,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,null,null,null,null,null,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,null,null,null,-1.5,-1,null,-1.5,-1,null,null,null,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,0.5,null,0,0.5,null,2,3,null,4,3,null,3,null,null,1.5,1.5,null,3,3,null,4,8,null,7.5,null,null,8.5,null,null,5,8,null,9,8,null,11,8,null,12,8,null,6,null,null,13,13.5,null,14,13.5,null,10,null,null,2.2250000000000001,3.2250000000000001,null,3.2250000000000001,3.2250000000000001,null,4.2249999999999996,3.2250000000000001,null,5.2249999999999996,5.7249999999999996,null,6.2249999999999996,5.7249999999999996,null,11.5,12.5,null,12.5,12.5,null,13.5,12.5,null,9,9.5,null,10,9.5,null,1,null,null,-0,null,null,2.5,null,null,3.5,null,null,13,null,null,14,null],"y":[-0.5,-0.5,null,-0.5,-0.5,null,-0.5,-0.5,null,-0.5,-0.5,null,-0.5,null,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,-1.5,null,-0.5,null,null,-0.5,null,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,null,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,null,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,null,null,null,null,null,null,null,null,null,null,null,null,-0.5,null,null,-0.5,null],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7.5,8,null,7.5,8],"y":[-1.5,-1.5,null,-1.5,-1.5],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7,7.5,null,8,7.5],"y":[-2,-1.5,null,-2,-1.5],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7.2999999999999998,7.7000000000000002,null,7.7000000000000002,7.2999999999999998],"y":[-1.7,-1.7,null,-1.7,-1.7],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,1,null,0,0,null,2,2,null,4,4,null,3,3,null,1.5,1.5,null,3,3,null,4,4,null,7.5,7.5,null,8.5,8.5,null,5,5,null,9,9,null,11,11,null,12,12,null,6,6,null,13,13,null,14,14,null,10,10,null,2.2250000000000001,2.2250000000000001,null,3.2250000000000001,3.2250000000000001,null,4.2249999999999996,4.2249999999999996,null,5.2249999999999996,5.2249999999999996,null,6.2249999999999996,6.2249999999999996,null,11.5,11.5,null,12.5,12.5,null,13.5,13.5,null,9,9,null,10,10,null,1,1,null,-0,-0,null,2.5,2.5,null,3.5,3.5,null,13,13,null,14,14],"y":[-0.5,-1,null,-0.5,-1,null,-0.5,-1,null,-0.5,-1,null,null,-1,null,-1.5,-2,null,-1.5,-2,null,-1.5,-2,null,null,-1,null,null,-1,null,-1.5,-2,null,-1.5,-2,null,-1.5,-2,null,-1.5,-2,null,null,-2,null,-1.5,-2,null,-1.5,-2,null,null,-2,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,null,0,null,null,0,null,null,0,null,null,0,null,null,-1,null,null,-1],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,3,1.5,3,7.5,5,7,8,9,11,12,2.2250000000000001,3.2250000000000001,6.2249999999999996,13.5,-0,2.5,13],"y":[-1,-1,-2,-2,-1,-2,-2,-2,-2,-2,-2,-3,-3,-3,-3,-0,-0,-1],"text":["personID:   1<br>first_name: Vernon<br>sex: 1","personID:   5<br>first_name: James<br>sex: 1","personID:   6<br>first_name: Dudley<br>sex: 1","personID:   7<br>first_name: Harry<br>sex: 1","personID:   9<br>first_name: Arthur<br>sex: 1","personID:  11<br>first_name: Ron<br>sex: 1","personID:  12<br>first_name: Fred<br>sex: 1","personID:  13<br>first_name: George<br>sex: 1","personID:  14<br>first_name: Percy<br>sex: 1","personID:  15<br>first_name: Charlie<br>sex: 1","personID:  16<br>first_name: Bill<br>sex: 1","personID:  21<br>first_name: James<br>sex: 1","personID:  22<br>first_name: Albus<br>sex: 1","personID:  25<br>first_name: Hugo<br>sex: 1","personID:  28<br>first_name: Louis<br>sex: 1","personID: 102<br>first_name: Father<br>sex: 1","personID: 104<br>first_name: Father<br>sex: 1","personID: 106<br>first_name: Father<br>sex: 1"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":["rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)"],"opacity":1,"size":26.45669291338583,"symbol":"square","line":{"width":1.8897637795275593,"color":["rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)"]}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,2,4,4,8.5,6,13,14,10,4.2249999999999996,5.2249999999999996,11.5,12.5,9,10,1,3.5,14],"y":[-1,-1,-1,-2,-1,-2,-2,-2,-2,-3,-3,-3,-3,-3,-3,-0,-0,-1],"text":["personID:   2<br>first_name: Marjorie<br>sex: 0","personID:   3<br>first_name: Petunia<br>sex: 0","personID:   4<br>first_name: Lily<br>sex: 0","personID:   8<br>first_name: Ginny<br>sex: 0","personID:  10<br>first_name: Molly<br>sex: 0","personID:  17<br>first_name: Hermione<br>sex: 0","personID:  18<br>first_name: Fleur<br>sex: 0","personID:  19<br>first_name: Gabrielle<br>sex: 0","personID:  20<br>first_name: Audrey<br>sex: 0","personID:  23<br>first_name: Lily<br>sex: 0","personID:  24<br>first_name: Rose<br>sex: 0","personID:  26<br>first_name: Victoire<br>sex: 0","personID:  27<br>first_name: Dominique<br>sex: 0","personID:  29<br>first_name: Molly<br>sex: 0","personID:  30<br>first_name: Lucy<br>sex: 0","personID: 101<br>first_name: Mother<br>sex: 0","personID: 103<br>first_name: Mother<br>sex: 0","personID: 105<br>first_name: Mother<br>sex: 0"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":["rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(253,231,37,1)","rgba(159,42,99,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(159,42,99,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)"],"opacity":1,"size":26.45669291338583,"symbol":"circle","line":{"width":1.8897637795275593,"color":["rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(253,231,37,1)","rgba(159,42,99,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(159,42,99,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)"]}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0],"y":[0],"name":"e3eea82d776bffa3349d4ff649935722","type":"scatter","mode":"markers","opacity":0,"hoverinfo":"skip","showlegend":false,"marker":{"color":[0,1],"colorscale":[[0,"#0D082A"],[0.0033444816053511705,"#0E092A"],[0.006688963210702341,"#0F092B"],[0.010033444816053512,"#100A2B"],[0.013377926421404682,"#110A2B"],[0.016722408026755852,"#120B2C"],[0.020066889632107024,"#130C2C"],[0.023411371237458192,"#140C2C"],[0.026755852842809364,"#150D2D"],[0.030100334448160536,"#160D2D"],[0.033444816053511704,"#170E2D"],[0.036789297658862873,"#180E2E"],[0.040133779264214048,"#190E2E"],[0.043478260869565216,"#1A0F2F"],[0.046822742474916385,"#1B0F2F"],[0.05016722408026756,"#1C0F2F"],[0.053511705685618728,"#1D1030"],[0.056856187290969896,"#1E1030"],[0.060200668896321072,"#1F1030"],[0.06354515050167224,"#201031"],[0.066889632107023408,"#211131"],[0.070234113712374577,"#221131"],[0.073578595317725745,"#221132"],[0.076923076923076927,"#231132"],[0.080267558528428096,"#241233"],[0.083612040133779264,"#251233"],[0.086956521739130432,"#261233"],[0.090301003344481601,"#271234"],[0.093645484949832769,"#281234"],[0.096989966555183951,"#291334"],[0.10033444816053512,"#2A1335"],[0.10367892976588629,"#2B1335"],[0.10702341137123746,"#2C1335"],[0.11036789297658862,"#2D1336"],[0.11371237458193979,"#2E1436"],[0.11705685618729096,"#2F1437"],[0.12040133779264214,"#301437"],[0.12374581939799331,"#311437"],[0.12709030100334448,"#321538"],[0.13043478260869565,"#331538"],[0.13377926421404682,"#341538"],[0.13712374581939799,"#351539"],[0.14046822742474915,"#361539"],[0.14381270903010032,"#37163A"],[0.14715719063545149,"#37163A"],[0.15050167224080269,"#38163A"],[0.15384615384615385,"#39163B"],[0.15719063545150502,"#3A163B"],[0.16053511705685619,"#3B173B"],[0.16387959866220736,"#3C173C"],[0.16722408026755853,"#3D173C"],[0.1705685618729097,"#3E173D"],[0.17391304347826086,"#3F183D"],[0.17725752508361203,"#40183D"],[0.1806020066889632,"#41183E"],[0.18394648829431437,"#42183E"],[0.18729096989966554,"#43183E"],[0.19063545150501671,"#44193F"],[0.1939799331103679,"#45193F"],[0.19732441471571907,"#461940"],[0.20066889632107024,"#471940"],[0.20401337792642141,"#481940"],[0.20735785953177258,"#481A41"],[0.21070234113712374,"#491A41"],[0.21404682274247491,"#4A1A41"],[0.21739130434782608,"#4B1A42"],[0.22073578595317725,"#4C1A42"],[0.22408026755852842,"#4D1B43"],[0.22742474916387959,"#4E1B43"],[0.23076923076923075,"#4F1B43"],[0.23411371237458192,"#501B44"],[0.23745819397993312,"#511B44"],[0.24080267558528429,"#521C45"],[0.24414715719063546,"#531C45"],[0.24749163879598662,"#541C45"],[0.25083612040133779,"#551C46"],[0.25418060200668896,"#561C46"],[0.25752508361204013,"#571D46"],[0.2608695652173913,"#581D47"],[0.26421404682274247,"#591D47"],[0.26755852842809363,"#5A1D48"],[0.2709030100334448,"#5B1D48"],[0.27424749163879597,"#5C1E48"],[0.27759197324414714,"#5D1E49"],[0.28093645484949831,"#5E1E49"],[0.28428093645484948,"#5F1E4A"],[0.28762541806020064,"#5F1E4A"],[0.29096989966555181,"#601F4A"],[0.29431438127090298,"#611F4B"],[0.29765886287625415,"#621F4B"],[0.30100334448160537,"#631F4B"],[0.30434782608695654,"#641F4C"],[0.30769230769230771,"#651F4C"],[0.31103678929765888,"#66204D"],[0.31438127090301005,"#67204D"],[0.31772575250836121,"#68204D"],[0.32107023411371238,"#69204E"],[0.32441471571906355,"#6A204E"],[0.32775919732441472,"#6B214F"],[0.33110367892976589,"#6C214F"],[0.33444816053511706,"#6D214F"],[0.33779264214046822,"#6E2150"],[0.34113712374581939,"#6F2150"],[0.34448160535117056,"#702251"],[0.34782608695652173,"#712251"],[0.3511705685618729,"#722251"],[0.35451505016722407,"#732252"],[0.35785953177257523,"#742252"],[0.3612040133779264,"#752352"],[0.36454849498327757,"#762353"],[0.36789297658862874,"#772353"],[0.37123745819397991,"#782354"],[0.37458193979933108,"#792354"],[0.37792642140468224,"#7A2354"],[0.38127090301003341,"#7B2455"],[0.38461538461538458,"#7C2455"],[0.38795986622073581,"#7D2456"],[0.39130434782608697,"#7E2456"],[0.39464882943143814,"#7F2456"],[0.39799331103678931,"#802557"],[0.40133779264214048,"#812557"],[0.40468227424749165,"#822558"],[0.40802675585284282,"#832558"],[0.41137123745819398,"#842558"],[0.41471571906354515,"#852559"],[0.41806020066889632,"#862659"],[0.42140468227424749,"#87265A"],[0.42474916387959866,"#88265A"],[0.42809364548494983,"#89265A"],[0.43143812709030099,"#8A265B"],[0.43478260869565216,"#8B275B"],[0.43812709030100333,"#8C275C"],[0.4414715719063545,"#8D275C"],[0.44481605351170567,"#8E275C"],[0.44816053511705684,"#8F275D"],[0.451505016722408,"#90275D"],[0.45484949832775917,"#91285E"],[0.45819397993311034,"#92285E"],[0.46153846153846151,"#93285E"],[0.46488294314381268,"#94285F"],[0.46822742474916385,"#95285F"],[0.47157190635451507,"#962960"],[0.47491638795986624,"#972960"],[0.47826086956521741,"#982960"],[0.48160535117056857,"#992961"],[0.48494983277591974,"#9A2961"],[0.48829431438127091,"#9B2962"],[0.49163879598662208,"#9C2A62"],[0.49498327759197325,"#9D2A62"],[0.49832775919732442,"#9E2A63"],[0.50167224080267558,"#9F2B63"],[0.50501672240802675,"#A02D63"],[0.50836120401337792,"#A12E63"],[0.51170568561872909,"#A23063"],[0.51505016722408026,"#A23163"],[0.51839464882943143,"#A33362"],[0.52173913043478259,"#A43562"],[0.52508361204013376,"#A53662"],[0.52842809364548493,"#A53862"],[0.5317725752508361,"#A63962"],[0.53511705685618727,"#A73B62"],[0.53846153846153844,"#A73C62"],[0.5418060200668896,"#A83D62"],[0.54515050167224077,"#A93F61"],[0.54849498327759194,"#AA4061"],[0.55183946488294311,"#AA4261"],[0.55518394648829428,"#AB4361"],[0.55852842809364545,"#AC4461"],[0.56187290969899661,"#AC4661"],[0.56521739130434778,"#AD4761"],[0.56856187290969895,"#AE4961"],[0.57190635451505012,"#AF4A60"],[0.57525083612040129,"#AF4B60"],[0.57859531772575246,"#B04D60"],[0.58193979933110362,"#B14E60"],[0.58528428093645479,"#B14F60"],[0.58862876254180596,"#B25060"],[0.59197324414715713,"#B35260"],[0.5953177257525083,"#B3535F"],[0.59866220735785947,"#B4545F"],[0.60200668896321075,"#B5565F"],[0.60535117056856191,"#B6575F"],[0.60869565217391308,"#B6585F"],[0.61204013377926425,"#B7595F"],[0.61538461538461542,"#B85B5E"],[0.61872909698996659,"#B85C5E"],[0.62207357859531776,"#B95D5E"],[0.62541806020066892,"#BA5F5E"],[0.62876254180602009,"#BA605E"],[0.63210702341137126,"#BB615D"],[0.63545150501672243,"#BC625D"],[0.6387959866220736,"#BC645D"],[0.64214046822742477,"#BD655D"],[0.64548494983277593,"#BE665D"],[0.6488294314381271,"#BE675D"],[0.65217391304347827,"#BF695C"],[0.65551839464882944,"#C06A5C"],[0.65886287625418061,"#C06B5C"],[0.66220735785953178,"#C16C5C"],[0.66555183946488294,"#C26D5B"],[0.66889632107023411,"#C26F5B"],[0.67224080267558528,"#C3705B"],[0.67558528428093645,"#C4715B"],[0.67892976588628762,"#C4725B"],[0.68227424749163879,"#C5745A"],[0.68561872909698995,"#C6755A"],[0.68896321070234112,"#C6765A"],[0.69230769230769229,"#C7775A"],[0.69565217391304346,"#C87859"],[0.69899665551839463,"#C87A59"],[0.7023411371237458,"#C97B59"],[0.70568561872909696,"#CA7C59"],[0.70903010033444813,"#CA7D58"],[0.7123745819397993,"#CB7F58"],[0.71571906354515047,"#CB8058"],[0.71906354515050164,"#CC8158"],[0.72240802675585281,"#CD8257"],[0.72575250836120397,"#CD8357"],[0.72909698996655514,"#CE8557"],[0.73244147157190631,"#CF8656"],[0.73578595317725748,"#CF8756"],[0.73913043478260865,"#D08856"],[0.74247491638795982,"#D18956"],[0.74581939799331098,"#D18B55"],[0.74916387959866215,"#D28C55"],[0.75250836120401332,"#D28D55"],[0.75585284280936449,"#D38E54"],[0.75919732441471566,"#D49054"],[0.76254180602006683,"#D49154"],[0.76588628762541799,"#D59253"],[0.76923076923076916,"#D59353"],[0.77257525083612044,"#D69453"],[0.77591973244147161,"#D79652"],[0.77926421404682278,"#D79752"],[0.78260869565217395,"#D89852"],[0.78595317725752512,"#D99951"],[0.78929765886287628,"#D99A51"],[0.79264214046822745,"#DA9C51"],[0.79598662207357862,"#DA9D50"],[0.79933110367892979,"#DB9E50"],[0.80267558528428096,"#DC9F4F"],[0.80602006688963213,"#DCA04F"],[0.80936454849498329,"#DDA24F"],[0.81270903010033446,"#DDA34E"],[0.81605351170568563,"#DEA44E"],[0.8193979933110368,"#DFA54D"],[0.82274247491638797,"#DFA64D"],[0.82608695652173914,"#E0A84D"],[0.8294314381270903,"#E0A94C"],[0.83277591973244147,"#E1AA4C"],[0.83612040133779264,"#E2AB4B"],[0.83946488294314381,"#E2AC4B"],[0.84280936454849498,"#E3AE4A"],[0.84615384615384615,"#E3AF4A"],[0.84949832775919731,"#E4B049"],[0.85284280936454848,"#E4B149"],[0.85618729096989965,"#E5B348"],[0.85953177257525082,"#E6B448"],[0.86287625418060199,"#E6B547"],[0.86622073578595316,"#E7B647"],[0.86956521739130432,"#E7B746"],[0.87290969899665549,"#E8B946"],[0.87625418060200666,"#E9BA45"],[0.87959866220735783,"#E9BB45"],[0.882943143812709,"#EABC44"],[0.88628762541806017,"#EABD43"],[0.88963210702341133,"#EBBF43"],[0.8929765886287625,"#EBC042"],[0.89632107023411367,"#ECC142"],[0.89966555183946484,"#EDC241"],[0.90301003344481601,"#EDC440"],[0.90635451505016718,"#EEC540"],[0.90969899665551834,"#EEC63F"],[0.91304347826086951,"#EFC73E"],[0.91638795986622068,"#EFC83E"],[0.91973244147157185,"#F0CA3D"],[0.92307692307692302,"#F0CB3C"],[0.92642140468227419,"#F1CC3B"],[0.92976588628762535,"#F2CD3B"],[0.93311036789297652,"#F2CE3A"],[0.93645484949832769,"#F3D039"],[0.93979933110367886,"#F3D138"],[0.94314381270903014,"#F4D238"],[0.94648829431438131,"#F4D337"],[0.94983277591973247,"#F5D536"],[0.95317725752508364,"#F5D635"],[0.95652173913043481,"#F6D734"],[0.95986622073578598,"#F7D833"],[0.96321070234113715,"#F7D932"],[0.96655518394648832,"#F8DB31"],[0.96989966555183948,"#F8DC30"],[0.97324414715719065,"#F9DD2F"],[0.97658862876254182,"#F9DE2E"],[0.97993311036789299,"#FAE02D"],[0.98327759197324416,"#FAE12C"],[0.98662207357859533,"#FBE22A"],[0.98996655518394649,"#FBE329"],[0.99331103678929766,"#FCE528"],[0.99665551839464883,"#FCE626"],[1,"#FDE725"]],"colorbar":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"thickness":23.039999999999996,"title":"Relatedness","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"tickmode":"array","ticktext":["0.00","0.25","0.50","0.75","1.00"],"tickvals":[0.0016666666666666668,0.2508333333333333,0.49999999999999994,0.74916666666666665,0.99833333333333329],"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"ticklen":2,"len":0.5}},"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":23.305936073059364,"r":7.3059360730593621,"b":10.958904109589042,"l":10.958904109589042},"paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.70000000431819842,14.700000000205629],"tickmode":"array","ticktext":["0","5","10"],"tickvals":[0,5,10],"categoryorder":"array","categoryarray":["0","5","10"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-3.1499999999999999,0.15000000000000002],"tickmode":"array","ticktext":["0","1","2","3"],"tickvals":[0,-1,-2,-3],"categoryorder":"array","categoryarray":["0","1","2","3"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"shapes":[],"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"Relatedness","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"202563ad13b9":{"x":{},"y":{},"xend":{},"yend":{},"type":"scatter"},"2025203e28b3":{"x":{},"y":{},"xend":{},"yend":{}},"2025375c998f":{"x":{},"y":{},"xend":{},"yend":{}},"20252e4225b4":{"x":{},"y":{},"xend":{},"yend":{}},"202565e56d8d":{"x":{},"y":{},"xend":{},"yend":{}},"20255a7f64fe":{"x":{},"y":{},"xend":{},"yend":{}},"2025a127b98":{"x":{},"y":{},"xend":{},"yend":{}},"20254488f3f2":{"x":{},"y":{},"colour":{},"shape":{},"text":{}}},"cur_data":"202563ad13b9","visdat":{"202563ad13b9":["function (y) ","x"],"2025203e28b3":["function (y) ","x"],"2025375c998f":["function (y) ","x"],"20252e4225b4":["function (y) ","x"],"202565e56d8d":["function (y) ","x"],"20255a7f64fe":["function (y) ","x"],"2025a127b98":["function (y) ","x"],"20254488f3f2":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level3">
-<h3 id="layout-and-coordinate-system">9) Layout and coordinate system<a class="anchor" aria-label="anchor" href="#layout-and-coordinate-system"></a>
+<h3 id="layout-and-coordinate-system">10) Layout and coordinate system<a class="anchor" aria-label="anchor" href="#layout-and-coordinate-system"></a>
 </h3>
 <p>In addition to the above options, layout and coordinate system are
 also configurable via <code>config</code>. For example if you are
@@ -870,7 +1040,7 @@ interested in a circular layout, you can set
 <code>coord_layout = "radial"</code> and adjust the minimum radius with
 <code>coord_radial_min_radius</code>. This plot uses polar coordinates
 to create a circular pedigree layout.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
 <span>  <span class="va">potter</span>,</span>
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
@@ -886,7 +1056,323 @@ to create a circular pedigree layout.</p>
 <span>    spread_out_generations <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span> <span class="co">#+theme_classic()</span></span></code></pre></div>
-<p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-23-1.png" class="r-plt" alt="" width="672"></p>
+<p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-28-1.png" class="r-plt" alt="" width="672"></p>
+</div>
+<div class="section level3">
+<h3 id="pinning-individuals-to-fixed-positions">11) Pinning individuals to fixed positions<a class="anchor" aria-label="anchor" href="#pinning-individuals-to-fixed-positions"></a>
+</h3>
+<p>Normally the horizontal position of each person is decided by the
+layout engine. If you want to override that for specific individuals—to
+slide one person to a particular spot, separate two overlapping
+branches, or line up a person with a feature elsewhere in the plot—use
+<code>fixed_positions</code>.</p>
+<p><code>fixed_positions</code> is a data frame with an ID column (named
+to match your <code>personID</code>) plus an <code>x</code> and/or
+<code>y</code> column. Each row pins that person to an absolute
+position. A missing or <code>NA</code> entry leaves that axis as
+computed.</p>
+<p>Positions are given in <strong>raw layout-slot units</strong>: the
+same units <code><a href="../reference/calculateCoordinates.html">calculateCoordinates()</a></code> produces, <em>before</em>
+<code>generation_width</code>/<code>generation_height</code> scaling and
+any radial transform. The easiest way to discover sensible values is to
+inspect the computed layout first:</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculateCoordinates.html">calculateCoordinates</a></span><span class="op">(</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>, momID <span class="op">=</span> <span class="st">"momID"</span>, dadID <span class="op">=</span> <span class="st">"dadID"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">coords</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"personID"</span>, <span class="st">"x_pos"</span>, <span class="st">"y_pos"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   personID x_pos y_pos</span></span>
+<span><span class="co">#&gt; 1        1   1.0     2</span></span>
+<span><span class="co">#&gt; 2        2   0.0     2</span></span>
+<span><span class="co">#&gt; 3        3   2.0     2</span></span>
+<span><span class="co">#&gt; 4        4   4.0     2</span></span>
+<span><span class="co">#&gt; 5        5   3.0     2</span></span>
+<span><span class="co">#&gt; 6        6   1.5     3</span></span></code></pre></div>
+<p>Here we pin one person far to the left of their generation. Because
+all connecting segments are derived from these coordinates, the lines
+follow the pinned node automatically—no other configuration needed.</p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    fixed_positions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>      personID <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>      x <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-30-1.png" class="r-plt" alt="" width="672"></p>
+<p>You can pin several people at once, and set <code>x</code>,
+<code>y</code>, or both. Use <code>NA</code> to leave one axis
+untouched:</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    fixed_positions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>      personID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">106</span>, <span class="fl">105</span><span class="op">)</span>,</span>
+<span>      x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">11</span>, <span class="fl">13</span><span class="op">)</span>, <span class="co"># person 106 is shifted right; person 105 also shifts in x</span></span>
+<span>      y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">1.80</span><span class="op">)</span> <span class="co"># person 106 keeps its generation; person 105 also shifts in y</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-31-1.png" class="r-plt" alt="" width="672"></p>
+<div class="section level4">
+<h4 id="pinning-a-parent">Pinning a parent<a class="anchor" aria-label="anchor" href="#pinning-a-parent"></a>
+</h4>
+<p>When you pin a <strong>parent</strong>, the connector running down to
+their children is re-anchored to the pinned position by default, so it
+stays attached. If you would rather move only the parent node and its
+spouse link—leaving the child connector where it was—set
+<code>fixed_positions_update_family = FALSE</code>.</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>,</span>
+<span>  personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>,</span>
+<span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    fixed_positions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>personID <span class="op">=</span> <span class="fl">101</span>, x <span class="op">=</span> <span class="fl">8</span>, y <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span>,</span>
+<span>    fixed_positions_update_family <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-32-1.png" class="r-plt" alt="" width="672"></p>
+<p>Pinning only repositions the people you name; everyone else stays
+where the layout placed them, so it is up to you to choose positions
+that do not overlap. IDs that are not found in the pedigree are ignored
+with a warning.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="trying-different-founder-orderings">12) Trying different founder orderings<a class="anchor" aria-label="anchor" href="#trying-different-founder-orderings"></a>
+</h3>
+<div class="section level4">
+<h4 id="why-row-order-matters">Why row order matters<a class="anchor" aria-label="anchor" href="#why-row-order-matters"></a>
+</h4>
+<p>The layout engine (kinship2) processes individuals in the order they
+appear in your data. For founders—people with no parents in the
+pedigree—this row order determines their initial left-to-right
+placement. Different orderings can move a couple from one side of the
+tree to the other, shorten long diagonal connectors, or reduce visual
+crossing of branches.</p>
+<p>By default <a href="https://github.com/R-Computing-Lab/ggpedigree/" class="external-link">ggpedigree</a> does not shuffle the rows, so
+the layout is determined by whatever order the data happen to arrive in.
+Two config options let you explore alternatives:</p>
+<table class="table">
+<colgroup>
+<col width="33%">
+<col width="33%">
+<col width="33%">
+</colgroup>
+<thead><tr class="header">
+<th>Option</th>
+<th>Default</th>
+<th>Purpose</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>founder_order_seed</code></td>
+<td><code>NULL</code></td>
+<td>Shuffle row order with this integer seed before layout</td>
+</tr>
+<tr class="even">
+<td><code>founder_order_tries</code></td>
+<td><code>1</code></td>
+<td>Try this many random shuffles; return the most compact one</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level4">
+<h4 id="comparing-two-layouts-with-founder_order_seed">Comparing two layouts with <code>founder_order_seed</code><a class="anchor" aria-label="anchor" href="#comparing-two-layouts-with-founder_order_seed"></a>
+</h4>
+<p>The easiest way to explore is to try a few integer seeds and compare
+the plots. Here we look at the default layout, seed 7, and seed 42 for
+the <code>potter</code> pedigree.</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p_default</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>, personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>, dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label_include <span class="op">=</span> <span class="cn">TRUE</span>, label_text_size <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Default ordering"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p_seed7</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>, personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>, dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    founder_order_seed <span class="op">=</span> <span class="fl">7L</span>,</span>
+<span>   </span>
+<span>    label_include <span class="op">=</span> <span class="cn">TRUE</span>, label_text_size <span class="op">=</span> <span class="fl">2.5</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"founder_order_seed = 7"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p_seed42</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>, personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>, dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    founder_order_seed <span class="op">=</span> <span class="fl">42L</span>,</span>
+<span>    label_include <span class="op">=</span> <span class="cn">TRUE</span>, label_text_size <span class="op">=</span> <span class="fl">2.5</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"founder_order_seed = 42"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p_default</span></span></code></pre></div>
+<p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-34-1.png" class="r-plt" alt="" width="672"></p>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p_seed7</span></span></code></pre></div>
+<p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-35-1.png" class="r-plt" alt="" width="672"></p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p_seed42</span></span></code></pre></div>
+<p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-36-1.png" class="r-plt" alt="" width="672"></p>
+<p>The same seed always produces the same plot, so results are fully
+reproducible once you have chosen a preferred layout.</p>
+</div>
+<div class="section level4">
+<h4 id="measuring-layout-quality">Measuring layout quality<a class="anchor" aria-label="anchor" href="#measuring-layout-quality"></a>
+</h4>
+<p><code><a href="../reference/calculateCoordinates.html">calculateCoordinates()</a></code> returns the raw layout data
+frame. You can compute a <em>layout score</em> (total parent-stub offset
+— lower means children sit closer to the midpoint of their parents) to
+compare candidates numerically before plotting:</p>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">9</span>, <span class="kw">function</span><span class="op">(</span><span class="va">s</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculateCoordinates.html">calculateCoordinates</a></span><span class="op">(</span></span>
+<span>    <span class="va">potter</span>,</span>
+<span>    personID <span class="op">=</span> <span class="st">"personID"</span>, momID <span class="op">=</span> <span class="st">"momID"</span>, dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>    config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>founder_order_seed <span class="op">=</span> <span class="va">s</span>,</span>
+<span>                  debug <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                  return_best_seed <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                  layout_score_method <span class="op">=</span> <span class="st">"parent_stub"</span></span>
+<span>  <span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu">ggpedigree</span><span class="fu">:::</span><span class="fu"><a href="../reference/dot-layoutScore.html">.layoutScore</a></span><span class="op">(</span><span class="va">coords</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>seed <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">9</span>, score <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">scores</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Layout score for seeds 0–9 (lower = more compact)"</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<caption>Layout score for seeds 0–9 (lower = more compact)</caption>
+<thead><tr class="header">
+<th align="right">seed</th>
+<th align="right">score</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="right">32.84</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">26.71</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">26.71</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">29.38</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">32.81</td>
+</tr>
+<tr class="even">
+<td align="right">5</td>
+<td align="right">27.06</td>
+</tr>
+<tr class="odd">
+<td align="right">6</td>
+<td align="right">27.54</td>
+</tr>
+<tr class="even">
+<td align="right">7</td>
+<td align="right">28.43</td>
+</tr>
+<tr class="odd">
+<td align="right">8</td>
+<td align="right">30.12</td>
+</tr>
+<tr class="even">
+<td align="right">9</td>
+<td align="right">28.13</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level4">
+<h4 id="automatic-search-with-founder_order_tries">Automatic search with <code>founder_order_tries</code><a class="anchor" aria-label="anchor" href="#automatic-search-with-founder_order_tries"></a>
+</h4>
+<p>If you don’t want to inspect scores by hand, set
+<code>founder_order_tries</code> to a larger number and let
+<a href="https://github.com/R-Computing-Lab/ggpedigree/" class="external-link">ggpedigree</a> pick the best seed automatically. The function
+evaluates that many shufflings and returns the most compact result.</p>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>, personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>, dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    founder_order_seed  <span class="op">=</span> <span class="fl">1L</span>,   <span class="co"># start search from seed 1</span></span>
+<span>    founder_order_tries <span class="op">=</span> <span class="fl">10L</span>,  <span class="co"># try seeds 1 through 155</span></span>
+<span>    label_include <span class="op">=</span> <span class="cn">TRUE</span>, label_text_size <span class="op">=</span> <span class="fl">2.5</span>,</span>
+<span>    return_best_seed <span class="op">=</span> <span class="cn">TRUE</span> <span class="co"># return the winning seed in the plot attributes for reference</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Best of seeds 1–10"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Best founder order seed: 5 with layout score: 267.060969564274</span></span></code></pre></div>
+<p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-38-1.png" class="r-plt" alt="" width="672"></p>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span></span>
+<span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>, personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>, dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    founder_order_seed  <span class="op">=</span> <span class="fl">5L</span>, </span>
+<span>    label_include <span class="op">=</span> <span class="cn">TRUE</span>, label_text_size <span class="op">=</span> <span class="fl">2.5</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ggPedigree.html">ggPedigree</a></span><span class="op">(</span></span>
+<span>  <span class="va">potter</span>,</span>
+<span>  famID <span class="op">=</span> <span class="st">"famID"</span>, personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
+<span>  momID <span class="op">=</span> <span class="st">"momID"</span>, dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    label_include <span class="op">=</span> <span class="cn">TRUE</span>, label_text_size <span class="op">=</span> <span class="fl">2.5</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">plot_grid</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Seed 5"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>                   , <span class="cn">NULL</span>, </span>
+<span>                   <span class="va">p2</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Default"</span><span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span> </span>
+<span>                   , <span class="cn">NULL</span>,</span>
+<span>  ncol <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  byrow <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  rel_widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">.1</span>, <span class="fl">1</span>, <span class="fl">.1</span><span class="op">)</span></span>
+<span><span class="op">)</span> </span></code></pre></div>
+<p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-38-2.png" class="r-plt" alt="" width="672"></p>
+<p>To make the result reproducible, always pair
+<code>founder_order_tries</code> with an explicit
+<code>founder_order_seed</code>. Without a seed, the function tries
+seeds <code>1, 2, …, N</code>—still deterministic, but recording the
+seed in your config makes the intent explicit.</p>
+<blockquote>
+<p><strong>Tip:</strong> For very large pedigrees the search can be slow
+because each trial reruns the full layout calculation. Start with a
+small <code>founder_order_tries</code> (5–10) to identify a good region,
+then fix the winning seed for production plots.</p>
+</blockquote>
+</div>
 </div>
 </div>
 <div class="section level2">
@@ -894,7 +1380,7 @@ to create a circular pedigree layout.</p>
 </h2>
 <p>If you want to reuse the same overrides across scripts or share them
 with collaborators, save your config list.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cfg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  point_scale_by_pedigree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  point_size <span class="op">=</span> <span class="fl">6</span>,</span>
@@ -916,7 +1402,7 @@ with collaborators, save your config list.</p>
 <span>  dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
 <span>  config <span class="op">=</span> <span class="va">cfg</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-24-1.png" class="r-plt" alt="" width="672"></p>
+<p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-39-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="config-reference">Config reference<a class="anchor" aria-label="anchor" href="#config-reference"></a>
@@ -925,8 +1411,8 @@ with collaborators, save your config list.</p>
 will only change a small subset, but the full list of supported keys can
 be printed programmatically.</p>
 <details><summary><strong>Show all config keys (names only)</strong>
-</summary><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cfg_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="../reference/getDefaultPlotConfig.html">getDefaultPlotConfig</a></span><span class="op">(</span><span class="st">"ggPedigree"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+</summary><div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cfg_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu">ggpedigree</span><span class="fu">:::</span><span class="fu">getDefaultPlotConfig</span><span class="op">(</span><span class="st">"ggPedigree"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>Config_Key <span class="op">=</span> <span class="va">cfg_names</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -1071,136 +1557,154 @@ be printed programmatically.</p>
 <td align="left">drop_non_classic_sibs</td>
 </tr>
 <tr class="even">
+<td align="left">fast_threshold</td>
+</tr>
+<tr class="odd">
 <td align="left">filter_degree_max</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">filter_degree_min</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">filter_n_pairs</td>
 </tr>
+<tr class="even">
+<td align="left">fixed_positions</td>
+</tr>
 <tr class="odd">
+<td align="left">fixed_positions_update_family</td>
+</tr>
+<tr class="even">
 <td align="left">focal_fill_chroma</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_component</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_force_zero</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_high_color</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_hue_direction</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_hue_range</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_include</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_legend_show</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_legend_title</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_lightness</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_low_color</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_method</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_mid_color</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_n_breaks</td>
 </tr>
-<tr class="odd">
-<td align="left">focal_fill_na_value</td>
-</tr>
 <tr class="even">
+<td align="left">focal_fill_na_color</td>
+</tr>
+<tr class="odd">
 <td align="left">focal_fill_personID</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_scale_midpoint</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_shape</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_use_log</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_viridis_begin</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_viridis_direction</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_viridis_end</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_viridis_option</td>
 </tr>
+<tr class="odd">
+<td align="left">founder_order_seed</td>
+</tr>
 <tr class="even">
+<td align="left">founder_order_tries</td>
+</tr>
+<tr class="odd">
 <td align="left">generation_height</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">generation_width</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">group_by_kin</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">grouping_column</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">hints</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">label_column</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">label_include</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">label_max_overlaps</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">label_method</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">label_nudge_x</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">label_nudge_y</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">label_nudge_y_flip</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">label_scale_by_pedigree</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">label_segment_color</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">label_text_angle</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">label_text_color</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">label_text_family</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">label_text_size</td>
+</tr>
+<tr class="odd">
+<td align="left">layout_score_method</td>
 </tr>
 <tr class="even">
 <td align="left">match_threshold_percent</td>
@@ -1347,6 +1851,12 @@ be printed programmatically.</p>
 <td align="left">relation</td>
 </tr>
 <tr class="even">
+<td align="left">reposition_founders</td>
+</tr>
+<tr class="odd">
+<td align="left">return_best_seed</td>
+</tr>
+<tr class="even">
 <td align="left">return_interactive</td>
 </tr>
 <tr class="odd">
@@ -1360,6 +1870,36 @@ be printed programmatically.</p>
 </tr>
 <tr class="even">
 <td align="left">segment_default_color</td>
+</tr>
+<tr class="odd">
+<td align="left">segment_lineage_component</td>
+</tr>
+<tr class="even">
+<td align="left">segment_lineage_focal_personID</td>
+</tr>
+<tr class="odd">
+<td align="left">segment_lineage_force_zero</td>
+</tr>
+<tr class="even">
+<td align="left">segment_lineage_include</td>
+</tr>
+<tr class="odd">
+<td align="left">segment_lineage_legend_show</td>
+</tr>
+<tr class="even">
+<td align="left">segment_lineage_legend_title</td>
+</tr>
+<tr class="odd">
+<td align="left">segment_lineage_method</td>
+</tr>
+<tr class="even">
+<td align="left">segment_lineage_na_color</td>
+</tr>
+<tr class="odd">
+<td align="left">segment_lineage_palette</td>
+</tr>
+<tr class="even">
+<td align="left">segment_lineage_types</td>
 </tr>
 <tr class="odd">
 <td align="left">segment_lineend</td>
@@ -1528,12 +2068,12 @@ be printed programmatically.</p>
 </tr>
 </tbody>
 </table></details><details><summary><strong>Show all config keys with defaults</strong>
-</summary><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getDefaultPlotConfig.html">getDefaultPlotConfig</a></span><span class="op">(</span><span class="st">"ggPedigree"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+</summary><div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">ggpedigree</span><span class="fu">:::</span><span class="fu">getDefaultPlotConfig</span><span class="op">(</span><span class="st">"ggPedigree"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># is a list</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"Config_Key"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"Config_Key"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>Default_Value <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -1872,343 +2412,423 @@ be printed programmatically.</p>
 <td align="left">0.4</td>
 </tr>
 <tr class="odd">
+<td align="left">segment_lineage_include</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">segment_lineage_component</td>
+<td align="left">mitochondrial</td>
+</tr>
+<tr class="odd">
+<td align="left">segment_lineage_types1</td>
+<td align="left">parent</td>
+</tr>
+<tr class="even">
+<td align="left">segment_lineage_types2</td>
+<td align="left">offspring</td>
+</tr>
+<tr class="odd">
+<td align="left">segment_lineage_types3</td>
+<td align="left">sibling</td>
+</tr>
+<tr class="even">
+<td align="left">segment_lineage_types4</td>
+<td align="left">mz</td>
+</tr>
+<tr class="odd">
+<td align="left">segment_lineage_method</td>
+<td align="left">viridis_d</td>
+</tr>
+<tr class="even">
+<td align="left">segment_lineage_palette1</td>
+<td align="left">#052f60</td>
+</tr>
+<tr class="odd">
+<td align="left">segment_lineage_palette2</td>
+<td align="left">#e69f00</td>
+</tr>
+<tr class="even">
+<td align="left">segment_lineage_palette3</td>
+<td align="left">#56b4e9</td>
+</tr>
+<tr class="odd">
+<td align="left">segment_lineage_palette4</td>
+<td align="left">#009e73</td>
+</tr>
+<tr class="even">
+<td align="left">segment_lineage_palette5</td>
+<td align="left">#f0e442</td>
+</tr>
+<tr class="odd">
+<td align="left">segment_lineage_palette6</td>
+<td align="left">#0072b2</td>
+</tr>
+<tr class="even">
+<td align="left">segment_lineage_palette7</td>
+<td align="left">#d55e00</td>
+</tr>
+<tr class="odd">
+<td align="left">segment_lineage_palette8</td>
+<td align="left">#cc79a7</td>
+</tr>
+<tr class="even">
+<td align="left">segment_lineage_na_color</td>
+<td align="left">grey80</td>
+</tr>
+<tr class="odd">
+<td align="left">segment_lineage_force_zero</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">segment_lineage_legend_show</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="odd">
+<td align="left">segment_lineage_legend_title</td>
+<td align="left">Lineage</td>
+</tr>
+<tr class="even">
 <td align="left">sex_color_include</td>
 <td align="left">TRUE</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">sex_legend_title</td>
 <td align="left">Sex</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">sex_shape_labels1</td>
 <td align="left">Female</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">sex_shape_labels2</td>
 <td align="left">Male</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">sex_shape_labels3</td>
 <td align="left">Unknown</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">sex_color_palette1</td>
 <td align="left">#440154FF</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">sex_color_palette2</td>
 <td align="left">#7fd34e</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">sex_color_palette3</td>
 <td align="left">#f1e51d</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">sex_shape_female</td>
 <td align="left">16</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">sex_shape_male</td>
 <td align="left">15</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">sex_shape_unknown</td>
 <td align="left">18</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">sex_legend_show</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">sex_shape_include</td>
 <td align="left">TRUE</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">status_include</td>
 <td align="left">TRUE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">status_code_affected</td>
 <td align="left">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">status_code_unaffected</td>
 <td align="left">0</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">status_label_affected</td>
 <td align="left">Affected</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">status_label_unaffected</td>
 <td align="left">Unaffected</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">status_alpha_affected</td>
 <td align="left">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">status_alpha_unaffected</td>
 <td align="left">0</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">status_color_palette1</td>
 <td align="left">#440154FF</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">status_color_palette2</td>
 <td align="left">#7fd34e</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">status_color_affected</td>
 <td align="left">black</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">status_color_unaffected</td>
 <td align="left">#7fd34e</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">status_shape_affected</td>
 <td align="left">4</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">status_legend_title</td>
 <td align="left">Affected</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">status_legend_show</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">overlay_shape</td>
 <td align="left">4</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">overlay_code_affected</td>
 <td align="left">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">overlay_code_unaffected</td>
 <td align="left">0</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">overlay_label_affected</td>
 <td align="left">Affected</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">overlay_label_unaffected</td>
 <td align="left">Unaffected</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">overlay_alpha_unaffected</td>
 <td align="left">0</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">overlay_color</td>
 <td align="left">black</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">overlay_alpha_affected</td>
 <td align="left">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">overlay_include</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">overlay_mode</td>
 <td align="left">alpha</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">overlay_stroke</td>
 <td align="left">1.5</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">overlay_legend_title</td>
 <td align="left">Overlay</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">overlay_legend_show</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_include</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_legend_show</td>
 <td align="left">TRUE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_personID</td>
 <td align="left">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_legend_title</td>
 <td align="left">Focal Fill</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_high_color</td>
 <td align="left">#FDE725FF</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_mid_color</td>
 <td align="left">#9F2A63FF</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_low_color</td>
 <td align="left">#0D082AFF</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_scale_midpoint</td>
 <td align="left">0.5</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_method</td>
 <td align="left">gradient</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_component</td>
 <td align="left">additive</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_shape</td>
 <td align="left">21</td>
 </tr>
-<tr class="even">
-<td align="left">focal_fill_na_value</td>
+<tr class="odd">
+<td align="left">focal_fill_na_color</td>
 <td align="left">black</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_use_log</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_force_zero</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_hue_range1</td>
 <td align="left">0</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_hue_range2</td>
 <td align="left">360</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_chroma</td>
 <td align="left">50</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_lightness</td>
 <td align="left">50</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_hue_direction</td>
 <td align="left">horizontal</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_viridis_option</td>
 <td align="left">D</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_viridis_begin</td>
 <td align="left">0</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">focal_fill_viridis_end</td>
 <td align="left">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">focal_fill_viridis_direction</td>
 <td align="left">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ci_include</td>
 <td align="left">TRUE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ci_ribbon_alpha</td>
 <td align="left">0.3</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">tile_color_palette1</td>
 <td align="left">white</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">tile_color_palette2</td>
 <td align="left">gold</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">tile_color_palette3</td>
 <td align="left">red</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">tile_color_border</td>
 <td align="left">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">tile_cluster</td>
 <td align="left">TRUE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">tile_interpolate</td>
 <td align="left">TRUE</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">tile_geom</td>
 <td align="left">geom_tile</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">tile_na_rm</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">tile_linejoin</td>
 <td align="left">mitre</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">matrix_fill_legend_title</td>
 <td align="left">Relatedness</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">matrix_sparse</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">matrix_isChild_method</td>
 <td align="left">partialparent</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">matrix_diagonal_include</td>
 <td align="left">TRUE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">matrix_upper_triangle_include</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">matrix_lower_triangle_include</td>
 <td align="left">TRUE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">return_static</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">return_widget</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">return_interactive</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">return_mid_parent</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">reduce_variables</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="odd">
+<td align="left">reposition_founders</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="even">
@@ -2224,126 +2844,146 @@ be printed programmatically.</p>
 <td align="left">15</td>
 </tr>
 <tr class="odd">
+<td align="left">fast_threshold</td>
+<td align="left">1000</td>
+</tr>
+<tr class="even">
+<td align="left">founder_order_tries</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">layout_score_method</td>
+<td align="left">composite</td>
+</tr>
+<tr class="even">
+<td align="left">return_best_seed</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">fixed_positions_update_family</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
 <td align="left">coord_layout</td>
 <td align="left">cartesian</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">coord_radial_start_angle</td>
 <td align="left">-90</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">coord_radial_end_angle</td>
 <td align="left">270</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">coord_radial_scale</td>
 <td align="left">1.5</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">coord_radial_min_radius</td>
 <td align="left">0.75</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">spread_out_generations</td>
 <td align="left">TRUE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">spread_out_generations_factor</td>
 <td align="left">0.5</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">override_many2many</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">optimize_plotly</td>
 <td align="left">TRUE</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">recode_missing_ids</td>
 <td align="left">TRUE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">recode_missing_sex</td>
 <td align="left">TRUE</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">add_phantoms</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">debug</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">affected_fill_include</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">affected_fill_code_affected</td>
 <td align="left">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">affected_fill_code_unaffected</td>
 <td align="left">0</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">affected_fill_label_affected</td>
 <td align="left">Affected</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">affected_fill_label_unaffected</td>
 <td align="left">Unaffected</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">affected_fill_color_affected</td>
 <td align="left">black</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">affected_fill_color_unaffected</td>
 <td align="left">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">affected_fill_shape_female</td>
 <td align="left">21</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">affected_fill_shape_male</td>
 <td align="left">22</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">affected_fill_shape_unknown</td>
 <td align="left">23</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">outline_color_include</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">outline_color_code_affected</td>
 <td align="left">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">outline_color_code_unaffected</td>
 <td align="left">0</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">outline_color_label_affected</td>
 <td align="left">Highlighted</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">outline_color_label_unaffected</td>
 <td align="left">Default</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">outline_color_affected</td>
 <td align="left">blue</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">outline_color_unaffected</td>
 <td align="left">black</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">preset</td>
 <td align="left">none</td>
 </tr>

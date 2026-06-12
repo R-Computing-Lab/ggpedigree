@@ -12,7 +12,8 @@ relationships.
   connections,
   config,
   plot_connections,
-  personID = "personID"
+  personID = "personID",
+  lineage_active = FALSE
 )
 
 addTwins(
@@ -20,7 +21,8 @@ addTwins(
   connections,
   config,
   plot_connections,
-  personID = "personID"
+  personID = "personID",
+  lineage_active = FALSE
 )
 ```
 
@@ -94,6 +96,10 @@ addTwins(
 
   Character string specifying the column name for individual IDs.
   Defaults to "personID".
+
+- lineage_active:
+
+  Logical; whether lineage coloring is in effect for this plot.
 
 ## Value
 

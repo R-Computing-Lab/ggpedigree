@@ -13,7 +13,8 @@ kinship2_align.pedigree(
   packed = TRUE,
   width = 10,
   align = TRUE,
-  hints = ped$hints
+  hints = ped$hints,
+  classic = FALSE
 )
 ```
 
@@ -41,6 +42,11 @@ kinship2_align.pedigree(
 
   Optional list with \`order\` and \`spouse\` components to guide
   alignment. If NULL, kinship2_autohint is called to generate hints
+
+- classic:
+
+  Logical, if TRUE uses classic alignment method (default FALSE). If
+  FALSE, uses an optimized method.
 
 ## Value
 

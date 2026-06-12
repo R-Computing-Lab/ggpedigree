@@ -11,7 +11,7 @@ handling overlapping subjects and adjusting positions appropriately."></head><bo
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.90</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +25,7 @@ handling overlapping subjects and adjusting positions appropriately."></head><bo
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/v00_plots.html">Plotting pedigrees with ggPedigree()</a></li>
     <li><a class="dropdown-item" href="../articles/v01_plots_extended.html">Extended: Plotting pedigrees with ggPedigree()</a></li>
     <li><a class="dropdown-item" href="../articles/v02_configuration.html">Using config to control ggpedigree plots</a></li>
-    <li><a class="dropdown-item" href="../articles/v11_configuration_extended.html">Extended: More uses of `config` to control ggpedigree plots</a></li>
+    <li><a class="dropdown-item" href="../articles/v11_configuration_extended.html">Extended: More uses of config to control ggpedigree plots</a></li>
     <li><a class="dropdown-item" href="../articles/v20_interactiveplots.html">Interactive Pedigree Plotting with ggPedigreeInteractive</a></li>
     <li><a class="dropdown-item" href="../articles/v21_extendedinteractiveplots.html">Extended: More Complex Pedigree Plots with ggPedigreeInteractive</a></li>
     <li><a class="dropdown-item" href="../articles/v22_plots_morecomplexity.html">Extended: Plotting more complicated pedigrees with `ggPedigree()`</a></li>
@@ -45,7 +45,7 @@ handling overlapping subjects and adjusting positions appropriately."></head><bo
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Merge two aligned pedigree structures</h1>
-      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/v1.2.0/R/kinship2_alignped3.R" class="external-link"><code>R/kinship2_alignped3.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/main/R/kinship2_alignped3.R" class="external-link"><code>R/kinship2_alignped3.R</code></a></small>
       <div class="d-none name"><code>kinship2_alignped3.Rd</code></div>
     </div>
 
@@ -57,7 +57,9 @@ handling overlapping subjects and adjusting positions appropriately.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">kinship2_alignped3</span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span>, <span class="va">packed</span>, space <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">kinship2_alignped3</span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span>, <span class="va">packed</span>, space <span class="op">=</span> <span class="fl">1</span>, classic <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">kinship2_alignped3_optimized</span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span>, <span class="va">packed</span>, space <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -78,6 +80,10 @@ handling overlapping subjects and adjusting positions appropriately.</p>
 
 <dt id="arg-space">space<a class="anchor" aria-label="anchor" href="#arg-space"></a></dt>
 <dd><p>Numeric, horizontal spacing between structures when packed=FALSE (default 1)</p></dd>
+
+
+<dt id="arg-classic">classic<a class="anchor" aria-label="anchor" href="#arg-classic"></a></dt>
+<dd><p>Logical, if TRUE uses classic alignment method (default FALSE)</p></dd>
 
 </dl></div>
     <div class="section level2">

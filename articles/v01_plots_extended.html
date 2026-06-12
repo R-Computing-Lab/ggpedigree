@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.90</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,7 @@
 <li><a class="dropdown-item" href="../articles/v00_plots.html">Plotting pedigrees with ggPedigree()</a></li>
     <li><a class="dropdown-item" href="../articles/v01_plots_extended.html">Extended: Plotting pedigrees with ggPedigree()</a></li>
     <li><a class="dropdown-item" href="../articles/v02_configuration.html">Using config to control ggpedigree plots</a></li>
-    <li><a class="dropdown-item" href="../articles/v11_configuration_extended.html">Extended: More uses of `config` to control ggpedigree plots</a></li>
+    <li><a class="dropdown-item" href="../articles/v11_configuration_extended.html">Extended: More uses of config to control ggpedigree plots</a></li>
     <li><a class="dropdown-item" href="../articles/v20_interactiveplots.html">Interactive Pedigree Plotting with ggPedigreeInteractive</a></li>
     <li><a class="dropdown-item" href="../articles/v21_extendedinteractiveplots.html">Extended: More Complex Pedigree Plots with ggPedigreeInteractive</a></li>
     <li><a class="dropdown-item" href="../articles/v22_plots_morecomplexity.html">Extended: Plotting more complicated pedigrees with `ggPedigree()`</a></li>
@@ -67,7 +67,7 @@
       <h1>Extended: Plotting pedigrees with ggPedigree()</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/v1.2.0/vignettes/articles/v01_plots_extended.Rmd" class="external-link"><code>vignettes/articles/v01_plots_extended.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/main/vignettes/articles/v01_plots_extended.Rmd" class="external-link"><code>vignettes/articles/v01_plots_extended.Rmd</code></a></small>
       <div class="d-none name"><code>v01_plots_extended.Rmd</code></div>
     </div>
 
@@ -255,6 +255,10 @@ coordinates for overlaying additional information.</p>
 <span><span class="co">#&gt; Pedigree data prepared. Number of individuals: 14</span></span>
 <span><span class="co">#&gt; Coordinates calculated. Number of individuals: 14</span></span>
 <span><span class="co">#&gt; Connections calculated. Number of connections: 14</span></span>
+<span><span class="co">#&gt; Using fixed color for segments. To enable lineage coloring for this segment type, ensure that segment_lineage_include is FALSE, segment_lineage_active is TRUE, and that the data includes a segment_lineage column with appropriate values.</span></span>
+<span><span class="co">#&gt; Using fixed color for segments. To enable lineage coloring for this segment type, ensure that segment_lineage_include is FALSE, segment_lineage_active is TRUE, and that the data includes a segment_lineage column with appropriate values.</span></span>
+<span><span class="co">#&gt; Using fixed color for segments. To enable lineage coloring for this segment type, ensure that segment_lineage_include is FALSE, segment_lineage_active is TRUE, and that the data includes a segment_lineage column with appropriate values.</span></span>
+<span><span class="co">#&gt; Using fixed color for segments. To enable lineage coloring for this segment type, ensure that segment_lineage_include is FALSE, segment_lineage_active is TRUE, and that the data includes a segment_lineage column with appropriate values.</span></span>
 <span><span class="co">#&gt; Adding nodes to the plot...</span></span>
 <span><span class="co">#&gt; Focal fill column:</span></span>
 <span><span class="co">#&gt; Status column: proband</span></span>
@@ -430,7 +434,7 @@ with Molly Weasley’s mitochondrial descendants in gold.</p>
 <span>    focal_fill_color_values <span class="op">=</span> <span class="va">focal_fill_color_values_wfu</span>,</span>
 <span>    focal_fill_force_zero <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    label_method <span class="op">=</span> <span class="st">"geom_text"</span>,</span>
-<span>    focal_fill_na_value <span class="op">=</span> <span class="va">text_color_wfu</span>,</span>
+<span>    focal_fill_na_color <span class="op">=</span> <span class="va">text_color_wfu</span>,</span>
 <span>    focal_fill_scale_midpoint <span class="op">=</span> <span class="fl">0.40</span>,</span>
 <span>    focal_fill_component <span class="op">=</span> <span class="st">"matID"</span>,</span>
 <span>    focal_fill_labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -468,7 +472,7 @@ with Molly Weasley’s mitochondrial descendants in gold.</p>
 <span>    focal_fill_component <span class="op">=</span> <span class="st">"mitochondrial"</span>,</span>
 <span>    focal_fill_force_zero <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    label_method <span class="op">=</span> <span class="st">"ggrepel"</span>,</span>
-<span>    focal_fill_na_value <span class="op">=</span> <span class="va">text_color_wfu</span>,</span>
+<span>    focal_fill_na_color <span class="op">=</span> <span class="va">text_color_wfu</span>,</span>
 <span>    label_text_angle <span class="op">=</span> <span class="op">-</span><span class="fl">30</span>,</span>
 <span>    sex_legend_show <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    sex_color_include <span class="op">=</span> <span class="cn">FALSE</span></span>

@@ -11,7 +11,8 @@ createFillColumn(
   focal_fill_personID = 2,
   personID = "personID",
   component = "additive",
-  config = list()
+  config = list(),
+  segment = FALSE
 )
 ```
 
@@ -36,6 +37,12 @@ createFillColumn(
 - config:
 
   A list of configuration options for customizing the fill column.
+
+- segment:
+
+  Logical indicating whether the fill column is for segment lineage
+  (TRUE) or focal fill (FALSE). This affects the column name and
+  force-zero behavior.
 
 ## Value
 

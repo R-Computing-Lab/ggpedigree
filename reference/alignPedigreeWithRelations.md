@@ -13,7 +13,7 @@ alignPedigreeWithRelations(
   momID,
   code_male = NULL,
   sexVar = "sex",
-  config
+  config = NULL
 )
 ```
 

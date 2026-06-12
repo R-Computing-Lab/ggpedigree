@@ -13,7 +13,7 @@ system needed for drawing the pedigree."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">ggpedigree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.90</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +27,7 @@ system needed for drawing the pedigree."></head><body>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/v00_plots.html">Plotting pedigrees with ggPedigree()</a></li>
     <li><a class="dropdown-item" href="../articles/v01_plots_extended.html">Extended: Plotting pedigrees with ggPedigree()</a></li>
     <li><a class="dropdown-item" href="../articles/v02_configuration.html">Using config to control ggpedigree plots</a></li>
-    <li><a class="dropdown-item" href="../articles/v11_configuration_extended.html">Extended: More uses of `config` to control ggpedigree plots</a></li>
+    <li><a class="dropdown-item" href="../articles/v11_configuration_extended.html">Extended: More uses of config to control ggpedigree plots</a></li>
     <li><a class="dropdown-item" href="../articles/v20_interactiveplots.html">Interactive Pedigree Plotting with ggPedigreeInteractive</a></li>
     <li><a class="dropdown-item" href="../articles/v21_extendedinteractiveplots.html">Extended: More Complex Pedigree Plots with ggPedigreeInteractive</a></li>
     <li><a class="dropdown-item" href="../articles/v22_plots_morecomplexity.html">Extended: Plotting more complicated pedigrees with `ggPedigree()`</a></li>
@@ -47,7 +47,7 @@ system needed for drawing the pedigree."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Align a pedigree for plotting</h1>
-      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/v1.2.0/R/kinship2_internals.R" class="external-link"><code>R/kinship2_internals.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/R-Computing-Lab/ggpedigree/blob/main/R/kinship2_internals.R" class="external-link"><code>R/kinship2_internals.R</code></a></small>
       <div class="d-none name"><code>kinship2_align.pedigree.Rd</code></div>
     </div>
 
@@ -65,7 +65,8 @@ system needed for drawing the pedigree.</p>
 <span>  packed <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  width <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  align <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  hints <span class="op">=</span> <span class="va">ped</span><span class="op">$</span><span class="va">hints</span></span>
+<span>  hints <span class="op">=</span> <span class="va">ped</span><span class="op">$</span><span class="va">hints</span>,</span>
+<span>  classic <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -93,6 +94,10 @@ If numeric, a vector c(a1, a2) controlling alignment penalties (default TRUE)</p
 <dt id="arg-hints">hints<a class="anchor" aria-label="anchor" href="#arg-hints"></a></dt>
 <dd><p>Optional list with `order` and `spouse` components to guide alignment.
 If NULL, kinship2_autohint is called to generate hints</p></dd>
+
+
+<dt id="arg-classic">classic<a class="anchor" aria-label="anchor" href="#arg-classic"></a></dt>
+<dd><p>Logical, if TRUE uses classic alignment method (default FALSE). If FALSE, uses an optimized method.</p></dd>
 
 </dl></div>
     <div class="section level2">
