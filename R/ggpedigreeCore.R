@@ -198,6 +198,7 @@ ggPedigree.core <- function(ped,
       )
       if (isTRUE(config$debug)) {
         message("Debug note: segment_lineage_include = TRUE with node color mapping is not supported in interactive mode. Consider setting return_interactive = FALSE for combined node + segment coloring.")
+        lineage_active <- TRUE
       } else {
         lineage_active <- FALSE
       }
@@ -221,7 +222,7 @@ ggPedigree.core <- function(ped,
     }
   }
 
-  if (lineage_active == TRUE) {
+  if (lineage_active == TRUE || (config$segment_lineage_include == TRUE && config$debug == TRUE)) {
     lineage_lookup <- ds |>
       dplyr::distinct(!!rlang::sym(personID), .data$segment_lineage)
 
