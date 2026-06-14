@@ -25,11 +25,13 @@ use_backwards_compat <- isTRUE(config$segment_lineage_include) &&
   type %in% config$segment_lineage_types &&
   "segment_lineage" %in% names(data)
 
+
 use_plotly_debug_lineage <- isTRUE(config$return_interactive) &&
   isTRUE(config$debug) &&
   isTRUE(use_backwards_compat) &&
   "segment_lineage" %in% names(data) &&
   length(unique(data$segment_lineage[!is.na(data$segment_lineage)])) > 0
+
 
 if (isTRUE(use_plotly_debug_lineage)) {
   if (config$debug == TRUE) {
@@ -63,6 +65,8 @@ if (isTRUE(use_plotly_debug_lineage)) {
     as.character(segment_lineage_levels)
   )
 
+  # assign global
+
   layer <- lapply(segment_lineage_levels, function(current_lineage) {
     current_data <- data |>
       dplyr::filter(.data$segment_lineage == current_lineage)
@@ -79,6 +83,15 @@ if (isTRUE(use_plotly_debug_lineage)) {
       )
     )
   })
+ #     assign(
+  #  "debug_objects",
+  #  list(
+  #    segment_lineage_colors = segment_lineage_colors,
+  #    segment_lineage_palette_colors = segment_lineage_palette_colors,
+  #    layer = layer
+  #  ),
+ #   envir = .GlobalEnv
+ # )
 } else if (isTRUE(use_lineage)) {
   mapping <- utils::modifyList(
     mapping,
