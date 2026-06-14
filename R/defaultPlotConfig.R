@@ -310,7 +310,6 @@ utils::globalVariables(c("focal_fill_na_value")) # to avoid R CMD check NOTE, it
 #' @seealso buildPlotConfig, vignette("v10_configuration")
 
 
-
 getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  personID = "personID",
                                  status_column = NULL,
@@ -412,7 +411,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  segment_self_color = segment_default_color,
                                  segment_sibling_color = segment_default_color,
                                  segment_spouse_color = segment_default_color,
-                                 segment_spouse_alpha = if(segment_lineage_legend_show) 0.5 else 1, # make spouse segments semi-transparent when lineage legend is shown to reduce visual dominance
+                                 segment_spouse_alpha = if (segment_lineage_legend_show) 0.5 else 1, # make spouse segments semi-transparent when lineage legend is shown to reduce visual dominance
                                  segment_mz_color = segment_default_color,
                                  segment_mz_linetype = segment_linetype,
                                  segment_mz_alpha = 1,
@@ -435,7 +434,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  ),
                                  segment_lineage_method = "viridis_d",
                                  segment_lineage_palette = focal_fill_color_values,
-                                 segment_lineage_na_color =  "grey80",
+                                 segment_lineage_na_color = "grey80",
                                  segment_lineage_force_zero = TRUE,
                                  segment_lineage_legend_show = TRUE,
                                  segment_lineage_legend_title = "Lineage",
@@ -634,10 +633,10 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     "wfu colors",
     "wfu color palette"
   )
-#  backwards compatibility with older versions that used focal_fill_na_value
- if(exists("focal_fill_na_value") && !is.null(focal_fill_na_value)){
-   focal_fill_na_color <- focal_fill_na_value
-   }
+  #  backwards compatibility with older versions that used focal_fill_na_value
+  if (exists("focal_fill_na_value") && !is.null(focal_fill_na_value)) {
+    focal_fill_na_color <- focal_fill_na_value
+  }
 
   if (!is.character(color_theme) || length(color_theme) != 1L || is.na(color_theme)) {
     stop("`color_theme` must be a non-missing character string.")
@@ -670,7 +669,6 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
     sex_color_palette <- rep("black", length(sex_color_palette))
 
     focal_fill_color_values <- c("grey10", "grey50", "grey85")
-
   }
 
   if (color_theme_lower %in% c(wfu_color_names) ||

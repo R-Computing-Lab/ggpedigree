@@ -111,7 +111,6 @@ test_that("give static plot when plotly fails", {
 #  Apply vertical spacing factor if generation_height ≠ 1
 
 test_that("vertical spacing factor if generation_height ≠ 1", {
-
   p <- ggPedigree(potter, config = list(generation_width = 1))
   p_2 <- ggPedigree(potter, config = list(generation_width = 2))
   p_3 <- ggPedigree(potter, config = list(generation_height = 2))

@@ -8,7 +8,6 @@ base_plt <- ggplot2::ggplot(
 )
 
 
-
 label_cfg <- list(
   label_column        = "personID",
   label_nudge_y       = 0,
@@ -72,10 +71,9 @@ test_that(".addLabels warns and falls back to geom_text when ggrepel is unavaila
   cfg <- utils::modifyList(label_cfg, list(label_method = "geom_text_repel"))
   mockery::stub(ggpedigree:::.addLabels, "requireNamespace", function(...) FALSE)
 
-  result <-   ggpedigree:::.addLabels(base_plt, cfg)
+  result <- ggpedigree:::.addLabels(base_plt, cfg)
   # Falls back to geom_text — still adds a layer
   expect_equal(n_layers(result), n_layers(base_plt) + 1)
-
 })
 
 # ---------------------------------------------------------------------------

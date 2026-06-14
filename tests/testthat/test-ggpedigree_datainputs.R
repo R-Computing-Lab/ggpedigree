@@ -33,7 +33,7 @@ missing_parent_num <- list(
 
 config_map <- list(
   #  cfg_skip = "cfg_skip",
-#  cfg_dbg = list(debug = TRUE, recode_missing_sex = FALSE),
+  #  cfg_dbg = list(debug = TRUE, recode_missing_sex = FALSE),
   cfg_m2 = list(code_male = 2, recode_missing_sex = FALSE),
   cfg_m1 = list(code_male = 1, recode_missing_sex = FALSE),
   cfg_m0 = list(code_male = 0, recode_missing_sex = FALSE)
@@ -70,8 +70,10 @@ grid <- grid %>% mutate(
     TRUE ~ expect_warnings
   ),
   expect_errors = case_when(
-    config_case %in% c("cfg_skip", "cfg_dbg",
-                       "cfg_m1") &
+    config_case %in% c(
+      "cfg_skip", "cfg_dbg",
+      "cfg_m1"
+    ) &
       sex_case %in% c("s121", "s101", "s10NA", "s12NA") ~ TRUE,
     # cfg_m2 fixes 1/2 but not 0/1
     config_case == "cfg_m2" &

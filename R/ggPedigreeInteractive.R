@@ -93,8 +93,7 @@ ggPedigreeInteractive <- function(ped,
     config$return_widget <- return_widget
     return_widget <- NULL
   }
-  if (!is.null(config$debug)) {
-  } else {
+  if (!is.null(config$debug)) {} else {
     config$debug <- debug
     debug <- NULL
   }

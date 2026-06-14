@@ -13,23 +13,23 @@ make_ds <- function(x = c(1, 2, 3, 4), y = c(0, 0, 1, 1)) {
 }
 
 cart_cfg <- list(
-  coord_layout         = "cartesian",
-  generation_height    = 1,
-  generation_width     = 1,
-  coord_radial_scale   = 1.5,
+  coord_layout = "cartesian",
+  generation_height = 1,
+  generation_width = 1,
+  coord_radial_scale = 1.5,
   coord_radial_min_radius = 0.75
 )
 
 radial_cfg <- list(
-  coord_layout              = "radial",
-  coord_radial_start_angle  = -90,
-  coord_radial_end_angle    = 270,
-  coord_radial_scale        = 1.5,
-  coord_radial_min_radius   = 0.75,
-  spread_out_generations    = TRUE,
+  coord_layout = "radial",
+  coord_radial_start_angle = -90,
+  coord_radial_end_angle = 270,
+  coord_radial_scale = 1.5,
+  coord_radial_min_radius = 0.75,
+  spread_out_generations = TRUE,
   spread_out_generations_factor = 0.5,
-  generation_height         = 1,
-  generation_width          = 1
+  generation_height = 1,
+  generation_width = 1
 )
 
 # ---------------------------------------------------------------------------
@@ -81,7 +81,7 @@ test_that(".adjustSpacing radial branch applies scale and min_radius to y", {
 
 test_that(".adjustSpacing radial and cartesian y_pos differ when scale != 1", {
   ds <- make_ds(y = c(0, 0, 1, 1))
-  r_cart   <- ggpedigree:::.adjustSpacing(ds, cart_cfg)
+  r_cart <- ggpedigree:::.adjustSpacing(ds, cart_cfg)
   r_radial <- ggpedigree:::.adjustSpacing(
     ds, utils::modifyList(cart_cfg, list(coord_layout = "radial"))
   )
@@ -124,9 +124,9 @@ test_that(".applyRadialLayout edge case: all same y maps to the same radius", {
 test_that(".applyRadialLayout with spread_out_generations=FALSE skips spread factor", {
   ds <- make_ds(x = c(1, 2, 3, 4), y = c(0.75, 0.75, 2.25, 2.25))
   cfg_no_spread <- utils::modifyList(radial_cfg, list(spread_out_generations = FALSE))
-  cfg_spread    <- utils::modifyList(radial_cfg, list(spread_out_generations = TRUE))
+  cfg_spread <- utils::modifyList(radial_cfg, list(spread_out_generations = TRUE))
   r_no_spread <- ggpedigree:::.applyRadialLayout(ds, cfg_no_spread)
-  r_spread    <- ggpedigree:::.applyRadialLayout(ds, cfg_spread)
+  r_spread <- ggpedigree:::.applyRadialLayout(ds, cfg_spread)
   expect_equal(nrow(r_no_spread), nrow(ds))
   # Outer generation (y_order > 0) gets pushed further with spread=TRUE
   expect_false(identical(r_no_spread$x_pos, r_spread$x_pos))

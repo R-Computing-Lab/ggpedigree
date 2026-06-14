@@ -17,105 +17,105 @@
 .addSegmentLayer <- function(plotObject, data, mapping, type, config,
                              lineage_active = FALSE, ...) {
   dots <- list(...)
-use_lineage <- isTRUE(lineage_active) &&
-  type %in% config$segment_lineage_types &&
-  "segment_lineage" %in% names(data)
+  use_lineage <- isTRUE(lineage_active) &&
+    type %in% config$segment_lineage_types &&
+    "segment_lineage" %in% names(data)
 
-use_backwards_compat <- isTRUE(config$segment_lineage_include) &&
-  type %in% config$segment_lineage_types &&
-  "segment_lineage" %in% names(data)
-
-
-use_plotly_debug_lineage <- isTRUE(config$return_interactive) &&
-  isTRUE(config$debug) &&
-  isTRUE(use_backwards_compat) &&
-  "segment_lineage" %in% names(data) &&
-  length(unique(data$segment_lineage[!is.na(data$segment_lineage)])) > 0
+  use_backwards_compat <- isTRUE(config$segment_lineage_include) &&
+    type %in% config$segment_lineage_types &&
+    "segment_lineage" %in% names(data)
 
 
-if (isTRUE(use_plotly_debug_lineage)) {
-  if (config$debug == TRUE) {
-    message("Using fixed lineage-specific segment layers for plotly/debug compatibility.")
-  }
- segment_lineage_levels <- unique(data$segment_lineage[!is.na(data$segment_lineage)])
-  needed_colors <- length(segment_lineage_levels)
+  use_plotly_debug_lineage <- isTRUE(config$return_interactive) &&
+    isTRUE(config$debug) &&
+    isTRUE(use_backwards_compat) &&
+    "segment_lineage" %in% names(data) &&
+    length(unique(data$segment_lineage[!is.na(data$segment_lineage)])) > 0
 
-  if (is.null(config$segment_lineage_palette)) {
-    segment_lineage_palette_colors <- as.character(
-      paletteer::paletteer_d("NineteenEightyR::miami2")
-    )
-  } else if (
-    is.character(config$segment_lineage_palette) &&
-      length(config$segment_lineage_palette) == 1
-  ) {
-    segment_lineage_palette_colors <- as.character(
-      paletteer::paletteer_d(config$segment_lineage_palette)
-    )
-  } else if (
-    is.character(config$segment_lineage_palette) &&
-      length(config$segment_lineage_palette) >= needed_colors
-  ) {
-    segment_lineage_palette_colors <- config$segment_lineage_palette
-  } else {
-    stop("Invalid segment_lineage_palette configuration. Must be NULL, a single palette name, or a character vector of colors with length >= number of unique segment lineages.")
-  }
 
-  segment_lineage_colors <- setNames(
-    segment_lineage_palette_colors[seq_len(needed_colors)],
-    as.character(segment_lineage_levels)
-  )
+  if (isTRUE(use_plotly_debug_lineage)) {
+    if (config$debug == TRUE) {
+      message("Using fixed lineage-specific segment layers for plotly/debug compatibility.")
+    }
+    segment_lineage_levels <- unique(data$segment_lineage[!is.na(data$segment_lineage)])
+    needed_colors <- length(segment_lineage_levels)
 
-  # assign global
-
-  layer <- lapply(segment_lineage_levels, function(current_lineage) {
-    current_data <- data |>
-      dplyr::filter(.data$segment_lineage == current_lineage)
-
-    do.call(
-      ggplot2::geom_segment,
-      c(
-        list(
-          data = current_data,
-          mapping = mapping,
-          colour = unname(segment_lineage_colors[[as.character(current_lineage)]])
-        ),
-        dots
+    if (is.null(config$segment_lineage_palette)) {
+      segment_lineage_palette_colors <- as.character(
+        paletteer::paletteer_d("NineteenEightyR::miami2")
       )
-    )
-  })
- #     assign(
-  #  "debug_objects",
-  #  list(
-  #    segment_lineage_colors = segment_lineage_colors,
-  #    segment_lineage_palette_colors = segment_lineage_palette_colors,
-  #    layer = layer
-  #  ),
- #   envir = .GlobalEnv
- # )
-} else if (isTRUE(use_lineage)) {
-  mapping <- utils::modifyList(
-    mapping,
-    ggplot2::aes(colour = .data$segment_lineage)
-  )
+    } else if (
+      is.character(config$segment_lineage_palette) &&
+        length(config$segment_lineage_palette) == 1
+    ) {
+      segment_lineage_palette_colors <- as.character(
+        paletteer::paletteer_d(config$segment_lineage_palette)
+      )
+    } else if (
+      is.character(config$segment_lineage_palette) &&
+        length(config$segment_lineage_palette) >= needed_colors
+    ) {
+      segment_lineage_palette_colors <- config$segment_lineage_palette
+    } else {
+      stop("Invalid segment_lineage_palette configuration. Must be NULL, a single palette name, or a character vector of colors with length >= number of unique segment lineages.")
+    }
 
-  layer <- do.call(
-    ggplot2::geom_segment,
-    c(list(data = data, mapping = mapping), dots)
-  )
-} else {
-  if (config$debug == TRUE) {
-    message("Using fixed color for segments. To enable lineage coloring for this segment type, ensure that segment_lineage_include is FALSE, segment_lineage_active is TRUE, and that the data includes a segment_lineage column with appropriate values.")
+    segment_lineage_colors <- setNames(
+      segment_lineage_palette_colors[seq_len(needed_colors)],
+      as.character(segment_lineage_levels)
+    )
+
+    # assign global
+
+    layer <- lapply(segment_lineage_levels, function(current_lineage) {
+      current_data <- data |>
+        dplyr::filter(.data$segment_lineage == current_lineage)
+
+      do.call(
+        ggplot2::geom_segment,
+        c(
+          list(
+            data = current_data,
+            mapping = mapping,
+            colour = unname(segment_lineage_colors[[as.character(current_lineage)]])
+          ),
+          dots
+        )
+      )
+    })
+    #     assign(
+    #  "debug_objects",
+    #  list(
+    #    segment_lineage_colors = segment_lineage_colors,
+    #    segment_lineage_palette_colors = segment_lineage_palette_colors,
+    #    layer = layer
+    #  ),
+    #   envir = .GlobalEnv
+    # )
+  } else if (isTRUE(use_lineage)) {
+    mapping <- utils::modifyList(
+      mapping,
+      ggplot2::aes(colour = .data$segment_lineage)
+    )
+
+    layer <- do.call(
+      ggplot2::geom_segment,
+      c(list(data = data, mapping = mapping), dots)
+    )
+  } else {
+    if (config$debug == TRUE) {
+      message("Using fixed color for segments. To enable lineage coloring for this segment type, ensure that segment_lineage_include is FALSE, segment_lineage_active is TRUE, and that the data includes a segment_lineage column with appropriate values.")
+    }
+
+    fixed_color <- config[[paste0("segment_", type, "_color")]]
+
+    layer <- do.call(
+      ggplot2::geom_segment,
+      c(list(data = data, mapping = mapping, colour = fixed_color), dots)
+    )
   }
 
-  fixed_color <- config[[paste0("segment_", type, "_color")]]
-
-  layer <- do.call(
-    ggplot2::geom_segment,
-    c(list(data = data, mapping = mapping, colour = fixed_color), dots)
-  )
-}
-
-plotObject + layer
+  plotObject + layer
 }
 
 #' @title Add Self Segments to ggplot Pedigree Plot

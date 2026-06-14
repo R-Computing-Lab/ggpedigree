@@ -361,8 +361,9 @@ calculateCoordinates <- function(ped,
       candidate <- .doOneLayout(ped_shuffled)
       rownames(candidate) <- NULL
       score <- .layoutScore(candidate,
-                            method  = config[["layout_score_method"]],
-                            twinID  = twinID)
+        method  = config[["layout_score_method"]],
+        twinID  = twinID
+      )
       if (score < best_score) {
         best_score <- score
         best_out <- candidate
@@ -370,7 +371,7 @@ calculateCoordinates <- function(ped,
       }
     }
     ped_out <- best_out
-    if(isTRUE(config$debug)||isTRUE(config$return_best_seed)) {
+    if (isTRUE(config$debug) || isTRUE(config$return_best_seed)) {
       message(
         "Best founder order seed: ", best_seed,
         " with layout score: ", best_score
@@ -409,19 +410,21 @@ calculateCoordinates <- function(ped,
   placed <- ds[
     !is.na(ds$x_pos) & !is.na(ds$x_fam) & (is.na(ds$extra) | !ds$extra),
   ]
-  if (nrow(placed) < 2L) return(0L)
+  if (nrow(placed) < 2L) {
+    return(0L)
+  }
 
   count <- 0L
   for (g in unique(placed$y_pos)) {
     gr <- placed[!is.na(placed$y_pos) & placed$y_pos == g, ]
-    n  <- nrow(gr)
+    n <- nrow(gr)
     if (n < 2L) next
     xc <- gr$x_pos
     xp <- gr$x_fam
     for (i in seq_len(n - 1L)) {
       for (j in seq.int(i + 1L, n)) {
         if (!is.na(xp[i]) && !is.na(xp[j]) &&
-            ((xc[i] < xc[j]) != (xp[i] < xp[j]))) {
+          ((xc[i] < xc[j]) != (xp[i] < xp[j]))) {
           count <- count + 1L
         }
       }
@@ -452,14 +455,18 @@ calculateCoordinates <- function(ped,
 #' @return A non-negative numeric value.
 #' @keywords internal
 .layoutScoreTwinPenalty <- function(ds, twinID = "twinID", cross_gen_penalty = 10) {
-  if (!twinID %in% names(ds)) return(0)
+  if (!twinID %in% names(ds)) {
+    return(0)
+  }
 
   placed <- ds[
     !is.na(ds[[twinID]]) &
       !is.na(ds$x_pos) &
       (is.na(ds$extra) | !ds$extra),
   ]
-  if (nrow(placed) < 2L) return(0)
+  if (nrow(placed) < 2L) {
+    return(0)
+  }
 
   penalty <- 0
   twin_groups <- split(placed, placed[[twinID]])
@@ -534,20 +541,19 @@ calculateCoordinates <- function(ped,
                          twinID = "twinID",
                          cross_gen_penalty = 10L,
                          twin_penalty_weight = 20L,
-                         duplication_weight = 100L
-                         ) {
+                         duplication_weight = 100L) {
   method <- match.arg(method)
   switch(method,
-    parent_stub      = ,
-    parent_offset    = sum(abs(ds$x_fam - ds$x_pos), na.rm = TRUE),
-    crossings        = .layoutScoreCrossings(ds),
-    duplications     = ,
+    parent_stub = ,
+    parent_offset = sum(abs(ds$x_fam - ds$x_pos), na.rm = TRUE),
+    crossings = .layoutScoreCrossings(ds),
+    duplications = ,
     minimal_duplicates = sum(duplicated(ds$nid[!is.na(ds$nid)])),
-    twin_penalty     = .layoutScoreTwinPenalty(ds, twinID = twinID,cross_gen_penalty = cross_gen_penalty),
-    composite        = {
+    twin_penalty = .layoutScoreTwinPenalty(ds, twinID = twinID, cross_gen_penalty = cross_gen_penalty),
+    composite = {
       sum(abs(ds$x_fam - ds$x_pos), na.rm = TRUE) +
-        cross_gen_penalty  * .layoutScoreCrossings(ds) +
-        twin_penalty_weight  * .layoutScoreTwinPenalty(ds, twinID = twinID) +
+        cross_gen_penalty * .layoutScoreCrossings(ds) +
+        twin_penalty_weight * .layoutScoreTwinPenalty(ds, twinID = twinID) +
         duplication_weight * sum(duplicated(ds$nid[!is.na(ds$nid)]))
     }
   )
