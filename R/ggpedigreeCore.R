@@ -191,17 +191,13 @@ ggPedigree.core <- function(ped,
     if (is_interactive) {
       warning(
         "Combining node color mapping with segment lineage coloring is not ",
-        "supported in interactive (plotly) plots, because the second color scale ",
-        "(via 'ggnewscale') does not convert to plotly. Falling back to fixed ",
-        "segment colors. Use the static ggPedigree() for combined node + segment ",
-        "coloring, or disable node coloring."
+        "supported in interactive (plotly) plots via ggnewscale. ",
+        "Segment lineage colors will be approximated using fixed colors per lineage group."
       )
       if (isTRUE(config$debug)) {
-        message("Debug note: segment_lineage_include = TRUE with node color mapping is not supported in interactive mode. Consider setting return_interactive = FALSE for combined node + segment coloring.")
-        lineage_active <- TRUE
-      } else {
-        lineage_active <- FALSE
+        message("Debug note: segment_lineage_include = TRUE with node color mapping uses per-lineage fixed colours in interactive mode.")
       }
+      lineage_active <- FALSE
     } else if (!have_ggnewscale) {
       warning(
         "segment_lineage_include = TRUE together with node color mapping requires ",
@@ -216,13 +212,12 @@ ggPedigree.core <- function(ped,
           "requires the 'ggnewscale' package. ",
           "Install ggnewscale, or disable node coloring"
         )
-      } else {
-        lineage_active <- FALSE
       }
+      lineage_active <- FALSE
     }
   }
 
-  if (lineage_active == TRUE || (config$segment_lineage_include == TRUE && config$debug == TRUE)) {
+  if (isTRUE(config$segment_lineage_include) && "segment_lineage" %in% names(ds)) {
     lineage_lookup <- ds |>
       dplyr::distinct(!!rlang::sym(personID), .data$segment_lineage)
 
@@ -415,13 +410,9 @@ ggPedigree.core <- function(ped,
   # Apply the segment lineage color scale before drawing nodes. When nodes also
   # use a color scale, start a fresh color scale (via {ggnewscale}) so node and
   # segment colors get independent legends.
-  if (lineage_active == TRUE || (config$segment_lineage_include == TRUE &&
-    isTRUE(config$debug)
-  )
-  ) {
+  if (lineage_active == TRUE) {
     p <- .add_segment_lineage_scales(p, config)
-    if (node_uses_color && have_ggnewscale &&
-      !is_interactive) {
+    if (node_uses_color && have_ggnewscale && !is_interactive) {
       p <- p + ggnewscale::new_scale_colour()
     }
   }

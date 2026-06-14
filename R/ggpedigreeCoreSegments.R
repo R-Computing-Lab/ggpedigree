@@ -25,15 +25,18 @@
     type %in% config$segment_lineage_types &&
     "segment_lineage" %in% names(data)
 
-
-  use_plotly_debug_lineage <- isTRUE(config$return_interactive) &&
-    isTRUE(config$debug) &&
+  # Fire whenever we are in interactive mode and lineage was configured but the
+  # mapped-aesthetic path was disabled (e.g., node colour conflict / no ggnewscale).
+  # Uses one fixed-colour geom_segment layer per lineage group so plotly can render
+  # the colours without needing a second, independent colour scale.
+  use_plotly_lineage <- isTRUE(config$return_interactive) &&
+    #  !isTRUE(lineage_active) &&
     isTRUE(use_backwards_compat) &&
     "segment_lineage" %in% names(data) &&
     length(unique(data$segment_lineage[!is.na(data$segment_lineage)])) > 0
 
 
-  if (isTRUE(use_plotly_debug_lineage)) {
+  if (isTRUE(use_plotly_lineage)) {
     if (config$debug == TRUE) {
       message("Using fixed lineage-specific segment layers for plotly/debug compatibility.")
     }
@@ -51,13 +54,16 @@
       segment_lineage_palette_colors <- as.character(
         paletteer::paletteer_d(config$segment_lineage_palette)
       )
-    } else if (
-      is.character(config$segment_lineage_palette) &&
-        length(config$segment_lineage_palette) >= needed_colors
-    ) {
+    } else if (is.character(config$segment_lineage_palette)) {
       segment_lineage_palette_colors <- config$segment_lineage_palette
     } else {
-      stop("Invalid segment_lineage_palette configuration. Must be NULL, a single palette name, or a character vector of colors with length >= number of unique segment lineages.")
+      stop("Invalid segment_lineage_palette configuration. Must be NULL, a single palette name string, or a character vector of colors.")
+    }
+
+    # When there are more unique lineage values than palette entries (common for
+    # continuous components like additive kinship), interpolate to fill the gap.
+    if (length(segment_lineage_palette_colors) < needed_colors) {
+      segment_lineage_palette_colors <- grDevices::colorRampPalette(segment_lineage_palette_colors)(needed_colors)
     }
 
     segment_lineage_colors <- setNames(
@@ -65,13 +71,10 @@
       as.character(segment_lineage_levels)
     )
 
-    # assign global
-
-    layer <- lapply(segment_lineage_levels, function(current_lineage) {
+    for (current_lineage in segment_lineage_levels) {
       current_data <- data |>
         dplyr::filter(.data$segment_lineage == current_lineage)
-
-      do.call(
+      plotObject <- plotObject + do.call(
         ggplot2::geom_segment,
         c(
           list(
@@ -82,16 +85,24 @@
           dots
         )
       )
-    })
-    #     assign(
-    #  "debug_objects",
-    #  list(
-    #    segment_lineage_colors = segment_lineage_colors,
-    #    segment_lineage_palette_colors = segment_lineage_palette_colors,
-    #    layer = layer
-    #  ),
-    #   envir = .GlobalEnv
-    # )
+    }
+    # Segments with no lineage value (off-line individuals) are rendered with the
+    # na_color so they remain visible rather than disappearing from the plot.
+    na_data <- data[is.na(data$segment_lineage), ]
+    if (nrow(na_data) > 0) {
+      plotObject <- plotObject + do.call(
+        ggplot2::geom_segment,
+        c(
+          list(
+            data = na_data,
+            mapping = mapping,
+            colour = config$segment_lineage_na_color
+          ),
+          dots
+        )
+      )
+    }
+    return(plotObject)
   } else if (isTRUE(use_lineage)) {
     mapping <- utils::modifyList(
       mapping,

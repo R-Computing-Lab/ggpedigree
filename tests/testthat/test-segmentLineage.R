@@ -158,7 +158,7 @@ test_that("interactive plot supports single-scale lineage segments", {
   expect_s3_class(p, "plotly")
 })
 
-test_that("interactive plot warns and falls back when combining node + lineage color", {
+test_that("interactive plot warns and uses per-lineage fixed colors when combining node + lineage color", {
   skip_if_not_installed("plotly")
   library(BGmisc)
   data("inbreeding")
@@ -180,6 +180,39 @@ test_that("interactive plot warns and falls back when combining node + lineage c
     "not supported in interactive"
   )
   expect_s3_class(p, "plotly")
+})
+
+test_that("interactive plot shows segment lineage colors when combined with focal_fill", {
+  skip_if_not_installed("plotly")
+  library(BGmisc)
+  data("inbreeding")
+
+  expect_warning(
+    p <- ggPedigreeInteractive(
+      inbreeding,
+      famID = "famID", personID = "ID",
+      tooltip_columns = c("ID", "sex"),
+      config = list(
+        code_male = 0,
+        code_female = 1,
+        focal_fill_include = TRUE,
+        sex_color_include = FALSE,
+        focal_fill_component = "additive",
+        focal_fill_personID = inbreeding$ID[2],
+        focal_fill_method = "viridis_c",
+        segment_lineage_include = TRUE,
+        segment_fill_method = "viridis_d",
+        segment_lineage_component = "mitochondrial",
+        override_many2many = TRUE
+      )
+    )
+  ) |> suppressWarnings()
+  expect_s3_class(p, "plotly")
+  # The workaround should produce multiple segment colours, not a single fallback grey
+  seg_colors <- unlist(lapply(p$x$data, function(tr) {
+    if (!is.null(tr$line$color)) tr$line$color
+  }))
+  expect_gt(length(unique(stats::na.omit(seg_colors))), 1L)
 })
 
 test_that("additive component without a focal person colors relative to a default reference", {
