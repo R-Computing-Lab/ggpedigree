@@ -165,6 +165,7 @@
             midpoint = config$focal_fill_scale_midpoint,
             n.breaks = config$focal_fill_n_breaks,
             na.value = config$focal_fill_na_color,
+            labels = scales::label_number(),
             transform = ifelse(config$focal_fill_use_log, "log2", "identity")
           )
         }
@@ -179,6 +180,7 @@
             midpoint = config$focal_fill_scale_midpoint,
             n.breaks = config$focal_fill_n_breaks,
             na.value = config$focal_fill_na_color,
+            labels = scales::label_number(),
             transform = ifelse(config$focal_fill_use_log, "log2", "identity")
           )
         }
@@ -204,6 +206,7 @@
             end = config$focal_fill_viridis_end,
             direction = config$focal_fill_viridis_direction,
             na.value = config$focal_fill_na_color,
+            labels = scales::label_number(),
             transform = ifelse(config$focal_fill_use_log, "log2", "identity")
           )
         }
@@ -229,6 +232,7 @@
             end = config$focal_fill_viridis_end,
             direction = config$focal_fill_viridis_direction,
             na.value = config$focal_fill_na_color,
+            labels = scales::label_number(),
             transform = ifelse(config$focal_fill_use_log, "log2", "identity")
           )
         }
