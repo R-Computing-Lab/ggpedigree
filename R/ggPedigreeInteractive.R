@@ -64,6 +64,11 @@ ggPedigreeInteractive <- function(ped,
                                   sexVar = "sex",
                                   affected_fill_column = NULL,
                                   outline_color_column = NULL) {
+  .config_expr <- substitute(config)
+  .config_caller_env <- parent.frame()
+  config <- tryCatch(config, error = function(e) {
+    .repairTrailingCommaConfig(.config_expr, .config_caller_env, e)
+  })
   if (!requireNamespace("plotly", quietly = TRUE)) {
     stop("The 'plotly' package is required for interactive plots.")
   }

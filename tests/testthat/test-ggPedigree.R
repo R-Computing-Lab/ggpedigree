@@ -6,6 +6,29 @@ data("potter")
 data("inbreeding")
 
 
+test_that("ggPedigree repairs a trailing comma in config instead of erroring", {
+  expect_message(
+    p <- ggPedigree(potter,
+      famID = "famID",
+      personID = "personID",
+      config = list(point_size = 11, label_include = TRUE, )
+    ),
+    "trailing comma"
+  )
+  expect_s3_class(p, "gg")
+})
+
+test_that("ggPedigree still errors on a genuinely broken config", {
+  expect_error(
+    ggPedigree(potter,
+      famID = "famID",
+      personID = "personID",
+      config = list(point_size = this_var_does_not_exist)
+    ),
+    "this_var_does_not_exist"
+  )
+})
+
 test_that("broken hints doesn't cause a fatal error", {
   if ("twinID" %in% names(potter) && "zygosity" %in% names(potter)) {
     # Remove twinID and zygosity columns for this test

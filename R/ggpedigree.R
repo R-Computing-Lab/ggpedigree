@@ -104,6 +104,11 @@ ggPedigree <- function(ped,
                        sexVar = "sex",
                        affected_fill_column = NULL,
                        outline_color_column = NULL) {
+  .config_expr <- substitute(config)
+  .config_caller_env <- parent.frame()
+  config <- tryCatch(config, error = function(e) {
+    .repairTrailingCommaConfig(.config_expr, .config_caller_env, e)
+  })
   if (!inherits(ped, "data.frame")) {
     if (rlang::inherits_any(ped, c("ped", "pedigree", "kinship2.pedigree"))) {
       # Convert ped object to data.frame

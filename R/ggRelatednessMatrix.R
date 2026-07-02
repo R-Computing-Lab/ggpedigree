@@ -50,6 +50,11 @@ ggRelatednessMatrix <- function(
   personID = "personID",
   ...
 ) {
+  .config_expr <- substitute(config)
+  .config_caller_env <- parent.frame()
+  config <- tryCatch(config, error = function(e) {
+    .repairTrailingCommaConfig(.config_expr, .config_caller_env, e)
+  })
   # Check if the input is a matrix
   if (!is.matrix(mat)) {
     stop("Input 'mat' must be a matrix.")

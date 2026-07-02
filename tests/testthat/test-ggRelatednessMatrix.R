@@ -43,6 +43,26 @@ test_that("ggRelatednessMatrix returns a gg object", {
   expect_true(p_add$theme$axis.text.y$angle == 0)
 })
 
+test_that("ggRelatednessMatrix repairs a trailing comma in config instead of erroring", {
+  library(BGmisc)
+  data("redsquirrels")
+
+  ped_filtered <- redsquirrels %>%
+    BGmisc::recodeSex(code_female = "F") %>%
+    dplyr::filter(famID == 160)
+  add_mat <- BGmisc::ped2add(ped_filtered, isChild_method = "partialparent", sparse = FALSE)
+
+  expect_message(
+    p <- ggRelatednessMatrix(
+      add_mat,
+      config = list(plot_title = "Trailing Comma Test", )
+    ),
+    "trailing comma"
+  )
+  expect_s3_class(p, "gg")
+  expect_equal(p$labels$title, "Trailing Comma Test")
+})
+
 test_that("ggRelatednessMatrix handles triangles", {
   library(BGmisc)
   data("redsquirrels")

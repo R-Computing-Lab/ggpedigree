@@ -25,6 +25,32 @@ test_that("ggPhenotypeByDegree basic functionality", {
   expect_s3_class(p, "gg")
 })
 
+test_that("ggPhenotypeByDegree repairs a trailing comma in config instead of erroring", {
+  df <- data.frame(
+    addRel_center = c(.5^c(1, 0, 2, 3, 4)),
+    n_pairs = c(600, 700, 800, 900, 1000),
+    cnu = c(1, 1, 1, 1, 1),
+    mtdna = c(0, 1, 0, 1, 0),
+    y_var = c(0.2, 0.3, 0.4, 0.5, 0.6),
+    y_se = c(0.05, 0.04, 0.03, 0.02, 0.01)
+  ) %>%
+    dplyr::mutate(
+      addRel_min = addRel_center * .9,
+      addRel_max = addRel_center * 1.1
+    )
+
+  expect_message(
+    p <- ggPhenotypeByDegree(
+      df = df,
+      y_var = "y_var",
+      y_se = "y_se",
+      config = list(apply_default_theme = FALSE, )
+    ),
+    "trailing comma"
+  )
+  expect_s3_class(p, "gg")
+})
+
 test_that("ggPhenotypeByDegree handles missing values", {
   # Create a sample data frame with NA values
   df <- data.frame(

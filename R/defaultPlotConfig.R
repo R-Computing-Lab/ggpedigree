@@ -436,7 +436,7 @@ getDefaultPlotConfig <- function(function_name = "getDefaultPlotConfig",
                                  segment_lineage_palette = focal_fill_color_values,
                                  segment_lineage_na_color = "grey80",
                                  segment_lineage_force_zero = TRUE,
-                                 segment_lineage_legend_show = TRUE,
+                                 segment_lineage_legend_show = segment_lineage_include,
                                  segment_lineage_legend_title = "Lineage",
                                  # ---- Sex Legend and Appearance ----
                                  sex_color_include = TRUE,
