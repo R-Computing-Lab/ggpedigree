@@ -690,3 +690,7 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 689,1,NA,NA,Damon Lannister (lord),M,https://awoiaf.westeros.org/index.php/Damon_Lannister_(lord),NA,NA
 690,1,NA,NA,Cerissa Brax,F,https://awoiaf.westeros.org/index.php/Cerissa_Brax,NA,NA
 691,1,690,689,Tybolt Lannister,M,https://awoiaf.westeros.org/index.php/Tybolt_Lannister,NA,NA
+692,1,NA,NA,Teora Kyndall,F,https://awoiaf.westeros.org/index.php/Teora_Kyndall,NA,NA
+693,1,692,691,Cerelle Lannister (daughter of Tybolt),F,https://awoiaf.westeros.org/index.php/Cerelle_Lannister_(daughter_of_Tybolt),NA,NA
+694,1,695,182,Lynora Hill,F,https://awoiaf.westeros.org/index.php/Lynora_Hill,NA,NA
+695,1,NA,NA,Serving girl,F,https://awoiaf.westeros.org/index.php/Lynora_Hill#Family,NA,NA

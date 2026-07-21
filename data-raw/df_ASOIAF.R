@@ -1229,8 +1229,27 @@ df <- df %>%
     name = "Tybolt Lannister",
     sex = "M", personID = 691, momID = 690, dadID = 689,
     url = "https://awoiaf.westeros.org/index.php/Tybolt_Lannister"
+  )  %>%
+  addPersonToPed(
+    name = "Teora Kyndall",
+    sex = "F", personID = 692,
+    url = "https://awoiaf.westeros.org/index.php/Teora_Kyndall"
+  ) %>%
+  addPersonToPed(
+    name = "Cerelle Lannister (daughter of Tybolt)",
+    sex = "F", personID = 693, dadID = 691, momID = 692,
+    url = "https://awoiaf.westeros.org/index.php/Cerelle_Lannister_(daughter_of_Tybolt)"
+  ) %>%
+  addPersonToPed(
+    name = "Lynora Hill",
+    sex = "F", personID = 694, dadID = 182, momID = 695,
+    url = "https://awoiaf.westeros.org/index.php/Lynora_Hill"
+  ) %>%
+  addPersonToPed(
+    name = "Serving girl",
+    sex = "F", personID = 695,
+    url = "https://awoiaf.westeros.org/index.php/Lynora_Hill#Family"
   )
-
 # modify existing people
 df <- df %>%
   mutate(
@@ -1304,6 +1323,7 @@ df <- df %>%
     dadID = case_when(
       personID == 1 ~ 564, # Walder Frey's father is Lord Frey
       personID == 33 ~ 679, # Jeyne  Darry's father is Lord Darry
+      personID == 179 ~ 689, # Damon Lannister (lord)
       personID == 179 ~ 689, # Damon Lannister (lord)
       personID == 207 ~ 258, # Prince Consort
       personID %in% c(252:254) ~ 636,
