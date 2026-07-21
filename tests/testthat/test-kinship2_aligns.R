@@ -1,3 +1,6 @@
+# check data version for ASOIAF
+asoiaf_nrow <- 699
+
 .align_with_alignped_stages <- function(ped,
                                         packed = TRUE,
                                         width = 10,
@@ -250,6 +253,10 @@ test_that("test autohint works with sample.ped", {
 
 test_that("align.pedigree works with ASOIAF", {
   data("ASOIAF")
+  # skip if not the correct data version
+  if (!exists("ASOIAF") || !is.data.frame(ASOIAF)|| nrow(ASOIAF) != asoiaf_nrow) {
+    skip("ASOIAF data not available, or not the correct version")
+  }
   df_ASOIAF <- BGmisc::checkParentIDs(ASOIAF,
     addphantoms = TRUE,
     repair = TRUE,
@@ -275,6 +282,12 @@ test_that("align.pedigree works with ASOIAF", {
 
 test_that("test autohint works with ASOIAF", {
   data("ASOIAF")
+
+  # skip if not the correct data version
+  if (!exists("ASOIAF") || !is.data.frame(ASOIAF)|| nrow(ASOIAF) != asoiaf_nrow) {
+    skip("ASOIAF data not available, or not the correct version")
+  }
+
   df_ASOIAF <- BGmisc::checkParentIDs(ASOIAF,
     addphantoms = TRUE,
     repair = TRUE,
@@ -401,7 +414,10 @@ test_that("classic option passes through kinship2_alignped stages with sample.pe
 
 test_that("classic option passes through kinship2_alignped stages with ASOIAF", {
   skip_if_not_installed("quadprog")
-
+  # skip if not the correct data version
+  if (!exists("ASOIAF") || !is.data.frame(ASOIAF)|| nrow(ASOIAF) != asoiaf_nrow) {
+    skip("ASOIAF data not available, or not the correct version")
+  }
   data("ASOIAF")
 
   df_ASOIAF <- BGmisc::checkParentIDs(
@@ -448,7 +464,10 @@ test_that("classic option passes through kinship2_alignped stages with ASOIAF au
   skip_if_not_installed("quadprog")
 
   data("ASOIAF")
-
+  # skip if not the correct data version
+  if (!exists("ASOIAF") || !is.data.frame(ASOIAF)|| nrow(ASOIAF) != asoiaf_nrow) {
+    skip("ASOIAF data not available, or not the correct version")
+  }
   df_ASOIAF <- BGmisc::checkParentIDs(
     ASOIAF,
     addphantoms = TRUE,
