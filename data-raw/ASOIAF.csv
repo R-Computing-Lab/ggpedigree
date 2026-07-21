@@ -177,7 +177,7 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 176,1,NA,NA,Darlessa Marbrand,F,https://awoiaf.westeros.org/index.php/Darlessa_Marbrand,NA,NA
 177,1,176,161,Tyrek Lannister,M,https://awoiaf.westeros.org/index.php/Tyrek_Lannister,NA,NA
 178,1,NA,162,Joy Hill,F,https://awoiaf.westeros.org/index.php/Joy_Hill,NA,NA
-179,1,NA,NA,Gerold Lannister,M,https://awoiaf.westeros.org/index.php/Gerold_Lannister,NA,NA
+179,1,690,689,Gerold Lannister,M,https://awoiaf.westeros.org/index.php/Gerold_Lannister,NA,NA
 180,1,585,179,Tywald Lannister,M,https://awoiaf.westeros.org/index.php/Tywald_Lannister,NA,NA
 181,1,585,179,Tion Lannister,M,https://awoiaf.westeros.org/index.php/Tion_Lannister,NA,NA
 182,1,585,179,Jason Lannister,M,https://awoiaf.westeros.org/index.php/Jason_Lannister,NA,NA
@@ -391,7 +391,7 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 390,12,387,389,Horas 'Horror' Redwyne,M,https://awoiaf.westeros.org/index.php/Horas_Redwyne,391,mz
 391,12,387,389,Hobber 'Slobber' Redwyne,M,https://awoiaf.westeros.org/index.php/Hobber_Redwyne,390,mz
 392,12,387,389,Desmera Redwyne,F,https://awoiaf.westeros.org/index.php/Desmera_Redwyne,NA,NA
-393,12,NA,NA,Lord Tyrell,M,https://awoiaf.westeros.org/index.php/Lord_Tyrell,NA,NA
+393,12,NA,NA,Lord Tyrell,M,https://awoiaf.westeros.org/index.php/Gormon_Tyrell#Family,NA,NA
 394,12,NA,383,Garse Flowers,M,https://awoiaf.westeros.org/index.php/Garse_Flowers,NA,NA
 395,12,NA,384,Luthor Tyrell,M,https://awoiaf.westeros.org/index.php/Luthor_Tyrell,NA,NA
 396,12,NA,383,Garrett Flowers,M,https://awoiaf.westeros.org/index.php/Garrett_Flowers,NA,NA
@@ -436,7 +436,7 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 435,19,430,680,Lyanna Mormont,F,https://awoiaf.westeros.org/index.php/Lyanna_Mormont,NA,NA
 436,19,432,NA,Daughter of Alysane Mormont,F,https://awoiaf.westeros.org/index.php/Alysane_Mormont#Family,NA,NA
 437,19,432,NA,Son of Alysane Mormont,M,https://awoiaf.westeros.org/index.php/Alysane_Mormont#Family,NA,NA
-438,12,NA,439,Redwyne,M,NA,NA,NA
+438,12,NA,439,Father of Paxter Redwyne,M,NA,NA,NA
 439,12,NA,NA,Runceford Redwyne,M,https://awoiaf.westeros.org/index.php/Runceford_Redwyne,NA,NA
 440,1,NA,443,Ryam Florent,M,https://awoiaf.westeros.org/index.php/Ryam_Florent,NA,NA
 441,1,NA,440,Imry Florent,M,https://awoiaf.westeros.org/index.php/Imry_Florent,NA,NA
@@ -679,3 +679,14 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 678,1,675,508,Ronnal Baratheon,M,https://awoiaf.westeros.org/index.php/Ronnal_Baratheon,NA,NA
 679,1,NA,NA,Lord Darry (father of Raymun),M,https://awoiaf.westeros.org/index.php/Lord_Darry_(father_of_Raymun),NA,NA
 680,19,NA,NA,Husband of Maege Mormont,M,https://awoiaf.westeros.org/index.php/Maege_Mormont#Family,NA,NA
+681,29,NA,NA,Lyman Beesbury,M,https://awoiaf.westeros.org/index.php/Lyman_Beesbury,NA,NA
+682,29,NA,681,Father of Alan Beesbury,M,https://awoiaf.westeros.org/index.php/Lyman_Beesbury#Family,NA,NA
+683,29,NA,682,Alan Beesbury,M,https://awoiaf.westeros.org/index.php/Alan_Beesbury,NA,NA
+684,30,NA,686,Ben Beesbury,M,https://awoiaf.westeros.org/index.php/Ben_Beesbury,NA,NA
+685,30,NA,684,Alton Beesbury,M,https://awoiaf.westeros.org/index.php/Alton_Beesbury,NA,NA
+686,30,NA,NA,Father Ben of Beesbury,M,https://awoiaf.westeros.org/index.php/Alton_Beesbury#Family,NA,NA
+687,30,NA,686,Father of Warryn Beesbury,M,https://awoiaf.westeros.org/index.php/Alton_Beesbury#Family,NA,NA
+688,30,NA,687,Warryn Beesbury,M,https://awoiaf.westeros.org/index.php/Warryn_Beesbury,NA,NA
+689,1,NA,NA,Damon Lannister (lord),M,https://awoiaf.westeros.org/index.php/Damon_Lannister_(lord),NA,NA
+690,1,NA,NA,Cerissa Brax,F,https://awoiaf.westeros.org/index.php/Cerissa_Brax,NA,NA
+691,1,690,689,Tybolt Lannister,M,https://awoiaf.westeros.org/index.php/Tybolt_Lannister,NA,NA

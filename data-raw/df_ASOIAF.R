@@ -157,6 +157,7 @@ df <- ped2fam(ASOIAF, personID = "personID") %>%
       personID == 383 ~ "https://awoiaf.westeros.org/index.php/Garth_Tyrell",
       personID == 390 ~ "https://awoiaf.westeros.org/index.php/Horas_Redwyne",
       personID == 391 ~ "https://awoiaf.westeros.org/index.php/Hobber_Redwyne",
+      personID == 393 ~ "https://awoiaf.westeros.org/index.php/Gormon_Tyrell#Family",
       personID == 397 ~ "https://awoiaf.westeros.org/index.php/Leo_Tyrell_(son_of_Moryn)",
       personID %in% c(425:426) ~ "https://awoiaf.westeros.org/index.php/House_Hightower#House_Hightower_at_the_end_of_the_third_century",
       personID == 427 ~ "https://awoiaf.westeros.org/index.php/Gerold_Hightower",
@@ -1172,6 +1173,62 @@ df <- df %>%
     name = "Husband of Maege Mormont",
     sex = "M", personID = 680,
     url = "https://awoiaf.westeros.org/index.php/Maege_Mormont#Family"
+  ) %>%
+  addPersonToPed(
+    name = "Lyman Beesbury",
+    sex = "M", personID = 681,
+    url = "https://awoiaf.westeros.org/index.php/Lyman_Beesbury"
+  ) %>%
+  addPersonToPed(
+    name = "Father of Alan Beesbury",
+    sex = "M", personID = 682, dadID = 681,
+    url = "https://awoiaf.westeros.org/index.php/Lyman_Beesbury#Family"
+  ) %>%
+  addPersonToPed(
+    name = "Alan Beesbury",
+    sex = "M", personID = 683, dadID = 682,
+    url = "https://awoiaf.westeros.org/index.php/Alan_Beesbury"
+  ) %>%
+  addPersonToPed(
+    name = "Ben Beesbury",
+    sex = "M", personID = 684, dadID = 686,
+    url = "https://awoiaf.westeros.org/index.php/Ben_Beesbury"
+  ) %>%
+  # Note: Alton Beesbury's canon status is currently unclear. Alton was mentioned in The Official Game of Thrones Cookbook, a book approved by George R. R. Martin and containing a foreword from Martin himself. Until further information comes out, Alton Beesbury should be considered as a semi-canon character.[1]
+  addPersonToPed(
+    name = "Alton Beesbury",
+    sex = "M", personID = 685, dadID = 684,
+    url = "https://awoiaf.westeros.org/index.php/Alton_Beesbury"
+  ) %>%
+  addPersonToPed(
+    name = "Father Ben of Beesbury",
+    sex = "M", personID = 686,
+    url = "https://awoiaf.westeros.org/index.php/Alton_Beesbury#Family"
+  ) %>%
+  addPersonToPed(
+    name = "Father of Warryn Beesbury",
+    sex = "M", personID = 687, dadID = 686,
+    url = "https://awoiaf.westeros.org/index.php/Alton_Beesbury#Family"
+  )  %>%
+  addPersonToPed(
+    name = "Warryn Beesbury",
+    sex = "M", personID = 688, dadID = 687,
+    url = "https://awoiaf.westeros.org/index.php/Warryn_Beesbury"
+  ) %>%
+  addPersonToPed(
+    name = "Damon Lannister (lord)",
+    sex = "M", personID = 689,
+    url = "https://awoiaf.westeros.org/index.php/Damon_Lannister_(lord)"
+  ) %>%
+  addPersonToPed(
+    name = "Cerissa Brax",
+    sex = "F", personID = 690,
+    url = "https://awoiaf.westeros.org/index.php/Cerissa_Brax"
+  ) %>%
+  addPersonToPed(
+    name = "Tybolt Lannister",
+    sex = "M", personID = 691, momID = 690, dadID = 689,
+    url = "https://awoiaf.westeros.org/index.php/Tybolt_Lannister"
   )
 
 # modify existing people
@@ -1188,7 +1245,9 @@ df <- df %>%
       TRUE ~ sex
     ),
     momID = case_when(
+      personID == 1 ~ 566, # Walder Frey's mother
       personID %in% c(422, 376, 408, 410, 412, 415, 416, 417, 419, 421) ~ NA, # has one of 4 potential mothers
+      personID == 179 ~ 690, # 	Cerissa Brax
       personID %in% c(488, 430) ~ 615,
       personID %in% c(385, 384, 383, 380) ~ 614,
       personID %in% c(300:301) ~ 600,
@@ -1198,7 +1257,7 @@ df <- df %>%
       personID %in% c(298:299) ~ 589, # Jena Dondarrion
       personID %in% c(163, 183) ~ 586,
       personID %in% c(158, 180, 181, 182) ~ 585, # Rohanne Webber
-      personID %in% c(28, 159:162) ~ 584, # Jeyne Marbrand is mother of Tywin Lannisteretc
+      personID %in% c(28, 159:162) ~ 584, # Jeyne Marbrand is mother of Tywin Lannister etc
       personID %in% c(154, 155, 121) ~ 583, # all the braxes share the same mother
       personID == 465 ~ 576, # Lorra Royce
       personID == 466 ~ 574, # Lyanne Glover is the mother of Brandon Stark
@@ -1213,33 +1272,39 @@ df <- df %>%
       personID == 303 ~ 502, # Naerys Targaryen's mother is Larra Rogare
       personID == 302 ~ 502, # Aegon IV Targaryen's mother is Larra Rogare
       personID == 307 ~ 502, # Aemon Targaryen, the Dragonknight, mother is Larra Rogare
+
+
+
+      personID == 199 ~ 517, # Betha Blackwood is mother of Rhaelle Targaryen
       personID == 200 ~ 516, # Aegon V Targaryen's mother is Dyanna Dayne
-      personID == 341 ~ 515, # Aemma Arryn's mother is Daella Targaryen (daughter of Jaehaerys I)
-      personID == 289 ~ 516, # Daella Targaryen (daughter of Maekar I) has Dyanna Dayne
+      personID == 201 ~ 517, # Betha Blackwood  is mother of Jaehaerys II Targaryen
+      personID == 202 ~ 518, # 	Aerys II's mother is Shaera Targaryen
+      personID == 203 ~ 518, # Rhaella Targaryen's mother is Shaera Targaryen
+      personID %in% c(
+        226,
+        232,
+        231) ~ 538, # kids of  Jasper
       personID == 257 ~ 505, # Princess of Dorne's mother is the Mother of Princess of Dorne
       personID == 280 ~ 517, # Betha Blackwood is mother of Duncan the Small
-      personID == 201 ~ 517, # Betha Blackwood  is mother of Jaehaerys II Targaryen
-      personID == 199 ~ 517, # Betha Blackwood is mother of Rhaelle Targaryen
-      personID == 203 ~ 518, # Rhaella Targaryen's mother is Shaera Targaryen
-      personID == 202 ~ 518, # 	Aerys II's mother is Shaera Targaryen
-      personID == 322 ~ 535, # Daenaera Velaryon's mother is Hazel Harte
-      personID == 306 ~ 339, #  Viserys II's mother is Rhaenyra Targaryen
-      personID %in% c(351, 350) ~ 510, # Alysanne Targaryen's mom is Alyssa Velaryon
       personID %in% c(
         283, # # Daeron Targaryen (son of Maekar I)
         287, #  Aemon Targaryen (son of Maekar I)
         285, # Aerion (son of Maekar) Targaryen
         288 #  Rhae Targaryen
-      ) ~ 516, # 	Dyanna Dayne is mother of
-      personID %in% c(226, 232, 231) ~ 538, # kids of  Jasper
-      personID == 1 ~ 566, # Walder Frey's mother
+      ) ~ 516, # 	Dyanna Dayne
       personID == 284 ~ 600,
+      personID == 289 ~ 516, # Daella Targaryen (daughter of Maekar I) has Dyanna Dayne
       personID == 294 ~ NA,
+      personID == 306 ~ 339, #  Viserys II's mother is Rhaenyra Targaryen
+      personID == 322 ~ 535, # Daenaera Velaryon's mother is Hazel Harte
+      personID == 341 ~ 515, # Aemma Arryn's mother is Daella Targaryen (daughter of Jaehaerys I)
+      personID %in% c(350, 351) ~ 510, # Alysanne Targaryen's mom is Alyssa Velaryon
       TRUE ~ momID
     ),
     dadID = case_when(
       personID == 1 ~ 564, # Walder Frey's father is Lord Frey
       personID == 33 ~ 679, # Jeyne  Darry's father is Lord Darry
+      personID == 179 ~ 689, # Damon Lannister (lord)
       personID == 207 ~ 258, # Prince Consort
       personID %in% c(252:254) ~ 636,
       personID == 257 ~ 504, # Princess of Dorne's father is the Father of Princess of Dorne
