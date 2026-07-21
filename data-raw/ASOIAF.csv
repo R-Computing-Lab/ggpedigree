@@ -6,9 +6,9 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 5,1,2,1,Aenys Frey,M,https://awoiaf.westeros.org/index.php/Aenys_Frey,NA,NA
 6,1,NA,NA,Corenna Swann,F,https://awoiaf.westeros.org/index.php/Corenna_Swann,NA,NA
 7,1,6,3,Ryman Frey,M,https://awoiaf.westeros.org/index.php/Ryman_Frey,NA,NA
-8,1,NA,7,Edwyn Frey,M,https://awoiaf.westeros.org/index.php/Edwyn_Frey,NA,NA
-9,1,NA,7,Walder 'Black Walder' Frey,M,https://awoiaf.westeros.org/index.php/Walder_Frey_(son_of_Ryman),NA,NA
-10,1,NA,7,Petyr Frey,M,https://awoiaf.westeros.org/index.php/Petyr_Frey,NA,NA
+8,1,698,7,Edwyn Frey,M,https://awoiaf.westeros.org/index.php/Edwyn_Frey,NA,NA
+9,1,698,7,Walder 'Black Walder' Frey,M,https://awoiaf.westeros.org/index.php/Walder_Frey_(son_of_Ryman),NA,NA
+10,1,698,7,Petyr Frey,M,https://awoiaf.westeros.org/index.php/Petyr_Frey,NA,NA
 11,1,NA,NA,Janyce Hunter,F,https://awoiaf.westeros.org/index.php/Janyce_Hunter,NA,NA
 12,1,11,8,Walda Frey,F,https://awoiaf.westeros.org/index.php/Walda_Frey,NA,NA
 13,1,NA,NA,Mylenda Caron,F,https://awoiaf.westeros.org/index.php/Mylenda_Caron,NA,NA
@@ -236,7 +236,7 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 235,1,NA,NA,Denys Arryn,M,https://awoiaf.westeros.org/index.php/Denys_Arryn,NA,NA
 236,1,234,235,Arryn,M,https://awoiaf.westeros.org/index.php/House_Arryn,NA,NA
 237,1,231,233,Youngest daughter of Elys Waynwood,F,https://awoiaf.westeros.org/index.php/House_Waynwood,NA,NA
-238,1,NA,NA,Hardyng,M,https://awoiaf.westeros.org/index.php/House_Hardyng,NA,NA
+238,1,NA,NA,Ser Hardyng,M,https://awoiaf.westeros.org/index.php/House_Hardyng,NA,NA
 239,1,237,238,Harrold Hardyng,M,https://awoiaf.westeros.org/index.php/Harrold_Hardyng,NA,NA
 240,1,231,233,Waynwood,F,https://awoiaf.westeros.org/index.php/House_Waynwood,NA,NA
 241,1,231,233,Waynwood,F,https://awoiaf.westeros.org/index.php/House_Waynwood,NA,NA
@@ -392,10 +392,10 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 391,12,387,389,Hobber 'Slobber' Redwyne,M,https://awoiaf.westeros.org/index.php/Hobber_Redwyne,390,mz
 392,12,387,389,Desmera Redwyne,F,https://awoiaf.westeros.org/index.php/Desmera_Redwyne,NA,NA
 393,12,NA,NA,Lord Tyrell,M,https://awoiaf.westeros.org/index.php/Gormon_Tyrell#Family,NA,NA
-394,12,NA,383,Garse Flowers,M,https://awoiaf.westeros.org/index.php/Garse_Flowers,NA,NA
-395,12,NA,384,Luthor Tyrell,M,https://awoiaf.westeros.org/index.php/Luthor_Tyrell,NA,NA
-396,12,NA,383,Garrett Flowers,M,https://awoiaf.westeros.org/index.php/Garrett_Flowers,NA,NA
-397,12,NA,384,Leo 'The Lazy' Tyrell,M,https://awoiaf.westeros.org/index.php/Leo_Tyrell_(son_of_Moryn),NA,NA
+394,12,700,383,Garse Flowers,M,https://awoiaf.westeros.org/index.php/Garse_Flowers,NA,NA
+395,12,699,384,Luthor Tyrell,M,https://awoiaf.westeros.org/index.php/Luthor_Tyrell,NA,NA
+396,12,700,383,Garrett Flowers,M,https://awoiaf.westeros.org/index.php/Garrett_Flowers,NA,NA
+397,12,699,384,Leo 'The Lazy' Tyrell,M,https://awoiaf.westeros.org/index.php/Leo_Tyrell_(son_of_Moryn),NA,NA
 398,12,NA,NA,Elyn Norridge,F,https://awoiaf.westeros.org/index.php/Elyn_Norridge,NA,NA
 399,12,398,395,Theodore Tyrell,M,https://awoiaf.westeros.org/index.php/Theodore_Tyrell,NA,NA
 400,12,398,395,Olene Tyrell,F,https://awoiaf.westeros.org/index.php/Olene_Tyrell,NA,NA
@@ -687,10 +687,15 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 686,30,NA,NA,Father Ben of Beesbury,M,https://awoiaf.westeros.org/index.php/Alton_Beesbury#Family,NA,NA
 687,30,NA,686,Father of Warryn Beesbury,M,https://awoiaf.westeros.org/index.php/Alton_Beesbury#Family,NA,NA
 688,30,NA,687,Warryn Beesbury,M,https://awoiaf.westeros.org/index.php/Warryn_Beesbury,NA,NA
-689,1,NA,NA,Damon Lannister (lord),M,https://awoiaf.westeros.org/index.php/Damon_Lannister_(lord),NA,NA
+689,1,NA,NA,Lord Damon Lannister,M,https://awoiaf.westeros.org/index.php/Damon_Lannister_(lord),NA,NA
 690,1,NA,NA,Cerissa Brax,F,https://awoiaf.westeros.org/index.php/Cerissa_Brax,NA,NA
 691,1,690,689,Tybolt Lannister,M,https://awoiaf.westeros.org/index.php/Tybolt_Lannister,NA,NA
 692,1,NA,NA,Teora Kyndall,F,https://awoiaf.westeros.org/index.php/Teora_Kyndall,NA,NA
 693,1,692,691,Cerelle Lannister (daughter of Tybolt),F,https://awoiaf.westeros.org/index.php/Cerelle_Lannister_(daughter_of_Tybolt),NA,NA
 694,1,695,182,Lynora Hill,F,https://awoiaf.westeros.org/index.php/Lynora_Hill,NA,NA
 695,1,NA,NA,Serving girl,F,https://awoiaf.westeros.org/index.php/Lynora_Hill#Family,NA,NA
+696,1,NA,NA,Ella Lannister of Lannisport,F,https://awoiaf.westeros.org/index.php/Ella_Lannister,NA,NA
+697,1,696,588,Damion Lannister,M,https://awoiaf.westeros.org/index.php/Damion_Lannister,NA,NA
+698,1,NA,NA,Wife of Ryman Frey,F,https://awoiaf.westeros.org/index.php/Ryman_Frey#Family,NA,NA
+699,12,NA,NA,Wife of Moryn Tyrell,F,https://awoiaf.westeros.org/index.php/Moryn Tyrell#Family,NA,NA
+700,12,NA,NA,Mother of Garret and Garse Flowers,F,https://awoiaf.westeros.org/index.php/Garse_Flowers,NA,NA

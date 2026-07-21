@@ -46,6 +46,7 @@ df <- ped2fam(ASOIAF, personID = "personID") %>%
       personID == 201 ~ "Jaehaerys II Targaryen",
       personID == 202 ~ "Aerys II Targaryen",
       personID == 237 ~ "Youngest daughter of Elys Waynwood",
+      personID == 238 ~ "Ser Hardyng",
       personID == 255 ~ "Lord Tully",
       personID == 257 ~ "Princess Of Dorne",
       personID == 274 ~ "Lord Uller",
@@ -1216,7 +1217,7 @@ df <- df %>%
     url = "https://awoiaf.westeros.org/index.php/Warryn_Beesbury"
   ) %>%
   addPersonToPed(
-    name = "Damon Lannister (lord)",
+    name = "Lord Damon Lannister",
     sex = "M", personID = 689,
     url = "https://awoiaf.westeros.org/index.php/Damon_Lannister_(lord)"
   ) %>%
@@ -1249,22 +1250,48 @@ df <- df %>%
     name = "Serving girl",
     sex = "F", personID = 695,
     url = "https://awoiaf.westeros.org/index.php/Lynora_Hill#Family"
+  ) %>%
+  addPersonToPed(
+    name = "Ella Lannister of Lannisport",
+    sex = "F", personID = 696,
+    url = "https://awoiaf.westeros.org/index.php/Ella_Lannister"
+  ) %>%
+  addPersonToPed(
+    name = "Damion Lannister",
+    sex = "M", personID = 697, momID = 696, dadID = 588,
+    url = "https://awoiaf.westeros.org/index.php/Damion_Lannister"
+  ) %>%
+  addPersonToPed(
+    name = "Wife of Ryman Frey",
+    sex = "F", personID = 698,
+    url = "https://awoiaf.westeros.org/index.php/Ryman_Frey#Family"
+  )  %>%
+  addPersonToPed(
+    name = "Wife of Moryn Tyrell",
+    sex = "F", personID = 699,
+    url = "https://awoiaf.westeros.org/index.php/Moryn Tyrell#Family"
+  )  %>%
+  addPersonToPed(
+    name = "Mother of Garret and Garse Flowers",
+    sex = "F", personID = 700,
+    url = "https://awoiaf.westeros.org/index.php/Garse_Flowers"
   )
 # modify existing people
 df <- df %>%
   mutate(
     sex = case_when(
+      personID == 236 ~ "M",
+      personID == 274 ~ "M",
       personID == 326 ~ "M",
       personID == 327 ~ "M",
       personID == 328 ~ "F",
       personID == 329 ~ "F",
       personID == 330 ~ "F",
-      personID == 274 ~ "M",
-      personID == 236 ~ "M",
       TRUE ~ sex
     ),
     momID = case_when(
       personID == 1 ~ 566, # Walder Frey's mother
+      personID %in% c(8, 9, 10) ~ 698, # all the children of Ryman Frey share the same mother
       personID %in% c(28, 159:162) ~ 584, # Jeyne Marbrand is mother of Tywin Lannister etc
       personID %in% c(121, 154:155) ~ 583, # all the braxes share the same mother
       personID %in% c(158, 180, 181, 182) ~ 585, # Rohanne Webber
@@ -1314,6 +1341,8 @@ df <- df %>%
                       415:417, 419,
                       421,422) ~ NA, # has one of 4 potential mothers
       personID %in% c(380,383:385) ~ 614,
+      personID %in% c(394, 396) ~ 700,
+      personID %in% c(395, 397) ~ 699,
       personID %in% c(430, 488) ~ 615,
       personID == 465 ~ 576, # Lorra Royce
       personID == 466 ~ 574, # Lyanne Glover is the mother of Brandon Stark
