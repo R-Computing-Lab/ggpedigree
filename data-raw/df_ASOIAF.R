@@ -16,7 +16,9 @@ df <- ped2fam(ASOIAF, personID = "personID") %>%
     -name_nsfx,
     -name_given,
     -name_surn,
-    #    -name_marriedsurn,
+    -name_marriedsurn,
+    -birth_place,
+    -death_place,
     -death_caus,
     -FAMC,
     -FAMS
@@ -25,13 +27,13 @@ df <- ped2fam(ASOIAF, personID = "personID") %>%
     momID = as.numeric(momID),
     dadID = as.numeric(dadID),
     personID = as.numeric(personID),
-    name = case_when(
-      name == "Naerys " ~ "Naerys Targaryen",
-      name == "Rhaenyra " ~ "Rhaenyra Targaryen",
-      name == "Betharios " ~ "Betharios of Braavos",
-      name == "Rowena " ~ "Rowena Arryn",
-      name == "Pate " ~ "Pate of the Blue Fork",
-      name == "Mellario " ~ "Mellario of Norvos",
+    name = case_when( # to ensure compatiblity with bgmisc and tidygedcom
+      name %in% c("Naerys ", "Naerys") ~ "Naerys Targaryen",
+      name %in% c("Rhaenyra ", "Rhaenyra") ~ "Rhaenyra Targaryen",
+      name %in% c("Betharios ", "Betharios") ~ "Betharios of Braavos",
+      name %in% c("Rowena ", "Rowena") ~ "Rowena Arryn",
+      name %in% c("Pate ", "Pate") ~ "Pate of the Blue Fork",
+      name %in% c("Mellario ", "Mellario") ~ "Mellario of Norvos",
       is.na(.data$name) &
         personID %in% c(360, 489:498) ~ "Bastard of Robert Baratheon",
       personID == 86 ~ "Mariya Darry",
@@ -162,7 +164,7 @@ df <- ped2fam(ASOIAF, personID = "personID") %>%
       personID == 500 ~ "https://awoiaf.westeros.org/index.php/House_Baratheon",
       TRUE ~ paste0("https://awoiaf.westeros.org/index.php/", str_replace_all(name, " ", "_"))
     ),
-    twinID = case_match(name,
+    twinID = name %>% recode_values(
       "Jaime Lannister" ~ 165,
       "Cersei Lannister" ~ 164,
       "Alyn Frey" ~ 73,
@@ -181,7 +183,7 @@ df <- ped2fam(ASOIAF, personID = "personID") %>%
       "Jon Waters" ~ 338,
       "Hobber 'Slobber' Redwyne" ~ 390,
       "Horas 'Horror' Redwyne" ~ 391,
-      .default = NA_real_
+      default = NA_real_
     )
   ) %>%
   mutate(
@@ -1249,6 +1251,14 @@ df <- df %>%
     twinID = case_when(
       personID == 304 ~ 594,
       TRUE ~ twinID
+    ),
+     # http://reddit.com/r/asoiaf/comments/n735xj/spoilers_extended_grrm_describing_twins/
+    zygosity = case_when(
+      personID %in% c(337, 338, 304) ~ "dz",
+      personID %in% c(390, 391, 99, 98) ~ "mz",
+      !is.na(zygosity) ~ zygosity,
+      !is.na(twinID) ~ "unknown",
+      TRUE ~ NA_character_
     )
   )
 
@@ -1258,16 +1268,6 @@ ASOIAF <- df %>%
   ped2fam(personID = "personID", famID = "famID") %>%
   rename(
     id = personID
-  ) %>%
-  # http://reddit.com/r/asoiaf/comments/n735xj/spoilers_extended_grrm_describing_twins/
-  mutate(
-    zygosity = case_when(
-      id %in% c(337, 338, 304) ~ "dz",
-      id %in% c(390, 391, 99, 98) ~ "mz",
-      !is.na(zygosity) ~ zygosity,
-      !is.na(twinID) ~ "unknown",
-      TRUE ~ NA_character_
-    )
   )
 
 # checks
