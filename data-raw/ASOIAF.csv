@@ -154,7 +154,7 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 153,1,NA,156,Andros Brax,M,https://awoiaf.westeros.org/index.php/Andros_Brax,NA,NA
 154,1,583,153,Tytos Brax,M,https://awoiaf.westeros.org/index.php/Tytos_Brax,NA,NA
 155,1,583,153,Robert Brax,M,https://awoiaf.westeros.org/index.php/Robert_Brax,NA,NA
-156,1,NA,NA,Brax,M,NA,NA,NA
+156,1,NA,NA,Lord Brax,M,https://awoiaf.westeros.org/index.php/House_Brax,NA,NA
 157,1,NA,156,Rupert Brax,M,https://awoiaf.westeros.org/index.php/Rupert_Brax,NA,NA
 158,1,585,179,Tytos Lannister,M,https://awoiaf.westeros.org/index.php/Tytos_Lannister,NA,NA
 159,1,584,158,Tywin Lannister,M,https://awoiaf.westeros.org/index.php/Tywin_Lannister,NA,NA
@@ -424,18 +424,18 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 423,19,NA,488,Jorah Mormont,M,https://awoiaf.westeros.org/index.php/Jorah_Mormont,NA,NA
 424,20,NA,NA,Tregar Ormollen,M,https://awoiaf.westeros.org/index.php/Tregar_Ormollen,NA,NA
 425,12,NA,426,Lord High Tower,M,https://awoiaf.westeros.org/index.php/House_Hightower#House_Hightower_at_the_end_of_the_third_century,NA,NA
-426,12,NA,NA,Hightower,M,https://awoiaf.westeros.org/index.php/House_Hightower#House_Hightower_at_the_end_of_the_third_century,NA,NA
+426,12,NA,NA,Father of Gerold Hightower,M,https://awoiaf.westeros.org/index.php/House_Hightower#House_Hightower_at_the_end_of_the_third_century,NA,NA
 427,12,NA,426,Gerold 'The White Bull' Hightower,M,https://awoiaf.westeros.org/index.php/Gerold_Hightower,NA,NA
-428,21,NA,NA,Glover,F,https://awoiaf.westeros.org/index.php/House_Glover,NA,NA
+428,21,NA,NA,Female Glover,F,https://awoiaf.westeros.org/index.php/House_Glover,NA,NA
 429,19,NA,NA,Lord Mormont,M,https://awoiaf.westeros.org/index.php/Lord_Mormont,NA,NA
 430,19,615,429,Maege Mormont,F,https://awoiaf.westeros.org/index.php/Maege_Mormont,NA,NA
-431,19,430,NA,Dacey Mormont,F,https://awoiaf.westeros.org/index.php/Dacey_Mormont,NA,NA
-432,19,430,NA,Alysane Mormont,F,https://awoiaf.westeros.org/index.php/Alysane_Mormont,NA,NA
-433,19,430,NA,Lyra Mormont,F,https://awoiaf.westeros.org/index.php/Lyra_Mormont,NA,NA
-434,19,430,NA,Jorelle Mormont,F,https://awoiaf.westeros.org/index.php/Jorelle_Mormont,NA,NA
-435,19,430,NA,Lyanna Mormont,F,https://awoiaf.westeros.org/index.php/Lyanna_Mormont,NA,NA
-436,19,432,NA,Snow,F,https://awoiaf.westeros.org/index.php/Alysane_Mormont#Family,NA,NA
-437,19,432,NA,Snow,M,https://awoiaf.westeros.org/index.php/Alysane_Mormont#Family,NA,NA
+431,19,430,680,Dacey Mormont,F,https://awoiaf.westeros.org/index.php/Dacey_Mormont,NA,NA
+432,19,430,680,Alysane Mormont,F,https://awoiaf.westeros.org/index.php/Alysane_Mormont,NA,NA
+433,19,430,680,Lyra Mormont,F,https://awoiaf.westeros.org/index.php/Lyra_Mormont,NA,NA
+434,19,430,680,Jorelle Mormont,F,https://awoiaf.westeros.org/index.php/Jorelle_Mormont,NA,NA
+435,19,430,680,Lyanna Mormont,F,https://awoiaf.westeros.org/index.php/Lyanna_Mormont,NA,NA
+436,19,432,NA,Daughter of Alysane Mormont,F,https://awoiaf.westeros.org/index.php/Alysane_Mormont#Family,NA,NA
+437,19,432,NA,Son of Alysane Mormont,M,https://awoiaf.westeros.org/index.php/Alysane_Mormont#Family,NA,NA
 438,12,NA,439,Redwyne,M,NA,NA,NA
 439,12,NA,NA,Runceford Redwyne,M,https://awoiaf.westeros.org/index.php/Runceford_Redwyne,NA,NA
 440,1,NA,443,Ryam Florent,M,https://awoiaf.westeros.org/index.php/Ryam_Florent,NA,NA
@@ -678,3 +678,4 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 677,1,675,508,Orryn Baratheon,M,https://awoiaf.westeros.org/index.php/Orryn_Baratheon,NA,NA
 678,1,675,508,Ronnal Baratheon,M,https://awoiaf.westeros.org/index.php/Ronnal_Baratheon,NA,NA
 679,1,NA,NA,Lord Darry (father of Raymun),M,https://awoiaf.westeros.org/index.php/Lord_Darry_(father_of_Raymun),NA,NA
+680,19,NA,NA,Husband of Maege Mormont,M,https://awoiaf.westeros.org/index.php/Maege_Mormont#Family,NA,NA
