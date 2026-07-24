@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcCoordinates.R, R/calcCoordinatesHelpers.R
 \name{.layoutScoreTwinPenalty}
 \alias{.layoutScoreTwinPenalty}
-\title{Penalise layouts that split twins apart}
+\title{Penalize layouts that split twins apart}
 \usage{
 .layoutScoreTwinPenalty(ds, twinID = "twinID", cross_gen_penalty = 10)
 

@@ -66,7 +66,7 @@ better**.  Five methods are available, controlled by `method`:
     generation rows receive a heavy flat penalty.}
   \item{`"composite"`}{Weighted sum:
     `parent_stub + 10 * crossings + 20 * twin_penalty + 100 * duplications`.
-    Penalises duplications most heavily, then twin separation, then
+    Penalizes duplications most heavily, then twin separation, then
     crossings, then stub length.  Good default when you have no strong
     preference.}
 }
