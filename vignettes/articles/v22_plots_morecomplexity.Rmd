@@ -1,8 +1,8 @@
 ---
-title: "Extended: Plotting more complicated pedigrees with `ggPedigree()`"
+title: "Extended: Plotting ASOIAF and more complicated pedigrees with `ggPedigree()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Extended: Plotting more complicated pedigrees with `ggPedigree()`}
+  %\VignetteIndexEntry{Extended: Plotting ASOIAF and more complicated pedigrees with `ggPedigree()`}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
