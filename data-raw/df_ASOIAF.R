@@ -25,6 +25,10 @@ df <- ped2fam(ASOIAF, personID = "personID") %>%
   ) %>%
   mutate(
     momID = as.numeric(momID),
+    momID = case_when(
+      dadID == 482 ~ 706, # mother of Ashara Dayne etc, all children of 482, share same mom
+      TRUE ~ momID
+    ),
     dadID = as.numeric(dadID),
     personID = as.numeric(personID),
     name = case_when( # to ensure compatiblity with bgmisc and tidygedcom
@@ -83,6 +87,7 @@ df <- ped2fam(ASOIAF, personID = "personID") %>%
       personID == 437 ~ "Son of Alysane Mormont",
       personID == 438 ~ "Father of Paxter Redwyne",
       personID == 443 ~ "Lord Florent",
+      personID %in% c(460:461) ~ "Daughter Tarly",
       personID == 465 ~ "Willam Stark",
       personID == 467 ~ "Melantha Blackwood",
       personID == 468 ~ "Lyarra Stark",
@@ -90,7 +95,8 @@ df <- ped2fam(ASOIAF, personID = "personID") %>%
       personID == 470 ~ "Benedict Royce",
       personID %in% c(471:473) ~ "Daughter of Benedict Royce",
       personID %in% (474:475) ~ "Will Be Overwritten",
-      personID == 482 ~ "Lord Dayne (father of Edric)",
+      personID == 482 ~ "Lord Dayne (Grandfather of Edric)",
+      personID == 483 ~ "Lord Dayne (father of Edric)",
       personID == 499 ~ "Ormund Baratheon",
       personID == 500 ~ "Unknown Baratheon",
       TRUE ~ name
@@ -166,12 +172,13 @@ df <- ped2fam(ASOIAF, personID = "personID") %>%
       personID == 427 ~ "https://awoiaf.westeros.org/index.php/Gerold_Hightower",
       personID %in% c(428) ~ "https://awoiaf.westeros.org/index.php/House_Glover",
       personID %in% c(436:437) ~ "https://awoiaf.westeros.org/index.php/Alysane_Mormont#Family",
-      personID %in% c(438, 460:461) ~ NA_character_,
+      personID  == 438 ~ NA_character_,
+      personID %in% c(460:461) ~ "https://awoiaf.westeros.org/index.php/Melessa_Florent#Family",
       personID %in% c(471:473) ~ "https://awoiaf.westeros.org/index.php/Benedict_Royce#Family",
       personID %in% c(474:475) ~ NA_character_,
       personID == 479 ~ "https://awoiaf.westeros.org/index.php/Sylva_Santagar",
-      personID == 482 ~ "https://awoiaf.westeros.org/index.php/Lord_Dayne_(father_of_Edric)",
-      personID == 483 ~ NA_character_, # No specific URL available
+      personID == 482 ~ "https://awoiaf.westeros.org/index.php/Ashara_Dayne#Family",
+      personID == 483 ~ "https://awoiaf.westeros.org/index.php/Lord_Dayne_(father_of_Edric)",
       personID == 500 ~ "https://awoiaf.westeros.org/index.php/House_Baratheon",
       TRUE ~ paste0("https://awoiaf.westeros.org/index.php/", str_replace_all(name, " ", "_"))
     ),
@@ -284,6 +291,20 @@ df <- df %>%
     dadID = 539,
     url = "https://awoiaf.westeros.org/index.php/Alicent_Hightower",
     overwrite = TRUE
+  )   %>%
+  addPersonToPed( # overwriting existing person with new name and URL
+    name = "Mother of Garret and Garse Flowers",
+    sex = "F", personID = 474,
+    momID= NA, dadID = NA,
+    overwrite = TRUE,
+    url = "https://awoiaf.westeros.org/index.php/Garse_Flowers"
+  )  %>%
+  addPersonToPed(
+    name = "Wife of Moryn Tyrell",
+    sex = "F", personID = 475,
+    momID= NA, dadID = NA,
+    overwrite = TRUE,
+    url = "https://awoiaf.westeros.org/index.php/Moryn Tyrell#Family"
   ) %>%
   # Add new people to the pedigree
   addPersonToPed(
@@ -487,9 +508,9 @@ df <- df %>%
     url = "https://awoiaf.westeros.org/index.php/Otto_Hightower#Family"
   ) %>%
   addPersonToPed(
-    name = "Hobert Hightower", # Name from Show
+    name = "Father of Otto Hightower",
     sex = "M", personID = 542, momID = NA, dadID = NA,
-    url = "https://awoiaf.westeros.org/index.php/Lord_Hightower"
+    url = "https://awoiaf.westeros.org/index.php/Otto_Hightower#Family"
   ) %>%
   addPersonToPed(
     name = "Mother of Otto Hightower",
@@ -497,7 +518,7 @@ df <- df %>%
         url = "https://awoiaf.westeros.org/index.php/Otto_Hightower#Family"
   ) %>%
   addPersonToPed(
-    name = "Lord Hightower",
+    name = "Lord Hobert Hightower", # Show gives character a name
     sex = "M", personID = 544, momID = 543, dadID = 542,
     url = "https://awoiaf.westeros.org/index.php/Lord_Hightower"
   ) %>%
@@ -516,7 +537,7 @@ df <- df %>%
     name = "Rhaena Targaryen",
     sex = "F", personID = 547, momID = 545, dadID = 536,
     twinID = 546, zygosity = "mz",
-    url = "https://awoiaf.westeros.org/index.php/Rhaena_Targaryen"
+    url = "https://awoiaf.westeros.org/index.php/Rhaena_Targaryen_(daughter_of_Daemon)"
   ) %>%
   addPersonToPed(
     name = "Visenya Targaryen (daughter of Rhaenyra)",
@@ -702,7 +723,7 @@ df <- df %>%
   ) %>%
   addPersonToPed(
     name = "Jeyne Marbrand", sex = "F",
-    personID = 584, momID = NA, dadID = NA,
+    personID = 584, momID = NA, dadID = 705,
     url = "https://awoiaf.westeros.org/index.php/Jeyne_Marbrand"
   ) %>%
   addPersonToPed(
@@ -1272,21 +1293,54 @@ df <- df %>%
     name = "Wife of Ryman Frey",
     sex = "F", personID = 698,
     url = "https://awoiaf.westeros.org/index.php/Ryman_Frey#Family"
-  )  %>%
+  ) %>%
   addPersonToPed(
-    name = "Wife of Moryn Tyrell",
-    sex = "F", personID = 475,
-    momID= NA, dadID = NA,
-    overwrite = TRUE,
-    url = "https://awoiaf.westeros.org/index.php/Moryn Tyrell#Family"
-  )  %>%
+    name = "Ormund Hightower",
+    sex = "M", personID = 699,
+    dadID = 544, momID = 543,
+    url = "https://awoiaf.westeros.org/index.php/Ormund_Hightower"
+  ) %>%
   addPersonToPed(
-    name = "Mother of Garret and Garse Flowers",
-    sex = "F", personID = 474,
-    momID= NA, dadID = NA,
-    overwrite = TRUE,
-    url = "https://awoiaf.westeros.org/index.php/Garse_Flowers"
-  )
+    name = "Wife of Ormund Hightower",
+    sex = "F", personID = 700,
+    dadID = NA, momID = NA,
+    url = "https://awoiaf.westeros.org/index.php/Ormund_Hightower#Family"
+  ) %>%
+  addPersonToPed(
+    name = "Lyonel Hightower",
+    sex = "M", personID = 701,
+    dadID = 699, momID = 700,
+    url = "https://awoiaf.westeros.org/index.php/Lyonel_Hightower"
+  ) %>%
+  addPersonToPed(
+    name = "Martyn Hightower",
+    sex = "M", personID = 702,
+    dadID = 699, momID = 700,
+    url = "https://awoiaf.westeros.org/index.php/Martyn_Hightower"
+  ) %>%
+  addPersonToPed(name = "Garmund Hightower",
+    sex = "M", personID = 703,
+    dadID = 699, momID = 700,
+    url = "https://awoiaf.westeros.org/index.php/Garmund_Hightower"
+  )  %>%
+  addPersonToPed(name = "Six Daughters Hightower",
+    sex = "F", personID = 704,
+    dadID = 703, momID = 547,
+    url = "https://awoiaf.westeros.org/index.php/Garmund_Hightower#Family"
+  )  %>%
+  addPersonToPed(name ="Alyn Marbrand",
+    sex = "M", personID = 705,
+    dadID = NA, momID = NA,
+    url = "https://awoiaf.westeros.org/index.php/Alyn_Marbrand")  %>%
+  addPersonToPed(name ="Mother of Ashara Dayne",
+    sex = "F", personID = 706,
+    dadID = NA, momID = NA,
+    url = "https://awoiaf.westeros.org/index.php/Ashara_Dayne#Family")
+
+
+
+
+
 # modify existing people
 df <- df %>%
   mutate(
