@@ -31,7 +31,7 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 30,1,28,4,Lyonel Frey,M,https://awoiaf.westeros.org/index.php/Lyonel_Frey,NA,NA
 31,1,28,4,Tion Frey,M,https://awoiaf.westeros.org/index.php/Tion_Frey,NA,NA
 32,1,28,4,Walder 'Red Walder' Frey,M,https://awoiaf.westeros.org/index.php/Walder_Frey_(son_of_Emmon),NA,NA
-33,1,NA,679,Jeyne Darry,F,https://awoiaf.westeros.org/index.php/Jeyne_Darry,NA,NA
+33,1,707,679,Jeyne Darry,F,https://awoiaf.westeros.org/index.php/Jeyne_Darry,NA,NA
 34,1,33,29,Tywin 'Ty' Frey,M,https://awoiaf.westeros.org/index.php/Tywin_Frey,NA,NA
 35,1,33,29,Willem Frey,M,https://awoiaf.westeros.org/index.php/Willem_Frey,NA,NA
 36,1,NA,NA,Tyana Wylde,F,https://awoiaf.westeros.org/index.php/Tyana_Wylde,NA,NA
@@ -84,7 +84,7 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 83,1,81,64,Alyx Frey,F,https://awoiaf.westeros.org/index.php/Alyx_Frey,NA,NA
 84,1,81,64,Bradamar Frey,M,https://awoiaf.westeros.org/index.php/Bradamar_Frey,NA,NA
 85,2,NA,NA,Wynafrei Whent,F,https://awoiaf.westeros.org/index.php/Wynafrei_Whent,NA,NA
-86,1,NA,NA,Mariya Darry,F,https://awoiaf.westeros.org/index.php/Mariya_Darry,NA,NA
+86,1,707,679,Mariya Darry,F,https://awoiaf.westeros.org/index.php/Mariya_Darry,NA,NA
 87,1,86,66,Amerei 'Gatehouse Ami' Frey,F,https://awoiaf.westeros.org/index.php/Amerei_Frey,NA,NA
 88,3,NA,NA,Pate of the Blue Fork,M,https://awoiaf.westeros.org/index.php/Pate_of_the_Blue_Fork,NA,NA
 89,1,86,66,Walda 'Fat Walda' Frey,F,https://awoiaf.westeros.org/index.php/Walda_Frey_(daughter_of_Merrett),NA,NA
@@ -331,7 +331,7 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 330,1,323,325,Joy Penrose,F,https://awoiaf.westeros.org/index.php/Joy_Penrose,NA,NA
 331,9,NA,NA,Lord Penrose,M,https://awoiaf.westeros.org/index.php/Lord_Penrose,NA,NA
 332,9,NA,331,Cortnay Penrose,M,https://awoiaf.westeros.org/index.php/Cortnay_Penrose,NA,NA
-333,1,520,522,Alyn Velaryon,M,https://awoiaf.westeros.org/index.php/Alyn_Velaryon,NA,NA
+333,1,520,523,Alyn Velaryon,M,https://awoiaf.westeros.org/index.php/Alyn_Velaryon,NA,NA
 334,1,322,321,Daeron Targaryen,M,https://awoiaf.westeros.org/index.php/Daeron_Targaryen,NA,NA
 335,1,322,321,Baelor Targaryen,M,https://awoiaf.westeros.org/index.php/Baelor_Targaryen,NA,NA
 336,10,620,619,Aliandra Martell,F,https://awoiaf.westeros.org/index.php/Aliandra_Martell,NA,NA
@@ -519,7 +519,7 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 518,1,517,200,Shaera Targaryen,F,https://awoiaf.westeros.org/index.php/Shaera_Targaryen,NA,NA
 519,1,NA,NA,Rymond Arryn,M,https://awoiaf.westeros.org/index.php/Rymond_Arryn,NA,NA
 520,1,NA,NA,Marilda of Hull,F,https://awoiaf.westeros.org/index.php/Marilda_of_Hull,NA,NA
-521,1,520,522,Addam Velaryon of Hull,M,https://awoiaf.westeros.org/index.php/Addam_Velaryon,NA,NA
+521,1,520,523,Addam Velaryon of Hull,M,https://awoiaf.westeros.org/index.php/Addam_Velaryon,NA,NA
 522,1,514,523,Laenor Velaryon,M,https://awoiaf.westeros.org/index.php/Laenor_Velaryon,NA,NA
 523,1,534,524,Corlys Velaryon,M,https://awoiaf.westeros.org/index.php/Corlys_Velaryon,NA,NA
 524,1,NA,525,Corwyn Velaryon,M,https://awoiaf.westeros.org/index.php/Corwyn_Velaryon,NA,NA
@@ -705,3 +705,4 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 704,1,547,703,Six Daughters Hightower,F,https://awoiaf.westeros.org/index.php/Garmund_Hightower#Family,NA,NA
 705,1,NA,NA,Alyn Marbrand,M,https://awoiaf.westeros.org/index.php/Alyn_Marbrand,NA,NA
 706,23,NA,NA,Mother of Ashara Dayne,F,https://awoiaf.westeros.org/index.php/Ashara_Dayne#Family,NA,NA
+707,1,NA,NA,Mother of Jeyne Darry,F,https://awoiaf.westeros.org/index.php/Lord_Darry_(father_of_Raymun)#Family,NA,NA

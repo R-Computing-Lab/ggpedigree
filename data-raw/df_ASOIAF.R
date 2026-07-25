@@ -7,7 +7,7 @@ library(BGmisc)
 
 
 ## Create dataframe
-ASOIAF <- ged <- readGedcom("data-raw/ASOIAF.ged") %>%
+ASOIAF <- ged <- readGedcom("data-raw/asoiaf/ASOIAF.ged") %>%
   mutate(name = str_remove(name, "/"))
 
 df <- ped2fam(ASOIAF, personID = "personID") %>%
@@ -24,13 +24,13 @@ df <- ped2fam(ASOIAF, personID = "personID") %>%
     -FAMS
   ) %>%
   mutate(
+    personID = as.numeric(personID),
+    dadID = as.numeric(dadID),
     momID = as.numeric(momID),
     momID = case_when(
       dadID == 482 ~ 706, # mother of Ashara Dayne etc, all children of 482, share same mom
       TRUE ~ momID
     ),
-    dadID = as.numeric(dadID),
-    personID = as.numeric(personID),
     name = case_when( # to ensure compatiblity with bgmisc and tidygedcom
       name %in% c("Naerys ", "Naerys") ~ "Naerys Targaryen",
       name %in% c("Rhaenyra ", "Rhaenyra") ~ "Rhaenyra Targaryen",
@@ -264,7 +264,7 @@ df <- df %>%
     name = "Alyn Velaryon",
     sex = "M",
     momID = 520,
-    dadID = 522, # officially Laenor Velaryon (but it's probably Corlys Velaryon)
+    dadID = 523, # officially Laenor Velaryon (but it's definitely Corlys Velaryon)
     url = "https://awoiaf.westeros.org/index.php/Alyn_Velaryon",
     overwrite = TRUE
   ) %>%
@@ -404,7 +404,7 @@ df <- df %>%
   ) %>%
   addPersonToPed(
     name = "Addam Velaryon of Hull",
-    sex = "M", personID = 521, momID = 520, dadID = 522,
+    sex = "M", personID = 521, momID = 520, dadID = 523,
     url = "https://awoiaf.westeros.org/index.php/Addam_Velaryon"
   ) %>%
   addPersonToPed(
@@ -1335,7 +1335,11 @@ df <- df %>%
   addPersonToPed(name ="Mother of Ashara Dayne",
     sex = "F", personID = 706,
     dadID = NA, momID = NA,
-    url = "https://awoiaf.westeros.org/index.php/Ashara_Dayne#Family")
+    url = "https://awoiaf.westeros.org/index.php/Ashara_Dayne#Family") %>%
+  addPersonToPed(name ="Mother of Jeyne Darry",
+    sex = "F", personID = 707,
+    dadID = NA, momID = NA,
+    url = "https://awoiaf.westeros.org/index.php/Lord_Darry_(father_of_Raymun)#Family")
 
 
 
@@ -1358,6 +1362,7 @@ df <- df %>%
       personID == 1 ~ 566, # Walder Frey's mother
       personID %in% c(8, 9, 10) ~ 698, # all the children of Ryman Frey share the same mother
       personID %in% c(28, 159:162) ~ 584, # Jeyne Marbrand is mother of Tywin Lannister etc
+      personID %in% c(33,86) ~ 707, # Jeyne and Mariya Darry's mother
       personID %in% c(121, 154:155) ~ 583, # all the braxes share the same mother
       personID %in% c(158, 180, 181, 182) ~ 585, # Rohanne Webber
       personID %in% c(163, 183) ~ 586,
@@ -1416,7 +1421,7 @@ df <- df %>%
     ),
     dadID = case_when(
       personID == 1 ~ 564, # Walder Frey's father is Lord Frey
-      personID == 33 ~ 679, # Jeyne  Darry's father is Lord Darry
+      personID %in% c(33,86)  ~ 679, # Jeyne and Mariya Darry's father is Lord Darry
       personID == 179 ~ 689, # Damon Lannister (lord)
       personID == 179 ~ 689, # Damon Lannister (lord)
       personID == 207 ~ 258, # Prince Consort
@@ -1486,7 +1491,7 @@ checkis_acyclic <- checkPedigreeNetwork(df_repaired,
 checkis_acyclic
 if (checkis_acyclic$is_acyclic) {
   message("The pedigree is acyclic.")
-  write_csv(ASOIAF, here("data-raw", "ASOIAF.csv"))
+  write_csv(ASOIAF, here("data-raw/asoiaf", "ASOIAF.csv"))
   usethis::use_data(ASOIAF,
     overwrite = TRUE, compress = "xz"
   )
