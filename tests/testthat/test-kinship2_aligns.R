@@ -254,7 +254,7 @@ test_that("test autohint works with sample.ped", {
 test_that("align.pedigree works with ASOIAF", {
   data("ASOIAF")
   # skip if not the correct data version
-  if (!exists("ASOIAF") || !is.data.frame(ASOIAF)|| nrow(ASOIAF) != asoiaf_nrow) {
+  if (!exists("ASOIAF") || !is.data.frame(ASOIAF) || nrow(ASOIAF) != asoiaf_nrow) {
     skip("ASOIAF data not available, or not the correct version")
   }
   df_ASOIAF <- BGmisc::checkParentIDs(ASOIAF,
@@ -266,12 +266,12 @@ test_that("align.pedigree works with ASOIAF", {
 
   ped <- with(df_ASOIAF, ggpedigree:::pedigree(ID, dadID, momID, sex))
   withr::local_options(width = 50)
-#  expect_snapshot(kinship2_align.pedigree(ped))
+  #  expect_snapshot(kinship2_align.pedigree(ped))
   align <- kinship2_align.pedigree(ped)
 
   expect_equal(align$n, c(
-    41,  74 , 94, 128,  97 , 41 , 14 , 12 , 20 , 17 , 11,
-    21  ,30 , 25 , 26 , 20 , 30 , 26 , 19 , 43 , 36
+    41, 74, 94, 128, 97, 41, 14, 12, 20, 17, 11,
+    21, 30, 25, 26, 20, 30, 26, 19, 43, 36
   ))
 
   expect_equal(dim(align$nid), c(21, 128))
@@ -284,7 +284,7 @@ test_that("test autohint works with ASOIAF", {
   data("ASOIAF")
 
   # skip if not the correct data version
-  if (!exists("ASOIAF") || !is.data.frame(ASOIAF)|| nrow(ASOIAF) != asoiaf_nrow) {
+  if (!exists("ASOIAF") || !is.data.frame(ASOIAF) || nrow(ASOIAF) != asoiaf_nrow) {
     skip("ASOIAF data not available, or not the correct version")
   }
 
@@ -302,8 +302,8 @@ test_that("test autohint works with ASOIAF", {
     width = 8, hints = newhint
   )
   expect_equal(plist$n, c(
-    41,  74 , 94, 128,  97 , 41 , 14 , 12 , 20 , 17 , 11,
-    21  ,30 , 25 , 26 , 20 , 30 , 26 , 19 , 43 , 36
+    41, 74, 94, 128, 97, 41, 14, 12, 20, 17, 11,
+    21, 30, 25, 26, 20, 30, 26, 19, 43, 36
   ))
   expect_equal(dim(plist$nid), c(21, 128))
   expect_equal(dim(plist$pos), c(21, 128))
@@ -415,7 +415,7 @@ test_that("classic option passes through kinship2_alignped stages with sample.pe
 test_that("classic option passes through kinship2_alignped stages with ASOIAF", {
   skip_if_not_installed("quadprog")
   # skip if not the correct data version
-  if (!exists("ASOIAF") || !is.data.frame(ASOIAF)|| nrow(ASOIAF) != asoiaf_nrow) {
+  if (!exists("ASOIAF") || !is.data.frame(ASOIAF) || nrow(ASOIAF) != asoiaf_nrow) {
     skip("ASOIAF data not available, or not the correct version")
   }
   data("ASOIAF")
@@ -451,8 +451,8 @@ test_that("classic option passes through kinship2_alignped stages with ASOIAF", 
   expect_align_stage_equal(classic, optimized)
 
   expect_equal(optimized$n, c(
-    41,  74 , 94, 129,  97 , 41 , 14 , 12 , 20 , 17 , 11,
-    22  ,31 , 24 , 26 , 20 , 31 , 26 , 19 , 43 , 36
+    41, 74, 94, 129, 97, 41, 14, 12, 20, 17, 11,
+    22, 31, 24, 26, 20, 31, 26, 19, 43, 36
   ))
   expect_equal(dim(optimized$nid), c(21, 129))
   expect_equal(dim(optimized$pos), c(21, 129))
@@ -465,7 +465,7 @@ test_that("classic option passes through kinship2_alignped stages with ASOIAF au
 
   data("ASOIAF")
   # skip if not the correct data version
-  if (!exists("ASOIAF") || !is.data.frame(ASOIAF)|| nrow(ASOIAF) != asoiaf_nrow) {
+  if (!exists("ASOIAF") || !is.data.frame(ASOIAF) || nrow(ASOIAF) != asoiaf_nrow) {
     skip("ASOIAF data not available, or not the correct version")
   }
   df_ASOIAF <- BGmisc::checkParentIDs(
