@@ -148,7 +148,7 @@ utils::globalVariables(c("focal_fill_na_value")) # to avoid R CMD check NOTE; th
 #' @param segment_self_color Color for self-loop segments. Default uses segment_default_color.
 #' @param segment_sibling_color Color for sibling segments. Default uses segment_default_color.
 #' @param segment_spouse_color Color for spouse segments. Default uses segment_default_color.
-#' @param segment_spouse_alpha Alpha for spouse segments. Default is 1 when segment filling is disabled, and 0.5 when enabled.
+#' @param segment_spouse_alpha Alpha for spouse segments. Default is 0.5 when the segment lineage legend is shown, and 1 otherwise.
 #' @param segment_mz_color Color for monozygotic twin segments. Default uses segment_default_color.
 #' @param segment_mz_linetype Line type for MZ segments. Default uses segment_linetype.
 #' @param segment_mz_alpha Alpha for MZ segments. Default is 1.
