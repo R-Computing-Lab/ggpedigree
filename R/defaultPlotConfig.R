@@ -1,4 +1,4 @@
-utils::globalVariables(c("focal_fill_na_value")) # to avoid R CMD check NOTE, it it to ensure backwards compatibility with older versions of ggPedigree that used focal_fill_na_value instead of focal_fill_na_color
+utils::globalVariables(c("focal_fill_na_value")) # to avoid R CMD check NOTE; this ensures backwards compatibility with older versions of ggPedigree that used focal_fill_na_value instead of focal_fill_na_color
 
 #' @title Shared Default Plotting Configuration
 #' @description Centralized configuration list used by all gg-based plotting functions.
