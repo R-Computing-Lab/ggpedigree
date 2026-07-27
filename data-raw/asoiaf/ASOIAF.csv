@@ -234,7 +234,7 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 233,1,NA,249,Elys Waynwood,M,https://awoiaf.westeros.org/index.php/Elys_Waynwood,NA,NA
 234,1,231,233,Waynwood,F,https://awoiaf.westeros.org/index.php/House_Waynwood,NA,NA
 235,1,NA,NA,Denys Arryn,M,https://awoiaf.westeros.org/index.php/Denys_Arryn,NA,NA
-236,1,234,235,Arryn,M,https://awoiaf.westeros.org/index.php/House_Arryn,NA,NA
+236,1,234,235,Son of Denys Arryn,M,https://awoiaf.westeros.org/index.php/House_Arryn,NA,NA
 237,1,231,233,Youngest daughter of Elys Waynwood,F,https://awoiaf.westeros.org/index.php/House_Waynwood,NA,NA
 238,1,NA,NA,Ser Hardyng,M,https://awoiaf.westeros.org/index.php/House_Hardyng,NA,NA
 239,1,237,238,Harrold Hardyng,M,https://awoiaf.westeros.org/index.php/Harrold_Hardyng,NA,NA
@@ -347,7 +347,7 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 346,1,344,340,Aemond Targaryen,M,https://awoiaf.westeros.org/index.php/Aemond_Targaryen,NA,NA
 347,1,344,340,Daeron Targaryen,M,https://awoiaf.westeros.org/index.php/Daeron_Targaryen,NA,NA
 348,1,344,340,Helaena Targaryen,F,https://awoiaf.westeros.org/index.php/Helaena_Targaryen,NA,NA
-349,1,351,350,Targaryen,U,https://awoiaf.westeros.org/index.php/House_Targaryen,NA,NA
+349,1,351,350,Maegelle Targaryen,F,https://awoiaf.westeros.org/index.php/Maegelle_Targaryen,NA,NA
 350,1,510,352,Jaehaerys 'The Conciliator' Targaryen,M,https://awoiaf.westeros.org/index.php/Jaehaerys_I_Targaryen,NA,NA
 351,1,510,352,Alysanne 'The Good' Targaryen,F,https://awoiaf.westeros.org/index.php/Alysanne_Targaryen,NA,NA
 352,1,354,353,Aenys Targaryen,M,https://awoiaf.westeros.org/index.php/Aenys_Targaryen,NA,NA
@@ -706,3 +706,8 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 705,1,NA,NA,Alyn Marbrand,M,https://awoiaf.westeros.org/index.php/Alyn_Marbrand,NA,NA
 706,23,NA,NA,Mother of Ashara Dayne,F,https://awoiaf.westeros.org/index.php/Ashara_Dayne#Family,NA,NA
 707,1,NA,NA,Mother of Jeyne Darry,F,https://awoiaf.westeros.org/index.php/Lord_Darry_(father_of_Raymun)#Family,NA,NA
+708,1,351,350,Saera Targaryen,F,https://awoiaf.westeros.org/index.php/Saera_Targaryen,NA,NA
+709,1,351,350,Viserra Targaryen,F,https://awoiaf.westeros.org/index.php/Viserra_Targaryen,NA,NA
+710,1,351,350,Vaegon Targaryen,M,https://awoiaf.westeros.org/index.php/Vaegon_Targaryen,NA,NA
+711,1,351,350,Gaemon Targaryen,M,https://awoiaf.westeros.org/index.php/Gaemon_Targaryen,NA,NA
+712,1,351,350,Valerion Targaryen,M,https://awoiaf.westeros.org/index.php/Valerion_Targaryen,NA,NA

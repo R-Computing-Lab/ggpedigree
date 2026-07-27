@@ -544,17 +544,19 @@ calculateCoordinates <- function(ped,
                          duplication_weight = 100L) {
   method <- match.arg(method)
   switch(method,
-    parent_stub = , #alias for parent_offset
+    parent_stub = , # alias for parent_offset
     parent_offset = sum(abs(ds$x_fam - ds$x_pos), na.rm = TRUE),
     crossings = .layoutScoreCrossings(ds),
-    duplications = , #alias for minimal_duplicates
+    duplications = , # alias for minimal_duplicates
     minimal_duplicates = sum(duplicated(ds$nid[!is.na(ds$nid)])),
     twin_penalty = .layoutScoreTwinPenalty(ds, twinID = twinID, cross_gen_penalty = cross_gen_penalty),
     composite = {
       sum(abs(ds$x_fam - ds$x_pos), na.rm = TRUE) +
         cross_gen_penalty * .layoutScoreCrossings(ds) +
-        twin_penalty_weight * .layoutScoreTwinPenalty(ds, twinID = twinID,
-                                                      cross_gen_penalty = cross_gen_penalty) +
+        twin_penalty_weight * .layoutScoreTwinPenalty(ds,
+          twinID = twinID,
+          cross_gen_penalty = cross_gen_penalty
+        ) +
         duplication_weight * sum(duplicated(ds$nid[!is.na(ds$nid)]))
     }
   )

@@ -49,6 +49,7 @@ df <- ped2fam(ASOIAF, personID = "personID") %>%
       personID == 200 ~ "Aegon V Targaryen",
       personID == 201 ~ "Jaehaerys II Targaryen",
       personID == 202 ~ "Aerys II Targaryen",
+      personID == 236 ~ "Son of Denys Arryn",
       personID == 237 ~ "Youngest daughter of Elys Waynwood",
       personID == 238 ~ "Ser Hardyng",
       personID == 255 ~ "Lord Tully",
@@ -151,7 +152,7 @@ df <- ped2fam(ASOIAF, personID = "personID") %>%
       personID == 320 ~ "https://awoiaf.westeros.org/index.php/Maelys_I_Blackfyre",
       personID == 321 ~ "https://awoiaf.westeros.org/index.php/Aegon_III_Targaryen",
       personID == 345 ~ "https://awoiaf.westeros.org/index.php/Aegon_II_Targaryen",
-      personID == 349 ~ "https://awoiaf.westeros.org/index.php/House_Targaryen",
+      personID == 349 ~ "https://awoiaf.westeros.org/index.php/Maegelle_Targaryen",
       personID == 350 ~ "https://awoiaf.westeros.org/index.php/Jaehaerys_I_Targaryen",
       personID == 351 ~ "https://awoiaf.westeros.org/index.php/Alysanne_Targaryen",
       personID == 353 ~ "https://awoiaf.westeros.org/index.php/Aegon_I_Targaryen",
@@ -291,6 +292,13 @@ df <- df %>%
     dadID = 539,
     url = "https://awoiaf.westeros.org/index.php/Alicent_Hightower",
     overwrite = TRUE
+  )  %>%
+  addPersonToPed(
+    name = "Maegelle Targaryen",
+    overwrite = TRUE,
+    sex = "F", personID = 349,
+    dadID = 350, momID = 351,
+    url = "https://awoiaf.westeros.org/index.php/Maegelle_Targaryen"
   ) %>%
   addPersonToPed( # overwriting existing person with new name and URL
     name = "Mother of Garret and Garse Flowers",
@@ -1347,7 +1355,38 @@ df <- df %>%
     sex = "F", personID = 707,
     dadID = NA, momID = NA,
     url = "https://awoiaf.westeros.org/index.php/Lord_Darry_(father_of_Raymun)#Family"
+  ) %>%
+  addPersonToPed(
+    name = "Saera Targaryen",
+    sex = "F", personID = 708,
+    dadID = 350, momID = 351,
+    url = "https://awoiaf.westeros.org/index.php/Saera_Targaryen"
+  ) %>%
+  addPersonToPed(
+    name = "Viserra Targaryen",
+    sex = "F", personID = 709,
+    dadID = 350, momID = 351,
+    url = "https://awoiaf.westeros.org/index.php/Viserra_Targaryen"
+  )  %>%
+  addPersonToPed(
+    name = "Vaegon Targaryen",
+    sex = "M", personID = 710,
+    dadID = 350, momID = 351,
+    url = "https://awoiaf.westeros.org/index.php/Vaegon_Targaryen"
+  )  %>%
+  addPersonToPed(
+    name = "Gaemon Targaryen",
+    sex = "M", personID = 711,
+    dadID = 350, momID = 351,
+    url = "https://awoiaf.westeros.org/index.php/Gaemon_Targaryen"
+  )  %>%
+  addPersonToPed(
+    name = "Valerion Targaryen",
+    sex = "M", personID = 712,
+    dadID = 350, momID = 351,
+    url = "https://awoiaf.westeros.org/index.php/Valerion_Targaryen"
   )
+
 
 
 # modify existing people
