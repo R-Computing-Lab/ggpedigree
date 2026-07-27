@@ -414,11 +414,11 @@ test_that("classic option passes through kinship2_alignped stages with sample.pe
 
 test_that("classic option passes through kinship2_alignped stages with ASOIAF", {
   skip_if_not_installed("quadprog")
+  data("ASOIAF")
   # skip if not the correct data version
   if (!exists("ASOIAF") || !is.data.frame(ASOIAF) || nrow(ASOIAF) != asoiaf_nrow) {
     skip("ASOIAF data not available, or not the correct version")
   }
-  data("ASOIAF")
 
   df_ASOIAF <- BGmisc::checkParentIDs(
     ASOIAF,
