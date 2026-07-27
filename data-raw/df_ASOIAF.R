@@ -1385,6 +1385,18 @@ df <- df %>%
     sex = "M", personID = 712,
     dadID = 350, momID = 351,
     url = "https://awoiaf.westeros.org/index.php/Valerion_Targaryen"
+  ) %>%
+  addPersonToPed(
+    name = "Gael Targaryen",
+    sex = "F", personID = 713,
+    dadID = 350, momID = 351,
+    url = "https://awoiaf.westeros.org/index.php/Gael_Targaryen"
+  ) %>%
+  addPersonToPed(
+    name = "Stillborn Targaryen",
+    sex = "M", personID = 714,
+    dadID = NA, momID = 713,
+    url = "https://awoiaf.westeros.org/index.php/Gael_Targaryen#Family"
   )
 
 

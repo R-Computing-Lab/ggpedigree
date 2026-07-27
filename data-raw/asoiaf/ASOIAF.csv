@@ -711,3 +711,5 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 710,1,351,350,Vaegon Targaryen,M,https://awoiaf.westeros.org/index.php/Vaegon_Targaryen,NA,NA
 711,1,351,350,Gaemon Targaryen,M,https://awoiaf.westeros.org/index.php/Gaemon_Targaryen,NA,NA
 712,1,351,350,Valerion Targaryen,M,https://awoiaf.westeros.org/index.php/Valerion_Targaryen,NA,NA
+713,1,351,350,Gael Targaryen,F,https://awoiaf.westeros.org/index.php/Gael_Targaryen,NA,NA
+714,1,713,NA,Stillborn Targaryen,M,https://awoiaf.westeros.org/index.php/Gael_Targaryen#Family,NA,NA
