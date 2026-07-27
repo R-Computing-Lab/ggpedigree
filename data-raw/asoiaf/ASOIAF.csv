@@ -282,7 +282,7 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 281,1,517,200,Daeron Targaryen (son of Aegon V),M,https://awoiaf.westeros.org/index.php/Daeron_Targaryen_(son_of_Aegon_V),NA,NA
 282,1,291,290,Maekar Targaryen,M,https://awoiaf.westeros.org/index.php/Maekar_Targaryen,NA,NA
 283,1,516,282,Daeron (son of Maekar) Targaryen,M,https://awoiaf.westeros.org/index.php/Daeron_Targaryen_(son_of_Maekar_I),NA,NA
-284,1,600,283,Vaella Targaryen,F,https://awoiaf.westeros.org/index.php/Vaella_Targaryen,NA,NA
+284,1,600,283,Vaella Targaryen,F,https://awoiaf.westeros.org/index.php/Vaella_Targaryen_(daughter_of_Daeron),NA,NA
 285,1,516,282,Aerion (son of Maekar) Targaryen,M,https://awoiaf.westeros.org/index.php/Aerion_Targaryen,NA,NA
 286,1,NA,285,Unknown Targaryen,M,https://awoiaf.westeros.org/index.php/House_Targaryen,NA,NA
 287,1,516,282,Aemon Targaryen,M,https://awoiaf.westeros.org/index.php/Aemon_Targaryen,NA,NA
@@ -294,8 +294,8 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 293,1,291,290,Aerys Targaryen,M,https://awoiaf.westeros.org/index.php/Aerys_Targaryen,NA,NA
 294,7,NA,NA,Aelinor Penrose,F,https://awoiaf.westeros.org/index.php/Aelinor_Penrose,NA,NA
 295,1,291,290,Rhaegel Targaryen,M,https://awoiaf.westeros.org/index.php/Rhaegel_Targaryen,NA,NA
-296,1,NA,295,Targaryen,M,https://awoiaf.westeros.org/index.php/House_Targaryen,NA,NA
-297,1,NA,295,Targaryen,M,https://awoiaf.westeros.org/index.php/House_Targaryen,NA,NA
+296,1,715,295,Aelor Targaryen,M,https://awoiaf.westeros.org/index.php/Aelor_Targaryen,NA,NA
+297,1,715,295,Aelora Targaryen,F,https://awoiaf.westeros.org/index.php/Aelora_Targaryen,NA,NA
 298,1,589,292,Valarr Targaryen,M,https://awoiaf.westeros.org/index.php/Valarr_Targaryen,NA,NA
 299,1,589,292,Matarys Targaryen,M,https://awoiaf.westeros.org/index.php/Matarys_Targaryen,NA,NA
 300,1,600,298,Stillborn Targaryen,M,https://awoiaf.westeros.org/index.php/Valarr_Targaryen#Family,NA,NA
@@ -597,7 +597,7 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 596,1,510,352,Rhaena Targaryen (daughter of Aenys I),F,https://awoiaf.westeros.org/index.php/Rhaena_Targaryen_(daughter_of_Aenys_I),NA,NA
 597,1,510,352,Aegon Targaryen (son of Aenys I),M,https://awoiaf.westeros.org/index.php/Aegon_Targaryen_(son_of_Aenys_I),NA,NA
 598,1,510,352,Viserys Targaryen (son of Aenys I),M,https://awoiaf.westeros.org/index.php/Viserys_Targaryen_(son_of_Aenys_I),NA,NA
-599,1,510,352,Vaella Targaryen,F,https://awoiaf.westeros.org/index.php/Vaella_Targaryen,NA,NA
+599,1,510,352,Vaella Targaryen,F,https://awoiaf.westeros.org/index.php/Vaella_Targaryen_(daughter_of_Aenys_I),NA,NA
 600,1,NA,NA,Kiera of Tyrosh,F,https://awoiaf.westeros.org/index.php/Kiera_of_Tyrosh,NA,NA
 601,1,596,597,Aerea Targaryen,F,https://awoiaf.westeros.org/index.php/Aerea_Targaryen,602,mz
 602,1,596,597,Rhaella Targaryen (daughter of Aegon),F,https://awoiaf.westeros.org/index.php/Rhaella_Targaryen_(daughter_of_Aegon),601,mz
@@ -713,3 +713,7 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 712,1,351,350,Valerion Targaryen,M,https://awoiaf.westeros.org/index.php/Valerion_Targaryen,NA,NA
 713,1,351,350,Gael Targaryen,F,https://awoiaf.westeros.org/index.php/Gael_Targaryen,NA,NA
 714,1,713,NA,Stillborn Targaryen,M,https://awoiaf.westeros.org/index.php/Gael_Targaryen#Family,NA,NA
+715,1,NA,NA,Alys Arryn,F,https://awoiaf.westeros.org/index.php/Alys_Arryn_(wife_of_Rhaegel),NA,NA
+716,1,715,295,Daenora Targaryen,F,https://awoiaf.westeros.org/index.php/Daenora_Targaryen,NA,NA
+717,1,716,285,Maegor Targaryen (son of Aerion),M,https://awoiaf.westeros.org/index.php/Maegor_Targaryen_(son_of_Aerion),NA,NA
+718,1,289,NA,Children of Daella Targaryen,U,https://awoiaf.westeros.org/index.php/Daella_Targaryen_(daughter_of_Maekar_I)#Family,NA,NA

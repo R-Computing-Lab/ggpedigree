@@ -108,10 +108,10 @@ kinship2_plotPedigree(df_repaired,
 
 ## Visualize the Pedigree with `ggPedigree()`
 
-Here is the same pedigree, but using `ggPedigree()` from {ggpedigree}. This function provides a more flexible and customizable way to visualize pedigrees, allowing for easy integration with other `ggplot2` functions.
+Here is the same pedigree, but using `ggPedigree()` from {ggpedigree}. This function provides a more flexible and customizable way to visualize pedigrees, allowing for easy integration with other `ggplot2` functions. 
 
 
-```{r message=FALSE, warning=FALSE}
+```{r message=TRUE, warning=FALSE}
 df_repaired <- df_repaired %>% mutate(
   famID = famID_mulit
 )
@@ -135,15 +135,19 @@ pltstatic <- ggPedigree(df_repaired,
     #  segment_self_color = "purple",
     #   label_segment_color = "gray",
     reduce_variables = F,
-    tooltip_columns = c("ID", "name")
+    tooltip_columns = c("ID", "name"),
+    founder_order_seed = 1238,
+    founder_order_tries = 2,
+    return_best_seed = TRUE  
   )
 )
-
+best_seed <- 1238
 pltstatic
 
 # pltstatic+ facet_wrap(~famID_mulit, drop=TRUE,scales = "free")
 ```
 
+## Visualize how related everyone is to Aegon the Conqueror
 
 ```{r}
 df_repaired_renamed <- df_repaired %>% rename(
@@ -184,12 +188,20 @@ plt <- ggPedigreeInteractive(df_repaired_renamed,
     label_text_size = 1,
     label_method = "geom_text",
     segment_self_color = "black",
+    founder_order_seed = best_seed,
     tooltip_columns = c("personID", "name", "focal_fill")
   )
 )
 
 plt
 htmlwidgets::saveWidget(plt, "ggpedigreeinteractive_aegon.html", selfcontained = TRUE)
+
+```
+
+## Visualize how related everyone is to Rhaenyra Targaryen
+
+
+```{r}
 
 plt <- ggPedigreeInteractive(df_repaired_renamed,
   #  status_column = "affected",
@@ -225,6 +237,7 @@ plt <- ggPedigreeInteractive(df_repaired_renamed,
     label_include = TRUE,
     label_text_size = 1,
     label_method = "geom_text",
+    founder_order_seed = best_seed,
     segment_self_color = "black",
     tooltip_columns = c("personID", "name", "focal_fill")
   )

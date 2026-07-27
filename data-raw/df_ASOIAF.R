@@ -63,6 +63,8 @@ df <- ped2fam(ASOIAF, personID = "personID") %>%
       personID == 288 ~ "Rhae Targaryen", # not Rhaelle Targaryen
       personID == 289 ~ "Daella Targaryen (daughter of Maekar I)",
       personID == 294 ~ "Aelinor Penrose",
+      personID == 296 ~ "Aelor Targaryen",
+      personID == 297 ~ "Aelora Targaryen",
       personID %in% c(300:301) ~ "Stillborn Targaryen",
       personID == 317 ~ "Father of Maelys I Blackfyre",
       personID == 322 ~ "Daenaera Velaryon",
@@ -135,12 +137,13 @@ df <- ped2fam(ASOIAF, personID = "personID") %>%
       personID == 274 ~ "https://awoiaf.westeros.org/index.php/Harmen_Uller#Family",
       personID == 280 ~ "https://awoiaf.westeros.org/index.php/Duncan_Targaryen",
       personID == 283 ~ "https://awoiaf.westeros.org/index.php/Daeron_Targaryen_(son_of_Maekar_I)",
+      personID == 284 ~ "https://awoiaf.westeros.org/index.php/Vaella_Targaryen_(daughter_of_Daeron)",
       personID == 285 ~ "https://awoiaf.westeros.org/index.php/Aerion_Targaryen",
       personID == 286 ~ "https://awoiaf.westeros.org/index.php/House_Targaryen",
       personID == 292 ~ "https://awoiaf.westeros.org/index.php/Baelor_Targaryen_(son_of_Daeron_II)",
       personID == 294 ~ "https://awoiaf.westeros.org/index.php/Aelinor_Penrose",
-      personID == 296 ~ "https://awoiaf.westeros.org/index.php/House_Targaryen",
-      personID == 297 ~ "https://awoiaf.westeros.org/index.php/House_Targaryen",
+      personID == 296 ~ "https://awoiaf.westeros.org/index.php/Aelor_Targaryen",
+      personID == 297 ~ "https://awoiaf.westeros.org/index.php/Aelora_Targaryen",
       personID %in% c(300:301) ~ "https://awoiaf.westeros.org/index.php/Valarr_Targaryen#Family",
       personID %in% c(318:319) ~ "https://awoiaf.westeros.org/index.php/House_Blackfyre#Family",
       personID == 302 ~ "https://awoiaf.westeros.org/index.php/Aegon_IV_Targaryen",
@@ -807,7 +810,7 @@ df <- df %>%
   addPersonToPed(
     name = "Vaella Targaryen", sex = "F",
     personID = 599, momID = 510, dadID = 352,
-    url = "https://awoiaf.westeros.org/index.php/Vaella_Targaryen"
+    url = "https://awoiaf.westeros.org/index.php/Vaella_Targaryen_(daughter_of_Aenys_I)"
   ) %>%
   addPersonToPed(
     name = "Kiera of Tyrosh", sex = "F",
@@ -1397,6 +1400,30 @@ df <- df %>%
     sex = "M", personID = 714,
     dadID = NA, momID = 713,
     url = "https://awoiaf.westeros.org/index.php/Gael_Targaryen#Family"
+  )  %>%
+  addPersonToPed(
+    name = "Alys Arryn",
+    sex = "F", personID = 715,
+    dadID = NA, momID = NA,
+    url = "https://awoiaf.westeros.org/index.php/Alys_Arryn_(wife_of_Rhaegel)"
+  )  %>%
+  addPersonToPed(
+    name = "Daenora Targaryen",
+    sex = "F", personID = 716,
+    dadID = 295, momID = 715,
+    url = "https://awoiaf.westeros.org/index.php/Daenora_Targaryen"
+  )  %>%
+  addPersonToPed(
+    name = "Maegor Targaryen (son of Aerion)",
+    sex = "M", personID = 717,
+    dadID = 285, momID = 716,
+    url = "https://awoiaf.westeros.org/index.php/Maegor_Targaryen_(son_of_Aerion)"
+  )  %>%
+  addPersonToPed(
+    name = "Children of Daella Targaryen",
+    sex = "U", personID = 718,
+    dadID = NA, momID = 289,
+    url = "https://awoiaf.westeros.org/index.php/Daella_Targaryen_(daughter_of_Maekar_I)#Family"
   )
 
 
@@ -1407,6 +1434,7 @@ df <- df %>%
     sex = case_when(
       personID == 236 ~ "M",
       personID == 274 ~ "M",
+      personID == 297 ~ "F",
       personID == 326 ~ "M",
       personID == 327 ~ "M",
       personID == 328 ~ "F",
@@ -1448,6 +1476,7 @@ df <- df %>%
       personID == 289 ~ 516, # Daella Targaryen (daughter of Maekar I) has Dyanna Dayne
       personID == 291 ~ 567, # Myriah Martell's mother is the Mother of Maron Martell
       personID == 294 ~ NA,
+      personID %in% c(296:297,716) ~ 715, # Alys Arryn is the wife of Rhaegel Targaryen
       personID %in% c(298:299) ~ 589, # Jena Dondarrion
       personID %in% c(300:301) ~ 600,
       personID == 302 ~ 502, # Aegon IV Targaryen's mother is Larra Rogare
