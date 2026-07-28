@@ -168,7 +168,7 @@ pltstatic <- ggPedigree(df_repaired,
     return_best_seed = TRUE  
   )
 )
-#> Best founder order seed: 1238 with layout score: 11107.5429148656
+#> Best founder order seed: 1238 with layout score: 11107.5429140284
 best_seed <- 1238
 pltstatic
 ```

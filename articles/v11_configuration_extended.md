@@ -1312,7 +1312,7 @@ ggPedigree(
     return_best_seed = TRUE # return the winning seed in the plot attributes for reference
   )
 ) + ggplot2::ggtitle("Best of seeds 1–10")
-#> Best founder order seed: 5 with layout score: 267.060969574231
+#> Best founder order seed: 5 with layout score: 267.060969564274
 ```
 
 ![](v11_configuration_extended_files/figure-html/unnamed-chunk-38-1.png)
