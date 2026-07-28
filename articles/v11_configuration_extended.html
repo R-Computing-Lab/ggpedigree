@@ -38,8 +38,8 @@
     <li><a class="dropdown-item" href="../articles/v02_configuration.html">Using config to control ggpedigree plots</a></li>
     <li><a class="dropdown-item" href="../articles/v11_configuration_extended.html">Extended: More uses of config to control ggpedigree plots</a></li>
     <li><a class="dropdown-item" href="../articles/v20_interactiveplots.html">Interactive Pedigree Plotting with ggPedigreeInteractive</a></li>
-    <li><a class="dropdown-item" href="../articles/v21_extendedinteractiveplots.html">Extended: More Complex Pedigree Plots with ggPedigreeInteractive</a></li>
-    <li><a class="dropdown-item" href="../articles/v22_plots_morecomplexity.html">Extended: Plotting more complicated pedigrees with `ggPedigree()`</a></li>
+    <li><a class="dropdown-item" href="../articles/v21_extendedinteractiveplots.html">Extended: More Interactive Pedigree Plots with ggPedigreeInteractive</a></li>
+    <li><a class="dropdown-item" href="../articles/v22_plots_morecomplexity.html">Extended: Plotting ASOIAF and more complicated pedigrees with `ggPedigree()`</a></li>
     <li><a class="dropdown-item" href="../articles/v30_matrix.html">Visualizing Relatedness Matrices with ggRelatednessMatrix()</a></li>
     <li><a class="dropdown-item" href="../articles/v31_phenotypicbydegree.html">Extended: Plotting Phenotypic Correlation by Degree of Relatedness</a></li>
   </ul>
@@ -61,7 +61,7 @@
 
 
 <link href="v11_configuration_extended_files/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
-<script src="v11_configuration_extended_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="v11_configuration_extended_files/plotly-binding-4.12.0/plotly.js"></script><script src="v11_configuration_extended_files/typedarray-0.1/typedarray.min.js"></script><link href="v11_configuration_extended_files/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
+<script src="v11_configuration_extended_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="v11_configuration_extended_files/plotly-binding-4.12.1/plotly.js"></script><script src="v11_configuration_extended_files/typedarray-0.1/typedarray.min.js"></script><link href="v11_configuration_extended_files/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
 <script src="v11_configuration_extended_files/crosstalk-1.2.2/js/crosstalk.min.js"></script><link href="v11_configuration_extended_files/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet">
 <script src="v11_configuration_extended_files/plotly-main-2.25.2/plotly-latest.min.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
@@ -92,7 +92,7 @@ values.</p>
 you want to change. Any options you do not specify will use the package
 defaults. You can see a full list of supported options and their
 defaults by reviewing the documentation for
-<code>getDefaultPlotConfig()</code>.</p>
+<code><a href="../reference/getDefaultPlotConfig.html">getDefaultPlotConfig()</a></code>.</p>
 <div class="section level2">
 <h2 id="basic-usage-of-config-in-ggpedigree">Basic usage of <code>config</code> in <code>ggPedigree()</code><a class="anchor" aria-label="anchor" href="#basic-usage-of-config-in-ggpedigree"></a>
 </h2>
@@ -1029,7 +1029,7 @@ handled by <code>config</code>.</p>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="plotly html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"data":[{"x":[2,1,null,null,0,null,1,2,null,3,4,null,4,3,null,null,1.5,null,4,3,null,3,4,null,8.5,7.5,null,7.5,8.5,null,6,5,null,null,7,null,null,8,null,10,9,null,null,11,null,13,12,null,5,6,null,12,13,null,null,14,null,9,10,null,null,2.2250000000000001,null,null,3.2250000000000001,null,null,4.2249999999999996,null,null,5.2249999999999996,null,null,6.2249999999999996,null,null,11.5,null,null,12.5,null,null,13.5,null,null,9,null,null,10,null,-0,1,null,1,-0,null,3.5,2.5,null,2.5,3.5,null,14,13,null,13,14],"y":[-1,-1,null,null,-1,null,-1,-1,null,-1,-1,null,-1,-1,null,null,-2,null,-2,-2,null,-2,-2,null,-1,-1,null,-1,-1,null,-2,-2,null,null,-2,null,null,-2,null,-2,-2,null,null,-2,null,-2,-2,null,-2,-2,null,-2,-2,null,null,-2,null,-2,-2,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,0,0,null,0,0,null,0,0,null,0,0,null,-1,-1,null,-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.5,0.5,null,0.5,0.5,null,3,3,null,3,3,null,null,null,null,1.5,1.5,null,3,3.5,null,8,8,null,null,null,null,null,null,null,8,8,null,8,8,null,8,8,null,8,8,null,8,8,null,8,8,null,null,null,null,13.5,13.5,null,13.5,13.5,null,null,null,null,3.2250000000000001,3.5,null,3.2250000000000001,3.5,null,3.2250000000000001,3.5,null,5.7249999999999996,5.5,null,5.7249999999999996,5.5,null,12.5,12.5,null,12.5,12.5,null,12.5,12.5,null,9.5,9.5,null,9.5,9.5,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"y":[-0.5,-0,null,-0.5,-0,null,-0.5,-0,null,-0.5,-0,null,null,null,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,null,null,null,null,null,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,null,null,null,-1.5,-1,null,-1.5,-1,null,null,null,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,0.5,null,0,0.5,null,2,3,null,4,3,null,3,null,null,1.5,1.5,null,3,3,null,4,8,null,7.5,null,null,8.5,null,null,5,8,null,9,8,null,11,8,null,12,8,null,6,null,null,13,13.5,null,14,13.5,null,10,null,null,2.2250000000000001,3.2250000000000001,null,3.2250000000000001,3.2250000000000001,null,4.2249999999999996,3.2250000000000001,null,5.2249999999999996,5.7249999999999996,null,6.2249999999999996,5.7249999999999996,null,11.5,12.5,null,12.5,12.5,null,13.5,12.5,null,9,9.5,null,10,9.5,null,1,null,null,-0,null,null,2.5,null,null,3.5,null,null,13,null,null,14,null],"y":[-0.5,-0.5,null,-0.5,-0.5,null,-0.5,-0.5,null,-0.5,-0.5,null,-0.5,null,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,-1.5,null,-0.5,null,null,-0.5,null,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,null,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,null,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,null,null,null,null,null,null,null,null,null,null,null,null,-0.5,null,null,-0.5,null],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7.5,8,null,7.5,8],"y":[-1.5,-1.5,null,-1.5,-1.5],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7,7.5,null,8,7.5],"y":[-2,-1.5,null,-2,-1.5],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7.2999999999999998,7.7000000000000002,null,7.7000000000000002,7.2999999999999998],"y":[-1.7,-1.7,null,-1.7,-1.7],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,1,null,0,0,null,2,2,null,4,4,null,3,3,null,1.5,1.5,null,3,3,null,4,4,null,7.5,7.5,null,8.5,8.5,null,5,5,null,9,9,null,11,11,null,12,12,null,6,6,null,13,13,null,14,14,null,10,10,null,2.2250000000000001,2.2250000000000001,null,3.2250000000000001,3.2250000000000001,null,4.2249999999999996,4.2249999999999996,null,5.2249999999999996,5.2249999999999996,null,6.2249999999999996,6.2249999999999996,null,11.5,11.5,null,12.5,12.5,null,13.5,13.5,null,9,9,null,10,10,null,1,1,null,-0,-0,null,2.5,2.5,null,3.5,3.5,null,13,13,null,14,14],"y":[-0.5,-1,null,-0.5,-1,null,-0.5,-1,null,-0.5,-1,null,null,-1,null,-1.5,-2,null,-1.5,-2,null,-1.5,-2,null,null,-1,null,null,-1,null,-1.5,-2,null,-1.5,-2,null,-1.5,-2,null,-1.5,-2,null,null,-2,null,-1.5,-2,null,-1.5,-2,null,null,-2,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,null,0,null,null,0,null,null,0,null,null,0,null,null,-1,null,null,-1],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,3,1.5,3,7.5,5,7,8,9,11,12,2.2250000000000001,3.2250000000000001,6.2249999999999996,13.5,-0,2.5,13],"y":[-1,-1,-2,-2,-1,-2,-2,-2,-2,-2,-2,-3,-3,-3,-3,-0,-0,-1],"text":["personID:   1<br>first_name: Vernon<br>sex: 1","personID:   5<br>first_name: James<br>sex: 1","personID:   6<br>first_name: Dudley<br>sex: 1","personID:   7<br>first_name: Harry<br>sex: 1","personID:   9<br>first_name: Arthur<br>sex: 1","personID:  11<br>first_name: Ron<br>sex: 1","personID:  12<br>first_name: Fred<br>sex: 1","personID:  13<br>first_name: George<br>sex: 1","personID:  14<br>first_name: Percy<br>sex: 1","personID:  15<br>first_name: Charlie<br>sex: 1","personID:  16<br>first_name: Bill<br>sex: 1","personID:  21<br>first_name: James<br>sex: 1","personID:  22<br>first_name: Albus<br>sex: 1","personID:  25<br>first_name: Hugo<br>sex: 1","personID:  28<br>first_name: Louis<br>sex: 1","personID: 102<br>first_name: Father<br>sex: 1","personID: 104<br>first_name: Father<br>sex: 1","personID: 106<br>first_name: Father<br>sex: 1"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":["rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)"],"opacity":1,"size":26.45669291338583,"symbol":"square","line":{"width":1.8897637795275593,"color":["rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)"]}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,2,4,4,8.5,6,13,14,10,4.2249999999999996,5.2249999999999996,11.5,12.5,9,10,1,3.5,14],"y":[-1,-1,-1,-2,-1,-2,-2,-2,-2,-3,-3,-3,-3,-3,-3,-0,-0,-1],"text":["personID:   2<br>first_name: Marjorie<br>sex: 0","personID:   3<br>first_name: Petunia<br>sex: 0","personID:   4<br>first_name: Lily<br>sex: 0","personID:   8<br>first_name: Ginny<br>sex: 0","personID:  10<br>first_name: Molly<br>sex: 0","personID:  17<br>first_name: Hermione<br>sex: 0","personID:  18<br>first_name: Fleur<br>sex: 0","personID:  19<br>first_name: Gabrielle<br>sex: 0","personID:  20<br>first_name: Audrey<br>sex: 0","personID:  23<br>first_name: Lily<br>sex: 0","personID:  24<br>first_name: Rose<br>sex: 0","personID:  26<br>first_name: Victoire<br>sex: 0","personID:  27<br>first_name: Dominique<br>sex: 0","personID:  29<br>first_name: Molly<br>sex: 0","personID:  30<br>first_name: Lucy<br>sex: 0","personID: 101<br>first_name: Mother<br>sex: 0","personID: 103<br>first_name: Mother<br>sex: 0","personID: 105<br>first_name: Mother<br>sex: 0"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":["rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(253,231,37,1)","rgba(159,42,99,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(159,42,99,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)"],"opacity":1,"size":26.45669291338583,"symbol":"circle","line":{"width":1.8897637795275593,"color":["rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(253,231,37,1)","rgba(159,42,99,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(159,42,99,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)"]}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0],"y":[0],"name":"e3eea82d776bffa3349d4ff649935722","type":"scatter","mode":"markers","opacity":0,"hoverinfo":"skip","showlegend":false,"marker":{"color":[0,1],"colorscale":[[0,"#0D082A"],[0.0033444816053511705,"#0E092A"],[0.006688963210702341,"#0F092B"],[0.010033444816053512,"#100A2B"],[0.013377926421404682,"#110A2B"],[0.016722408026755852,"#120B2C"],[0.020066889632107024,"#130C2C"],[0.023411371237458192,"#140C2C"],[0.026755852842809364,"#150D2D"],[0.030100334448160536,"#160D2D"],[0.033444816053511704,"#170E2D"],[0.036789297658862873,"#180E2E"],[0.040133779264214048,"#190E2E"],[0.043478260869565216,"#1A0F2F"],[0.046822742474916385,"#1B0F2F"],[0.05016722408026756,"#1C0F2F"],[0.053511705685618728,"#1D1030"],[0.056856187290969896,"#1E1030"],[0.060200668896321072,"#1F1030"],[0.06354515050167224,"#201031"],[0.066889632107023408,"#211131"],[0.070234113712374577,"#221131"],[0.073578595317725745,"#221132"],[0.076923076923076927,"#231132"],[0.080267558528428096,"#241233"],[0.083612040133779264,"#251233"],[0.086956521739130432,"#261233"],[0.090301003344481601,"#271234"],[0.093645484949832769,"#281234"],[0.096989966555183951,"#291334"],[0.10033444816053512,"#2A1335"],[0.10367892976588629,"#2B1335"],[0.10702341137123746,"#2C1335"],[0.11036789297658862,"#2D1336"],[0.11371237458193979,"#2E1436"],[0.11705685618729096,"#2F1437"],[0.12040133779264214,"#301437"],[0.12374581939799331,"#311437"],[0.12709030100334448,"#321538"],[0.13043478260869565,"#331538"],[0.13377926421404682,"#341538"],[0.13712374581939799,"#351539"],[0.14046822742474915,"#361539"],[0.14381270903010032,"#37163A"],[0.14715719063545149,"#37163A"],[0.15050167224080269,"#38163A"],[0.15384615384615385,"#39163B"],[0.15719063545150502,"#3A163B"],[0.16053511705685619,"#3B173B"],[0.16387959866220736,"#3C173C"],[0.16722408026755853,"#3D173C"],[0.1705685618729097,"#3E173D"],[0.17391304347826086,"#3F183D"],[0.17725752508361203,"#40183D"],[0.1806020066889632,"#41183E"],[0.18394648829431437,"#42183E"],[0.18729096989966554,"#43183E"],[0.19063545150501671,"#44193F"],[0.1939799331103679,"#45193F"],[0.19732441471571907,"#461940"],[0.20066889632107024,"#471940"],[0.20401337792642141,"#481940"],[0.20735785953177258,"#481A41"],[0.21070234113712374,"#491A41"],[0.21404682274247491,"#4A1A41"],[0.21739130434782608,"#4B1A42"],[0.22073578595317725,"#4C1A42"],[0.22408026755852842,"#4D1B43"],[0.22742474916387959,"#4E1B43"],[0.23076923076923075,"#4F1B43"],[0.23411371237458192,"#501B44"],[0.23745819397993312,"#511B44"],[0.24080267558528429,"#521C45"],[0.24414715719063546,"#531C45"],[0.24749163879598662,"#541C45"],[0.25083612040133779,"#551C46"],[0.25418060200668896,"#561C46"],[0.25752508361204013,"#571D46"],[0.2608695652173913,"#581D47"],[0.26421404682274247,"#591D47"],[0.26755852842809363,"#5A1D48"],[0.2709030100334448,"#5B1D48"],[0.27424749163879597,"#5C1E48"],[0.27759197324414714,"#5D1E49"],[0.28093645484949831,"#5E1E49"],[0.28428093645484948,"#5F1E4A"],[0.28762541806020064,"#5F1E4A"],[0.29096989966555181,"#601F4A"],[0.29431438127090298,"#611F4B"],[0.29765886287625415,"#621F4B"],[0.30100334448160537,"#631F4B"],[0.30434782608695654,"#641F4C"],[0.30769230769230771,"#651F4C"],[0.31103678929765888,"#66204D"],[0.31438127090301005,"#67204D"],[0.31772575250836121,"#68204D"],[0.32107023411371238,"#69204E"],[0.32441471571906355,"#6A204E"],[0.32775919732441472,"#6B214F"],[0.33110367892976589,"#6C214F"],[0.33444816053511706,"#6D214F"],[0.33779264214046822,"#6E2150"],[0.34113712374581939,"#6F2150"],[0.34448160535117056,"#702251"],[0.34782608695652173,"#712251"],[0.3511705685618729,"#722251"],[0.35451505016722407,"#732252"],[0.35785953177257523,"#742252"],[0.3612040133779264,"#752352"],[0.36454849498327757,"#762353"],[0.36789297658862874,"#772353"],[0.37123745819397991,"#782354"],[0.37458193979933108,"#792354"],[0.37792642140468224,"#7A2354"],[0.38127090301003341,"#7B2455"],[0.38461538461538458,"#7C2455"],[0.38795986622073581,"#7D2456"],[0.39130434782608697,"#7E2456"],[0.39464882943143814,"#7F2456"],[0.39799331103678931,"#802557"],[0.40133779264214048,"#812557"],[0.40468227424749165,"#822558"],[0.40802675585284282,"#832558"],[0.41137123745819398,"#842558"],[0.41471571906354515,"#852559"],[0.41806020066889632,"#862659"],[0.42140468227424749,"#87265A"],[0.42474916387959866,"#88265A"],[0.42809364548494983,"#89265A"],[0.43143812709030099,"#8A265B"],[0.43478260869565216,"#8B275B"],[0.43812709030100333,"#8C275C"],[0.4414715719063545,"#8D275C"],[0.44481605351170567,"#8E275C"],[0.44816053511705684,"#8F275D"],[0.451505016722408,"#90275D"],[0.45484949832775917,"#91285E"],[0.45819397993311034,"#92285E"],[0.46153846153846151,"#93285E"],[0.46488294314381268,"#94285F"],[0.46822742474916385,"#95285F"],[0.47157190635451507,"#962960"],[0.47491638795986624,"#972960"],[0.47826086956521741,"#982960"],[0.48160535117056857,"#992961"],[0.48494983277591974,"#9A2961"],[0.48829431438127091,"#9B2962"],[0.49163879598662208,"#9C2A62"],[0.49498327759197325,"#9D2A62"],[0.49832775919732442,"#9E2A63"],[0.50167224080267558,"#9F2B63"],[0.50501672240802675,"#A02D63"],[0.50836120401337792,"#A12E63"],[0.51170568561872909,"#A23063"],[0.51505016722408026,"#A23163"],[0.51839464882943143,"#A33362"],[0.52173913043478259,"#A43562"],[0.52508361204013376,"#A53662"],[0.52842809364548493,"#A53862"],[0.5317725752508361,"#A63962"],[0.53511705685618727,"#A73B62"],[0.53846153846153844,"#A73C62"],[0.5418060200668896,"#A83D62"],[0.54515050167224077,"#A93F61"],[0.54849498327759194,"#AA4061"],[0.55183946488294311,"#AA4261"],[0.55518394648829428,"#AB4361"],[0.55852842809364545,"#AC4461"],[0.56187290969899661,"#AC4661"],[0.56521739130434778,"#AD4761"],[0.56856187290969895,"#AE4961"],[0.57190635451505012,"#AF4A60"],[0.57525083612040129,"#AF4B60"],[0.57859531772575246,"#B04D60"],[0.58193979933110362,"#B14E60"],[0.58528428093645479,"#B14F60"],[0.58862876254180596,"#B25060"],[0.59197324414715713,"#B35260"],[0.5953177257525083,"#B3535F"],[0.59866220735785947,"#B4545F"],[0.60200668896321075,"#B5565F"],[0.60535117056856191,"#B6575F"],[0.60869565217391308,"#B6585F"],[0.61204013377926425,"#B7595F"],[0.61538461538461542,"#B85B5E"],[0.61872909698996659,"#B85C5E"],[0.62207357859531776,"#B95D5E"],[0.62541806020066892,"#BA5F5E"],[0.62876254180602009,"#BA605E"],[0.63210702341137126,"#BB615D"],[0.63545150501672243,"#BC625D"],[0.6387959866220736,"#BC645D"],[0.64214046822742477,"#BD655D"],[0.64548494983277593,"#BE665D"],[0.6488294314381271,"#BE675D"],[0.65217391304347827,"#BF695C"],[0.65551839464882944,"#C06A5C"],[0.65886287625418061,"#C06B5C"],[0.66220735785953178,"#C16C5C"],[0.66555183946488294,"#C26D5B"],[0.66889632107023411,"#C26F5B"],[0.67224080267558528,"#C3705B"],[0.67558528428093645,"#C4715B"],[0.67892976588628762,"#C4725B"],[0.68227424749163879,"#C5745A"],[0.68561872909698995,"#C6755A"],[0.68896321070234112,"#C6765A"],[0.69230769230769229,"#C7775A"],[0.69565217391304346,"#C87859"],[0.69899665551839463,"#C87A59"],[0.7023411371237458,"#C97B59"],[0.70568561872909696,"#CA7C59"],[0.70903010033444813,"#CA7D58"],[0.7123745819397993,"#CB7F58"],[0.71571906354515047,"#CB8058"],[0.71906354515050164,"#CC8158"],[0.72240802675585281,"#CD8257"],[0.72575250836120397,"#CD8357"],[0.72909698996655514,"#CE8557"],[0.73244147157190631,"#CF8656"],[0.73578595317725748,"#CF8756"],[0.73913043478260865,"#D08856"],[0.74247491638795982,"#D18956"],[0.74581939799331098,"#D18B55"],[0.74916387959866215,"#D28C55"],[0.75250836120401332,"#D28D55"],[0.75585284280936449,"#D38E54"],[0.75919732441471566,"#D49054"],[0.76254180602006683,"#D49154"],[0.76588628762541799,"#D59253"],[0.76923076923076916,"#D59353"],[0.77257525083612044,"#D69453"],[0.77591973244147161,"#D79652"],[0.77926421404682278,"#D79752"],[0.78260869565217395,"#D89852"],[0.78595317725752512,"#D99951"],[0.78929765886287628,"#D99A51"],[0.79264214046822745,"#DA9C51"],[0.79598662207357862,"#DA9D50"],[0.79933110367892979,"#DB9E50"],[0.80267558528428096,"#DC9F4F"],[0.80602006688963213,"#DCA04F"],[0.80936454849498329,"#DDA24F"],[0.81270903010033446,"#DDA34E"],[0.81605351170568563,"#DEA44E"],[0.8193979933110368,"#DFA54D"],[0.82274247491638797,"#DFA64D"],[0.82608695652173914,"#E0A84D"],[0.8294314381270903,"#E0A94C"],[0.83277591973244147,"#E1AA4C"],[0.83612040133779264,"#E2AB4B"],[0.83946488294314381,"#E2AC4B"],[0.84280936454849498,"#E3AE4A"],[0.84615384615384615,"#E3AF4A"],[0.84949832775919731,"#E4B049"],[0.85284280936454848,"#E4B149"],[0.85618729096989965,"#E5B348"],[0.85953177257525082,"#E6B448"],[0.86287625418060199,"#E6B547"],[0.86622073578595316,"#E7B647"],[0.86956521739130432,"#E7B746"],[0.87290969899665549,"#E8B946"],[0.87625418060200666,"#E9BA45"],[0.87959866220735783,"#E9BB45"],[0.882943143812709,"#EABC44"],[0.88628762541806017,"#EABD43"],[0.88963210702341133,"#EBBF43"],[0.8929765886287625,"#EBC042"],[0.89632107023411367,"#ECC142"],[0.89966555183946484,"#EDC241"],[0.90301003344481601,"#EDC440"],[0.90635451505016718,"#EEC540"],[0.90969899665551834,"#EEC63F"],[0.91304347826086951,"#EFC73E"],[0.91638795986622068,"#EFC83E"],[0.91973244147157185,"#F0CA3D"],[0.92307692307692302,"#F0CB3C"],[0.92642140468227419,"#F1CC3B"],[0.92976588628762535,"#F2CD3B"],[0.93311036789297652,"#F2CE3A"],[0.93645484949832769,"#F3D039"],[0.93979933110367886,"#F3D138"],[0.94314381270903014,"#F4D238"],[0.94648829431438131,"#F4D337"],[0.94983277591973247,"#F5D536"],[0.95317725752508364,"#F5D635"],[0.95652173913043481,"#F6D734"],[0.95986622073578598,"#F7D833"],[0.96321070234113715,"#F7D932"],[0.96655518394648832,"#F8DB31"],[0.96989966555183948,"#F8DC30"],[0.97324414715719065,"#F9DD2F"],[0.97658862876254182,"#F9DE2E"],[0.97993311036789299,"#FAE02D"],[0.98327759197324416,"#FAE12C"],[0.98662207357859533,"#FBE22A"],[0.98996655518394649,"#FBE329"],[0.99331103678929766,"#FCE528"],[0.99665551839464883,"#FCE626"],[1,"#FDE725"]],"colorbar":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"thickness":23.039999999999996,"title":"Relatedness","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"tickmode":"array","ticktext":["0.00","0.25","0.50","0.75","1.00"],"tickvals":[0.0016666666666666668,0.2508333333333333,0.49999999999999994,0.74916666666666665,0.99833333333333329],"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"ticklen":2,"len":0.5}},"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":23.305936073059364,"r":7.3059360730593621,"b":10.958904109589042,"l":10.958904109589042},"paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.70000000431819842,14.700000000205629],"tickmode":"array","ticktext":["0","5","10"],"tickvals":[0,5,10],"categoryorder":"array","categoryarray":["0","5","10"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-3.1499999999999999,0.15000000000000002],"tickmode":"array","ticktext":["0","1","2","3"],"tickvals":[0,-1,-2,-3],"categoryorder":"array","categoryarray":["0","1","2","3"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"shapes":[],"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"Relatedness","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"202563ad13b9":{"x":{},"y":{},"xend":{},"yend":{},"type":"scatter"},"2025203e28b3":{"x":{},"y":{},"xend":{},"yend":{}},"2025375c998f":{"x":{},"y":{},"xend":{},"yend":{}},"20252e4225b4":{"x":{},"y":{},"xend":{},"yend":{}},"202565e56d8d":{"x":{},"y":{},"xend":{},"yend":{}},"20255a7f64fe":{"x":{},"y":{},"xend":{},"yend":{}},"2025a127b98":{"x":{},"y":{},"xend":{},"yend":{}},"20254488f3f2":{"x":{},"y":{},"colour":{},"shape":{},"text":{}}},"cur_data":"202563ad13b9","visdat":{"202563ad13b9":["function (y) ","x"],"2025203e28b3":["function (y) ","x"],"2025375c998f":["function (y) ","x"],"20252e4225b4":["function (y) ","x"],"202565e56d8d":["function (y) ","x"],"20255a7f64fe":["function (y) ","x"],"2025a127b98":["function (y) ","x"],"20254488f3f2":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"data":[{"x":[2,1,null,null,0,null,1,2,null,3,4,null,4,3,null,null,1.5,null,4,3,null,3,4,null,8.5,7.5,null,7.5,8.5,null,6,5,null,null,7,null,null,8,null,10,9,null,null,11,null,13,12,null,5,6,null,12,13,null,null,14,null,9,10,null,null,2.2250000000000001,null,null,3.2250000000000001,null,null,4.2249999999999996,null,null,5.2249999999999996,null,null,6.2249999999999996,null,null,11.5,null,null,12.5,null,null,13.5,null,null,9,null,null,10,null,0,1,null,1,0,null,3.5,2.5,null,2.5,3.5,null,14,13,null,13,14],"y":[-1,-1,null,null,-1,null,-1,-1,null,-1,-1,null,-1,-1,null,null,-2,null,-2,-2,null,-2,-2,null,-1,-1,null,-1,-1,null,-2,-2,null,null,-2,null,null,-2,null,-2,-2,null,null,-2,null,-2,-2,null,-2,-2,null,-2,-2,null,null,-2,null,-2,-2,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,null,-3,null,0,0,null,0,0,null,0,0,null,0,0,null,-1,-1,null,-1,-1],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.5,0.5,null,0.5,0.5,null,3,3,null,3,3,null,null,null,null,1.5,1.5,null,3,3.5,null,8,8,null,null,null,null,null,null,null,8,8,null,8,8,null,8,8,null,8,8,null,8,8,null,8,8,null,null,null,null,13.5,13.5,null,13.5,13.5,null,null,null,null,3.2250000000000001,3.5,null,3.2250000000000001,3.5,null,3.2250000000000001,3.5,null,5.7249999999999996,5.5,null,5.7249999999999996,5.5,null,12.5,12.5,null,12.5,12.5,null,12.5,12.5,null,9.5,9.5,null,9.5,9.5,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"y":[-0.5,-0,null,-0.5,-0,null,-0.5,-0,null,-0.5,-0,null,null,null,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,null,null,null,null,null,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,-1.5,-1,null,null,null,null,-1.5,-1,null,-1.5,-1,null,null,null,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,-2.5,-2,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,0.5,null,0,0.5,null,2,3,null,4,3,null,3,null,null,1.5,1.5,null,3,3,null,4,8,null,7.5,null,null,8.5,null,null,5,8,null,9,8,null,11,8,null,12,8,null,6,null,null,13,13.5,null,14,13.5,null,10,null,null,2.2250000000000001,3.2250000000000001,null,3.2250000000000001,3.2250000000000001,null,4.2249999999999996,3.2250000000000001,null,5.2249999999999996,5.7249999999999996,null,6.2249999999999996,5.7249999999999996,null,11.5,12.5,null,12.5,12.5,null,13.5,12.5,null,9,9.5,null,10,9.5,null,1,null,null,0,null,null,2.5,null,null,3.5,null,null,13,null,null,14,null],"y":[-0.5,-0.5,null,-0.5,-0.5,null,-0.5,-0.5,null,-0.5,-0.5,null,-0.5,null,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,-1.5,null,-0.5,null,null,-0.5,null,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,null,null,-1.5,-1.5,null,-1.5,-1.5,null,-1.5,null,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,-2.5,-2.5,null,null,null,null,null,null,null,null,null,null,null,null,null,-0.5,null,null,-0.5,null],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7.5,8,null,7.5,8],"y":[-1.5,-1.5,null,-1.5,-1.5],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7,7.5,null,8,7.5],"y":[-2,-1.5,null,-2,-1.5],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7.2999999999999998,7.7000000000000002,null,7.7000000000000002,7.2999999999999998],"y":[-1.7,-1.7,null,-1.7,-1.7],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,1,null,0,0,null,2,2,null,4,4,null,3,3,null,1.5,1.5,null,3,3,null,4,4,null,7.5,7.5,null,8.5,8.5,null,5,5,null,9,9,null,11,11,null,12,12,null,6,6,null,13,13,null,14,14,null,10,10,null,2.2250000000000001,2.2250000000000001,null,3.2250000000000001,3.2250000000000001,null,4.2249999999999996,4.2249999999999996,null,5.2249999999999996,5.2249999999999996,null,6.2249999999999996,6.2249999999999996,null,11.5,11.5,null,12.5,12.5,null,13.5,13.5,null,9,9,null,10,10,null,1,1,null,0,0,null,2.5,2.5,null,3.5,3.5,null,13,13,null,14,14],"y":[-0.5,-1,null,-0.5,-1,null,-0.5,-1,null,-0.5,-1,null,null,-1,null,-1.5,-2,null,-1.5,-2,null,-1.5,-2,null,null,-1,null,null,-1,null,-1.5,-2,null,-1.5,-2,null,-1.5,-2,null,-1.5,-2,null,null,-2,null,-1.5,-2,null,-1.5,-2,null,null,-2,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,-2.5,-3,null,null,0,null,null,0,null,null,0,null,null,0,null,null,-1,null,null,-1],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,3,1.5,3,7.5,5,7,8,9,11,12,2.2250000000000001,3.2250000000000001,6.2249999999999996,13.5,0,2.5,13],"y":[-1,-1,-2,-2,-1,-2,-2,-2,-2,-2,-2,-3,-3,-3,-3,-0,-0,-1],"text":["personID:   1<br>first_name: Vernon<br>sex: 1","personID:   5<br>first_name: James<br>sex: 1","personID:   6<br>first_name: Dudley<br>sex: 1","personID:   7<br>first_name: Harry<br>sex: 1","personID:   9<br>first_name: Arthur<br>sex: 1","personID:  11<br>first_name: Ron<br>sex: 1","personID:  12<br>first_name: Fred<br>sex: 1","personID:  13<br>first_name: George<br>sex: 1","personID:  14<br>first_name: Percy<br>sex: 1","personID:  15<br>first_name: Charlie<br>sex: 1","personID:  16<br>first_name: Bill<br>sex: 1","personID:  21<br>first_name: James<br>sex: 1","personID:  22<br>first_name: Albus<br>sex: 1","personID:  25<br>first_name: Hugo<br>sex: 1","personID:  28<br>first_name: Louis<br>sex: 1","personID: 102<br>first_name: Father<br>sex: 1","personID: 104<br>first_name: Father<br>sex: 1","personID: 106<br>first_name: Father<br>sex: 1"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":["rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)"],"opacity":1,"size":26.45669291338583,"symbol":"square","line":{"width":1.8897637795275593,"color":["rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(159,42,99,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)"]}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,2,4,4,8.5,6,13,14,10,4.2249999999999996,5.2249999999999996,11.5,12.5,9,10,1,3.5,14],"y":[-1,-1,-1,-2,-1,-2,-2,-2,-2,-3,-3,-3,-3,-3,-3,-0,-0,-1],"text":["personID:   2<br>first_name: Marjorie<br>sex: 0","personID:   3<br>first_name: Petunia<br>sex: 0","personID:   4<br>first_name: Lily<br>sex: 0","personID:   8<br>first_name: Ginny<br>sex: 0","personID:  10<br>first_name: Molly<br>sex: 0","personID:  17<br>first_name: Hermione<br>sex: 0","personID:  18<br>first_name: Fleur<br>sex: 0","personID:  19<br>first_name: Gabrielle<br>sex: 0","personID:  20<br>first_name: Audrey<br>sex: 0","personID:  23<br>first_name: Lily<br>sex: 0","personID:  24<br>first_name: Rose<br>sex: 0","personID:  26<br>first_name: Victoire<br>sex: 0","personID:  27<br>first_name: Dominique<br>sex: 0","personID:  29<br>first_name: Molly<br>sex: 0","personID:  30<br>first_name: Lucy<br>sex: 0","personID: 101<br>first_name: Mother<br>sex: 0","personID: 103<br>first_name: Mother<br>sex: 0","personID: 105<br>first_name: Mother<br>sex: 0"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":["rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(253,231,37,1)","rgba(159,42,99,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(159,42,99,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)"],"opacity":1,"size":26.45669291338583,"symbol":"circle","line":{"width":1.8897637795275593,"color":["rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(253,231,37,1)","rgba(159,42,99,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(159,42,99,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(85,28,70,1)","rgba(13,8,42,1)","rgba(13,8,42,1)","rgba(13,8,42,1)"]}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0],"y":[0],"name":"20d8fe2a2d2f47a617bc2e0738a84e05","type":"scatter","mode":"markers","opacity":0,"hoverinfo":"skip","showlegend":false,"marker":{"color":[0,1],"colorscale":[[0,"#0D082A"],[0.0033444816053511705,"#0E092A"],[0.006688963210702341,"#0F092B"],[0.010033444816053512,"#100A2B"],[0.013377926421404682,"#110A2B"],[0.016722408026755852,"#120B2C"],[0.020066889632107024,"#130C2C"],[0.023411371237458192,"#140C2C"],[0.026755852842809364,"#150D2D"],[0.030100334448160536,"#160D2D"],[0.033444816053511704,"#170E2D"],[0.036789297658862873,"#180E2E"],[0.040133779264214048,"#190E2E"],[0.043478260869565216,"#1A0F2F"],[0.046822742474916385,"#1B0F2F"],[0.05016722408026756,"#1C0F2F"],[0.053511705685618728,"#1D1030"],[0.056856187290969896,"#1E1030"],[0.060200668896321072,"#1F1030"],[0.06354515050167224,"#201031"],[0.066889632107023408,"#211131"],[0.070234113712374577,"#221131"],[0.073578595317725745,"#221132"],[0.076923076923076927,"#231132"],[0.080267558528428096,"#241233"],[0.083612040133779264,"#251233"],[0.086956521739130432,"#261233"],[0.090301003344481601,"#271234"],[0.093645484949832769,"#281234"],[0.096989966555183951,"#291334"],[0.10033444816053512,"#2A1335"],[0.10367892976588629,"#2B1335"],[0.10702341137123746,"#2C1335"],[0.11036789297658862,"#2D1336"],[0.11371237458193979,"#2E1436"],[0.11705685618729096,"#2F1437"],[0.12040133779264214,"#301437"],[0.12374581939799331,"#311437"],[0.12709030100334448,"#321538"],[0.13043478260869565,"#331538"],[0.13377926421404682,"#341538"],[0.13712374581939799,"#351539"],[0.14046822742474915,"#361539"],[0.14381270903010032,"#37163A"],[0.14715719063545149,"#37163A"],[0.15050167224080269,"#38163A"],[0.15384615384615385,"#39163B"],[0.15719063545150502,"#3A163B"],[0.16053511705685619,"#3B173B"],[0.16387959866220736,"#3C173C"],[0.16722408026755853,"#3D173C"],[0.1705685618729097,"#3E173D"],[0.17391304347826086,"#3F183D"],[0.17725752508361203,"#40183D"],[0.1806020066889632,"#41183E"],[0.18394648829431437,"#42183E"],[0.18729096989966554,"#43183E"],[0.19063545150501671,"#44193F"],[0.1939799331103679,"#45193F"],[0.19732441471571907,"#461940"],[0.20066889632107024,"#471940"],[0.20401337792642141,"#481940"],[0.20735785953177258,"#481A41"],[0.21070234113712374,"#491A41"],[0.21404682274247491,"#4A1A41"],[0.21739130434782608,"#4B1A42"],[0.22073578595317725,"#4C1A42"],[0.22408026755852842,"#4D1B43"],[0.22742474916387959,"#4E1B43"],[0.23076923076923075,"#4F1B43"],[0.23411371237458192,"#501B44"],[0.23745819397993312,"#511B44"],[0.24080267558528429,"#521C45"],[0.24414715719063546,"#531C45"],[0.24749163879598662,"#541C45"],[0.25083612040133779,"#551C46"],[0.25418060200668896,"#561C46"],[0.25752508361204013,"#571D46"],[0.2608695652173913,"#581D47"],[0.26421404682274247,"#591D47"],[0.26755852842809363,"#5A1D48"],[0.2709030100334448,"#5B1D48"],[0.27424749163879597,"#5C1E48"],[0.27759197324414714,"#5D1E49"],[0.28093645484949831,"#5E1E49"],[0.28428093645484948,"#5F1E4A"],[0.28762541806020064,"#5F1E4A"],[0.29096989966555181,"#601F4A"],[0.29431438127090298,"#611F4B"],[0.29765886287625415,"#621F4B"],[0.30100334448160537,"#631F4B"],[0.30434782608695654,"#641F4C"],[0.30769230769230771,"#651F4C"],[0.31103678929765888,"#66204D"],[0.31438127090301005,"#67204D"],[0.31772575250836121,"#68204D"],[0.32107023411371238,"#69204E"],[0.32441471571906355,"#6A204E"],[0.32775919732441472,"#6B214F"],[0.33110367892976589,"#6C214F"],[0.33444816053511706,"#6D214F"],[0.33779264214046822,"#6E2150"],[0.34113712374581939,"#6F2150"],[0.34448160535117056,"#702251"],[0.34782608695652173,"#712251"],[0.3511705685618729,"#722251"],[0.35451505016722407,"#732252"],[0.35785953177257523,"#742252"],[0.3612040133779264,"#752352"],[0.36454849498327757,"#762353"],[0.36789297658862874,"#772353"],[0.37123745819397991,"#782354"],[0.37458193979933108,"#792354"],[0.37792642140468224,"#7A2354"],[0.38127090301003341,"#7B2455"],[0.38461538461538458,"#7C2455"],[0.38795986622073581,"#7D2456"],[0.39130434782608697,"#7E2456"],[0.39464882943143814,"#7F2456"],[0.39799331103678931,"#802557"],[0.40133779264214048,"#812557"],[0.40468227424749165,"#822558"],[0.40802675585284282,"#832558"],[0.41137123745819398,"#842558"],[0.41471571906354515,"#852559"],[0.41806020066889632,"#862659"],[0.42140468227424749,"#87265A"],[0.42474916387959866,"#88265A"],[0.42809364548494983,"#89265A"],[0.43143812709030099,"#8A265B"],[0.43478260869565216,"#8B275B"],[0.43812709030100333,"#8C275C"],[0.4414715719063545,"#8D275C"],[0.44481605351170567,"#8E275C"],[0.44816053511705684,"#8F275D"],[0.451505016722408,"#90275D"],[0.45484949832775917,"#91285E"],[0.45819397993311034,"#92285E"],[0.46153846153846151,"#93285E"],[0.46488294314381268,"#94285F"],[0.46822742474916385,"#95285F"],[0.47157190635451507,"#962960"],[0.47491638795986624,"#972960"],[0.47826086956521741,"#982960"],[0.48160535117056857,"#992961"],[0.48494983277591974,"#9A2961"],[0.48829431438127091,"#9B2962"],[0.49163879598662208,"#9C2A62"],[0.49498327759197325,"#9D2A62"],[0.49832775919732442,"#9E2A63"],[0.50167224080267558,"#9F2B63"],[0.50501672240802675,"#A02D63"],[0.50836120401337792,"#A12E63"],[0.51170568561872909,"#A23063"],[0.51505016722408026,"#A23163"],[0.51839464882943143,"#A33362"],[0.52173913043478259,"#A43562"],[0.52508361204013376,"#A53662"],[0.52842809364548493,"#A53862"],[0.5317725752508361,"#A63962"],[0.53511705685618727,"#A73B62"],[0.53846153846153844,"#A73C62"],[0.5418060200668896,"#A83D62"],[0.54515050167224077,"#A93F61"],[0.54849498327759194,"#AA4061"],[0.55183946488294311,"#AA4261"],[0.55518394648829428,"#AB4361"],[0.55852842809364545,"#AC4461"],[0.56187290969899661,"#AC4661"],[0.56521739130434778,"#AD4761"],[0.56856187290969895,"#AE4961"],[0.57190635451505012,"#AF4A60"],[0.57525083612040129,"#AF4B60"],[0.57859531772575246,"#B04D60"],[0.58193979933110362,"#B14E60"],[0.58528428093645479,"#B14F60"],[0.58862876254180596,"#B25060"],[0.59197324414715713,"#B35260"],[0.5953177257525083,"#B3535F"],[0.59866220735785947,"#B4545F"],[0.60200668896321075,"#B5565F"],[0.60535117056856191,"#B6575F"],[0.60869565217391308,"#B6585F"],[0.61204013377926425,"#B7595F"],[0.61538461538461542,"#B85B5E"],[0.61872909698996659,"#B85C5E"],[0.62207357859531776,"#B95D5E"],[0.62541806020066892,"#BA5F5E"],[0.62876254180602009,"#BA605E"],[0.63210702341137126,"#BB615D"],[0.63545150501672243,"#BC625D"],[0.6387959866220736,"#BC645D"],[0.64214046822742477,"#BD655D"],[0.64548494983277593,"#BE665D"],[0.6488294314381271,"#BE675D"],[0.65217391304347827,"#BF695C"],[0.65551839464882944,"#C06A5C"],[0.65886287625418061,"#C06B5C"],[0.66220735785953178,"#C16C5C"],[0.66555183946488294,"#C26D5B"],[0.66889632107023411,"#C26F5B"],[0.67224080267558528,"#C3705B"],[0.67558528428093645,"#C4715B"],[0.67892976588628762,"#C4725B"],[0.68227424749163879,"#C5745A"],[0.68561872909698995,"#C6755A"],[0.68896321070234112,"#C6765A"],[0.69230769230769229,"#C7775A"],[0.69565217391304346,"#C87859"],[0.69899665551839463,"#C87A59"],[0.7023411371237458,"#C97B59"],[0.70568561872909696,"#CA7C59"],[0.70903010033444813,"#CA7D58"],[0.7123745819397993,"#CB7F58"],[0.71571906354515047,"#CB8058"],[0.71906354515050164,"#CC8158"],[0.72240802675585281,"#CD8257"],[0.72575250836120397,"#CD8357"],[0.72909698996655514,"#CE8557"],[0.73244147157190631,"#CF8656"],[0.73578595317725748,"#CF8756"],[0.73913043478260865,"#D08856"],[0.74247491638795982,"#D18956"],[0.74581939799331098,"#D18B55"],[0.74916387959866215,"#D28C55"],[0.75250836120401332,"#D28D55"],[0.75585284280936449,"#D38E54"],[0.75919732441471566,"#D49054"],[0.76254180602006683,"#D49154"],[0.76588628762541799,"#D59253"],[0.76923076923076916,"#D59353"],[0.77257525083612044,"#D69453"],[0.77591973244147161,"#D79652"],[0.77926421404682278,"#D79752"],[0.78260869565217395,"#D89852"],[0.78595317725752512,"#D99951"],[0.78929765886287628,"#D99A51"],[0.79264214046822745,"#DA9C51"],[0.79598662207357862,"#DA9D50"],[0.79933110367892979,"#DB9E50"],[0.80267558528428096,"#DC9F4F"],[0.80602006688963213,"#DCA04F"],[0.80936454849498329,"#DDA24F"],[0.81270903010033446,"#DDA34E"],[0.81605351170568563,"#DEA44E"],[0.8193979933110368,"#DFA54D"],[0.82274247491638797,"#DFA64D"],[0.82608695652173914,"#E0A84D"],[0.8294314381270903,"#E0A94C"],[0.83277591973244147,"#E1AA4C"],[0.83612040133779264,"#E2AB4B"],[0.83946488294314381,"#E2AC4B"],[0.84280936454849498,"#E3AE4A"],[0.84615384615384615,"#E3AF4A"],[0.84949832775919731,"#E4B049"],[0.85284280936454848,"#E4B149"],[0.85618729096989965,"#E5B348"],[0.85953177257525082,"#E6B448"],[0.86287625418060199,"#E6B547"],[0.86622073578595316,"#E7B647"],[0.86956521739130432,"#E7B746"],[0.87290969899665549,"#E8B946"],[0.87625418060200666,"#E9BA45"],[0.87959866220735783,"#E9BB45"],[0.882943143812709,"#EABC44"],[0.88628762541806017,"#EABD43"],[0.88963210702341133,"#EBBF43"],[0.8929765886287625,"#EBC042"],[0.89632107023411367,"#ECC142"],[0.89966555183946484,"#EDC241"],[0.90301003344481601,"#EDC440"],[0.90635451505016718,"#EEC540"],[0.90969899665551834,"#EEC63F"],[0.91304347826086951,"#EFC73E"],[0.91638795986622068,"#EFC83E"],[0.91973244147157185,"#F0CA3D"],[0.92307692307692302,"#F0CB3C"],[0.92642140468227419,"#F1CC3B"],[0.92976588628762535,"#F2CD3B"],[0.93311036789297652,"#F2CE3A"],[0.93645484949832769,"#F3D039"],[0.93979933110367886,"#F3D138"],[0.94314381270903014,"#F4D238"],[0.94648829431438131,"#F4D337"],[0.94983277591973247,"#F5D536"],[0.95317725752508364,"#F5D635"],[0.95652173913043481,"#F6D734"],[0.95986622073578598,"#F7D833"],[0.96321070234113715,"#F7D932"],[0.96655518394648832,"#F8DB31"],[0.96989966555183948,"#F8DC30"],[0.97324414715719065,"#F9DD2F"],[0.97658862876254182,"#F9DE2E"],[0.97993311036789299,"#FAE02D"],[0.98327759197324416,"#FAE12C"],[0.98662207357859533,"#FBE22A"],[0.98996655518394649,"#FBE329"],[0.99331103678929766,"#FCE528"],[0.99665551839464883,"#FCE626"],[1,"#FDE725"]],"colorbar":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"thickness":23.039999999999996,"title":"Relatedness","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"tickmode":"array","ticktext":["0.00","0.25","0.50","0.75","1.00"],"tickvals":[0.0016666666666666668,0.2508333333333333,0.49999999999999994,0.74916666666666665,0.99833333333333329],"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"ticklen":2,"len":0.5}},"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":23.305936073059364,"r":7.3059360730593621,"b":10.958904109589042,"l":10.958904109589042},"paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.70000000000000007,14.699999999999999],"tickmode":"array","ticktext":["0","5","10"],"tickvals":[0,5,10],"categoryorder":"array","categoryarray":["0","5","10"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-3.1499999999999999,0.15000000000000002],"tickmode":"array","ticktext":["0","1","2","3"],"tickvals":[0,-1,-2,-3],"categoryorder":"array","categoryarray":["0","1","2","3"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":false,"tickfont":{"color":null,"family":null,"size":0},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"shapes":[],"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"Relatedness","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"1fdb4570fedf":{"x":{},"y":{},"xend":{},"yend":{},"type":"scatter"},"1fdb7f14bf19":{"x":{},"y":{},"xend":{},"yend":{}},"1fdb4e4256a5":{"x":{},"y":{},"xend":{},"yend":{}},"1fdb4071c056":{"x":{},"y":{},"xend":{},"yend":{}},"1fdb868fe2b":{"x":{},"y":{},"xend":{},"yend":{}},"1fdb7f0c0ae8":{"x":{},"y":{},"xend":{},"yend":{}},"1fdb3a7a8996":{"x":{},"y":{},"xend":{},"yend":{}},"1fdb623b35fb":{"x":{},"y":{},"colour":{},"shape":{},"text":{}}},"cur_data":"1fdb4570fedf","visdat":{"1fdb4570fedf":["function (y) ","x"],"1fdb7f14bf19":["function (y) ","x"],"1fdb4e4256a5":["function (y) ","x"],"1fdb4071c056":["function (y) ","x"],"1fdb868fe2b":["function (y) ","x"],"1fdb7f0c0ae8":["function (y) ","x"],"1fdb3a7a8996":["function (y) ","x"],"1fdb623b35fb":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level3">
 <h3 id="layout-and-coordinate-system">10) Layout and coordinate system<a class="anchor" aria-label="anchor" href="#layout-and-coordinate-system"></a>
@@ -1213,7 +1213,6 @@ the <code>potter</code> pedigree.</p>
 <span>  momID <span class="op">=</span> <span class="st">"momID"</span>, dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    founder_order_seed <span class="op">=</span> <span class="fl">7L</span>,</span>
-<span>   </span>
 <span>    label_include <span class="op">=</span> <span class="cn">TRUE</span>, label_text_size <span class="op">=</span> <span class="fl">2.5</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"founder_order_seed = 7"</span><span class="op">)</span></span>
@@ -1251,11 +1250,13 @@ compare candidates numerically before plotting:</p>
 <span>  <span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculateCoordinates.html">calculateCoordinates</a></span><span class="op">(</span></span>
 <span>    <span class="va">potter</span>,</span>
 <span>    personID <span class="op">=</span> <span class="st">"personID"</span>, momID <span class="op">=</span> <span class="st">"momID"</span>, dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
-<span>    config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>founder_order_seed <span class="op">=</span> <span class="va">s</span>,</span>
-<span>                  debug <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>                  return_best_seed <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>                  layout_score_method <span class="op">=</span> <span class="st">"parent_stub"</span></span>
-<span>  <span class="op">)</span><span class="op">)</span></span>
+<span>    config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      founder_order_seed <span class="op">=</span> <span class="va">s</span>,</span>
+<span>      debug <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>      return_best_seed <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>      layout_score_method <span class="op">=</span> <span class="st">"parent_stub"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
 <span>  <span class="fu">ggpedigree</span><span class="fu">:::</span><span class="fu"><a href="../reference/dot-layoutScore.html">.layoutScore</a></span><span class="op">(</span><span class="va">coords</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span></span>
@@ -1324,13 +1325,13 @@ evaluates that many shufflings and returns the most compact result.</p>
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>, personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
 <span>  momID <span class="op">=</span> <span class="st">"momID"</span>, dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    founder_order_seed  <span class="op">=</span> <span class="fl">1L</span>,   <span class="co"># start search from seed 1</span></span>
-<span>    founder_order_tries <span class="op">=</span> <span class="fl">10L</span>,  <span class="co"># try seeds 1 through 155</span></span>
+<span>    founder_order_seed <span class="op">=</span> <span class="fl">1L</span>, <span class="co"># start search from seed 1</span></span>
+<span>    founder_order_tries <span class="op">=</span> <span class="fl">10L</span>, <span class="co"># try seeds 1 through 155</span></span>
 <span>    label_include <span class="op">=</span> <span class="cn">TRUE</span>, label_text_size <span class="op">=</span> <span class="fl">2.5</span>,</span>
 <span>    return_best_seed <span class="op">=</span> <span class="cn">TRUE</span> <span class="co"># return the winning seed in the plot attributes for reference</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Best of seeds 1–10"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Best founder order seed: 5 with layout score: 267.060969564274</span></span></code></pre></div>
+<span><span class="co">#&gt; Best founder order seed: 5 with layout score: 267.060969574231</span></span></code></pre></div>
 <p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-38-1.png" class="r-plt" alt="" width="672"></p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -1340,7 +1341,7 @@ evaluates that many shufflings and returns the most compact result.</p>
 <span>  famID <span class="op">=</span> <span class="st">"famID"</span>, personID <span class="op">=</span> <span class="st">"personID"</span>,</span>
 <span>  momID <span class="op">=</span> <span class="st">"momID"</span>, dadID <span class="op">=</span> <span class="st">"dadID"</span>,</span>
 <span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    founder_order_seed  <span class="op">=</span> <span class="fl">5L</span>, </span>
+<span>    founder_order_seed <span class="op">=</span> <span class="fl">5L</span>,</span>
 <span>    label_include <span class="op">=</span> <span class="cn">TRUE</span>, label_text_size <span class="op">=</span> <span class="fl">2.5</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -1352,14 +1353,14 @@ evaluates that many shufflings and returns the most compact result.</p>
 <span>    label_include <span class="op">=</span> <span class="cn">TRUE</span>, label_text_size <span class="op">=</span> <span class="fl">2.5</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">plot_grid</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Seed 5"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>                   , <span class="cn">NULL</span>, </span>
-<span>                   <span class="va">p2</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Default"</span><span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span> </span>
-<span>                   , <span class="cn">NULL</span>,</span>
+<span><span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">plot_grid</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Seed 5"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="cn">NULL</span>,</span>
+<span>  <span class="va">p2</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Default"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="cn">NULL</span>,</span>
 <span>  ncol <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  byrow <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>  rel_widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">.1</span>, <span class="fl">1</span>, <span class="fl">.1</span><span class="op">)</span></span>
-<span><span class="op">)</span> </span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="v11_configuration_extended_files/figure-html/unnamed-chunk-38-2.png" class="r-plt" alt="" width="672"></p>
 <p>To make the result reproducible, always pair
 <code>founder_order_tries</code> with an explicit
@@ -1412,7 +1413,7 @@ will only change a small subset, but the full list of supported keys can
 be printed programmatically.</p>
 <details><summary><strong>Show all config keys (names only)</strong>
 </summary><div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cfg_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu">ggpedigree</span><span class="fu">:::</span><span class="fu">getDefaultPlotConfig</span><span class="op">(</span><span class="st">"ggPedigree"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">cfg_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu">ggpedigree</span><span class="fu">:::</span><span class="fu"><a href="../reference/getDefaultPlotConfig.html">getDefaultPlotConfig</a></span><span class="op">(</span><span class="st">"ggPedigree"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>Config_Key <span class="op">=</span> <span class="va">cfg_names</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -1956,120 +1957,123 @@ be printed programmatically.</p>
 <td align="left">segment_sibling_color</td>
 </tr>
 <tr class="odd">
+<td align="left">segment_spouse_alpha</td>
+</tr>
+<tr class="even">
 <td align="left">segment_spouse_color</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">sex_color_include</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">sex_color_palette</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">sex_legend_show</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">sex_legend_title</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">sex_shape_female</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">sex_shape_include</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">sex_shape_labels</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">sex_shape_male</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">sex_shape_unknown</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">spread_out_generations</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">spread_out_generations_factor</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">status_alpha_affected</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">status_alpha_unaffected</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">status_code_affected</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">status_code_unaffected</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">status_color_affected</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">status_color_palette</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">status_color_unaffected</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">status_include</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">status_label_affected</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">status_label_unaffected</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">status_legend_show</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">status_legend_title</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">status_shape_affected</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">tile_cluster</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">tile_color_border</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">tile_color_palette</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">tile_geom</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">tile_interpolate</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">tile_linejoin</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">tile_na_rm</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">tooltip_columns</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">tooltip_include</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">use_only_classic_kin</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">use_relative_degree</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">value_rounding_digits</td>
 </tr>
 </tbody>
 </table></details><details><summary><strong>Show all config keys with defaults</strong>
 </summary><div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">ggpedigree</span><span class="fu">:::</span><span class="fu">getDefaultPlotConfig</span><span class="op">(</span><span class="st">"ggPedigree"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">ggpedigree</span><span class="fu">:::</span><span class="fu"><a href="../reference/getDefaultPlotConfig.html">getDefaultPlotConfig</a></span><span class="op">(</span><span class="st">"ggPedigree"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># is a list</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -2376,64 +2380,72 @@ be printed programmatically.</p>
 <td align="left">black</td>
 </tr>
 <tr class="even">
+<td align="left">segment_spouse_alpha</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
 <td align="left">segment_mz_color</td>
 <td align="left">black</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">segment_mz_linetype</td>
 <td align="left">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">segment_mz_alpha</td>
 <td align="left">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">segment_mz_t</td>
 <td align="left">0.6</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">segment_self_linetype</td>
 <td align="left">dotdash</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">segment_self_alpha</td>
 <td align="left">0.5</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">segment_self_angle</td>
 <td align="left">90</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">segment_self_curvature</td>
 <td align="left">-0.2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">segment_self_linewidth</td>
 <td align="left">0.4</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">segment_lineage_include</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">segment_lineage_component</td>
 <td align="left">mitochondrial</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">segment_lineage_types1</td>
 <td align="left">parent</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">segment_lineage_types2</td>
 <td align="left">offspring</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">segment_lineage_types3</td>
 <td align="left">sibling</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">segment_lineage_types4</td>
 <td align="left">mz</td>
+</tr>
+<tr class="even">
+<td align="left">segment_lineage_types5</td>
+<td align="left">spouse</td>
 </tr>
 <tr class="odd">
 <td align="left">segment_lineage_method</td>
@@ -2481,7 +2493,7 @@ be printed programmatically.</p>
 </tr>
 <tr class="even">
 <td align="left">segment_lineage_legend_show</td>
-<td align="left">TRUE</td>
+<td align="left">FALSE</td>
 </tr>
 <tr class="odd">
 <td align="left">segment_lineage_legend_title</td>
@@ -3001,7 +3013,7 @@ be printed programmatically.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

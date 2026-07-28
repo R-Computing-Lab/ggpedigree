@@ -21,7 +21,8 @@ list to the plotting function and the plot is drawn using those values.
 You do not need to supply every option. You only provide the options you
 want to change. Any options you do not specify will use the package
 defaults. You can see a full list of supported options and their
-defaults by reviewing the documentation for `getDefaultPlotConfig()`.
+defaults by reviewing the documentation for
+[`getDefaultPlotConfig()`](https://r-computing-lab.github.io/ggpedigree/reference/getDefaultPlotConfig.md).
 
 ## Basic usage of `config` in `ggPedigree()`
 
@@ -1208,7 +1209,6 @@ p_seed7 <- ggPedigree(
   momID = "momID", dadID = "dadID",
   config = list(
     founder_order_seed = 7L,
-   
     label_include = TRUE, label_text_size = 2.5
   )
 ) + ggplot2::ggtitle("founder_order_seed = 7")
@@ -1262,11 +1262,13 @@ scores <- sapply(0:9, function(s) {
   coords <- calculateCoordinates(
     potter,
     personID = "personID", momID = "momID", dadID = "dadID",
-    config = list(founder_order_seed = s,
-                  debug = FALSE,
-                  return_best_seed = FALSE,
-                  layout_score_method = "parent_stub"
-  ))
+    config = list(
+      founder_order_seed = s,
+      debug = FALSE,
+      return_best_seed = FALSE,
+      layout_score_method = "parent_stub"
+    )
+  )
   ggpedigree:::.layoutScore(coords)
 })
 
@@ -1304,13 +1306,13 @@ ggPedigree(
   famID = "famID", personID = "personID",
   momID = "momID", dadID = "dadID",
   config = list(
-    founder_order_seed  = 1L,   # start search from seed 1
-    founder_order_tries = 10L,  # try seeds 1 through 155
+    founder_order_seed = 1L, # start search from seed 1
+    founder_order_tries = 10L, # try seeds 1 through 155
     label_include = TRUE, label_text_size = 2.5,
     return_best_seed = TRUE # return the winning seed in the plot attributes for reference
   )
 ) + ggplot2::ggtitle("Best of seeds 1–10")
-#> Best founder order seed: 5 with layout score: 267.060969564274
+#> Best founder order seed: 5 with layout score: 267.060969574231
 ```
 
 ![](v11_configuration_extended_files/figure-html/unnamed-chunk-38-1.png)
@@ -1324,7 +1326,7 @@ p1 <- ggPedigree(
   famID = "famID", personID = "personID",
   momID = "momID", dadID = "dadID",
   config = list(
-    founder_order_seed  = 5L, 
+    founder_order_seed = 5L,
     label_include = TRUE, label_text_size = 2.5
   )
 )
@@ -1336,14 +1338,14 @@ p2 <- ggPedigree(
     label_include = TRUE, label_text_size = 2.5
   )
 )
-cowplot::plot_grid(p1 + ggplot2::ggtitle("Seed 5") + theme_linedraw()
-                   , NULL, 
-                   p2 + ggplot2::ggtitle("Default")+ theme_linedraw() 
-                   , NULL,
+cowplot::plot_grid(p1 + ggplot2::ggtitle("Seed 5") + theme_linedraw(),
+  NULL,
+  p2 + ggplot2::ggtitle("Default") + theme_linedraw(),
+  NULL,
   ncol = 2,
   byrow = T,
   rel_widths = c(1, .1, 1, .1)
-) 
+)
 ```
 
 ![](v11_configuration_extended_files/figure-html/unnamed-chunk-38-2.png)
@@ -1586,6 +1588,7 @@ tibble::tibble(Config_Key = cfg_names) %>%
 | segment_self_linetype          |
 | segment_self_linewidth         |
 | segment_sibling_color          |
+| segment_spouse_alpha           |
 | segment_spouse_color           |
 | sex_color_include              |
 | sex_color_palette              |
@@ -1713,6 +1716,7 @@ df %>%
 | segment_self_color             | black          |
 | segment_sibling_color          | black          |
 | segment_spouse_color           | black          |
+| segment_spouse_alpha           | 1              |
 | segment_mz_color               | black          |
 | segment_mz_linetype            | 1              |
 | segment_mz_alpha               | 1              |
@@ -1728,6 +1732,7 @@ df %>%
 | segment_lineage_types2         | offspring      |
 | segment_lineage_types3         | sibling        |
 | segment_lineage_types4         | mz             |
+| segment_lineage_types5         | spouse         |
 | segment_lineage_method         | viridis_d      |
 | segment_lineage_palette1       | \#052f60       |
 | segment_lineage_palette2       | \#e69f00       |
@@ -1739,7 +1744,7 @@ df %>%
 | segment_lineage_palette8       | \#cc79a7       |
 | segment_lineage_na_color       | grey80         |
 | segment_lineage_force_zero     | TRUE           |
-| segment_lineage_legend_show    | TRUE           |
+| segment_lineage_legend_show    | FALSE          |
 | segment_lineage_legend_title   | Lineage        |
 | sex_color_include              | TRUE           |
 | sex_legend_title               | Sex            |

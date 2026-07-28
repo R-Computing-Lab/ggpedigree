@@ -1,4 +1,4 @@
-# Extended: More Complex Pedigree Plots with ggPedigreeInteractive
+# Extended: More Interactive Pedigree Plots with ggPedigreeInteractive
 
 ``` r
 

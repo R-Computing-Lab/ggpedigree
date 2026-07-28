@@ -22,7 +22,8 @@ plotting function and the plot is drawn using those values.
 You do not need to supply every option. You only provide the options you
 want to change. Any options you do not specify will use the package
 defaults. You can see a full list of supported options and their
-defaults by reviewing the documentation for `getDefaultPlotConfig()`.
+defaults by reviewing the documentation for
+[`getDefaultPlotConfig()`](https://r-computing-lab.github.io/ggpedigree/reference/getDefaultPlotConfig.md).
 
 This vignette demonstrates how `config` is used in practice. An extended
 list of all available options is provided in the online documentation.

@@ -1,4 +1,4 @@
-# Penalise layouts that split twins apart
+# Penalize layouts that split twins apart
 
 For each group of co-twins (individuals sharing the same value of the
 \`twinID\` column), computes the number of "intruder" layout positions

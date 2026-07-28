@@ -71,6 +71,12 @@ getDefaultPlotConfig(
   ped_packed = TRUE,
   ped_align = TRUE,
   ped_width = 15,
+  fast_threshold = 1000,
+  founder_order_seed = NULL,
+  founder_order_tries = 1L,
+  layout_score_method = "composite",
+  fixed_positions = NULL,
+  fixed_positions_update_family = TRUE,
   coord_layout = "cartesian",
   coord_radial_start_angle = -90,
   coord_radial_end_angle = 270,
@@ -88,6 +94,7 @@ getDefaultPlotConfig(
   segment_self_color = segment_default_color,
   segment_sibling_color = segment_default_color,
   segment_spouse_color = segment_default_color,
+  segment_spouse_alpha = if (segment_lineage_legend_show) 0.5 else 1,
   segment_mz_color = segment_default_color,
   segment_mz_linetype = segment_linetype,
   segment_mz_alpha = 1,
@@ -97,6 +104,16 @@ getDefaultPlotConfig(
   segment_self_alpha = 0.5,
   segment_self_angle = 90,
   segment_self_curvature = -0.2,
+  segment_lineage_include = FALSE,
+  segment_lineage_component = "mitochondrial",
+  segment_lineage_focal_personID = NULL,
+  segment_lineage_types = c("parent", "offspring", "sibling", "mz", "spouse"),
+  segment_lineage_method = "viridis_d",
+  segment_lineage_palette = focal_fill_color_values,
+  segment_lineage_na_color = "grey80",
+  segment_lineage_force_zero = TRUE,
+  segment_lineage_legend_show = segment_lineage_include,
+  segment_lineage_legend_title = "Lineage",
   sex_color_include = TRUE,
   sex_legend_title = "Sex",
   sex_shape_labels = c("Female", "Male", "Unknown"),
@@ -145,7 +162,7 @@ getDefaultPlotConfig(
   focal_fill_method = "gradient",
   focal_fill_component = "additive",
   focal_fill_n_breaks = NULL,
-  focal_fill_na_value = "black",
+  focal_fill_na_color = "black",
   focal_fill_shape = 21,
   focal_fill_force_zero = FALSE,
   focal_fill_use_log = FALSE,
@@ -194,6 +211,8 @@ getDefaultPlotConfig(
   return_interactive = FALSE,
   return_mid_parent = FALSE,
   reduce_variables = TRUE,
+  reposition_founders = TRUE,
+  return_best_seed = FALSE,
   hints = NULL,
   relation = NULL,
   debug = FALSE,
@@ -473,6 +492,84 @@ getDefaultPlotConfig(
 
   Plot width of the pedigree block.
 
+- fast_threshold:
+
+  Threshold for switching to piecewise layout algorithms for large
+  pedigrees.
+
+- founder_order_seed:
+
+  Integer seed used to shuffle the pedigree row order before passing to
+  kinship2. Because kinship2 processes founders in the order they
+  appear, different shufflings produce different lateral placements. Set
+  to an integer (e.g. \`42\`) to get a specific alternative layout.
+  \`NULL\` (default) uses the original row order. Combine with
+  \`founder_order_tries\` to search automatically for a compact layout.
+
+- founder_order_tries:
+
+  Integer number of row-order shufflings to evaluate. When greater than
+  1, the function tries seeds
+  `founder_order_seed + 0, founder_order_seed + 1, ...` (or `1, 2, ...`
+  when `founder_order_seed` is `NULL`), scores each layout with
+  \`layout_score_method\`, and returns the best result. Default is `1`
+  (no search).
+
+- layout_score_method:
+
+  Scoring method used to rank candidate layouts when
+  \`founder_order_tries \> 1\`. One of:
+
+  \`"parent_stub"\`
+
+  :   (default) Sum of \`\|x_fam - x_pos\|\`. Total diagonal parent-stub
+      length.
+
+  \`"crossings"\`
+
+  :   Count of crossing parent-stub segment pairs within each
+      generation.
+
+  \`"duplications"\`
+
+  :   Count of extra kinship2 duplicate placements (\`extra = TRUE\`
+      rows).
+
+  \`"twin_penalty"\`
+
+  :   Sum of intruder positions separating co-twins within their
+      generation row. Twins placed in different generation rows receive
+      a heavy flat penalty.
+
+  \`"composite"\`
+
+  :   Weighted sum: \`parent_stub + 10\*crossings + 20\*twin_penalty +
+      100\*duplications\`.
+
+  Lower scores are better in all cases.
+
+- fixed_positions:
+
+  Optional data frame for pinning specific individuals to exact layout
+  slots, overriding the computed layout. It must contain an ID column
+  named to match \`personID\` (e.g., \`"personID"\` or \`"ID"\`) plus an
+  \`x\` and/or \`y\` column. Each row sets that person's absolute
+  position in raw layout-slot units (the units
+  \`calculateCoordinates()\` emits, before
+  \`generation_width\`/\`generation_height\` scaling and any radial
+  transform). A missing or \`NA\` axis leaves the computed value
+  unchanged. IDs not found in the pedigree are ignored with a warning.
+  Default is \`NULL\` (no pinning).
+
+- fixed_positions_update_family:
+
+  When pinning a parent, whether to recompute the family anchor
+  (\`x_fam\`/\`y_fam\`) of that parent's children so the
+  parent-to-children connector follows the pinned parent. \`TRUE\`
+  (default) keeps connectors attached; \`FALSE\` moves only the node and
+  spouse link, leaving the down-connector at the original location. Has
+  no effect when nothing is pinned.
+
 - coord_layout:
 
   Layout mode for the pedigree. Options: "cartesian" (default) or
@@ -550,6 +647,11 @@ getDefaultPlotConfig(
 
   Color for spouse segments. Default uses segment_default_color.
 
+- segment_spouse_alpha:
+
+  Alpha for spouse segments. Default is 1 when segment filling is
+  disabled, and 0.5 when enabled.
+
 - segment_mz_color:
 
   Color for monozygotic twin segments. Default uses
@@ -587,6 +689,70 @@ getDefaultPlotConfig(
 - segment_self_curvature:
 
   Curvature of self-loop segment. Default is -0.2.
+
+- segment_lineage_include:
+
+  Whether to color segments by family lineage (e.g., paternal, maternal,
+  or mitochondrial lines). When \`FALSE\` (default), segments use the
+  fixed per-type colors. When \`TRUE\`, participating segments are
+  colored by a \`segment_lineage\` value derived from
+  \`segment_lineage_component\`.
+
+- segment_lineage_component:
+
+  Which lineage to trace. Uses the same vocabulary as
+  \`focal_fill_component\`: \`"mitochondrial"\`/\`"mtdna"\`,
+  \`"additive"\`, \`"common nuclear"\`, \`"maternal"\`, \`"paternal"\`,
+  or \`"family"\`. Default is \`"mitochondrial"\`.
+
+- segment_lineage_focal_personID:
+
+  Optional ID of a focal person. When supplied, segments are colored by
+  their lineage relationship \*to that person\* (off-line segments
+  become \`NA\`/grey), letting you trace the lines connected to one
+  node. When \`NULL\` (default), partition components (\`maternal\`,
+  \`paternal\`, \`family\`, \`mitochondrial\`) color segments by their
+  own lineage group, while continuous relatedness components
+  (\`additive\`, \`common nuclear\`) color relative to a default
+  reference person (\`focal_fill_personID\`).
+
+- segment_lineage_types:
+
+  Character vector of segment types that participate in lineage
+  coloring. Any of \`"spouse"\`, \`"parent"\`, \`"offspring"\`,
+  \`"sibling"\`, \`"mz"\`. Default is \`c("parent", "offspring",
+  "sibling", "mz")\` (the inheritance-bearing segments). Self-loop
+  segments always keep their fixed color.
+
+- segment_lineage_method:
+
+  Scale method for the segment lineage color aesthetic. One of
+  \`"viridis_d"\`, \`"viridis_c"\`, \`"viridis_b"\`, \`"hue"\`,
+  \`"manual"\`, \`"gradient"\`, \`"gradient2"\`, \`"steps"\`. Default is
+  \`"viridis_d"\`.
+
+- segment_lineage_palette:
+
+  Optional vector of colors for \`segment_lineage_method = "manual"\`.
+
+- segment_lineage_na_color:
+
+  Color used for segments with no lineage value (off-line or
+  non-participating). Default is \`"grey80"\`.
+
+- segment_lineage_force_zero:
+
+  When using a focal person with a continuous component (e.g.,
+  mitochondrial/additive), replace \`0\` relationships with \`NA\` so
+  off-line segments are greyed out. Default is \`TRUE\`.
+
+- segment_lineage_legend_show:
+
+  Whether to show the segment lineage legend. Default is TRUE.
+
+- segment_lineage_legend_title:
+
+  Title for the segment lineage legend. Default is "Lineage".
 
 - sex_color_include:
 
@@ -789,7 +955,7 @@ getDefaultPlotConfig(
 
   Number of breaks in focal fill scale.
 
-- focal_fill_na_value:
+- focal_fill_na_color:
 
   Color for NA values in focal fill.
 
@@ -983,6 +1149,22 @@ getDefaultPlotConfig(
 
   Whether to reduce the number of variables passed to the plot for
   performance optimization. Default is TRUE.
+
+- reposition_founders:
+
+  Whether to reposition founders in the layout. Default is TRUE, which
+  moves founders to the top of the plot and centers them over their
+  descendants. When FALSE, founders are placed according to their
+  original generation assignment, which may be more appropriate for
+  certain types of pedigrees (e.g., those with many generations or
+  non-traditional structures).
+
+- return_best_seed:
+
+  Whether to return the seed that produced the best layout when
+  \`founder_order_tries \> 1\`. Default is \`FALSE\`. When \`TRUE\`, the
+  output includes a \`best_seed\` attribute with the integer seed that
+  produced the best layout.
 
 - hints:
 

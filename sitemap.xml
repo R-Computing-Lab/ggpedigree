@@ -53,10 +53,12 @@
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-pick_first.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-preparePhenotypeByDegreeData.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-renumberPedigreeIDs.html</loc></url>
+<url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-repairTrailingCommaConfig.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-repositionCrossGenerationSpouses.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/dot-restoreNames.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/formatTooltip.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/generateSpouseList.html</loc></url>
+<url><loc>https://r-computing-lab.github.io/ggpedigree/reference/getDefaultPlotConfig.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/getMidpoints.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/getRelativeCoordinates.html</loc></url>
 <url><loc>https://r-computing-lab.github.io/ggpedigree/reference/ggPedigree.core.html</loc></url>

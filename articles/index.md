@@ -12,9 +12,9 @@
   plots](https://r-computing-lab.github.io/ggpedigree/articles/v11_configuration_extended.md):
 - [Interactive Pedigree Plotting with
   ggPedigreeInteractive](https://r-computing-lab.github.io/ggpedigree/articles/v20_interactiveplots.md):
-- [Extended: More Complex Pedigree Plots with
+- [Extended: More Interactive Pedigree Plots with
   ggPedigreeInteractive](https://r-computing-lab.github.io/ggpedigree/articles/v21_extendedinteractiveplots.md):
-- [Extended: Plotting more complicated pedigrees with
+- [Extended: Plotting ASOIAF and more complicated pedigrees with
   \`ggPedigree()\`](https://r-computing-lab.github.io/ggpedigree/articles/v22_plots_morecomplexity.md):
 - [Visualizing Relatedness Matrices with
   ggRelatednessMatrix()](https://r-computing-lab.github.io/ggpedigree/articles/v30_matrix.md):

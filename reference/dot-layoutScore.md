@@ -33,7 +33,7 @@ Returns a single non-negative number summarising layout quality;
 - \`"composite"\`:
 
   Weighted sum: \`parent_stub + 10 \* crossings + 20 \* twin_penalty +
-  100 \* duplications\`. Penalises duplications most heavily, then twin
+  100 \* duplications\`. Penalizes duplications most heavily, then twin
   separation, then crossings, then stub length. Good default when you
   have no strong preference.
 

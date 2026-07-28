@@ -1,4 +1,4 @@
-# Extended: Plotting more complicated pedigrees with \`ggPedigree()\`
+# Extended: Plotting ASOIAF and more complicated pedigrees with \`ggPedigree()\`
 
 ## Introduction
 
@@ -162,10 +162,14 @@ pltstatic <- ggPedigree(df_repaired,
     #  segment_self_color = "purple",
     #   label_segment_color = "gray",
     reduce_variables = F,
-    tooltip_columns = c("ID", "name")
+    tooltip_columns = c("ID", "name"),
+    founder_order_seed = 1238,
+    founder_order_tries = 2,
+    return_best_seed = TRUE  
   )
 )
-
+#> Best founder order seed: 1238 with layout score: 11107.5429148656
+best_seed <- 1238
 pltstatic
 ```
 
@@ -176,6 +180,8 @@ pltstatic
 
 # pltstatic+ facet_wrap(~famID_mulit, drop=TRUE,scales = "free")
 ```
+
+### Visualize how related everyone is to Aegon the Conqueror
 
 ``` r
 
@@ -217,9 +223,12 @@ plt <- ggPedigreeInteractive(df_repaired_renamed,
     label_text_size = 1,
     label_method = "geom_text",
     segment_self_color = "black",
+    founder_order_seed = best_seed,
     tooltip_columns = c("personID", "name", "focal_fill")
   )
 )
+#> Warning in kinship2_autohint(ped): Unexpected result in autohint, please
+#> contact developer
 
 plt
 ```
@@ -227,6 +236,12 @@ plt
 ``` r
 
 htmlwidgets::saveWidget(plt, "ggpedigreeinteractive_aegon.html", selfcontained = TRUE)
+```
+
+### Visualize how related everyone is to Rhaenyra Targaryen
+
+``` r
+
 
 plt <- ggPedigreeInteractive(df_repaired_renamed,
   #  status_column = "affected",
@@ -262,10 +277,13 @@ plt <- ggPedigreeInteractive(df_repaired_renamed,
     label_include = TRUE,
     label_text_size = 1,
     label_method = "geom_text",
+    founder_order_seed = best_seed,
     segment_self_color = "black",
     tooltip_columns = c("personID", "name", "focal_fill")
   )
 )
+#> Warning in kinship2_autohint(ped): Unexpected result in autohint, please
+#> contact developer
 
 plt
 ```

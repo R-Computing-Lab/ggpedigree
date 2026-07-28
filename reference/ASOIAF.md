@@ -23,7 +23,7 @@ data(ASOIAF)
 
 ## Format
 
-A data frame with 679 observations on 9 variables.
+A data frame with 688 observations on 9 variables.
 
 ## Details
 
