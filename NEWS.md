@@ -1,6 +1,6 @@
 # ggpedigree (development version)
 # ==============================
-
+# ggpedigree Version: 1.2.0.9
 ## Quality of life improvements
 * Optimizing implemention of pedigree alignment functions from kinship2
 * Added unit tests for the pedigree alignment functions
