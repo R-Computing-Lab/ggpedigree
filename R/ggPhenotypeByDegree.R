@@ -64,6 +64,11 @@ ggPhenotypeByDegree <- function(df,
                                 config = list(),
                                 data_prep = TRUE,
                                 ...) {
+  .config_expr <- substitute(config)
+  .config_caller_env <- parent.frame()
+  config <- tryCatch(config, error = function(e) {
+    .repairTrailingCommaConfig(.config_expr, .config_caller_env, e)
+  })
   # ---- Early checks on input ----
 
   if (!is.data.frame(df)) {

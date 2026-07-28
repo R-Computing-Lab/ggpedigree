@@ -6,6 +6,29 @@ data("potter")
 data("inbreeding")
 
 
+test_that("ggPedigree repairs a trailing comma in config instead of erroring", {
+  expect_message(
+    p <- ggPedigree(potter,
+      famID = "famID",
+      personID = "personID",
+      config = list(point_size = 11, label_include = TRUE, )
+    ),
+    "trailing comma"
+  )
+  expect_s3_class(p, "gg")
+})
+
+test_that("ggPedigree still errors on a genuinely broken config", {
+  expect_error(
+    ggPedigree(potter,
+      famID = "famID",
+      personID = "personID",
+      config = list(point_size = this_var_does_not_exist)
+    ),
+    "this_var_does_not_exist"
+  )
+})
+
 test_that("broken hints doesn't cause a fatal error", {
   if ("twinID" %in% names(potter) && "zygosity" %in% names(potter)) {
     # Remove twinID and zygosity columns for this test
@@ -111,7 +134,6 @@ test_that("give static plot when plotly fails", {
 #  Apply vertical spacing factor if generation_height ≠ 1
 
 test_that("vertical spacing factor if generation_height ≠ 1", {
-
   p <- ggPedigree(potter, config = list(generation_width = 1))
   p_2 <- ggPedigree(potter, config = list(generation_width = 2))
   p_3 <- ggPedigree(potter, config = list(generation_height = 2))

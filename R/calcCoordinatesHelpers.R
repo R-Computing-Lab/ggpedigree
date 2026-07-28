@@ -13,19 +13,21 @@
   placed <- ds[
     !is.na(ds$x_pos) & !is.na(ds$x_fam) & (is.na(ds$extra) | !ds$extra),
   ]
-  if (nrow(placed) < 2L) return(0L)
+  if (nrow(placed) < 2L) {
+    return(0L)
+  }
 
   count <- 0L
   for (g in unique(placed$y_pos)) {
     gr <- placed[!is.na(placed$y_pos) & placed$y_pos == g, ]
-    n  <- nrow(gr)
+    n <- nrow(gr)
     if (n < 2L) next
     xc <- gr$x_pos
     xp <- gr$x_fam
     for (i in seq_len(n - 1L)) {
       for (j in seq.int(i + 1L, n)) {
         if (!is.na(xp[i]) && !is.na(xp[j]) &&
-            ((xc[i] < xc[j]) != (xp[i] < xp[j]))) {
+          ((xc[i] < xc[j]) != (xp[i] < xp[j]))) {
           count <- count + 1L
         }
       }
@@ -56,14 +58,18 @@
 #' @return A non-negative numeric value.
 #' @keywords internal
 .layoutScoreTwinPenalty <- function(ds, twinID = "twinID", cross_gen_penalty = 10) {
-  if (!twinID %in% names(ds)) return(0)
+  if (!twinID %in% names(ds)) {
+    return(0)
+  }
 
   placed <- ds[
     !is.na(ds[[twinID]]) &
       !is.na(ds$x_pos) &
       (is.na(ds$extra) | !ds$extra),
   ]
-  if (nrow(placed) < 2L) return(0)
+  if (nrow(placed) < 2L) {
+    return(0)
+  }
 
   penalty <- 0
   twin_groups <- split(placed, placed[[twinID]])
@@ -138,22 +144,21 @@
                          twinID = "twinID",
                          cross_gen_penalty = 10L,
                          twin_penalty_weight = 20L,
-                         duplication_weight = 100L
-) {
+                         duplication_weight = 100L) {
   method <- match.arg(method)
   switch(method,
-         parent_stub      = ,
-         parent_offset    = sum(abs(ds$x_fam - ds$x_pos), na.rm = TRUE),
-         crossings        = .layoutScoreCrossings(ds),
-         duplications     = ,
-         minimal_duplicates = sum(duplicated(ds$nid[!is.na(ds$nid)])),
-         twin_penalty     = .layoutScoreTwinPenalty(ds, twinID = twinID,cross_gen_penalty = cross_gen_penalty),
-         composite        = {
-           sum(abs(ds$x_fam - ds$x_pos), na.rm = TRUE) +
-             cross_gen_penalty  * .layoutScoreCrossings(ds) +
-             twin_penalty_weight  * .layoutScoreTwinPenalty(ds, twinID = twinID) +
-             duplication_weight * sum(duplicated(ds$nid[!is.na(ds$nid)]))
-         }
+    parent_stub = ,
+    parent_offset = sum(abs(ds$x_fam - ds$x_pos), na.rm = TRUE),
+    crossings = .layoutScoreCrossings(ds),
+    duplications = ,
+    minimal_duplicates = sum(duplicated(ds$nid[!is.na(ds$nid)])),
+    twin_penalty = .layoutScoreTwinPenalty(ds, twinID = twinID, cross_gen_penalty = cross_gen_penalty),
+    composite = {
+      sum(abs(ds$x_fam - ds$x_pos), na.rm = TRUE) +
+        cross_gen_penalty * .layoutScoreCrossings(ds) +
+        twin_penalty_weight * .layoutScoreTwinPenalty(ds, twinID = twinID) +
+        duplication_weight * sum(duplicated(ds$nid[!is.na(ds$nid)]))
+    }
   )
 }
 
@@ -336,8 +341,8 @@
   # Optionally recompute the family anchor for children of pinned parents so the
   # parent-to-children connector follows the pinned parent. NULL (unset) -> TRUE.
   if (!isFALSE(config[["fixed_positions_update_family"]]) &&
-      length(pinned_ids) > 0 &&
-      all(c("x_fam", "y_fam") %in% names(ds))) {
+    length(pinned_ids) > 0 &&
+    all(c("x_fam", "y_fam") %in% names(ds))) {
     affected <- which(as.character(ds[[momID]]) %in% pinned_ids | as.character(ds[[dadID]]) %in% pinned_ids)
     if (length(affected) > 0) {
       xp <- stats::setNames(ds$x_pos, as.character(ds[[personID]]))

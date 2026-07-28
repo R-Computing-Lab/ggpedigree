@@ -64,6 +64,11 @@ ggPedigreeInteractive <- function(ped,
                                   sexVar = "sex",
                                   affected_fill_column = NULL,
                                   outline_color_column = NULL) {
+  .config_expr <- substitute(config)
+  .config_caller_env <- parent.frame()
+  config <- tryCatch(config, error = function(e) {
+    .repairTrailingCommaConfig(.config_expr, .config_caller_env, e)
+  })
   if (!requireNamespace("plotly", quietly = TRUE)) {
     stop("The 'plotly' package is required for interactive plots.")
   }
@@ -93,7 +98,7 @@ ggPedigreeInteractive <- function(ped,
     config$return_widget <- return_widget
     return_widget <- NULL
   }
-  if (!is.null(debug)) {
+  if (!is.null(config$debug)) {} else {
     config$debug <- debug
     debug <- NULL
   }
@@ -141,6 +146,13 @@ ggPedigreeInteractive <- function(ped,
     outline_color_column = outline_color_column
   )
 
+  # When debug = TRUE, ggPedigree.core returns a list; unwrap it here so the
+  # rest of the interactive pipeline always receives a plain ggplot object.
+  #  if (is.list(static_plot) && !inherits(static_plot, "ggplot") &&
+  #   !is.null(static_plot$plot)) {
+  #    static_plot <- static_plot$plot
+  # }
+
   ## 2. Identify data columns for tooltips ----------------------------------
   #   When ggplotly is called, it creates a single data frame that merges all
   #   layer data.  We therefore build a 'text' aesthetic ahead of time so that
@@ -187,7 +199,13 @@ ggPedigreeInteractive <- function(ped,
     }
 
     if (config$optimize_plotly == TRUE) {
-      static_plot <- optimizePedigree(static_plot, config = config, plot_type = "static")
+      static_plot <- tryCatch(optimizePedigree(static_plot, config = config, plot_type = "static"),
+        error = function(e) {
+          warning("Error optimizing static pedigree: ", e$message)
+          message("Proceeding with unoptimized static plot.")
+          static_plot
+        }
+      )
     }
     plt <- tryCatch(
       plotly::ggplotly(static_plot,
@@ -203,7 +221,13 @@ ggPedigreeInteractive <- function(ped,
     )
   } else {
     if (config$optimize_plotly == TRUE) {
-      static_plot <- optimizePedigree(static_plot, config = config, plot_type = "static")
+      static_plot <- tryCatch(optimizePedigree(static_plot, config = config, plot_type = "static"),
+        error = function(e) {
+          warning("Error optimizing static pedigree: ", e$message)
+          message("Proceeding with unoptimized static plot.")
+          static_plot
+        }
+      )
     }
     plt <- tryCatch(
       plotly::ggplotly(static_plot,
@@ -222,7 +246,13 @@ ggPedigreeInteractive <- function(ped,
 
   #     assign("DEBUG_static_plot", static_plot, envir = .GlobalEnv)
   if (config$optimize_plotly == TRUE) {
-    plt <- optimizePedigree(plt, config = config, plot_type = "plotly")
+    plt <- tryCatch(optimizePedigree(plt, config = config, plot_type = "plotly"),
+      error = function(e) {
+        warning("Error optimizing plotly pedigree: ", e$message)
+        message("Proceeding with unoptimized plotly object.")
+        plt
+      }
+    )
   }
 
   if (config$return_static == TRUE) {
@@ -278,7 +308,14 @@ optimizePedigree <- function(p, config = list(), plot_type = c("plotly", "static
       }
     )
   } else if (plot_type == "static") {
-    p <- optimizeStaticPedigree(p, config = config)
+    p <- tryCatch(
+      optimizeStaticPedigree(p, config = config),
+      error = function(e) {
+        warning("Error optimizing static pedigree: ", e$message)
+        message("Returning unoptimized static ggplot object instead.")
+        p
+      }
+    )
   } else {
     stop("plot_type must be either 'plotly' or 'static'")
   }

@@ -19,7 +19,7 @@ library(BGmisc)
 # )
 # write_csv(Ped, here("data-raw", "Pedigree_dryadcopy.csv"), na = "")
 
-Ped <- read.csv(here("data-raw", "Pedigree_dryadcopy.csv")) %>%
+Ped <- read.csv(here("data-raw/squirrels", "Pedigree_dryadcopy.csv")) %>%
   suppressWarnings()
 
 Ped <- Ped %>% rename(
@@ -37,7 +37,7 @@ Ped <- Ped %>% rename(
 #  suppressWarnings()
 
 # write_csv(LRS, here("data-raw", "LRS_fordryad.csv"), na = "")
-LRS <- read.csv(here("data-raw", "LRS_fordryad.csv")) %>%
+LRS <- read.csv(here("data-raw/squirrels", "LRS_fordryad.csv")) %>%
   suppressWarnings()
 
 LRS <- LRS %>%
@@ -64,7 +64,7 @@ LRS <- LRS %>%
 
 
 # write_csv(ARS, here("data-raw", "ARS_dryadcopy.csv"), na = "")
-ARS <- read.csv(here("data-raw", "ARS_dryadcopy.csv")) %>%
+ARS <- read.csv(here("data-raw/squirrels", "ARS_dryadcopy.csv")) %>%
   suppressWarnings()
 
 ARS <- ARS %>%
@@ -169,7 +169,7 @@ ds_grouped <- ds %>%
 redsquirrels_full <- ds_grouped %>%
   arrange(personID)
 
-write_csv(redsquirrels_full, here("data-raw", "redsquirrels_full.csv"), na = "")
+write_csv(redsquirrels_full, here("data-raw/squirrels", "redsquirrels_full.csv"), na = "")
 
 usethis::use_data(redsquirrels_full, overwrite = TRUE, compress = "xz")
 
@@ -202,7 +202,7 @@ checkis_acyclic <- checkPedigreeNetwork(redsquirrels,
 checkis_acyclic
 if (checkis_acyclic$is_acyclic) {
   message("The pedigree is acyclic.")
-  write_csv(redsquirrels, here("data-raw", "redsquirrels.csv"), na = "")
+  write_csv(redsquirrels, here("data-raw/squirrels", "redsquirrels.csv"), na = "")
 
   usethis::use_data(redsquirrels, overwrite = TRUE, compress = "xz")
 } else {

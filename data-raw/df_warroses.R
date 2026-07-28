@@ -7,7 +7,7 @@ library(BGmisc)
 
 
 ## Create dataframe
-ged <- read_csv("data-raw/df_raw_wor.csv",
+ged <- read_csv("data-raw/wor/df_raw_wor.csv",
   col_types = cols(
     twinID = col_double(),
     zygosity = col_character()
@@ -97,7 +97,7 @@ checkis_acyclic <- checkPedigreeNetwork(df_repaired,
 checkis_acyclic
 if (checkis_acyclic$is_acyclic) {
   message("The pedigree is acyclic.")
-  write_csv(warsofroses, here("data-raw", "warsofroses.csv"))
+  write_csv(warsofroses, here("data-raw/wor", "warsofroses.csv"))
   usethis::use_data(warsofroses, overwrite = TRUE, compress = "xz")
 } else {
   message("The pedigree contains cyclic relationships.")

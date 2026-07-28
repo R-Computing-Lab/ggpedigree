@@ -172,7 +172,7 @@ test_that(".layoutScoreCrossings ignores extra=TRUE rows", {
     x_pos = c(1, 3),
     x_fam = c(3, 1),
     y_pos = c(1, 1),
-    extra = c(TRUE, TRUE)  # both are duplicates — should be excluded
+    extra = c(TRUE, TRUE) # both are duplicates — should be excluded
   )
   expect_equal(ggpedigree:::.layoutScoreCrossings(ds), 0L)
 })
@@ -180,9 +180,9 @@ test_that(".layoutScoreCrossings ignores extra=TRUE rows", {
 test_that(".layoutScoreCrossings counts per-generation, not across generations", {
   # Two pairs: one cross in generation y=1, zero in y=2
   ds <- data.frame(
-    x_pos = c(1, 3,  2, 4),
-    x_fam = c(3, 1,  1.5, 3.5),  # first pair crosses, second does not
-    y_pos = c(1, 1,  2, 2),
+    x_pos = c(1, 3, 2, 4),
+    x_fam = c(3, 1, 1.5, 3.5), # first pair crosses, second does not
+    y_pos = c(1, 1, 2, 2),
     extra = rep(FALSE, 4)
   )
   expect_equal(ggpedigree:::.layoutScoreCrossings(ds), 1L)
@@ -237,14 +237,14 @@ test_that(".layoutScore 'crossings' detects one crossing", {
 
 test_that(".layoutScore 'composite' combines methods with weights", {
   ds <- data.frame(
-    x_pos  = c(1, 3), x_fam = c(3, 1),
-    y_pos  = c(1, 1), extra = c(FALSE, FALSE),
-    nid    = c(1, 2),  twinID = c(NA, NA)
+    x_pos = c(1, 3), x_fam = c(3, 1),
+    y_pos = c(1, 1), extra = c(FALSE, FALSE),
+    nid = c(1, 2), twinID = c(NA, NA)
   )
-  stub     <- sum(abs(ds$x_fam - ds$x_pos), na.rm = TRUE)   # 4
-  crossings <- 1L                                             # one inversion
-  dups     <- 0L                                              # no duplicates
-  twin_pen <- 0                                               # no twins
+  stub <- sum(abs(ds$x_fam - ds$x_pos), na.rm = TRUE) # 4
+  crossings <- 1L # one inversion
+  dups <- 0L # no duplicates
+  twin_pen <- 0 # no twins
   expected <- stub + 10L * crossings + 20L * twin_pen + 100L * dups
   expect_equal(
     ggpedigree:::.layoutScore(ds, method = "composite"),
@@ -263,16 +263,16 @@ test_that(".layoutScoreTwinPenalty returns 0 when no twinID column", {
 
 test_that(".layoutScoreTwinPenalty returns 0 when all twinIDs are NA", {
   ds <- data.frame(
-    x_pos  = c(1, 3), y_pos = c(1, 1),
-    extra  = c(FALSE, FALSE), twinID = c(NA_integer_, NA_integer_)
+    x_pos = c(1, 3), y_pos = c(1, 1),
+    extra = c(FALSE, FALSE), twinID = c(NA_integer_, NA_integer_)
   )
   expect_equal(ggpedigree:::.layoutScoreTwinPenalty(ds), 0)
 })
 
 test_that(".layoutScoreTwinPenalty returns 0 for adjacent twins", {
   ds <- data.frame(
-    x_pos  = c(1, 2),  y_pos = c(1, 1),
-    extra  = c(FALSE, FALSE), twinID = c(1L, 1L)
+    x_pos = c(1, 2), y_pos = c(1, 1),
+    extra = c(FALSE, FALSE), twinID = c(1L, 1L)
   )
   expect_equal(ggpedigree:::.layoutScoreTwinPenalty(ds), 0)
 })
@@ -280,16 +280,16 @@ test_that(".layoutScoreTwinPenalty returns 0 for adjacent twins", {
 test_that(".layoutScoreTwinPenalty penalises one intruder between twins", {
   # Twins at x=1 and x=3 — one intruder slot between them
   ds <- data.frame(
-    x_pos  = c(1, 3),  y_pos = c(1, 1),
-    extra  = c(FALSE, FALSE), twinID = c(1L, 1L)
+    x_pos = c(1, 3), y_pos = c(1, 1),
+    extra = c(FALSE, FALSE), twinID = c(1L, 1L)
   )
   expect_equal(ggpedigree:::.layoutScoreTwinPenalty(ds), 1)
 })
 
 test_that(".layoutScoreTwinPenalty handles triplets: 0 when adjacent", {
   ds <- data.frame(
-    x_pos  = c(1, 2, 3), y_pos = c(1, 1, 1),
-    extra  = rep(FALSE, 3), twinID = c(2L, 2L, 2L)
+    x_pos = c(1, 2, 3), y_pos = c(1, 1, 1),
+    extra = rep(FALSE, 3), twinID = c(2L, 2L, 2L)
   )
   expect_equal(ggpedigree:::.layoutScoreTwinPenalty(ds), 0)
 })
@@ -297,8 +297,8 @@ test_that(".layoutScoreTwinPenalty handles triplets: 0 when adjacent", {
 test_that(".layoutScoreTwinPenalty handles triplets: penalises spread", {
   # Triplets at x=1, 3, 5 — two intruder slots
   ds <- data.frame(
-    x_pos  = c(1, 3, 5), y_pos = c(1, 1, 1),
-    extra  = rep(FALSE, 3), twinID = c(2L, 2L, 2L)
+    x_pos = c(1, 3, 5), y_pos = c(1, 1, 1),
+    extra = rep(FALSE, 3), twinID = c(2L, 2L, 2L)
   )
   expect_equal(ggpedigree:::.layoutScoreTwinPenalty(ds), 2)
 })
@@ -306,8 +306,8 @@ test_that(".layoutScoreTwinPenalty handles triplets: penalises spread", {
 test_that(".layoutScoreTwinPenalty gives heavy penalty for cross-generation twins", {
   # Twins in different rows — penalty = 10 * C(2,2) = 10
   ds <- data.frame(
-    x_pos  = c(1, 1),  y_pos = c(1, 2),
-    extra  = c(FALSE, FALSE), twinID = c(3L, 3L)
+    x_pos = c(1, 1), y_pos = c(1, 2),
+    extra = c(FALSE, FALSE), twinID = c(3L, 3L)
   )
   expect_gt(ggpedigree:::.layoutScoreTwinPenalty(ds), 0)
 })
@@ -315,8 +315,8 @@ test_that(".layoutScoreTwinPenalty gives heavy penalty for cross-generation twin
 test_that(".layoutScoreTwinPenalty ignores extra=TRUE rows", {
   # One twin is an extra row — should be excluded
   ds <- data.frame(
-    x_pos  = c(1, 5),  y_pos = c(1, 1),
-    extra  = c(FALSE, TRUE), twinID = c(1L, 1L)
+    x_pos = c(1, 5), y_pos = c(1, 1),
+    extra = c(FALSE, TRUE), twinID = c(1L, 1L)
   )
   # After filtering: only one placed twin → no pair → penalty = 0
   expect_equal(ggpedigree:::.layoutScoreTwinPenalty(ds), 0)
@@ -326,8 +326,8 @@ test_that(".layoutScoreTwinPenalty sums across multiple twin groups", {
   # Group A (twinID=1): adjacent → 0 penalty
   # Group B (twinID=2): one intruder → 1 penalty
   ds <- data.frame(
-    x_pos  = c(1, 2,   4, 6),
-    y_pos  = c(1, 1,   1, 1),
+    x_pos  = c(1, 2, 4, 6),
+    y_pos  = c(1, 1, 1, 1),
     extra  = rep(FALSE, 4),
     twinID = c(1L, 1L, 2L, 2L)
   )
@@ -336,9 +336,9 @@ test_that(".layoutScoreTwinPenalty sums across multiple twin groups", {
 
 test_that(".layoutScore 'twin_penalty' method routes to twin penalty", {
   ds <- data.frame(
-    x_pos  = c(1, 3),  y_pos = c(1, 1),
-    extra  = c(FALSE, FALSE),  twinID = c(1L, 1L),
-    x_fam  = c(NA, NA),  nid = c(1L, 2L)
+    x_pos = c(1, 3), y_pos = c(1, 1),
+    extra = c(FALSE, FALSE), twinID = c(1L, 1L),
+    x_fam = c(NA, NA), nid = c(1L, 2L)
   )
   expect_equal(
     ggpedigree:::.layoutScore(ds, method = "twin_penalty", twinID = "twinID"),
@@ -349,15 +349,15 @@ test_that(".layoutScore 'twin_penalty' method routes to twin penalty", {
 test_that(".layoutScore 'composite' includes twin penalty", {
   # Twins split by one intruder + one stub crossing + no dups
   ds <- data.frame(
-    x_pos  = c(1, 3),  x_fam = c(3, 1),
-    y_pos  = c(1, 1),  extra = c(FALSE, FALSE),
-    nid    = c(1L, 2L), twinID = c(1L, 1L)
+    x_pos = c(1, 3), x_fam = c(3, 1),
+    y_pos = c(1, 1), extra = c(FALSE, FALSE),
+    nid = c(1L, 2L), twinID = c(1L, 1L)
   )
-  stub     <- sum(abs(ds$x_fam - ds$x_pos), na.rm = TRUE)  # 4
+  stub <- sum(abs(ds$x_fam - ds$x_pos), na.rm = TRUE) # 4
   crossings <- 1L
-  twin_pen  <- 1                                             # span=2, n=2 → 2-1=1
-  dups      <- 0L
-  expected  <- stub + 10L * crossings + 20L * twin_pen + 100L * dups
+  twin_pen <- 1 # span=2, n=2 → 2-1=1
+  dups <- 0L
+  expected <- stub + 10L * crossings + 20L * twin_pen + 100L * dups
   expect_equal(
     ggpedigree:::.layoutScore(ds, method = "composite", twinID = "twinID"),
     expected

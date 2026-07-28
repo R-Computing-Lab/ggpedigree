@@ -174,6 +174,34 @@ test_that("ggPedigreeInteractive returns a gg object", {
   expect_s3_class(static, "gg")
 })
 
+test_that("ggPedigreeInteractive repairs a trailing comma in config instead of erroring", {
+  library(BGmisc)
+  data("potter") # load example data from BGmisc
+  if ("twinID" %in% names(potter) && "zygosity" %in% names(potter)) {
+    potter <- potter %>%
+      select(-twinID, -zygosity)
+  } else if ("twinID" %in% names(potter) && !"zygosity" %in% names(potter)) {
+    potter <- potter %>%
+      select(-twinID)
+  }
+
+  expect_message(
+    static <- ggPedigreeInteractive(
+      potter,
+      famID = "famID",
+      personID = "personID",
+      momID = "momID",
+      dadID = "dadID",
+      spouseID = "spouseID",
+      patID = "patID",
+      matID = "matID",
+      config = list(return_static = TRUE, )
+    ),
+    "trailing comma"
+  )
+  expect_s3_class(static, "gg")
+})
+
 test_that("ggPedigreeInteractive handles errors", {
   expect_error(
     ggPedigreeInteractive("potter", famID = "famID", personID = "personID", return_widget = TRUE)
