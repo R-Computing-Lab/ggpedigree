@@ -1428,7 +1428,7 @@ df <- df %>%
   addPersonToPed(
     name = "Stillborn daughter of Ashara Dayne",
     sex = "F", personID = 719,
-    dadID = NA, momID = 481,
+    dadID = 213, momID = 481,
     url = "https://awoiaf.westeros.org/index.php/Ashara_Dayne#Family"
   )
 

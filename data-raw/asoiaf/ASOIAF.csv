@@ -479,13 +479,13 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 478,1,479,476,Lomas Estermont,M,https://awoiaf.westeros.org/index.php/Lomas_Estermont,NA,NA
 479,1,NA,480,Sylva 'Spotted Sylva' Santagar,F,https://awoiaf.westeros.org/index.php/Sylva_Santagar,NA,NA
 480,1,NA,NA,Symon Santagar,M,https://awoiaf.westeros.org/index.php/Symon_Santagar,NA,NA
-481,23,706,482,Ashara Dayne,F,https://awoiaf.westeros.org/index.php/Ashara_Dayne,NA,NA
-482,23,NA,NA,Lord Dayne (Grandfather of Edric),M,https://awoiaf.westeros.org/index.php/Ashara_Dayne#Family,NA,NA
-483,23,706,482,Lord Dayne (father of Edric),M,https://awoiaf.westeros.org/index.php/Lord_Dayne_(father_of_Edric),NA,NA
-484,23,706,482,Arthur Dayne,M,https://awoiaf.westeros.org/index.php/Arthur_Dayne,NA,NA
-485,23,706,482,Allyria Dayne,F,https://awoiaf.westeros.org/index.php/Allyria_Dayne,NA,NA
-486,23,NA,483,Edric Dayne,M,https://awoiaf.westeros.org/index.php/Edric_Dayne,NA,NA
-487,24,NA,NA,Beric Dondarrion,M,https://awoiaf.westeros.org/index.php/Beric_Dondarrion,NA,NA
+481,1,706,482,Ashara Dayne,F,https://awoiaf.westeros.org/index.php/Ashara_Dayne,NA,NA
+482,1,NA,NA,Lord Dayne (Grandfather of Edric),M,https://awoiaf.westeros.org/index.php/Ashara_Dayne#Family,NA,NA
+483,1,706,482,Lord Dayne (father of Edric),M,https://awoiaf.westeros.org/index.php/Lord_Dayne_(father_of_Edric),NA,NA
+484,1,706,482,Arthur Dayne,M,https://awoiaf.westeros.org/index.php/Arthur_Dayne,NA,NA
+485,1,706,482,Allyria Dayne,F,https://awoiaf.westeros.org/index.php/Allyria_Dayne,NA,NA
+486,1,NA,483,Edric Dayne,M,https://awoiaf.westeros.org/index.php/Edric_Dayne,NA,NA
+487,23,NA,NA,Beric Dondarrion,M,https://awoiaf.westeros.org/index.php/Beric_Dondarrion,NA,NA
 488,19,615,429,Jeor Mormont,M,https://awoiaf.westeros.org/index.php/Jeor_Mormont,NA,NA
 489,1,NA,167,Bastard of Robert Baratheon,U,https://awoiaf.westeros.org/index.php/Robert_I_Baratheon#Family,NA,NA
 490,1,NA,167,Bastard of Robert Baratheon,U,https://awoiaf.westeros.org/index.php/Robert_I_Baratheon#Family,NA,NA
@@ -601,10 +601,10 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 600,1,NA,NA,Kiera of Tyrosh,F,https://awoiaf.westeros.org/index.php/Kiera_of_Tyrosh,NA,NA
 601,1,596,597,Aerea Targaryen,F,https://awoiaf.westeros.org/index.php/Aerea_Targaryen,602,mz
 602,1,596,597,Rhaella Targaryen (daughter of Aegon),F,https://awoiaf.westeros.org/index.php/Rhaella_Targaryen_(daughter_of_Aegon),601,mz
-603,25,605,606,Erryk Cargyll,M,https://awoiaf.westeros.org/index.php/Erryk_Cargyll,604,mz
-604,25,605,606,Arryk Cargyll,M,https://awoiaf.westeros.org/index.php/Arryk_Cargyll,603,mz
-605,25,NA,NA,Mother Cargyll,F,https://awoiaf.westeros.org/index.php/House_Cargyll,NA,NA
-606,25,NA,NA,Father Cargyll,M,https://awoiaf.westeros.org/index.php/House_Cargyll,NA,NA
+603,24,605,606,Erryk Cargyll,M,https://awoiaf.westeros.org/index.php/Erryk_Cargyll,604,mz
+604,24,605,606,Arryk Cargyll,M,https://awoiaf.westeros.org/index.php/Arryk_Cargyll,603,mz
+605,24,NA,NA,Mother Cargyll,F,https://awoiaf.westeros.org/index.php/House_Cargyll,NA,NA
+606,24,NA,NA,Father Cargyll,M,https://awoiaf.westeros.org/index.php/House_Cargyll,NA,NA
 607,1,609,610,Brandon Stark (son of Cregan),M,https://awoiaf.westeros.org/index.php/Brandon_Stark_(son_of_Cregan),NA,NA
 608,1,NA,NA,Alys Karstark (wife of Brandon),F,https://awoiaf.westeros.org/index.php/Alys_Karstark_(wife_of_Brandon),NA,NA
 609,1,NA,NA,Lynara Stark,F,https://awoiaf.westeros.org/index.php/Lynara_Stark,NA,NA
@@ -652,41 +652,41 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 651,1,650,649,Benjen Stark (son of Bennard),M,https://awoiaf.westeros.org/index.php/Benjen_Stark_(son_of_Bennard),NA,NA
 652,1,650,649,Brandon Stark (son of Bennard),M,https://awoiaf.westeros.org/index.php/Brandon_Stark_(son_of_Bennard),NA,NA
 653,1,650,649,Elric Stark,M,https://awoiaf.westeros.org/index.php/Elric_Stark,NA,NA
-654,26,NA,NA,Selwyn Tarth,M,https://awoiaf.westeros.org/index.php/Selwyn_Tarth,NA,NA
-655,26,NA,NA,Unknown wife of Selwyn Tarth,F,https://awoiaf.westeros.org/index.php/Selwyn_Tarth#Family,NA,NA
-656,26,655,654,Galladon Tarth,M,https://awoiaf.westeros.org/index.php/Galladon_Tarth,NA,NA
-657,26,655,654,Arianne Tarth,F,https://awoiaf.westeros.org/index.php/Arianne_Tarth,NA,NA
-658,26,655,654,Alysanne Tarth,F,https://awoiaf.westeros.org/index.php/Alysanne_Tarth,NA,NA
-659,26,655,654,Brienne of Tarth,F,https://awoiaf.westeros.org/index.php/Brienne_of_Tarth,NA,NA
-660,27,674,673,Jonos Bracken,M,https://awoiaf.westeros.org/index.php/Jonos_Bracken,NA,NA
-661,27,NA,NA,Unknown first wife of Jonos Bracken,F,NA,NA,NA
-662,27,661,660,Barbara Bracken,F,https://awoiaf.westeros.org/index.php/Barbara_Bracken,NA,NA
-663,27,661,660,Jayne Bracken,F,https://awoiaf.westeros.org/index.php/Jayne_Bracken,NA,NA
-664,28,NA,NA,Unknown second wife of Jonos Bracken,F,https://awoiaf.westeros.org/index.php/Jonos_Bracken#Family,NA,NA
-665,27,NA,NA,Lady Bracken (third wife of Jonos),F,https://awoiaf.westeros.org/index.php/Lady_Bracken,NA,NA
-666,27,665,660,Catelyn Bracken,F,https://awoiaf.westeros.org/index.php/Catelyn_Bracken,NA,NA
-667,27,665,660,Bess Bracken,F,https://awoiaf.westeros.org/index.php/Bess_Bracken,NA,NA
-668,27,665,660,Alysanne Bracken,F,https://awoiaf.westeros.org/index.php/Alysanne_Bracken,NA,NA
-669,27,NA,670,Hendry Bracken,M,https://awoiaf.westeros.org/index.php/Hendry_Bracken,NA,NA
-670,27,674,673,Unknown sibling of Jonos Bracken,M,https://awoiaf.westeros.org/index.php/Jonos_Bracken#Family,NA,NA
-671,27,NA,NA,mother of Harry Rivers,F,https://awoiaf.westeros.org/index.php/Harry_Rivers,NA,NA
-672,27,671,660,Harry Rivers,M,https://awoiaf.westeros.org/index.php/Harry_Rivers,NA,NA
-673,27,NA,NA,Father of Jonas Bracken,M,https://awoiaf.westeros.org/index.php/Jonos_Bracken#Family,NA,NA
-674,27,NA,NA,Mother of Jonas Bracken,F,https://awoiaf.westeros.org/index.php/Jonos_Bracken#Family,NA,NA
+654,25,NA,NA,Selwyn Tarth,M,https://awoiaf.westeros.org/index.php/Selwyn_Tarth,NA,NA
+655,25,NA,NA,Unknown wife of Selwyn Tarth,F,https://awoiaf.westeros.org/index.php/Selwyn_Tarth#Family,NA,NA
+656,25,655,654,Galladon Tarth,M,https://awoiaf.westeros.org/index.php/Galladon_Tarth,NA,NA
+657,25,655,654,Arianne Tarth,F,https://awoiaf.westeros.org/index.php/Arianne_Tarth,NA,NA
+658,25,655,654,Alysanne Tarth,F,https://awoiaf.westeros.org/index.php/Alysanne_Tarth,NA,NA
+659,25,655,654,Brienne of Tarth,F,https://awoiaf.westeros.org/index.php/Brienne_of_Tarth,NA,NA
+660,26,674,673,Jonos Bracken,M,https://awoiaf.westeros.org/index.php/Jonos_Bracken,NA,NA
+661,26,NA,NA,Unknown first wife of Jonos Bracken,F,NA,NA,NA
+662,26,661,660,Barbara Bracken,F,https://awoiaf.westeros.org/index.php/Barbara_Bracken,NA,NA
+663,26,661,660,Jayne Bracken,F,https://awoiaf.westeros.org/index.php/Jayne_Bracken,NA,NA
+664,27,NA,NA,Unknown second wife of Jonos Bracken,F,https://awoiaf.westeros.org/index.php/Jonos_Bracken#Family,NA,NA
+665,26,NA,NA,Lady Bracken (third wife of Jonos),F,https://awoiaf.westeros.org/index.php/Lady_Bracken,NA,NA
+666,26,665,660,Catelyn Bracken,F,https://awoiaf.westeros.org/index.php/Catelyn_Bracken,NA,NA
+667,26,665,660,Bess Bracken,F,https://awoiaf.westeros.org/index.php/Bess_Bracken,NA,NA
+668,26,665,660,Alysanne Bracken,F,https://awoiaf.westeros.org/index.php/Alysanne_Bracken,NA,NA
+669,26,NA,670,Hendry Bracken,M,https://awoiaf.westeros.org/index.php/Hendry_Bracken,NA,NA
+670,26,674,673,Unknown sibling of Jonos Bracken,M,https://awoiaf.westeros.org/index.php/Jonos_Bracken#Family,NA,NA
+671,26,NA,NA,mother of Harry Rivers,F,https://awoiaf.westeros.org/index.php/Harry_Rivers,NA,NA
+672,26,671,660,Harry Rivers,M,https://awoiaf.westeros.org/index.php/Harry_Rivers,NA,NA
+673,26,NA,NA,Father of Jonas Bracken,M,https://awoiaf.westeros.org/index.php/Jonos_Bracken#Family,NA,NA
+674,26,NA,NA,Mother of Jonas Bracken,F,https://awoiaf.westeros.org/index.php/Jonos_Bracken#Family,NA,NA
 675,1,NA,NA,Mother of Rogar Baratheon,F,https://awoiaf.westeros.org/index.php/Rogar_Baratheon#Family,NA,NA
 676,1,675,508,Garon Baratheon,M,https://awoiaf.westeros.org/index.php/Garon_Baratheon,NA,NA
 677,1,675,508,Orryn Baratheon,M,https://awoiaf.westeros.org/index.php/Orryn_Baratheon,NA,NA
 678,1,675,508,Ronnal Baratheon,M,https://awoiaf.westeros.org/index.php/Ronnal_Baratheon,NA,NA
 679,1,NA,NA,Lord Darry (father of Raymun),M,https://awoiaf.westeros.org/index.php/Lord_Darry_(father_of_Raymun),NA,NA
 680,19,NA,NA,Husband of Maege Mormont,M,https://awoiaf.westeros.org/index.php/Maege_Mormont#Family,NA,NA
-681,29,NA,NA,Lyman Beesbury,M,https://awoiaf.westeros.org/index.php/Lyman_Beesbury,NA,NA
-682,29,NA,681,Father of Alan Beesbury,M,https://awoiaf.westeros.org/index.php/Lyman_Beesbury#Family,NA,NA
-683,29,NA,682,Alan Beesbury,M,https://awoiaf.westeros.org/index.php/Alan_Beesbury,NA,NA
-684,30,NA,686,Ben Beesbury,M,https://awoiaf.westeros.org/index.php/Ben_Beesbury,NA,NA
-685,30,NA,684,Alton Beesbury,M,https://awoiaf.westeros.org/index.php/Alton_Beesbury,NA,NA
-686,30,NA,NA,Father of Ben of Beesbury,M,https://awoiaf.westeros.org/index.php/Alton_Beesbury#Family,NA,NA
-687,30,NA,686,Father of Warryn Beesbury,M,https://awoiaf.westeros.org/index.php/Alton_Beesbury#Family,NA,NA
-688,30,NA,687,Warryn Beesbury,M,https://awoiaf.westeros.org/index.php/Warryn_Beesbury,NA,NA
+681,28,NA,NA,Lyman Beesbury,M,https://awoiaf.westeros.org/index.php/Lyman_Beesbury,NA,NA
+682,28,NA,681,Father of Alan Beesbury,M,https://awoiaf.westeros.org/index.php/Lyman_Beesbury#Family,NA,NA
+683,28,NA,682,Alan Beesbury,M,https://awoiaf.westeros.org/index.php/Alan_Beesbury,NA,NA
+684,29,NA,686,Ben Beesbury,M,https://awoiaf.westeros.org/index.php/Ben_Beesbury,NA,NA
+685,29,NA,684,Alton Beesbury,M,https://awoiaf.westeros.org/index.php/Alton_Beesbury,NA,NA
+686,29,NA,NA,Father of Ben of Beesbury,M,https://awoiaf.westeros.org/index.php/Alton_Beesbury#Family,NA,NA
+687,29,NA,686,Father of Warryn Beesbury,M,https://awoiaf.westeros.org/index.php/Alton_Beesbury#Family,NA,NA
+688,29,NA,687,Warryn Beesbury,M,https://awoiaf.westeros.org/index.php/Warryn_Beesbury,NA,NA
 689,1,NA,NA,Lord Damon Lannister,M,https://awoiaf.westeros.org/index.php/Damon_Lannister_(lord),NA,NA
 690,1,NA,NA,Cerissa Brax,F,https://awoiaf.westeros.org/index.php/Cerissa_Brax,NA,NA
 691,1,690,689,Tybolt Lannister,M,https://awoiaf.westeros.org/index.php/Tybolt_Lannister,NA,NA
@@ -704,7 +704,7 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 703,1,700,699,Garmund Hightower,M,https://awoiaf.westeros.org/index.php/Garmund_Hightower,NA,NA
 704,1,547,703,Six Daughters Hightower,F,https://awoiaf.westeros.org/index.php/Garmund_Hightower#Family,NA,NA
 705,1,NA,NA,Alyn Marbrand,M,https://awoiaf.westeros.org/index.php/Alyn_Marbrand,NA,NA
-706,23,NA,NA,Mother of Ashara Dayne,F,https://awoiaf.westeros.org/index.php/Ashara_Dayne#Family,NA,NA
+706,1,NA,NA,Mother of Ashara Dayne,F,https://awoiaf.westeros.org/index.php/Ashara_Dayne#Family,NA,NA
 707,1,NA,NA,Mother of Jeyne Darry,F,https://awoiaf.westeros.org/index.php/Lord_Darry_(father_of_Raymun)#Family,NA,NA
 708,1,351,350,Saera Targaryen,F,https://awoiaf.westeros.org/index.php/Saera_Targaryen,NA,NA
 709,1,351,350,Viserra Targaryen,F,https://awoiaf.westeros.org/index.php/Viserra_Targaryen,NA,NA
@@ -717,3 +717,4 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 716,1,715,295,Daenora Targaryen,F,https://awoiaf.westeros.org/index.php/Daenora_Targaryen,NA,NA
 717,1,716,285,Maegor Targaryen (son of Aerion),M,https://awoiaf.westeros.org/index.php/Maegor_Targaryen_(son_of_Aerion),NA,NA
 718,1,289,NA,Children of Daella Targaryen,U,https://awoiaf.westeros.org/index.php/Daella_Targaryen_(daughter_of_Maekar_I)#Family,NA,NA
+719,1,481,213,Stillborn daughter of Ashara Dayne,F,https://awoiaf.westeros.org/index.php/Ashara_Dayne#Family,NA,NA
